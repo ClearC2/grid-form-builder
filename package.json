@@ -50,15 +50,15 @@
     "immutable": "^3.0.0",
     "react": "^15.0.0 || ^16.0.0",
     "react-dom": "^15.0.0 || ^16.0.0",
-    "react-redux": "^4.0.0 || ^5.0.0"
-  },
-  "dependencies": {
+    "react-redux": "^4.0.0 || ^5.0.0",
     "c2-dialog": "git+ssh://git@github.com:ClearC2/c2-dialog.git",
     "moment": "^2.20.1",
     "prop-types": "^15.0.0",
     "react-datetime": "^2.11.1",
     "react-grid-layout": "^0.15.2",
-    "react-portal": "^4.1.2",
+    "react-portal": "^4.1.2"
+  },
+  "dependencies": {
     "react-rnd": "^7.1.5",
     "react-select": "^1.2.1",
     "react-sizeme": "^2.3.6"
