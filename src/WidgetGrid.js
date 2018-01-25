@@ -5,8 +5,6 @@ import {Map, fromJS} from 'immutable'
 import sizeMe from 'react-sizeme'
 import {Responsive} from 'react-grid-layout'
 import CustomGridWidthProvider from './CustomGridWidthProvider'
-import '../node_modules/react-grid-layout/css/styles.css'
-import '../node_modules/react-resizable/css/styles.css'
 
 import {setComponentLayouts} from './redux'
 
