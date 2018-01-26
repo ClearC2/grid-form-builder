@@ -1,6 +1,6 @@
 import {Map, fromJS} from 'immutable'
 
-export function createAction (type, ...argNames) {
+function createAction (type, ...argNames) {
   return function (...args) {
     let action = {type}
     argNames.forEach((arg, index) => {
@@ -10,12 +10,12 @@ export function createAction (type, ...argNames) {
   }
 }
 
-export const SET_COMPONENT_LAYOUT = 'app/set-form-grid-layout/no-sync'
-export const setComponentLayouts = createAction(SET_COMPONENT_LAYOUT, 'compName', 'layouts', 'overwrite')
+export const SET_FORM_BUILDER_LAYOUT = 'app/set-form-grid-layout/no-sync'
+export const setComponentLayouts = createAction(SET_FORM_BUILDER_LAYOUT, 'compName', 'layouts', 'overwrite')
 
-export function reducer (state = Map(), action) {
+export default function reducer (state = Map(), action) {
   switch (action.type) {
-    case SET_COMPONENT_LAYOUT: {
+    case SET_FORM_BUILDER_LAYOUT: {
       let keyPath = Array.isArray(action.compName) ? action.compName : [action.compName]
       keyPath.push('layouts')
       const args = [
