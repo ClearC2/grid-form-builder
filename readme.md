@@ -2,6 +2,8 @@
 
 Grid Form Builder is a component that accepts JSON to generate forms on a [react-grid-layout](https://github.com/STRML/react-grid-layout) and stores the layouts in the redux store. 
 
+[Grid Form Builder Demo](https://i.imgur.com/yrJ3PR6.mp4)
+
 **Installation:**
 
 
