@@ -22,7 +22,7 @@ Grid Form Builder is a component that accepts JSON to generate forms on a [react
 
 * Import the reducer from grid-form-builder and add it to your project's combineReducers method. (example below)
 
-```
+```javascript
 import { combineReducers } from 'redux-immutable'
 import app, {dialogs} from '../app/reducer'
 import auth from '../app/auth/redux'
@@ -40,7 +40,7 @@ You are now ready to import the FormBuilder to start creating forms.
 
 ### FormBuilder
 
-```
+```javascript
 import React, {Component} from 'react'
 import {Map} from 'immutable'
 import {FormBuilder} from '../../src/index'
@@ -97,7 +97,7 @@ This is an object (usually an immutable map) that is key:value pairs where the k
 #### `handleOnChange?: function`
 handleOnChange is the handler called any time a field is changed. Use this handler to update your formValues object. At minimum this method will provide you an object with the following structure (this is usually the entire event object, but not always).
 
-```
+```javascript
 {
     target: {
         name: '',
