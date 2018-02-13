@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {Map, Set} from 'immutable'
+import {Map, Set, List} from 'immutable'
 import {Portal} from 'react-portal'
 import {Dialog} from 'c2-dialog'
 import ReactDom from 'react-dom'
-import {FormBuilder} from '../GridFormBuilder'
+import FormBuilder from '../GridFormBuilder'
 export default class Conditionalinput extends Component {
   state = {
     formValues: Map(),

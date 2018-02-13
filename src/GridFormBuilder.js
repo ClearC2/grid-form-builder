@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import WidgetGrid from './WidgetGrid'
-import {Map, List} from 'immutable'
+import {Map, List, fromJS} from 'immutable'
 import Input from './FieldDefinitions/Input'
 import Textarea from './FieldDefinitions/Textarea'
 import Datetime from './FieldDefinitions/Datetime'
