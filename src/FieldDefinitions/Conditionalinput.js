@@ -4,6 +4,7 @@ import {Portal} from 'react-portal'
 import {Dialog} from 'c2-dialog'
 import ReactDom from 'react-dom'
 import FormBuilder from '../GridFormBuilder'
+
 export default class Conditionalinput extends Component {
   state = {
     formValues: Map(),
@@ -96,6 +97,7 @@ export default class Conditionalinput extends Component {
     portal.node.style.position = 'absolute'
     portal.node.style.top = `${fieldPos.top + document.documentElement.scrollTop}px`
     portal.node.style.left = `${fieldPos.left + document.documentElement.scrollLeft}px`
+    console.log(portal, portal.node, portal.node.style, ReactDom.findDOMNode(this).getBoundingClientRect(), fieldPos, 'portal logggs')
   }
 
   render = () => {
