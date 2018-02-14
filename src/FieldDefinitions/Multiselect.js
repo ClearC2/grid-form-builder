@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {List} from 'immutable'
+import {List, fromJS} from 'immutable'
 import ReactSelect from 'react-select'
 
 export default class Multiselect extends Component {
