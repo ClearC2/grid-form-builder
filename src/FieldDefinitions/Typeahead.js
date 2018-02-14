@@ -63,7 +63,7 @@ export default class Typeahead extends Component {
       return Promise.resolve({options: values})
     }
 
-    return [] // refactor to handle ajax prepop options?
+    return Promise.resolve({options: []}) // refactor to handle ajax prepop options?
   }
 
   render = () => {
