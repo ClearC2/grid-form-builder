@@ -1,7 +1,7 @@
 /* eslint-disable */
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const extractSASS = new ExtractTextPlugin('style.css')
+const extractSASS = new ExtractTextPlugin('styles.css')
 
 module.exports = {
   entry: './src/index.js',
