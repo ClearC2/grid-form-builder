@@ -45,14 +45,39 @@ export default class Listselect extends Component {
   }
 
   render = () => {
-    const {field, opts = {}} = this.props
+    const {inline, field, opts = {}} = this.props
     const {value} = this.state
     const {options = List(), label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}} = opts
+
+    const styles = {
+      labelContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: inline ? 150 : '100%',
+        minWidth: inline ? 150 : '100%',
+        height: 15,
+        marginTop: inline ? 4 : 0,
+        background: 'transparent',
+        marginBottom: inline ? 10 : 0,
+        ...labelStyle
+      },
+      label: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        lineHeight: inline ? '23px' : '15px',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        fontSize: inline ? '10pt' : '8pt',
+        background: 'transparent',
+        ...labelStyle
+      }
+    }
+
     return (
       <div style={{display: 'flex', flex: 1, flexDirection: 'column', height: '100%'}}>
-        <div style={{display: 'flex', flexDirection: 'row', width: 150, minWidth: 150, height: 27, ...labelStyle}}>
+        <div style={styles.labelContainer}>
           {!!Icon && <Icon size={20} style={{marginRight: 5}} {...iconProps} />}
-          <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', height: 27, ...labelStyle}}>{label}</strong>
+          <strong style={styles.label}>{label}</strong>
         </div>
         <div style={{display: 'flex', flexDirection: 'column', minHeight: 10, border: '1px solid lightgrey', height: 'calc(100% - 18px)', marginTop: 3, overflowY: 'scroll'}}>
           {options.map(option => {
