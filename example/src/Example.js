@@ -10,6 +10,20 @@ export default class Example extends Component {
   handleOnChange = e => this.setState({formValues: this.state.formValues.set(e.target.name, e.target.value)})
 
   formSchema = () => ({
+    'Secondary Roles': {
+      dimensions: {x: 0, y: 5, h: 1, w: 6},
+      type: 'multiselect',
+      options: ['Manager', 'Admin', 'Tech', 'Network Operations']
+    },
+    'cfd_reportsto': {
+      label: 'Contact',
+      dimensions: {x: 6, y: 5, h: 1, w: 6},
+      type: 'typeahead',
+      props: {
+        url: '/typeahead/person',
+        cfd: ['cfd_contactphone', 'cfd_companyname', 'cfd_contactemail']
+      }
+    },
     'physicaladdress': {
       label: 'Address',
       dimensions: {x: 0, y: 0, h: 1, w: 6}
@@ -76,11 +90,6 @@ export default class Example extends Component {
       type: 'multicheckbox',
       options: ['Manager', 'Admin', 'Tech', 'Network Operations']
     },
-    'Secondary Roles': {
-      dimensions: {x: 0, y: 5, h: 1, w: 6},
-      type: 'multiselect',
-      options: ['Manager', 'Admin', 'Tech', 'Network Operations']
-    },
     'Status': {
       dimensions: {x: 0, y: 20, h: 1, w: 6},
       type: 'radio',
@@ -97,15 +106,6 @@ export default class Example extends Component {
       type: 'select',
       options: ['Customer', 'Vendor', 'Competitor', 'Partner'],
       dimensions: {x: 6, y: 1, h: 1, w: 6}
-    },
-    'cfd_reportsto': {
-      label: 'Contact',
-      dimensions: {x: 6, y: 5, h: 1, w: 6},
-      type: 'typeahead',
-      props: {
-        url: '/typeahead/person',
-        cfd: ['cfd_contactphone', 'cfd_companyname', 'cfd_contactemail']
-      }
     },
     'cfd_accountmanager': {
       label: 'Account Manager',
@@ -185,6 +185,5 @@ export default class Example extends Component {
     formValues={this.state.formValues}
     handleOnChange={this.handleOnChange}
     draggable
-    inline
   />
 }
