@@ -32,7 +32,8 @@ export default class Checkbox extends Component {
         fontSize: inline ? '10pt' : '8pt',
         lineHeight: inline ? '10pt' : '8pt',
         whiteSpace: 'nowrap',
-        textOverflow: 'ellipsis'
+        textOverflow: 'ellipsis',
+        ...labelStyle
       },
       input: {
         display: 'flex',
