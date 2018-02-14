@@ -1,6 +1,7 @@
 /* eslint-disable */
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const extractSASS = new ExtractTextPlugin('style.css')
 
 module.exports = {
   entry: './src/index.js',
@@ -19,8 +20,16 @@ module.exports = {
       {
         test: /\.css$/,
         loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
-      }
+      },
+      {
+        test: /\.scss$/,
+        loader: extractSASS.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
+        })
+      },
+      { test: /\.(png|jpg|gif)$/, use: [{loader: 'file-loader'}] }
     ]
   },
-  plugins: [new ExtractTextPlugin('styles.css')]
+  plugins: [new ExtractTextPlugin('styles.css'), extractSASS]
 }

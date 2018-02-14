@@ -101,7 +101,6 @@ export default class Example extends Component {
     'cfd_reportsto': {
       label: 'Contact',
       dimensions: {x: 6, y: 5, h: 1, w: 6},
-      labelStyle: {width: 90, minWidth: 90},
       type: 'typeahead',
       props: {
         url: '/typeahead/person',
