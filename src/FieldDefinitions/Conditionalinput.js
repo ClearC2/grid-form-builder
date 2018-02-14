@@ -92,16 +92,19 @@ export default class Conditionalinput extends Component {
     this.setState({showDialog: newState})
   }
 
-  onModalOpen = () => {
+  onModalOpen = (showLog) => {
     const portal = this.refs[`conditionalInput-${this.props.field}-portal`]
     const fieldPos = ReactDom.findDOMNode(this).getBoundingClientRect()
-    portal.node.style.position = 'absolute'
-    portal.node.style.top = `${fieldPos.top + document.documentElement.scrollTop}px`
-    portal.node.style.left = `${fieldPos.left + document.documentElement.scrollLeft}px`
+    if (showLog === 'yes') {
+      portal.node.style.position = 'absolute'
+      portal.node.style.top = `${fieldPos.top + document.documentElement.scrollTop}px`
+      portal.node.style.left = `${fieldPos.left + document.documentElement.scrollLeft}px`
+    }
     console.log(portal, portal.node, portal.node.style, ReactDom.findDOMNode(this).getBoundingClientRect(), fieldPos, 'portal logggs')
   }
 
   render = () => {
+    this.onModalOpen('yes')
     const {field, opts = {}} = this.props // formValues = Map(), handleOnChange = () => {},
     const {label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}} = opts // , props = {}
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
