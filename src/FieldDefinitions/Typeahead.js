@@ -67,7 +67,7 @@ export default class Typeahead extends Component {
   }
 
   render = () => {
-    const {field, formValues = Map(), opts = {}} = this.props
+    const {inline, field, formValues = Map(), opts = {}} = this.props
     const {label = field, labelStyle = {}} = opts
     const currentValue = formValues.get(field, Map({value: '', label: ''}))
     let value = ''
@@ -84,14 +84,49 @@ export default class Typeahead extends Component {
         valueLabel = currentValue.label ? currentValue.label : ''
       }
     }
+
+    const styles = {
+      container: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: inline ? 'row' : 'column',
+        background: 'transparent'
+      },
+      labelContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: inline ? 150 : '100%',
+        minWidth: inline ? 150 : '100%',
+        height: 15,
+        marginTop: inline ? 4 : 0,
+        background: 'transparent',
+        ...labelStyle
+      },
+      label: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        lineHeight: inline ? '23px' : '15px',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        fontSize: inline ? '10pt' : '8pt',
+        background: 'transparent',
+        ...labelStyle
+      }
+    }
+
+    const className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
+
     if (this.state.shouldRemount) {
       return <Placeholder handleMount={this.setShouldRemount} />
     } else {
       return (
-        <div style={{display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'flex-start', alignItems: 'center'}} >
-          <span style={{display: 'flex', flexDirection: 'row', width: 150, minWidth: 150, height: 15, marginTop: 3, fontWeight: 'bold', ...labelStyle}}>{label}</span>
+        <div style={styles.container} >
+          <div style={styles.labelContainer}>
+            <strong style={styles.label}>{label}</strong>
+          </div>
           <ReactSelect.Async
             onMouseDown={this.onMouseDown}
+            className={className}
             name={field}
             value={{value, label: valueLabel}}
             onChange={this.handleChange}

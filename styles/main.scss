@@ -20,10 +20,16 @@ div.Select {
 
 div.select-grid-input {
   height: 25px;
+  div.Select-menu-outer {
+    margin-left: 0;
+  }
 }
 
 div.select-grid-input.select-grid-input-inline {
-  height: 31px;
+  height: 24px;
+  div.Select-menu-outer {
+    margin-left: 0;
+  }
 }
 
 div.select-grid-input.select-grid-input-inline > div.Select-control {
