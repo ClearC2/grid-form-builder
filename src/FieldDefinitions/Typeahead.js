@@ -2,6 +2,14 @@ import React, {Component} from 'react'
 import {Map} from 'immutable'
 import ReactSelect from 'react-select'
 
+class Placeholder extends Component {
+  static propTypes = {
+    handleMount: PropTypes.func.isRequired
+  }
+  componentDidMount = () => this.props.handleMount()
+  render = () => null
+}
+
 export default class Typeahead extends Component {
   static defaultProps = {
     minChars: 1
