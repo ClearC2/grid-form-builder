@@ -185,6 +185,5 @@ export default class Example extends Component {
     formValues={this.state.formValues}
     handleOnChange={this.handleOnChange}
     draggable
-    inline
   />
 }
