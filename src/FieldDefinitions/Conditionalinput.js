@@ -31,10 +31,10 @@ export default class Conditionalinput extends Component {
     const condition = formValues.get('condition')
     const inputType = this.props.opts.inputType || 'input'
     let schema = Map({
-      [field]: {label: `${this.props.opts.label || field} condition:`, type: 'Header', dimensions: {x: 0, y: 0, h: 1, w: 1}},
-      'condition': {type: 'select', options: this.props.conditionOptions, dimensions: {x: 1, y: 0, h: 1, w: 3}, label: 'Condition'},
-      [`low ${field}`]: {type: inputType, label: `${this.props.opts.label || field}`, dimensions: {x: 3, y: 0, h: 1, w: 3}},
-      [`high ${field}`]: {type: inputType, label: doubleFields.includes(condition) ? `${this.props.opts.label || field}` : '', dimensions: {x: 6, y: 3, h: 1, w: 3}, style: {opacity: doubleFields.includes(condition) ? 1 : 0}}
+      [field]: {label: `${this.props.opts.label || field} condition:`, type: 'Header', dimensions: {x: 0, y: 0, h: 1, w: 6}},
+      'condition': {type: 'select', options: this.props.conditionOptions, dimensions: {x: 6, y: 0, h: 1, w: 6}, label: 'Condition'},
+      [`low ${field}`]: {type: inputType, label: `${this.props.opts.label || field}`, dimensions: {x: 3, y: 0, h: 1, w: 6}},
+      [`high ${field}`]: {type: inputType, label: doubleFields.includes(condition) ? `${this.props.opts.label || field}` : '', dimensions: {x: 3, y: 3, h: 1, w: 6}, style: {opacity: doubleFields.includes(condition) ? 1 : 0}}
     })
     if (inputType === 'Multiselect') {
       schema = schema.set('')
