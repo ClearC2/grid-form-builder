@@ -8,7 +8,8 @@ import FormBuilder from '../GridFormBuilder'
 export default class Conditionalinput extends Component {
   state = {
     formValues: Map(),
-    doubleFields: Set()
+    doubleFields: Set(),
+    showDialog: false
   }
   static defaultProps = {
     conditionOptions: ['is equal to', 'is not equal to', 'is between', 'contains:', 'does not contain'],
