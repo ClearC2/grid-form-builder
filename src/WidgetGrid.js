@@ -186,7 +186,7 @@ export class Grid extends Component {
         children.push(
           <div
             key={key}
-            style={{background: 'white', overflow: 'visible', height: '100%'}}
+            style={{background: 'transparent', overflow: 'visible', height: '100%'}}
           >
             <Component
               key={key}
@@ -282,7 +282,7 @@ function WidgetWrapper ({size, child, widgetKey, handleRemoveWidgetClick}) {
   }
 
   return (
-    <div style={{height: '100%', width: '100%', display: 'flex'}}>
+    <div style={{height: '100%', width: '100%', display: 'flex', background: 'transparent'}}>
       {size ? React.cloneElement(child, {size, removeSelf: handleClick}) : child}
     </div>
   )

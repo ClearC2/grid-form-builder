@@ -60,13 +60,18 @@ export default class FormBuilder extends Component {
     formValues: PropTypes.object,
     prepops: PropTypes.object,
     handleOnChange: PropTypes.func,
-    draggable: PropTypes.bool
+    draggable: PropTypes.bool,
+    inline: PropTypes.bool
+  }
+
+  static defaultProps = {
+    inline: false
   }
 
   uppercaseFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 
   render = () => {
-    let {formSchema = {}, formValues = Map(), handleOnChange = () => {}, prepops = Map(), formName = 'form', draggable = false} = this.props
+    let {formSchema = {}, formValues = Map(), handleOnChange = () => {}, prepops = Map(), formName = 'form', draggable = false, inline = false} = this.props
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     prepops = (typeof prepops.isMap === 'function') ? prepops : Map(prepops)
     const dateFields = []
@@ -81,12 +86,12 @@ export default class FormBuilder extends Component {
         dimensions.h = options.size ? options.size : options.length ? options.length : 1
       }
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
-      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0) dateFields.unshift(<Component draggable={draggable} key={field} handleOnChange={handleOnChange} formValues={formValues} prepops={prepops.get(formSchema[field].prepops)} field={field} opts={formSchema[field]} defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}} />)
-      else normalFields.push(<Component draggable={draggable} key={field} handleOnChange={handleOnChange} formValues={formValues} prepops={prepops.get(formSchema[field].prepops)} field={field} opts={formSchema[field]} defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}} />)
+      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0) dateFields.unshift(<Component inline={inline} draggable={draggable} key={field} handleOnChange={handleOnChange} formValues={formValues} prepops={prepops.get(formSchema[field].prepops)} field={field} opts={formSchema[field]} defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}} />)
+      else normalFields.push(<Component inline={inline} draggable={draggable} key={field} handleOnChange={handleOnChange} formValues={formValues} prepops={prepops.get(formSchema[field].prepops)} field={field} opts={formSchema[field]} defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}} />)
     })
     return (
       <div style={{height: '100%', minWidth: 350}}>
-        <WidgetGrid compName={formName} verticalCompact={false} margin={[40, 5]} rowHeight={27}>
+        <WidgetGrid compName={formName} verticalCompact={false} margin={[40, 5]} rowHeight={inline ? 27 : 40}>
           {normalFields}
           {dateFields}
         </WidgetGrid>
