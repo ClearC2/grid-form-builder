@@ -40,7 +40,7 @@ export default class Select extends Component {
       input: {
         display: 'flex',
         flexGrow: 1,
-        height: 27,
+        height: inline ? 27 : 25,
         border: inline ? 0 : '1px solid #a0a0a0',
         paddingLeft: 5,
         minWidth: 90,
