@@ -33,27 +33,51 @@ export default class Example extends Component {
     },
     'mobilephonenumber': {
       label: 'Join Date',
-      dimensions: {x: 0, y: 9, h: 1, w: 6},
+      dimensions: {x: 0, y: 6, h: 1, w: 6},
       type: 'date'
+    },
+    'asdfasfdag': {
+      label: 'Zip Code',
+      dimensions: {x: 0, y: 7, h: 1, w: 6}
+    },
+    'asdfasfdagds': {
+      label: 'Zip Code',
+      dimensions: {x: 6, y: 7, h: 1, w: 6}
+    },
+    'asdfassfdfdag': {
+      label: 'Zip Code',
+      dimensions: {x: 0, y: 10, h: 1, w: 6}
+    },
+    'sffvsfd': {
+      label: 'Zip Code',
+      dimensions: {x: 6, y: 10, h: 1, w: 6}
+    },
+    'sdfgsvs': {
+      label: 'Zip Code',
+      dimensions: {x: 0, y: 15, h: 1, w: 6}
+    },
+    'regsfdgvs': {
+      label: 'Zip Code',
+      dimensions: {x: 6, y: 15, h: 1, w: 6}
     },
     'email2': {
       label: 'Leave Date',
-      dimensions: {x: 6, y: 10, h: 1, w: 6},
+      dimensions: {x: 6, y: 6, h: 1, w: 6},
       type: 'datetime'
     },
     'cfd_companyname': {
       label: 'Organization',
-      dimensions: {x: 0, y: 7, h: 5, w: 6},
+      dimensions: {x: 0, y: 11, h: 5, w: 6},
       type: 'listselect',
       options: ['Option 1', 'Option 2', 'Option 3']
     },
     'Roles': {
-      dimensions: {x: 6, y: 7, h: 4, w: 6},
+      dimensions: {x: 6, y: 11, h: 4, w: 6},
       type: 'multicheckbox',
       options: ['Manager', 'Admin', 'Tech', 'Network Operations']
     },
     'Secondary Roles': {
-      dimensions: {x: 0, y: 16, h: 4, w: 6},
+      dimensions: {x: 0, y: 5, h: 1, w: 6},
       type: 'multiselect',
       options: ['Manager', 'Admin', 'Tech', 'Network Operations']
     },
@@ -76,7 +100,7 @@ export default class Example extends Component {
     },
     'cfd_reportsto': {
       label: 'Contact',
-      dimensions: {x: 6, y: 2, h: 1, w: 6},
+      dimensions: {x: 6, y: 5, h: 1, w: 6},
       labelStyle: {width: 90, minWidth: 90},
       type: 'typeahead',
       props: {
@@ -86,21 +110,21 @@ export default class Example extends Component {
     },
     'cfd_accountmanager': {
       label: 'Account Manager',
-      dimensions: {x: 6, y: 3, h: 1, w: 6}
+      dimensions: {x: 6, y: 2, h: 1, w: 6}
     },
     'status': {
       label: 'Status',
       type: 'select',
       options: ['Active', 'Inactive'],
-      dimensions: {x: 6, y: 4, h: 1, w: 6}
+      dimensions: {x: 6, y: 3, h: 1, w: 6}
     },
     'Tags': {
-      dimensions: {x: 6, y: 5, h: 1, w: 6}
+      dimensions: {x: 6, y: 4, h: 1, w: 6}
     },
     'description': {
       label: 'Notes',
       type: 'textarea',
-      dimensions: {x: 0, y: 22, h: 1, w: 12}
+      dimensions: {x: 0, y: 8, h: 1, w: 12}
     },
     'priornotes': {
       label: 'Prior Notes',
