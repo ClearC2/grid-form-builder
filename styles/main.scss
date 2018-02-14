@@ -12,15 +12,48 @@ div.Select {
   background-color: transparent;
   border: 2px solid #a1c3fa;
   border-radius: 2px;
-  margin: -2px;
+
+  span.Select-arrow-zone {
+    margin-right: -4px;
+  }
+}
+
+div.select-grid-input {
+  height: 25px;
+}
+
+div.select-grid-input.select-grid-input-inline {
+  height: 31px;
+}
+
+div.select-grid-input.select-grid-input-inline > div.Select-control {
+  border: 0;
+  border-bottom: 1px solid #a0a0a0;
 }
 
 div.Select-control {
-  border: 0;
-  border-bottom: 1px solid #a0a0a0;
+  border: 1px solid #a0a0a0;
   border-radius: 1px;
   background-color: transparent;
   height: 24px;
+
+  span.Select-multi-value-wrapper {
+    display: flex;
+
+    div.Select-value {
+      margin: 0;
+      margin-right: 5;
+      span.Select-value-icon {
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 22px;
+        width: 25px;
+        margin-left: -5px;
+      }
+    }
+  }
 
   span {
     div.Select-value {
@@ -33,6 +66,14 @@ div.Select-control {
       }
     }
   }
+}
+
+.select-grid-input.select-grid-input-inline > div.Select-control > span > div.Select-placeholder {
+  line-height: 27px;
+}
+
+.select-grid-input > div.Select-control > span > div.Select-placeholder {
+  line-height: 25px;
 }
 
 div.Select-menu-outer {

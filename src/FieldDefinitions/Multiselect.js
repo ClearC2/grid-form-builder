@@ -29,26 +29,63 @@ export default class Multiselect extends Component {
   }
 
   render = () => {
-    const {field, opts = {}} = this.props
+    const {inline, field, opts = {}} = this.props
     const {label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}, props = {}} = opts
+
+    const styles = {
+      container: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: inline ? 'row' : 'column',
+        background: 'transparent'
+      },
+      labelContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: inline ? 150 : '100%',
+        minWidth: inline ? 150 : '100%',
+        height: 15,
+        marginTop: inline ? 4 : 0,
+        background: 'transparent',
+        ...labelStyle
+      },
+      label: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        lineHeight: inline ? '23px' : '15px',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        fontSize: inline ? '10pt' : '8pt',
+        background: 'transparent',
+        ...labelStyle
+      },
+      icon: {
+        marginRight: 5,
+        width: 20
+      },
+      input: {
+        ...style
+      }
+    }
+
+    const className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
+
     return (
-      <div style={{display: 'flex', flex: '1', flexDirection: 'row'}}>
-        <div style={{display: 'flex', flexDirection: 'row', width: 150, minWidth: 150, height: 30, marginTop: 4, ...labelStyle}}>
-          {!!Icon && <Icon size={20} style={{marginRight: 5}} {...iconProps} />}
-          <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', ...labelStyle}}>{label}</strong>
+      <div style={styles.container}>
+        <div style={styles.labelContainer}>
+          {!!Icon && <Icon size={20} style={styles.icon} {...iconProps} />}
+          <strong style={styles.label}>{label}</strong>
         </div>
-        <div style={{width: '100%', display: 'inline-block'}}>
-          <ReactSelect
-            onChange={this.onChange}
-            className='select-grid-input'
-            style={{display: 'inline-block', height: 30, paddingLeft: 5, minWidth: 150, width: '100%', ...style}}
-            multi
-            name={field}
-            options={this.state.builtOptions}
-            value={this.props.formValues.getIn([field, 'values'], List()).map(val => { return {value: val, label: val} }).toArray()}
-            {...props}
-          />
-        </div>
+        <ReactSelect
+          onChange={this.onChange}
+          className={className}
+          style={styles.input}
+          multi
+          name={field}
+          options={this.state.builtOptions}
+          value={this.props.formValues.getIn([field, 'values'], List()).map(val => { return {value: val, label: val} }).toArray()}
+          {...props}
+        />
       </div>
     )
   }
