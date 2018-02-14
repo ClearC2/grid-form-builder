@@ -98,7 +98,7 @@ export default class Conditionalinput extends Component {
     portal.node.style.position = 'absolute'
     portal.node.style.top = `${fieldPos.top + document.documentElement.scrollTop}px`
     portal.node.style.left = `${fieldPos.left + document.documentElement.scrollLeft}px`
-    console.log(portal, portal.node, portal.node.style, ReactDom.findDOMNode(this).getBoundingClientRect(), fieldPos, 'portal logggs')
+    // console.log(portal, portal.node, portal.node.style, ReactDom.findDOMNode(this).getBoundingClientRect(), fieldPos, 'portal logggs')
   }
 
   render = () => {
