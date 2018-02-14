@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
 import ReactSelect from 'react-select'
+import PropTypes from 'prop-types'
 
 class Placeholder extends Component {
   static propTypes = {
