@@ -13,6 +13,16 @@ Grid Form Builder is a component that accepts JSON to generate forms on a [react
 "grid-form-builder": "git+ssh://git@github.com:ClearC2/grid-form-builder.git",
 ```
 
+* react-grid-layout, react-datetime, and react-select are peer dependencies of grid-form-builder. If your project uses css, import the react-grid-layout css style sheets below where your other css files are being imported. 
+
+```
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
+import 'react-select/dist/react-select.css'
+import 'react-datetime/css/react-datetime.css'
+import 'grid-form-builder/styles/main.scss'
+```
+
 * Import the reducer from grid-form-builder and add it to your project's combineReducers method. (example below)
 
 ```javascript
