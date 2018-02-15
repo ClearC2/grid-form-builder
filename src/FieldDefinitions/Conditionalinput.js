@@ -56,12 +56,12 @@ export default class Conditionalinput extends Component {
       [`low ${field}`]: {
         type: inputType,
         label: `${this.props.opts.label || field}`,
-        dimensions: {x: 3, y: 0, h: 1, w: 6}
+        dimensions: {x: 3, y: 2, h: 1, w: 6}
       },
       [`high ${field}`]: {
         type: inputType,
         label: doubleFields.includes(condition) ? `${this.props.opts.label || field}` : '',
-        dimensions: {x: 3, y: 3, h: 1, w: 6},
+        dimensions: {x: 3, y: 2, h: 1, w: 6},
         style: {opacity: doubleFields.includes(condition) ? 1 : 0}
       }
     })
