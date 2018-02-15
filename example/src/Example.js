@@ -1,10 +1,47 @@
 import React, {Component} from 'react'
-import {Map} from 'immutable'
+import {Map, List} from 'immutable'
 import {FormBuilder} from '../../src/index'
 
 export default class Example extends Component {
   state = {
-    formValues: Map(),
+    formValues: Map({
+      'physicaladdress': '724 Canyon Drive',
+      'Secondary Roles': List(['Admin', 'Manager']),
+      'cfd_reportsto': 'Jacob Allen',
+      'pacity': 'Coppell',
+      'pastate': 'Texas',
+      'papostalcode': '75019',
+      'pacountry': 'Denton',
+      'mobilephonenumber': '555-555-5544',
+      'asdfasfdag': '75019',
+      'asdfasfdagds': '75019',
+      'asdfassfdfdag': '75019',
+      'sffvsfd': '75019',
+      'sdfgsvs': '75019',
+      'regsfdgvs': '75019',
+      'email2': 'email@clearc2.com',
+      'cfd_companyname': 'Clear C2, Inc.',
+      'Roles': List(['Admin', 'Manager']),
+      'Status': 'Active',
+      c2_contact_pa: 'Qualified',
+      c2_contact_city: 'Customer',
+      'cfd_accountmanager': 'Jacob Allen',
+      'status': 'Active',
+      'Tags': 'N/A',
+      'description': 'This is a mock record',
+      'priornotes': 'Last time on grid form builder, everything was status quo',
+      OrgInfo: 'Best Organization Ever!',
+      'cfd_companyphone': '555-444-5544',
+      'cfd_companyaddress': '724 Canyon Drive',
+      'cfd_companycity': 'Coppell',
+      'cfd_companystate': 'Texas',
+      'cfd_companycountry': 'USA',
+      'cfd_fax': '555-444-5545',
+      'cfd_companylinkedin': 'linkedin.com/clearc2',
+      'cfd_companyfacebook': 'facebook.com/clearc2',
+      'cfd_companytwitter': 'twitter.com/clearc2',
+      'cfd_companypriornotes': 'Best Company on the planet'
+    }),
     inline: false
   }
 
