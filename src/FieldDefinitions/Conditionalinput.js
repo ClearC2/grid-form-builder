@@ -130,6 +130,7 @@ export default class Conditionalinput extends Component {
   // }
 
   render = () => {
+    console.log(this.state.showDialog, this.state, this.props, 'show Dialog loggggg')
     const {field, opts = {}} = this.props // formValues = Map(), handleOnChange = () => {},
     const {label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}} = opts // , props = {}
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
