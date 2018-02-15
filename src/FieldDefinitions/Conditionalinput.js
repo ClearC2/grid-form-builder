@@ -121,6 +121,11 @@ export default class Conditionalinput extends Component {
     this.setState({showDialog: newState})
   }
 
+  handleToggleDialog2 = (newState = !this.state.showDialog) => {
+    console.log(newState, 'toggle2 dialog click logggg')
+    this.setState({showDialog: newState})
+  }
+
   // onModalOpen = () => {
   //   const portal = this.refs[`conditionalInput-${this.props.field}-portal`]
   //   const fieldPos = ReactDom.findDOMNode(this).getBoundingClientRect()
@@ -158,7 +163,7 @@ export default class Conditionalinput extends Component {
           </Dialog>
         </Portal>}
         <div
-          onClick={() => { this.handleToggleDialog(true) }}
+          onClick={() => { this.handleToggleDialog2(true) }}
           id={`conditionalInput-${field}`}
           style={{
             display: 'flex',
