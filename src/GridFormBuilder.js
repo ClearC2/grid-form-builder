@@ -17,6 +17,10 @@ import Conditionalinput from './FieldDefinitions/Conditionalinput'
 import Multiselect from './FieldDefinitions/Multiselect'
 
 import '../styles/main.scss'
+import '../styles/react-datetime.css'
+import '../styles/react-grid-layout.css'
+import '../styles/react-resizable.css'
+import '../styles/react-select.css'
 
 let validComponents = Map()
 export function initCustomFormComponents (defs = Map()) {
