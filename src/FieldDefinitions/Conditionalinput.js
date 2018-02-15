@@ -141,7 +141,7 @@ export default class Conditionalinput extends Component {
           {!!Icon && <Icon size={20} style={{marginRight: 5, width: 20}} {...iconProps} />}
           <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', ...labelStyle}}>{label}</strong>
         </div>
-        <Portal
+        {this.state.showDialog && <Portal
           isOpened={this.state.showDialog}
           ref={`conditionalInput-${field}-portal`}
           node={document && document.getElementById(`conditionalInput-${field}`)}
@@ -157,7 +157,7 @@ export default class Conditionalinput extends Component {
               <FormBuilder formName={`conditionalInput-${field}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
             </div>
           </Dialog>
-        </Portal>
+        </Portal>}
         <div
           onClick={() => { this.handleToggleDialog(true) }}
           id={`conditionalInput-${field}`}
