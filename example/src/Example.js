@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Map, List} from 'immutable'
-import {FormBuilder} from '../../src/index'
+import {FormBuilder, updateFormValues} from '../../src/index'
 
 export default class Example extends Component {
   state = {
@@ -47,7 +47,7 @@ export default class Example extends Component {
 
   toggleInline = () => this.setState({inline: !this.state.inline})
 
-  handleOnChange = e => this.setState({formValues: this.state.formValues.set(e.target.name, e.target.value)})
+  handleOnChange = e => this.setState({formValues: updateFormValues(e, this.state.formValues)})
 
   formSchema = () => ({
     'Secondary Roles': {
