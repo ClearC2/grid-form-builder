@@ -56,7 +56,7 @@ export default class Conditionalinput extends Component {
       [`low ${field}`]: {
         type: inputType,
         label: `${this.props.opts.label || field}`,
-        dimensions: {x: 3, y: 2, h: 1, w: 6}
+        dimensions: {x: 3, y: 1, h: 1, w: 6}
       },
       [`high ${field}`]: {
         type: inputType,
@@ -119,17 +119,8 @@ export default class Conditionalinput extends Component {
   handleToggleDialog = (newState = !this.state.showDialog) => {
     console.log(newState, 'toggle dialog click logggg')
     this.setState({showDialog: newState})
-    newState ? this.openPortal() : this.closePortal()
+    newState ? this.portal.openPortal() : this.portal.closePortal()
   }
-
-  // onModalOpen = () => {
-  //   const portal = this.refs[`conditionalInput-${this.props.field}-portal`]
-  //   const fieldPos = ReactDom.findDOMNode(this).getBoundingClientRect()
-  //   portal.node.style.position = 'absolute'
-  //   portal.node.style.top = `${fieldPos.top + document.documentElement.scrollTop}px`
-  //   portal.node.style.left = `${fieldPos.left + document.documentElement.scrollLeft}px`
-  //   // console.log(portal, portal.node, portal.node.style, ReactDom.findDOMNode(this).getBoundingClientRect(), fieldPos, 'portal logggs')
-  // }
 
   render = () => {
     const {field, opts = {}} = this.props // formValues = Map(), handleOnChange = () => {},
@@ -143,7 +134,7 @@ export default class Conditionalinput extends Component {
           <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', ...labelStyle}}>{label}</strong>
         </div>
         {this.state.showDialog && <Portal
-          ref={`conditionalInput-${field}-portal`}
+          ref={portal => { this.portal = portal }}
           node={document && document.getElementById(`conditionalInput-${field}`)}
           closeOnOutsideClick
           closeOnEsc
