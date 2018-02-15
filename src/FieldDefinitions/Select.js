@@ -41,7 +41,10 @@ export default class Select extends Component {
         display: 'flex',
         flexGrow: 1,
         height: inline ? 27 : 25,
-        border: inline ? 0 : '1px solid #a0a0a0',
+        borderBottom: '1px solid #a0a0a0',
+        borderTop: inline ? 0 : '1px solid #a0a0a0',
+        borderLeft: inline ? 0 : '1px solid #a0a0a0',
+        borderRight: inline ? 0 : '1px solid #a0a0a0',
         paddingLeft: 5,
         minWidth: 90,
         ...style
