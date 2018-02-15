@@ -55,6 +55,7 @@ export default class Example extends Component {
       type: 'multiselect',
       options: ['Manager', 'Admin', 'Tech', 'Network Operations']
     },
+    'c_registereddate': {label: 'Registered', type: 'conditionalInput', inputType: 'Date'},
     'cfd_reportsto': {
       label: 'Contact',
       dimensions: {x: 6, y: 5, h: 1, w: 6},

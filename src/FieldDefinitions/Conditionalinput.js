@@ -50,18 +50,18 @@ export default class Conditionalinput extends Component {
       'condition': {
         type: 'select',
         options: this.props.conditionOptions,
-        dimensions: {x: 6, y: 0, h: 1, w: 6},
+        dimensions: {x: 1, y: 1, h: 1, w: 6},
         label: 'Condition'
       },
       [`low ${field}`]: {
         type: inputType,
         label: `${this.props.opts.label || field}`,
-        dimensions: {x: 3, y: 1, h: 1, w: 6}
+        dimensions: {x: 1, y: 2, h: 1, w: 6}
       },
       [`high ${field}`]: {
         type: inputType,
         label: doubleFields.includes(condition) ? `${this.props.opts.label || field}` : '',
-        dimensions: {x: 3, y: 2, h: 1, w: 6},
+        dimensions: {x: 1, y: 3, h: 1, w: 6},
         style: {opacity: doubleFields.includes(condition) ? 1 : 0}
       }
     })
@@ -117,9 +117,20 @@ export default class Conditionalinput extends Component {
   }
 
   handleToggleDialog = (newState = !this.state.showDialog) => {
-    console.log(newState, 'toggle dialog click logggg')
+    console.log(newState, document && document.getElementById(`conditionalInput-${this.props.field}`), 'toggle dialog click logggg')
     this.setState({showDialog: newState})
-    newState ? this.portal.openPortal() : this.portal.closePortal()
+    if (newState) {
+      this.onModalOpen()
+    }
+  }
+
+  onModalOpen = () => {
+    const portal = this.refs[`conditionalInput-${this.props.field}-portal`]// this.portal
+    const fieldPos = ReactDom.findDOMNode(this).getBoundingClientRect()
+    console.log(portal,this.portal,  fieldPos)
+    portal.node.style.position = 'absolute'
+    portal.node.style.top = `${fieldPos.top + document.documentElement.scrollTop}px`
+    portal.node.style.left = `${fieldPos.left + document.documentElement.scrollLeft}px`
   }
 
   render = () => {
@@ -135,6 +146,7 @@ export default class Conditionalinput extends Component {
         </div>
         {this.state.showDialog && <Portal
           ref={portal => { this.portal = portal }}
+          // ref={`conditionalInput-${field}-portal`}
           node={document && document.getElementById(`conditionalInput-${field}`)}
           closeOnOutsideClick
           closeOnEsc
@@ -145,7 +157,7 @@ export default class Conditionalinput extends Component {
               <span>&times;</span>
             </button>
             <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%'}}>
-              <FormBuilder formName={`conditionalInput-${field}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
+              <FormBuilder inline formName={`conditionalInput-${field}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
             </div>
           </Dialog>
         </Portal>}
