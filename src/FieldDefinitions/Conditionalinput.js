@@ -119,6 +119,7 @@ export default class Conditionalinput extends Component {
   handleToggleDialog = (newState = !this.state.showDialog) => {
     console.log(newState, 'toggle dialog click logggg')
     this.setState({showDialog: newState})
+    newState ? this.openPortal() : this.closePortal()
   }
 
   // onModalOpen = () => {
