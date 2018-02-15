@@ -117,6 +117,7 @@ export default class Conditionalinput extends Component {
   }
 
   handleToggleDialog = (newState = !this.state.showDialog) => {
+    console.log(newState, 'toggle dialog click logggg')
     this.setState({showDialog: newState})
   }
 
@@ -130,7 +131,6 @@ export default class Conditionalinput extends Component {
   // }
 
   render = () => {
-    console.log(this.state.showDialog, this.state, this.props, 'show Dialog loggggg')
     const {field, opts = {}} = this.props // formValues = Map(), handleOnChange = () => {},
     const {label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}} = opts // , props = {}
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
@@ -142,7 +142,6 @@ export default class Conditionalinput extends Component {
           <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', ...labelStyle}}>{label}</strong>
         </div>
         {this.state.showDialog && <Portal
-          isOpened={this.state.showDialog}
           ref={`conditionalInput-${field}-portal`}
           node={document && document.getElementById(`conditionalInput-${field}`)}
           closeOnOutsideClick
