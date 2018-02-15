@@ -17,12 +17,22 @@ export default class Conditionalinput extends Component {
   }
 
   componentDidMount () {
-    this.setState({formValues: this.state.formValues.set('condition', this.props.conditionOptions[0]), doubleFields: Set(this.props.doubleFields)})// sets a default condition value
+    this.setState({
+      formValues: this.state.formValues.set('condition', this.props.conditionOptions[0]),
+      doubleFields: Set(this.props.doubleFields)
+    })// sets a default condition value
   }
 
   componentWillReceiveProps (props) {
     if (props.formValues.get(this.props.field, '') === '') {
-      this.setState({formValues: Map({condition: this.props.conditionOptions[0], doubleFields: Set(this.props.doubleFields), [`low ${this.props.field}`]: '', [`low ${this.props.field}`]: ''})})
+      this.setState({
+        formValues: Map({
+          condition: this.props.conditionOptions[0],
+          doubleFields: Set(this.props.doubleFields),
+          [`low ${this.props.field}`]: '',
+          [`high ${this.props.field}`]: ''
+        })
+      })
     }
   }
 
@@ -32,10 +42,28 @@ export default class Conditionalinput extends Component {
     const condition = formValues.get('condition')
     const inputType = this.props.opts.inputType || 'input'
     let schema = Map({
-      [field]: {label: `${this.props.opts.label || field} condition:`, type: 'Header', dimensions: {x: 0, y: 0, h: 1, w: 6}},
-      'condition': {type: 'select', options: this.props.conditionOptions, dimensions: {x: 6, y: 0, h: 1, w: 6}, label: 'Condition'},
-      [`low ${field}`]: {type: inputType, label: `${this.props.opts.label || field}`, dimensions: {x: 3, y: 0, h: 1, w: 6}},
-      [`high ${field}`]: {type: inputType, label: doubleFields.includes(condition) ? `${this.props.opts.label || field}` : '', dimensions: {x: 3, y: 3, h: 1, w: 6}, style: {opacity: doubleFields.includes(condition) ? 1 : 0}}
+      [field]: {
+        label: `${this.props.opts.label || field} condition:`,
+        type: 'Header',
+        dimensions: {x: 0, y: 0, h: 1, w: 6}
+      },
+      'condition': {
+        type: 'select',
+        options: this.props.conditionOptions,
+        dimensions: {x: 6, y: 0, h: 1, w: 6},
+        label: 'Condition'
+      },
+      [`low ${field}`]: {
+        type: inputType,
+        label: `${this.props.opts.label || field}`,
+        dimensions: {x: 3, y: 0, h: 1, w: 6}
+      },
+      [`high ${field}`]: {
+        type: inputType,
+        label: doubleFields.includes(condition) ? `${this.props.opts.label || field}` : '',
+        dimensions: {x: 3, y: 3, h: 1, w: 6},
+        style: {opacity: doubleFields.includes(condition) ? 1 : 0}
+      }
     })
     if (inputType === 'Multiselect') {
       schema = schema.set('')
@@ -92,14 +120,14 @@ export default class Conditionalinput extends Component {
     this.setState({showDialog: newState})
   }
 
-  onModalOpen = () => {
-    const portal = this.refs[`conditionalInput-${this.props.field}-portal`]
-    const fieldPos = ReactDom.findDOMNode(this).getBoundingClientRect()
-    portal.node.style.position = 'absolute'
-    portal.node.style.top = `${fieldPos.top + document.documentElement.scrollTop}px`
-    portal.node.style.left = `${fieldPos.left + document.documentElement.scrollLeft}px`
-    // console.log(portal, portal.node, portal.node.style, ReactDom.findDOMNode(this).getBoundingClientRect(), fieldPos, 'portal logggs')
-  }
+  // onModalOpen = () => {
+  //   const portal = this.refs[`conditionalInput-${this.props.field}-portal`]
+  //   const fieldPos = ReactDom.findDOMNode(this).getBoundingClientRect()
+  //   portal.node.style.position = 'absolute'
+  //   portal.node.style.top = `${fieldPos.top + document.documentElement.scrollTop}px`
+  //   portal.node.style.left = `${fieldPos.left + document.documentElement.scrollLeft}px`
+  //   // console.log(portal, portal.node, portal.node.style, ReactDom.findDOMNode(this).getBoundingClientRect(), fieldPos, 'portal logggs')
+  // }
 
   render = () => {
     const {field, opts = {}} = this.props // formValues = Map(), handleOnChange = () => {},
@@ -112,7 +140,14 @@ export default class Conditionalinput extends Component {
           {!!Icon && <Icon size={20} style={{marginRight: 5, width: 20}} {...iconProps} />}
           <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', ...labelStyle}}>{label}</strong>
         </div>
-        <Portal isOpened={this.state.showDialog} ref={`conditionalInput-${field}-portal`} closeOnOutsideClick closeOnEsc onOpen={this.onModalOpen} onClose={() => { this.handleToggleDialog(false) }}>
+        <Portal
+          isOpened={this.state.showDialog}
+          ref={`conditionalInput-${field}-portal`}
+          node={document && document.getElementById(`conditionalInput-${field}`)}
+          closeOnOutsideClick
+          closeOnEsc
+          onClose={() => { this.handleToggleDialog(false) }}
+        >
           <Dialog size={{width: '430px', height: '180px', overflow: 'hidden'}} style={{backgroundColor: '#f5f5f5', border: '2px solid #36a9e1'}}>
             <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => { this.handleToggleDialog(false) }}>
               <span>&times;</span>
@@ -122,7 +157,23 @@ export default class Conditionalinput extends Component {
             </div>
           </Dialog>
         </Portal>
-        <div onClick={() => { this.handleToggleDialog(true) }} style={{display: 'flex', flexGrow: 1, textAlign: 'center', whiteSpace: 'nowrap', paddingLeft: 5, border: 0, backgroundColor: 'transparent', borderBottom: '1px solid #a0a0a0', minWidth: 90, color: '#1e8fc6', ...style}}>
+        <div
+          onClick={() => { this.handleToggleDialog(true) }}
+          id={`conditionalInput-${field}`}
+          style={{
+            display: 'flex',
+            flexGrow: 1,
+            textAlign: 'center',
+            whiteSpace: 'nowrap',
+            paddingLeft: 5,
+            border: 0,
+            backgroundColor: 'transparent',
+            borderBottom: '1px solid #a0a0a0',
+            minWidth: 90,
+            color: '#1e8fc6',
+            ...style
+          }}
+        >
           {hideDisplay ? '' : 'Values...'}
         </div>
       </div>
