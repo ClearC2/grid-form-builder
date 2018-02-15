@@ -149,7 +149,7 @@ export default class Conditionalinput extends Component {
           onClose={() => { this.handleToggleDialog(false) }}
         >
           <Dialog size={{width: '430px', height: '180px', overflow: 'hidden'}} style={{backgroundColor: '#f5f5f5', border: '2px solid #36a9e1'}}>
-            <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => { this.handleToggleDialog(false) }}>
+            <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} >
               <span>&times;</span>
             </button>
             <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%'}}>
