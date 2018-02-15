@@ -121,11 +121,6 @@ export default class Conditionalinput extends Component {
     this.setState({showDialog: newState})
   }
 
-  handleToggleDialog2 = (newState = !this.state.showDialog) => {
-    console.log(newState, 'toggle2 dialog click logggg')
-    this.setState({showDialog: newState})
-  }
-
   // onModalOpen = () => {
   //   const portal = this.refs[`conditionalInput-${this.props.field}-portal`]
   //   const fieldPos = ReactDom.findDOMNode(this).getBoundingClientRect()
@@ -154,7 +149,7 @@ export default class Conditionalinput extends Component {
           onClose={() => { this.handleToggleDialog(false) }}
         >
           <Dialog size={{width: '430px', height: '180px', overflow: 'hidden'}} style={{backgroundColor: '#f5f5f5', border: '2px solid #36a9e1'}}>
-            <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} >
+            <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
               <span>&times;</span>
             </button>
             <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%'}}>
@@ -163,7 +158,7 @@ export default class Conditionalinput extends Component {
           </Dialog>
         </Portal>}
         <div
-          onClick={() => { this.handleToggleDialog2(true) }}
+          onClick={() => { this.handleToggleDialog(true) }}
           id={`conditionalInput-${field}`}
           style={{
             display: 'flex',
