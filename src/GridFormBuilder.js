@@ -92,8 +92,47 @@ export default class FormBuilder extends Component {
         dimensions.h = options.size ? options.size : options.length ? options.length : 1
       }
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
-      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0) dateFields.unshift(<Component inline={inline} draggable={draggable} key={field} handleOnChange={handleOnChange} formValues={formValues} prepops={prepops.get(formSchema[field].prepops)} field={field} opts={formSchema[field]} defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}} />)
-      else normalFields.push(<Component inline={inline} draggable={draggable} key={field} handleOnChange={handleOnChange} formValues={formValues} prepops={prepops.get(formSchema[field].prepops)} field={field} opts={formSchema[field]} defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}} />)
+      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0) {
+        dateFields.unshift(
+          <Component
+            inline={inline}
+            draggable={draggable}
+            key={field}
+            handleOnChange={handleOnChange}
+            formValues={formValues}
+            prepops={prepops.get(formSchema[field].prepops)}
+            field={field} opts={formSchema[field]}
+            defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}}
+          />
+        )
+      } else if (type === 'Customcomponent') {
+        normalFields.push(
+          <Component
+            formSchema={formSchema}
+            inline={inline}
+            draggable={draggable}
+            key={field}
+            handleOnChange={handleOnChange}
+            formValues={formValues}
+            prepops={prepops.get(formSchema[field].prepops)}
+            field={field} opts={formSchema[field]}
+            defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}}
+          />
+        )
+      } else {
+        normalFields.push(
+          <Component
+            inline={inline}
+            draggable={draggable}
+            key={field}
+            handleOnChange={handleOnChange}
+            formValues={formValues}
+            prepops={prepops.get(formSchema[field].prepops)}
+            field={field} opts={formSchema[field]}
+            defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}}
+          />
+        )
+      }
     })
     return (
       <div style={{height: '100%', minWidth: 350}}>
