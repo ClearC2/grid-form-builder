@@ -56,12 +56,12 @@ export default class Conditionalinput extends Component {
       [`low ${field}`]: {
         type: inputType,
         label: `${this.props.opts.label || field}`,
-        dimensions: {x: 3, y: 0, h: 1, w: 6}
+        dimensions: {x: 3, y: 2, h: 1, w: 6}
       },
       [`high ${field}`]: {
         type: inputType,
         label: doubleFields.includes(condition) ? `${this.props.opts.label || field}` : '',
-        dimensions: {x: 3, y: 3, h: 1, w: 6},
+        dimensions: {x: 3, y: 2, h: 1, w: 6},
         style: {opacity: doubleFields.includes(condition) ? 1 : 0}
       }
     })
@@ -117,6 +117,7 @@ export default class Conditionalinput extends Component {
   }
 
   handleToggleDialog = (newState = !this.state.showDialog) => {
+    console.log(newState, 'toggle dialog click logggg')
     this.setState({showDialog: newState})
   }
 
@@ -130,7 +131,6 @@ export default class Conditionalinput extends Component {
   // }
 
   render = () => {
-    console.log(this.state.showDialog, this.state, this.props, 'show Dialog loggggg')
     const {field, opts = {}} = this.props // formValues = Map(), handleOnChange = () => {},
     const {label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}} = opts // , props = {}
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
@@ -141,8 +141,7 @@ export default class Conditionalinput extends Component {
           {!!Icon && <Icon size={20} style={{marginRight: 5, width: 20}} {...iconProps} />}
           <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', ...labelStyle}}>{label}</strong>
         </div>
-        <Portal
-          isOpened={this.state.showDialog}
+        {this.state.showDialog && <Portal
           ref={`conditionalInput-${field}-portal`}
           node={document && document.getElementById(`conditionalInput-${field}`)}
           closeOnOutsideClick
@@ -150,14 +149,14 @@ export default class Conditionalinput extends Component {
           onClose={() => { this.handleToggleDialog(false) }}
         >
           <Dialog size={{width: '430px', height: '180px', overflow: 'hidden'}} style={{backgroundColor: '#f5f5f5', border: '2px solid #36a9e1'}}>
-            <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => { this.handleToggleDialog(false) }}>
+            <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} >
               <span>&times;</span>
             </button>
             <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%'}}>
               <FormBuilder formName={`conditionalInput-${field}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
             </div>
           </Dialog>
-        </Portal>
+        </Portal>}
         <div
           onClick={() => { this.handleToggleDialog(true) }}
           id={`conditionalInput-${field}`}
