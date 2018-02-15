@@ -44,9 +44,11 @@ export default class Input extends Component {
         display: 'flex',
         flexGrow: 1,
         paddingLeft: 5,
-        border: inline ? 0 : '1px solid #a0a0a0',
         backgroundColor: 'transparent',
         borderBottom: '1px solid #a0a0a0',
+        borderTop: inline ? 0 : '1px solid #a0a0a0',
+        borderLeft: inline ? 0 : '1px solid #a0a0a0',
+        borderRight: inline ? 0 : '1px solid #a0a0a0',
         minWidth: 90,
         ...style
       }

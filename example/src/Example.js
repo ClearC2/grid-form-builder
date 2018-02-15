@@ -4,8 +4,11 @@ import {FormBuilder} from '../../src/index'
 
 export default class Example extends Component {
   state = {
-    formValues: Map()
+    formValues: Map(),
+    inline: false
   }
+
+  toggleInline = () => this.setState({inline: !this.state.inline})
 
   handleOnChange = e => this.setState({formValues: this.state.formValues.set(e.target.name, e.target.value)})
 
@@ -179,11 +182,19 @@ export default class Example extends Component {
     }
   })
 
-  render = () => <FormBuilder
-    formName='ExampleForm'
-    formSchema={this.formSchema()}
-    formValues={this.state.formValues}
-    handleOnChange={this.handleOnChange}
-    draggable
-  />
+  render = () => (
+    <div style={{width: '100%', height: '100%'}}>
+      <div style={{width: '100%', height: 30, marginTop: 20, marginBottom: 20, display: 'flex', justifyContent: 'center'}}>
+        <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
+      </div>
+      <FormBuilder
+        formName='ExampleForm'
+        formSchema={this.formSchema()}
+        formValues={this.state.formValues}
+        handleOnChange={this.handleOnChange}
+        draggable
+        inline={this.state.inline}
+      />
+    </div>
+  )
 }
