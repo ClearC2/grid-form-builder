@@ -4,11 +4,6 @@ import {Provider} from 'react-redux'
 import store from './store'
 import Example from './Example'
 
-import 'react-grid-layout/css/styles.css'
-import 'react-resizable/css/styles.css'
-import 'react-select/dist/react-select.css'
-import 'react-datetime/css/react-datetime.css'
-
 render(
   (
     <Provider store={store}>

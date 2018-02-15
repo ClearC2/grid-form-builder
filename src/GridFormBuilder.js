@@ -16,8 +16,6 @@ import Listselect from './FieldDefinitions/Listselect'
 import Conditionalinput from './FieldDefinitions/Conditionalinput'
 import Multiselect from './FieldDefinitions/Multiselect'
 
-import '../styles/main.scss'
-
 let validComponents = Map()
 export function initCustomFormComponents (defs = Map()) {
   defs = fromJS(defs)
