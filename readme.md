@@ -20,7 +20,7 @@ import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import 'react-select/dist/react-select.css'
 import 'react-datetime/css/react-datetime.css'
-import 'grid-form-builder/styles/main.scss'
+import 'grid-form-builder/styles/grid-form-builder.css'
 ```
 
 * Import the reducer from grid-form-builder and add it to your project's combineReducers method. (example below)
