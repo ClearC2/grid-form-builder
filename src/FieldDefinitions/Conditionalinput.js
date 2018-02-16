@@ -117,7 +117,6 @@ export default class Conditionalinput extends Component {
   }
 
   handleToggleDialog = (newState = !this.state.showDialog) => {
-    console.log(newState, document && document.getElementById(`conditionalInput-${this.props.field}-id`), 'toggle dialog click logggg')
     this.setState({showDialog: newState})
     this.onModalOpen()
   }
@@ -132,7 +131,6 @@ export default class Conditionalinput extends Component {
     const {label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}} = opts // , props = {}
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
     const hideDisplay = (this.props.formValues.getIn([field, 'condition'], '') === '' && this.props.formValues.getIn([field, 'values', 0], '') === '')
-    console.log(document && document.getElementById(`conditionalInput-${field}-id`), 'element loggg')
     return (
       <div style={{display: 'flex', flex: 1, flexDirection: 'row'}}>
         <div style={{display: 'flex', flexDirection: 'row', minWidth: 150, height: 15, marginTop: 4, ...labelStyle}}>
