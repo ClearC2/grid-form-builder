@@ -143,8 +143,8 @@ export default class Conditionalinput extends Component {
               backgroundColor: '#f5f5f5',
               border: '2px solid #36a9e1',
               position: 'fixed',
-              top: `${this.state.fieldPos.top}px`,
-              left: `${this.state.fieldPos.left}px`,
+              top: `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
+              left: `${this.state.fieldPos.left + 100}px`,
               bottom: '100px'
             }}
             enableResizing={true}
