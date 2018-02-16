@@ -50,7 +50,7 @@ export default class Conditionalinput extends Component {
       'condition': {
         type: 'select',
         options: this.props.conditionOptions,
-        dimensions: {x: 2, y: 1, h: 1, w: 6},
+        dimensions: {x: 3, y: 1, h: 1, w: 6},
         label: 'Condition'
       },
       [`low ${field}`]: {
