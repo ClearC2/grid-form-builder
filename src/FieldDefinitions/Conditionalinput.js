@@ -50,18 +50,18 @@ export default class Conditionalinput extends Component {
       'condition': {
         type: 'select',
         options: this.props.conditionOptions,
-        dimensions: {x: 1, y: 1, h: 1, w: 6},
+        dimensions: {x: 2, y: 1, h: 1, w: 6},
         label: 'Condition'
       },
       [`low ${field}`]: {
         type: inputType,
         label: `${this.props.opts.label || field}`,
-        dimensions: {x: 1, y: 2, h: 1, w: 6}
+        dimensions: {x: 3, y: 2, h: 1, w: 6}
       },
       [`high ${field}`]: {
         type: inputType,
         label: doubleFields.includes(condition) ? `${this.props.opts.label || field}` : '',
-        dimensions: {x: 1, y: 3, h: 1, w: 6},
+        dimensions: {x: 3, y: 3, h: 1, w: 6},
         style: {opacity: doubleFields.includes(condition) ? 1 : 0}
       }
     })
@@ -135,19 +135,22 @@ export default class Conditionalinput extends Component {
     console.log(document && document.getElementById(`conditionalInput-${field}-id`), 'element loggg')
     return (
       <div style={{display: 'flex', flex: 1, flexDirection: 'row'}}>
-        <div style={{display: 'flex', flexDirection: 'row', width: 150, minWidth: 150, height: 15, marginTop: 4, ...labelStyle}}>
+        <div style={{display: 'flex', flexDirection: 'row', minWidth: 150, height: 15, marginTop: 4, ...labelStyle}}>
           {!!Icon && <Icon size={20} style={{marginRight: 5, width: 20}} {...iconProps} />}
           <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', ...labelStyle}}>{label}</strong>
         </div>
         {this.state.showDialog &&
-          <Dialog ref={`conditionalInput-${field}-dialog`} size={{width: '430px', height: '180px', overflow: 'hidden'}}
+          <Dialog ref={`conditionalInput-${field}-dialog`} size={{width: '40%', height: '180px'}}
             style={{
               backgroundColor: '#f5f5f5',
               border: '2px solid #36a9e1',
               position: 'fixed',
-              top: this.state.fieldPos.top,
-              left: this.state.fieldPos.left + 100
+              top: `${this.state.fieldPos.top}px`,
+              left: `${this.state.fieldPos.left}px`,
+              bottom: '100px'
             }}
+            enableResizing={true}
+            disableDragging={false}
           >
             <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
               <span>&times;</span>
