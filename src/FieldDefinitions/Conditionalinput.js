@@ -117,20 +117,14 @@ export default class Conditionalinput extends Component {
   }
 
   handleToggleDialog = (newState = !this.state.showDialog) => {
-    console.log(newState, document && document.getElementById(`conditionalInput-${this.props.field}`), 'toggle dialog click logggg')
+    console.log(newState, document && document.getElementById(`conditionalInput-${this.props.field}-id`), 'toggle dialog click logggg')
     this.setState({showDialog: newState})
-    if (newState) {
-      this.onModalOpen()
-    }
+    this.onModalOpen()
   }
 
   onModalOpen = () => {
-    const portal = this.refs[`conditionalInput-${this.props.field}-portal`]// this.portal
     const fieldPos = ReactDom.findDOMNode(this).getBoundingClientRect()
-    console.log(portal,this.portal,  fieldPos)
-    portal.node.style.position = 'absolute'
-    portal.node.style.top = `${fieldPos.top + document.documentElement.scrollTop}px`
-    portal.node.style.left = `${fieldPos.left + document.documentElement.scrollLeft}px`
+    this.setState({fieldPos: fieldPos})
   }
 
   render = () => {
@@ -138,32 +132,33 @@ export default class Conditionalinput extends Component {
     const {label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}} = opts // , props = {}
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
     const hideDisplay = (this.props.formValues.getIn([field, 'condition'], '') === '' && this.props.formValues.getIn([field, 'values', 0], '') === '')
+    console.log(document && document.getElementById(`conditionalInput-${field}-id`), 'element loggg')
     return (
       <div style={{display: 'flex', flex: 1, flexDirection: 'row'}}>
         <div style={{display: 'flex', flexDirection: 'row', width: 150, minWidth: 150, height: 15, marginTop: 4, ...labelStyle}}>
           {!!Icon && <Icon size={20} style={{marginRight: 5, width: 20}} {...iconProps} />}
           <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', ...labelStyle}}>{label}</strong>
         </div>
-        {this.state.showDialog && <Portal
-          ref={portal => { this.portal = portal }}
-          // ref={`conditionalInput-${field}-portal`}
-          node={document && document.getElementById(`conditionalInput-${field}`)}
-          closeOnOutsideClick
-          closeOnEsc
-          onClose={() => { this.handleToggleDialog(false) }}
-        >
-          <Dialog size={{width: '430px', height: '180px', overflow: 'hidden'}} style={{backgroundColor: '#f5f5f5', border: '2px solid #36a9e1'}}>
+        {this.state.showDialog &&
+          <Dialog ref={`conditionalInput-${field}-dialog`} size={{width: '430px', height: '180px', overflow: 'hidden'}}
+            style={{
+              backgroundColor: '#f5f5f5',
+              border: '2px solid #36a9e1',
+              position: 'fixed',
+              top: this.state.fieldPos.top,
+              left: this.state.fieldPos.left + 100
+            }}
+          >
             <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
               <span>&times;</span>
             </button>
             <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%'}}>
               <FormBuilder inline formName={`conditionalInput-${field}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
             </div>
-          </Dialog>
-        </Portal>}
+          </Dialog>}
         <div
           onClick={() => { this.handleToggleDialog(true) }}
-          id={`conditionalInput-${field}`}
+          id={`conditionalInput-${field}-id`}
           style={{
             display: 'flex',
             flexGrow: 1,
