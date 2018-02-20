@@ -13,9 +13,10 @@ export default class Datetime extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   render = () => {
-    const {inline, field, formValues = Map(), opts = {}} = this.props
-    const {label = field, labelStyle = {}, Icon = null, iconProps = {}, props = {}} = opts
-    let value = formValues.get(field, '')
+    const {inline, formValues = Map(), config = {}} = this.props
+    const {labelStyle = {}, name = null} = config
+    if (!name) return null
+    const {label = name} = config
 
     const styles = {
       container: {
@@ -55,10 +56,9 @@ export default class Datetime extends Component {
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
-          {!!Icon && <Icon size={20} style={styles.icon} {...iconProps} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <DateTime onMouseDown={this.onMouseDown} value={value} onChange={this.handleChange} dateFormat='M/D/YYYY' className={className} {...props} />
+        <DateTime onMouseDown={this.onMouseDown} value={formValues.get(name, '')} onChange={this.handleChange} dateFormat='M/D/YYYY' className={className} />
       </div>
     )
   }

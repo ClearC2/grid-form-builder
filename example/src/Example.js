@@ -95,7 +95,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 5, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 5, 'h': 5, 'w': 6},
               'config': {
                 'name': 'listselecttest',
                 'label': 'List Select',
@@ -137,7 +137,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 6, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 10, 'h': 1, 'w': 6},
               'config': {
                 'name': 'multicheckboxtest',
                 'label': 'Multi-Checkbox',
@@ -171,7 +171,7 @@ export default class Example extends Component {
             },
             // {
             //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 7, 'h': 1, 'w': 6},
+            //   'dimensions': {'x': 0, 'y': 11, 'h': 1, 'w': 6},
             //   'config': {
             //     'name': 'multiselecttest',
             //     'label': 'Multiselect',
@@ -205,7 +205,7 @@ export default class Example extends Component {
             // },
             // {
             //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 8, 'h': 1, 'w': 6},
+            //   'dimensions': {'x': 0, 'y': 12, 'h': 1, 'w': 6},
             //   'config': {
             //     'name': 'radiotest',
             //     'label': 'Radio',
@@ -239,7 +239,7 @@ export default class Example extends Component {
             // },
             // {
             //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 9, 'h': 1, 'w': 6},
+            //   'dimensions': {'x': 0, 'y': 13, 'h': 1, 'w': 6},
             //   'config': {
             //     'name': 'radiotest',
             //     'label': 'Radio',
@@ -273,7 +273,7 @@ export default class Example extends Component {
             // },
             // {
             //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 10, 'h': 1, 'w': 6},
+            //   'dimensions': {'x': 0, 'y': 14, 'h': 1, 'w': 6},
             //   'config': {
             //     'name': 'textareatest',
             //     'label': 'Textarea',
