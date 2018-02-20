@@ -84,10 +84,6 @@ export default class FormBuilder extends Component {
       let {type = 'input'} = config
       type = this.uppercaseFirstLetter(type)
       if (type === 'Textarea' && dimensions.h < 4) dimensions.h = 4
-      if (type === 'Radio') {
-        const {options = List()} = formSchema[field]
-        dimensions.h = options.size ? options.size : options.length ? options.length : 1
-      }
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
       if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0) {
         dateFields.unshift(

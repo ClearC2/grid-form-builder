@@ -86,7 +86,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 4, 'h': 1, 'w': 6},
+              'dimensions': {'x': 6, 'y': 3, 'h': 1, 'w': 6},
               'config': {
                 'name': 'datetimetest',
                 'label': 'Date Time',
@@ -171,7 +171,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 14, 'h': 1, 'w': 6},
+              'dimensions': {'x': 6, 'y': 5, 'h': 1, 'w': 6},
               'config': {
                 'name': 'multiselecttest',
                 'label': 'Multiselect',
@@ -203,83 +203,49 @@ export default class Example extends Component {
                 }
               }
             },
-            // {
-            //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 17, 'h': 1, 'w': 6},
-            //   'config': {
-            //     'name': 'radiotest',
-            //     'label': 'Radio',
-            //     'type': 'radio',
-            //     'keyword': {
-            //       'category': 'TASKS',
-            //       'options': [
-            //         {
-            //           'label': 'Contract Signing',
-            //           'value': 'Contract Signing'
-            //         },
-            //         {
-            //           'label': 'Customer Service',
-            //           'value': 'Customer Service'
-            //         },
-            //         {
-            //           'label': 'Demonstration',
-            //           'value': 'Demonstration'
-            //         },
-            //         {
-            //           'label': 'Executive Meeting',
-            //           'value': 'Executive Meeting'
-            //         },
-            //         {
-            //           'label': 'Initial Meeting',
-            //           'value': 'Initial Meeting'
-            //         }
-            //       ]
-            //     }
-            //   }
-            // },
-            // {
-            //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 18, 'h': 1, 'w': 6},
-            //   'config': {
-            //     'name': 'radiotest',
-            //     'label': 'Radio',
-            //     'type': 'radio',
-            //     'keyword': {
-            //       'category': 'TASKS',
-            //       'options': [
-            //         {
-            //           'label': 'Contract Signing',
-            //           'value': 'Contract Signing'
-            //         },
-            //         {
-            //           'label': 'Customer Service',
-            //           'value': 'Customer Service'
-            //         },
-            //         {
-            //           'label': 'Demonstration',
-            //           'value': 'Demonstration'
-            //         },
-            //         {
-            //           'label': 'Executive Meeting',
-            //           'value': 'Executive Meeting'
-            //         },
-            //         {
-            //           'label': 'Initial Meeting',
-            //           'value': 'Initial Meeting'
-            //         }
-            //       ]
-            //     }
-            //   }
-            // },
-            // {
-            //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 19, 'h': 1, 'w': 6},
-            //   'config': {
-            //     'name': 'textareatest',
-            //     'label': 'Textarea',
-            //     'type': 'textarea'
-            //   }
-            // }
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 10, 'h': 4, 'w': 6},
+              'config': {
+                'name': 'radiotest',
+                'label': 'Radio',
+                'type': 'radio',
+                'keyword': {
+                  'category': 'TASKS',
+                  'options': [
+                    {
+                      'label': 'Contract Signing',
+                      'value': 'Contract Signing'
+                    },
+                    {
+                      'label': 'Customer Service',
+                      'value': 'Customer Service'
+                    },
+                    {
+                      'label': 'Demonstration',
+                      'value': 'Demonstration'
+                    },
+                    {
+                      'label': 'Executive Meeting',
+                      'value': 'Executive Meeting'
+                    },
+                    {
+                      'label': 'Initial Meeting',
+                      'value': 'Initial Meeting'
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 14, 'h': 4, 'w': 6},
+              'config': {
+                'name': 'textareatest',
+                'label': 'Textarea',
+                'type': 'textarea'
+              }
+            }
           ]
         },
         'id': 'FDC58F0F0B2099E61BE23AB6110572E1',

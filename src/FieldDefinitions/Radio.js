@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
-import {Map, List} from 'immutable'
+import {Map} from 'immutable'
 
 export default class Radio extends Component {
   render = () => {
-    const {inline, field, formValues = Map(), handleOnChange = () => {}, opts = {}} = this.props
-    const value = formValues.get(field, '')
-    const {options = List(), label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}, props = {}, boxed = false} = opts
+    const {inline, config = {}, handleOnChange = () => {}, formValues = Map()} = this.props
+    const {labelStyle = {}, style = {}, name = null} = config
+    if (!name) return null
+    const {label = name, keyword = {}, boxed} = config
+    const {options = []} = keyword
     const boxStyle = !boxed ? {} : {border: '1px solid lightgrey', backgroundColor: '#f5f5f5'}
 
     const styles = {
@@ -43,10 +45,6 @@ export default class Radio extends Component {
         marginLeft: inline ? 0 : 10,
         marginTop: inline ? 10 : 5
       },
-      icon: {
-        marginRight: 5,
-        width: 20
-      },
       input: {
         display: 'flex',
         marginRight: 5,
@@ -58,15 +56,14 @@ export default class Radio extends Component {
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
-          {!!Icon && <Icon size={20} style={styles.icon} {...iconProps} />}
           <strong style={styles.label}>{label}</strong>
         </div>
         <div style={styles.optionsContainer}>
-          {options.map(option => {
+          {options.map((option, i) => {
             return (
-              <label key={option} style={styles.label}>
-                <input className='radio-grid-input' onChange={handleOnChange} style={styles.input} type='radio' name={field} value={option} checked={option.toLowerCase() === value.toLowerCase()} {...props} />
-                {option}
+              <label key={i} style={styles.label}>
+                <input className='radio-grid-input' onChange={handleOnChange} style={styles.input} type='radio' name={name} value={option.value} checked={option.value.toLowerCase() === formValues.get(name, '').toLowerCase()} />
+                {option.label ? option.label : option.value}
               </label>
             )
           })}
