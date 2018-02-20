@@ -38,10 +38,6 @@ export default class Input extends Component {
         background: 'transparent',
         ...labelStyle
       },
-      icon: {
-        marginRight: 5,
-        width: 20
-      },
       input: {
         display: 'flex',
         flexGrow: 1,

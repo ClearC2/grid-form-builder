@@ -44,10 +44,6 @@ export default class Date extends Component {
         fontSize: inline ? '10pt' : '8pt',
         background: 'transparent',
         ...labelStyle
-      },
-      icon: {
-        marginRight: 5,
-        width: 20
       }
     }
 

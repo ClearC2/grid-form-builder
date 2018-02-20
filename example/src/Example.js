@@ -137,7 +137,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 10, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 10, 'h': 4, 'w': 6},
               'config': {
                 'name': 'multicheckboxtest',
                 'label': 'Multi-Checkbox',
@@ -169,77 +169,43 @@ export default class Example extends Component {
                 }
               }
             },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 14, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'multiselecttest',
+                'label': 'Multiselect',
+                'type': 'multiselect',
+                'keyword': {
+                  'category': 'TASKS',
+                  'options': [
+                    {
+                      'label': 'Contract Signing',
+                      'value': 'Contract Signing'
+                    },
+                    {
+                      'label': 'Customer Service',
+                      'value': 'Customer Service'
+                    },
+                    {
+                      'label': 'Demonstration',
+                      'value': 'Demonstration'
+                    },
+                    {
+                      'label': 'Executive Meeting',
+                      'value': 'Executive Meeting'
+                    },
+                    {
+                      'label': 'Initial Meeting',
+                      'value': 'Initial Meeting'
+                    }
+                  ]
+                }
+              }
+            },
             // {
             //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 11, 'h': 1, 'w': 6},
-            //   'config': {
-            //     'name': 'multiselecttest',
-            //     'label': 'Multiselect',
-            //     'type': 'multiselect',
-            //     'keyword': {
-            //       'category': 'TASKS',
-            //       'options': [
-            //         {
-            //           'label': 'Contract Signing',
-            //           'value': 'Contract Signing'
-            //         },
-            //         {
-            //           'label': 'Customer Service',
-            //           'value': 'Customer Service'
-            //         },
-            //         {
-            //           'label': 'Demonstration',
-            //           'value': 'Demonstration'
-            //         },
-            //         {
-            //           'label': 'Executive Meeting',
-            //           'value': 'Executive Meeting'
-            //         },
-            //         {
-            //           'label': 'Initial Meeting',
-            //           'value': 'Initial Meeting'
-            //         }
-            //       ]
-            //     }
-            //   }
-            // },
-            // {
-            //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 12, 'h': 1, 'w': 6},
-            //   'config': {
-            //     'name': 'radiotest',
-            //     'label': 'Radio',
-            //     'type': 'radio',
-            //     'keyword': {
-            //       'category': 'TASKS',
-            //       'options': [
-            //         {
-            //           'label': 'Contract Signing',
-            //           'value': 'Contract Signing'
-            //         },
-            //         {
-            //           'label': 'Customer Service',
-            //           'value': 'Customer Service'
-            //         },
-            //         {
-            //           'label': 'Demonstration',
-            //           'value': 'Demonstration'
-            //         },
-            //         {
-            //           'label': 'Executive Meeting',
-            //           'value': 'Executive Meeting'
-            //         },
-            //         {
-            //           'label': 'Initial Meeting',
-            //           'value': 'Initial Meeting'
-            //         }
-            //       ]
-            //     }
-            //   }
-            // },
-            // {
-            //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 13, 'h': 1, 'w': 6},
+            //   'dimensions': {'x': 0, 'y': 17, 'h': 1, 'w': 6},
             //   'config': {
             //     'name': 'radiotest',
             //     'label': 'Radio',
@@ -273,7 +239,41 @@ export default class Example extends Component {
             // },
             // {
             //   'type': 'field',
-            //   'dimensions': {'x': 0, 'y': 14, 'h': 1, 'w': 6},
+            //   'dimensions': {'x': 0, 'y': 18, 'h': 1, 'w': 6},
+            //   'config': {
+            //     'name': 'radiotest',
+            //     'label': 'Radio',
+            //     'type': 'radio',
+            //     'keyword': {
+            //       'category': 'TASKS',
+            //       'options': [
+            //         {
+            //           'label': 'Contract Signing',
+            //           'value': 'Contract Signing'
+            //         },
+            //         {
+            //           'label': 'Customer Service',
+            //           'value': 'Customer Service'
+            //         },
+            //         {
+            //           'label': 'Demonstration',
+            //           'value': 'Demonstration'
+            //         },
+            //         {
+            //           'label': 'Executive Meeting',
+            //           'value': 'Executive Meeting'
+            //         },
+            //         {
+            //           'label': 'Initial Meeting',
+            //           'value': 'Initial Meeting'
+            //         }
+            //       ]
+            //     }
+            //   }
+            // },
+            // {
+            //   'type': 'field',
+            //   'dimensions': {'x': 0, 'y': 19, 'h': 1, 'w': 6},
             //   'config': {
             //     'name': 'textareatest',
             //     'label': 'Textarea',

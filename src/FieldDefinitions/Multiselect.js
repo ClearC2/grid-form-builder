@@ -3,12 +3,15 @@ import {List, fromJS} from 'immutable'
 import ReactSelect from 'react-select'
 
 export default class Multiselect extends Component {
-  state = {
-    fieldValues: [],
-    builtOptions: []
-  }
-  componentDidMount () {
-    this.setState({builtOptions: this.buildOptions(this.props.opts.options)})
+  constructor (props) {
+    super(props)
+    const {config = {}} = props
+    const {keyword = {}} = config
+    const {options = []} = keyword
+    this.state = {
+      fieldValues: [],
+      builtOptions: options
+    }
   }
 
   onChange = (e) => {
@@ -20,17 +23,11 @@ export default class Multiselect extends Component {
     }
   }
 
-  buildOptions = (opts) => {
-    let builtOpts = []
-    opts.forEach(opt => {
-      builtOpts.push({value: opt, label: opt})
-    })
-    return builtOpts
-  }
-
   render = () => {
-    const {inline, field, opts = {}} = this.props
-    const {label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}, props = {}} = opts
+    const {inline, config = {}} = this.props
+    const {labelStyle = {}, style = {}, name = null} = config
+    if (!name) return null
+    const {label = name} = config
 
     const styles = {
       container: {
@@ -59,10 +56,6 @@ export default class Multiselect extends Component {
         background: 'transparent',
         ...labelStyle
       },
-      icon: {
-        marginRight: 5,
-        width: 20
-      },
       input: {
         ...style
       }
@@ -73,7 +66,6 @@ export default class Multiselect extends Component {
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
-          {!!Icon && <Icon size={20} style={styles.icon} {...iconProps} />}
           <strong style={styles.label}>{label}</strong>
         </div>
         <ReactSelect
@@ -81,10 +73,9 @@ export default class Multiselect extends Component {
           className={className}
           style={styles.input}
           multi
-          name={field}
+          name={name}
           options={this.state.builtOptions}
-          value={this.props.formValues.getIn([field, 'values'], List()).map(val => { return {value: val, label: val} }).toArray()}
-          {...props}
+          value={this.state.fieldValues}
         />
       </div>
     )
