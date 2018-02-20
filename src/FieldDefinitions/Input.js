@@ -6,8 +6,10 @@ export default class Input extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   render = () => {
-    const {inline, field, formValues = Map(), handleOnChange = () => {}, opts = {}} = this.props
-    const {label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}, props = {}} = opts
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}} = this.props
+    const {labelStyle = {}, style = {}, name = null} = config
+    if (!name) return null
+    const {label = name} = config
 
     const styles = {
       container: {
@@ -57,10 +59,9 @@ export default class Input extends Component {
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
-          {!!Icon && <Icon size={20} style={styles.icon} {...iconProps} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <input onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} type='text' name={field} value={formValues.get(field, '')} {...props} />
+        <input onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} type='text' name={name} value={formValues.get(name, '')} />
       </div>
     )
   }
