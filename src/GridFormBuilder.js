@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import WidgetGrid from './WidgetGrid'
-import {Map, List, fromJS} from 'immutable'
+import {Map, fromJS} from 'immutable'
 import Input from './FieldDefinitions/Input'
 import Textarea from './FieldDefinitions/Textarea'
 import Datetime from './FieldDefinitions/Datetime'
@@ -75,8 +75,8 @@ export default class FormBuilder extends Component {
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     const dateFields = []
     const normalFields = []
-    const {form = {}} = formSchema
-    const {jsonschema = {}} = form
+    let {form, jsonschema} = formSchema
+    jsonschema = jsonschema || form || {}
     const {layout = []} = jsonschema
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
     layout.map((field, i) => {

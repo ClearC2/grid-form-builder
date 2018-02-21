@@ -245,6 +245,27 @@ export default class Example extends Component {
                 'label': 'Textarea',
                 'type': 'textarea'
               }
+            },
+            {
+              'type': 'header',
+              'dimensions': {'x': 6, 'y': 2, 'h': 4, 'w': 6},
+              'config': {
+                'name': 'headertest',
+                'label': 'Example Header',
+                'type': 'header',
+                'style': {
+                  'color': 'grey'
+                }
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 2, 'h': 4, 'w': 6},
+              'config': {
+                'name': 'typeaheadtest',
+                'label': 'Typeahead',
+                'type': 'typeahead'
+              }
             }
           ]
         },
@@ -277,7 +298,7 @@ export default class Example extends Component {
         </div>
         <FormBuilder
           formName={formSchema.form.name}
-          formSchema={formSchema}
+          formSchema={formSchema.form}
           formValues={this.state.formValues}
           handleOnChange={this.handleOnChange}
           draggable
