@@ -3,16 +3,22 @@ import {Map} from 'immutable'
 
 export default class Checkbox extends Component {
   handleOnChange = e => {
-    const {field, formValues = Map(), handleOnChange = () => {}} = this.props
-    let value = formValues.get(field, '')
-    value = value === 'on' ? 'off' : 'on'
+    const {formValues = Map(), handleOnChange = () => {}, config} = this.props
+    const {name = null} = config
+    let value = formValues.get(name, '')
+    if (typeof value === 'string') value = value.toLowerCase() === 'yes'
+    value = !value
     handleOnChange({target: {name: e.target.name, value}})
   }
 
   render = () => {
-    const {inline, field, formValues = Map(), opts = {}} = this.props
-    const {label = field, style = {}, props = {}, labelStyle} = opts
-    const value = formValues.get(field, '')
+    const {inline, formValues = Map(), config = {}} = this.props
+    const {labelStyle = {}, style = {}, name = null} = config
+    if (!name) return null
+    const {label = name} = config
+    let value = formValues.get(name, '')
+    if (typeof value === 'string') value = value.toLowerCase() === 'yes'
+    value = !!value
 
     const styles = {
       container: {
@@ -45,8 +51,8 @@ export default class Checkbox extends Component {
 
     return (
       <div style={styles.container}>
-        <label key={field} style={styles.label}>
-          <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={field} checked={value.toLowerCase() === 'on'} {...props} />
+        <label style={styles.label}>
+          <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} />
           {label}
         </label>
       </div>

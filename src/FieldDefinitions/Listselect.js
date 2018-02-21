@@ -5,7 +5,7 @@ import {Map, List, fromJS} from 'immutable'
 export default class Listselect extends Component {
   constructor (props) {
     super(props)
-    const {field, formValues = Map(), opts = {}} = this.props
+    const {field, formValues = Map(), opts = {}} = props
     const value = formValues.get(field, List())
     const {options = List()} = opts
     let currentVals = List()
@@ -29,9 +29,11 @@ export default class Listselect extends Component {
   }
 
   selectAllOptions = () => {
-    const {opts = {}} = this.props
-    const {options = List()} = opts
-    this.setState({value: fromJS(options)})
+    const {config = {}} = this.props
+    const {keyword = {}} = config
+    const {options = []} = keyword
+    let values = options.map(options => options.value)
+    this.setState({value: fromJS(values)})
   }
 
   deselectAllOptions = () => this.setState({value: List()})
@@ -45,9 +47,12 @@ export default class Listselect extends Component {
   }
 
   render = () => {
-    const {inline, field, opts = {}} = this.props
+    const {inline, config = {}} = this.props
+    const {labelStyle = {}, style = {}, name = null} = config
+    if (!name) return null
+    const {label = name, keyword = {}} = config
+    const {options = []} = keyword
     const {value} = this.state
-    const {options = List(), label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}} = opts
 
     const styles = {
       labelContainer: {
@@ -76,14 +81,13 @@ export default class Listselect extends Component {
     return (
       <div style={{display: 'flex', flex: 1, flexDirection: 'column', height: '100%'}}>
         <div style={styles.labelContainer}>
-          {!!Icon && <Icon size={20} style={{marginRight: 5}} {...iconProps} />}
           <strong style={styles.label}>{label}</strong>
         </div>
         <div style={{display: 'flex', flexDirection: 'column', minHeight: 10, border: '1px solid lightgrey', height: 'calc(100% - 18px)', marginTop: 3, overflowY: 'scroll'}}>
-          {options.map(option => {
+          {options.map((option, i) => {
             return (
               <div
-                key={option}
+                key={i}
                 onClick={this.handleOnChange}
                 style={{
                   display: 'flex',
@@ -94,10 +98,10 @@ export default class Listselect extends Component {
                   paddingLeft: 5,
                   width: '100%',
                   borderBottom: '1px solid lightgrey',
-                  backgroundColor: value.indexOf(option) > -1 ? '#a1c3fa' : 'transparent',
+                  backgroundColor: value.indexOf(option.value) > -1 ? '#a1c3fa' : 'transparent',
                   ...style}}
               >
-                {option}
+                {option.label ? option.label : option.value}
               </div>
             )
           })}

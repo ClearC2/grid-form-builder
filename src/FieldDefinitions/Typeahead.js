@@ -28,30 +28,17 @@ export default class Typeahead extends Component {
   setShouldRemount = (shouldRemount = true) => this.setState({shouldRemount})
 
   handleChange = (typeahead) => {
-    const {handleOnChange = () => {}, opts = {}} = this.props
-    const {currentOptions = Map()} = this.state
-    const {props = {}} = opts
-    const {cfd = []} = props
-    const {field} = this.props
-    const value = typeahead ? typeahead.value : ''
-    const label = typeahead ? typeahead.label : ''
-    let fieldsToUpdate = []
-    fieldsToUpdate.push({target: {name: field, value: Map({value, label})}})
-    cfd.map(cfdField => {
-      const cfdValue = currentOptions.getIn([value, 'cfd', cfdField], '')
-      fieldsToUpdate.push({target: {name: cfdField, value: cfdValue}})
-      if (cfdField.indexOf('cfd_') === -1) fieldsToUpdate.push({target: {name: 'cfd_' + cfdField, value: cfdValue}})
-    })
-    handleOnChange(fieldsToUpdate)
+    console.log(typeahead)
   }
 
   loadOptions = input => {
-    const {field, formValues = Map()} = this.props
-    const currentValue = formValues.get(field, '')
+    const {config = {}, formValues = Map()} = this.props
+    const {name = null} = config
+    const currentValue = formValues.get(name, {value: '', label: ''})
 
     let values = []
 
-    if (currentValue && currentValue !== '') {
+    if (currentValue && currentValue.value && currentValue.value !== '') {
       values.push({value: currentValue, label: currentValue})
     }
 
@@ -59,31 +46,20 @@ export default class Typeahead extends Component {
       values.push({value: input, label: input})
     }
 
-    if (input.length < this.props.minChars) {
+    if (input.length > this.props.minChars) {
+      console.log('Fetch Data From Here?', window.location.origin + `/api/typeahead/name/${name}/search/${input}`)
       return Promise.resolve({options: values})
     }
 
-    return Promise.resolve({options: []}) // refactor to handle ajax prepop options?
+    return Promise.resolve({options: []})
   }
 
   render = () => {
-    const {inline, field, formValues = Map(), opts = {}} = this.props
-    const {label = field, labelStyle = {}} = opts
-    const currentValue = formValues.get(field, Map({value: '', label: ''}))
-    let value = ''
-    let valueLabel = ''
-    if (typeof currentValue === 'string') {
-      value = currentValue
-      valueLabel = currentValue
-    } else if (typeof currentValue === 'object') {
-      if (typeof currentValue.get === 'function') {
-        value = currentValue.get('value', '')
-        valueLabel = currentValue.get('label', '')
-      } else {
-        value = currentValue.value ? currentValue.value : ''
-        valueLabel = currentValue.label ? currentValue.label : ''
-      }
-    }
+    const {inline, formValues = Map(), config = {}} = this.props
+    const {labelStyle = {}, name = null} = config
+    if (!name) return null
+    const {label = name} = config
+    const value = formValues.get(name, {value: '', label: ''})
 
     const styles = {
       container: {
@@ -127,8 +103,8 @@ export default class Typeahead extends Component {
           <ReactSelect.Async
             onMouseDown={this.onMouseDown}
             className={className}
-            name={field}
-            value={{value, label: valueLabel}}
+            name={name}
+            value={value}
             onChange={this.handleChange}
             loadOptions={this.loadOptions}
           />

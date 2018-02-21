@@ -1,10 +1,13 @@
 import React, {Component} from 'react'
-import {Map, List} from 'immutable'
+import {Map} from 'immutable'
 
 export default class Select extends Component {
   render = () => {
-    const {inline, field, formValues = Map(), handleOnChange = () => {}, prepops = List(), opts = {}} = this.props
-    const {options = List(), label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}, props = {}} = opts
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}} = this.props
+    const {labelStyle = {}, style = {}, name = null} = config
+    if (!name) return null
+    const {label = name, keyword = {}} = config
+    const {options = []} = keyword
 
     const styles = {
       container: {
@@ -33,10 +36,6 @@ export default class Select extends Component {
         background: 'transparent',
         ...labelStyle
       },
-      icon: {
-        marginRight: 5,
-        width: 20
-      },
       input: {
         display: 'flex',
         flexGrow: 1,
@@ -54,21 +53,11 @@ export default class Select extends Component {
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
-          {!!Icon && <Icon size={20} style={styles.icon} {...iconProps} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={field} value={formValues.get(field, '')} {...props}>
+        <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')}>
           <option key='blank' value='' />{/* {should all selects have a blank option?} */}
-          {options.map(value => <option key={value} value={value}>{value}</option>)}
-          {prepops.map(value => {
-            if (typeof value === 'string') return <option key={value} value={value}>{value}</option>
-            else if (typeof value === 'object') {
-              return value.map((i, subval) => { // returning a Map throws a React warning, but ideally prepops are not Maps
-                if (typeof subval === 'string') return <option key={subval} value={subval}>{subval}</option>
-              })
-            } else return null
-          })
-          }
+          {options.map((option, i) => <option key={i} value={option.value}>{option.label ? option.label : option.value}</option>)}
         </select>
       </div>
     )

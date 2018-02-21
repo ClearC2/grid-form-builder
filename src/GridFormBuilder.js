@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import WidgetGrid from './WidgetGrid'
-import {Map, List, fromJS} from 'immutable'
+import {Map, fromJS} from 'immutable'
 import Input from './FieldDefinitions/Input'
 import Textarea from './FieldDefinitions/Textarea'
 import Datetime from './FieldDefinitions/Datetime'
@@ -71,46 +71,42 @@ export default class FormBuilder extends Component {
   uppercaseFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 
   render = () => {
-    let {formSchema = {}, formValues = Map(), handleOnChange = () => {}, prepops = Map(), formName = 'form', draggable = false, inline = false} = this.props
+    let {formSchema = {}, formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false} = this.props
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
-    prepops = (typeof prepops.isMap === 'function') ? prepops : Map(prepops)
     const dateFields = []
     const normalFields = []
+    let {form, jsonschema} = formSchema
+    jsonschema = jsonschema || form || {}
+    const {layout = []} = jsonschema
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
-    Object.keys(formSchema).map((field, i) => {
-      let {type = 'input', dimensions = {x: 0, y: i, h: 1, w: 6}} = formSchema[field]
+    layout.map((field, i) => {
+      const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}} = field
+      let {type = 'input'} = config
       type = this.uppercaseFirstLetter(type)
       if (type === 'Textarea' && dimensions.h < 4) dimensions.h = 4
-      if (type === 'Radio') {
-        const {options = List()} = formSchema[field]
-        dimensions.h = options.size ? options.size : options.length ? options.length : 1
-      }
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
       if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0) {
         dateFields.unshift(
           <Component
             inline={inline}
             draggable={draggable}
-            key={field}
+            key={'' + i}
             handleOnChange={handleOnChange}
             formValues={formValues}
-            prepops={prepops.get(formSchema[field].prepops)}
-            field={field} opts={formSchema[field]}
-            defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}}
+            config={config}
+            defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
         )
       } else if (type === 'Customcomponent') {
         normalFields.push(
           <Component
-            formSchema={formSchema}
             inline={inline}
             draggable={draggable}
-            key={field}
+            key={'' + i}
             handleOnChange={handleOnChange}
             formValues={formValues}
-            prepops={prepops.get(formSchema[field].prepops)}
-            field={field} opts={formSchema[field]}
-            defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}}
+            config={config}
+            defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
         )
       } else {
@@ -118,12 +114,11 @@ export default class FormBuilder extends Component {
           <Component
             inline={inline}
             draggable={draggable}
-            key={field}
+            key={'' + i}
             handleOnChange={handleOnChange}
             formValues={formValues}
-            prepops={prepops.get(formSchema[field].prepops)}
-            field={field} opts={formSchema[field]}
-            defaultDataGrid={{i: field, isResizable: false, isDraggable: draggable, ...dimensions}}
+            config={config}
+            defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
         )
       }

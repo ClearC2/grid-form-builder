@@ -6,8 +6,10 @@ export default class Textarea extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   render = () => {
-    const {inline, field, formValues = Map(), handleOnChange = () => {}, opts = {}} = this.props
-    const {rows = 4, label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}, props = {}} = opts
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}} = this.props
+    const {labelStyle = {}, style = {}, name = null, rows = 4} = config
+    if (!name) return null
+    const {label = name} = config
 
     const styles = {
       container: {
@@ -36,10 +38,6 @@ export default class Textarea extends Component {
         background: 'transparent',
         ...labelStyle
       },
-      icon: {
-        marginRight: 5,
-        width: 20
-      },
       input: {
         display: 'flex',
         flexGrow: 1,
@@ -55,10 +53,9 @@ export default class Textarea extends Component {
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
-          {!!Icon && <Icon size={20} style={styles.icon} {...iconProps} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <textarea onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} name={field} value={formValues.get(field, '')} rows={rows} {...props} />
+        <textarea onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} name={name} value={formValues.get(name, '')} rows={rows} />
       </div>
     )
   }

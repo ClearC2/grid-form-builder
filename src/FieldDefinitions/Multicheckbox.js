@@ -5,7 +5,7 @@ import {Map, List} from 'immutable'
 export default class Multicheckbox extends Component {
   constructor (props) {
     super(props)
-    const {field, formValues = Map(), opts = {}} = this.props
+    const {field, formValues = Map(), opts = {}} = props
     const value = formValues.get(field, List())
     const {options = List()} = opts
     let currentVals = List()
@@ -37,9 +37,12 @@ export default class Multicheckbox extends Component {
   }
 
   render = () => {
-    const {inline, field, opts = {}} = this.props
+    const {inline, config = {}} = this.props
+    const {labelStyle = {}, style = {}, name = null} = config
+    if (!name) return null
+    const {label = name, keyword = {}, boxed} = config
+    const {options = []} = keyword
     const {value} = this.state
-    const {options = List(), label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}, props = {}, boxed = false} = opts
     const boxStyle = !boxed ? {} : {border: '1px solid lightgrey', backgroundColor: '#f5f5f5'}
 
     const styles = {
@@ -77,10 +80,6 @@ export default class Multicheckbox extends Component {
         marginLeft: inline ? 0 : 10,
         marginTop: inline ? 10 : 5
       },
-      icon: {
-        marginRight: 5,
-        width: 20
-      },
       input: {
         display: 'flex',
         marginRight: 5,
@@ -92,15 +91,14 @@ export default class Multicheckbox extends Component {
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
-          {!!Icon && <Icon size={20} style={styles.icon} {...iconProps} />}
           <strong style={styles.label}>{label}</strong>
         </div>
         <div style={styles.optionsContainer}>
-          {options.map(option => {
+          {options.map((option, i) => {
             return (
-              <label key={option} style={styles.label}>
-                <input className='radio-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={field} value={option} checked={value.indexOf(option) > -1} {...props} />
-                {option}
+              <label key={i} style={styles.label}>
+                <input className='radio-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} value={option.value} checked={value.indexOf(option.value) > -1} />
+                {option.label ? option.label : option.value}
               </label>
             )
           })}
