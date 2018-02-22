@@ -139,10 +139,18 @@ div.Select-input {
   color: black;
 }
 
+.date-wrapper-grid-input.warn-required > input {
+  border: 1px solid #ec1c24;
+}
+
 .date-wrapper-grid-input.date-wrapper-grid-input-inline > input {
   height: 27px;
   border: 0;
   border-bottom: 1px solid #a0a0a0;
+}
+
+.date-wrapper-grid-input.date-wrapper-grid-input-inline.warn-required > input {
+  border-bottom: 1px solid #ec1c24;
 }
 
 .date-wrapper-grid-input > .rdtPicker {

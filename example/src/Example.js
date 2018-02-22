@@ -23,8 +23,7 @@ export default class Example extends Component {
                 'label': 'Input',
                 'type': 'input',
                 'icon': 'facebook',
-                'iconStyle': {'color': 'blue'},
-                'required': true
+                'iconStyle': {'color': 'blue'}
               }
             },
             {
@@ -75,7 +74,8 @@ export default class Example extends Component {
               'config': {
                 'name': 'checkboxtest',
                 'label': 'Checkbox',
-                'type': 'checkbox'
+                'type': 'checkbox',
+                'required': true
               }
             },
             {
