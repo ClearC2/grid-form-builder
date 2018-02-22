@@ -40,7 +40,8 @@ export default class Textarea extends Component {
       },
       input: {
         display: 'flex',
-        flexGrow: 1,
+        flexGrow: inline ? 1 : 0,
+        height: inline ? 'auto' : 'calc(100% - 21px)',
         paddingLeft: 5,
         resize: 'none',
         backgroundColor: 'transparent',

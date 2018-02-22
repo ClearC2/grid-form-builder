@@ -57,6 +57,7 @@ export default class Multiselect extends Component {
         ...labelStyle
       },
       input: {
+        height: inline ? 'auto' : 25,
         ...style
       },
       icon: {

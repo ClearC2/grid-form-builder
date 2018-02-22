@@ -38,8 +38,8 @@ export default class Select extends Component {
       },
       input: {
         display: 'flex',
-        flexGrow: 1,
-        height: inline ? 27 : 25,
+        flexGrow: inline ? 1 : 0,
+        height: inline ? 'auto' : 25,
         borderBottom: '1px solid #a0a0a0',
         borderTop: inline ? 0 : '1px solid #a0a0a0',
         borderLeft: inline ? 0 : '1px solid #a0a0a0',

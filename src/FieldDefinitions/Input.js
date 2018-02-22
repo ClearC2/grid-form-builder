@@ -40,7 +40,7 @@ export default class Input extends Component {
       },
       input: {
         display: 'flex',
-        flexGrow: 1,
+        flexGrow: inline ? 1 : 0,
         paddingLeft: 5,
         backgroundColor: 'transparent',
         borderBottom: '1px solid #a0a0a0',
@@ -48,6 +48,7 @@ export default class Input extends Component {
         borderLeft: inline ? 0 : '1px solid #a0a0a0',
         borderRight: inline ? 0 : '1px solid #a0a0a0',
         minWidth: 90,
+        height: inline ? 'auto' : 25,
         ...style
       },
       icon: {
