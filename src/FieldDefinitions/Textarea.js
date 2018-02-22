@@ -47,9 +47,9 @@ export default class Textarea extends Component {
         resize: 'none',
         backgroundColor: 'transparent',
         borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderTop: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderLeft: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderRight: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         minWidth: 90,
         marginTop: inline ? 25 : 0,
         ...style

@@ -11,7 +11,7 @@ export default class Input extends Component {
     if (!name) return null
     const {label = name} = config
     const value = formValues.get(name, '')
-    const warn = requiredWarning && formValues.get(name, '').length === 0
+    const warn = requiredWarning && formValues.get(name, '').length === 0 && required
 
     const styles = {
       container: {
