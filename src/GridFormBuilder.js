@@ -16,10 +16,25 @@ import Listselect from './FieldDefinitions/Listselect'
 import Conditionalinput from './FieldDefinitions/Conditionalinput'
 import Multiselect from './FieldDefinitions/Multiselect'
 
-let validComponents = Map()
+let validComponents = {}
 export function initCustomFormComponents (defs = Map()) {
   defs = fromJS(defs)
   validComponents = defs
+}
+
+let IconLibrary = {}
+export function initComponentIconLibrary (defs = {}) {
+  if (typeof defs !== 'object') {
+    IconLibrary = {}
+    return
+  }
+  let formattedKeys = {}
+  Object.keys(defs).map(name => {
+    const component = defs[name]
+    name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
+    formattedKeys[name] = component
+  })
+  IconLibrary = formattedKeys
 }
 
 export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
@@ -81,10 +96,12 @@ export default class FormBuilder extends Component {
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
     layout.map((field, i) => {
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}} = field
-      let {type = 'input'} = config
+      let {type = 'input', icon = ''} = config
       type = this.uppercaseFirstLetter(type)
+      icon = this.uppercaseFirstLetter(icon)
       if (type === 'Textarea' && dimensions.h < 4) dimensions.h = 4
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
+      icon = IconLibrary[icon] ? IconLibrary[icon] : null
       if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0) {
         dateFields.unshift(
           <Component
@@ -94,6 +111,7 @@ export default class FormBuilder extends Component {
             handleOnChange={handleOnChange}
             formValues={formValues}
             config={config}
+            Icon={icon}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
         )
@@ -106,6 +124,7 @@ export default class FormBuilder extends Component {
             handleOnChange={handleOnChange}
             formValues={formValues}
             config={config}
+            Icon={icon}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
         )
@@ -118,6 +137,7 @@ export default class FormBuilder extends Component {
             handleOnChange={handleOnChange}
             formValues={formValues}
             config={config}
+            Icon={icon}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
         )

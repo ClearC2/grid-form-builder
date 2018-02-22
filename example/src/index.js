@@ -10,6 +10,8 @@ import 'react-select/dist/react-select.css'
 import 'react-datetime/css/react-datetime.css'
 import '../../styles/grid-form-builder.css'
 
+import './Icons'
+
 render(
   (
     <Provider store={store}>
