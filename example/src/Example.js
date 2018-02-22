@@ -32,7 +32,6 @@ export default class Example extends Component {
               'config': {
                 'name': 'selecttest',
                 'label': 'Select',
-                'required': true,
                 'type': 'select',
                 'keyword': {
                   'category': 'TASKS',
@@ -267,6 +266,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'typeaheadtest',
                 'label': 'Typeahead',
+                'required': true,
                 'type': 'typeahead'
               }
             }

@@ -56,7 +56,7 @@ export default class Typeahead extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}} = config
+    const {labelStyle = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name} = config
     const value = formValues.get(name, {value: '', label: ''})
@@ -105,6 +105,7 @@ export default class Typeahead extends Component {
       return (
         <div style={styles.container} >
           <div style={styles.labelContainer}>
+            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
             <strong style={styles.label}>{label}</strong>
           </div>
