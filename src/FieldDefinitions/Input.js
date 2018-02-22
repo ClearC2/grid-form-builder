@@ -6,10 +6,12 @@ export default class Input extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null} = this.props
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name} = config
+    const value = formValues.get(name, '')
+    const warn = requiredWarning && formValues.get(name, '').length === 0
 
     const styles = {
       container: {
@@ -44,10 +46,10 @@ export default class Input extends Component {
         flexGrow: inline ? 1 : 0,
         paddingLeft: 5,
         backgroundColor: 'transparent',
-        borderBottom: '1px solid #a0a0a0',
-        borderTop: inline ? 0 : '1px solid #a0a0a0',
-        borderLeft: inline ? 0 : '1px solid #a0a0a0',
-        borderRight: inline ? 0 : '1px solid #a0a0a0',
+        borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         minWidth: 90,
         height: inline ? 'auto' : 25,
         ...style
@@ -68,7 +70,7 @@ export default class Input extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <input onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} type='text' name={name} value={formValues.get(name, '')} />
+        <input onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} type='text' name={name} value={value} />
       </div>
     )
   }

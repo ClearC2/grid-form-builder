@@ -23,7 +23,8 @@ export default class Example extends Component {
                 'label': 'Input',
                 'type': 'input',
                 'icon': 'facebook',
-                'iconStyle': {'color': 'blue'}
+                'iconStyle': {'color': 'blue'},
+                'required': true
               }
             },
             {
