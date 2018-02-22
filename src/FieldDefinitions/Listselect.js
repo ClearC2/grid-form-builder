@@ -47,8 +47,8 @@ export default class Listselect extends Component {
   }
 
   render = () => {
-    const {inline, config = {}} = this.props
-    const {labelStyle = {}, style = {}, name = null} = config
+    const {inline, config = {}, Icon = null} = this.props
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}} = config
     if (!name) return null
     const {label = name, keyword = {}} = config
     const {options = []} = keyword
@@ -75,12 +75,20 @@ export default class Listselect extends Component {
         fontSize: inline ? '10pt' : '8pt',
         background: 'transparent',
         ...labelStyle
+      },
+      icon: {
+        marginRight: 5,
+        width: 15,
+        height: 15,
+        marginTop: inline ? 4 : 0,
+        ...iconStyle
       }
     }
 
     return (
       <div style={{display: 'flex', flex: 1, flexDirection: 'column', height: '100%'}}>
         <div style={styles.labelContainer}>
+          {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
         <div style={{display: 'flex', flexDirection: 'column', minHeight: 10, border: '1px solid lightgrey', height: 'calc(100% - 18px)', marginTop: 3, overflowY: 'scroll'}}>

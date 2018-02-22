@@ -37,8 +37,8 @@ export default class Multicheckbox extends Component {
   }
 
   render = () => {
-    const {inline, config = {}} = this.props
-    const {labelStyle = {}, style = {}, name = null} = config
+    const {inline, config = {}, Icon = null} = this.props
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}} = config
     if (!name) return null
     const {label = name, keyword = {}, boxed} = config
     const {options = []} = keyword
@@ -66,7 +66,7 @@ export default class Multicheckbox extends Component {
       label: {
         display: 'flex',
         justifyContent: 'flex-start',
-        lineHeight: inline ? '23px' : '15px',
+        lineHeight: inline ? '12pt' : '11pt',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         fontSize: inline ? '10pt' : '8pt',
@@ -85,12 +85,20 @@ export default class Multicheckbox extends Component {
         marginRight: 5,
         marginTop: 0,
         ...style
+      },
+      icon: {
+        marginRight: 5,
+        width: 15,
+        height: 15,
+        marginTop: -1,
+        ...iconStyle
       }
     }
 
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
+          {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
         <div style={styles.optionsContainer}>

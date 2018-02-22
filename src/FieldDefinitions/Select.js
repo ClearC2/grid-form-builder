@@ -3,8 +3,8 @@ import {Map} from 'immutable'
 
 export default class Select extends Component {
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}} = this.props
-    const {labelStyle = {}, style = {}, name = null} = config
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null} = this.props
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}} = config
     if (!name) return null
     const {label = name, keyword = {}} = config
     const {options = []} = keyword
@@ -47,12 +47,20 @@ export default class Select extends Component {
         paddingLeft: 5,
         minWidth: 90,
         ...style
+      },
+      icon: {
+        marginRight: 5,
+        width: 15,
+        height: 15,
+        marginTop: inline ? 3 : -1,
+        ...iconStyle
       }
     }
 
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
+          {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
         <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')}>

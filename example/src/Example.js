@@ -21,7 +21,9 @@ export default class Example extends Component {
               'config': {
                 'name': 'inputtest',
                 'label': 'Input',
-                'type': 'input'
+                'type': 'input',
+                'icon': 'facebook',
+                'iconStyle': {'color': 'blue'}
               }
             },
             {

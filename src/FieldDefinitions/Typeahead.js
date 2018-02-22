@@ -55,8 +55,8 @@ export default class Typeahead extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}} = this.props
-    const {labelStyle = {}, name = null} = config
+    const {inline, formValues = Map(), config = {}, Icon = null} = this.props
+    const {labelStyle = {}, name = null, iconStyle = {}} = config
     if (!name) return null
     const {label = name} = config
     const value = formValues.get(name, {value: '', label: ''})
@@ -87,6 +87,13 @@ export default class Typeahead extends Component {
         fontSize: inline ? '10pt' : '8pt',
         background: 'transparent',
         ...labelStyle
+      },
+      icon: {
+        marginRight: 5,
+        width: 15,
+        height: 15,
+        marginTop: inline ? 4 : 0,
+        ...iconStyle
       }
     }
 
@@ -98,6 +105,7 @@ export default class Typeahead extends Component {
       return (
         <div style={styles.container} >
           <div style={styles.labelContainer}>
+            {Icon && <Icon style={styles.icon} />}
             <strong style={styles.label}>{label}</strong>
           </div>
           <ReactSelect.Async

@@ -24,8 +24,8 @@ export default class Multiselect extends Component {
   }
 
   render = () => {
-    const {inline, config = {}} = this.props
-    const {labelStyle = {}, style = {}, name = null} = config
+    const {inline, config = {}, Icon = null} = this.props
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}} = config
     if (!name) return null
     const {label = name} = config
 
@@ -58,6 +58,13 @@ export default class Multiselect extends Component {
       },
       input: {
         ...style
+      },
+      icon: {
+        marginRight: 5,
+        width: 15,
+        height: 15,
+        marginTop: inline ? 3 : -1,
+        ...iconStyle
       }
     }
 
@@ -66,6 +73,7 @@ export default class Multiselect extends Component {
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
+          {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
         <ReactSelect

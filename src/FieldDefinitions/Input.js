@@ -6,8 +6,8 @@ export default class Input extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}} = this.props
-    const {labelStyle = {}, style = {}, name = null} = config
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null} = this.props
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}} = config
     if (!name) return null
     const {label = name} = config
 
@@ -49,12 +49,20 @@ export default class Input extends Component {
         borderRight: inline ? 0 : '1px solid #a0a0a0',
         minWidth: 90,
         ...style
+      },
+      icon: {
+        marginRight: 5,
+        width: 15,
+        height: 15,
+        marginTop: inline ? 4 : -1,
+        ...iconStyle
       }
     }
 
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
+          {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
         <input onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} type='text' name={name} value={formValues.get(name, '')} />
