@@ -143,7 +143,6 @@ export default class Example extends Component {
               'config': {
                 'name': 'multicheckboxtest',
                 'label': 'Multi-Checkbox',
-                'required': true,
                 'type': 'multicheckbox',
                 'keyword': {
                   'category': 'TASKS',
@@ -178,6 +177,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'multiselecttest',
                 'label': 'Multiselect',
+                'required': true,
                 'type': 'multiselect',
                 'keyword': {
                   'category': 'TASKS',
