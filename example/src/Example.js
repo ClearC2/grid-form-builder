@@ -83,6 +83,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'datetest',
                 'label': 'Date',
+                'required': true,
                 'type': 'date'
               }
             },
@@ -266,7 +267,6 @@ export default class Example extends Component {
               'config': {
                 'name': 'typeaheadtest',
                 'label': 'Typeahead',
-                'required': true,
                 'type': 'typeahead'
               }
             }
