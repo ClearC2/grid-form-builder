@@ -13,7 +13,7 @@ export default class Checkbox extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}} = config
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, '')
@@ -62,6 +62,7 @@ export default class Checkbox extends Component {
           {Icon && <Icon style={styles.icon} />}
           <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} />
           {label}
+          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
         </label>
       </div>
     )
