@@ -4,7 +4,7 @@ import {Map} from 'immutable'
 export default class Select extends Component {
   render = () => {
     const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}} = config
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name, keyword = {}} = config
     const {options = []} = keyword
@@ -60,6 +60,7 @@ export default class Select extends Component {
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
+          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
