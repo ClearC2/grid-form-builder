@@ -247,6 +247,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'textareatest',
                 'label': 'Textarea',
+                'required': true,
                 'type': 'textarea'
               }
             },

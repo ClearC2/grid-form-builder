@@ -6,10 +6,11 @@ export default class Textarea extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null} = this.props
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, rows = 4, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name} = config
+    const warn = requiredWarning && formValues.get(name, '').length === 0 && required
 
     const styles = {
       container: {
@@ -45,6 +46,10 @@ export default class Textarea extends Component {
         paddingLeft: 5,
         resize: 'none',
         backgroundColor: 'transparent',
+        borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         minWidth: 90,
         marginTop: inline ? 25 : 0,
         ...style
