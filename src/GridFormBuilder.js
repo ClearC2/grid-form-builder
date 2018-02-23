@@ -15,6 +15,7 @@ import Typeahead from './FieldDefinitions/Typeahead'
 import Listselect from './FieldDefinitions/Listselect'
 import Conditionalinput from './FieldDefinitions/Conditionalinput'
 import Multiselect from './FieldDefinitions/Multiselect'
+import Phone from './FieldDefinitions/Phone'
 
 let validComponents = {}
 export function initCustomFormComponents (defs = Map()) {
@@ -66,7 +67,7 @@ class Customcomponent extends Component {
   }
 }
 
-const FormComponents = { Input, Textarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Customcomponent }
+const FormComponents = { Input, Textarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Customcomponent, Phone }
 
 export default class FormBuilder extends Component {
   static propTypes = {
