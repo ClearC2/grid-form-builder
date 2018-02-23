@@ -28,6 +28,16 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
+              'dimensions': {'x': 6, 'y': 0, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'phonetest',
+                'label': 'Phone',
+                'type': 'phone',
+                'delimiter': '-'
+              }
+            },
+            {
+              'type': 'field',
               'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
               'config': {
                 'name': 'selecttest',
