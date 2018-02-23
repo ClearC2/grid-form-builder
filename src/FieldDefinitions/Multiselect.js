@@ -28,7 +28,7 @@ export default class Multiselect extends Component {
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name} = config
-    const warn = requiredWarning && this.state.fieldValues === [] && required
+    const warn = requiredWarning && this.state.fieldValues.length === 0 && required
 
     const styles = {
       container: {

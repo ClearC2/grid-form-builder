@@ -78,20 +78,12 @@ div.Select-control {
   height: 24px;
 }
 
-div.Select-control.warn-required {
+div.warn-required > div.Select-control {
   border: 1px solid #ec1c24;
-  border-radius: 1px;
-  background-color: transparent;
-  height: 24px;
 }
 
 .select-grid-input.select-grid-input-inline > div.Select-control > span > div.Select-placeholder {
   line-height: 27px;
-}
-
-.select-grid-input.select-grid-input-inline.warn-required > div.Select-control.warn-required > span > div.Select-placeholder {
-  line-height: 27px;
-  border: 1px solid #ec1c24;
 }
 
 .select-grid-input > div.Select-control > span > div.Select-placeholder {
