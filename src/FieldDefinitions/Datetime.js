@@ -13,10 +13,11 @@ export default class Datetime extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name} = config
+    const warn = requiredWarning && formValues.get(name, '').length === 0 && required
 
     const styles = {
       container: {
@@ -55,7 +56,8 @@ export default class Datetime extends Component {
       }
     }
 
-    const className = inline ? `date-wrapper-grid-input date-wrapper-grid-input-inline` : `date-wrapper-grid-input`
+    let className = inline ? `date-wrapper-grid-input date-wrapper-grid-input-inline` : `date-wrapper-grid-input`
+    className = !warn ? className : className + ' warn-required'
 
     return (
       <div style={styles.container}>
