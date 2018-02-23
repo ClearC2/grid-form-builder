@@ -3,11 +3,12 @@ import {Map} from 'immutable'
 
 export default class Select extends Component {
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null} = this.props
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name, keyword = {}} = config
     const {options = []} = keyword
+    const warn = requiredWarning && formValues.get(name, '').length === 0 && required
 
     const styles = {
       container: {
@@ -40,10 +41,10 @@ export default class Select extends Component {
         display: 'flex',
         flexGrow: inline ? 1 : 0,
         height: inline ? 'auto' : 25,
-        borderBottom: '1px solid #a0a0a0',
-        borderTop: inline ? 0 : '1px solid #a0a0a0',
-        borderLeft: inline ? 0 : '1px solid #a0a0a0',
-        borderRight: inline ? 0 : '1px solid #a0a0a0',
+        borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         paddingLeft: 5,
         minWidth: 90,
         ...style

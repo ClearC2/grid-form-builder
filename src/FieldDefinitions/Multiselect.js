@@ -24,10 +24,11 @@ export default class Multiselect extends Component {
   }
 
   render = () => {
-    const {inline, config = {}, Icon = null} = this.props
+    const {inline, config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name} = config
+    const warn = requiredWarning && this.state.fieldValues === [] && required
 
     const styles = {
       container: {
@@ -69,7 +70,8 @@ export default class Multiselect extends Component {
       }
     }
 
-    const className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
+    let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
+    className = !warn ? className : className + ' warn-required'
 
     return (
       <div style={styles.container}>

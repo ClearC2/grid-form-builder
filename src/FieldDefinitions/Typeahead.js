@@ -55,11 +55,12 @@ export default class Typeahead extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name} = config
     const value = formValues.get(name, {value: '', label: ''})
+    const warn = requiredWarning && formValues.get(name, '').length === 0 && required
 
     const styles = {
       container: {
@@ -97,7 +98,8 @@ export default class Typeahead extends Component {
       }
     }
 
-    const className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
+    let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
+    className = !warn ? className : className + ' warn-required'
 
     if (this.state.shouldRemount) {
       return <Placeholder handleMount={this.setShouldRemount} />

@@ -33,6 +33,7 @@ export default class Example extends Component {
                 'name': 'selecttest',
                 'label': 'Select',
                 'type': 'select',
+                'required': true,
                 'keyword': {
                   'category': 'TASKS',
                   'options': [
@@ -179,6 +180,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'multiselecttest',
                 'label': 'Multiselect',
+                'required': true,
                 'type': 'multiselect',
                 'keyword': {
                   'category': 'TASKS',
@@ -269,6 +271,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'typeaheadtest',
                 'label': 'Typeahead',
+                'required': true,
                 'type': 'typeahead'
               }
             }
