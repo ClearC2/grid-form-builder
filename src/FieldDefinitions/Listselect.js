@@ -47,12 +47,13 @@ export default class Listselect extends Component {
   }
 
   render = () => {
-    const {inline, config = {}, Icon = null} = this.props
+    const {inline, config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name, keyword = {}} = config
     const {options = []} = keyword
-    const {value} = this.state
+    const {value = []} = this.state
+    const warn = requiredWarning && value.size === 0 && required
 
     const styles = {
       labelContainer: {
@@ -92,7 +93,7 @@ export default class Listselect extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <div style={{display: 'flex', flexDirection: 'column', minHeight: 10, border: '1px solid lightgrey', height: 'calc(100% - 18px)', marginTop: 3, overflowY: 'scroll'}}>
+        <div style={{display: 'flex', flexDirection: 'column', minHeight: 10, border: warn ? '1px solid #ec1c24' : '1px solid lightgrey', height: 'calc(100% - 18px)', marginTop: 3, overflowY: 'scroll'}}>
           {options.map((option, i) => {
             return (
               <div
