@@ -86,7 +86,7 @@ export default class FormBuilder extends Component {
   }
 
   state = {
-    requiredWarning: true
+    requiredWarning: false
   }
 
   onSubmit = () => {
