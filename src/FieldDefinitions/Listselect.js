@@ -56,6 +56,12 @@ export default class Listselect extends Component {
     const warn = requiredWarning && value.size === 0 && required
 
     const styles = {
+      container: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: inline ? 'row' : 'column',
+        background: 'transparent'
+      },
       labelContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -64,7 +70,6 @@ export default class Listselect extends Component {
         height: 15,
         marginTop: inline ? 4 : 0,
         background: 'transparent',
-        marginBottom: inline ? 10 : 0,
         ...labelStyle
       },
       label: {
@@ -77,48 +82,61 @@ export default class Listselect extends Component {
         background: 'transparent',
         ...labelStyle
       },
+      input: {
+        display: 'flex',
+        flexDirection: 'column',
+        flexGrow: inline ? 1 : 0,
+        height: inline ? 'auto' : 'calc(100% - 21px)',
+        resize: 'none',
+        backgroundColor: 'transparent',
+        minWidth: 90,
+        marginTop: inline ? 25 : 0,
+        ...style
+      },
       icon: {
         marginRight: 5,
         width: 15,
         height: 15,
-        marginTop: inline ? 4 : 0,
+        marginTop: inline ? 4 : -1,
         ...iconStyle
       }
     }
 
     return (
-      <div style={{display: 'flex', flex: 1, flexDirection: 'column', height: '100%'}}>
+      <div style={styles.container}>
         <div style={styles.labelContainer}>
           {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <div style={{display: 'flex', flexDirection: 'column', minHeight: 10, border: warn ? '1px solid #ec1c24' : '1px solid lightgrey', height: 'calc(100% - 18px)', marginTop: 3, overflowY: 'scroll'}}>
-          {options.map((option, i) => {
-            return (
-              <div
-                key={i}
-                onClick={this.handleOnChange}
-                style={{
-                  display: 'flex',
-                  height: 27,
-                  minHeight: 27,
-                  margin: 0,
-                  alignItems: 'center',
-                  paddingLeft: 5,
-                  width: '100%',
-                  borderBottom: '1px solid lightgrey',
-                  backgroundColor: value.indexOf(option.value) > -1 ? '#a1c3fa' : 'transparent',
-                  ...style}}
-              >
-                {option.label ? option.label : option.value}
-              </div>
-            )
-          })}
-        </div>
-        <div style={{display: 'flex', justifyContent: 'flex-end', height: 15, minHeight: 15}}>
-          <span onClick={this.selectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue'}} className='cursor-hand'>Select All</span>
-          <span onClick={this.deselectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue'}} className='cursor-hand'>Deselect All</span>
+        <div style={styles.input}>
+          <div style={{display: 'flex', flex: 1, flexDirection: 'column', minHeight: 10, border: warn ? '1px solid #ec1c24' : '1px solid lightgrey', height: 'calc(100% - 18px)', overflowY: 'scroll'}}>
+            {options.map((option, i) => {
+              return (
+                <div
+                  key={i}
+                  onClick={this.handleOnChange}
+                  style={{
+                    display: 'flex',
+                    height: 27,
+                    minHeight: 27,
+                    margin: 0,
+                    alignItems: 'center',
+                    paddingLeft: 5,
+                    width: '100%',
+                    borderBottom: '1px solid lightgrey',
+                    backgroundColor: value.indexOf(option.value) > -1 ? '#a1c3fa' : 'transparent',
+                    ...style}}
+                >
+                  {option.label ? option.label : option.value}
+                </div>
+              )
+            })}
+          </div>
+          <div style={{display: 'flex', justifyContent: 'flex-end', height: 15, minHeight: 15}}>
+            <span onClick={this.selectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue'}} className='cursor-hand'>Select All</span>
+            <span onClick={this.deselectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue'}} className='cursor-hand'>Deselect All</span>
+          </div>
         </div>
       </div>
     )
