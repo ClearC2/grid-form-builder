@@ -5,8 +5,8 @@ import {FormBuilder, updateFormValues} from '../../src/index'
 export default class Example extends Component {
   state = {
     formValues: Map({
-      companyname: 'Clear C2, Inc.',
-      address: '1234 Main Street'
+      inputtest: 'Clear C2, Inc.',
+      textareatest: '1234 Main Street'
     }),
     inline: false,
     formSchema: {
@@ -23,7 +23,8 @@ export default class Example extends Component {
                 'label': 'Input',
                 'type': 'input',
                 'icon': 'facebook',
-                'iconStyle': {'color': 'blue'}
+                'iconStyle': {'color': 'blue'},
+                'readonly': true
               }
             },
             {
@@ -110,7 +111,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 5, 'h': 5, 'w': 6},
+              'dimensions': {'x': 0, 'y': 4, 'h': 5, 'w': 6},
               'config': {
                 'name': 'listselecttest',
                 'label': 'List Select',
@@ -255,7 +256,17 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 14, 'h': 4, 'w': 6},
+              'dimensions': {'x': 0, 'y': 15, 'h': 4, 'w': 6},
+              'config': {
+                'name': 'textareatest',
+                'label': 'Textarea',
+                'required': true,
+                'type': 'textarea'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 15, 'h': 4, 'w': 6},
               'config': {
                 'name': 'textareatest',
                 'label': 'Textarea',
@@ -265,7 +276,7 @@ export default class Example extends Component {
             },
             {
               'type': 'header',
-              'dimensions': {'x': 6, 'y': 2, 'h': 4, 'w': 6},
+              'dimensions': {'x': 6, 'y': 2, 'h': 1, 'w': 6},
               'config': {
                 'name': 'headertest',
                 'label': 'Example Header',
@@ -277,12 +288,76 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 6, 'y': 2, 'h': 4, 'w': 6},
+              'dimensions': {'x': 6, 'y': 2, 'h': 1, 'w': 6},
               'config': {
                 'name': 'typeaheadtest',
                 'label': 'Typeahead',
                 'required': true,
                 'type': 'typeahead'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 6, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 7, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 8, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 9, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 9, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 14, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 14, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input'
               }
             }
           ]
