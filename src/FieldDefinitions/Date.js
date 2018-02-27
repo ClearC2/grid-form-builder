@@ -4,9 +4,11 @@ import {Map} from 'immutable'
 
 export default class Date extends Component {
   handleChange = val => {
-    const {field, handleOnChange = () => {}, Icon = null} = this.props
+    const {handleOnChange = () => {}, Icon = null} = this.props
+    const field = this.props.config.name
     const value = typeof val === 'object' ? val.format('M/D/YYYY') : val
     let e = {target: {name: field, value}}
+    console.log(e, 'e loggggg')
     handleOnChange(e)
   }
   onMouseDown = e => {

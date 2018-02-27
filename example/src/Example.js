@@ -41,6 +41,16 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
               'config': {
+                'name': 'c_registerddate',
+                'label': 'Registered',
+                'type': 'conditionalInput',
+                'inputType': 'input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
+              'config': {
                 'name': 'selecttest',
                 'label': 'Select',
                 'type': 'select',
@@ -394,6 +404,7 @@ export default class Example extends Component {
           formSchema={formSchema.form}
           formValues={this.state.formValues}
           handleOnChange={this.handleOnChange}
+          draggable={false}
           inline={this.state.inline}
         />
       </div>

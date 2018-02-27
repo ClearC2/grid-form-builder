@@ -4,7 +4,8 @@ import {Map} from 'immutable'
 
 export default class Datetime extends Component {
   handleChange = val => {
-    const {field, handleOnChange = () => {}, Icon = null} = this.props
+    const {handleOnChange = () => {}, Icon = null} = this.props
+    const field = this.props.config.name
     const value = typeof val === 'object' ? val.format('M/D/YYYY h:mm a') : val
     let e = {target: {name: field, value}}
     handleOnChange(e)
