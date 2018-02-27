@@ -44,7 +44,7 @@ export default class Example extends Component {
                 'name': 'c_registerddate',
                 'label': 'Registered',
                 'type': 'conditionalInput',
-                'inputType': 'Date'
+                'inputType': 'input'
               }
             },
             // {
@@ -330,7 +330,7 @@ export default class Example extends Component {
           formSchema={formSchema.form}
           formValues={this.state.formValues}
           handleOnChange={this.handleOnChange}
-          draggable
+          draggable={false}
           inline={this.state.inline}
         />
       </div>

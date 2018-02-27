@@ -41,7 +41,6 @@ export default class Conditionalinput extends Component {
     const {name} = this.props.config
     const condition = formValues.get('condition')
     const inputType = this.props.config.inputType || 'input'
-    console.log(doubleFields.includes(condition) ? 1 : 0, doubleFields.includes(condition), doubleFields, condition, 'formSchema logggggg')
     let schema = {
       form: {
         name: 'Conditional Input1',
@@ -111,7 +110,6 @@ export default class Conditionalinput extends Component {
   }
 
   handleOnChange = e => {
-    console.log(e.target, e.target.name, e.target.value, this.state, 'e loggggggggggg')
     const {doubleFields} = this.state
     let newValues = this.state.formValues
     // fix field values if condition changes from multi to single input
@@ -171,55 +169,91 @@ export default class Conditionalinput extends Component {
     const value = formValues.get(name, '')
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
-    const hideDisplay = false
+    const hideDisplay = !(this.state.formValues.get(`low ${this.props.config.name}`, false) || this.state.formValues.get(`high ${this.props.config.name}`, false))
 
+
+    const styles = {
+      container: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: inline ? 'row' : 'column',
+        background: 'transparent'
+      },
+      labelContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: inline ? 150 : '100%',
+        minWidth: inline ? 150 : '100%',
+        height: 15,
+        marginTop: inline ? 4 : 0,
+        background: 'transparent',
+        ...labelStyle
+      },
+      label: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        lineHeight: inline ? '23px' : '15px',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        fontSize: inline ? '10pt' : '8pt',
+        color: '#383e4b',
+        background: 'transparent',
+        ...labelStyle
+      },
+      input: {
+        display: 'flex',
+        flexGrow: inline ? 1 : 0,
+        paddingLeft: 5,
+        backgroundColor: 'transparent',
+        borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
+        minWidth: 90,
+        color: '#2b71e2',
+        height: inline ? 'auto' : 25,
+        ...style
+      },
+      icon: {
+        marginRight: 5,
+        width: 15,
+        height: 15,
+        marginTop: inline ? 4 : -1,
+        ...iconStyle
+      }
+    }
 
 
     return (
-      <div style={{display: 'flex', flex: 1, flexDirection: 'row'}}>
-        <div style={{display: 'flex', flexDirection: 'row', minWidth: 150, height: 15, marginTop: 4, ...labelStyle}}>
-          {!!Icon && <Icon size={20} style={{marginRight: 5, width: 20}} {...iconProps} />}
-          <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', ...labelStyle}}>{label}</strong>
+      <div style={styles.container}>
+        <div style={styles.labelContainer}>
+          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+          {Icon && <Icon style={styles.icon} />}
+          <strong style={styles.label}>{label}</strong>
         </div>
-        {this.state.showDialog &&
-          <Dialog ref={`conditionalInput-${name}-dialog`} size={{width: '40%', height: '180px'}}
-            style={{
-              backgroundColor: '#f5f5f5',
-              border: '2px solid #36a9e1',
-              position: 'fixed',
-              top: `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
-              left: `${this.state.fieldPos.left + 100}px`,
-              bottom: '100px'
-            }}
-            enableResizing={true}
-            disableDragging={false}
-          >
-            <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
-              <span>&times;</span>
-            </button>
-            <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%'}}>
-              <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
-            </div>
-          </Dialog>}
-        <div
-          onClick={() => { this.handleToggleDialog(true) }}
-          id={`conditionalInput-${name}-id`}
-          style={{
-            display: 'flex',
-            flexGrow: 1,
-            textAlign: 'center',
-            whiteSpace: 'nowrap',
-            paddingLeft: 5,
-            border: 0,
-            backgroundColor: 'transparent',
-            borderBottom: '1px solid #a0a0a0',
-            minWidth: 90,
-            color: '#1e8fc6',
-            ...style
-          }}
-        >
+        <div onClick={() => { this.handleToggleDialog(true) }} id={`conditionalInput-${name}-id`} style={styles.input}>
           {hideDisplay ? '' : 'Values...'}
         </div>
+        {this.state.showDialog &&
+        <Dialog ref={`conditionalInput-${name}-dialog`} size={{width: '40%', height: '180px'}}
+                style={{
+                  backgroundColor: '#f5f5f5',
+                  border: '2px solid #36a9e1',
+                  position: 'fixed',
+                  top: `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
+                  left: `${this.state.fieldPos.left + 100}px`,
+                  bottom: '100px'
+                }}
+                enableResizing={true}
+                disableDragging={false}
+        >
+          <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
+            <span>&times;</span>
+          </button>
+          <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%'}} >
+            <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
+          </div>
+        </Dialog>}
       </div>
     )
   }
