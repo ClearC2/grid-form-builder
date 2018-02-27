@@ -12,6 +12,8 @@ export default class Input extends Component {
     const {label = name} = config
     const value = formValues.get(name, '')
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -70,7 +72,7 @@ export default class Input extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <input onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} type='text' name={name} value={value} />
+        <input onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} type='text' name={name} value={value} disabled={disabled} />
       </div>
     )
   }

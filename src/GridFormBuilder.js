@@ -90,8 +90,9 @@ export default class FormBuilder extends Component {
   }
 
   onSubmit = () => {
-    let {formSchema = {}, formValues = Map(), handleSubmit = () => { console.warn('onSubmit was called but no handleSubmit function was provided.') }} = this.props
+    let {formSchema = Map(), formValues = Map(), handleSubmit = () => { console.warn('onSubmit was called but no handleSubmit function was provided.') }} = this.props
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
+    formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
     let {form, jsonschema} = formSchema
     jsonschema = jsonschema || form || {}
     let {layout = []} = jsonschema
@@ -109,15 +110,15 @@ export default class FormBuilder extends Component {
   uppercaseFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 
   render = () => {
-    let {formSchema = {}, formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false} = this.props
+    let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false} = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
+    formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
     const dateFields = []
     const normalFields = []
     let {form, jsonschema} = formSchema
     jsonschema = jsonschema || form || {}
     let {layout = []} = jsonschema
-    layout = (typeof layout.toJS === 'function') ? layout.toJS() : layout
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
     layout.map((field, i) => {
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}} = field
