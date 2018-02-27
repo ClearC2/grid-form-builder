@@ -36,49 +36,60 @@ export default class Example extends Component {
                 'delimiter': '-'
               }
             },
+            // 'c_registereddate': {label: 'Registered', type: 'conditionalInput', inputType: 'Date', dimensions: {x: 0, y: 31, h: 1, w: 4}},
             {
               'type': 'field',
               'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
               'config': {
-                'name': 'selecttest',
-                'label': 'Select',
-                'type': 'select',
-                'required': true,
-                'keyword': {
-                  'category': 'TASKS',
-                  'options': [
-                    {
-                      'label': 'Contract Signing',
-                      'value': 'Contract Signing'
-                    },
-                    {
-                      'label': 'Customer Service',
-                      'value': 'Customer Service'
-                    },
-                    {
-                      'label': 'Demonstration',
-                      'value': 'Demonstration'
-                    },
-                    {
-                      'label': 'Executive Meeting',
-                      'value': 'Executive Meeting'
-                    },
-                    {
-                      'label': 'Initial Meeting',
-                      'value': 'Initial Meeting'
-                    },
-                    {
-                      'label': 'Kick Off Meeting',
-                      'value': 'Kick Off Meeting'
-                    },
-                    {
-                      'label': 'Internet Hub',
-                      'value': 'Internet Hub'
-                    }
-                  ]
-                }
+                'name': 'c_registerddate',
+                'label': 'Registered',
+                'type': 'conditionalInput',
+                'inputType': 'Date'
               }
             },
+            // {
+            //   'type': 'field',
+            //   'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
+            //   'config': {
+            //     'name': 'selecttest',
+            //     'label': 'Select',
+            //     'type': 'select',
+            //     'required': true,
+            //     'keyword': {
+            //       'category': 'TASKS',
+            //       'options': [
+            //         {
+            //           'label': 'Contract Signing',
+            //           'value': 'Contract Signing'
+            //         },
+            //         {
+            //           'label': 'Customer Service',
+            //           'value': 'Customer Service'
+            //         },
+            //         {
+            //           'label': 'Demonstration',
+            //           'value': 'Demonstration'
+            //         },
+            //         {
+            //           'label': 'Executive Meeting',
+            //           'value': 'Executive Meeting'
+            //         },
+            //         {
+            //           'label': 'Initial Meeting',
+            //           'value': 'Initial Meeting'
+            //         },
+            //         {
+            //           'label': 'Kick Off Meeting',
+            //           'value': 'Kick Off Meeting'
+            //         },
+            //         {
+            //           'label': 'Internet Hub',
+            //           'value': 'Internet Hub'
+            //         }
+            //       ]
+            //     }
+            //   }
+            // },
             {
               'type': 'field',
               'dimensions': {'x': 0, 'y': 2, 'h': 1, 'w': 6},

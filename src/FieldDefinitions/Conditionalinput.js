@@ -24,13 +24,13 @@ export default class Conditionalinput extends Component {
   }
 
   componentWillReceiveProps (props) {
-    if (props.formValues.get(this.props.field, '') === '') {
+    if (props.formValues.get(this.props.config.name, '') === '') {
       this.setState({
         formValues: Map({
           condition: this.props.conditionOptions[0],
           doubleFields: Set(this.props.doubleFields),
-          [`low ${this.props.field}`]: '',
-          [`high ${this.props.field}`]: ''
+          [`low ${this.props.config.name}`]: '',
+          [`high ${this.props.config.name}`]: ''
         })
       })
     }
@@ -38,48 +38,85 @@ export default class Conditionalinput extends Component {
 
   formSchema = () => { // for Dialog
     const {formValues, doubleFields} = this.state
-    const {field} = this.props
+    const {name} = this.props.config
     const condition = formValues.get('condition')
-    const inputType = this.props.opts.inputType || 'input'
-    let schema = Map({
-      [field]: {
-        label: `${this.props.opts.label || field} condition:`,
-        type: 'Header',
-        dimensions: {x: 0, y: 0, h: 1, w: 6}
+    const inputType = this.props.config.inputType || 'input'
+    console.log(doubleFields.includes(condition) ? 1 : 0, doubleFields.includes(condition), doubleFields, condition, 'formSchema logggggg')
+    let schema = {
+      form: {
+        name: 'Conditional Input1',
+        description: 'allow more complex inputs.',
+        jsonschema: {
+          layout: [
+            {
+              type: 'field',
+              dimensions: {x: 0, y: 0, h: 1, w: 6},
+              config: {
+                name: name,
+                type: 'header',
+                label: `${this.props.config.label || name} condition:`
+              }
+            },
+            {
+              type: 'field',
+              dimensions: {x: 3, y: 1, h: 1, w: 6},
+              config: {
+                name: 'condition',
+                label: 'Condition',
+                type: 'select',
+                keyword: {
+                  category: 'NONE',
+                  options: this.props.conditionOptions.map(opt => { return {value: opt, label: opt} })
+                }
+                // options: this.props.conditionOptions
+              }
+            },
+            {
+              type: 'field',
+              dimensions: {x: 3, y: 2, h: 1, w: 6},
+              config: {
+                name: `low ${name}`,
+                label: `${this.props.config.label || name}`,
+                type: inputType
+              }
+            }
+          ]
+        }
       },
-      'condition': {
-        type: 'select',
-        options: this.props.conditionOptions,
-        dimensions: {x: 3, y: 1, h: 1, w: 6},
-        label: 'Condition'
-      },
-      [`low ${field}`]: {
-        type: inputType,
-        label: `${this.props.opts.label || field}`,
-        dimensions: {x: 3, y: 2, h: 1, w: 6}
-      },
-      [`high ${field}`]: {
-        type: inputType,
-        label: doubleFields.includes(condition) ? `${this.props.opts.label || field}` : '',
-        dimensions: {x: 3, y: 3, h: 1, w: 6},
-        style: {opacity: doubleFields.includes(condition) ? 1 : 0}
-      }
-    })
+      id: 'FDC58F0F0B2099E61BE23AB6110572E1',
+      lastUpdateDate: '2018-02-26 10:16:14',
+      lastUpdateBy: 'will darden',
+      createdDate: '2018-02-26 10:16:14',
+      createdBy: 'will darden'
+    }
+    if (doubleFields.includes(condition)) {
+      schema.form.jsonschema.layout.push(
+        {
+          type: 'field',
+          dimensions: {x: 3, y: 3, h: 1, w: 6},
+          config: {
+            name: `high ${name}`,
+            label: doubleFields.includes(condition) ? `${this.props.config.label || name}` : '',
+            type: inputType
+          }
+        }
+      )
+    }
     if (inputType === 'Multiselect') {
-      schema = schema.set('')
       console.log('ERROR: Multiselect has not been implemented for conditional inputs')
     }
     return (
-      schema.toJS()
+      schema.form
     )
   }
 
   handleOnChange = e => {
+    console.log(e.target, e.target.name, e.target.value, this.state, 'e loggggggggggg')
     const {doubleFields} = this.state
     let newValues = this.state.formValues
     // fix field values if condition changes from multi to single input
     if (e.target.name === 'condition' && !doubleFields.includes(e.target.value)) {
-      newValues = newValues.delete(`high ${this.props.field}`)
+      newValues = newValues.delete(`high ${this.props.config.name}`)
     }
     if (e.target.value === '') {
       newValues = newValues.delete(e.target.name)
@@ -89,7 +126,7 @@ export default class Conditionalinput extends Component {
     this.setState({formValues: newValues})
     if (this.props.handleOnChange) {
       const valObject = this.buildValueObject(newValues)
-      const event = {target: {value: valObject, name: this.props.field}}
+      const event = {target: {value: valObject, name: this.props.config.name}}
       this.props.handleOnChange(event)
     }
   }
@@ -127,10 +164,17 @@ export default class Conditionalinput extends Component {
   }
 
   render = () => {
-    const {field, opts = {}} = this.props // formValues = Map(), handleOnChange = () => {},
-    const {label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {}} = opts // , props = {}
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
+    if (!name) return null
+    const {label = name} = config
+    const value = formValues.get(name, '')
+    const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
-    const hideDisplay = (this.props.formValues.getIn([field, 'condition'], '') === '' && this.props.formValues.getIn([field, 'values', 0], '') === '')
+    const hideDisplay = false
+
+
+
     return (
       <div style={{display: 'flex', flex: 1, flexDirection: 'row'}}>
         <div style={{display: 'flex', flexDirection: 'row', minWidth: 150, height: 15, marginTop: 4, ...labelStyle}}>
@@ -138,7 +182,7 @@ export default class Conditionalinput extends Component {
           <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', ...labelStyle}}>{label}</strong>
         </div>
         {this.state.showDialog &&
-          <Dialog ref={`conditionalInput-${field}-dialog`} size={{width: '40%', height: '180px'}}
+          <Dialog ref={`conditionalInput-${name}-dialog`} size={{width: '40%', height: '180px'}}
             style={{
               backgroundColor: '#f5f5f5',
               border: '2px solid #36a9e1',
@@ -154,12 +198,12 @@ export default class Conditionalinput extends Component {
               <span>&times;</span>
             </button>
             <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%'}}>
-              <FormBuilder inline formName={`conditionalInput-${field}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
+              <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
             </div>
           </Dialog>}
         <div
           onClick={() => { this.handleToggleDialog(true) }}
-          id={`conditionalInput-${field}-id`}
+          id={`conditionalInput-${name}-id`}
           style={{
             display: 'flex',
             flexGrow: 1,
