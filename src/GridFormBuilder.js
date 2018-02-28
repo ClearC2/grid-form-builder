@@ -146,6 +146,7 @@ export default class FormBuilder extends Component {
             requiredWarning={requiredWarning}
             inline={inline}
             draggable={draggable}
+            formSchema={formSchema}
             key={'' + i}
             handleOnChange={handleOnChange}
             formValues={formValues}
