@@ -6,9 +6,11 @@ export default class Checkbox extends Component {
     const {formValues = Map(), handleOnChange = () => {}, config} = this.props
     const {name = null} = config
     let value = formValues.get(name, '')
-    if (typeof value === 'string') value = value.toLowerCase() === 'yes'
+    if (typeof value === 'string') {
+      value = (value.toLowerCase() === 'yes' || value.toLowerCase() === 'on')
+    }
     value = !value
-    handleOnChange({target: {name: e.target.name, value}})
+    handleOnChange({target: {name: e.target.name, value: value}})
   }
 
   render = () => {
