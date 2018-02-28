@@ -130,12 +130,12 @@ export default class Conditionalinput extends Component {
   }
 
   buildValueObject = (formValues) => {
-    const {field} = this.props
+    const {name} = this.props.config
     const {doubleFields} = this.state
     // get current values
     let condition = formValues.get('condition', '')
-    let low = formValues.get(`low ${field}`, '')
-    let high = formValues.get(`high ${field}`, '')
+    let low = formValues.get(`low ${name}`, '')
+    let high = formValues.get(`high ${name}`, '')
     if (!doubleFields.includes(condition)) {
       high = ''
     } else {
