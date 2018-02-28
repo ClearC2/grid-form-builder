@@ -37,6 +37,15 @@ export default class Example extends Component {
                 'delimiter': '-'
               }
             },
+            // {
+            //   'type': "field",
+            //   'dimensions': {x: 0, y: 0, h: 5, w: 3},
+            //   'config': {
+            //     'name': "conditionTable",
+            //     'type': "Customcomponent",
+            //     'component': 'Conditiontable'
+            //   }
+            // },
             {
               'type': 'field',
               'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},

@@ -17,7 +17,7 @@ import Conditionalinput from './FieldDefinitions/Conditionalinput'
 import Multiselect from './FieldDefinitions/Multiselect'
 import Phone from './FieldDefinitions/Phone'
 
-let validComponents = {}
+let validComponents = Map()
 export function initCustomFormComponents (defs = Map()) {
   defs = fromJS(defs)
   validComponents = defs
@@ -50,13 +50,11 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
 
 class Customcomponent extends Component {
   render = () => {
-    const {opts = {}} = this.props // field, formValues = Map(), handleOnChange = () => {},
-    const {props = {}, component = ''} = opts // label = field, style = {}, labelStyle = {}, Icon = null, iconProps = {},
-    const Component = validComponents.get((component + '').toLowerCase())
+    const Component = validComponents.get((this.props.config.component + '').toLowerCase())
     if (Component) {
       return (
         <div style={{display: 'flex', flex: 1, flexDirection: 'row'}}>
-          <Component {...props} {...this.props} />
+          <Component {...this.props} />
         </div>
       )
     } else {
