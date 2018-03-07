@@ -387,7 +387,7 @@ At minimum, the shape of the formSchema must have a jsonschema object, with a la
 The shape of each layout object should have a type to indicate what type of element it is (Field and Header are the current supported types), dimensions to indicate where on the grid this element should be rendered, and a config object for the element.
 For fields, the config object must contain at minimum the field name and field type.
 
-#####Layout Object Shape:
+##### Layout Object Shape:
 ```
 type?:       string    // required: field | header
 
