@@ -12,7 +12,7 @@ export default class Conditionalinput extends Component {
     showDialog: false
   }
   static defaultProps = {
-    conditionOptions: ['is equal to', 'is not equal to', 'is between', 'contains:', 'does not contain'],
+    conditionOptions: ['is equal to', 'is not equal to', 'is between', 'contains:', 'does not contain', 'is greater than', 'is less than'],
     doubleFields: ['is between'] // conditionOptions part of this set will have two input fields. others only one.
   }
 
