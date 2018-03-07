@@ -17,9 +17,9 @@ export default class Multiselect extends Component {
   onChange = (e) => {
     this.setState({fieldValues: e})
     if (e.length === 0) {
-      this.props.handleOnChange({target: {name: this.props.field, value: ''}})
+      this.props.handleOnChange({target: {name: this.props.config.name, value: ''}})
     } else {
-      this.props.handleOnChange({target: {name: this.props.field, value: fromJS({condition: 'is one of', values: List(e.map(val => val.value))})}})
+      this.props.handleOnChange({target: {name: this.props.config.name, value: fromJS({condition: 'is one of', values: List(e.map(val => val.value))})}})
     }
   }
 

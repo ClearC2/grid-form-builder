@@ -37,6 +37,15 @@ export default class Example extends Component {
                 'delimiter': '-'
               }
             },
+            // {
+            //   'type': "field",
+            //   'dimensions': {x: 0, y: 0, h: 5, w: 3},
+            //   'config': {
+            //     'name': "conditionTable",
+            //     'type': "Customcomponent",
+            //     'component': 'Conditiontable'
+            //   }
+            // },
             {
               'type': 'field',
               'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
@@ -192,6 +201,28 @@ export default class Example extends Component {
                       'value': 'Initial Meeting'
                     }
                   ]
+                }
+              }
+            },
+            {
+              "type":"field",
+              "dimensions":{"x":0,"y":2,"h":2,"w":2},
+              "config":{
+                "name":"Detail/Summary",
+                "label":"Detail/Summary",
+                "type":"radio",
+                "labelStyle":{
+                  // "marginTop":"-10pt",
+                  "color":"navy",
+                  "fontSize":"11pt"
+                },
+                "boxed":"true",
+                "keyword":{
+                  "options":[
+                    {"label":"Detail Only","value":"Detail Only"},
+                    {"label":"Summary Only","value":"Summary Only"},
+                    {"label":"Both","value":"Both"}
+                    ]
                 }
               }
             },

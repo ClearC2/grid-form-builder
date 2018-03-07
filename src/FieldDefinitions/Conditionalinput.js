@@ -12,7 +12,7 @@ export default class Conditionalinput extends Component {
     showDialog: false
   }
   static defaultProps = {
-    conditionOptions: ['is equal to', 'is not equal to', 'is between', 'contains:', 'does not contain'],
+    conditionOptions: ['is equal to', 'is not equal to', 'is between', 'contains:', 'does not contain', 'is greater than', 'is less than'],
     doubleFields: ['is between'] // conditionOptions part of this set will have two input fields. others only one.
   }
 
@@ -130,12 +130,12 @@ export default class Conditionalinput extends Component {
   }
 
   buildValueObject = (formValues) => {
-    const {field} = this.props
+    const {name} = this.props.config
     const {doubleFields} = this.state
     // get current values
     let condition = formValues.get('condition', '')
-    let low = formValues.get(`low ${field}`, '')
-    let high = formValues.get(`high ${field}`, '')
+    let low = formValues.get(`low ${name}`, '')
+    let high = formValues.get(`high ${name}`, '')
     if (!doubleFields.includes(condition)) {
       high = ''
     } else {

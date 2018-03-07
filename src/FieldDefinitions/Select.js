@@ -6,7 +6,7 @@ export default class Select extends Component {
     const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
-    const {label = name, keyword = {}} = config
+    const {label = name, keyword = {}, suppressBlankOption = false} = config
     const {options = []} = keyword
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
 
@@ -66,7 +66,7 @@ export default class Select extends Component {
           <strong style={styles.label}>{label}</strong>
         </div>
         <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')}>
-          <option key='blank' value='' />{/* {should all selects have a blank option?} */}
+          {!suppressBlankOption && <option key='blank' value='' /> /* {should all selects have a blank option?} */}
           {options.map((option, i) => <option key={i} value={option.value}>{option.label ? option.label : option.value}</option>)}
         </select>
       </div>
