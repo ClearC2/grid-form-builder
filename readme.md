@@ -396,8 +396,8 @@ dimensions?: object    // required, shape:
                 y?: number             // required, indicate veritcal position on the grid (0 - infinity)
                 w?: number             // required, indicate the number of horizontal grid slots the element will occupy (1 - 12)
                 h?: number             // required, indicate the number of veritcal grid slots the element will occupy (1 - infinity)
-                minH: number           // optional, if resizable, this specifices the smallest grid unit height this element can be shrunk to
-                minW: number           // optional, if resizable, this specifices the smallest grid unit width this element can be shrunk to
+                minH?: number           // optional, if resizable, this specifices the smallest grid unit height this element can be shrunk to
+                minW?: number           // optional, if resizable, this specifices the smallest grid unit width this element can be shrunk to
                                            
 config?:     object    // required, configuration options for the element, shape:
                 name?:       string    // required, name of the field, the value for this input is held under this key
