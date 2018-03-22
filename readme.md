@@ -58,6 +58,26 @@ initComponentIconLibrary({
 })
 ```
 
+### AJAX Client
+grid-form-builder allows you to pass down your project's axios client to handle async data fetches for things like typeahead options. To initialize your axios client in grid-form-builder, import the initFormBuilderAjax function from 'grid-form-builder' in the root of your application and pass in a config.ajax assignment like below.
+```javascript
+import {initFormBuilderAjax} from 'grid-form-builder'
+import axiosClient from './axiosClient'
+
+initFormBuilderAjax(config => { config.ajax = axiosClient })
+
+render(
+  (
+    <Provider store={store}>
+      <Example />
+    </Provider>
+  ),
+  document.getElementById('app')
+)
+
+```
+
+
 ### FormBuilder
 
 ```javascript
