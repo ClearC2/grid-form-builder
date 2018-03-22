@@ -60,10 +60,10 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
               'config': {
-                'name': 'selecttest',
-                'label': 'Select',
-                'type': 'select',
+                'name': 'multiselecttest',
+                'label': 'Multiselect',
                 'required': true,
+                'type': 'multiselect',
                 'keyword': {
                   'category': 'TASKS',
                   'options': [
@@ -86,14 +86,6 @@ export default class Example extends Component {
                     {
                       'label': 'Initial Meeting',
                       'value': 'Initial Meeting'
-                    },
-                    {
-                      'label': 'Kick Off Meeting',
-                      'value': 'Kick Off Meeting'
-                    },
-                    {
-                      'label': 'Internet Hub',
-                      'value': 'Internet Hub'
                     }
                   ]
                 }
@@ -212,7 +204,6 @@ export default class Example extends Component {
                 'label': 'Detail/Summary',
                 'type': 'radio',
                 'labelStyle': {
-                  // "marginTop":"-10pt",
                   'color': 'navy',
                   'fontSize': '11pt'
                 },
@@ -233,7 +224,10 @@ export default class Example extends Component {
                 'name': 'typeaheadtest',
                 'label': 'Typeahead',
                 'required': true,
-                'type': 'typeahead'
+                'type': 'typeahead',
+                'keyword': {
+                  'category': 'c2_company'
+                }
               }
             },
             {
@@ -306,10 +300,10 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 6, 'y': 2, 'h': 1, 'w': 6},
               'config': {
-                'name': 'multiselecttest',
-                'label': 'Multiselect',
+                'name': 'selecttest',
+                'label': 'Select',
+                'type': 'select',
                 'required': true,
-                'type': 'multiselect',
                 'keyword': {
                   'category': 'TASKS',
                   'options': [
@@ -332,6 +326,14 @@ export default class Example extends Component {
                     {
                       'label': 'Initial Meeting',
                       'value': 'Initial Meeting'
+                    },
+                    {
+                      'label': 'Kick Off Meeting',
+                      'value': 'Kick Off Meeting'
+                    },
+                    {
+                      'label': 'Internet Hub',
+                      'value': 'Internet Hub'
                     }
                   ]
                 }

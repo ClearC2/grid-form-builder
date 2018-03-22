@@ -38,13 +38,20 @@ export default class Typeahead extends Component {
       }
     }
     // This is where we need to make the magic happen. - JRA 3/22/2018
-    // If all we do is handleOnChange it will only update itself and have no effect on the rest of the form values. - JRA 3/22/2018
+    // If all we do is handleOnChange it will only update it's own field value with the entire typeahead object and have no effect on the rest of the form values. - JRA 3/22/2018
     handleOnChange(psudoEventObject)
   }
 
   loadOptions = search => {
     const {config = {}, formValues = Map()} = this.props
-    const {name = null} = config
+    const {name = null, keyword = {}} = config
+    const {category = null} = keyword
+
+    if (!category) {
+      console.error(`The JSON schema representation for ${name} does not have a keyword category. The keyword category is mandatory for this field type to search for results.`)
+      return Promise.resolve({options: []})
+    }
+
     const currentValue = formValues.get(name, {value: '', label: ''})
 
     let values = []
@@ -58,7 +65,7 @@ export default class Typeahead extends Component {
     }
 
     if (search.length > this.props.minChars) {
-      return GFBConfig.ajax.get(`/api/typeahead/name/${name}/search/${search}`)
+      return GFBConfig.ajax.get(`/api/typeahead/name/${category}/search/${search}`)
         .then(resp => {
           return {options: values.concat(resp.data.data)}
         })
