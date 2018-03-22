@@ -203,11 +203,7 @@ export default class Example extends Component {
                 'name': 'Detail/Summary',
                 'label': 'Detail/Summary',
                 'type': 'radio',
-                'labelStyle': {
-                  'color': 'navy',
-                  'fontSize': '11pt'
-                },
-                'boxed': 'true',
+                'boxed': true,
                 'keyword': {
                   'options': [
                     {'label': 'Detail Only', 'value': 'Detail Only'},
