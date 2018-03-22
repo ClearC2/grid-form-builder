@@ -28,8 +28,16 @@ export default class Typeahead extends Component {
 
   setShouldRemount = (shouldRemount = true) => this.setState({shouldRemount})
 
-  handleChange = (typeahead) => {
-    console.log(typeahead)
+  handleChange = typeahead => {
+    const {handleOnChange, config = {}} = this.props
+    const {name = null} = config
+    const psudoEventObject = {
+      target: {
+        value: typeahead,
+        name
+      }
+    }
+    handleOnChange(psudoEventObject)
   }
 
   loadOptions = search => {
