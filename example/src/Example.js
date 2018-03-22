@@ -230,35 +230,10 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 6, 'y': 5, 'h': 1, 'w': 6},
               'config': {
-                'name': 'multiselecttest',
-                'label': 'Multiselect',
+                'name': 'typeaheadtest',
+                'label': 'Typeahead',
                 'required': true,
-                'type': 'multiselect',
-                'keyword': {
-                  'category': 'TASKS',
-                  'options': [
-                    {
-                      'label': 'Contract Signing',
-                      'value': 'Contract Signing'
-                    },
-                    {
-                      'label': 'Customer Service',
-                      'value': 'Customer Service'
-                    },
-                    {
-                      'label': 'Demonstration',
-                      'value': 'Demonstration'
-                    },
-                    {
-                      'label': 'Executive Meeting',
-                      'value': 'Executive Meeting'
-                    },
-                    {
-                      'label': 'Initial Meeting',
-                      'value': 'Initial Meeting'
-                    }
-                  ]
-                }
+                'type': 'typeahead'
               }
             },
             {
@@ -331,10 +306,35 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 6, 'y': 2, 'h': 1, 'w': 6},
               'config': {
-                'name': 'typeaheadtest',
-                'label': 'Typeahead',
+                'name': 'multiselecttest',
+                'label': 'Multiselect',
                 'required': true,
-                'type': 'typeahead'
+                'type': 'multiselect',
+                'keyword': {
+                  'category': 'TASKS',
+                  'options': [
+                    {
+                      'label': 'Contract Signing',
+                      'value': 'Contract Signing'
+                    },
+                    {
+                      'label': 'Customer Service',
+                      'value': 'Customer Service'
+                    },
+                    {
+                      'label': 'Demonstration',
+                      'value': 'Demonstration'
+                    },
+                    {
+                      'label': 'Executive Meeting',
+                      'value': 'Executive Meeting'
+                    },
+                    {
+                      'label': 'Initial Meeting',
+                      'value': 'Initial Meeting'
+                    }
+                  ]
+                }
               }
             },
             {

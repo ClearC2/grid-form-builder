@@ -37,6 +37,8 @@ export default class Typeahead extends Component {
         name
       }
     }
+    // This is where we need to make the magic happen. - JRA 3/22/2018
+    // If all we do is handleOnChange it will only update itself and have no effect on the rest of the form values. - JRA 3/22/2018
     handleOnChange(psudoEventObject)
   }
 
@@ -58,7 +60,7 @@ export default class Typeahead extends Component {
     if (search.length > this.props.minChars) {
       return GFBConfig.ajax.get(`/api/typeahead/name/${name}/search/${search}`)
         .then(resp => {
-          return {options: values.concat(resp.data.options)}
+          return {options: values.concat(resp.data.data)}
         })
     }
 
