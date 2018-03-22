@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Map} from 'immutable'
 import ReactSelect from 'react-select'
 import PropTypes from 'prop-types'
+import GFBConfig from '../config'
 
 class Placeholder extends Component {
   static propTypes = {
@@ -31,7 +32,7 @@ export default class Typeahead extends Component {
     console.log(typeahead)
   }
 
-  loadOptions = input => {
+  loadOptions = search => {
     const {config = {}, formValues = Map()} = this.props
     const {name = null} = config
     const currentValue = formValues.get(name, {value: '', label: ''})
@@ -42,13 +43,15 @@ export default class Typeahead extends Component {
       values.push({value: currentValue, label: currentValue})
     }
 
-    if (input.trim() !== '' && !values.some(o => o.value === input)) {
-      values.push({value: input, label: input})
+    if (search.trim() !== '' && !values.some(o => o.value === search)) {
+      values.push({value: search, label: search})
     }
 
-    if (input.length > this.props.minChars) {
-      console.log('Fetch Data From Here?', window.location.origin + `/api/typeahead/name/${name}/search/${input}`)
-      return Promise.resolve({options: values})
+    if (search.length > this.props.minChars) {
+      return GFBConfig.ajax.get(`/api/typeahead/name/${name}/search/${search}`)
+        .then(resp => {
+          return {options: values.concat(resp.data.options)}
+        })
     }
 
     return Promise.resolve({options: []})
