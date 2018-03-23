@@ -44,11 +44,11 @@ export default class Typeahead extends Component {
 
   loadOptions = search => {
     const {config = {}, formValues = Map()} = this.props
-    const {name = null, keyword = {}} = config
+    const {name = null, keyword = {}, url = ''} = config
     const {category = null} = keyword
 
-    if (!category) {
-      console.error(`The JSON schema representation for ${name} does not have a keyword category. The keyword category is mandatory for this field type to search for results.`)
+    if (!category && !url) {
+      console.error(`The JSON schema representation for ${name} does not have a keyword category or url. Either a keyword category or url is mandatory for this field type to search for results.`)
       return Promise.resolve({options: []})
     }
 
@@ -65,10 +65,19 @@ export default class Typeahead extends Component {
     }
 
     if (search.length > this.props.minChars) {
-      return GFBConfig.ajax.get(`/api/typeahead/name/${category}/search/${search}`)
-        .then(resp => {
-          return {options: values.concat(resp.data.data)}
-        })
+      if (url) {
+        return GFBConfig.ajax.get(`${url}/${search}`)
+          .then(resp => {
+            return {options: values.concat(resp.data.data)}
+          })
+      } else {
+        return GFBConfig.ajax.get(`/api/typeahead/name/${category}/search/${search}`)
+          .then(resp => {
+            return {options: values.concat(resp.data.data)}
+          })
+      }
+
+
     }
 
     return Promise.resolve({options: []})
