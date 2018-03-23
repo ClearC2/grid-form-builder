@@ -15,8 +15,8 @@ export default class Multiselect extends Component {
   }
 
   componentWillReceiveProps (props) {
-    let val = props.formValues.get(props.config.name)
-    if (val === []) {
+    let val = props.formValues.get(props.config.name, null)
+    if (!val && this.state.fieldValues !== []) {
       this.setState({fieldValues: []})
     }
   }
