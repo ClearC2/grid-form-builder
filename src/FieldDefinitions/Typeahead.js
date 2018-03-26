@@ -44,11 +44,11 @@ export default class Typeahead extends Component {
 
   loadOptions = search => {
     const {config = {}, formValues = Map()} = this.props
-    const {name = null, keyword = {}, url = ''} = config
-    const {category = null} = keyword
+    const {name = null, typeahead = {}} = config
+    const {key = null} = typeahead
 
-    if (!category && !url) {
-      console.error(`The JSON schema representation for ${name} does not have a keyword category or url. Either a keyword category or url is mandatory for this field type to search for results.`)
+    if (!key) {
+      console.error(`The JSON schema representation for ${name} does not have a typeahead key. A typeahead.key is required for this field type to search for results.`)
       return Promise.resolve({options: []})
     }
 
@@ -65,19 +65,10 @@ export default class Typeahead extends Component {
     }
 
     if (search.length > this.props.minChars) {
-      if (url) {
-        return GFBConfig.ajax.get(`${url}/${search}`)
-          .then(resp => {
-            return {options: values.concat(resp.data.data)}
-          })
-      } else {
-        return GFBConfig.ajax.get(`/api/typeahead/name/${category}/search/${search}`)
-          .then(resp => {
-            return {options: values.concat(resp.data.data)}
-          })
-      }
-
-
+      return GFBConfig.ajax.get(`/api/typeahead/name/${key}/search/${search}`)
+        .then(resp => {
+          return {options: values.concat(resp.data.data)}
+        })
     }
 
     return Promise.resolve({options: []})
@@ -85,10 +76,11 @@ export default class Typeahead extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}, required = false} = config
+    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false} = config
     if (!name) return null
     const {label = name} = config
-    const value = formValues.get(name, {value: '', label: ''})
+    let value = formValues.get(name, null)
+    if (typeof value === 'string' && value.length > 0) value = {value, label: value}
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
 
     const styles = {
@@ -144,6 +136,7 @@ export default class Typeahead extends Component {
             onMouseDown={this.onMouseDown}
             className={className}
             name={name}
+            multi={multi}
             value={value}
             onChange={this.handleChange}
             loadOptions={this.loadOptions}

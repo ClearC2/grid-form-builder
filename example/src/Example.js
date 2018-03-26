@@ -6,7 +6,8 @@ export default class Example extends Component {
   state = {
     formValues: Map({
       inputtest: 'Clear C2, Inc.',
-      textareatest: '1234 Main Street'
+      textareatest: '1234 Main Street',
+      typeaheadtest: 'Clear C2, Inc.'
     }),
     inline: false,
     formSchema: {
@@ -220,9 +221,10 @@ export default class Example extends Component {
                 'name': 'typeaheadtest',
                 'label': 'Typeahead',
                 'required': true,
+                'multi': true,
                 'type': 'typeahead',
-                'keyword': {
-                  'category': 'c2_company'
+                'typeahead': {
+                  'key': 'c2_company'
                 }
               }
             },
