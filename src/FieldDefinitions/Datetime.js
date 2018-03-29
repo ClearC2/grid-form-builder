@@ -4,7 +4,7 @@ import {Map} from 'immutable'
 
 export default class Datetime extends Component {
   handleChange = val => {
-    const {handleOnChange = () => {}, Icon = null} = this.props
+    const {handleOnChange = () => {}} = this.props
     const field = this.props.config.name
     const value = typeof val === 'object' ? val.format('M/D/YYYY h:mm a') : val
     let e = {target: {name: field, value}}
@@ -19,6 +19,8 @@ export default class Datetime extends Component {
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -67,7 +69,7 @@ export default class Datetime extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <DateTime onMouseDown={this.onMouseDown} value={formValues.get(name, '')} onChange={this.handleChange} dateFormat='M/D/YYYY' className={className} />
+        <DateTime onMouseDown={this.onMouseDown} value={formValues.get(name, '')} onChange={this.handleChange} dateFormat='M/D/YYYY' className={className} inputProps={{disabled: disabled}} />
       </div>
     )
   }

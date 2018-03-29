@@ -36,6 +36,8 @@ export default class Multiselect extends Component {
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && this.state.fieldValues.length === 0 && required
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -66,6 +68,7 @@ export default class Multiselect extends Component {
       },
       input: {
         height: inline ? 'auto' : 25,
+        backgroundColor: disabled ? '#eee' : 'white',
         ...style
       },
       icon: {
@@ -95,6 +98,7 @@ export default class Multiselect extends Component {
           name={name}
           options={this.state.builtOptions}
           value={this.state.fieldValues}
+          disabled={disabled}
         />
       </div>
     )

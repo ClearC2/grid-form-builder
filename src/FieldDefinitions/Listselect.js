@@ -18,6 +18,10 @@ export default class Listselect extends Component {
   }
 
   handleOnChange = e => {
+    const {config = {}} = this.props
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
+    if (disabled) return
     const updatingValue = e.target.innerHTML
     let {value} = this.state
     if (value.indexOf(updatingValue) > -1) {
@@ -32,11 +36,20 @@ export default class Listselect extends Component {
     const {config = {}} = this.props
     const {keyword = {}} = config
     const {options = []} = keyword
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
+    if (disabled) return
     let values = options.map(options => options.value)
     this.setState({value: fromJS(values)})
   }
 
-  deselectAllOptions = () => this.setState({value: List()})
+  deselectAllOptions = () => {
+    const {config = {}} = this.props
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
+    if (disabled) return
+    this.setState({value: List()})
+  }
 
   componentDidUpdate = (p, s) => {
     const {field, handleOnChange = () => {}} = this.props
@@ -54,6 +67,8 @@ export default class Listselect extends Component {
     const {options = []} = keyword
     const {value = []} = this.state
     const warn = requiredWarning && value.size === 0 && required
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -88,7 +103,7 @@ export default class Listselect extends Component {
         flexGrow: inline ? 1 : 0,
         height: inline ? 'auto' : 'calc(100% - 21px)',
         resize: 'none',
-        backgroundColor: 'transparent',
+        backgroundColor: disabled ? '#eee' : 'transparent',
         minWidth: 90,
         marginTop: inline ? 25 : 0,
         ...style
@@ -134,8 +149,8 @@ export default class Listselect extends Component {
             })}
           </div>
           <div style={{display: 'flex', justifyContent: 'flex-end', height: 15, minHeight: 15}}>
-            <span onClick={this.selectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue'}} className='cursor-hand'>Select All</span>
-            <span onClick={this.deselectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue'}} className='cursor-hand'>Deselect All</span>
+            <span onClick={this.selectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue', cursor: 'pointer'}} >Select All</span>
+            <span onClick={this.deselectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue', cursor: 'pointer'}} >Deselect All</span>
           </div>
         </div>
       </div>

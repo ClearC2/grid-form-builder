@@ -11,6 +11,8 @@ export default class Textarea extends Component {
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -45,7 +47,7 @@ export default class Textarea extends Component {
         height: inline ? 'auto' : 'calc(100% - 21px)',
         paddingLeft: 5,
         resize: 'none',
-        backgroundColor: 'transparent',
+        backgroundColor: disabled ? '#eee' : 'white',
         borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         borderTop: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         borderLeft: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
@@ -70,7 +72,7 @@ export default class Textarea extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <textarea onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} name={name} value={formValues.get(name, '')} rows={rows} />
+        <textarea onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} name={name} value={formValues.get(name, '')} rows={rows} disabled={disabled} />
       </div>
     )
   }

@@ -44,6 +44,8 @@ export default class Multicheckbox extends Component {
     const {options = []} = keyword
     const {value} = this.state
     const boxStyle = !boxed ? {} : {border: '1px solid lightgrey', backgroundColor: '#f5f5f5'}
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -106,7 +108,7 @@ export default class Multicheckbox extends Component {
           {options.map((option, i) => {
             return (
               <label key={i} style={styles.label}>
-                <input className='radio-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} value={option.value} checked={value.indexOf(option.value) > -1} />
+                <input className='radio-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} value={option.value} checked={value.indexOf(option.value) > -1} disabled={disabled} />
                 {option.label ? option.label : option.value}
               </label>
             )

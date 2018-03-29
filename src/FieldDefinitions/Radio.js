@@ -9,6 +9,8 @@ export default class Radio extends Component {
     const {label = name, keyword = {}, boxed} = config
     const {options = []} = keyword
     const boxStyle = !boxed ? {} : {border: '1px solid lightgrey', backgroundColor: '#f5f5f5'}
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -71,7 +73,7 @@ export default class Radio extends Component {
           {options.map((option, i) => {
             return (
               <label key={i} style={styles.label}>
-                <input className='radio-grid-input' onChange={handleOnChange} style={styles.input} type='radio' name={name} value={option.value} checked={option.value.toLowerCase() === formValues.get(name, '').toLowerCase()} />
+                <input className='radio-grid-input' onChange={handleOnChange} style={styles.input} type='radio' name={name} value={option.value} checked={option.value.toLowerCase() === formValues.get(name, '').toLowerCase()} disabled={disabled} />
                 {option.label ? option.label : option.value}
               </label>
             )

@@ -82,6 +82,8 @@ export default class Typeahead extends Component {
     let value = formValues.get(name, null)
     if (typeof value === 'string' && value.length > 0) value = {value, label: value}
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -110,6 +112,9 @@ export default class Typeahead extends Component {
         background: 'transparent',
         ...labelStyle
       },
+      input: {
+        backgroundColor: disabled ? '#eee' : 'white'
+      },
       icon: {
         marginRight: 5,
         width: 15,
@@ -133,6 +138,7 @@ export default class Typeahead extends Component {
             <strong style={styles.label}>{label}</strong>
           </div>
           <ReactSelect.Async
+            style={styles.input}
             onMouseDown={this.onMouseDown}
             className={className}
             name={name}
@@ -140,6 +146,7 @@ export default class Typeahead extends Component {
             value={value}
             onChange={this.handleChange}
             loadOptions={this.loadOptions}
+            disabled={disabled}
           />
         </div>
       )

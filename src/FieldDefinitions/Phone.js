@@ -20,6 +20,8 @@ export default class Phone extends Component {
     const {label = name} = config
     const value = formValues.get(name, '')
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -53,7 +55,7 @@ export default class Phone extends Component {
         display: 'flex',
         flexGrow: inline ? 1 : 0,
         paddingLeft: 5,
-        backgroundColor: 'transparent',
+        backgroundColor: disabled ? '#eee' : 'white',
         borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
@@ -78,7 +80,7 @@ export default class Phone extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <Cleave options={{phone: true, phoneRegionCode: 'US', delimiter}} onMouseDown={this.onMouseDown} onChange={this.handleChange} style={styles.input} type='text' name={name} value={value}/>
+        <Cleave options={{phone: true, phoneRegionCode: 'US', delimiter}} onMouseDown={this.onMouseDown} onChange={this.handleChange} style={styles.input} type='text' name={name} value={value} disabled={disabled} />
       </div>
     )
   }

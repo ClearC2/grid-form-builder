@@ -4,11 +4,10 @@ import {Map} from 'immutable'
 
 export default class Date extends Component {
   handleChange = val => {
-    const {handleOnChange = () => {}, Icon = null} = this.props
+    const {handleOnChange = () => {}} = this.props
     const field = this.props.config.name
     const value = typeof val === 'object' ? val.format('M/D/YYYY') : val
     let e = {target: {name: field, value}}
-    console.log(e, 'e loggggg')
     handleOnChange(e)
   }
   onMouseDown = e => {
@@ -16,10 +15,12 @@ export default class Date extends Component {
   }
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
+    const {labelStyle = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -69,7 +70,7 @@ export default class Date extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <DateTime onMouseDown={this.onMouseDown} value={formValues.get(name, '')} onChange={this.handleChange} dateFormat='M/D/YYYY' timeFormat={false} className={className} />
+        <DateTime onMouseDown={this.onMouseDown} value={formValues.get(name, '')} onChange={this.handleChange} dateFormat='M/D/YYYY' timeFormat={false} className={className} inputProps={{disabled: disabled}} />
       </div>
     )
   }

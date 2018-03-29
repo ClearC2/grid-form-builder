@@ -9,6 +9,8 @@ export default class Select extends Component {
     const {label = name, keyword = {}, suppressBlankOption = false} = config
     const {options = []} = keyword
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -41,6 +43,7 @@ export default class Select extends Component {
         display: 'flex',
         flexGrow: inline ? 1 : 0,
         height: inline ? 'auto' : 25,
+        backgroundColor: disabled ? '#eee' : 'white',
         borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
@@ -65,7 +68,7 @@ export default class Select extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')}>
+        <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')} disabled={disabled}>
           {!suppressBlankOption && <option key='blank' value='' /> /* {should all selects have a blank option?} */}
           {options.map((option, i) => <option key={i} value={option.value}>{option.label ? option.label : option.value}</option>)}
         </select>

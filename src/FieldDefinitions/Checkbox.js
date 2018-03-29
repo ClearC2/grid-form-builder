@@ -21,6 +21,8 @@ export default class Checkbox extends Component {
     let value = formValues.get(name, '')
     if (typeof value === 'string') value = value.toLowerCase() === 'yes'
     value = !!value
+    let {readonly = false, disabled = false} = config
+    disabled = disabled || readonly
 
     const styles = {
       container: {
@@ -62,7 +64,7 @@ export default class Checkbox extends Component {
       <div style={styles.container}>
         <label style={styles.label}>
           {Icon && <Icon style={styles.icon} />}
-          <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} />
+          <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} disabled={disabled} />
           {label}
           {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
         </label>
