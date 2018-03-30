@@ -42,6 +42,10 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
   let fields = fieldsToUpdate
   if (!Array.isArray(fields)) fields = [fields]
   let formValues = currentFormValues
+  if (typeof formValues === 'undefined') {
+    console.error('You did something wrong, grid form builder is trying to update values but there are no values.')
+    return Map()
+  }
   fields.map(field => {
     formValues = formValues.set(field.target.name, field.target.value)
   })
