@@ -29,10 +29,11 @@ export default class Multicheckbox extends Component {
   }
 
   componentDidUpdate = (p, s) => {
-    const {field, handleOnChange = () => {}} = this.props
+    const {config = {}, handleOnChange = () => {}} = this.props
+    const {name} = config
     const {value} = this.state
     if (value.size !== s.value.size) {
-      handleOnChange({target: {name: field, value}})
+      handleOnChange({target: {name: name, value}})
     }
   }
 
