@@ -24,8 +24,7 @@ export default class Example extends Component {
                 'label': 'Input',
                 'type': 'input',
                 'icon': 'facebook',
-                'iconStyle': {'color': 'blue'},
-                'readonly': true
+                'iconStyle': {'color': 'blue'}
               }
             },
             {
@@ -35,8 +34,7 @@ export default class Example extends Component {
                 'name': 'phonetest',
                 'label': 'Phone',
                 'type': 'phone',
-                'delimiter': '-',
-                'readonly': true
+                'delimiter': '-'
               }
             },
             // {
@@ -65,7 +63,6 @@ export default class Example extends Component {
                 'name': 'multiselecttest',
                 'label': 'Multiselect',
                 'required': true,
-                'readonly': true,
                 'type': 'multiselect',
                 'keyword': {
                   'category': 'TASKS',
@@ -100,8 +97,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'checkboxtest',
                 'label': 'Checkbox',
-                'type': 'checkbox',
-                'readonly': true
+                'type': 'checkbox'
               }
             },
             {
@@ -110,7 +106,6 @@ export default class Example extends Component {
               'config': {
                 'name': 'datetest',
                 'label': 'Date',
-                'readonly': true,
                 'type': 'date'
               }
             },
@@ -120,8 +115,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'datetimetest',
                 'label': 'Date Time',
-                'type': 'datetime',
-                'readonly': true
+                'type': 'datetime'
               }
             },
             {
@@ -131,7 +125,6 @@ export default class Example extends Component {
                 'name': 'listselecttest',
                 'label': 'List Select',
                 'type': 'listselect',
-                'readonly': false,
                 'keyword': {
                   'category': 'TASKS',
                   'options': [
@@ -174,7 +167,6 @@ export default class Example extends Component {
                 'name': 'multicheckboxtest',
                 'label': 'Multi-Checkbox',
                 'type': 'multicheckbox',
-                'readonly': true,
                 'keyword': {
                   'category': 'TASKS',
                   'options': [
@@ -210,7 +202,6 @@ export default class Example extends Component {
                 'label': 'Detail/Summary',
                 'type': 'radio',
                 'boxed': true,
-                'readonly': true,
                 'required': true,
                 'keyword': {
                   'options': [
@@ -229,7 +220,6 @@ export default class Example extends Component {
                 'label': 'Typeahead',
                 'required': true,
                 'multi': true,
-                'readonly': true,
                 'type': 'typeahead',
                 'typeahead': {
                   'key': 'c2_company'
@@ -243,7 +233,6 @@ export default class Example extends Component {
                 'name': 'radiotest',
                 'label': 'Radio',
                 'type': 'radio',
-                'readonly': true,
                 'required': true,
                 'keyword': {
                   'category': 'TASKS',
@@ -279,8 +268,7 @@ export default class Example extends Component {
                 'name': 'textareatest',
                 'label': 'Textarea',
                 'required': true,
-                'type': 'textarea',
-                'readonly': true
+                'type': 'textarea'
               }
             },
             {
@@ -289,7 +277,6 @@ export default class Example extends Component {
               'config': {
                 'name': 'textareatest',
                 'label': 'Textarea',
-                'required': true,
                 'type': 'textarea'
               }
             },
@@ -312,7 +299,6 @@ export default class Example extends Component {
                 'name': 'selecttest',
                 'label': 'Select',
                 'type': 'select',
-                'readonly': true,
                 'keyword': {
                   'category': 'TASKS',
                   'options': [
