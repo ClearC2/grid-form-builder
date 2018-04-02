@@ -17,13 +17,12 @@ export default class Multicheckbox extends Component {
     }
   }
 
-  handleOnChange = e => {
-    const updatingValue = e.target.value
+  handleOnChange = changingVal => {
     let {value} = this.state
-    if (value.indexOf(updatingValue) > -1) {
-      value = value.filter(option => option !== updatingValue)
+    if (value.indexOf(changingVal) > -1) {
+      value = value.filter(option => option !== changingVal)
     } else {
-      value = value.push(updatingValue)
+      value = value.push(changingVal)
     }
     this.setState({value})
   }
@@ -109,7 +108,7 @@ export default class Multicheckbox extends Component {
           {options.map((option, i) => {
             return (
               <label key={i} style={styles.label}>
-                <input className='radio-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} value={option.value} checked={value.indexOf(option.value) > -1} disabled={disabled} />
+                <input className='radio-grid-input' onChange={() => this.handleOnChange(option.value)} style={styles.input} type='checkbox' name={name} value={option.value} checked={value.indexOf(option.value) > -1} disabled={disabled} />
                 {option.label ? option.label : option.value}
               </label>
             )

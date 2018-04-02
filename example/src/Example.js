@@ -172,23 +172,23 @@ export default class Example extends Component {
                   'options': [
                     {
                       'label': 'Contract Signing',
-                      'value': '1'
+                      'value': 1
                     },
                     {
                       'label': 'Customer Service',
-                      'value': '2'
+                      'value': 2
                     },
                     {
                       'label': 'Demonstration',
-                      'value': '3'
+                      'value': 3
                     },
                     {
                       'label': 'Executive Meeting',
-                      'value': '4'
+                      'value': 'N/A'
                     },
                     {
                       'label': 'Initial Meeting',
-                      'value': 'Initial Meeting'
+                      'value': 'Exception'
                     }
                   ]
                 }
