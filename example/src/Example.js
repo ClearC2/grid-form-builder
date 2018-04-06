@@ -432,7 +432,7 @@ export default class Example extends Component {
           formSchema={formSchema.form}
           formValues={this.state.formValues}
           handleOnChange={this.handleOnChange}
-          draggable={false}
+          draggable
           inline={this.state.inline}
         />
       </div>
