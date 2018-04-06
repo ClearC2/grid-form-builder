@@ -112,7 +112,7 @@ export default class FormBuilder extends Component {
   uppercaseFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 
   render = () => {
-    let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false} = this.props
+    let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}} = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
@@ -176,7 +176,7 @@ export default class FormBuilder extends Component {
       }
     })
     return (
-      <div style={{height: '100%', minWidth: inline ? 700 : 400}}>
+      <div style={{height: '100%', minWidth: inline ? 700 : 400, ...style}}>
         <WidgetGrid compName={formName} verticalCompact={false} margin={[40, 5]} rowHeight={inline ? 27 : 45}>
           {normalFields}
           {dateFields}
