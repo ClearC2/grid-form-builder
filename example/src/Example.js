@@ -18,7 +18,7 @@ export default class Example extends Component {
           'layout': [
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 0, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 0, 'h': 1, 'w': 3},
               'config': {
                 'name': 'inputtest',
                 'label': 'Input',
@@ -29,7 +29,34 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 6, 'y': 0, 'h': 1, 'w': 6},
+              'dimensions': {'x': 3, 'y': 0, 'h': 1, 'w': 3},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input',
+                'type': 'input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 0, 'h': 1, 'w': 3},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input',
+                'type': 'input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 9, 'y': 0, 'h': 1, 'w': 3},
+              'config': {
+                'name': 'inputtest',
+                'label': 'Input',
+                'type': 'input'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 6},
               'config': {
                 'name': 'phonetest',
                 'label': 'Phone',
@@ -37,15 +64,6 @@ export default class Example extends Component {
                 'delimiter': '-'
               }
             },
-            // {
-            //   'type': "field",
-            //   'dimensions': {x: 0, y: 0, h: 5, w: 3},
-            //   'config': {
-            //     'name': "conditionTable",
-            //     'type': "Customcomponent",
-            //     'component': 'Conditiontable'
-            //   }
-            // },
             {
               'type': 'field',
               'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
