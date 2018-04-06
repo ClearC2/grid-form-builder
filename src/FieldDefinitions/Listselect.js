@@ -75,7 +75,8 @@ export default class Listselect extends Component {
         display: 'flex',
         flex: 1,
         flexDirection: inline ? 'row' : 'column',
-        background: 'transparent'
+        background: 'transparent',
+        minWidth: 177
       },
       labelContainer: {
         display: 'flex',
