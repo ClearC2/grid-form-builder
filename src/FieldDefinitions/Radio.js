@@ -18,6 +18,7 @@ export default class Radio extends Component {
         flex: 1,
         flexDirection: inline ? 'row' : 'column',
         background: 'transparent',
+        minWidth: 177,
         ...boxStyle
       },
       labelContainer: {
