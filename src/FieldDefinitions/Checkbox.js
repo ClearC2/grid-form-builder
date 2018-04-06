@@ -29,7 +29,8 @@ export default class Checkbox extends Component {
         display: 'flex',
         flex: 1,
         flexDirection: 'row',
-        background: 'transparent'
+        background: 'transparent',
+        minWidth: 177
       },
       label: {
         display: 'flex',
