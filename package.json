@@ -30,7 +30,8 @@
     "ignore": [
       "/dist/",
       "/theme/",
-      "/.yarn/"
+      "/.yarn/",
+      "/lib/"
     ]
   },
   "devDependencies": {
