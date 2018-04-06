@@ -114,7 +114,7 @@ export default class Typeahead extends Component {
       },
       input: {
         backgroundColor: disabled ? '#eee' : 'white',
-        minWidth: 176
+        minWidth: 177
       },
       icon: {
         marginRight: 5,

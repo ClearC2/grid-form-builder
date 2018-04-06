@@ -49,7 +49,7 @@ export default class Select extends Component {
         borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         paddingLeft: 5,
-        minWidth: 90,
+        minWidth: 177,
         ...style
       },
       icon: {
