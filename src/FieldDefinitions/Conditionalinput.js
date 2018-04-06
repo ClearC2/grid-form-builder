@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Map, Set, List} from 'immutable'
-import {Portal} from 'react-portal'
 import {Dialog} from 'c2-dialog'
 import ReactDom from 'react-dom'
 import FormBuilder from '../GridFormBuilder'
@@ -162,15 +161,13 @@ export default class Conditionalinput extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
     const {label = name} = config
-    const value = formValues.get(name, '')
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
     const hideDisplay = !(this.state.formValues.get(`low ${this.props.config.name}`, false) || this.state.formValues.get(`high ${this.props.config.name}`, false))
-
 
     const styles = {
       container: {
@@ -209,7 +206,7 @@ export default class Conditionalinput extends Component {
         borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        minWidth: 90,
+        minWidth: 177,
         color: '#2b71e2',
         height: inline ? 'auto' : 25,
         ...style
@@ -223,7 +220,6 @@ export default class Conditionalinput extends Component {
       }
     }
 
-
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
@@ -236,16 +232,16 @@ export default class Conditionalinput extends Component {
         </div>
         {this.state.showDialog &&
         <Dialog ref={`conditionalInput-${name}-dialog`} size={{width: '40%', height: '180px'}}
-                style={{
-                  backgroundColor: '#f5f5f5',
-                  border: '2px solid #36a9e1',
-                  position: 'fixed',
-                  top: `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
-                  left: `${this.state.fieldPos.left + 100}px`,
-                  bottom: '100px'
-                }}
-                enableResizing={true}
-                disableDragging={false}
+          style={{
+            backgroundColor: '#f5f5f5',
+            border: '2px solid #36a9e1',
+            position: 'fixed',
+            top: `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
+            left: `${this.state.fieldPos.left + 100}px`,
+            bottom: '100px'
+          }}
+          enableResizing
+          disableDragging={false}
         >
           <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
             <span>&times;</span>
