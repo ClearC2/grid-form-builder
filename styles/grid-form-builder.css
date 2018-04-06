@@ -132,7 +132,8 @@ div.Select-input {
   height: 27px;
   display: flex;
   flex-direction: column;
-  flex: 1
+  flex: 1;
+  min-width: 177px;
 }
 
 .date-wrapper-grid-input > input {
