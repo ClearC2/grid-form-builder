@@ -196,7 +196,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 2, 'h': 2, 'w': 2},
+              'dimensions': {'x': 0, 'y': 2, 'h': 2, 'w': 6},
               'config': {
                 'name': 'Detail/Summary',
                 'label': 'Detail/Summary',
