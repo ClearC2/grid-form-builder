@@ -176,7 +176,7 @@ export default class FormBuilder extends Component {
       }
     })
     return (
-      <div style={{height: '100%', minWidth: inline ? 700 : 400, ...style}}>
+      <div style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
         <WidgetGrid compName={formName} verticalCompact={false} margin={[40, 5]} rowHeight={inline ? 27 : 45}>
           {normalFields}
           {dateFields}
