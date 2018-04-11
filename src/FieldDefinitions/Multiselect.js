@@ -69,7 +69,7 @@ export default class Multiselect extends Component {
       input: {
         height: inline ? 'auto' : 25,
         backgroundColor: disabled ? '#eee' : 'white',
-        minWidth: 177,
+        minWidth: 170,
         ...style
       },
       icon: {
