@@ -65,7 +65,7 @@ export default class Typeahead extends Component {
     }
 
     if (search.length > this.props.minChars) {
-      return GFBConfig.ajax.get(`/api/typeahead/name/${key}/search/${search}`)
+      return GFBConfig.ajax.get(`/typeahead/name/${key}/search/${search}`)
         .then(resp => {
           return {options: values.concat(resp.data.data)}
         })
@@ -132,7 +132,7 @@ export default class Typeahead extends Component {
       return <Placeholder handleMount={this.setShouldRemount} />
     } else {
       return (
-        <div style={styles.container} >
+        <div style={styles.container}>
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
