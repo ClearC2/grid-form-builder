@@ -5345,9 +5345,9 @@ react-select@^1.2.1:
     prop-types "^15.5.8"
     react-input-autosize "^2.1.2"
 
-react-sizeme@^2.3.6:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/react-sizeme/-/react-sizeme-2.4.2.tgz#9e1683f926f92b3db7881d09f9efa3879e8dfde2"
+react-sizeme@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-sizeme/-/react-sizeme-2.4.1.tgz#c087da165416548543136860612c4bbe5be64c37"
   dependencies:
     element-resize-detector "^1.1.12"
     invariant "^2.2.2"
