@@ -32,7 +32,7 @@ export default class Multiselect extends Component {
 
   render = () => {
     const {inline, config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}} = config
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && this.state.fieldValues.length === 0 && required
@@ -44,7 +44,8 @@ export default class Multiselect extends Component {
         display: 'flex',
         flex: 1,
         flexDirection: inline ? 'row' : 'column',
-        background: 'transparent'
+        background: 'transparent',
+        ...containerStyle
       },
       labelContainer: {
         display: 'flex',

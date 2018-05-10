@@ -7,7 +7,7 @@ export default class Textarea extends Component {
   }
   render = () => {
     const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, style = {}, name = null, rows = 4, iconStyle = {}, required = false} = config
+    const {labelStyle = {}, style = {}, name = null, rows = 4, iconStyle = {}, required = false, containerStyle = {}} = config
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
@@ -20,7 +20,8 @@ export default class Textarea extends Component {
         flex: 1,
         flexDirection: inline ? 'row' : 'column',
         background: 'transparent',
-        minWidth: 177
+        minWidth: 177,
+        ...containerStyle
       },
       labelContainer: {
         display: 'flex',

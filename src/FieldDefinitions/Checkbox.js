@@ -15,7 +15,7 @@ export default class Checkbox extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}} = config
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, '')
@@ -30,7 +30,8 @@ export default class Checkbox extends Component {
         flex: 1,
         flexDirection: 'row',
         background: 'transparent',
-        minWidth: 177
+        minWidth: 177,
+        ...containerStyle
       },
       label: {
         display: 'flex',

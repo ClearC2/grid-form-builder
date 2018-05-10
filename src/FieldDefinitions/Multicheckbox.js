@@ -38,7 +38,7 @@ export default class Multicheckbox extends Component {
 
   render = () => {
     const {inline, config = {}, Icon = null} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}} = config
     if (!name) return null
     const {label = name, keyword = {}, boxed} = config
     const {options = []} = keyword
@@ -54,7 +54,8 @@ export default class Multicheckbox extends Component {
         flexDirection: inline ? 'row' : 'column',
         background: 'transparent',
         minWidth: 177,
-        ...boxStyle
+        ...boxStyle,
+        ...containerStyle
       },
       labelContainer: {
         display: 'flex',

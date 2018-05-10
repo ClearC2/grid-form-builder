@@ -15,7 +15,7 @@ export default class Datetime extends Component {
   }
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}, required = false} = config
+    const {labelStyle = {}, name = null, iconStyle = {}, required = false, containerStyle = {}} = config
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
@@ -28,7 +28,8 @@ export default class Datetime extends Component {
         flex: 1,
         flexDirection: inline ? 'row' : 'column',
         background: 'transparent',
-        height: inline ? 'auto' : 25
+        height: inline ? 'auto' : 25,
+        ...containerStyle
       },
       labelContainer: {
         display: 'flex',

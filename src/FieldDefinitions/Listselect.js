@@ -61,7 +61,7 @@ export default class Listselect extends Component {
 
   render = () => {
     const {inline, config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}} = config
     if (!name) return null
     const {label = name, keyword = {}} = config
     const {options = []} = keyword
@@ -76,7 +76,8 @@ export default class Listselect extends Component {
         flex: 1,
         flexDirection: inline ? 'row' : 'column',
         background: 'transparent',
-        minWidth: 177
+        minWidth: 177,
+        ...containerStyle
       },
       labelContainer: {
         display: 'flex',

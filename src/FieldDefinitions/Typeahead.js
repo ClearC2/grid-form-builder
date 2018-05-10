@@ -76,7 +76,7 @@ export default class Typeahead extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false, style = {}} = config
+    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false, style = {}, containerStyle = {}} = config
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, null)
@@ -90,7 +90,8 @@ export default class Typeahead extends Component {
         display: 'flex',
         flex: 1,
         flexDirection: inline ? 'row' : 'column',
-        background: 'transparent'
+        background: 'transparent',
+        ...containerStyle
       },
       labelContainer: {
         display: 'flex',
