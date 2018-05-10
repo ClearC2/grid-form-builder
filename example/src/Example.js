@@ -241,6 +241,9 @@ export default class Example extends Component {
                 'type': 'typeahead',
                 'typeahead': {
                   'key': 'c2_company'
+                },
+                'style': {
+                  'width': '150px'
                 }
               }
             },

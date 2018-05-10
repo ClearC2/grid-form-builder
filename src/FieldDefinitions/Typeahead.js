@@ -76,7 +76,7 @@ export default class Typeahead extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false} = config
+    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false, style = {}} = config
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, null)
@@ -114,7 +114,8 @@ export default class Typeahead extends Component {
       },
       input: {
         backgroundColor: disabled ? '#eee' : 'white',
-        minWidth: 177
+        minWidth: 177,
+        ...style
       },
       icon: {
         marginRight: 5,
@@ -139,7 +140,7 @@ export default class Typeahead extends Component {
             <strong style={styles.label}>{label}</strong>
           </div>
           <ReactSelect.Async
-            style={styles.input}
+            style={style}
             onMouseDown={this.onMouseDown}
             className={className}
             name={name}
