@@ -242,7 +242,7 @@ export default class Example extends Component {
                 'typeahead': {
                   'key': 'c2_company'
                 },
-                'customStyle': {
+                'style': {
                   'width': '150px'
                 }
               }
