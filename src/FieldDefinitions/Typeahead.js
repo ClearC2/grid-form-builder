@@ -45,7 +45,7 @@ export default class Typeahead extends Component {
   loadOptions = search => {
     const {config = {}, formValues = Map()} = this.props
     const {name = null, typeahead = {}} = config
-    const {key = null} = typeahead
+    const {key = null, duplication = false} = typeahead
 
     if (!key) {
       console.error(`The JSON schema representation for ${name} does not have a typeahead key. A typeahead.key is required for this field type to search for results.`)
@@ -67,7 +67,8 @@ export default class Typeahead extends Component {
     if (search.length > this.props.minChars) {
       return GFBConfig.ajax.get(`/typeahead/name/${key}/search/${search}`)
         .then(resp => {
-          return {options: values.concat(resp.data.data)}
+          const results = resp.data.data.map(value => { value.duplication = duplication })
+          return {options: values.concat(results)}
         })
     }
 
