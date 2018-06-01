@@ -67,7 +67,10 @@ export default class Typeahead extends Component {
     if (search.length > this.props.minChars) {
       return GFBConfig.ajax.get(`/typeahead/name/${key}/search/${search}`)
         .then(resp => {
-          const results = resp.data.data.map(value => { value.duplication = duplication })
+          const results = resp.data.data.map(value => {
+            value.duplication = duplication
+            return value
+          })
           return {options: values.concat(results)}
         })
     }
