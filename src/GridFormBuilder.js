@@ -123,7 +123,7 @@ export default class FormBuilder extends Component {
     let {layout = []} = jsonschema
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
     layout.map((field, i) => {
-      const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}} = field
+      const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
       let {type = 'input', icon = ''} = config
       type = this.uppercaseFirstLetter(type)
       icon = this.uppercaseFirstLetter(icon)
@@ -144,7 +144,7 @@ export default class FormBuilder extends Component {
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
         )
-      } else if (type === 'Customcomponent') {
+      } else if (Type === 'Customcomponent') {
         normalFields.push(
           <Component
             requiredWarning={requiredWarning}
