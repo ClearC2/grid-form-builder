@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import WidgetGrid from './WidgetGrid'
-import {Map, fromJS} from 'immutable'
+import {Map} from 'immutable'
 import Input from './FieldDefinitions/Input'
 import Textarea from './FieldDefinitions/Textarea'
 import Datetime from './FieldDefinitions/Datetime'
@@ -16,12 +16,6 @@ import Listselect from './FieldDefinitions/Listselect'
 import Conditionalinput from './FieldDefinitions/Conditionalinput'
 import Multiselect from './FieldDefinitions/Multiselect'
 import Phone from './FieldDefinitions/Phone'
-
-let validComponents = Map()
-export function initCustomFormComponents (defs = Map()) {
-  defs = fromJS(defs)
-  validComponents = defs
-}
 
 let IconLibrary = {}
 export function initComponentIconLibrary (defs = {}) {
@@ -52,24 +46,11 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
   return formValues
 }
 
-class Customcomponent extends Component {
-  render = () => {
-    const Component = validComponents.get((this.props.config.component + '').toLowerCase())
-    if (Component) {
-      return (
-        <div style={{display: 'flex', flex: 1, flexDirection: 'row'}}>
-          <Component {...this.props} />
-        </div>
-      )
-    } else {
-      return (
-        <div />
-      )
-    }
-  }
+let FormComponents = { Input, Textarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone }
+export function initCustomFormComponents (defs = {}) {
+  defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
+  FormComponents = {...FormComponents, ...defs}
 }
-
-const FormComponents = { Input, Textarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Customcomponent, Phone }
 
 export default class FormBuilder extends Component {
   static propTypes = {
