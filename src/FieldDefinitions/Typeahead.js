@@ -32,7 +32,8 @@ export default class Typeahead extends Component {
     const {handleOnChange, config = {}} = this.props
     const {name = null} = config
     Object.keys(typeahead).forEach(field => {
-      const value = typeahead[field]
+      let value = typeahead[field]
+      if (field === 'duplication') value = typeahead.value
       if (field === 'label') field = name
       if (field !== 'value') {
         handleOnChange({
