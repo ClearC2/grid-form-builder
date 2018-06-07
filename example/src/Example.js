@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
-import {FormBuilder, updateFormValues} from '../../src/index'
+import {FormBuilder} from '../../src/index'
 
 export default class Example extends Component {
   state = {
@@ -237,13 +237,9 @@ export default class Example extends Component {
                 'name': 'typeaheadtest',
                 'label': 'Typeahead',
                 'required': true,
-                'multi': true,
                 'type': 'typeahead',
                 'typeahead': {
                   'key': 'c2_company'
-                },
-                'style': {
-                  'width': '150px'
                 }
               }
             },
@@ -432,7 +428,11 @@ export default class Example extends Component {
 
   toggleInline = () => this.setState({inline: !this.state.inline})
 
-  handleOnChange = e => this.setState({formValues: updateFormValues(e, this.state.formValues)})
+  handleOnChange = e => {
+    this.setState(s => {
+      return {formValues: s.formValues.set(e.target.name, e.target.value)}
+    })
+  }
 
   render = () => {
     const {formSchema} = this.state
@@ -453,7 +453,6 @@ export default class Example extends Component {
           formSchema={formSchema.form}
           formValues={this.state.formValues}
           handleOnChange={this.handleOnChange}
-          draggable
           inline={this.state.inline}
         />
       </div>

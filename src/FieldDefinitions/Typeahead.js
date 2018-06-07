@@ -31,15 +31,18 @@ export default class Typeahead extends Component {
   handleChange = typeahead => {
     const {handleOnChange, config = {}} = this.props
     const {name = null} = config
-    const psudoEventObject = {
-      target: {
-        value: typeahead,
-        name
+    Object.keys(typeahead).forEach(field => {
+      const value = typeahead[field]
+      if (field === 'label') field = name
+      if (field !== 'duplication' && field !== 'value') {
+        handleOnChange({
+          target: {
+            name: field,
+            value
+          }
+        })
       }
-    }
-    // This is where we need to make the magic happen. - JRA 3/22/2018
-    // If all we do is handleOnChange it will only update it's own field value with the entire typeahead object and have no effect on the rest of the form values. - JRA 3/22/2018
-    handleOnChange(psudoEventObject)
+    })
   }
 
   loadOptions = search => {

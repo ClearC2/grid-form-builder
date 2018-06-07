@@ -506,7 +506,7 @@ const returnTypeaheadValues = (name, search) => {
 }
 
 module.exports = function (app) {
-  app.get(`/api/typeahead/name/:name/search/:search`, function (req, res) {
+  app.get(`/typeahead/name/:name/search/:search`, function (req, res) {
     const name = req.params.name
     const search = req.params.search
     if (!utils.ensureParameter(name, res)) return
