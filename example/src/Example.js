@@ -239,7 +239,8 @@ export default class Example extends Component {
                 'required': true,
                 'type': 'typeahead',
                 'typeahead': {
-                  'key': 'c2_company'
+                  'key': 'c2_company',
+                  'duplication': true
                 }
               }
             },
