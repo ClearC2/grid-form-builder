@@ -430,9 +430,14 @@ export default class Example extends Component {
   toggleInline = () => this.setState({inline: !this.state.inline})
 
   handleOnChange = e => {
+    const input = e.target
     this.setState(s => {
-      return {formValues: s.formValues.set(e.target.name, e.target.value)}
+      return {formValues: s.formValues.set(input.name, input.value)}
     })
+  }
+
+  onSubmit = () => {
+    console.log(this.exampleForm.validate())
   }
 
   render = () => {
@@ -448,8 +453,10 @@ export default class Example extends Component {
           justifyContent: 'center'
         }}>
           <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
+          <button onClick={this.onSubmit} style={{marginLeft: 10}}>Submit</button>
         </div>
         <FormBuilder
+          ref={ref => { this.exampleForm = ref }}
           formName={formSchema.form.name}
           formSchema={formSchema.form}
           formValues={this.state.formValues}

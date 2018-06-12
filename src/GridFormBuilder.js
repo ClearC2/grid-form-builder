@@ -90,6 +90,32 @@ export default class FormBuilder extends Component {
     else handleSubmit()
   }
 
+  validate = () => {
+    let {formSchema = Map(), formValues = Map()} = this.props
+    formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
+    formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
+    let {form, jsonschema} = formSchema
+    jsonschema = jsonschema || form || {}
+    let {layout = []} = jsonschema
+    layout = (typeof layout.toJS === 'function') ? layout.toJS() : layout
+    let reasons = []
+    layout.map(field => {
+      const {config = {}} = field
+      const {required = false, name, label = name} = config
+      if (required && formValues.get(name, '').length === 0) {
+        reasons.push({
+          reason: 'required',
+          message: `${label} cannot be blank.`,
+          description: `The field ${name} is marked as required, but its value is empty.`
+        })
+      }
+    })
+    if (reasons.length > 0) {
+      this.setState({requiredWarning: true})
+    }
+    return reasons
+  }
+
   uppercaseFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 
   render = () => {
