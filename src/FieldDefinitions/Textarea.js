@@ -7,7 +7,7 @@ export default class Textarea extends Component {
   }
   render = () => {
     const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, style = {}, name = null, rows = 4, iconStyle = {}, required = false, containerStyle = {}} = config
+    const {labelStyle = {}, style = {}, name = null, rows = 4, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
@@ -74,7 +74,7 @@ export default class Textarea extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <textarea onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} name={name} value={formValues.get(name, '')} rows={rows} disabled={disabled} />
+        <textarea onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} name={name} value={formValues.get(name, '')} rows={rows} disabled={disabled} onKeyDown={onKeyDown} />
       </div>
     )
   }

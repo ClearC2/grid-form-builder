@@ -7,7 +7,7 @@ export default class Input extends Component {
   }
   render = () => {
     const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}} = config
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
     const value = formValues.get(name, '')
@@ -73,7 +73,7 @@ export default class Input extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <input onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} type='text' name={name} value={value} disabled={disabled} />
+        <input onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} type='text' name={name} value={value} disabled={disabled} onKeyDown={onKeyDown} />
       </div>
     )
   }

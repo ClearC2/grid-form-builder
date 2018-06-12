@@ -4,7 +4,7 @@ import {Map} from 'immutable'
 export default class Select extends Component {
   render = () => {
     const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}} = config
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name, keyword = {}, suppressBlankOption = false} = config
     const {options = []} = keyword
@@ -69,7 +69,7 @@ export default class Select extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')} disabled={disabled}>
+        <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')} disabled={disabled} onKeyDown={onKeyDown}>
           {!suppressBlankOption && <option key='blank' value='' /> /* {should all selects have a blank option?} */}
           {options.map((option, i) => <option key={i} value={option.value}>{option.label ? option.label : option.value}</option>)}
         </select>

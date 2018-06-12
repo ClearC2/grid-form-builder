@@ -84,7 +84,7 @@ export default class Typeahead extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false, style = {}, containerStyle = {}} = config
+    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false, style = {}, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, null)
@@ -158,6 +158,7 @@ export default class Typeahead extends Component {
             onChange={this.handleChange}
             loadOptions={this.loadOptions}
             disabled={disabled}
+            onKeyDown={onKeyDown}
           />
         </div>
       )

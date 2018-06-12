@@ -15,7 +15,7 @@ export default class Phone extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, delimiter = ' ', containerStyle = {}} = config
+    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, delimiter = ' ', containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
     const value = formValues.get(name, '')
@@ -81,7 +81,7 @@ export default class Phone extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <Cleave options={{phone: true, phoneRegionCode: 'US', delimiter}} onMouseDown={this.onMouseDown} onChange={this.handleChange} style={styles.input} type='text' name={name} value={value} disabled={disabled} />
+        <Cleave options={{phone: true, phoneRegionCode: 'US', delimiter}} onMouseDown={this.onMouseDown} onChange={this.handleChange} style={styles.input} type='text' name={name} value={value} disabled={disabled} onKeyDown={onKeyDown} />
       </div>
     )
   }

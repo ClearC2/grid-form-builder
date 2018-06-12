@@ -15,7 +15,7 @@ export default class Date extends Component {
   }
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}, required = false, containerStyle = {}} = config
+    const {labelStyle = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
@@ -71,7 +71,7 @@ export default class Date extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <DateTime onMouseDown={this.onMouseDown} value={formValues.get(name, '')} onChange={this.handleChange} dateFormat='M/D/YYYY' timeFormat={false} className={className} inputProps={{disabled: disabled}} />
+        <DateTime onMouseDown={this.onMouseDown} value={formValues.get(name, '')} onChange={this.handleChange} dateFormat='M/D/YYYY' timeFormat={false} className={className} inputProps={{disabled: disabled}} onKeyDown={onKeyDown} />
       </div>
     )
   }
