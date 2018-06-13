@@ -144,6 +144,7 @@ export default class Example extends Component {
                 'name': 'listselecttest',
                 'label': 'List Select',
                 'type': 'listselect',
+                'required': true,
                 'keyword': {
                   'category': 'TASKS',
                   'options': [

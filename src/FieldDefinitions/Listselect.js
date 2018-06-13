@@ -125,6 +125,7 @@ export default class Listselect extends Component {
           {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
+          <span style={{fontWeight: 'normal', fontSize: '9pt', marginLeft: 3, marginTop: -1, color: 'red'}}>{warn ? 'This Field Is Required' : ''}</span>
         </div>
         <div style={styles.input}>
           <div style={{display: 'flex', flex: 1, flexDirection: 'column', minHeight: 10, border: warn ? '1px solid #ec1c24' : '1px solid lightgrey', height: 'calc(100% - 18px)', overflowY: 'scroll'}}>
