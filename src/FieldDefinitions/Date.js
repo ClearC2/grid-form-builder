@@ -74,7 +74,6 @@ export default class Date extends Component {
           <strong style={styles.label}>{label}</strong>
         </div>
         <DateTime
-          placeholder={'test'}
           onMouseDown={this.onMouseDown}
           value={formValues.get(name, '')}
           onChange={this.handleChange}

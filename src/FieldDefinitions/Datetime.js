@@ -28,7 +28,7 @@ export default class Datetime extends Component {
         flex: 1,
         flexDirection: inline ? 'row' : 'column',
         background: 'transparent',
-        height: inline ? 'auto' : 25,
+        paddingBottom: 5,
         ...containerStyle
       },
       labelContainer: {
@@ -62,6 +62,8 @@ export default class Datetime extends Component {
 
     let className = inline ? `date-wrapper-grid-input date-wrapper-grid-input-inline` : `date-wrapper-grid-input`
     className = !warn ? className : className + ' warn-required'
+    const inputClass = warn ? 'warn-required' : ''
+    const placeholder = warn ? '* This Field Is Required' : ''
 
     return (
       <div style={styles.container}>
@@ -70,7 +72,19 @@ export default class Datetime extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <DateTime onMouseDown={this.onMouseDown} value={formValues.get(name, '')} onChange={this.handleChange} dateFormat='M/D/YYYY' className={className} inputProps={{disabled: disabled}} onKeyDown={onKeyDown} />
+        <DateTime
+          onMouseDown={this.onMouseDown}
+          value={formValues.get(name, '')}
+          onChange={this.handleChange}
+          dateFormat='M/D/YYYY'
+          className={className}
+          inputProps={{
+            disabled: disabled,
+            placeholder: placeholder,
+            className: inputClass
+          }}
+          onKeyDown={onKeyDown}
+        />
       </div>
     )
   }
