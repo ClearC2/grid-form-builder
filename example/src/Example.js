@@ -33,7 +33,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'requiredTestField',
                 'label': 'Name',
-                'type': 'datetime',
+                'type': 'phone',
                 'required': true
               }
             },

@@ -23,6 +23,9 @@ export default class Phone extends Component {
     let {readonly = false, disabled = false} = config
     disabled = disabled || readonly
 
+    const placeholder = warn ? '* This Field Is Required' : ''
+    const className = warn ? 'warn-required' : ''
+
     const styles = {
       container: {
         display: 'flex',
@@ -81,7 +84,19 @@ export default class Phone extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <Cleave options={{phone: true, phoneRegionCode: 'US', delimiter}} onMouseDown={this.onMouseDown} onChange={this.handleChange} style={styles.input} type='text' name={name} value={value} disabled={disabled} onKeyDown={onKeyDown} />
+        <Cleave
+          placeholder={placeholder}
+          options={{phone: true, phoneRegionCode: 'US', delimiter}}
+          onMouseDown={this.onMouseDown}
+          onChange={this.handleChange}
+          style={styles.input}
+          type='text'
+          name={name}
+          value={value}
+          disabled={disabled}
+          onKeyDown={onKeyDown}
+          className={className}
+        />
       </div>
     )
   }
