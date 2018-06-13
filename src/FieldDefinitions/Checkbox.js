@@ -14,7 +14,7 @@ export default class Checkbox extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
@@ -23,6 +23,7 @@ export default class Checkbox extends Component {
     value = !!value
     let {readonly = false, disabled = false} = config
     disabled = disabled || readonly
+    const warn = requiredWarning && formValues.get(name, '').length === 0 && required
 
     const styles = {
       container: {
@@ -68,7 +69,9 @@ export default class Checkbox extends Component {
           {Icon && <Icon style={styles.icon} />}
           <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} disabled={disabled} onKeyDown={onKeyDown} />
           {label}
-          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>
+            * <span style={{fontWeight: 'normal', fontSize: '9pt'}}>{warn ? 'This Field Is Required' : ''}</span>
+          </div>}
         </label>
       </div>
     )
