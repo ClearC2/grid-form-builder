@@ -15,6 +15,9 @@ export default class Input extends Component {
     let {readonly = false, disabled = false} = config
     disabled = disabled || readonly
 
+    const placeholder = warn ? '* This Field Is Required' : ''
+    const className = warn ? 'warn-required' : ''
+
     const styles = {
       container: {
         display: 'flex',
@@ -73,7 +76,18 @@ export default class Input extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <input onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} type='text' name={name} value={value} disabled={disabled} onKeyDown={onKeyDown} />
+        <input
+          className={className}
+          placeholder={placeholder}
+          onMouseDown={this.onMouseDown}
+          onChange={handleOnChange}
+          style={styles.input}
+          type='text'
+          name={name}
+          value={value}
+          disabled={disabled}
+          onKeyDown={onKeyDown}
+        />
       </div>
     )
   }

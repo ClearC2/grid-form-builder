@@ -1,3 +1,16 @@
+.warn-required::placeholder {
+  color: red;
+  opacity: 1;
+}
+
+.warn-required:-ms-input-placeholder {
+  color: red;
+}
+
+.warn-required::-ms-input-placeholder {
+  color: red;
+}
+
 select.select-grid-input {
   border: 0;
   background-color: transparent;

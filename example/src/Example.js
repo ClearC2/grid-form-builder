@@ -31,9 +31,10 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 3, 'y': 0, 'h': 1, 'w': 3},
               'config': {
-                'name': 'inputtest',
-                'label': 'Input',
-                'type': 'input'
+                'name': 'requiredTestField',
+                'label': 'Name',
+                'type': 'input',
+                'required': true
               }
             },
             {
