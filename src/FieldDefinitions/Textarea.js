@@ -14,6 +14,9 @@ export default class Textarea extends Component {
     let {readonly = false, disabled = false} = config
     disabled = disabled || readonly
 
+    const placeholder = warn ? '* This Field Is Required' : ''
+    const className = warn ? 'warn-required' : ''
+
     const styles = {
       container: {
         display: 'flex',
@@ -74,7 +77,18 @@ export default class Textarea extends Component {
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
         </div>
-        <textarea onMouseDown={this.onMouseDown} onChange={handleOnChange} style={styles.input} name={name} value={formValues.get(name, '')} rows={rows} disabled={disabled} onKeyDown={onKeyDown} />
+        <textarea
+          className={className}
+          onMouseDown={this.onMouseDown}
+          onChange={handleOnChange}
+          style={styles.input}
+          name={name}
+          value={formValues.get(name, '')}
+          rows={rows}
+          disabled={disabled}
+          onKeyDown={onKeyDown}
+          placeholder={placeholder}
+        />
       </div>
     )
   }
