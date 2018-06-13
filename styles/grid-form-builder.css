@@ -11,6 +11,19 @@
   color: red;
 }
 
+div.warn-required > div > span > div.Select-placeholder {
+  color: red;
+  opacity: 1;
+}
+
+div.warn-required > div > span > div.Select-placeholder {
+  color: red;
+}
+
+div.warn-required > div > span > div.Select-placeholder {
+  color: red;
+}
+
 select.select-grid-input {
   border: 0;
   background-color: transparent;

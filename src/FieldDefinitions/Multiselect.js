@@ -84,6 +84,7 @@ export default class Multiselect extends Component {
 
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
+    const placeholder = warn ? '* This Field Is Required' : ''
 
     return (
       <div style={styles.container}>
@@ -102,6 +103,7 @@ export default class Multiselect extends Component {
           value={this.state.fieldValues}
           disabled={disabled}
           onKeyDown={onKeyDown}
+          placeholder={placeholder}
         />
       </div>
     )
