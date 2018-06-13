@@ -187,6 +187,7 @@ export default class Example extends Component {
                 'name': 'multicheckboxtest',
                 'label': 'Multi-Checkbox',
                 'type': 'multicheckbox',
+                'required': true,
                 'keyword': {
                   'category': 'TASKS',
                   'options': [

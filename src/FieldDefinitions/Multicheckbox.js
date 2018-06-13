@@ -37,7 +37,7 @@ export default class Multicheckbox extends Component {
   }
 
   render = () => {
-    const {inline, config = {}, Icon = null} = this.props
+    const {inline, config = {}, Icon = null, requiredWarning, formValues} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name, keyword = {}, boxed} = config
@@ -46,6 +46,7 @@ export default class Multicheckbox extends Component {
     const boxStyle = !boxed ? {} : {border: '1px solid lightgrey', backgroundColor: '#f5f5f5'}
     let {readonly = false, disabled = false} = config
     disabled = disabled || readonly
+    const warn = requiredWarning && formValues.get(name, '').length === 0 && required
 
     const styles = {
       container: {
@@ -105,6 +106,7 @@ export default class Multicheckbox extends Component {
           {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
           {Icon && <Icon style={styles.icon} />}
           <strong style={styles.label}>{label}</strong>
+          <span style={{fontWeight: 'normal', fontSize: '9pt', marginLeft: 3, marginTop: -1, color: 'red'}}>{warn ? 'This Field Is Required' : ''}</span>
         </div>
         <div style={styles.optionsContainer}>
           {options.map((option, i) => {
