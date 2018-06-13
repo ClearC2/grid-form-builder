@@ -51,6 +51,7 @@ export default class Select extends Component {
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         paddingLeft: 5,
         minWidth: 170,
+        color: warn ? 'red' : 'inherit',
         ...style
       },
       icon: {
@@ -70,7 +71,8 @@ export default class Select extends Component {
           <strong style={styles.label}>{label}</strong>
         </div>
         <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')} disabled={disabled} onKeyDown={onKeyDown}>
-          {!suppressBlankOption && <option key='blank' value='' /> /* {should all selects have a blank option?} */}
+          {warn && <option key='required' value='' style={{color: 'red'}} disabled hidden>* This Field Is Required</option>}
+          {!suppressBlankOption && !warn && <option key='blank' value='' /> /* {should all selects have a blank option?} */}
           {options.map((option, i) => <option key={i} value={option.value}>{option.label ? option.label : option.value}</option>)}
         </select>
       </div>

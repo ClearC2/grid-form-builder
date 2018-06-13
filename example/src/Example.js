@@ -320,6 +320,7 @@ export default class Example extends Component {
                 'name': 'selecttest',
                 'label': 'Select',
                 'type': 'select',
+                'required': true,
                 'keyword': {
                   'category': 'TASKS',
                   'options': [
