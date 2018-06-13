@@ -6,8 +6,7 @@ export default class Example extends Component {
   state = {
     formValues: Map({
       inputtest: 'Clear C2, Inc.',
-      textareatest: '1234 Main Street',
-      typeaheadtest: 'Clear C2, Inc.'
+      textareatest: '1234 Main Street'
     }),
     inline: false,
     formSchema: {
