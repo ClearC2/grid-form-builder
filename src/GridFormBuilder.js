@@ -46,8 +46,7 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
   return formValues
 }
 // v fields that cannot be transformed into conditional inputs v
-const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'radio', 'textarea', 'listselect',
-  'multicheckbox'])
+const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
 let FormComponents = { Input, Textarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone }
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
@@ -132,7 +131,13 @@ export default class FormBuilder extends Component {
     let {layout = []} = jsonschema
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
     layout.map((field, i) => {
-      if (this.props.conditionalSearch && field.config.type && !unconditionalFields.has(field.config.type.toLowerCase())) {
+      if (this.props.conditionalSearch && !unconditionalFields.has(field.config.type ? field.config.type.toLowerCase() : 'input')) {
+        if (field.config.type === 'radio') { // inputs that are normally radios should be multicheckboxes in search
+          field.config.type = 'multicheckbox'
+        }
+        if (field.config.type === 'select') {
+          field.config.type = 'multiselect'
+        }
         field.config.inputType = field.config.type || 'input'
         field.config.type = 'conditionalInput'
       }

@@ -4,6 +4,9 @@ import {Dialog} from 'c2-dialog'
 import ReactDom from 'react-dom'
 import FormBuilder from '../GridFormBuilder'
 
+const TEXT_INPUTS = Set(['textarea'])
+const NUMBER_INPUTS = Set(['phone', 'input', 'date'])
+const CATEGORICAL_INPUTS = Set(['multiselect', 'typeahead', 'checkbox', 'radio', 'select', 'listselect', 'multicheckbox'])
 export default class Conditionalinput extends Component {
   state = {
     formValues: Map(),
@@ -14,8 +17,7 @@ export default class Conditionalinput extends Component {
     conditionOptions: ['is equal to', 'is not equal to', 'is between', 'contains', 'does not contain', 'is greater than', 'is less than'],
     doubleFields: ['is between'], // conditionOptions part of this set will have two input fields. others only one.
     options: {
-      text: ['is equal to', 'is not equal to', 'contains', 'does not contain', 'is one of'],
-      date: ['is equal to', 'is not equal to', 'is between', 'is after', 'is before'],
+      text: ['is equal to', 'is not equal to', 'contains', 'does not contain', 'is between', 'is not between'],
       number: ['is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain', 'is greater than', 'is less than'],
       categorical: ['is one of', 'is not one of']
     }
@@ -23,9 +25,10 @@ export default class Conditionalinput extends Component {
 
   componentDidMount () {
     this.setState({
-      formValues: this.state.formValues.set('condition', this.props.conditionOptions[0]),
+      formValues: this.state.formValues.set('condition', this.convertListToOptions(this.getInputTypeOptionsList(this.getInputType()))[0]),
       doubleFields: Set(this.props.doubleFields)
     })// sets a default condition value
+    console.log(this.convertListToOptions(this.getInputTypeOptionsList(this.getInputType()))[0], 'initial option loggggg')
   }
 
   componentWillReceiveProps (props) {
@@ -41,38 +44,38 @@ export default class Conditionalinput extends Component {
     }
   }
 
+  getInputType = () => {
+    return this.props.config.inputType || 'input'
+  }
+
   convertListToOptions = (list) => {
     return list.map(opt => { return {value: opt, label: opt} })
   }
 
   getInputTypeOptionsList = (type) => {
-    switch (type) {
-      case 'textarea':
-        return this.props.options.text
-      case 'input':
-      case 'phone':
-        return this.props.options.number
-      case 'date':
-      case 'datetime':
-        return this.props.options.date
-      case 'multiselect':
-      case 'typeahead':
-      case 'checkbox':
-      case 'radio':
-      case 'select':
-      case 'listselect':
-      case 'multicheckbox':
-        return this.props.options.categorical
-      default:
-        return this.props.options.text
+    if (TEXT_INPUTS.has(type)) {
+      return this.props.options.text
+    } else if (NUMBER_INPUTS.has(type)) {
+      return this.props.options.number
+    } else if (CATEGORICAL_INPUTS.has(type)) {
+      return this.props.options.categorical
     }
+    return this.props.options.text
+  }
+
+  calculateFieldHeight = (type) => {
+    if (type === 'radio' || type === 'listselect' || type === 'multicheckbox') {
+      return this.props.config.keyword.options.length
+    }
+    return 1
   }
 
   formSchema = () => { // for Dialog
+    console.log(this.props, 'props loggggggggg')
     const {formValues, doubleFields} = this.state
     const {name} = this.props.config
     const condition = formValues.get('condition')
-    const inputType = this.props.config.inputType || 'input'
+    const inputType = this.getInputType()
     let schema = {
       form: {
         name: 'Conditional Input1',
@@ -99,12 +102,11 @@ export default class Conditionalinput extends Component {
                   category: 'NONE',
                   options: this.convertListToOptions(this.getInputTypeOptionsList(inputType))
                 }
-                // options: this.props.conditionOptions
               }
             },
             {
               type: 'field',
-              dimensions: {x: 1, y: 2, h: 1, w: 6},
+              dimensions: {x: 1, y: 2, h: this.calculateFieldHeight(inputType), w: 6},
               config: {
                 ...this.props.config,
                 name: `low ${name}`,
@@ -134,9 +136,6 @@ export default class Conditionalinput extends Component {
           }
         }
       )
-    }
-    if (inputType === 'Multiselect') {
-      console.log('ERROR: Multiselect has not been implemented for conditional inputs')
     }
     return (
       schema.form
@@ -196,6 +195,7 @@ export default class Conditionalinput extends Component {
   }
 
   render = () => {
+    const inputType = this.getInputType()
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
@@ -266,7 +266,7 @@ export default class Conditionalinput extends Component {
           {hideDisplay ? '' : 'Values...'}
         </div>
         {this.state.showDialog &&
-        <Dialog ref={`conditionalInput-${name}-dialog`} size={{width: '40%', height: '200px'}}
+        <Dialog ref={`conditionalInput-${name}-dialog`} size={{width: '40%', height: `${170 + (this.calculateFieldHeight(inputType) * 22)}px`}}
           style={{
             backgroundColor: '#f5f5f5',
             border: '2px solid #36a9e1',
