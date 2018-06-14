@@ -12,7 +12,13 @@ export default class Conditionalinput extends Component {
   }
   static defaultProps = {
     conditionOptions: ['is equal to', 'is not equal to', 'is between', 'contains', 'does not contain', 'is greater than', 'is less than'],
-    doubleFields: ['is between'] // conditionOptions part of this set will have two input fields. others only one.
+    doubleFields: ['is between'], // conditionOptions part of this set will have two input fields. others only one.
+    options: {
+      text: ['is equal to', 'is not equal to', 'contains', 'does not contain', 'is one of'],
+      date: ['is equal to', 'is not equal to', 'is between', 'is after', 'is before'],
+      number: ['is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain', 'is greater than', 'is less than'],
+      categorical: ['is one of', 'is not one of']
+    }
   }
 
   componentDidMount () {
@@ -32,6 +38,33 @@ export default class Conditionalinput extends Component {
           [`high ${this.props.config.name}`]: ''
         })
       })
+    }
+  }
+
+  convertListToOptions = (list) => {
+    return list.map(opt => { return {value: opt, label: opt} })
+  }
+
+  getInputTypeOptionsList = (type) => {
+    switch (type) {
+      case 'textarea':
+        return this.props.options.text
+      case 'input':
+      case 'phone':
+        return this.props.options.number
+      case 'date':
+      case 'datetime':
+        return this.props.options.date
+      case 'multiselect':
+      case 'typeahead':
+      case 'checkbox':
+      case 'radio':
+      case 'select':
+      case 'listselect':
+      case 'multicheckbox':
+        return this.props.options.categorical
+      default:
+        return this.props.options.text
     }
   }
 
@@ -57,21 +90,21 @@ export default class Conditionalinput extends Component {
             },
             {
               type: 'field',
-              dimensions: {x: 3, y: 1, h: 1, w: 6},
+              dimensions: {x: 1, y: 1, h: 1, w: 6},
               config: {
                 name: 'condition',
                 label: 'Condition',
                 type: 'select',
                 keyword: {
                   category: 'NONE',
-                  options: this.props.conditionOptions.map(opt => { return {value: opt, label: opt} })
+                  options: this.convertListToOptions(this.getInputTypeOptionsList(inputType))
                 }
                 // options: this.props.conditionOptions
               }
             },
             {
               type: 'field',
-              dimensions: {x: 3, y: 2, h: 1, w: 6},
+              dimensions: {x: 1, y: 2, h: 1, w: 6},
               config: {
                 ...this.props.config,
                 name: `low ${name}`,
@@ -92,7 +125,7 @@ export default class Conditionalinput extends Component {
       schema.form.jsonschema.layout.push(
         {
           type: 'field',
-          dimensions: {x: 3, y: 3, h: 1, w: 6},
+          dimensions: {x: 1, y: 3, h: 1, w: 6},
           config: {
             ...this.props.config,
             name: `high ${name}`,
@@ -233,14 +266,15 @@ export default class Conditionalinput extends Component {
           {hideDisplay ? '' : 'Values...'}
         </div>
         {this.state.showDialog &&
-        <Dialog ref={`conditionalInput-${name}-dialog`} size={{width: '40%', height: '180px'}}
+        <Dialog ref={`conditionalInput-${name}-dialog`} size={{width: '40%', height: '200px'}}
           style={{
             backgroundColor: '#f5f5f5',
             border: '2px solid #36a9e1',
             position: 'fixed',
             top: `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
             left: `${this.state.fieldPos.left + 100}px`,
-            bottom: '100px'
+            bottom: '100px',
+            overflowY: 'visible'
           }}
           enableResizing
           disableDragging={false}
