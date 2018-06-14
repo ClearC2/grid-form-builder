@@ -14,10 +14,9 @@ export default class Conditionalinput extends Component {
     showDialog: false
   }
   static defaultProps = {
-    conditionOptions: ['is equal to', 'is not equal to', 'is between', 'contains', 'does not contain', 'is greater than', 'is less than'],
     doubleFields: ['is between'], // conditionOptions part of this set will have two input fields. others only one.
     options: {
-      text: ['is equal to', 'is not equal to', 'contains', 'does not contain', 'is between', 'is not between'],
+      text: ['contains', 'is equal to', 'is not equal to', 'does not contain', 'is between', 'is not between'],
       number: ['is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain', 'is greater than', 'is less than'],
       categorical: ['is one of', 'is not one of']
     }
@@ -25,7 +24,7 @@ export default class Conditionalinput extends Component {
 
   componentDidMount () {
     this.setState({
-      formValues: this.state.formValues.set('condition', this.convertListToOptions(this.getInputTypeOptionsList(this.getInputType()))[0]),
+      formValues: this.state.formValues.set('condition', this.getInputTypeOptionsList(this.getInputType())[0]),
       doubleFields: Set(this.props.doubleFields)
     })// sets a default condition value
     console.log(this.convertListToOptions(this.getInputTypeOptionsList(this.getInputType()))[0], 'initial option loggggg')
@@ -35,7 +34,7 @@ export default class Conditionalinput extends Component {
     if (props.formValues.get(this.props.config.name, '') === '') {
       this.setState({
         formValues: Map({
-          condition: this.props.conditionOptions[0],
+          condition: this.getInputTypeOptionsList(this.getInputType())[0],
           doubleFields: Set(this.props.doubleFields),
           [`low ${this.props.config.name}`]: '',
           [`high ${this.props.config.name}`]: ''
