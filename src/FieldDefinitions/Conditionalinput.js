@@ -27,7 +27,6 @@ export default class Conditionalinput extends Component {
       formValues: this.state.formValues.set('condition', this.getInputTypeOptionsList(this.getInputType())[0]),
       doubleFields: Set(this.props.doubleFields)
     })// sets a default condition value
-    console.log(this.convertListToOptions(this.getInputTypeOptionsList(this.getInputType()))[0], 'initial option loggggg')
   }
 
   componentWillReceiveProps (props) {
@@ -70,7 +69,6 @@ export default class Conditionalinput extends Component {
   }
 
   formSchema = () => { // for Dialog
-    console.log(this.props, 'props loggggggggg')
     const {formValues, doubleFields} = this.state
     const {name} = this.props.config
     const condition = formValues.get('condition')
