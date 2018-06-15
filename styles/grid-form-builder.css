@@ -104,6 +104,15 @@ div.Select-control {
   height: 24px;
 }
 
+div.Select-menu-outer > div.Select-menu > div.Select-option {
+  overflow-x: visible;
+  white-space: nowrap;
+}
+
+div.Select-menu-outer{
+  min-width: 275px;
+}
+
 div.warn-required > div.Select-control {
   border: 1px solid #ec1c24;
 }
