@@ -263,12 +263,17 @@ export default class Conditionalinput extends Component {
         </div>
         {this.state.showDialog &&
         <Dialog ref={`conditionalInput-${name}-dialog`} size={{width: '40%', height: `${170 + (this.calculateFieldHeight(inputType) * 22)}px`}}
+          center
           style={{
-            backgroundColor: '#f5f5f5',
+            background: '#fff',
+            boxShadow: '0px 0px 15px #444',
+            borderRadius: '5px',
+            padding: 10,
+            // backgroundColor: '#f5f5f5',
             border: '2px solid #36a9e1',
             position: 'fixed',
-            top: `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
-            left: `${this.state.fieldPos.left + 100}px`,
+            top: '30%', // `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
+            left: '30%', // `${this.state.fieldPos.left + 100}px`,
             bottom: '100px',
             overflowY: 'visible'
           }}
