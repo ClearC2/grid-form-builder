@@ -42,7 +42,8 @@ export default class Example extends Component {
               'config': {
                 'name': 'inputtest',
                 'label': 'Input',
-                'type': 'input'
+                'type': 'input',
+                'disabled': true
               }
             },
             {
@@ -124,7 +125,8 @@ export default class Example extends Component {
               'config': {
                 'name': 'datetest',
                 'label': 'Date',
-                'type': 'date'
+                'type': 'date',
+                'disabled': true
               }
             },
             {

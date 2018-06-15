@@ -83,7 +83,8 @@ export default class Date extends Component {
           inputProps={{
             disabled: disabled,
             placeholder: placeholder,
-            className: inputClass
+            className: inputClass,
+            style: {backgroundColor: disabled ? '#eeeeee' : 'transparent'}
           }}
           onKeyDown={onKeyDown}
         />
