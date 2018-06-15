@@ -5,7 +5,7 @@ import ReactDom from 'react-dom'
 import FormBuilder from '../GridFormBuilder'
 
 const TEXT_INPUTS = Set(['textarea'])
-const NUMBER_INPUTS = Set(['phone', 'input', 'date'])
+const NUMBER_INPUTS = Set(['phone', 'input', 'date', 'datetime'])
 const CATEGORICAL_INPUTS = Set(['multiselect', 'typeahead', 'checkbox', 'radio', 'select', 'listselect', 'multicheckbox'])
 export default class Conditionalinput extends Component {
   state = {
@@ -14,7 +14,7 @@ export default class Conditionalinput extends Component {
     showDialog: false
   }
   static defaultProps = {
-    doubleFields: ['is between'], // conditionOptions part of this set will have two input fields. others only one.
+    doubleFields: ['is between', 'is not between'], // conditionOptions part of this set will have two input fields. others only one.
     options: {
       text: ['contains', 'is equal to', 'is not equal to', 'does not contain', 'is between', 'is not between'],
       number: ['is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain', 'is greater than', 'is less than'],
@@ -142,25 +142,64 @@ export default class Conditionalinput extends Component {
   handleOnChange = e => {
     const {doubleFields} = this.state
     let newValues = this.state.formValues
-    // fix field values if condition changes from multi to single input
-    if (e.target.name === 'condition' && !doubleFields.includes(e.target.value)) {
-      newValues = newValues.delete(`high ${this.props.config.name}`)
-    }
+
     if (e.target.value === '') {
-      newValues = newValues.delete(e.target.name)
+      const event = {target: {value: '', name: this.props.config.name}}
+        this.setState({
+          formValues: Map({
+            condition: this.getInputTypeOptionsList(this.getInputType())[0],
+            doubleFields: Set(this.props.doubleFields),
+            [`low ${this.props.config.name}`]: '',
+            [`high ${this.props.config.name}`]: ''
+          })
+        })
+      if (this.props.handleOnChange) {
+        this.props.handleOnChange(event)
+      }
+      return
+    }
+    if (this.props.config.inputType === 'multiselect') {
+      if (e.target.name === 'condition') {
+        newValues = newValues.set(e.target.name, e.target.value)
+      } else {
+        newValues = newValues.set(e.target.name, e.target.value.get('values', []).toJS())
+      }
     } else {
       newValues = newValues.set(e.target.name, e.target.value)
     }
+
     this.setState({formValues: newValues})
     if (this.props.handleOnChange) {
       const valObject = this.buildValueObject(newValues)
       const event = {target: {value: valObject, name: this.props.config.name}}
       this.props.handleOnChange(event)
     }
+    // else {
+    //   // fix field values if condition changes from multi to single input
+    //   if (e.target.name === 'condition' && !doubleFields.includes(e.target.value)) {
+    //     newValues = newValues.delete(`high ${this.props.config.name}`)
+    //   }
+    //   if (e.target.value === '') {
+    //     newValues = newValues.delete(e.target.name)
+    //   } else {
+    //     newValues = newValues.set(e.target.name, e.target.value)
+    //   }
+    //   this.setState({formValues: newValues})
+    //   console.log(e.target.name, e.target.value, 'formValues:', this.state.formValues, 'newValues:', newValues, 'props:', this.props, 'state:', this.state, 'val loggggggg 2')
+    //   if (this.props.handleOnChange) {
+    //     const valObject = this.buildValueObject(newValues)
+    //     const event = {target: {value: valObject, name: this.props.config.name}}
+    //     this.props.handleOnChange(event)
+    //   }
+    // }
   }
 
   buildValueObject = (formValues) => {
     const {name} = this.props.config
+    if (this.props.config.inputType === 'multiselect') {
+      return (Map({condition: formValues.get('condition', ''), values: formValues.get(`low ${name}`, '')}))
+    }
+
     const {doubleFields} = this.state
     // get current values
     let condition = formValues.get('condition', '')
@@ -168,7 +207,7 @@ export default class Conditionalinput extends Component {
     let high = formValues.get(`high ${name}`, '')
     if (!doubleFields.includes(condition)) {
       high = ''
-    } else {
+    }  else {
       if (parseInt(low) > parseInt(high)) {
         const tmp = low
         low = high
@@ -185,7 +224,6 @@ export default class Conditionalinput extends Component {
     this.setState({showDialog: newState})
     this.onModalOpen()
   }
-
   onModalOpen = () => {
     const fieldPos = ReactDom.findDOMNode(this).getBoundingClientRect()
     this.setState({fieldPos: fieldPos})
@@ -278,7 +316,7 @@ export default class Conditionalinput extends Component {
             overflowY: 'visible'
           }}
           enableResizing
-          disableDragging={false}
+          disableDragging
         >
           <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
             <span>&times;</span>
