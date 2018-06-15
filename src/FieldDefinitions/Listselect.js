@@ -52,10 +52,10 @@ export default class Listselect extends Component {
   }
 
   componentDidUpdate = (p, s) => {
-    const {field, handleOnChange = () => {}} = this.props
+    const {handleOnChange = () => {}} = this.props
     const {value} = this.state
     if (value.size !== s.value.size) {
-      handleOnChange({target: {name: field, value}})
+      handleOnChange({target: {name: this.props.config.name, value}})
     }
   }
 

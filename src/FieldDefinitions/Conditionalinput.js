@@ -251,7 +251,6 @@ export default class Conditionalinput extends Component {
         ...iconStyle
       }
     }
-
     return (
       <div style={styles.container}>
         <div style={styles.labelContainer}>
