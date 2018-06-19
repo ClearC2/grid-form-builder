@@ -236,7 +236,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 6, 'y': 5, 'h': 1, 'w': 1},
+              'dimensions': {'x': 6, 'y': 5, 'h': 1, 'w': 6},
               'config': {
                 'name': 'typeaheadtest',
                 'label': 'Typeahead',

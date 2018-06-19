@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
-import ReactSelect from 'react-select'
+import {AsyncCreatable} from 'react-select'
 import PropTypes from 'prop-types'
 import GFBConfig from '../config'
 
@@ -47,25 +47,13 @@ export default class Typeahead extends Component {
   }
 
   loadOptions = search => {
-    const {config = {}, formValues = Map()} = this.props
+    const {config = {}} = this.props
     const {name = null, typeahead = {}} = config
     const {key = null, duplication = false} = typeahead
 
     if (!key) {
       console.error(`The JSON schema representation for ${name} does not have a typeahead key. A typeahead.key is required for this field type to search for results.`)
       return Promise.resolve({options: []})
-    }
-
-    const currentValue = formValues.get(name, {value: '', label: ''})
-
-    let values = []
-
-    if (currentValue && currentValue.value && currentValue.value !== '') {
-      values.push({value: currentValue, label: currentValue})
-    }
-
-    if (search.trim() !== '' && !values.some(o => o.value === search)) {
-      values.push({value: search, label: search})
     }
 
     if (search.length > this.props.minChars) {
@@ -75,7 +63,7 @@ export default class Typeahead extends Component {
             value.duplication = duplication
             return value
           })
-          return {options: values.concat(results)}
+          return {options: results}
         })
     }
 
@@ -149,7 +137,7 @@ export default class Typeahead extends Component {
             {Icon && <Icon style={styles.icon} />}
             <strong style={styles.label}>{label}</strong>
           </div>
-          <ReactSelect.Async
+          <AsyncCreatable
             style={style}
             onMouseDown={this.onMouseDown}
             className={className}
