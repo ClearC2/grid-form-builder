@@ -29,6 +29,7 @@ export default class Conditionalinput extends Component {
     })// sets a default condition value
   }
 
+  typeaheadValues = Map()
   componentWillReceiveProps (props) {
     if (props.formValues.get(this.props.config.name, '') === '') {
       this.setState({
@@ -142,7 +143,6 @@ export default class Conditionalinput extends Component {
   handleOnChange = e => {
     const {doubleFields} = this.state
     let newValues = this.state.formValues
-
     if (e.target.value === '') {
       const event = {target: {value: '', name: this.props.config.name}}
         this.setState({
@@ -164,10 +164,16 @@ export default class Conditionalinput extends Component {
       } else {
         newValues = newValues.set(e.target.name, e.target.value.get('values', []).toJS())
       }
+    } else if (this.props.config.inputType === 'typeahead') {
+      if (e.target.name === 'condition' || e.target.name.split(' ')[0] === 'low') {
+        this.typeaheadValues = this.typeaheadValues.set(e.target.name, e.target.value)
+      }
+      this.typeaheadValues.forEach((value, key) => {
+        newValues = newValues.set(key, value)
+      })
     } else {
-      newValues = newValues.set(e.target.name, e.target.value)
+        newValues = newValues.set(e.target.name, e.target.value)
     }
-
     this.setState({formValues: newValues})
     if (this.props.handleOnChange) {
       const valObject = this.buildValueObject(newValues)
