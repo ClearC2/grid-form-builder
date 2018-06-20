@@ -31,7 +31,6 @@ export default class Typeahead extends Component {
   handleChange = typeahead => {
     const {handleOnChange, config = {}} = this.props
     const {name = null} = config
-    console.log(typeahead, 'typeahead loggggggg')
     Object.keys(typeahead).forEach(field => {
       let value = typeahead[field]
       if (field === 'duplication') value = typeahead.value
@@ -131,7 +130,6 @@ export default class Typeahead extends Component {
     if (this.state.shouldRemount) {
       return <Placeholder handleMount={this.setShouldRemount} />
     } else {
-      console.log(value, 'value loggggggggg')
       return (
         <div style={styles.container}>
           <div style={styles.labelContainer}>
