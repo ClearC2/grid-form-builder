@@ -436,6 +436,7 @@ export default class Example extends Component {
 
   handleOnChange = e => {
     const input = e.target
+    console.log(input.name, input.value, this.state.formValues, 'parent handle on change and formValues previous to change loggggggg')
     this.setState(s => {
       return {formValues: s.formValues.set(input.name, input.value)}
     })
@@ -467,7 +468,7 @@ export default class Example extends Component {
           formValues={this.state.formValues}
           handleOnChange={this.handleOnChange}
           inline={this.state.inline}
-          conditionalSearch={false}
+          conditionalSearch={!false}
         />
       </div>
     )

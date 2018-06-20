@@ -1,46 +1,46 @@
 import React, {Component} from 'react'
 import {Map, Set, List} from 'immutable'
 import {Dialog} from 'c2-dialog'
-import ReactDom from 'react-dom'
 import FormBuilder from '../GridFormBuilder'
 
 const TEXT_INPUTS = Set(['textarea'])
 const NUMBER_INPUTS = Set(['phone', 'input', 'date', 'datetime'])
 const CATEGORICAL_INPUTS = Set(['multiselect', 'typeahead', 'checkbox', 'radio', 'select', 'listselect', 'multicheckbox'])
+
 export default class Conditionalinput extends Component {
-  state = {
-    formValues: Map(),
-    doubleFields: Set(),
-    showDialog: false
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      formValues: Map({
+        condition: this.getInputTypeOptionsList(this.getInputType())[0]
+      }),
+      values: List(),
+      showDialog: false
+    }
   }
+
   static defaultProps = {
-    doubleFields: ['is between', 'is not between'], // conditionOptions part of this set will have two input fields. others only one.
     options: {
+      all: [],
       text: ['contains', 'is equal to', 'is not equal to', 'does not contain', 'is between', 'is not between'],
       number: ['is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain', 'is greater than', 'is less than'],
       categorical: ['is one of', 'is not one of']
     }
   }
 
-  componentDidMount () {
-    this.setState({
-      formValues: this.state.formValues.set('condition', this.getInputTypeOptionsList(this.getInputType())[0]),
-      doubleFields: Set(this.props.doubleFields)
-    })// sets a default condition value
+  handleToggleDialog = (newState = !this.state.showDialog) => {
+    this.setState({showDialog: newState})
   }
 
-  typeaheadValues = Map()
   componentWillReceiveProps (props) {
-    if (props.formValues.get(this.props.config.name, '') === '') {
-      this.setState({
-        formValues: Map({
-          condition: this.getInputTypeOptionsList(this.getInputType())[0],
-          doubleFields: Set(this.props.doubleFields),
-          [`low ${this.props.config.name}`]: '',
-          [`high ${this.props.config.name}`]: ''
-        })
-      })
-    }
+    // if (props.formValues.get(this.props.config.name, '') === '') {
+    //   this.setState({
+    //     formValues: Map({
+    //       condition: this.getInputTypeOptionsList(this.getInputType())[0]
+    //     })
+    //   })
+    // }
   }
 
   getInputType = () => {
@@ -62,6 +62,16 @@ export default class Conditionalinput extends Component {
     return this.props.options.text
   }
 
+  calculateModalHeight = () => {
+    const titleAndConditionHeight = 170
+    const singleFieldHight = this.calculateFieldHeight(this.getInputType()) * 30
+    const size = titleAndConditionHeight + (singleFieldHight * this.state.values.size)
+    if (size > 500) {
+      return `500`
+    }
+    return `${size}`
+  }
+
   calculateFieldHeight = (type) => {
     if (type === 'radio' || type === 'listselect' || type === 'multicheckbox') {
       return this.props.config.keyword.options.length
@@ -70,7 +80,7 @@ export default class Conditionalinput extends Component {
   }
 
   formSchema = () => { // for Dialog
-    const {formValues, doubleFields} = this.state
+    const {formValues} = this.state
     const {name} = this.props.config
     const condition = formValues.get('condition')
     const inputType = this.getInputType()
@@ -107,7 +117,7 @@ export default class Conditionalinput extends Component {
               dimensions: {x: 1, y: 2, h: this.calculateFieldHeight(inputType), w: 6},
               config: {
                 ...this.props.config,
-                name: `low ${name}`,
+                name: `${name}-0`,
                 label: `${this.props.config.label || name}`,
                 type: inputType
               }
@@ -121,117 +131,48 @@ export default class Conditionalinput extends Component {
       createdDate: '2018-02-26 10:16:14',
       createdBy: 'will darden'
     }
-    if (doubleFields.includes(condition)) {
-      schema.form.jsonschema.layout.push(
-        {
+    if (this.getInputType() === 'input') {
+      let fieldCount = 1
+      this.state.values.forEach(() => {
+        schema.form.jsonschema.layout.push({
           type: 'field',
-          dimensions: {x: 1, y: 3, h: 1, w: 6},
+          dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(inputType), w: 6},
           config: {
             ...this.props.config,
-            name: `high ${name}`,
-            label: doubleFields.includes(condition) ? `${this.props.config.label || name}` : '',
+            name: `${name}-${fieldCount}`,
+            label: `${this.props.config.label || name}`,
             type: inputType
           }
-        }
-      )
+        })
+        fieldCount++
+      })
     }
     return (
       schema.form
     )
   }
 
+  parentFieldName = () => this.props.config.name
+  getEventFieldIndex = (e) => e.target.name.split('-')[1]
   handleOnChange = e => {
-    const {doubleFields} = this.state
-    let newValues = this.state.formValues
-    if (e.target.value === '') {
-      const event = {target: {value: '', name: this.props.config.name}}
-        this.setState({
-          formValues: Map({
-            condition: this.getInputTypeOptionsList(this.getInputType())[0],
-            doubleFields: Set(this.props.doubleFields),
-            [`low ${this.props.config.name}`]: '',
-            [`high ${this.props.config.name}`]: ''
-          })
-        })
-      if (this.props.handleOnChange) {
-        this.props.handleOnChange(event)
-      }
-      return
-    }
-    if (this.props.config.inputType === 'multiselect') {
-      if (e.target.name === 'condition') {
-        newValues = newValues.set(e.target.name, e.target.value)
-      } else {
-        newValues = newValues.set(e.target.name, e.target.value.get('values', []).toJS())
-      }
-    } else if (this.props.config.inputType === 'typeahead') {
-      if (e.target.name === 'condition' || e.target.name.split(' ')[0] === 'low') {
-        this.typeaheadValues = this.typeaheadValues.set(e.target.name, e.target.value)
-      }
-      this.typeaheadValues.forEach((value, key) => {
-        newValues = newValues.set(key, value)
-      })
-    } else {
-        newValues = newValues.set(e.target.name, e.target.value)
-    }
-    this.setState({formValues: newValues})
+    console.log(this.getEventFieldIndex(e), e.target.name, 'e logggggggg')
+    let newValues = this.state.values.get('values', List()).set(this.getEventFieldIndex(e), e.target.value)
+    this.setState({
+      formValues: this.state.formValues.set(e.target.name, e.target.value), // to update mini form
+      values: newValues // to update parent readable values
+    })
     if (this.props.handleOnChange) {
-      const valObject = this.buildValueObject(newValues)
-      const event = {target: {value: valObject, name: this.props.config.name}}
+      const event = {
+        target: {
+          value: {
+            condition: this.state.formValues.get('condition', ''),
+            values: newValues
+          },
+          name: this.parentFieldName()
+        }
+      }
       this.props.handleOnChange(event)
     }
-    // else {
-    //   // fix field values if condition changes from multi to single input
-    //   if (e.target.name === 'condition' && !doubleFields.includes(e.target.value)) {
-    //     newValues = newValues.delete(`high ${this.props.config.name}`)
-    //   }
-    //   if (e.target.value === '') {
-    //     newValues = newValues.delete(e.target.name)
-    //   } else {
-    //     newValues = newValues.set(e.target.name, e.target.value)
-    //   }
-    //   this.setState({formValues: newValues})
-    //   if (this.props.handleOnChange) {
-    //     const valObject = this.buildValueObject(newValues)
-    //     const event = {target: {value: valObject, name: this.props.config.name}}
-    //     this.props.handleOnChange(event)
-    //   }
-    // }
-  }
-
-  buildValueObject = (formValues) => {
-    const {name} = this.props.config
-    if (this.props.config.inputType === 'multiselect') {
-      return (Map({condition: formValues.get('condition', ''), values: formValues.get(`low ${name}`, '')}))
-    }
-
-    const {doubleFields} = this.state
-    // get current values
-    let condition = formValues.get('condition', '')
-    let low = formValues.get(`low ${name}`, '')
-    let high = formValues.get(`high ${name}`, '')
-    if (!doubleFields.includes(condition)) {
-      high = ''
-    }  else {
-      if (parseInt(low) > parseInt(high)) {
-        const tmp = low
-        low = high
-        high = tmp
-      }
-    }
-    let vals = List()
-    if (condition !== '' || low !== '') { vals = vals.push(low) }
-    if (high !== '') { vals = vals.push(high) }
-    return (Map({condition: condition, values: vals}))
-  }
-
-  handleToggleDialog = (newState = !this.state.showDialog) => {
-    this.setState({showDialog: newState})
-    this.onModalOpen()
-  }
-  onModalOpen = () => {
-    const fieldPos = ReactDom.findDOMNode(this).getBoundingClientRect()
-    this.setState({fieldPos: fieldPos})
   }
 
   render = () => {
@@ -242,8 +183,7 @@ export default class Conditionalinput extends Component {
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
-    const hideDisplay = !(this.state.formValues.get(`low ${this.props.config.name}`, false) || this.state.formValues.get(`high ${this.props.config.name}`, false))
-
+    let hideDisplay = this.state.values.size === 0
     const styles = {
       container: {
         display: 'flex',
@@ -305,7 +245,12 @@ export default class Conditionalinput extends Component {
           {hideDisplay ? '' : 'Values...'}
         </div>
         {this.state.showDialog &&
-        <Dialog ref={`conditionalInput-${name}-dialog`} size={{width: '40%', height: `${170 + (this.calculateFieldHeight(inputType) * 22)}px`}}
+        <Dialog
+          ref={`conditionalInput-${name}-dialog`}
+          size={{
+            width: '40%',
+            height: this.calculateModalHeight()
+          }}
           center
           style={{
             background: '#fff',
