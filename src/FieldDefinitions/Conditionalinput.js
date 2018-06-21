@@ -121,6 +121,7 @@ export default class Conditionalinput extends Component {
               dimensions: {x: 1, y: 2, h: this.calculateFieldHeight(inputType), w: 8},
               config: {
                 ...this.props.config,
+                readonly: false,
                 name: `${name}-0`,
                 label: `${this.props.config.label || name}`,
                 type: inputType
@@ -143,7 +144,7 @@ export default class Conditionalinput extends Component {
           type: 'field',
           dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(inputType), w: 8},
           config: {
-
+            readonly: false,
             name: `${name}-${fieldCount}`,
             label: `     ...or`,
             type: inputType
