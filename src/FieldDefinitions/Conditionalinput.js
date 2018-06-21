@@ -3,12 +3,17 @@ import {Map, Set, List} from 'immutable'
 import {Dialog} from 'c2-dialog'
 import FormBuilder from '../GridFormBuilder'
 
-const TEXT_INPUTS = Set(['textarea'])
-const NUMBER_INPUTS = Set(['phone', 'input', 'date', 'datetime'])
-const CATEGORICAL_INPUTS = Set(['multiselect', 'typeahead', 'checkbox', 'radio', 'select', 'listselect', 'multicheckbox'])
+/*
+  Select Fields are converted to multiselects
+  radio buttons are converted to multicheckboxes
+  checkboxes are converted to multicheckboxes
+ */
+
+const SINGLE_FIELD_INPUTS = Set(['multiselect', 'typeahead', 'multicheckbox', 'listselect'])
+const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone'])
+const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
 
 export default class Conditionalinput extends Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -22,7 +27,9 @@ export default class Conditionalinput extends Component {
 
   static defaultProps = {
     options: {
-      all: [],
+      all: ['contains', 'is equal to', 'is not equal to', 'does not contain', 'is between', 'is not between',
+        'is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain',
+        'is greater than', 'is less than', 'is one of', 'is not one of'],
       text: ['contains', 'is equal to', 'is not equal to', 'does not contain', 'is between', 'is not between'],
       number: ['is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain', 'is greater than', 'is less than'],
       categorical: ['is one of', 'is not one of']
@@ -52,20 +59,18 @@ export default class Conditionalinput extends Component {
   }
 
   getInputTypeOptionsList = (type) => {
-    if (TEXT_INPUTS.has(type)) {
-      return this.props.options.text
-    } else if (NUMBER_INPUTS.has(type)) {
-      return this.props.options.number
-    } else if (CATEGORICAL_INPUTS.has(type)) {
+    if (ONLY_CATEGORICAL_INPUT.has(type)) {
       return this.props.options.categorical
     }
-    return this.props.options.text
+    return this.props.options.all
   }
 
   calculateModalHeight = () => {
-    const titleAndConditionHeight = 170
-    const singleFieldHight = this.calculateFieldHeight(this.getInputType()) * 30
-    const size = titleAndConditionHeight + (singleFieldHight * this.state.values.size)
+    const titleAndConditionHeight = 145
+    const singleFieldHight = this.calculateFieldHeight(this.getInputType()) * 32
+    let nFields = ONLY_CATEGORICAL_INPUT.has(this.getInputType()) ? 1 : Math.max(this.state.values.size, 1)
+    nFields = Math.min(nFields, this.getMaxFields())
+    const size = titleAndConditionHeight + (singleFieldHight * nFields)
     if (size > 500) {
       return `500`
     }
@@ -108,7 +113,7 @@ export default class Conditionalinput extends Component {
                 type: 'select',
                 keyword: {
                   category: 'NONE',
-                  options: this.convertListToOptions(this.getInputTypeOptionsList(inputType))
+                  options: this.convertListToOptions(this.getInputTypeOptionsList(this.getInputType()))
                 }
               }
             },
@@ -131,9 +136,10 @@ export default class Conditionalinput extends Component {
       createdDate: '2018-02-26 10:16:14',
       createdBy: 'will darden'
     }
-    if (this.getInputType() === 'input') {
+    const maxFieldCount = this.getMaxFields()
+    if (MULTI_FIELD_INPUTS.has(this.getInputType())) {
       let fieldCount = 1
-      this.state.values.forEach(() => {
+      while (fieldCount < maxFieldCount && fieldCount < this.state.values.size + 1) {
         schema.form.jsonschema.layout.push({
           type: 'field',
           dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(inputType), w: 6},
@@ -145,18 +151,50 @@ export default class Conditionalinput extends Component {
           }
         })
         fieldCount++
-      })
+      }
     }
     return (
       schema.form
     )
   }
 
+  getMaxFields = () => {
+    switch (this.state.formValues.get('condition', '')) {
+      case 'is between':
+      case 'is not between':
+        return 2
+      default:
+        return 999
+    }
+  }
   parentFieldName = () => this.props.config.name
-  getEventFieldIndex = (e) => e.target.name.split('-')[1]
+  getEventFieldIndex = (e) => {
+    let name = e.target.name.split('-')
+    return name[name.length - 1]
+  }
   handleOnChange = e => {
-    console.log(this.getEventFieldIndex(e), e.target.name, 'e logggggggg')
-    let newValues = this.state.values.get('values', List()).set(this.getEventFieldIndex(e), e.target.value)
+    console.log(e.target.value, e.target.name, this.state, 'e logggggggg')
+    if (this.getInputType() === 'typeahead') {
+      if (e.target.value.label) {
+        e.target.name = `${this.props.config.name}-${this.state.values.size}`
+        e.target.value = e.target.value.label
+      } else if (this.props.config.name !== e.target.name.split('-')[0]) {
+        return // escape if its an extraneous typeahead field)
+      }
+    }
+    /* Categorical input come back as arrays and are always one field, and should be put directly into values.
+      Other fields have one value per input field, and can have many fields, so have to be put into an array
+      based on their input field index.
+     */
+    let newValues
+    if (SINGLE_FIELD_INPUTS.has(this.getInputType())) {
+      console.log(this.state.values, 'single field input logggggggggggggggggg')
+      newValues = e.target.value
+    } else {
+      console.log(this.state.values, 'multi field input logggggggggggggggggg')
+      newValues = this.state.values.set(this.getEventFieldIndex(e), e.target.value)
+    }
+    console.log(newValues, 'setting new values loggggggggg')
     this.setState({
       formValues: this.state.formValues.set(e.target.name, e.target.value), // to update mini form
       values: newValues // to update parent readable values
@@ -171,6 +209,7 @@ export default class Conditionalinput extends Component {
           name: this.parentFieldName()
         }
       }
+      console.log(event, 'event logggggggggg')
       this.props.handleOnChange(event)
     }
   }
@@ -256,7 +295,6 @@ export default class Conditionalinput extends Component {
             background: '#fff',
             boxShadow: '0px 0px 15px #444',
             borderRadius: '5px',
-            padding: 10,
             // backgroundColor: '#f5f5f5',
             border: '2px solid #36a9e1',
             position: 'fixed',
