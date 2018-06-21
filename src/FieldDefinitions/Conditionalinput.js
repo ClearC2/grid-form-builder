@@ -16,13 +16,13 @@ const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'
 export default class Conditionalinput extends Component {
   constructor (props) {
     super(props)
+
     this.state = {
       formValues: Map({
         condition: this.getInputTypeOptionsList(this.getInputType())[0]
       }),
       values: List(),
       showDialog: false
-
     }
   }
 
@@ -42,13 +42,13 @@ export default class Conditionalinput extends Component {
   }
 
   componentWillReceiveProps (props) {
-    // if (props.formValues.get(this.props.config.name, '') === '') {
-    //   this.setState({
-    //     formValues: Map({
-    //       condition: this.getInputTypeOptionsList(this.getInputType())[0]
-    //     })
-    //   })
-    // }
+    if (props.formValues.get(this.parentFieldName(), '') === '') {
+      this.setState({
+        formValues: Map({
+          condition: this.getInputTypeOptionsList(this.getInputType())[0]
+        })
+      })
+    }
   }
 
   getInputType = () => {
@@ -86,7 +86,6 @@ export default class Conditionalinput extends Component {
   }
 
   formSchema = () => { // for Dialog
-    const {formValues} = this.state
     const {name} = this.props.config
     const inputType = this.getInputType()
     let schema = {
@@ -144,9 +143,9 @@ export default class Conditionalinput extends Component {
           type: 'field',
           dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(inputType), w: 8},
           config: {
-            ...this.props.config,
+
             name: `${name}-${fieldCount}`,
-            label: `${this.props.config.label || name}`,
+            label: `     ...or`,
             type: inputType
           }
         })
@@ -175,9 +174,9 @@ export default class Conditionalinput extends Component {
   handleOnChange = e => {
     if (this.getInputType() === 'typeahead') {
       if (e.target.value.label) {
-        e.target.name = `${this.props.config.name}-${this.state.values.size}`
+        e.target.name = `${this.parentFieldName()}-${this.state.values.size}`
         e.target.value = e.target.value.label
-      } else if (this.props.config.name !== e.target.name.split('-')[0]) {
+      } else if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
       }
     }
@@ -196,16 +195,20 @@ export default class Conditionalinput extends Component {
       values: newValues // to update parent readable values
     })
     if (this.props.handleOnChange) {
-      const event = {
+      const valEvent = {
         target: {
-          value: {
-            condition: this.state.formValues.get('condition', ''),
-            values: newValues
-          },
+          value: newValues.toJS(),
           name: this.parentFieldName()
         }
       }
-      this.props.handleOnChange(event)
+      this.props.handleOnChange(valEvent)
+      const conditionEvent = {
+        target: {
+          value: this.state.formValues.get('condition', ''),
+          name: `${this.parentFieldName()}-CONDITION`
+        }
+      }
+      this.props.handleOnChange(conditionEvent)
     }
   }
 
