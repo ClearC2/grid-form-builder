@@ -195,9 +195,12 @@ export default class Conditionalinput extends Component {
       values: newValues // to update parent readable values
     })
     if (this.props.handleOnChange) {
+      if (typeof newValues === typeof Map() || typeof newValues === typeof List()) {
+        newValues = newValues.toJS()
+      }
       const valEvent = {
         target: {
-          value: newValues.toJS(),
+          value: newValues,
           name: this.parentFieldName()
         }
       }
