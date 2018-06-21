@@ -172,6 +172,7 @@ export default class Conditionalinput extends Component {
     return name[name.length - 1]
   }
   handleOnChange = e => {
+
     if (this.getInputType() === 'typeahead') {
       if (e.target.value.label) {
         e.target.name = `${this.parentFieldName()}-${this.state.values.size}`
@@ -194,7 +195,15 @@ export default class Conditionalinput extends Component {
       formValues: this.state.formValues.set(e.target.name, e.target.value), // to update mini form
       values: newValues // to update parent readable values
     })
-    if (this.props.handleOnChange) {
+    if (e.target.name === 'condition') {
+      const valEvent = {
+        target: {
+          value: e.target.value,
+          name: `${this.parentFieldName()}-CONDITION`
+        }
+      }
+      this.props.handleOnChange(valEvent)
+    } else if (this.props.handleOnChange) {
       if (typeof newValues === typeof Map() || typeof newValues === typeof List()) {
         newValues = newValues.toJS()
       }
