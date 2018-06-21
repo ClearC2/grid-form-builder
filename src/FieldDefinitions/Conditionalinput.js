@@ -22,6 +22,7 @@ export default class Conditionalinput extends Component {
       }),
       values: List(),
       showDialog: false
+
     }
   }
 
@@ -87,7 +88,6 @@ export default class Conditionalinput extends Component {
   formSchema = () => { // for Dialog
     const {formValues} = this.state
     const {name} = this.props.config
-    const condition = formValues.get('condition')
     const inputType = this.getInputType()
     let schema = {
       form: {
@@ -119,7 +119,7 @@ export default class Conditionalinput extends Component {
             },
             {
               type: 'field',
-              dimensions: {x: 1, y: 2, h: this.calculateFieldHeight(inputType), w: 6},
+              dimensions: {x: 1, y: 2, h: this.calculateFieldHeight(inputType), w: 8},
               config: {
                 ...this.props.config,
                 name: `${name}-0`,
@@ -142,7 +142,7 @@ export default class Conditionalinput extends Component {
       while (fieldCount < maxFieldCount && fieldCount < this.state.values.size + 1) {
         schema.form.jsonschema.layout.push({
           type: 'field',
-          dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(inputType), w: 6},
+          dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(inputType), w: 8},
           config: {
             ...this.props.config,
             name: `${name}-${fieldCount}`,
@@ -173,7 +173,6 @@ export default class Conditionalinput extends Component {
     return name[name.length - 1]
   }
   handleOnChange = e => {
-    console.log(e.target.value, e.target.name, this.state, 'e logggggggg')
     if (this.getInputType() === 'typeahead') {
       if (e.target.value.label) {
         e.target.name = `${this.props.config.name}-${this.state.values.size}`
@@ -188,13 +187,10 @@ export default class Conditionalinput extends Component {
      */
     let newValues
     if (SINGLE_FIELD_INPUTS.has(this.getInputType())) {
-      console.log(this.state.values, 'single field input logggggggggggggggggg')
       newValues = e.target.value
     } else {
-      console.log(this.state.values, 'multi field input logggggggggggggggggg')
       newValues = this.state.values.set(this.getEventFieldIndex(e), e.target.value)
     }
-    console.log(newValues, 'setting new values loggggggggg')
     this.setState({
       formValues: this.state.formValues.set(e.target.name, e.target.value), // to update mini form
       values: newValues // to update parent readable values
@@ -209,13 +205,11 @@ export default class Conditionalinput extends Component {
           name: this.parentFieldName()
         }
       }
-      console.log(event, 'event logggggggggg')
       this.props.handleOnChange(event)
     }
   }
 
   render = () => {
-    const inputType = this.getInputType()
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
@@ -295,7 +289,6 @@ export default class Conditionalinput extends Component {
             background: '#fff',
             boxShadow: '0px 0px 15px #444',
             borderRadius: '5px',
-            // backgroundColor: '#f5f5f5',
             border: '2px solid #36a9e1',
             position: 'fixed',
             top: '30%', // `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
