@@ -5,22 +5,56 @@ export default class Checkbox extends Component {
   handleOnChange = e => {
     const {formValues = Map(), handleOnChange = () => {}, config} = this.props
     const {name = null} = config
-    let value = formValues.get(name, '')
-    if (typeof value === 'string') {
-      value = (value.toLowerCase() === 'yes' || value.toLowerCase() === 'on')
+    let value = formValues.get(name, '0') // if the field value is undefined in the current form values, we are defaulting it to the c2 standard of a false string value of 0
+    switch (value) {
+      case true: value = false; break
+      case false: value = true; break
+      case 0: value = 1; break
+      case 1: value = 0; break
+      case '0': value = '1'; break
+      case '1': value = '0'; break
+      case 'true': value = 'false'; break
+      case 'false': value = 'true'; break
+      case 'True': value = 'False'; break
+      case 'False': value = 'True'; break
+      case 'TRUE': value = 'FALSE'; break
+      case 'FALSE': value = 'TRUE'; break
+      case 't': value = 'f'; break
+      case 'f': value = 't'; break
+      case 'T': value = 'F'; break
+      case 'F': value = 'T'; break
+      case 'y': value = 'n'; break
+      case 'n': value = 'y'; break
+      case 'Y': value = 'N'; break
+      case 'N': value = 'Y'; break
+      case 'Yes': value = 'No'; break
+      case 'No': value = 'Yes'; break
+      case 'YES': value = 'NO'; break
+      case 'NO': value = 'YES'; break
+      case 'yes': value = 'no'; break
+      case 'no': value = 'yes'; break
+      case 'On': value = 'Off'; break
+      case 'Off': value = 'On'; break
+      case 'ON': value = 'OFF'; break
+      case 'OFF': value = 'ON'; break
+      case 'on': value = 'off'; break
+      case 'off': value = 'on'; break
+      case name: value = ''; break // this might be dangerous to assume the checked value is the name of the field
+      case '': value = name; break // this might be dangerous to assume the unchecked value is a blank string
+      default: value = !!e.target.value
     }
-    value = !value
     handleOnChange({target: {name: e.target.name, value: value}})
   }
+
+  truthy = [true, 1, '1', 't', 'T', 'true', 'True', 'TRUE', 'y', 'Y', 'Yes', 'YES', 'yes', 'on', 'On', 'ON', this.props.config.name]
+
+  falsey = [false, 0, '0', 'f', 'F', 'false', 'False', 'FALSE', 'n', 'N', 'No', 'NO', 'no', 'off', 'Off', 'OFF', '']
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
-    let value = formValues.get(name, '')
-    if (typeof value === 'string') value = value.toLowerCase() === 'yes'
-    value = !!value
     let {readonly = false, disabled = false} = config
     disabled = disabled || readonly
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
@@ -62,6 +96,12 @@ export default class Checkbox extends Component {
         ...iconStyle
       }
     }
+
+    let value = formValues.get(name, '')
+
+    if (this.truthy.indexOf(value) > -1) value = true
+    else if (this.falsey.indexOf(value) > -1) value = false
+    else value = false
 
     return (
       <div style={styles.container}>
