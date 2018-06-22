@@ -24,6 +24,7 @@ export default class Conditionalinput extends Component {
       values: List(),
       showDialog: false
     }
+
   }
 
   static defaultProps = {
@@ -35,6 +36,20 @@ export default class Conditionalinput extends Component {
       number: ['is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain', 'is greater than', 'is less than'],
       categorical: ['is one of', 'is not one of']
     }
+  }
+
+  closeDialogOnEnterPress = (event) => {
+    if (this.state.showDialog && event.key === 'Enter') {
+      this.handleToggleDialog(false)
+    }
+  }
+
+  componentDidMount () {
+    document.addEventListener('keypress', this.closeDialogOnEnterPress)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('keypress', this.closeDialogOnEnterPress)
   }
 
   handleToggleDialog = (newState = !this.state.showDialog) => {
@@ -71,11 +86,9 @@ export default class Conditionalinput extends Component {
     const singleFieldHight = this.calculateFieldHeight(this.getInputType()) * 32
     let nFields = ONLY_CATEGORICAL_INPUT.has(this.getInputType()) ? 1 : Math.max(this.state.values.size, 1)
     nFields = Math.min(nFields, this.getMaxFields())
-    const size = titleAndConditionHeight + (singleFieldHight * nFields)
-    if (size > 500) {
-      return `500`
-    }
-    return `${size}`
+    const footerHeight = 50
+    const size = titleAndConditionHeight + (singleFieldHight * nFields) + footerHeight
+    return (size > 500) ? '500' : `${size}`
   }
 
   calculateFieldHeight = (type) => {
@@ -173,7 +186,6 @@ export default class Conditionalinput extends Component {
     return name[name.length - 1]
   }
   handleOnChange = e => {
-
     if (this.getInputType() === 'typeahead') {
       if (e.target.value.label) {
         e.target.name = `${this.parentFieldName()}-${this.state.values.size}`
@@ -309,7 +321,6 @@ export default class Conditionalinput extends Component {
             position: 'fixed',
             top: '30%', // `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
             left: '30%', // `${this.state.fieldPos.left + 100}px`,
-            bottom: '100px',
             overflowY: 'visible'
           }}
           enableResizing
@@ -318,9 +329,12 @@ export default class Conditionalinput extends Component {
           <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
             <span>&times;</span>
           </button>
-          <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%'}} >
+          <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%', height: '100%', marginBottom: '-80px'}} >
             <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
           </div>
+          <button type='button' className='btn-primary pull-right' style={{paddingRight: '10px', paddingTop: '5px', marginRight: '30px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
+            <span>Ok</span>
+          </button>
         </Dialog>}
       </div>
     )

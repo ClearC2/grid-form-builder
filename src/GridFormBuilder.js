@@ -119,6 +119,25 @@ export default class FormBuilder extends Component {
 
   uppercaseFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 
+  convertFieldToSearch = (field = {}) => {
+    if (!unconditionalFields.has(field.config.type ? field.config.type.toLowerCase() : 'input')) {
+      if (field.config.type === 'radio') { // inputs that are normally radios should be multicheckboxes in search
+        field.config.type = 'multicheckbox'
+      }
+      if (field.config.type === 'select') {
+        field.config.type = 'multiselect'
+      }
+      if (field.config.type === 'typeahead') {
+        field.config.multi = true
+      }
+      field.config.readonly = false
+      field.config.disabled = false
+      field.config.inputType = field.config.type || 'input'
+      field.config.type = 'conditionalInput'
+    }
+    return field
+  }
+
   render = () => {
     let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5} = this.props
     const {requiredWarning} = this.state
@@ -131,19 +150,8 @@ export default class FormBuilder extends Component {
     let {layout = []} = jsonschema
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
     layout.map((field, i) => {
-      if (this.props.conditionalSearch && !unconditionalFields.has(field.config.type ? field.config.type.toLowerCase() : 'input')) {
-        if (field.config.type === 'radio') { // inputs that are normally radios should be multicheckboxes in search
-          field.config.type = 'multicheckbox'
-        }
-        if (field.config.type === 'select') {
-          field.config.type = 'multiselect'
-        }
-        if (field.config.type === 'typeahead') {
-          field.config.multi = true
-        }
-        field.config.readonly = false
-        field.config.inputType = field.config.type || 'input'
-        field.config.type = 'conditionalInput'
+      if (this.props.conditionalSearch) {
+        field = this.convertFieldToSearch(field)
       }
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
       let {type = 'input', icon = ''} = config
