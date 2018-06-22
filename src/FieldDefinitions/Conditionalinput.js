@@ -16,10 +16,9 @@ const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'
 export default class Conditionalinput extends Component {
   constructor (props) {
     super(props)
-
     this.state = {
       formValues: Map({
-        condition: this.getInputTypeOptionsList(this.getInputType())[0]
+        condition: 'contains'
       }),
       values: List(),
       showDialog: false
@@ -31,10 +30,10 @@ export default class Conditionalinput extends Component {
     options: {
       all: ['contains', 'is equal to', 'is not equal to', 'does not contain', 'is between', 'is not between',
         'is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain',
-        'is greater than', 'is less than', 'is one of', 'is not one of'],
+        'is greater than', 'is less than', 'is one of', 'is not one of', 'is blank', 'is not blank'],
       text: ['contains', 'is equal to', 'is not equal to', 'does not contain', 'is between', 'is not between'],
       number: ['is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain', 'is greater than', 'is less than'],
-      categorical: ['is one of', 'is not one of']
+      categorical: ['is one of', 'is not one of', 'is blank', 'is not blank']
     }
   }
 
@@ -84,7 +83,7 @@ export default class Conditionalinput extends Component {
   calculateModalHeight = () => {
     const titleAndConditionHeight = 145
     const singleFieldHight = this.calculateFieldHeight(this.getInputType()) * 32
-    let nFields = ONLY_CATEGORICAL_INPUT.has(this.getInputType()) ? 1 : Math.max(this.state.values.size, 1)
+    let nFields = ONLY_CATEGORICAL_INPUT.has(this.getInputType()) ? 0 : Math.max(this.state.values.size, 0)
     nFields = Math.min(nFields, this.getMaxFields())
     const footerHeight = 50
     const size = titleAndConditionHeight + (singleFieldHight * nFields) + footerHeight
@@ -128,17 +127,6 @@ export default class Conditionalinput extends Component {
                   options: this.convertListToOptions(this.getInputTypeOptionsList(this.getInputType()))
                 }
               }
-            },
-            {
-              type: 'field',
-              dimensions: {x: 1, y: 2, h: this.calculateFieldHeight(inputType), w: 8},
-              config: {
-                ...this.props.config,
-                readonly: false,
-                name: `${name}-0`,
-                label: `${this.props.config.label || name}`,
-                type: inputType
-              }
             }
           ]
         }
@@ -150,8 +138,23 @@ export default class Conditionalinput extends Component {
       createdBy: 'will darden'
     }
     const maxFieldCount = this.getMaxFields()
+    let fieldCount = 0
+    if (fieldCount < maxFieldCount) {
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {x: 1, y: 2, h: this.calculateFieldHeight(inputType), w: 8},
+        config: {
+          ...this.props.config,
+          readonly: false,
+          name: `${name}-0`,
+          label: `${this.props.config.label || name}`,
+          type: inputType
+        }
+      })
+      fieldCount++
+    }
     if (MULTI_FIELD_INPUTS.has(this.getInputType())) {
-      let fieldCount = 1
+
       while (fieldCount < maxFieldCount && fieldCount < this.state.values.size + 1) {
         schema.form.jsonschema.layout.push({
           type: 'field',
@@ -172,6 +175,10 @@ export default class Conditionalinput extends Component {
   }
 
   getMaxFields = () => {
+    if (this.state.formValues.get('condition', '') === 'is blank' ||
+      this.state.formValues.get('condition', '') === 'is not blank') {
+      return 0
+    }
     switch (this.state.formValues.get('condition', '')) {
       case 'is between':
       case 'is not between':
@@ -185,7 +192,22 @@ export default class Conditionalinput extends Component {
     let name = e.target.name.split('-')
     return name[name.length - 1]
   }
+
+  handleConditionChange = (e) => {
+    this.setState({formValues: this.state.formValues.set(e.target.name, e.target.value)})
+    if (this.props.handleOnChange) {
+      this.props.handleOnChange({target: {value: e.target.value, name: `${this.parentFieldName()}-CONDITION`}})
+      if (e.target.value === 'is blank' || e.target.value === 'is not blank') {
+        this.props.handleOnChange({target: {value: [], name: this.parentFieldName()}})
+      }
+    }
+  }
+
   handleOnChange = e => {
+    if (e.target.name === 'condition') {
+      this.handleConditionChange(e)
+      return
+    }
     if (this.getInputType() === 'typeahead') {
       if (e.target.value.label) {
         e.target.name = `${this.parentFieldName()}-${this.state.values.size}`
@@ -208,15 +230,8 @@ export default class Conditionalinput extends Component {
       formValues: this.state.formValues.set(e.target.name, e.target.value), // to update mini form
       values: newValues // to update parent readable values
     })
-    if (e.target.name === 'condition') {
-      const valEvent = {
-        target: {
-          value: e.target.value,
-          name: `${this.parentFieldName()}-CONDITION`
-        }
-      }
-      this.props.handleOnChange(valEvent)
-    } else if (this.props.handleOnChange) {
+
+    if (this.props.handleOnChange) {
       if (typeof newValues === typeof Map() || typeof newValues === typeof List()) {
         newValues = newValues.toJS()
       }
@@ -237,6 +252,15 @@ export default class Conditionalinput extends Component {
     }
   }
 
+  hideDisplay = () => {
+    if (this.state.formValues.get('condition', '') === 'is blank' ||
+      this.state.formValues.get('condition', '') === 'is not blank') {
+      return false
+    } else {
+      return this.state.values.size === 0
+    }
+  }
+
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
@@ -244,7 +268,7 @@ export default class Conditionalinput extends Component {
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
-    let hideDisplay = this.state.values.size === 0
+    let hideDisplay = this.hideDisplay()
     const styles = {
       container: {
         display: 'flex',
