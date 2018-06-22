@@ -154,7 +154,6 @@ export default class Conditionalinput extends Component {
       fieldCount++
     }
     if (MULTI_FIELD_INPUTS.has(this.getInputType())) {
-
       while (fieldCount < maxFieldCount && fieldCount < this.state.values.size + 1) {
         schema.form.jsonschema.layout.push({
           type: 'field',
