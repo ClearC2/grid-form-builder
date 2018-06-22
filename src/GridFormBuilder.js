@@ -157,7 +157,7 @@ export default class FormBuilder extends Component {
       let {type = 'input', icon = ''} = config
       type = this.uppercaseFirstLetter(type)
       icon = this.uppercaseFirstLetter(icon)
-      if (type === 'Textarea' && dimensions.h < 4) dimensions.h = 4
+      if (type === 'Textarea' && dimensions.h < 2) dimensions.h = 2
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
       icon = IconLibrary[icon] ? IconLibrary[icon] : null
       if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0) {

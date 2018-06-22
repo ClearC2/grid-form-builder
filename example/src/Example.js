@@ -285,7 +285,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 15, 'h': 4, 'w': 6},
+              'dimensions': {'x': 0, 'y': 15, 'h': 2, 'w': 6},
               'config': {
                 'name': 'textareatest',
                 'label': 'Textarea',
