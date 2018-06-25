@@ -164,6 +164,7 @@ export default class FormBuilder extends Component {
         dateFields.unshift(
           <Component
             requiredWarning={requiredWarning}
+            rowHeight={rowHeight}
             inline={inline}
             draggable={draggable}
             key={'' + i}
@@ -178,6 +179,7 @@ export default class FormBuilder extends Component {
         normalFields.push(
           <Component
             requiredWarning={requiredWarning}
+            rowHeight={rowHeight}
             inline={inline}
             draggable={draggable}
             formSchema={formSchema}
@@ -193,6 +195,7 @@ export default class FormBuilder extends Component {
         normalFields.push(
           <Component
             requiredWarning={requiredWarning}
+            rowHeight={rowHeight}
             inline={inline}
             draggable={draggable}
             key={'' + i}
