@@ -28,14 +28,31 @@ export default class Typeahead extends Component {
 
   setShouldRemount = (shouldRemount = true) => this.setState({shouldRemount})
 
-  handleChange = typeahead => {
+  handleChange = newValue => {
     const {handleOnChange, config = {}} = this.props
-    const {name = null} = config
-    Object.keys(typeahead).forEach(field => {
-      let value = typeahead[field]
-      if (field === 'duplication') value = typeahead.value
+    const {name = null, typeahead = {}} = config
+    if (newValue.className || (newValue.value.trim() === '' && newValue.label.trim() === '')) {
+      newValue[name] = newValue.value || ''
+      const {fields = []} = typeahead
+      let resetValues = {
+        [name]: ''
+      }
+      fields.map(field => { resetValues[field] = '' })
+      Object.keys(resetValues).forEach(field => {
+        handleOnChange({
+          target: {
+            name: field,
+            value: resetValues[field]
+          }
+        })
+      })
+    }
+
+    Object.keys(newValue).forEach(field => {
+      let value = newValue[field]
+      if (field === 'duplication') value = newValue.value
       if (field === 'label') field = name
-      if (field !== 'value') {
+      if (field !== 'value' && field !== 'className') {
         handleOnChange({
           target: {
             name: field,
@@ -149,6 +166,7 @@ export default class Typeahead extends Component {
             disabled={disabled}
             onKeyDown={onKeyDown}
             placeholder={placeholder}
+            resetValue={{[name]: '', value: '', label: ''}}
           />
         </div>
       )
