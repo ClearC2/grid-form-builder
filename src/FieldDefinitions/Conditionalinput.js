@@ -198,9 +198,8 @@ export default class Conditionalinput extends Component {
   }
 
   handleConditionChange = (e) => {
-    console.log(this.state, 'state logggggg')
     if (e.target.value === 'is between' || e.target.value === 'is not between') {
-      let change = this.state.formValues
+      let change = this.state.formValues.set(e.target.name, e.target.value)
       let i = 2
       while (i < this.state.values.size) {
         change = change.delete(`${this.parentFieldName()}-${i}`)
@@ -216,9 +215,26 @@ export default class Conditionalinput extends Component {
         this.props.handleOnChange({target: {value: [], name: this.parentFieldName()}})
       }
       if (e.target.value === 'is between' || e.target.value === 'is not between') {
-        this.props.handleOnChange({target: {value: this.state.formValues.get(this.parentFieldName(), List()).slice(0,2), name: this.parentFieldName()}})
+        this.props.handleOnChange({
+          target: {
+            value: this.state.formValues.get(this.parentFieldName(), List()).slice(0,2),
+            name: this.parentFieldName()
+          }
+        })
       }
     }
+  }
+
+  squashValues = (deletedIndex, list, fieldPrefix) => {
+    let i = typeof deletedIndex === 'string' ? parseInt(deletedIndex) : deletedIndex
+    while ((i + 1) < this.state.values.size) {
+      let copyField = fieldPrefix ? fieldPrefix + (i + 1) : i + 1 // field name of thing that will replace other thing
+      let pasteField = fieldPrefix ? fieldPrefix + (i) : i
+      list = list.set(pasteField, list.get(copyField))
+      i++
+    }
+    list = list.delete(fieldPrefix ? fieldPrefix + (i) : i)
+    return list
   }
 
   handleOnChange = e => {
@@ -234,6 +250,7 @@ export default class Conditionalinput extends Component {
       if (e.target.id !== undefined) {
         if (e.target.id === null) {
           newTypeaheadValues = this.state.typeaheadValues.delete(this.getEventFieldIndex(e))
+          newTypeaheadValues = this.squashValues(this.getEventFieldIndex(e), newTypeaheadValues)
         } else {
           newTypeaheadValues = this.state.typeaheadValues.set(this.getEventFieldIndex(e), e.target.id)
         }
@@ -244,17 +261,20 @@ export default class Conditionalinput extends Component {
       based on their input field index.
      */
     let newValues = List()
+    let newFormValues = this.state.formValues.set(e.target.name, e.target.value)
     if (SINGLE_FIELD_INPUTS.has(this.getInputType())) {
       newValues = e.target.value
     } else {
       if (e.target.value === '') {
         newValues = this.state.values.delete(this.getEventFieldIndex(e))
+        newValues = this.squashValues(this.getEventFieldIndex(e), newValues)
+        newFormValues = this.squashValues(this.getEventFieldIndex(e), newFormValues, this.parentFieldName() + '-')
       } else {
         newValues = this.state.values.set(this.getEventFieldIndex(e), e.target.value)
       }
     }
     this.setState({
-      formValues: this.state.formValues.set(e.target.name, e.target.value), // to update mini form
+      formValues: newFormValues, // to update mini form
       values: newValues, // to update parent readable values
       typeaheadValues: newTypeaheadValues
     })
@@ -278,7 +298,6 @@ export default class Conditionalinput extends Component {
       }
       this.props.handleOnChange(conditionEvent)
     }
-
   }
 
   hideDisplay = () => {
