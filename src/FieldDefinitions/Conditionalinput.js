@@ -212,29 +212,33 @@ export default class Conditionalinput extends Component {
       this.handleConditionChange(e)
       return
     }
-    let newTypeaheadValue // single value
+    let newTypeaheadValues = List() // list of all the values
     if (this.getInputType() === 'typeahead') {
       console.log(e.target, 'target logggggggg')
-      if (e.target.value.label) {
-        e.target.name = `${this.parentFieldName()}-${this.state.values.size}`
-
-        newTypeaheadValue = e.target.value.value
-        e.target.value = e.target.value.label
-      } else if (this.parentFieldName() !== e.target.name.split('-')[0]) {
+      if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
+      }
+      if (e.target.id !== undefined) {
+        if (e.target.id === null) {
+          newTypeaheadValues = this.state.typeaheadValues.delete(this.getEventFieldIndex(e))
+        } else {
+          newTypeaheadValues = this.state.typeaheadValues.set(this.getEventFieldIndex(e), e.target.id)
+        }
       }
     }
     /* Categorical input come back as arrays and are always one field, and should be put directly into values.
       Other fields have one value per input field, and can have many fields, so have to be put into an array
       based on their input field index.
      */
-    let newValues
-    let newTypeaheadValues // multi value
+    let newValues = List()
     if (SINGLE_FIELD_INPUTS.has(this.getInputType())) {
       newValues = e.target.value
     } else {
-      newValues = this.state.values.set(this.getEventFieldIndex(e), e.target.value)
-      newTypeaheadValues = this.state.typeaheadValues.set(this.getEventFieldIndex(e), newTypeaheadValue)
+      if (e.target.value === '') {
+        newValues = this.state.values.delete(this.getEventFieldIndex(e))
+      } else {
+        newValues = this.state.values.set(this.getEventFieldIndex(e), e.target.value)
+      }
     }
     this.setState({
       formValues: this.state.formValues.set(e.target.name, e.target.value), // to update mini form
@@ -248,7 +252,7 @@ export default class Conditionalinput extends Component {
       }
       const valEvent = {
         target: {
-          value: newValues,
+          value: (this.getInputType() === 'typeahead') ? newTypeaheadValues : newValues,
           name: this.parentFieldName()
         }
       }
