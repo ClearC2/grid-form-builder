@@ -83,7 +83,7 @@ export default class Conditionalinput extends Component {
   calculateModalHeight = () => {
     const titleAndConditionHeight = 145
     const singleFieldHight = this.calculateFieldHeight(this.getInputType()) * 32
-    let nFields = ONLY_CATEGORICAL_INPUT.has(this.getInputType()) ? 0 : Math.max(this.state.values.size, 0)
+    let nFields = ONLY_CATEGORICAL_INPUT.has(this.getInputType()) ? 1 : Math.max(this.state.values.size || 0, 1)
     nFields = Math.min(nFields, this.getMaxFields())
     const footerHeight = 50
     const size = titleAndConditionHeight + (singleFieldHight * nFields) + footerHeight
@@ -210,7 +210,7 @@ export default class Conditionalinput extends Component {
     if (this.getInputType() === 'typeahead') {
       if (e.target.value.label) {
         e.target.name = `${this.parentFieldName()}-${this.state.values.size}`
-        e.target.value = e.target.value.label
+        // e.target.value = e.target.value.label
       } else if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
       }
@@ -231,7 +231,7 @@ export default class Conditionalinput extends Component {
     })
 
     if (this.props.handleOnChange) {
-      if (typeof newValues === typeof Map() || typeof newValues === typeof List()) {
+      if (newValues instanceof Map || newValues instanceof List) {
         newValues = newValues.toJS()
       }
       const valEvent = {
@@ -249,6 +249,7 @@ export default class Conditionalinput extends Component {
       }
       this.props.handleOnChange(conditionEvent)
     }
+
   }
 
   hideDisplay = () => {
