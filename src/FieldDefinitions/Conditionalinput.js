@@ -9,8 +9,8 @@ import FormBuilder from '../GridFormBuilder'
   checkboxes are converted to multicheckboxes
  */
 
-const SINGLE_FIELD_INPUTS = Set(['multiselect', 'typeahead', 'multicheckbox', 'listselect'])
-const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone'])
+const SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselect'])
+const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'typeahead'])
 const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
 
 export default class Conditionalinput extends Component {
@@ -21,7 +21,8 @@ export default class Conditionalinput extends Component {
         condition: 'contains'
       }),
       values: List(),
-      showDialog: false
+      showDialog: false,
+      typeaheadValues: List()
     }
 
   }
@@ -155,16 +156,20 @@ export default class Conditionalinput extends Component {
     }
     if (MULTI_FIELD_INPUTS.has(this.getInputType())) {
       while (fieldCount < maxFieldCount && fieldCount < this.state.values.size + 1) {
-        schema.form.jsonschema.layout.push({
+        let newField = {
           type: 'field',
           dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(inputType), w: 8},
           config: {
             readonly: false,
-            name: `${name}-${fieldCount}`,
-            label: `     ...or`,
-            type: inputType
+              name: `${name}-${fieldCount}`,
+              label: `     ...or`,
+              type: inputType
           }
-        })
+        }
+        if (this.props.config.typeahead) {
+          newField.config.typeahead = this.props.config.typeahead
+        }
+        schema.form.jsonschema.layout.push(newField)
         fieldCount++
       }
     }
@@ -207,10 +212,14 @@ export default class Conditionalinput extends Component {
       this.handleConditionChange(e)
       return
     }
+    let newTypeaheadValue // single value
     if (this.getInputType() === 'typeahead') {
+      console.log(e.target, 'target logggggggg')
       if (e.target.value.label) {
         e.target.name = `${this.parentFieldName()}-${this.state.values.size}`
-        // e.target.value = e.target.value.label
+
+        newTypeaheadValue = e.target.value.value
+        e.target.value = e.target.value.label
       } else if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
       }
@@ -220,14 +229,17 @@ export default class Conditionalinput extends Component {
       based on their input field index.
      */
     let newValues
+    let newTypeaheadValues // multi value
     if (SINGLE_FIELD_INPUTS.has(this.getInputType())) {
       newValues = e.target.value
     } else {
       newValues = this.state.values.set(this.getEventFieldIndex(e), e.target.value)
+      newTypeaheadValues = this.state.typeaheadValues.set(this.getEventFieldIndex(e), newTypeaheadValue)
     }
     this.setState({
       formValues: this.state.formValues.set(e.target.name, e.target.value), // to update mini form
-      values: newValues // to update parent readable values
+      values: newValues, // to update parent readable values
+      typeaheadValues: newTypeaheadValues
     })
 
     if (this.props.handleOnChange) {
@@ -262,6 +274,7 @@ export default class Conditionalinput extends Component {
   }
 
   render = () => {
+    console.log(this.props, this.state, 'props logggggggg')
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null

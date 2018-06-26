@@ -128,7 +128,7 @@ export default class FormBuilder extends Component {
         field.config.type = 'multiselect'
       }
       if (field.config.type === 'typeahead') {
-        field.config.multi = true
+        // field.config.multi = true
       }
       field.config.readonly = false
       field.config.disabled = false
