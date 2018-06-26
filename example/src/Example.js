@@ -244,7 +244,11 @@ export default class Example extends Component {
                 'type': 'typeahead',
                 'typeahead': {
                   'key': 'c2_company',
-                  'duplication': true
+                  'duplication': true,
+                  'fields': [
+                    'inputtest',
+                    'textareatest'
+                  ]
                 }
               }
             },

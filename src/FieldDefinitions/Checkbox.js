@@ -51,7 +51,7 @@ export default class Checkbox extends Component {
   falsey = [false, 0, '0', 'f', 'F', 'false', 'False', 'FALSE', 'n', 'N', 'No', 'NO', 'no', 'off', 'Off', 'OFF', '']
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, rowHeight} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
@@ -71,7 +71,7 @@ export default class Checkbox extends Component {
       label: {
         display: 'flex',
         flex: 1,
-        height: inline ? 27 : 40,
+        height: rowHeight || inline ? 27 : 40,
         margin: 0,
         marginBottom: inline ? 5 : 0,
         alignItems: 'center',

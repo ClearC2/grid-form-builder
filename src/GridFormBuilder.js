@@ -139,7 +139,7 @@ export default class FormBuilder extends Component {
   }
 
   render = () => {
-    let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5} = this.props
+    let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight} = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
@@ -164,6 +164,7 @@ export default class FormBuilder extends Component {
         dateFields.unshift(
           <Component
             requiredWarning={requiredWarning}
+            rowHeight={rowHeight}
             inline={inline}
             draggable={draggable}
             key={'' + i}
@@ -178,6 +179,7 @@ export default class FormBuilder extends Component {
         normalFields.push(
           <Component
             requiredWarning={requiredWarning}
+            rowHeight={rowHeight}
             inline={inline}
             draggable={draggable}
             formSchema={formSchema}
@@ -193,6 +195,7 @@ export default class FormBuilder extends Component {
         normalFields.push(
           <Component
             requiredWarning={requiredWarning}
+            rowHeight={rowHeight}
             inline={inline}
             draggable={draggable}
             key={'' + i}
@@ -207,7 +210,7 @@ export default class FormBuilder extends Component {
     })
     return (
       <div style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
-        <WidgetGrid compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={inline ? 27 : 45}>
+        <WidgetGrid compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={rowHeight || inline ? 27 : 45}>
           {normalFields}
           {dateFields}
         </WidgetGrid>
