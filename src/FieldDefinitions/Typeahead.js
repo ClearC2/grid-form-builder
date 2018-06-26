@@ -51,14 +51,20 @@ export default class Typeahead extends Component {
     Object.keys(newValue).forEach(field => {
       let value = newValue[field]
       if (field === 'duplication') value = newValue.value
-      if (field === 'label') field = name
-      if (field !== 'value' && field !== 'className') {
-        handleOnChange({
-          target: {
-            name: field,
-            value
-          }
-        })
+      let id = null
+      if (field === 'label') {
+        id = newValue.value
+        field = name
+      }
+      let e = {
+        target: {
+          name: field,
+          value,
+          id
+        }
+      }
+      if (field !== 'className' && field !== 'value' && field !== 'label') {
+        handleOnChange(e)
       }
     })
   }
