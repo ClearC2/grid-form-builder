@@ -161,9 +161,9 @@ export default class Conditionalinput extends Component {
           dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(inputType), w: 8},
           config: {
             readonly: false,
-              name: `${name}-${fieldCount}`,
-              label: `     ...or`,
-              type: inputType
+            name: `${name}-${fieldCount}`,
+            label: `     ...or`,
+            type: inputType
           }
         }
         if (this.props.config.typeahead) {
@@ -198,11 +198,25 @@ export default class Conditionalinput extends Component {
   }
 
   handleConditionChange = (e) => {
-    this.setState({formValues: this.state.formValues.set(e.target.name, e.target.value)})
+    console.log(this.state, 'state logggggg')
+    if (e.target.value === 'is between' || e.target.value === 'is not between') {
+      let change = this.state.formValues
+      let i = 2
+      while (i < this.state.values.size) {
+        change = change.delete(`${this.parentFieldName()}-${i}`)
+        i++
+      }
+      this.setState({formValues: change, values: change})
+    } else {
+      this.setState({formValues: this.state.formValues.set(e.target.name, e.target.value)})
+    }
     if (this.props.handleOnChange) {
       this.props.handleOnChange({target: {value: e.target.value, name: `${this.parentFieldName()}-CONDITION`}})
       if (e.target.value === 'is blank' || e.target.value === 'is not blank') {
         this.props.handleOnChange({target: {value: [], name: this.parentFieldName()}})
+      }
+      if (e.target.value === 'is between' || e.target.value === 'is not between') {
+        this.props.handleOnChange({target: {value: this.state.formValues.get(this.parentFieldName(), List()).slice(0,2), name: this.parentFieldName()}})
       }
     }
   }
@@ -214,7 +228,6 @@ export default class Conditionalinput extends Component {
     }
     let newTypeaheadValues = List() // list of all the values
     if (this.getInputType() === 'typeahead') {
-      console.log(e.target, 'target logggggggg')
       if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
       }
@@ -278,7 +291,6 @@ export default class Conditionalinput extends Component {
   }
 
   render = () => {
-    console.log(this.props, this.state, 'props logggggggg')
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false} = config
     if (!name) return null
