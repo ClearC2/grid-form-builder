@@ -138,6 +138,10 @@ export default class FormBuilder extends Component {
     return field
   }
 
+  handleDragDropOnInput = droptarget => {
+    console.log(droptarget)
+  }
+
   render = () => {
     let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight} = this.props
     const {requiredWarning} = this.state
@@ -172,6 +176,7 @@ export default class FormBuilder extends Component {
             formValues={formValues}
             config={config}
             Icon={icon}
+            handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
         )
@@ -188,6 +193,7 @@ export default class FormBuilder extends Component {
             formValues={formValues}
             config={config}
             Icon={icon}
+            handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
         )
@@ -203,6 +209,7 @@ export default class FormBuilder extends Component {
             formValues={formValues}
             config={config}
             Icon={icon}
+            handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
         )

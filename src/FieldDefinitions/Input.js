@@ -1,10 +1,20 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
+import {DropTarget} from 'react-dnd'
 
-export default class Input extends Component {
+class Input extends Component {
+  componentDidUpdate = p => {
+    let {droppedItem, handleDragDropOnInput} = this.props
+    droppedItem = droppedItem === null ? null : droppedItem.widget
+    if (droppedItem && !p.droppedItem) {
+      handleDragDropOnInput(droppedItem)
+    }
+  }
+
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
   }
+
   render = () => {
     const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
@@ -92,3 +102,18 @@ export default class Input extends Component {
     )
   }
 }
+
+function collect (connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    droppedItem: monitor.getDropResult()
+  }
+}
+
+const boxTarget = {
+  drop (props, monitor) {
+    return {widget: monitor.getItem()}
+  }
+}
+
+export default DropTarget('Input', boxTarget, collect)(Input)
