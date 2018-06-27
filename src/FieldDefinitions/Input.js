@@ -129,4 +129,4 @@ const boxTarget = {
   }
 }
 
-export default DropTarget('NewWidgetDraggable', boxTarget, collect)(Input)
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Input)

@@ -13,6 +13,35 @@ Grid Form Builder is a component that accepts JSON to generate forms on a [react
 "grid-form-builder": "git+ssh://git@github.com:ClearC2/grid-form-builder.git",
 ```
 
+# Important - Grid Form Builder now requires react-dnd@2.5.4 and react-dnd-html5-backend@2.5.4 to be installed as peer dependencies.
+
+Your project will need to set up the html5 backend context in the root of your application.
+```javascript
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {Provider} from 'react-redux'
+import store from './store'
+import Application from './Application'
+import ajax from './ajax'
+
+import HTML5Backend from 'react-dnd-html5-backend'
+import {DragDropContext} from 'react-dnd'
+
+
+const render = (props = {}) => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <HTML5BackendProvider {...props} />
+    </Provider>,
+    document.getElementById('app')
+  )
+}
+
+const HTML5BackendProvider = DragDropContext(HTML5Backend)(Application)
+
+render()
+```
+
 * react-grid-layout, react-datetime, and react-select are peer dependencies of grid-form-builder. If your project uses css, import the react-grid-layout css style sheets below where your other css files are being imported. 
 
 ```

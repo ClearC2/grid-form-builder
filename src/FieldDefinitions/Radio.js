@@ -1,9 +1,24 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
+import {DropTarget} from 'react-dnd'
 
-export default class Radio extends Component {
+export class Radio extends Component {
+  componentDidUpdate = p => {
+    const {didDrop, isOver} = this.props
+    if (didDrop && !p.didDrop && !isOver && p.isOver) {
+      // if it was just previously over and dropped (this is to make this event only trigger once)
+      let {droppedItem, handleDragDropOnInput, config} = this.props
+      droppedItem = droppedItem === null ? null : droppedItem.widget
+      if (droppedItem && !p.droppedItem) {
+        handleDragDropOnInput({
+          source: droppedItem,
+          target: config
+        })
+      }
+    }
+  }
   render = () => {
-    const {inline, config = {}, handleOnChange = () => {}, formValues = Map(), Icon = null, requiredWarning} = this.props
+    const {inline, config = {}, handleOnChange = () => {}, formValues = Map(), Icon = null, requiredWarning, connectDropTarget} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name, keyword = {}, boxed} = config
@@ -66,24 +81,45 @@ export default class Radio extends Component {
     }
 
     return (
-      <div style={styles.container}>
-        <div style={styles.labelContainer}>
-          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
-          {Icon && <Icon style={styles.icon} />}
-          <strong style={styles.label}>{label}</strong>
-          <span style={{fontWeight: 'normal', fontSize: '9pt', color: 'red', marginLeft: 9}}>{warn ? 'This Field Is Required' : ''}</span>
+      connectDropTarget(
+        <div style={styles.container}>
+          <div style={styles.labelContainer}>
+            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+            {Icon && <Icon style={styles.icon} />}
+            <strong style={styles.label}>{label}</strong>
+            <span style={{fontWeight: 'normal', fontSize: '9pt', color: 'red', marginLeft: 9}}>{warn ? 'This Field Is Required' : ''}</span>
+          </div>
+          <div style={styles.optionsContainer}>
+            {options.map((option, i) => {
+              return (
+                <label key={i} style={styles.label}>
+                  <input className='radio-grid-input' onChange={handleOnChange} style={styles.input} type='radio' name={name} value={option.value} checked={option.value.toLowerCase() === formValues.get(name, '').toLowerCase()} disabled={disabled} onKeyDown={onKeyDown} />
+                  {option.label ? option.label : option.value}
+                </label>
+              )
+            })}
+          </div>
         </div>
-        <div style={styles.optionsContainer}>
-          {options.map((option, i) => {
-            return (
-              <label key={i} style={styles.label}>
-                <input className='radio-grid-input' onChange={handleOnChange} style={styles.input} type='radio' name={name} value={option.value} checked={option.value.toLowerCase() === formValues.get(name, '').toLowerCase()} disabled={disabled} onKeyDown={onKeyDown} />
-                {option.label ? option.label : option.value}
-              </label>
-            )
-          })}
-        </div>
-      </div>
+      )
     )
   }
 }
+
+function collect (connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    droppedItem: monitor.getDropResult(),
+    didDrop: monitor.didDrop(),
+    isOver: monitor.isOver()
+  }
+}
+
+const boxTarget = {
+  drop (props, monitor) {
+    return {
+      widget: monitor.getItem()
+    }
+  }
+}
+
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Radio)

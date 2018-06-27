@@ -37,4 +37,4 @@ function collect (connect, monitor) {
   }
 }
 
-export default DragSource('NewWidgetDraggable', cardSource, collect)(TestDraggableUnit)
+export default DragSource('FormBuilderDraggable', cardSource, collect)(TestDraggableUnit)

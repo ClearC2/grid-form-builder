@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, Set, List, fromJS} from 'immutable'
+import {Map, Set, List} from 'immutable'
 import {Dialog} from 'c2-dialog'
 import FormBuilder from '../GridFormBuilder'
 

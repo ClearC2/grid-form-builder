@@ -2,8 +2,24 @@ import React, {Component} from 'react'
 import {Map} from 'immutable'
 import Cleave from 'cleave.js/react'
 import 'cleave.js/dist/addons/cleave-phone.us'
+import {DropTarget} from 'react-dnd'
 
-export default class Phone extends Component {
+export class Phone extends Component {
+  componentDidUpdate = p => {
+    const {didDrop, isOver} = this.props
+    if (didDrop && !p.didDrop && !isOver && p.isOver) {
+      // if it was just previously over and dropped (this is to make this event only trigger once)
+      let {droppedItem, handleDragDropOnInput, config} = this.props
+      droppedItem = droppedItem === null ? null : droppedItem.widget
+      if (droppedItem && !p.droppedItem) {
+        handleDragDropOnInput({
+          source: droppedItem,
+          target: config
+        })
+      }
+    }
+  }
+
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
   }
@@ -14,7 +30,7 @@ export default class Phone extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, delimiter = ' ', containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
@@ -78,26 +94,47 @@ export default class Phone extends Component {
     }
 
     return (
-      <div style={styles.container}>
-        <div style={styles.labelContainer}>
-          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
-          {Icon && <Icon style={styles.icon} />}
-          <strong style={styles.label}>{label}</strong>
+      connectDropTarget(
+        <div style={styles.container}>
+          <div style={styles.labelContainer}>
+            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+            {Icon && <Icon style={styles.icon} />}
+            <strong style={styles.label}>{label}</strong>
+          </div>
+          <Cleave
+            placeholder={placeholder}
+            options={{phone: true, phoneRegionCode: 'US', delimiter}}
+            onMouseDown={this.onMouseDown}
+            onChange={this.handleChange}
+            style={styles.input}
+            type='text'
+            name={name}
+            value={value}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
+            className={className}
+          />
         </div>
-        <Cleave
-          placeholder={placeholder}
-          options={{phone: true, phoneRegionCode: 'US', delimiter}}
-          onMouseDown={this.onMouseDown}
-          onChange={this.handleChange}
-          style={styles.input}
-          type='text'
-          name={name}
-          value={value}
-          disabled={disabled}
-          onKeyDown={onKeyDown}
-          className={className}
-        />
-      </div>
+      )
     )
   }
 }
+
+function collect (connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    droppedItem: monitor.getDropResult(),
+    didDrop: monitor.didDrop(),
+    isOver: monitor.isOver()
+  }
+}
+
+const boxTarget = {
+  drop (props, monitor) {
+    return {
+      widget: monitor.getItem()
+    }
+  }
+}
+
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Phone)

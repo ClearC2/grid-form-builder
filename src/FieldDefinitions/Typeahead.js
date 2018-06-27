@@ -3,6 +3,7 @@ import {Map} from 'immutable'
 import {AsyncCreatable} from 'react-select'
 import PropTypes from 'prop-types'
 import GFBConfig from '../config'
+import {DropTarget} from 'react-dnd'
 
 class Placeholder extends Component {
   static propTypes = {
@@ -12,7 +13,7 @@ class Placeholder extends Component {
   render = () => null
 }
 
-export default class Typeahead extends Component {
+export class Typeahead extends Component {
   static defaultProps = {
     minChars: 1
   }
@@ -20,6 +21,21 @@ export default class Typeahead extends Component {
   state = {
     shouldRemount: false,
     currentOptions: {}
+  }
+
+  componentDidUpdate = p => {
+    const {didDrop, isOver} = this.props
+    if (didDrop && !p.didDrop && !isOver && p.isOver) {
+      // if it was just previously over and dropped (this is to make this event only trigger once)
+      let {droppedItem, handleDragDropOnInput, config} = this.props
+      droppedItem = droppedItem === null ? null : droppedItem.widget
+      if (droppedItem && !p.droppedItem) {
+        handleDragDropOnInput({
+          source: droppedItem,
+          target: config
+        })
+      }
+    }
   }
 
   onMouseDown = e => {
@@ -94,7 +110,7 @@ export default class Typeahead extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget} = this.props
     const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false, style = {}, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
@@ -154,28 +170,49 @@ export default class Typeahead extends Component {
       return <Placeholder handleMount={this.setShouldRemount} />
     } else {
       return (
-        <div style={styles.container}>
-          <div style={styles.labelContainer}>
-            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
-            {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label}>{label}</strong>
+        connectDropTarget(
+          <div style={styles.container}>
+            <div style={styles.labelContainer}>
+              {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+              {Icon && <Icon style={styles.icon} />}
+              <strong style={styles.label}>{label}</strong>
+            </div>
+            <AsyncCreatable
+              style={style}
+              onMouseDown={this.onMouseDown}
+              className={className}
+              name={name}
+              multi={multi}
+              value={value}
+              onChange={this.handleChange}
+              loadOptions={this.loadOptions}
+              disabled={disabled}
+              onKeyDown={onKeyDown}
+              placeholder={placeholder}
+              resetValue={{[name]: '', value: '', label: ''}}
+            />
           </div>
-          <AsyncCreatable
-            style={style}
-            onMouseDown={this.onMouseDown}
-            className={className}
-            name={name}
-            multi={multi}
-            value={value}
-            onChange={this.handleChange}
-            loadOptions={this.loadOptions}
-            disabled={disabled}
-            onKeyDown={onKeyDown}
-            placeholder={placeholder}
-            resetValue={{[name]: '', value: '', label: ''}}
-          />
-        </div>
+        )
       )
     }
   }
 }
+
+function collect (connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    droppedItem: monitor.getDropResult(),
+    didDrop: monitor.didDrop(),
+    isOver: monitor.isOver()
+  }
+}
+
+const boxTarget = {
+  drop (props, monitor) {
+    return {
+      widget: monitor.getItem()
+    }
+  }
+}
+
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Typeahead)

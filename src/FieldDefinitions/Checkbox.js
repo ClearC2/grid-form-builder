@@ -1,7 +1,23 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
+import {DropTarget} from 'react-dnd'
 
-export default class Checkbox extends Component {
+export class Checkbox extends Component {
+  componentDidUpdate = p => {
+    const {didDrop, isOver} = this.props
+    if (didDrop && !p.didDrop && !isOver && p.isOver) {
+      // if it was just previously over and dropped (this is to make this event only trigger once)
+      let {droppedItem, handleDragDropOnInput, config} = this.props
+      droppedItem = droppedItem === null ? null : droppedItem.widget
+      if (droppedItem && !p.droppedItem) {
+        handleDragDropOnInput({
+          source: droppedItem,
+          target: config
+        })
+      }
+    }
+  }
+
   handleOnChange = e => {
     const {formValues = Map(), handleOnChange = () => {}, config} = this.props
     const {name = null} = config
@@ -51,7 +67,7 @@ export default class Checkbox extends Component {
   falsey = [false, 0, '0', 'f', 'F', 'false', 'False', 'FALSE', 'n', 'N', 'No', 'NO', 'no', 'off', 'Off', 'OFF', '']
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, rowHeight} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, rowHeight, connectDropTarget} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
@@ -104,16 +120,37 @@ export default class Checkbox extends Component {
     else value = false
 
     return (
-      <div style={styles.container}>
-        <label style={styles.label}>
-          {Icon && <Icon style={styles.icon} />}
-          <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} disabled={disabled} onKeyDown={onKeyDown} />
-          {label}
-          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>
-            * <span style={{fontWeight: 'normal', fontSize: '9pt'}}>{warn ? 'This Field Is Required' : ''}</span>
-          </div>}
-        </label>
-      </div>
+      connectDropTarget(
+        <div style={styles.container}>
+          <label style={styles.label}>
+            {Icon && <Icon style={styles.icon} />}
+            <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} disabled={disabled} onKeyDown={onKeyDown} />
+            {label}
+            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>
+              * <span style={{fontWeight: 'normal', fontSize: '9pt'}}>{warn ? 'This Field Is Required' : ''}</span>
+            </div>}
+          </label>
+        </div>
+      )
     )
   }
 }
+
+function collect (connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    droppedItem: monitor.getDropResult(),
+    didDrop: monitor.didDrop(),
+    isOver: monitor.isOver()
+  }
+}
+
+const boxTarget = {
+  drop (props, monitor) {
+    return {
+      widget: monitor.getItem()
+    }
+  }
+}
+
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Checkbox)
