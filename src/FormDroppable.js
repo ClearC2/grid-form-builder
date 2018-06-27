@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {DragSource} from 'react-dnd'
 
 const cardSource = {
@@ -24,14 +24,14 @@ function collect (connect, monitor) {
   }
 }
 
-export default function (Component) {
-  return DragSource('FormBuilderDraggable', cardSource, collect)(class FormDraggable extends Component {
+export default function (Child) {
+  return DragSource('FormBuilderDraggable', cardSource, collect)(class FormDroppable extends Component {
     render = () => {
       const {connectDragSource} = this.props
       return (
         connectDragSource(
           <div className='form-droppable-handle'>
-            <Component
+            <Child
               {...this.props}
             />
           </div>
