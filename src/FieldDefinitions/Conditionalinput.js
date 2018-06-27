@@ -14,16 +14,16 @@ const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'typeahead
 const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
 
 const CONDITIONS = {
+  'contains': {
+    maxFields: 999,
+    minFields: 1,
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
+  },
   'is between': {
     maxFields: 2,
     minFields: 2,
     invalidInputTypes: [...ONLY_CATEGORICAL_INPUT],
     joinString: `       and`
-  },
-  'contains': {
-    maxFields: 999,
-    minFields: 1,
-    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
   },
   'is equal to': {
     maxFields: 999,
@@ -282,7 +282,6 @@ export default class Conditionalinput extends Component {
     }
     let newTypeaheadValues = List() // list of all the values
     if (this.inputType() === 'typeahead') {
-      console.log(e, 'e loggggggggggg typeahead')
       if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
       }
