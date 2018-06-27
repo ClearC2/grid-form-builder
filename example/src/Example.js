@@ -471,7 +471,6 @@ export default class Example extends Component {
           formValues={this.state.formValues}
           handleOnChange={this.handleOnChange}
           inline={this.state.inline}
-          conditionalSearch={!false}
         />
       </div>
     )

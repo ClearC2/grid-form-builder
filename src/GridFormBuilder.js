@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
+import HTML5Backend from 'react-dnd-html5-backend'
+import {DragDropContext} from 'react-dnd'
 import Input from './FieldDefinitions/Input'
 import Textarea from './FieldDefinitions/Textarea'
 import Datetime from './FieldDefinitions/Datetime'
@@ -53,7 +55,7 @@ export function initCustomFormComponents (defs = {}) {
   FormComponents = {...FormComponents, ...defs}
 }
 
-export default class FormBuilder extends Component {
+export class FormBuilder extends Component {
   static propTypes = {
     formName: PropTypes.string.isRequired,
     formSchema: PropTypes.object,
@@ -225,3 +227,5 @@ export default class FormBuilder extends Component {
     )
   }
 }
+
+export default DragDropContext(HTML5Backend)(FormBuilder)
