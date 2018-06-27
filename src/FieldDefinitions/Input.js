@@ -116,4 +116,4 @@ const boxTarget = {
   }
 }
 
-export default DropTarget('Input', boxTarget, collect)(Input)
+export default DropTarget('NewWidgetDraggable', boxTarget, collect)(Input)
