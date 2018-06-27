@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
-import {FormBuilderWithContext as FormBuilder} from '../../src/index'
+import {FormBuilder} from '../../src/index'
 
 export default class Example extends Component {
   state = {
