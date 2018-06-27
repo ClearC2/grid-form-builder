@@ -55,7 +55,7 @@ export function initCustomFormComponents (defs = {}) {
   FormComponents = {...FormComponents, ...defs}
 }
 
-export class FormBuilder extends Component {
+export default class FormBuilder extends Component {
   static propTypes = {
     formName: PropTypes.string.isRequired,
     formSchema: PropTypes.object,
@@ -228,4 +228,4 @@ export class FormBuilder extends Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(FormBuilder)
+export const FormBuilderWithContext = DragDropContext(HTML5Backend)(FormBuilder)
