@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, Set, List} from 'immutable'
+import {Map, Set, List, fromJS} from 'immutable'
 import {Dialog} from 'c2-dialog'
 import FormBuilder from '../GridFormBuilder'
 
@@ -13,6 +13,71 @@ const SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselect'])
 const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'typeahead'])
 const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
 
+const CONDITIONS = {
+  'is between': {
+    maxFields: 2,
+    minFields: 2,
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT],
+    joinString: `       and`
+  },
+  'contains': {
+    maxFields: 999,
+    minFields: 1,
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
+  },
+  'is equal to': {
+    maxFields: 999,
+    minFields: 1,
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
+  },
+  'is greater than': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
+  },
+  'is less than': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
+  },
+  'is one of': {
+    maxFields: 999,
+    minFields: 1,
+    invalidInputTypes: []
+  },
+  'is not between': {
+    maxFields: 2,
+    minFields: 2,
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT],
+    joinString: `      and`
+  },
+  'does not contain': {
+    maxFields: 999,
+    minFields: 1,
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
+  },
+  'is not equal to': {
+    maxFields: 999,
+    minFields: 1,
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
+  },
+  'is not one of': {
+    maxFields: 999,
+    minFields: 1,
+    invalidInputTypes: []
+  },
+  'is blank': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: []
+  },
+  'is not blank': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: []
+  }
+}
+
 export default class Conditionalinput extends Component {
   constructor (props) {
     super(props)
@@ -24,25 +89,9 @@ export default class Conditionalinput extends Component {
       showDialog: false,
       typeaheadValues: List()
     }
-
   }
 
-  static defaultProps = {
-    options: {
-      all: ['contains', 'is equal to', 'is not equal to', 'does not contain', 'is between', 'is not between',
-        'is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain',
-        'is greater than', 'is less than', 'is one of', 'is not one of', 'is blank', 'is not blank'],
-      text: ['contains', 'is equal to', 'is not equal to', 'does not contain', 'is between', 'is not between'],
-      number: ['is equal to', 'is not equal to', 'is between', 'is not between', 'contains', 'does not contain', 'is greater than', 'is less than'],
-      categorical: ['is one of', 'is not one of', 'is blank', 'is not blank']
-    }
-  }
-
-  closeDialogOnEnterPress = (event) => {
-    if (this.state.showDialog && event.key === 'Enter') {
-      this.handleToggleDialog(false)
-    }
-  }
+  closeDialogOnEnterPress = (event) => this.state.showDialog && event.key === 'Enter' && this.handleToggleDialog(false)
 
   componentDidMount () {
     document.addEventListener('keypress', this.closeDialogOnEnterPress)
@@ -60,32 +109,39 @@ export default class Conditionalinput extends Component {
     if (props.formValues.get(this.parentFieldName(), '') === '') {
       this.setState({
         formValues: Map({
-          condition: this.getInputTypeOptionsList(this.getInputType())[0]
+          condition: this.inputTypeOptionsList(this.inputType())[0]
         })
       })
     }
   }
 
-  getInputType = () => {
-    return this.props.config.inputType || 'input'
+  maxFieldCount = () => CONDITIONS[this.condition()].maxFields
+  minFieldCount = () => CONDITIONS[this.condition()].minFields
+  parentFieldName = () => this.props.config.name
+  parentLabel = () => this.props.config.label || this.props.config.name
+  inputType = () => this.props.config.inputType || 'input'
+  condition = () => this.state.formValues.get('condition', '')
+  getEventFieldIndex = (e) => {
+    let name = e.target.name.split('-')
+    return name[name.length - 1]
   }
 
-  convertListToOptions = (list) => {
-    return list.map(opt => { return {value: opt, label: opt} })
-  }
-
-  getInputTypeOptionsList = (type) => {
-    if (ONLY_CATEGORICAL_INPUT.has(type)) {
-      return this.props.options.categorical
-    }
-    return this.props.options.all
+  convertListToOptions = (list) => list.map(opt => { return {value: opt, label: opt} })
+  inputTypeOptionsList = (type) => {
+    let options = []
+    Object.keys(CONDITIONS).forEach((key) => {
+      if (!Set(CONDITIONS[key].invalidInputTypes).has(type)) {
+        options.push(key)
+      }
+    })
+    return options
   }
 
   calculateModalHeight = () => {
     const titleAndConditionHeight = 145
-    const singleFieldHight = this.calculateFieldHeight(this.getInputType()) * 32
-    let nFields = ONLY_CATEGORICAL_INPUT.has(this.getInputType()) ? 1 : Math.max(this.state.values.size || 0, 1)
-    nFields = Math.min(nFields, this.getMaxFields())
+    const singleFieldHight = this.calculateFieldHeight(this.inputType()) * 32
+    let nFields = ONLY_CATEGORICAL_INPUT.has(this.inputType()) ? 1 : Math.max(this.state.values.size || 0, 1)
+    nFields = Math.min(nFields, this.maxFieldCount())
     const footerHeight = 50
     const size = titleAndConditionHeight + (singleFieldHight * nFields) + footerHeight
     return (size > 500) ? '500' : `${size}`
@@ -99,8 +155,6 @@ export default class Conditionalinput extends Component {
   }
 
   formSchema = () => { // for Dialog
-    const {name} = this.props.config
-    const inputType = this.getInputType()
     let schema = {
       form: {
         name: 'Conditional Input1',
@@ -111,9 +165,9 @@ export default class Conditionalinput extends Component {
               type: 'field',
               dimensions: {x: 0, y: 0, h: 1, w: 6},
               config: {
-                name: name,
+                name: this.parentFieldName(),
                 type: 'header',
-                label: `${this.props.config.label || name} condition:`
+                label: `${this.parentLabel()} condition:`
               }
             },
             {
@@ -125,7 +179,7 @@ export default class Conditionalinput extends Component {
                 type: 'select',
                 keyword: {
                   category: 'NONE',
-                  options: this.convertListToOptions(this.getInputTypeOptionsList(this.getInputType()))
+                  options: this.convertListToOptions(this.inputTypeOptionsList(this.inputType()))
                 }
               }
             }
@@ -138,32 +192,33 @@ export default class Conditionalinput extends Component {
       createdDate: '2018-02-26 10:16:14',
       createdBy: 'will darden'
     }
-    const maxFieldCount = this.getMaxFields()
+    const maxFieldCount = this.maxFieldCount()
+    const minFieldCount = this.minFieldCount()
     let fieldCount = 0
-    if (fieldCount < maxFieldCount) {
+    if (fieldCount < this.maxFieldCount()) {
       schema.form.jsonschema.layout.push({
         type: 'field',
-        dimensions: {x: 1, y: 2, h: this.calculateFieldHeight(inputType), w: 8},
+        dimensions: {x: 1, y: 2, h: this.calculateFieldHeight(this.inputType()), w: 8},
         config: {
           ...this.props.config,
           readonly: false,
-          name: `${name}-0`,
-          label: `${this.props.config.label || name}`,
-          type: inputType
+          name: `${this.parentFieldName()}-0`,
+          label: `${this.parentLabel()}`,
+          type: this.inputType()
         }
       })
       fieldCount++
     }
-    if (MULTI_FIELD_INPUTS.has(this.getInputType())) {
-      while (fieldCount < maxFieldCount && fieldCount < this.state.values.size + 1) {
+    if (MULTI_FIELD_INPUTS.has(this.inputType())) {
+      while (fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < this.state.values.size + 1)) {
         let newField = {
           type: 'field',
-          dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(inputType), w: 8},
+          dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(this.inputType()), w: 8},
           config: {
             readonly: false,
-            name: `${name}-${fieldCount}`,
-            label: `     ...or`,
-            type: inputType
+            name: `${this.parentFieldName()}-${fieldCount}`,
+            label: CONDITIONS[this.condition()].joinString || `     ...or`,
+            type: this.inputType()
           }
         }
         if (this.props.config.typeahead) {
@@ -176,25 +231,6 @@ export default class Conditionalinput extends Component {
     return (
       schema.form
     )
-  }
-
-  getMaxFields = () => {
-    if (this.state.formValues.get('condition', '') === 'is blank' ||
-      this.state.formValues.get('condition', '') === 'is not blank') {
-      return 0
-    }
-    switch (this.state.formValues.get('condition', '')) {
-      case 'is between':
-      case 'is not between':
-        return 2
-      default:
-        return 999
-    }
-  }
-  parentFieldName = () => this.props.config.name
-  getEventFieldIndex = (e) => {
-    let name = e.target.name.split('-')
-    return name[name.length - 1]
   }
 
   handleConditionChange = (e) => {
@@ -227,13 +263,15 @@ export default class Conditionalinput extends Component {
 
   squashValues = (deletedIndex, list, fieldPrefix) => {
     let i = typeof deletedIndex === 'string' ? parseInt(deletedIndex) : deletedIndex
+    let copyField = fieldPrefix ? fieldPrefix + (i + 1) : i + 1
+    let pasteField = fieldPrefix ? fieldPrefix + (i) : i
     while ((i + 1) < this.state.values.size) {
-      let copyField = fieldPrefix ? fieldPrefix + (i + 1) : i + 1 // field name of thing that will replace other thing
-      let pasteField = fieldPrefix ? fieldPrefix + (i) : i
+      copyField = fieldPrefix ? fieldPrefix + (i + 1) : i + 1
+      pasteField = fieldPrefix ? fieldPrefix + (i) : i
       list = list.set(pasteField, list.get(copyField))
       i++
     }
-    list = list.delete(fieldPrefix ? fieldPrefix + (i) : i)
+    list = list.delete(copyField)
     return list
   }
 
@@ -243,7 +281,8 @@ export default class Conditionalinput extends Component {
       return
     }
     let newTypeaheadValues = List() // list of all the values
-    if (this.getInputType() === 'typeahead') {
+    if (this.inputType() === 'typeahead') {
+      console.log(e, 'e loggggggggggg typeahead')
       if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
       }
@@ -262,7 +301,7 @@ export default class Conditionalinput extends Component {
      */
     let newValues = List()
     let newFormValues = this.state.formValues.set(e.target.name, e.target.value)
-    if (SINGLE_FIELD_INPUTS.has(this.getInputType())) {
+    if (SINGLE_FIELD_INPUTS.has(this.inputType())) {
       newValues = e.target.value
     } else {
       if (e.target.value === '') {
@@ -285,14 +324,14 @@ export default class Conditionalinput extends Component {
       }
       const valEvent = {
         target: {
-          value: (this.getInputType() === 'typeahead') ? newTypeaheadValues : newValues,
+          value: (this.inputType() === 'typeahead') ? newTypeaheadValues : newValues,
           name: this.parentFieldName()
         }
       }
       this.props.handleOnChange(valEvent)
       const conditionEvent = {
         target: {
-          value: this.state.formValues.get('condition', ''),
+          value: this.condition(),
           name: `${this.parentFieldName()}-CONDITION`
         }
       }
@@ -300,9 +339,9 @@ export default class Conditionalinput extends Component {
     }
   }
 
+  // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
   hideDisplay = () => {
-    if (this.state.formValues.get('condition', '') === 'is blank' ||
-      this.state.formValues.get('condition', '') === 'is not blank') {
+    if (this.condition() === 'is blank' || this.condition() === 'is not blank') {
       return false
     } else {
       return this.state.values.size === 0
@@ -315,8 +354,6 @@ export default class Conditionalinput extends Component {
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
-    // hideDisplay is a bool deciding whether to show colored 'Values...' text in form field or not
-    let hideDisplay = this.hideDisplay()
     const styles = {
       container: {
         display: 'flex',
@@ -375,7 +412,7 @@ export default class Conditionalinput extends Component {
           <strong style={styles.label}>{label}</strong>
         </div>
         <div onClick={() => { this.handleToggleDialog(true) }} id={`conditionalInput-${name}-id`} style={styles.input}>
-          {hideDisplay ? '' : 'Values...'}
+          {this.hideDisplay() ? '' : 'Values...'}
         </div>
         {this.state.showDialog &&
         <Dialog
