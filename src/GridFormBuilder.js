@@ -138,8 +138,9 @@ export default class FormBuilder extends Component {
     return field
   }
 
-  handleDragDropOnInput = droptarget => {
-    console.log(droptarget)
+  handleDragDropOnInput = ({source, target}) => {
+    const {handleOnDrop = () => null} = this.props
+    handleOnDrop({source, target})
   }
 
   render = () => {

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
 import {FormBuilder} from '../../src/index'
+import DragUnit from './TestDraggableUnit'
 
 export default class Example extends Component {
   state = {
@@ -40,8 +41,8 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 6, 'y': 0, 'h': 1, 'w': 3},
               'config': {
-                'name': 'inputtest',
-                'label': 'Input',
+                'name': 'unique-test-input',
+                'label': 'Test Input',
                 'type': 'input',
                 'disabled': true
               }
@@ -449,6 +450,8 @@ export default class Example extends Component {
     console.log(this.exampleForm.validate())
   }
 
+  handleOnDrop = ({source, target}) => console.log(source, target)
+
   render = () => {
     const {formSchema} = this.state
     return (
@@ -463,6 +466,7 @@ export default class Example extends Component {
         }}>
           <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
           <button onClick={this.onSubmit} style={{marginLeft: 10}}>Submit</button>
+          <DragUnit someProp='test' />
         </div>
         <FormBuilder
           ref={ref => { this.exampleForm = ref }}
@@ -471,6 +475,7 @@ export default class Example extends Component {
           formValues={this.state.formValues}
           handleOnChange={this.handleOnChange}
           inline={this.state.inline}
+          handleOnDrop={this.handleOnDrop}
         />
       </div>
     )
