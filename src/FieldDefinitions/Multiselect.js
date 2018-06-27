@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {List, fromJS} from 'immutable'
+import {List, fromJS, Map} from 'immutable'
 import ReactSelect from 'react-select'
 import {DropTarget} from 'react-dnd'
 
@@ -19,8 +19,10 @@ export class Multiselect extends Component {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
       // if it was just previously over and dropped (this is to make this event only trigger once)
-      let {droppedItem, handleDragDropOnInput, config} = this.props
+      let {droppedItem, handleDragDropOnInput, config = {}, formValues = Map()} = this.props
       droppedItem = droppedItem === null ? null : droppedItem.widget
+      const currentValue = formValues.get(config.name, '')
+      config = {currentValue, ...config}
       if (droppedItem && !p.droppedItem) {
         handleDragDropOnInput({
           source: droppedItem,

@@ -8,8 +8,10 @@ export class Datetime extends Component {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
       // if it was just previously over and dropped (this is to make this event only trigger once)
-      let {droppedItem, handleDragDropOnInput, config} = this.props
+      let {droppedItem, handleDragDropOnInput, config = {}, formValues = Map()} = this.props
       droppedItem = droppedItem === null ? null : droppedItem.widget
+      const currentValue = formValues.get(config.name, '')
+      config = {currentValue, ...config}
       if (droppedItem && !p.droppedItem) {
         handleDragDropOnInput({
           source: droppedItem,
