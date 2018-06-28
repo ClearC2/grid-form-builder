@@ -9,9 +9,12 @@ export class Multiselect extends Component {
     const {config = {}} = props
     const {keyword = {}} = config
     const {options = []} = keyword
-    let incomingValues = props.formValues.get(props.config.name, Map()).get('values', [])
-    if (incomingValues instanceof List) {
-      incomingValues = incomingValues.toJS()
+    let incomingValues = null
+    if (props.formValues && props.formValues instanceof Map) {
+      incomingValues = props.formValues.get(props.config.name, Map()).get('values', [])
+      if (incomingValues instanceof List) {
+        incomingValues = incomingValues.toJS()
+      }
     }
     this.state = {
       fieldValues: incomingValues || [],
