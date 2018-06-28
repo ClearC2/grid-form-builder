@@ -368,7 +368,11 @@ export default class Conditionalinput extends Component {
       this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
     } else {
       let oldValue = this.props.formValues.get(this.parentFieldName(), Map())
-      oldValue = oldValue.setIn(['values', this.getEventFieldIndex(e)], e.target.value)
+      if (MULTI_FIELD_INPUTS.has(this.inputType())) {
+        oldValue = oldValue.setIn(['values', this.getEventFieldIndex(e)], e.target.value.get('values'))
+      } else {
+        oldValue = oldValue.setIn(['values'], e.target.value.get('values'))
+      }
       this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
     }
   }
