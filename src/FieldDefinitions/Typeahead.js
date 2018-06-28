@@ -65,7 +65,6 @@ export class Typeahead extends Component {
         })
       })
     }
-    console.log(this.props, this.state, 'typeahead loggggggggg')
     Object.keys(newValue).forEach(field => {
       let value = newValue[field]
       if (field === 'duplication') value = newValue.value
