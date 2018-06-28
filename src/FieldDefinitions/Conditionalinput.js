@@ -369,7 +369,7 @@ export default class Conditionalinput extends Component {
     } else {
       let oldValue = this.props.formValues.get(this.parentFieldName(), Map())
       if (MULTI_FIELD_INPUTS.has(this.inputType())) {
-        oldValue = oldValue.setIn(['values', this.getEventFieldIndex(e)], e.target.value.get('values'))
+        oldValue = oldValue.setIn(['values', this.getEventFieldIndex(e)], typeof e.target.value === 'string' ? e.target.value : e.target.value.get('values'))
       } else {
         oldValue = oldValue.setIn(['values'], e.target.value.get('values'))
       }
