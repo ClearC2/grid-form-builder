@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {List, fromJS, Map} from 'immutable'
 import ReactSelect from 'react-select'
+import {DropTarget} from 'react-dnd'
 
-export default class Multiselect extends Component {
+export class Multiselect extends Component {
   constructor (props) {
     super(props)
     const {config = {}} = props
@@ -15,6 +16,23 @@ export default class Multiselect extends Component {
     this.state = {
       fieldValues: incomingValues || [],
       builtOptions: options
+    }
+  }
+
+  componentDidUpdate = p => {
+    const {didDrop, isOver} = this.props
+    if (didDrop && !p.didDrop && !isOver && p.isOver) {
+      // if it was just previously over and dropped (this is to make this event only trigger once)
+      let {droppedItem, handleDragDropOnInput, config = {}, formValues = Map()} = this.props
+      droppedItem = droppedItem === null ? null : droppedItem.widget
+      const currentValue = formValues.get(config.name, '')
+      config = {currentValue, ...config}
+      if (droppedItem && !p.droppedItem) {
+        handleDragDropOnInput({
+          source: droppedItem,
+          target: config
+        })
+      }
     }
   }
 
@@ -35,7 +53,7 @@ export default class Multiselect extends Component {
   }
 
   render = () => {
-    const {inline, config = {}, Icon = null, requiredWarning} = this.props
+    const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, multi = true, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
@@ -91,25 +109,46 @@ export default class Multiselect extends Component {
     const placeholder = warn ? '* This Field Is Required' : ''
 
     return (
-      <div style={styles.container}>
-        <div style={styles.labelContainer}>
-          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
-          {Icon && <Icon style={styles.icon} />}
-          <strong style={styles.label}>{label}</strong>
+      connectDropTarget(
+        <div style={styles.container}>
+          <div style={styles.labelContainer}>
+            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+            {Icon && <Icon style={styles.icon} />}
+            <strong style={styles.label}>{label}</strong>
+          </div>
+          <ReactSelect
+            onChange={this.onChange}
+            className={className}
+            style={styles.input}
+            multi={multi}
+            name={name}
+            options={this.state.builtOptions}
+            value={this.state.fieldValues}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
+            placeholder={placeholder}
+          />
         </div>
-        <ReactSelect
-          onChange={this.onChange}
-          className={className}
-          style={styles.input}
-          multi={multi}
-          name={name}
-          options={this.state.builtOptions}
-          value={this.state.fieldValues}
-          disabled={disabled}
-          onKeyDown={onKeyDown}
-          placeholder={placeholder}
-        />
-      </div>
+      )
     )
   }
 }
+
+function collect (connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    droppedItem: monitor.getDropResult(),
+    didDrop: monitor.didDrop(),
+    isOver: monitor.isOver()
+  }
+}
+
+const boxTarget = {
+  drop (props, monitor) {
+    return {
+      widget: monitor.getItem()
+    }
+  }
+}
+
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Multiselect)

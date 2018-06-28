@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {Map, List, fromJS} from 'immutable'
+import {DropTarget} from 'react-dnd'
 
 // this component is designed to return a List() of selected values to the forms handle change function
-export default class Listselect extends Component {
+export class Listselect extends Component {
   constructor (props) {
     super(props)
     const {field, formValues = Map(), opts = {}} = props
@@ -57,10 +58,25 @@ export default class Listselect extends Component {
     if (value.size !== s.value.size) {
       handleOnChange({target: {name: this.props.config.name, value}})
     }
+
+    const {didDrop, isOver} = this.props
+    if (didDrop && !p.didDrop && !isOver && p.isOver) {
+      // if it was just previously over and dropped (this is to make this event only trigger once)
+      let {droppedItem, handleDragDropOnInput, config = {}, formValues = Map()} = this.props
+      droppedItem = droppedItem === null ? null : droppedItem.widget
+      const currentValue = formValues.get(config.name, '')
+      config = {currentValue, ...config}
+      if (droppedItem && !p.droppedItem) {
+        handleDragDropOnInput({
+          source: droppedItem,
+          target: config
+        })
+      }
+    }
   }
 
   render = () => {
-    const {inline, config = {}, Icon = null, requiredWarning} = this.props
+    const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}} = config
     if (!name) return null
     const {label = name, keyword = {}} = config
@@ -120,43 +136,64 @@ export default class Listselect extends Component {
     }
 
     return (
-      <div style={styles.container}>
-        <div style={styles.labelContainer}>
-          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
-          {Icon && <Icon style={styles.icon} />}
-          <strong style={styles.label}>{label}</strong>
-          <span style={{fontWeight: 'normal', fontSize: '9pt', marginLeft: 3, marginTop: -1, color: 'red'}}>{warn ? 'This Field Is Required' : ''}</span>
-        </div>
-        <div style={styles.input}>
-          <div style={{display: 'flex', flex: 1, flexDirection: 'column', minHeight: 10, border: warn ? '1px solid #ec1c24' : '1px solid lightgrey', height: 'calc(100% - 18px)', overflowY: 'scroll'}}>
-            {options.map((option, i) => {
-              return (
-                <div
-                  key={i}
-                  onClick={this.handleOnChange}
-                  style={{
-                    display: 'flex',
-                    height: 27,
-                    minHeight: 27,
-                    margin: 0,
-                    alignItems: 'center',
-                    paddingLeft: 5,
-                    width: '100%',
-                    borderBottom: '1px solid lightgrey',
-                    backgroundColor: value.indexOf(option.value) > -1 ? '#a1c3fa' : 'transparent',
-                    ...style}}
-                >
-                  {option.label ? option.label : option.value}
-                </div>
-              )
-            })}
+      connectDropTarget(
+        <div style={styles.container}>
+          <div style={styles.labelContainer}>
+            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+            {Icon && <Icon style={styles.icon} />}
+            <strong style={styles.label}>{label}</strong>
+            <span style={{fontWeight: 'normal', fontSize: '9pt', marginLeft: 3, marginTop: -1, color: 'red'}}>{warn ? 'This Field Is Required' : ''}</span>
           </div>
-          <div style={{display: 'flex', justifyContent: 'flex-end', height: 15, minHeight: 15}}>
-            <span onClick={this.selectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue', cursor: 'pointer'}} >Select All</span>
-            <span onClick={this.deselectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue', cursor: 'pointer'}} >Deselect All</span>
+          <div style={styles.input}>
+            <div style={{display: 'flex', flex: 1, flexDirection: 'column', minHeight: 10, border: warn ? '1px solid #ec1c24' : '1px solid lightgrey', height: 'calc(100% - 18px)', overflowY: 'scroll'}}>
+              {options.map((option, i) => {
+                return (
+                  <div
+                    key={i}
+                    onClick={this.handleOnChange}
+                    style={{
+                      display: 'flex',
+                      height: 27,
+                      minHeight: 27,
+                      margin: 0,
+                      alignItems: 'center',
+                      paddingLeft: 5,
+                      width: '100%',
+                      borderBottom: '1px solid lightgrey',
+                      backgroundColor: value.indexOf(option.value) > -1 ? '#a1c3fa' : 'transparent',
+                      ...style}}
+                  >
+                    {option.label ? option.label : option.value}
+                  </div>
+                )
+              })}
+            </div>
+            <div style={{display: 'flex', justifyContent: 'flex-end', height: 15, minHeight: 15}}>
+              <span onClick={this.selectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue', cursor: 'pointer'}} >Select All</span>
+              <span onClick={this.deselectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue', cursor: 'pointer'}} >Deselect All</span>
+            </div>
           </div>
         </div>
-      </div>
+      )
     )
   }
 }
+
+function collect (connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    droppedItem: monitor.getDropResult(),
+    didDrop: monitor.didDrop(),
+    isOver: monitor.isOver()
+  }
+}
+
+const boxTarget = {
+  drop (props, monitor) {
+    return {
+      widget: monitor.getItem()
+    }
+  }
+}
+
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Listselect)

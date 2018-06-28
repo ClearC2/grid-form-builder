@@ -1,12 +1,29 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
+import {DropTarget} from 'react-dnd'
 
-export default class Textarea extends Component {
+export class Textarea extends Component {
+  componentDidUpdate = p => {
+    const {didDrop, isOver} = this.props
+    if (didDrop && !p.didDrop && !isOver && p.isOver) {
+      // if it was just previously over and dropped (this is to make this event only trigger once)
+      let {droppedItem, handleDragDropOnInput, config = {}, formValues = Map()} = this.props
+      droppedItem = droppedItem === null ? null : droppedItem.widget
+      const currentValue = formValues.get(config.name, '')
+      config = {currentValue, ...config}
+      if (droppedItem && !p.droppedItem) {
+        handleDragDropOnInput({
+          source: droppedItem,
+          target: config
+        })
+      }
+    }
+  }
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
   }
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning} = this.props
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget} = this.props
     const {labelStyle = {}, style = {}, name = null, rows = 4, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
@@ -71,25 +88,46 @@ export default class Textarea extends Component {
     }
 
     return (
-      <div style={styles.container}>
-        <div style={styles.labelContainer}>
-          {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
-          {Icon && <Icon style={styles.icon} />}
-          <strong style={styles.label}>{label}</strong>
+      connectDropTarget(
+        <div style={styles.container}>
+          <div style={styles.labelContainer}>
+            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+            {Icon && <Icon style={styles.icon} />}
+            <strong style={styles.label}>{label}</strong>
+          </div>
+          <textarea
+            className={className}
+            onMouseDown={this.onMouseDown}
+            onChange={handleOnChange}
+            style={styles.input}
+            name={name}
+            value={formValues.get(name, '')}
+            rows={rows}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
+            placeholder={placeholder}
+          />
         </div>
-        <textarea
-          className={className}
-          onMouseDown={this.onMouseDown}
-          onChange={handleOnChange}
-          style={styles.input}
-          name={name}
-          value={formValues.get(name, '')}
-          rows={rows}
-          disabled={disabled}
-          onKeyDown={onKeyDown}
-          placeholder={placeholder}
-        />
-      </div>
+      )
     )
   }
 }
+
+function collect (connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    droppedItem: monitor.getDropResult(),
+    didDrop: monitor.didDrop(),
+    isOver: monitor.isOver()
+  }
+}
+
+const boxTarget = {
+  drop (props, monitor) {
+    return {
+      widget: monitor.getItem()
+    }
+  }
+}
+
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Textarea)
