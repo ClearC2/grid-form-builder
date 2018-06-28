@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {List, fromJS} from 'immutable'
+import {List, fromJS, Map} from 'immutable'
 import ReactSelect from 'react-select'
 
 export default class Multiselect extends Component {
@@ -8,8 +8,12 @@ export default class Multiselect extends Component {
     const {config = {}} = props
     const {keyword = {}} = config
     const {options = []} = keyword
+    let incomingValues = props.formValues.get(props.config.name, Map()).get('values', [])
+    if (incomingValues instanceof List) {
+      incomingValues = incomingValues.toJS()
+    }
     this.state = {
-      fieldValues: [],
+      fieldValues: incomingValues || [],
       builtOptions: options
     }
   }

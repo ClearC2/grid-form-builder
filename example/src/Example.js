@@ -248,7 +248,8 @@ export default class Example extends Component {
                   'fields': [
                     'inputtest',
                     'textareatest'
-                  ]
+                  ],
+                  'fieldId': 'value'
                 }
               }
             },
@@ -450,6 +451,7 @@ export default class Example extends Component {
   }
 
   render = () => {
+    console.log(this.state.formValues, 'form val logggggggggggg')
     const {formSchema} = this.state
     return (
       <div style={{width: '100%', height: '100%'}}>
@@ -471,7 +473,7 @@ export default class Example extends Component {
           formValues={this.state.formValues}
           handleOnChange={this.handleOnChange}
           inline={this.state.inline}
-          conditionalSearch={false}
+          conditionalSearch={!false}
         />
       </div>
     )

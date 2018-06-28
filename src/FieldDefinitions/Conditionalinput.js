@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, Set, List, fromJS} from 'immutable'
+import {Map, Set, List} from 'immutable'
 import {Dialog} from 'c2-dialog'
 import FormBuilder from '../GridFormBuilder'
 
@@ -81,14 +81,56 @@ const CONDITIONS = {
 export default class Conditionalinput extends Component {
   constructor (props) {
     super(props)
+    let conditionalFieldValues = Map()
+    let i = 0
+    let valueList = this.getValuesFromFormValues()
+    valueList.forEach((value) => {
+      conditionalFieldValues = conditionalFieldValues.set(`${this.parentFieldName()}-${i}`, value)
+      i++
+    })
+    // take any form-builder values from props and convert them to contitional table form readable values
     this.state = {
-      formValues: Map({
-        condition: 'contains'
+      modalFormValues: Map({
+        condition: this.getConditionFromFormValues() || this.inputTypeOptionsList(this.inputType())[0],
+        ...conditionalFieldValues.toJS()
       }),
       values: List(),
       showDialog: false,
       typeaheadValues: List()
     }
+    // convert this.props.formValues to conditional form values
+    this.props.handleOnChange({
+      target: {
+        name: this.parentFieldName(),
+        value: Map({
+          condition: this.state.modalFormValues.get('condition'),
+          values: valueList
+        })
+      }
+    })
+  }
+
+  getConditionFromFormValues = (formValues = this.props.formValues) => {
+    let val = formValues.get(this.parentFieldName())
+    if (val && val instanceof Map) {
+      return formValues.get(this.parentFieldName(), Map()).get('condition', null)
+    } else {
+      return null
+    }
+  }
+  getValuesFromFormValues = (formValues = this.props.formValues) => {
+    let val = formValues.get(this.parentFieldName())
+    if (val) {
+      if (val instanceof Map) {
+        return val.get('values', List())
+      } else if (val instanceof List) {
+        return val
+      } else {
+        // val is typeof string
+        return List([val])
+      }
+    }
+    return List()
   }
 
   closeDialogOnEnterPress = (event) => this.state.showDialog && event.key === 'Enter' && this.handleToggleDialog(false)
@@ -106,12 +148,20 @@ export default class Conditionalinput extends Component {
   }
 
   componentWillReceiveProps (props) {
-    if (props.formValues.get(this.parentFieldName(), '') === '') {
-      this.setState({
-        formValues: Map({
-          condition: this.inputTypeOptionsList(this.inputType())[0]
-        })
+    if (props.formValues.get(this.parentFieldName()) !== this.props.formValues.get(this.parentFieldName())) {
+      let conditionalFieldValues = Map()
+      let i = 0
+      let valueList = this.getValuesFromFormValues(props.formValues)
+      valueList.forEach((value) => {
+        conditionalFieldValues = conditionalFieldValues.set(`${this.parentFieldName()}-${i}`, value)
+        i++
       })
+      // take any form-builder values from props and convert them to contitional table form readable values
+      this.setState({
+        modalFormValues: Map({
+          condition: this.getConditionFromFormValues(props.formValues) || this.inputTypeOptionsList(this.inputType())[0],
+          ...conditionalFieldValues.toJS()
+        })})
     }
   }
 
@@ -120,7 +170,14 @@ export default class Conditionalinput extends Component {
   parentFieldName = () => this.props.config.name
   parentLabel = () => this.props.config.label || this.props.config.name
   inputType = () => this.props.config.inputType || 'input'
-  condition = () => this.state.formValues.get('condition', '')
+  condition = () => {
+    let oldValue = this.props.formValues.get(this.parentFieldName())
+    if (oldValue && oldValue instanceof Map) {
+      return this.props.formValues.get(this.parentFieldName(), Map()).get('condition', null)
+    } else {
+      return this.state.modalFormValues.get('condition')
+    }
+  }
   getEventFieldIndex = (e) => {
     let name = e.target.name.split('-')
     return name[name.length - 1]
@@ -140,11 +197,22 @@ export default class Conditionalinput extends Component {
   calculateModalHeight = () => {
     const titleAndConditionHeight = 145
     const singleFieldHight = this.calculateFieldHeight(this.inputType()) * 32
-    let nFields = ONLY_CATEGORICAL_INPUT.has(this.inputType()) ? 1 : Math.max(this.state.values.size || 0, 1)
+    let nFields = SINGLE_FIELD_INPUTS.has(this.inputType()) ? 1 : this.nFieldsWithValues() + 1
     nFields = Math.min(nFields, this.maxFieldCount())
     const footerHeight = 50
     const size = titleAndConditionHeight + (singleFieldHight * nFields) + footerHeight
     return (size > 500) ? '500' : `${size}`
+  }
+  nFieldsWithValues = () => {
+    if (SINGLE_FIELD_INPUTS.has(this.inputType())) {
+      if (this.props.formValues.getIn([this.parentFieldName(), 'values'], List()).size > 0) {
+        return 1
+      } else {
+        return 0
+      }
+    } else {
+      return this.props.formValues.getIn([this.parentFieldName(), 'values'], List()).size
+    }
   }
 
   calculateFieldHeight = (type) => {
@@ -177,6 +245,7 @@ export default class Conditionalinput extends Component {
                 name: 'condition',
                 label: 'Condition',
                 type: 'select',
+                suppressBlankOption: true,
                 keyword: {
                   category: 'NONE',
                   options: this.convertListToOptions(this.inputTypeOptionsList(this.inputType()))
@@ -210,7 +279,7 @@ export default class Conditionalinput extends Component {
       fieldCount++
     }
     if (MULTI_FIELD_INPUTS.has(this.inputType())) {
-      while (fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < this.state.values.size + 1)) {
+      while (fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < this.nFieldsWithValues() + 1)) {
         let newField = {
           type: 'field',
           dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(this.inputType()), w: 8},
@@ -234,30 +303,11 @@ export default class Conditionalinput extends Component {
   }
 
   handleConditionChange = (e) => {
-    if (e.target.value === 'is between' || e.target.value === 'is not between') {
-      let change = this.state.formValues.set(e.target.name, e.target.value)
-      let i = 2
-      while (i < this.state.values.size) {
-        change = change.delete(`${this.parentFieldName()}-${i}`)
-        i++
-      }
-      this.setState({formValues: change, values: change})
-    } else {
-      this.setState({formValues: this.state.formValues.set(e.target.name, e.target.value)})
-    }
-    if (this.props.handleOnChange) {
-      this.props.handleOnChange({target: {value: e.target.value, name: `${this.parentFieldName()}-CONDITION`}})
-      if (e.target.value === 'is blank' || e.target.value === 'is not blank') {
-        this.props.handleOnChange({target: {value: [], name: this.parentFieldName()}})
-      }
-      if (e.target.value === 'is between' || e.target.value === 'is not between') {
-        this.props.handleOnChange({
-          target: {
-            value: this.state.formValues.get(this.parentFieldName(), List()).slice(0,2),
-            name: this.parentFieldName()
-          }
-        })
-      }
+    this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
+    let oldValue = this.props.formValues.get(this.parentFieldName())
+    if (oldValue && oldValue instanceof Map) {
+      let newFieldValue = this.props.formValues.get(this.parentFieldName(), Map()).set(e.target.name, e.target.value)
+      this.props.handleOnChange({target: {name: this.parentFieldName(), value: newFieldValue}})
     }
   }
 
@@ -274,67 +324,52 @@ export default class Conditionalinput extends Component {
     list = list.delete(copyField)
     return list
   }
-
+/*
+  this.props.formValues: {
+    key: [values]
+  }
+  this.state.modalFormValues: {
+    key: {
+      condition: '',
+      values: [''] || [{label: '', values: ''}]
+    }
+ */
   handleOnChange = e => {
     if (e.target.name === 'condition') {
       this.handleConditionChange(e)
       return
     }
-    let newTypeaheadValues = List() // list of all the values
     if (this.inputType() === 'typeahead') {
       if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
       }
+      this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
+
       if (e.target.id !== undefined) {
         if (e.target.id === null) {
-          newTypeaheadValues = this.state.typeaheadValues.delete(this.getEventFieldIndex(e))
-          newTypeaheadValues = this.squashValues(this.getEventFieldIndex(e), newTypeaheadValues)
+          let oldValue = this.props.formValues.get(this.parentFieldName(), Map())
+          oldValue = oldValue.setIn(['values', this.getEventFieldIndex(e)], {label: e.target.value, value: e.target.value})
+          this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
+          return
         } else {
-          newTypeaheadValues = this.state.typeaheadValues.set(this.getEventFieldIndex(e), e.target.id)
+          let oldValue = this.props.formValues.get(this.parentFieldName(), Map())
+          oldValue = oldValue.setIn(['values', this.getEventFieldIndex(e)], {label: e.target.value, value: e.target.id})
+          this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
+          return
         }
       }
     }
-    /* Categorical input come back as arrays and are always one field, and should be put directly into values.
-      Other fields have one value per input field, and can have many fields, so have to be put into an array
-      based on their input field index.
-     */
-    let newValues = List()
-    let newFormValues = this.state.formValues.set(e.target.name, e.target.value)
-    if (SINGLE_FIELD_INPUTS.has(this.inputType())) {
-      newValues = e.target.value
+    // give modal form its expected simple values
+    this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
+    // send conditional values back to parent
+    if (e.target.value instanceof List) {
+      let oldValue = this.props.formValues.get(this.parentFieldName(), Map())
+      oldValue = oldValue.setIn(['values'], e.target.value)
+      this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
     } else {
-      if (e.target.value === '') {
-        newValues = this.state.values.delete(this.getEventFieldIndex(e))
-        newValues = this.squashValues(this.getEventFieldIndex(e), newValues)
-        newFormValues = this.squashValues(this.getEventFieldIndex(e), newFormValues, this.parentFieldName() + '-')
-      } else {
-        newValues = this.state.values.set(this.getEventFieldIndex(e), e.target.value)
-      }
-    }
-    this.setState({
-      formValues: newFormValues, // to update mini form
-      values: newValues, // to update parent readable values
-      typeaheadValues: newTypeaheadValues
-    })
-
-    if (this.props.handleOnChange) {
-      if (newValues instanceof Map || newValues instanceof List) {
-        newValues = newValues.toJS()
-      }
-      const valEvent = {
-        target: {
-          value: (this.inputType() === 'typeahead') ? newTypeaheadValues : newValues,
-          name: this.parentFieldName()
-        }
-      }
-      this.props.handleOnChange(valEvent)
-      const conditionEvent = {
-        target: {
-          value: this.condition(),
-          name: `${this.parentFieldName()}-CONDITION`
-        }
-      }
-      this.props.handleOnChange(conditionEvent)
+      let oldValue = this.props.formValues.get(this.parentFieldName(), Map())
+      oldValue = oldValue.setIn(['values', this.getEventFieldIndex(e)], e.target.value)
+      this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
     }
   }
 
@@ -343,7 +378,12 @@ export default class Conditionalinput extends Component {
     if (this.condition() === 'is blank' || this.condition() === 'is not blank') {
       return false
     } else {
-      return this.state.values.size === 0
+      let tmp = this.props.formValues.get(this.parentFieldName(), Map())
+      if (tmp instanceof Map) {
+        return tmp.get('values', List()).size === 0
+      } else {
+        return true
+      }
     }
   }
 
@@ -438,7 +478,7 @@ export default class Conditionalinput extends Component {
             <span>&times;</span>
           </button>
           <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%', height: '100%', marginBottom: '-80px'}} >
-            <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.formValues} handleOnChange={this.handleOnChange} draggable={false} />
+            <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.modalFormValues} handleOnChange={this.handleOnChange} draggable={false} />
           </div>
           <button type='button' className='btn-primary pull-right' style={{paddingRight: '10px', paddingTop: '5px', marginRight: '30px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
             <span>Ok</span>
