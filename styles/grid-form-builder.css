@@ -85,6 +85,7 @@ div.Select-control > span.Select-multi-value-wrapper > div.Select-value {
 
 div.Select-control > span.Select-multi-value-wrapper {
   display: flex;
+  height: 23px;
 }
 
 div.Select-control > div.Select-value > span {
