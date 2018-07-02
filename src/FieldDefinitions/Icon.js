@@ -24,7 +24,7 @@ export class Icon extends Component {
     const {style = {}, iconStyle = {}, onClick = () => null} = config
     return (
       connectDropTarget(
-        <div onClick={onClick} style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', ...style}}>
+        <div onClick={onClick} className='cursor-hand' style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', ...style}}>
           {Icon && <Icon style={{height: 20, width: 20, ...iconStyle}} />}
         </div>
       )
