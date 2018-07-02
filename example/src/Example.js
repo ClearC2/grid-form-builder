@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import {Map} from 'immutable'
 import {FormBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
+import ConditionTable from 'query-builder'
+
+const TEST_SEARCH = false
 
 export default class Example extends Component {
   state = {
@@ -455,31 +458,60 @@ export default class Example extends Component {
 
   render = () => {
     const {formSchema} = this.state
-    return (
-      <div style={{width: '100%', height: '100%'}}>
-        <div style={{
-          width: '100%',
-          height: 30,
-          marginTop: 20,
-          marginBottom: 20,
-          display: 'flex',
-          justifyContent: 'center'
-        }}>
-          <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
-          <button onClick={this.onSubmit} style={{marginLeft: 10}}>Submit</button>
-          <DragUnit someProp='test' />
+    if (TEST_SEARCH) {
+      // will mode: TEST_SEARCH constant at top is false
+      return (<div style={{display: 'flex'}}>
+        <div style={{width: '66%'}}>
+          <FormBuilder
+            ref={ref => { this.exampleForm = ref }}
+            formName={formSchema.form.name}
+            formSchema={formSchema.form}
+            formValues={this.state.formValues}
+            handleOnChange={this.handleOnChange}
+            inline={this.state.inline}
+            conditionalSearch={TEST_SEARCH}
+            handleOnDrop={this.handleOnDrop}
+          />
         </div>
-        <FormBuilder
-          ref={ref => { this.exampleForm = ref }}
-          formName={formSchema.form.name}
-          formSchema={formSchema.form}
-          formValues={this.state.formValues}
-          handleOnChange={this.handleOnChange}
-          inline={this.state.inline}
-          conditionalSearch={false}
-          handleOnDrop={this.handleOnDrop}
-        />
-      </div>
-    )
+        <div style={{width: '33%', marginTop: '150px'}}>
+          <ConditionTable
+            formName={formSchema.form.name}
+            title={'Conditional Table Title'}
+            searchFunction={(req) => { console.log(req, 'Search function not implemented yet') }} // eslint-disable-line
+            formSchema={formSchema.form}
+            handleOnChange={this.handleOnChange}
+            formValues={this.state.formValues}
+          />
+        </div>
+      </div>)
+    } else {
+      // Jake mode: TEST_SEARCH constant at top is false
+      return (
+        <div style={{width: '100%', height: '100%'}}>
+          <div style={{
+            width: '100%',
+            height: 30,
+            marginTop: 20,
+            marginBottom: 20,
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
+            <button onClick={this.onSubmit} style={{marginLeft: 10}}>Submit</button>
+            <DragUnit someProp='test' />
+          </div>
+          <FormBuilder
+            ref={ref => { this.exampleForm = ref }}
+            formName={formSchema.form.name}
+            formSchema={formSchema.form}
+            formValues={this.state.formValues}
+            handleOnChange={this.handleOnChange}
+            inline={this.state.inline}
+            conditionalSearch={TEST_SEARCH}
+            handleOnDrop={this.handleOnDrop}
+          />
+        </div>
+      )
+    }
   }
 }
