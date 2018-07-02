@@ -35,9 +35,11 @@ export default class Example extends Component {
               'dimensions': {'x': 3, 'y': 0, 'h': 1, 'w': 3},
               'config': {
                 'name': 'requiredTestField',
-                'label': 'Name',
-                'type': 'phone',
-                'required': true
+                'type': 'icon',
+                'icon': 'trash',
+                'iconStyle': {
+                  'color': 'red'
+                }
               }
             },
             {
