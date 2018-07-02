@@ -75,6 +75,11 @@ const CONDITIONS = {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: []
+  },
+  '': {
+    maxFields: 999,
+    minFields: 1,
+    invalidInputTypes: []
   }
 }
 
@@ -173,9 +178,9 @@ export default class Conditionalinput extends Component {
   condition = () => {
     let oldValue = this.props.formValues.get(this.parentFieldName())
     if (oldValue && oldValue instanceof Map) {
-      return this.props.formValues.get(this.parentFieldName(), Map()).get('condition', null)
+      return this.props.formValues.get(this.parentFieldName(), Map()).get('condition', '')
     } else {
-      return this.state.modalFormValues.get('condition')
+      return this.state.modalFormValues.get('condition', '')
     }
   }
   getEventFieldIndex = (e) => {
