@@ -13,7 +13,7 @@ const SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselect'])
 const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'typeahead'])
 const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
 
-const CONDITIONS = {
+export const CONDITIONS = {
   'contains': {
     maxFields: 999,
     minFields: 1,
