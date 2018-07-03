@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  app.get('/typeahead/name/:typeaheadkey/search/:userinput', function (req, res) {
+  app.post('/typeahead/name/:typeaheadkey/search/:userinput', function (req, res) {
     return res.json({
       'data': [
         {

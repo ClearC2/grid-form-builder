@@ -87,17 +87,31 @@ export class Typeahead extends Component {
   }
 
   loadOptions = search => {
-    const {config = {}} = this.props
+    const {config = {}, formValues = Map()} = this.props
     const {name = null, typeahead = {}} = config
-    const {key = null, duplication = false} = typeahead
+    const {key = null, duplication = false, filters = []} = typeahead
 
     if (!key) {
       console.error(`The JSON schema representation for ${name} does not have a typeahead key. A typeahead.key is required for this field type to search for results.`)
       return Promise.resolve({options: []})
     }
 
+    let filter = []
+    filters.map(field => {
+      const fieldVal = formValues.get(field, '')
+      if (typeof fieldVal === 'string' && fieldVal.trim().length > 0) {
+        filter = [
+          {
+            'name': field,
+            'comparator': 'is equal to',
+            'values': fieldVal
+          }
+        ]
+      }
+    })
+
     if (search.length > this.props.minChars) {
-      return GFBConfig.ajax.get(`/typeahead/name/${key}/search/${search}`)
+      return GFBConfig.ajax.post(`/typeahead/name/${key}/search/${search}`, {filter})
         .then(resp => {
           const results = resp.data.data.map(value => {
             value.duplication = duplication
