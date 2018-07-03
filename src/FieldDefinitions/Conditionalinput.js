@@ -362,6 +362,8 @@ export default class Conditionalinput extends Component {
           this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
           return
         }
+      } else {
+        console.error('No Id found for selected ', e.target.name, ' typeahead field value')
       }
     }
     // give modal form its expected simple values
