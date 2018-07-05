@@ -47,6 +47,22 @@ export class Typeahead extends Component {
   setShouldRemount = (shouldRemount = true) => this.setState({shouldRemount})
 
   handleChange = newValue => {
+    if (Array.isArray(newValue)) {
+      const {handleOnChange, config = {}} = this.props
+      const {name = null} = config
+      let target = {
+        name: name,
+        value: newValue
+      }
+      // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
+      // so I'll give it back to the developer raw and let them figure it out -- JRA 7/5/2018
+      handleOnChange({target})
+    } else {
+      this.handleSingleValueChange(newValue)
+    }
+  }
+
+  handleSingleValueChange = newValue => {
     const {handleOnChange, config = {}} = this.props
     const {name = null, typeahead = {}} = config
     if (newValue.className || (newValue.value.trim() === '' && newValue.label.trim() === '')) {
@@ -130,7 +146,13 @@ export class Typeahead extends Component {
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, null)
-    if (typeof value === 'string' && value.length > 0) value = {value, label: value}
+    if (Array.isArray(value) && value.length > 0) {
+      value = value.map(v => {
+        if (typeof v === 'object') return v
+        if (typeof v === 'string' || typeof v === 'number') return {value: v, label: v}
+      })
+    }
+    if ((typeof value === 'string' || typeof v === 'number') && value.length > 0) value = {value, label: value}
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     let {readonly = false, disabled = false} = config
     disabled = disabled || readonly

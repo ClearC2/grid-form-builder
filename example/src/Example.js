@@ -248,6 +248,7 @@ export default class Example extends Component {
                 'label': 'Typeahead',
                 'required': true,
                 'type': 'typeahead',
+                'multi': true,
                 'typeahead': {
                   'key': 'c2_company',
                   'duplication': true,
