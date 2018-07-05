@@ -255,7 +255,11 @@ export default class Example extends Component {
                     'inputtest',
                     'textareatest'
                   ],
-                  'fieldId': 'value'
+                  'fieldId': 'value',
+                  'filters': [
+                    'companyid',
+                    'inputtest'
+                  ]
                 }
               }
             },
