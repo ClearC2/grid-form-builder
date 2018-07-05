@@ -314,6 +314,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'textareatest',
                 'label': 'Textarea',
+                'readonly': true,
                 'type': 'textarea'
               }
             },
