@@ -63,7 +63,8 @@ export default class FormBuilder extends Component {
     handleOnChange: PropTypes.func,
     draggable: PropTypes.bool,
     inline: PropTypes.bool,
-    handleSubmit: PropTypes.func
+    handleSubmit: PropTypes.func,
+    conditionalSearch: PropTypes.bool
   }
 
   static defaultProps = {
