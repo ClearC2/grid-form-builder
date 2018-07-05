@@ -156,6 +156,7 @@ export default class FormBuilder extends Component {
     layout.map((field, i) => {
       if (this.props.conditionalSearch) {
         field = this.convertFieldToSearch(field)
+        console.log(field, 'field loggggg')
       }
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
       let {type = 'input', icon = ''} = config
