@@ -174,7 +174,7 @@ export default class Conditionalinput extends Component {
   minFieldCount = () => CONDITIONS[this.condition()].minFields
   parentFieldName = () => this.props.config.name
   parentLabel = () => this.props.config.label || this.props.config.name
-  inputType = () => this.props.config.inputType || 'input'
+  inputType = () => (this.props.config.inputType || 'input').toLowerCase()
   condition = () => {
     let oldValue = this.props.formValues.get(this.parentFieldName())
     if (oldValue && oldValue instanceof Map) {
