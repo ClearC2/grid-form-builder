@@ -129,8 +129,10 @@ export default class FormBuilder extends Component {
       if (field.config.type === 'select') {
         field.config.type = 'multiselect'
       }
-      field.config.inputType = field.config.type || 'input'
-      field.config.type = 'conditionalInput'
+      if (field.config.type !== 'conditionalInput') {
+        field.config.inputType = field.config.type || 'input'
+        field.config.type = 'conditionalInput'
+      }
     }
     field.config.readonly = false
     field.config.disabled = false
