@@ -123,13 +123,13 @@ export default class FormBuilder extends Component {
 
   convertFieldToSearch = (field = {}) => {
     if (!unconditionalFields.has(field.config.type ? field.config.type.toLowerCase() : 'input')) {
-      if (field.config.type === 'radio') { // inputs that are normally radios should be multicheckboxes in search
-        field.config.type = 'multicheckbox'
-      }
-      if (field.config.type === 'select') {
-        field.config.type = 'multiselect'
-      }
-      if (field.config.type !== 'conditionalInput') {
+      if (!field.config.forceUnconditional) {
+        if (field.config.type === 'radio') { // inputs that are normally radios should be multicheckboxes in search
+          field.config.type = 'multicheckbox'
+        }
+        if (field.config.type === 'select') {
+          field.config.type = 'multiselect'
+        }
         field.config.inputType = field.config.type || 'input'
         field.config.type = 'conditionalInput'
       }
