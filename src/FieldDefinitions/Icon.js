@@ -19,12 +19,19 @@ export class Icon extends Component {
       }
     }
   }
+  handleAnywhereClick = () => {
+    const {handleAnywhereClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleAnywhereClick(config)
+  }
   render = () => {
     const {config = {}, Icon = null, connectDropTarget} = this.props
     const {style = {}, iconStyle = {}, onClick = () => null} = config
     return (
       connectDropTarget(
-        <div onClick={onClick} className='cursor-hand' style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', ...style}}>
+        <div onClick={onClick} className='cursor-hand' style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', ...style}} onMouseUp={this.handleAnywhereClick}>
           {Icon && <Icon style={{height: 20, width: 20, ...iconStyle}} />}
         </div>
       )

@@ -20,6 +20,14 @@ export class Checkbox extends Component {
     }
   }
 
+  handleAnywhereClick = () => {
+    const {handleAnywhereClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleAnywhereClick(config)
+  }
+
   handleOnChange = e => {
     const {formValues = Map(), handleOnChange = () => {}, config} = this.props
     const {name = null} = config
@@ -123,7 +131,7 @@ export class Checkbox extends Component {
 
     return (
       connectDropTarget(
-        <div style={styles.container}>
+        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <label style={styles.label}>
             {Icon && <Icon style={styles.icon} />}
             <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} disabled={disabled} onKeyDown={onKeyDown} />

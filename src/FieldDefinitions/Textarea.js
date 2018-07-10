@@ -19,6 +19,13 @@ export class Textarea extends Component {
       }
     }
   }
+  handleAnywhereClick = () => {
+    const {handleAnywhereClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleAnywhereClick(config)
+  }
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
   }
@@ -89,7 +96,7 @@ export class Textarea extends Component {
 
     return (
       connectDropTarget(
-        <div style={styles.container}>
+        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}

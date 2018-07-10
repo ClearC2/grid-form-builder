@@ -139,6 +139,11 @@ export default class FormBuilder extends Component {
     return field
   }
 
+  handleAnywhereClick = e => {
+    const {onClick = () => null} = this.props
+    onClick(e)
+  }
+
   handleDragDropOnInput = ({source, target}) => {
     const {handleOnDrop = () => null} = this.props
     handleOnDrop({source, target})
@@ -175,6 +180,7 @@ export default class FormBuilder extends Component {
             draggable={draggable}
             key={'' + i}
             handleOnChange={handleOnChange}
+            handleAnywhereClick={this.handleAnywhereClick}
             formValues={formValues}
             config={config}
             Icon={icon}
@@ -192,6 +198,7 @@ export default class FormBuilder extends Component {
             formSchema={formSchema}
             key={'' + i}
             handleOnChange={handleOnChange}
+            handleAnywhereClick={this.handleAnywhereClick}
             formValues={formValues}
             config={config}
             Icon={icon}
@@ -208,6 +215,7 @@ export default class FormBuilder extends Component {
             draggable={draggable}
             key={'' + i}
             handleOnChange={handleOnChange}
+            handleAnywhereClick={this.handleAnywhereClick}
             formValues={formValues}
             config={config}
             Icon={icon}

@@ -458,6 +458,10 @@ export default class Example extends Component {
     })
   }
 
+  handleOnClick = e => {
+    console.log(e)
+  }
+
   onSubmit = () => {
     console.log(this.exampleForm.validate())
   }
@@ -514,6 +518,7 @@ export default class Example extends Component {
             formSchema={formSchema.form}
             formValues={this.state.formValues}
             handleOnChange={this.handleOnChange}
+            onClick={this.handleOnClick}
             inline={this.state.inline}
             conditionalSearch={TEST_SEARCH}
             handleOnDrop={this.handleOnDrop}
