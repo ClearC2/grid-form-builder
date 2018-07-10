@@ -27,7 +27,11 @@ export default class Example extends Component {
                 'label': 'Input',
                 'type': 'input',
                 'icon': 'facebook',
-                'iconStyle': {'color': 'blue'}
+                'iconStyle': {'color': 'blue'},
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
+                }
               }
             },
             {
@@ -39,6 +43,10 @@ export default class Example extends Component {
                 'icon': 'trash',
                 'iconStyle': {
                   'color': 'red'
+                },
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
                 }
               }
             },
@@ -68,7 +76,11 @@ export default class Example extends Component {
                 'name': 'phonetest',
                 'label': 'Phone',
                 'type': 'phone',
-                'delimiter': '-'
+                'delimiter': '-',
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
+                }
               }
             },
             {
@@ -113,6 +125,10 @@ export default class Example extends Component {
                       'value': 'Initial Meeting'
                     }
                   ]
+                },
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
                 }
               }
             },
@@ -122,7 +138,11 @@ export default class Example extends Component {
               'config': {
                 'name': 'checkboxtest',
                 'label': 'Checkbox',
-                'type': 'checkbox'
+                'type': 'checkbox',
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
+                }
               }
             },
             {
@@ -132,7 +152,11 @@ export default class Example extends Component {
                 'name': 'datetest',
                 'label': 'Date',
                 'type': 'date',
-                'disabled': true
+                'disabled': true,
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
+                }
               }
             },
             {
@@ -141,7 +165,11 @@ export default class Example extends Component {
               'config': {
                 'name': 'datetimetest',
                 'label': 'Date Time',
-                'type': 'datetime'
+                'type': 'datetime',
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
+                }
               }
             },
             {
@@ -184,6 +212,10 @@ export default class Example extends Component {
                       'value': 'Internet Hub'
                     }
                   ]
+                },
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
                 }
               }
             },
@@ -219,6 +251,10 @@ export default class Example extends Component {
                       'value': 'Exception'
                     }
                   ]
+                },
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
                 }
               }
             },
@@ -237,6 +273,10 @@ export default class Example extends Component {
                     {'label': 'Summary Only', 'value': 'Summary Only'},
                     {'label': 'Both', 'value': 'Both'}
                   ]
+                },
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
                 }
               }
             },
@@ -261,6 +301,10 @@ export default class Example extends Component {
                     'companyid',
                     'inputtest'
                   ]
+                },
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
                 }
               }
             },
@@ -306,7 +350,11 @@ export default class Example extends Component {
                 'name': 'textareatest',
                 'label': 'Textarea',
                 'required': true,
-                'type': 'textarea'
+                'type': 'textarea',
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
+                }
               }
             },
             {
@@ -328,6 +376,10 @@ export default class Example extends Component {
                 'type': 'header',
                 'style': {
                   'color': 'grey'
+                },
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
                 }
               }
             },
@@ -371,6 +423,10 @@ export default class Example extends Component {
                       'value': 'Internet Hub'
                     }
                   ]
+                },
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
                 }
               }
             },
@@ -459,7 +515,7 @@ export default class Example extends Component {
   }
 
   handleOnClick = e => {
-    console.log(e)
+    // console.log(e)
   }
 
   onSubmit = () => {

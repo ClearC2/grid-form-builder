@@ -26,8 +26,15 @@ export class Radio extends Component {
     config = {currentValue, ...config}
     handleAnywhereClick(config)
   }
+  handleCascadeKeywordClick = e => {
+    const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleCascadeKeywordClick(config)
+  }
   render = () => {
-    const {inline, config = {}, handleOnChange = () => {}, formValues = Map(), Icon = null, requiredWarning, connectDropTarget} = this.props
+    const {inline, config = {}, handleOnChange = () => {}, formValues = Map(), Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name, keyword = {}, boxed} = config
@@ -65,6 +72,7 @@ export class Radio extends Component {
         textOverflow: 'ellipsis',
         fontSize: inline ? '10pt' : '8pt',
         background: 'transparent',
+        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         ...labelStyle
       },
       optionsContainer: {
@@ -95,8 +103,9 @@ export class Radio extends Component {
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label}>{label}</strong>
+            <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
             <span style={{fontWeight: 'normal', fontSize: '9pt', color: 'red', marginLeft: 9}}>{warn ? 'This Field Is Required' : ''}</span>
+            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <div style={styles.optionsContainer}>
             {options.map((option, i) => {

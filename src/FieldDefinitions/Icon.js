@@ -26,13 +26,21 @@ export class Icon extends Component {
     config = {currentValue, ...config}
     handleAnywhereClick(config)
   }
+  handleCascadeKeywordClick = e => {
+    const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleCascadeKeywordClick(config)
+  }
   render = () => {
-    const {config = {}, Icon = null, connectDropTarget} = this.props
+    const {config = {}, Icon = null, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
     const {style = {}, iconStyle = {}, onClick = () => null} = config
     return (
       connectDropTarget(
         <div onClick={onClick} className='cursor-hand' style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', ...style}} onMouseUp={this.handleAnywhereClick}>
-          {Icon && <Icon style={{height: 20, width: 20, ...iconStyle}} />}
+          {Icon && <Icon style={{height: 20, width: 20, marginRight: 5, ...iconStyle}} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''} />}
+          {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
         </div>
       )
     )

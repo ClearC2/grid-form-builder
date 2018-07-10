@@ -26,16 +26,29 @@ export class Header extends Component {
     config = {currentValue, ...config}
     handleAnywhereClick(config)
   }
+  handleCascadeKeywordClick = e => {
+    const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleCascadeKeywordClick(config)
+  }
   render = () => {
-    const {config = {}, connectDropTarget} = this.props
+    const {config = {}, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
     const {style = {}, name = null} = config
     if (!name) return null
     const {label = name} = config
     return (
       connectDropTarget(
         <div style={{display: 'flex', flex: 1, flexDirection: 'row'}} onMouseUp={this.handleAnywhereClick}>
-          <div style={{display: 'flex', flexDirection: 'row', width: 150, minWidth: 150, height: 15, marginTop: 4, ...style}}>
-            <strong style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', fontSize: '13pt', ...style}}>{label}</strong>
+          <div style={{display: 'flex', flexDirection: 'row', width: 150, minWidth: 150, height: 15, marginTop: 4, alignItems: 'center', ...style}}>
+            <strong
+              style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', fontSize: '13pt', marginRight: 5, ...style}}
+              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+            >
+              {label}
+            </strong>
+            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon size={13} onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
         </div>
       )

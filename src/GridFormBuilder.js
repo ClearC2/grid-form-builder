@@ -149,6 +149,11 @@ export default class FormBuilder extends Component {
     handleOnDrop({source, target})
   }
 
+  handleCascadeKeywordClick = e => {
+    const {handleCascade = () => null} = this.props
+    handleCascade(e)
+  }
+
   render = () => {
     let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight} = this.props
     const {requiredWarning} = this.state
@@ -165,12 +170,15 @@ export default class FormBuilder extends Component {
         field = this.convertFieldToSearch(field)
       }
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
-      let {type = 'input', icon = ''} = config
+      let {type = 'input', icon = '', cascade = {}} = config
+      let {keyword = null, icon: cascadeIcon = ''} = cascade
       type = this.uppercaseFirstLetter(type)
       icon = this.uppercaseFirstLetter(icon)
+      cascadeIcon = this.uppercaseFirstLetter(cascadeIcon)
       if (type === 'Textarea' && dimensions.h < 2) dimensions.h = 2
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
       icon = IconLibrary[icon] ? IconLibrary[icon] : null
+      cascadeIcon = IconLibrary[cascadeIcon] ? IconLibrary[cascadeIcon] : null
       if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0) {
         dateFields.unshift(
           <Component
@@ -184,6 +192,9 @@ export default class FormBuilder extends Component {
             formValues={formValues}
             config={config}
             Icon={icon}
+            cascadingKeyword={keyword}
+            CascadeIcon={cascadeIcon}
+            handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
@@ -202,6 +213,9 @@ export default class FormBuilder extends Component {
             formValues={formValues}
             config={config}
             Icon={icon}
+            cascadingKeyword={keyword}
+            CascadeIcon={cascadeIcon}
+            handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />
@@ -219,6 +233,9 @@ export default class FormBuilder extends Component {
             formValues={formValues}
             config={config}
             Icon={icon}
+            cascadingKeyword={keyword}
+            CascadeIcon={cascadeIcon}
+            handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
           />

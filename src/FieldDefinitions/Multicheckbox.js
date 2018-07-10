@@ -60,8 +60,16 @@ export class Multicheckbox extends Component {
     handleAnywhereClick(config)
   }
 
+  handleCascadeKeywordClick = e => {
+    const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleCascadeKeywordClick(config)
+  }
+
   render = () => {
-    const {inline, config = {}, Icon = null, requiredWarning, formValues, connectDropTarget} = this.props
+    const {inline, config = {}, Icon = null, requiredWarning, formValues, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name, keyword = {}, boxed} = config
@@ -100,6 +108,8 @@ export class Multicheckbox extends Component {
         textOverflow: 'ellipsis',
         fontSize: inline ? '10pt' : '8pt',
         background: 'transparent',
+        marginRight: 5,
+        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         ...labelStyle
       },
       optionsContainer: {
@@ -130,8 +140,9 @@ export class Multicheckbox extends Component {
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label}>{label}</strong>
+            <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
             <span style={{fontWeight: 'normal', fontSize: '9pt', marginLeft: 3, marginTop: -1, color: 'red'}}>{warn ? 'This Field Is Required' : ''}</span>
+            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <div style={styles.optionsContainer}>
             {options.map((option, i) => {

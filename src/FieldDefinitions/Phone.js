@@ -30,6 +30,14 @@ export class Phone extends Component {
     handleAnywhereClick(config)
   }
 
+  handleCascadeKeywordClick = e => {
+    const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleCascadeKeywordClick(config)
+  }
+
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
   }
@@ -40,7 +48,7 @@ export class Phone extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, delimiter = ' ', containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
@@ -77,8 +85,9 @@ export class Phone extends Component {
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         fontSize: inline ? '10pt' : '8pt',
-        color: '#383e4b',
+        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         background: 'transparent',
+        marginRight: 5,
         ...labelStyle
       },
       input: {
@@ -109,7 +118,8 @@ export class Phone extends Component {
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label}>{label}</strong>
+            <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
+            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <Cleave
             placeholder={placeholder}
