@@ -65,7 +65,9 @@ export class Typeahead extends Component {
   handleSingleValueChange = newValue => {
     const {handleOnChange, config = {}} = this.props
     const {name = null, typeahead = {}} = config
-    if (newValue.className || (newValue.value.trim() === '' && newValue.label.trim() === '')) {
+    if (newValue.className || (
+      (typeof newValue.value !== 'number') && (typeof newValue.label !== 'number') &&
+        newValue.value.trim() === '' && newValue.label.trim() === '')) {
       newValue[name] = newValue.value || ''
       const {fields = []} = typeahead
       let resetValues = {
