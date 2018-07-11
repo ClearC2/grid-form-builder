@@ -42,6 +42,22 @@ export class Multiselect extends Component {
     }
   }
 
+  handleAnywhereClick = () => {
+    const {handleAnywhereClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleAnywhereClick(config)
+  }
+
+  handleCascadeKeywordClick = e => {
+    const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleCascadeKeywordClick(config)
+  }
+
   componentWillReceiveProps (props) {
     let val = props.formValues.get(props.config.name, null)
     if (!val && this.state.fieldValues !== []) {
@@ -59,7 +75,7 @@ export class Multiselect extends Component {
   }
 
   render = () => {
-    const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget} = this.props
+    const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, multi = true, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
@@ -93,6 +109,8 @@ export class Multiselect extends Component {
         textOverflow: 'ellipsis',
         fontSize: inline ? '10pt' : '8pt',
         background: 'transparent',
+        marginRight: 5,
+        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         ...labelStyle
       },
       input: {
@@ -116,11 +134,12 @@ export class Multiselect extends Component {
 
     return (
       connectDropTarget(
-        <div style={styles.container}>
+        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label}>{label}</strong>
+            <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
+            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <ReactSelect
             onChange={this.onChange}

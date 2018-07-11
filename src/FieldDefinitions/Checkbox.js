@@ -20,6 +20,22 @@ export class Checkbox extends Component {
     }
   }
 
+  handleAnywhereClick = () => {
+    const {handleAnywhereClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleAnywhereClick(config)
+  }
+
+  handleCascadeKeywordClick = e => {
+    const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleCascadeKeywordClick(config)
+  }
+
   handleOnChange = e => {
     const {formValues = Map(), handleOnChange = () => {}, config} = this.props
     const {name = null} = config
@@ -69,7 +85,7 @@ export class Checkbox extends Component {
   falsey = [false, 0, '0', 'f', 'F', 'false', 'False', 'FALSE', 'n', 'N', 'No', 'NO', 'no', 'off', 'Off', 'OFF', '']
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, rowHeight, connectDropTarget} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, rowHeight, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
@@ -98,6 +114,7 @@ export class Checkbox extends Component {
         lineHeight: '10pt',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
+        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         ...labelStyle
       },
       input: {
@@ -123,14 +140,15 @@ export class Checkbox extends Component {
 
     return (
       connectDropTarget(
-        <div style={styles.container}>
-          <label style={styles.label}>
+        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
+          <label style={styles.label} onMouseUp={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>
             {Icon && <Icon style={styles.icon} />}
             <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} disabled={disabled} onKeyDown={onKeyDown} />
             {label}
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>
               * <span style={{fontWeight: 'normal', fontSize: '9pt'}}>{warn ? 'This Field Is Required' : ''}</span>
             </div>}
+            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon style={{marginLeft: 5}} size={14} onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </label>
         </div>
       )

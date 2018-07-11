@@ -75,8 +75,24 @@ export class Listselect extends Component {
     }
   }
 
+  handleAnywhereClick = () => {
+    const {handleAnywhereClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleAnywhereClick(config)
+  }
+
+  handleCascadeKeywordClick = e => {
+    const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleCascadeKeywordClick(config)
+  }
+
   render = () => {
-    const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget} = this.props
+    const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}} = config
     if (!name) return null
     const {label = name, keyword = {}} = config
@@ -113,6 +129,8 @@ export class Listselect extends Component {
         textOverflow: 'ellipsis',
         fontSize: inline ? '10pt' : '8pt',
         background: 'transparent',
+        marginRight: 5,
+        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         ...labelStyle
       },
       input: {
@@ -137,12 +155,13 @@ export class Listselect extends Component {
 
     return (
       connectDropTarget(
-        <div style={styles.container}>
+        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label}>{label}</strong>
+            <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
             <span style={{fontWeight: 'normal', fontSize: '9pt', marginLeft: 3, marginTop: -1, color: 'red'}}>{warn ? 'This Field Is Required' : ''}</span>
+            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <div style={styles.input}>
             <div style={{display: 'flex', flex: 1, flexDirection: 'column', minHeight: 10, border: warn ? '1px solid #ec1c24' : '1px solid lightgrey', height: 'calc(100% - 18px)', overflowY: 'scroll'}}>

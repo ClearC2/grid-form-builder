@@ -390,12 +390,14 @@ export default class Example extends Component {
 
   handleOnChange = e => this.setState({formValues: this.state.formValues.set(e.target.name, e.target.value)})
 
+  handleOnClick = config => console.log(config)
 
   render = () => <FormBuilder
     formName="ExampleForm"
     formSchema={this.state.formSchema}
     formValues={this.state.formValues}
     handleOnChange={this.handleOnChange}
+    onClick={this.handleOnClick}
     inline={this.state.inline}
     draggable
   />
@@ -480,6 +482,9 @@ handleOnChange is the handler called any time a field is changed. Use this handl
     }
 }
 ```
+
+#### `onClick?: function`
+This function is triggered any time a cell containing a field is clicked. This function gives the configuration object of the clicked cell as its only argument.
 
 #### `draggable?: bool`
 This bool indicates weather or not the user should be able to drag fields around the grid on the screen. Default is false.
