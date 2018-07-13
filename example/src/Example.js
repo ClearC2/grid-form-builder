@@ -365,12 +365,7 @@ export default class Example extends Component {
                     'inputtest',
                     'textareatest'
                   ],
-                  'fieldId': 'value',
-                  'filter': {
-                    'name': 'isVendor',
-                    'comparator': 'is equal to',
-                    'values': [1]
-                  }
+                  'fieldId': 'value'
                 }
               }
             },

@@ -141,7 +141,7 @@ export class Typeahead extends Component {
     const {config = {}} = this.props
     const {name = null, typeahead = {}} = config
     const {key = null, duplication = false} = typeahead
-    let {filter} = typeahead
+    let {filter = {}} = typeahead
 
     if (!key) {
       console.error(`The JSON schema representation for ${name} does not have a typeahead key. A typeahead.key is required for this field type to search for results.`)
