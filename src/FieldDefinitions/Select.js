@@ -85,7 +85,7 @@ export class Select extends Component {
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         paddingLeft: 5,
         minWidth: 170,
-        color: warn ? 'red' : 'inherit',
+        color: warn ? '#ec1c24' : placeholder ? formValues.get(name, '').length === 0 ? '#757575' : '#323232' : '#323232',
         ...style
       },
       icon: {
@@ -107,7 +107,7 @@ export class Select extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')} disabled={disabled} onKeyDown={onKeyDown}>
-            {placeholder && <option key='required' value='' style={{color: warn ? '#ec1c24' : '#383e4b'}} disabled hidden>{placeholder}</option>}
+            {placeholder && <option key='required' value='' disabled hidden>{placeholder}</option>}
             {!suppressBlankOption && !placeholder && <option key='blank' value='' /> /* {should all selects have a blank option?} */}
             {options.map((option, i) => <option key={i} value={option.value}>{option.label ? option.label : option.value}</option>)}
           </select>

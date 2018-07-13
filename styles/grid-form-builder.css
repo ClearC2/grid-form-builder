@@ -114,6 +114,10 @@ div.Select-menu-outer{
   min-width: 275px;
 }
 
+div.Select-placeholder, div.Select--single > div.Select-control div.Select-value {
+  color: #757575;
+}
+
 div.warn-required > div.Select-control {
   border: 1px solid #ec1c24;
 }
