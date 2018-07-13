@@ -157,6 +157,12 @@ export default class Conditionalinput extends Component {
       let conditionalFieldValues = Map()
       let i = 0
       let valueList = this.getValuesFromFormValues(props.formValues)
+      if (!valueList) {
+        valueList = List()
+      }
+      if (typeof valueList === 'string') {
+        valueList = List()
+      }
       valueList.forEach((value) => {
         conditionalFieldValues = conditionalFieldValues.set(`${this.parentFieldName()}-${i}`, value)
         i++
