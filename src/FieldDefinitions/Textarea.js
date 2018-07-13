@@ -42,10 +42,10 @@ export class Textarea extends Component {
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
-    let {readonly = false, disabled = false} = config
+    let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
 
-    const placeholder = warn ? '* This Field Is Required' : ''
+    placeholder = warn ? '* This Field Is Required' : placeholder
     const className = warn ? 'warn-required' : ''
 
     const styles = {
