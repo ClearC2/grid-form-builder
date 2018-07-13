@@ -99,8 +99,9 @@ export class Listselect extends Component {
     const {options = []} = keyword
     const {value = []} = this.state
     const warn = requiredWarning && value.size === 0 && required
-    let {readonly = false, disabled = false} = config
+    let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
+    placeholder = warn ? 'This Field Is Required' : placeholder
 
     const styles = {
       container: {
@@ -160,7 +161,7 @@ export class Listselect extends Component {
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
             <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
-            <span style={{fontWeight: 'normal', fontSize: '9pt', marginLeft: 3, marginTop: -1, color: 'red'}}>{warn ? 'This Field Is Required' : ''}</span>
+            <span style={{fontWeight: 'normal', fontSize: '9pt', marginLeft: 3, marginTop: -1, color: warn ? '#ec1c24' : '#383e4b', marginRight: 5}}>{placeholder}</span>
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <div style={styles.input}>

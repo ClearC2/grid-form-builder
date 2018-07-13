@@ -40,8 +40,9 @@ export class Select extends Component {
     const {label = name, keyword = {}, suppressBlankOption = false} = config
     const {options = []} = keyword
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
-    let {readonly = false, disabled = false} = config
+    let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
+    placeholder = warn ? '* This Field Is Required' : placeholder
 
     const styles = {
       container: {
@@ -84,7 +85,7 @@ export class Select extends Component {
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         paddingLeft: 5,
         minWidth: 170,
-        color: warn ? 'red' : 'inherit',
+        color: warn ? '#ec1c24' : placeholder ? formValues.get(name, '').length === 0 ? '#757575' : '#323232' : '#323232',
         ...style
       },
       icon: {
@@ -106,8 +107,8 @@ export class Select extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')} disabled={disabled} onKeyDown={onKeyDown}>
-            {warn && <option key='required' value='' style={{color: 'red'}} disabled hidden>* This Field Is Required</option>}
-            {!suppressBlankOption && !warn && <option key='blank' value='' /> /* {should all selects have a blank option?} */}
+            {placeholder && <option key='required' value='' disabled hidden>{placeholder}</option>}
+            {!suppressBlankOption && !placeholder && <option key='blank' value='' /> /* {should all selects have a blank option?} */}
             {options.map((option, i) => <option key={i} value={option.value}>{option.label ? option.label : option.value}</option>)}
           </select>
         </div>

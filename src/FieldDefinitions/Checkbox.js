@@ -89,9 +89,10 @@ export class Checkbox extends Component {
     const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
     if (!name) return null
     const {label = name} = config
-    let {readonly = false, disabled = false} = config
+    let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
+    placeholder = warn ? 'This Field Is Required' : placeholder
 
     const styles = {
       container: {
@@ -145,9 +146,10 @@ export class Checkbox extends Component {
             {Icon && <Icon style={styles.icon} />}
             <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} disabled={disabled} onKeyDown={onKeyDown} />
             {label}
-            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>
-              * <span style={{fontWeight: 'normal', fontSize: '9pt'}}>{warn ? 'This Field Is Required' : ''}</span>
-            </div>}
+            <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>
+              {required && '*'}
+              {placeholder && <span style={{fontWeight: 'normal', fontSize: '9pt', color: warn ? '#ec1c24' : '#383e4b', marginLeft: 5}}>{placeholder}</span>}
+            </div>
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon style={{marginLeft: 5}} size={14} onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </label>
         </div>

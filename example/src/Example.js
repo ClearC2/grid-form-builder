@@ -297,14 +297,75 @@ export default class Example extends Component {
                     'textareatest'
                   ],
                   'fieldId': 'value',
-                  'filters': [
-                    'companyid',
-                    'inputtest'
-                  ]
+                  'filter': {
+                    'type': 'and',
+                    'conditions': [
+                      {
+                        'type': 'or',
+                        'conditions': [
+                          {
+                            'type': 'and',
+                            'conditions': [
+                              {
+                                'name': 'inputtest',
+                                'comparator': 'is equal to',
+                                'values': []
+                              },
+                              {
+                                'name': 'inputtest',
+                                'comparator': 'is equal to',
+                                'values': []
+                              }
+                            ]
+                          },
+                          {
+                            'type': 'and',
+                            'conditions': [
+                              {
+                                'name': 'inputtest',
+                                'comparator': 'contains',
+                                'values': []
+                              },
+                              {
+                                'name': 'inputtest',
+                                'comparator': 'is not equal to',
+                                'values': []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        'name': 'inputtest',
+                        'comparator': 'is equal to',
+                        'values': [1]
+                      }
+                    ]
+                  }
                 },
                 'cascade': {
                   'keyword': 'C2_PEOPLE_SOMETHING',
                   'icon': 'tree'
+                }
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 6, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'typeaheadtest2',
+                'label': 'Typeahead2',
+                'required': true,
+                'type': 'typeahead',
+                'multi': true,
+                'typeahead': {
+                  'key': 'c2_company',
+                  'duplication': true,
+                  'fields': [
+                    'inputtest',
+                    'textareatest'
+                  ],
+                  'fieldId': 'value'
                 }
               }
             },

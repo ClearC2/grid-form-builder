@@ -120,29 +120,36 @@ export class Typeahead extends Component {
     })
   }
 
+  populateFilterBody = (filter = {}) => {
+    if (filter.hasOwnProperty('name')) {
+      this.populateConditionObject(filter)
+    } else if (filter.hasOwnProperty('conditions') && Array.isArray(filter.conditions)) {
+      filter.conditions.map(condition => this.populateFilterBody(condition))
+    }
+    return filter
+  }
+
+  populateConditionObject = (condition = {name: null, comparator: null, values: []}) => {
+    const {formValues = Map()} = this.props
+    if (!condition.hasOwnProperty('values')) condition.values = []
+    const value = formValues.get(condition.name, '')
+    condition.values.push(value)
+    return condition
+  }
+
   loadOptions = search => {
-    const {config = {}, formValues = Map()} = this.props
+    const {config = {}} = this.props
     const {name = null, typeahead = {}} = config
-    const {key = null, duplication = false, filters = []} = typeahead
+    const {key = null, duplication = false} = typeahead
+    let {filter = {}} = typeahead
 
     if (!key) {
       console.error(`The JSON schema representation for ${name} does not have a typeahead key. A typeahead.key is required for this field type to search for results.`)
       return Promise.resolve({options: []})
     }
 
-    let filter = []
-    filters.map(field => {
-      const fieldVal = formValues.get(field, '')
-      if (typeof fieldVal === 'string' && fieldVal.trim().length > 0) {
-        filter = [
-          {
-            'name': field,
-            'comparator': 'is equal to',
-            'values': fieldVal
-          }
-        ]
-      }
-    })
+    filter = JSON.parse(JSON.stringify(filter)) // deep clone the object as to not mutate the definition
+    this.populateFilterBody(filter)
 
     if (search.length > this.props.minChars) {
       return GFBConfig.ajax.post(`/typeahead/name/${key}/search/${search}`, {filter})
@@ -172,7 +179,7 @@ export class Typeahead extends Component {
     }
     if ((typeof value === 'string' || typeof v === 'number') && value.length > 0) value = {value, label: value}
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
-    let {readonly = false, disabled = false} = config
+    let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
 
     const styles = {
@@ -221,7 +228,7 @@ export class Typeahead extends Component {
 
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
-    const placeholder = warn ? '* This Field Is Required' : ''
+    placeholder = warn ? '* This Field Is Required' : placeholder
 
     if (this.state.shouldRemount) {
       return <Placeholder handleMount={this.setShouldRemount} />

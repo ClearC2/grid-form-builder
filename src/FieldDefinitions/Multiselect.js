@@ -80,7 +80,7 @@ export class Multiselect extends Component {
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && this.state.fieldValues.length === 0 && required
-    let {readonly = false, disabled = false} = config
+    let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
 
     const styles = {
@@ -130,7 +130,7 @@ export class Multiselect extends Component {
 
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
-    const placeholder = warn ? '* This Field Is Required' : ''
+    placeholder = warn ? '* This Field Is Required' : placeholder
 
     return (
       connectDropTarget(

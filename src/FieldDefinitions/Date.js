@@ -50,7 +50,7 @@ export class Date extends Component {
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
-    let {readonly = false, disabled = false} = config
+    let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
 
     const styles = {
@@ -96,7 +96,7 @@ export class Date extends Component {
     let className = inline ? `date-wrapper-grid-input date-wrapper-grid-input-inline` : `date-wrapper-grid-input`
     className = !warn ? className : className + ' warn-required'
     const inputClass = warn ? 'warn-required' : ''
-    const placeholder = warn ? '* This Field Is Required' : ''
+    placeholder = warn ? '* This Field Is Required' : placeholder
 
     return (
       connectDropTarget(
