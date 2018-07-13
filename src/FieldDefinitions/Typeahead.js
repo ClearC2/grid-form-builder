@@ -179,7 +179,7 @@ export class Typeahead extends Component {
     }
     if ((typeof value === 'string' || typeof v === 'number') && value.length > 0) value = {value, label: value}
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
-    let {readonly = false, disabled = false} = config
+    let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
 
     const styles = {
@@ -228,7 +228,7 @@ export class Typeahead extends Component {
 
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
-    const placeholder = warn ? '* This Field Is Required' : ''
+    placeholder = warn ? '* This Field Is Required' : placeholder
 
     if (this.state.shouldRemount) {
       return <Placeholder handleMount={this.setShouldRemount} />
