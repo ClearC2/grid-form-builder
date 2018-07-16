@@ -587,7 +587,6 @@ export default class Example extends Component {
 
   render = () => {
     const {formSchema} = this.state
-    console.log(this.state.formSchema, this.state.formValues, 'form val logggggggggg')
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is false
       return (<div style={{display: 'flex'}}>
