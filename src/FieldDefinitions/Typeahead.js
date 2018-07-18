@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
-import {AsyncCreatable} from 'react-select'
+import {AsyncCreatable, Async} from 'react-select'
 import PropTypes from 'prop-types'
 import GFBConfig from '../config'
 import {DropTarget} from 'react-dnd'
@@ -169,7 +169,7 @@ export class Typeahead extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false, style = {}, containerStyle = {}, onKeyDown = () => null} = config
+    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false, style = {}, containerStyle = {}, onKeyDown = () => null, allowcreate = false} = config
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, null)
@@ -244,7 +244,7 @@ export class Typeahead extends Component {
               <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
               {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
             </div>
-            <AsyncCreatable
+            {allowcreate && <AsyncCreatable
               style={style}
               onMouseDown={this.onMouseDown}
               className={className}
@@ -257,7 +257,21 @@ export class Typeahead extends Component {
               onKeyDown={onKeyDown}
               placeholder={placeholder}
               resetValue={{[name]: '', value: '', label: ''}}
-            />
+            />}
+            {!allowcreate && <Async
+              style={style}
+              onMouseDown={this.onMouseDown}
+              className={className}
+              name={name}
+              multi={multi}
+              value={value}
+              onChange={this.handleChange}
+              loadOptions={this.loadOptions}
+              disabled={disabled}
+              onKeyDown={onKeyDown}
+              placeholder={placeholder}
+              resetValue={{[name]: '', value: '', label: ''}}
+            />}
           </div>
         )
       )
