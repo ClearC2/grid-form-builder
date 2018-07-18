@@ -155,9 +155,12 @@ export class Typeahead extends Component {
       return GFBConfig.ajax.post(`/typeahead/name/${key}/search/${search}`, {filter})
         .then(resp => {
           const results = resp.data.data.map(value => {
-            value.duplication = duplication
+            if (duplication) {
+              value.duplication = duplication
+            }
             return value
           })
+          console.log({options: results})
           return {options: results}
         })
     }
