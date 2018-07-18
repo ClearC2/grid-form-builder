@@ -103,10 +103,10 @@ export class Typeahead extends Component {
       let value = newValue[field]
       if (field === 'duplication') value = newValue.value
       let id = null
-      if (field === 'label') {
-        id = newValue[this.props.config.typeahead.fieldId || this.props.config.typeahead.fieldid || 'value'] || newValue.label
-        field = name
-      }
+      // if (field === 'label') {
+      //   id = newValue[this.props.config.typeahead.fieldId || this.props.config.typeahead.fieldid || 'value'] || newValue.label
+      //   field = name
+      // }
       let e = {
         target: {
           name: field,
