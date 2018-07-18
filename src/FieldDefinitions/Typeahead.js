@@ -160,7 +160,6 @@ export class Typeahead extends Component {
             }
             return value
           })
-          console.log({options: results})
           return {options: results}
         })
     }
