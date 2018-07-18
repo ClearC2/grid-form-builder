@@ -35,7 +35,9 @@ export class Header extends Component {
   }
   render = () => {
     const {config = {}, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {style = {}, name = null} = config
+    const {name = null} = config
+    let {style = {}} = config
+    style = typeof style === 'string' ? JSON.parse(style) : style
     if (!name) return null
     const {label = name} = config
     return (

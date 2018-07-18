@@ -86,7 +86,11 @@ export class Checkbox extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, rowHeight, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
+    const {name = null, iconStyle = {}, required = false, onKeyDown = () => null} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}} = config
+    containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
+    labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
+    style = typeof style === 'string' ? JSON.parse(style) : style
     if (!name) return null
     const {label = name} = config
     let {readonly = false, disabled = false, placeholder = ''} = config

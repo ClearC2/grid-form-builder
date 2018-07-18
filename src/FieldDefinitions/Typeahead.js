@@ -169,7 +169,12 @@ export class Typeahead extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false, style = {}, containerStyle = {}, onKeyDown = () => null, allowcreate = false} = config
+    const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
+    labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
+    style = typeof style === 'string' ? JSON.parse(style) : style
+    iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, null)

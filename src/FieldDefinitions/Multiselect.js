@@ -76,7 +76,12 @@ export class Multiselect extends Component {
 
   render = () => {
     const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {labelStyle = {}, style = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, multi = true, onKeyDown = () => null} = config
+    const {name = null, required = false, multi = true, onKeyDown = () => null} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
+    labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
+    style = typeof style === 'string' ? JSON.parse(style) : style
+    iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && this.state.fieldValues.length === 0 && required
