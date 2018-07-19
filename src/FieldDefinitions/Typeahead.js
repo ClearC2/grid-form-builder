@@ -151,7 +151,7 @@ export class Typeahead extends Component {
     filter = JSON.parse(JSON.stringify(filter)) // deep clone the object as to not mutate the definition
     this.populateFilterBody(filter)
 
-    if (search.length > this.props.minChars) {
+    if (search.length >= this.props.minChars || search === ' ') {
       return GFBConfig.ajax.post(`/typeahead/name/${key}/search/${search}`, {filter})
         .then(resp => {
           const results = resp.data.data.map(value => {
