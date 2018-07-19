@@ -152,7 +152,8 @@ export class Typeahead extends Component {
     this.populateFilterBody(filter)
 
     if (search.length >= this.props.minChars || search === ' ') {
-      return GFBConfig.ajax.post(`/typeahead/name/${key}/search/${search}`, {filter})
+      if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
+      return GFBConfig.ajax.post(`/typeahead/name/${key}/search${search}`, {filter})
         .then(resp => {
           const results = resp.data.data.map(value => {
             if (duplication) {
