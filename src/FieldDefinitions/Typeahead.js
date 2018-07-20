@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
-import {AsyncCreatable} from 'react-select'
+import {AsyncCreatable, Async} from 'react-select'
 import PropTypes from 'prop-types'
 import GFBConfig from '../config'
 import {DropTarget} from 'react-dnd'
@@ -103,10 +103,10 @@ export class Typeahead extends Component {
       let value = newValue[field]
       if (field === 'duplication') value = newValue.value
       let id = null
-      if (field === 'label') {
-        id = newValue[this.props.config.typeahead.fieldId || this.props.config.typeahead.fieldid || 'value'] || newValue.label
-        field = name
-      }
+      // if (field === 'label') {
+      //   id = newValue[this.props.config.typeahead.fieldId || this.props.config.typeahead.fieldid || 'value'] || newValue.label
+      //   field = name
+      // }
       let e = {
         target: {
           name: field,
@@ -151,11 +151,14 @@ export class Typeahead extends Component {
     filter = JSON.parse(JSON.stringify(filter)) // deep clone the object as to not mutate the definition
     this.populateFilterBody(filter)
 
-    if (search.length > this.props.minChars) {
-      return GFBConfig.ajax.post(`/typeahead/name/${key}/search/${search}`, {filter})
+    if (search.length >= this.props.minChars || search === ' ') {
+      if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
+      return GFBConfig.ajax.post(`/typeahead/name/${key}/search${search}`, {filter})
         .then(resp => {
           const results = resp.data.data.map(value => {
-            value.duplication = duplication
+            if (duplication) {
+              value.duplication = duplication
+            }
             return value
           })
           return {options: results}
@@ -167,7 +170,12 @@ export class Typeahead extends Component {
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}, required = false, multi = false, style = {}, containerStyle = {}, onKeyDown = () => null} = config
+    const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
+    labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
+    style = typeof style === 'string' ? JSON.parse(style) : style
+    iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, null)
@@ -242,7 +250,7 @@ export class Typeahead extends Component {
               <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
               {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
             </div>
-            <AsyncCreatable
+            {allowcreate && <AsyncCreatable
               style={style}
               onMouseDown={this.onMouseDown}
               className={className}
@@ -255,7 +263,21 @@ export class Typeahead extends Component {
               onKeyDown={onKeyDown}
               placeholder={placeholder}
               resetValue={{[name]: '', value: '', label: ''}}
-            />
+            />}
+            {!allowcreate && <Async
+              style={style}
+              onMouseDown={this.onMouseDown}
+              className={className}
+              name={name}
+              multi={multi}
+              value={value}
+              onChange={this.handleChange}
+              loadOptions={this.loadOptions}
+              disabled={disabled}
+              onKeyDown={onKeyDown}
+              placeholder={placeholder}
+              resetValue={{[name]: '', value: '', label: ''}}
+            />}
           </div>
         )
       )

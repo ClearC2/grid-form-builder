@@ -35,7 +35,10 @@ export class Icon extends Component {
   }
   render = () => {
     const {config = {}, Icon = null, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {style = {}, iconStyle = {}, onClick = () => null} = config
+    const {onClick = () => null} = config
+    let {style = {}, iconStyle = {}} = config
+    style = typeof style === 'string' ? JSON.parse(style) : style
+    iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     return (
       connectDropTarget(
         <div onClick={onClick} className='cursor-hand' style={{display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center', ...style}} onMouseUp={this.handleAnywhereClick}>

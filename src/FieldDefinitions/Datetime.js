@@ -46,7 +46,12 @@ export class Datetime extends Component {
   }
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {labelStyle = {}, name = null, iconStyle = {}, required = false, containerStyle = {}, onKeyDown = () => null} = config
+    const {name = null, required = false, onKeyDown = () => null} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
+    labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
+    style = typeof style === 'string' ? JSON.parse(style) : style
+    iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
@@ -117,7 +122,7 @@ export class Datetime extends Component {
               disabled: disabled,
               placeholder: placeholder,
               className: inputClass,
-              style: {backgroundColor: disabled ? '#eeeeee' : 'transparent'}
+              style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style}
             }}
             onKeyDown={onKeyDown}
           />
