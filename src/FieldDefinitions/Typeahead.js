@@ -237,7 +237,6 @@ export class Typeahead extends Component {
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
     placeholder = warn ? '* This Field Is Required' : placeholder
-
     if (this.state.shouldRemount) {
       return <Placeholder handleMount={this.setShouldRemount} />
     } else {

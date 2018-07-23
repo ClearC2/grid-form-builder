@@ -9,8 +9,8 @@ import FormBuilder from '../GridFormBuilder'
   checkboxes are converted to multicheckboxes
  */
 
-const SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselect'])
-const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'typeahead'])
+const SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselect', 'typeahead'])
+const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone'])
 const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
 
 export const TEXT_INPUTS = ['textarea', 'checkbox', 'radio']
@@ -165,10 +165,15 @@ export default class Conditionalinput extends Component {
       if (typeof valueList === 'string') {
         valueList = List()
       }
-      valueList.forEach((value) => {
-        conditionalFieldValues = conditionalFieldValues.set(`${this.parentFieldName()}-${i}`, value)
-        i++
-      })
+      if (SINGLE_FIELD_INPUTS.has(this.inputType())) {
+        conditionalFieldValues = conditionalFieldValues.set(`${this.parentFieldName()}-0`, valueList)
+      } else {
+        valueList.forEach((value) => {
+          conditionalFieldValues = conditionalFieldValues.set(`${this.parentFieldName()}-${i}`, value)
+          i++
+        })
+      }
+
       // take any form-builder values from props and convert them to contitional table form readable values
       this.setState({
         modalFormValues: Map({
@@ -357,30 +362,15 @@ export default class Conditionalinput extends Component {
         return // escape if its an extraneous typeahead field)
       }
       this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
-
-      if (e.target.id !== undefined) {
-        if (e.target.id === null) {
-          let oldValue = this.props.formValues.get(this.parentFieldName(), Map())
-          oldValue = oldValue.setIn(['values', this.getEventFieldIndex(e)], {label: e.target.value, value: e.target.value})
-          this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
-          return
-        } else {
-          let oldValue = this.props.formValues.get(this.parentFieldName(), Map())
-          oldValue = oldValue.setIn(['values', this.getEventFieldIndex(e)], {label: e.target.value, value: e.target.id})
-          this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
-          return
-        }
-      } else {
-        console.error('No Id found for selected ', e.target.name, ' typeahead field value')
+      if (e.target.value) {
+        this.props.handleOnChange({target: {name: this.parentFieldName(), value: List(e.target.value)}})
+        this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
       }
-    }
-    // give modal form its expected simple values
-    this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
-    // send conditional values back to parent
-    if (e.target.value instanceof List) {
+    } else if (e.target.value instanceof List) {
       let oldValue = this.props.formValues.get(this.parentFieldName(), Map())
       oldValue = oldValue.setIn(['values'], e.target.value)
       this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
+      this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
     } else {
       let oldValue = this.props.formValues.get(this.parentFieldName(), Map())
       if (MULTI_FIELD_INPUTS.has(this.inputType())) {
@@ -397,6 +387,7 @@ export default class Conditionalinput extends Component {
         }
       }
       this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
+      this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
     }
   }
 
