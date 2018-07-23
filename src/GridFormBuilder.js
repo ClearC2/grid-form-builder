@@ -126,6 +126,7 @@ export default class FormBuilder extends Component {
       if (!field.config.forceUnconditional && !field.config.forceunconditional) {
         if (field.config.type === 'typeahead' && !field.config.typeahead.fieldId) {
           field.config.typeahead.fieldId = 'value'
+          field.config.multi = true
         }
         if (field.config.type === 'radio') { // inputs that are normally radios should be multicheckboxes in search
           field.config.type = 'multicheckbox'
