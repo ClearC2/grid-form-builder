@@ -4,7 +4,7 @@ import {FormBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import ConditionTable from 'query-builder'
 
-const TEST_SEARCH = false // for conditional search forms
+const TEST_SEARCH = true // for conditional search forms
 
 export default class Example extends Component {
   state = {
