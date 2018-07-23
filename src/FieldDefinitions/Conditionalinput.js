@@ -363,7 +363,8 @@ export default class Conditionalinput extends Component {
       }
       this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
       if (e.target.value) {
-        this.props.handleOnChange({target: {name: this.parentFieldName(), value: List(e.target.value)}})
+        let oldValue = this.props.formValues.get(this.parentFieldName(), Map()).setIn(['values'], List(e.target.value))
+        this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
         this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
       }
     } else if (e.target.value instanceof List) {
