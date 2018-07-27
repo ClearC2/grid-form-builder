@@ -4,7 +4,7 @@ import {FormBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import ConditionTable from 'query-builder'
 
-const TEST_SEARCH = true // for conditional search forms
+const TEST_SEARCH = false // for conditional search forms
 
 export default class Example extends Component {
   state = {
@@ -21,29 +21,13 @@ export default class Example extends Component {
           'layout': [
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 0, 'h': 1, 'w': 3},
+              'dimensions': {'x': 0, 'y': 0, 'h': 10, 'w': 6},
               'config': {
-                'name': 'inputtest',
+                'name': 'testerinput',
                 'label': 'Input',
-                'type': 'input',
+                'type': 'richtextarea',
                 'icon': 'facebook',
                 'iconStyle': {'color': 'blue'},
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 3, 'y': 0, 'h': 1, 'w': 3},
-              'config': {
-                'name': 'requiredTestField',
-                'type': 'icon',
-                'icon': 'trash',
-                'iconStyle': {
-                  'color': 'red'
-                },
                 'cascade': {
                   'keyword': 'C2_PEOPLE_SOMETHING',
                   'icon': 'tree'

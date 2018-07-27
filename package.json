@@ -80,6 +80,8 @@
     "react-redux": "^4.0.0 || ^5.0.0"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^11.0.1",
+    "@ckeditor/ckeditor5-react": "^1.0.0-beta.1",
     "c2-dialog": "git+ssh://git@github.com:ClearC2/c2-dialog.git",
     "cleave.js": "^1.1.1",
     "moment": "^2.20.1",

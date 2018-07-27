@@ -231,3 +231,15 @@ div.Select-input {
 .radio-grid-input:checked {
   background: url(./check_radio_sheet.png) -57px top no-repeat;
 }
+
+.ck.ck-reset.ck-editor.ck-rounded-corners {
+  height: 100%;
+}
+
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-blurred.ck-editor__editable_inline {
+  height: calc(100% - 55px);
+}
+
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-focused.ck-editor__editable_inline {
+  height: calc(100% - 55px);
+}
