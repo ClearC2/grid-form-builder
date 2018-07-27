@@ -13,6 +13,8 @@ export default class Example extends Component {
       textareatest: '1234 Main Street'
     }),
     inline: false,
+    draggable: false,
+    resizeable: false,
     formSchema: {
       'form': {
         'name': 'Company 1',
@@ -552,6 +554,8 @@ export default class Example extends Component {
 
   toggleInline = () => this.setState({inline: !this.state.inline})
 
+  toggleDraggable = () => this.setState({draggable: !this.state.draggable})
+
   handleOnChange = e => {
     const input = e.target
     this.setState(s => {
@@ -609,6 +613,7 @@ export default class Example extends Component {
             display: 'flex',
             justifyContent: 'center'
           }}>
+            <button onClick={this.toggleDraggable} style={{marginRight: 10}}>{this.state.draggable ? 'Make Static' : 'Make Draggable'}</button>
             <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
             <button onClick={this.onSubmit} style={{marginLeft: 10}}>Submit</button>
             <DragUnit someProp='test' />
@@ -623,6 +628,7 @@ export default class Example extends Component {
             inline={this.state.inline}
             conditionalSearch={TEST_SEARCH}
             handleOnDrop={this.handleOnDrop}
+            draggable={this.state.draggable}
           />
         </div>
       )
