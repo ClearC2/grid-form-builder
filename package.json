@@ -15,7 +15,18 @@
     "compile": "babel -d lib/ src/",
     "prepublish": "npm run compile",
     "lint": "standard \"src/**/*.js\"",
-    "install:yarn": "./install-yarn.sh"
+    "install:yarn": "./install-yarn.sh",
+    "cm": "git-cz",
+    "semantic-release": "semantic-release"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "release": {
+    "branch": "master",
+    "extends": "c2-semantic-release"
   },
   "author": "Jacob Allen",
   "license": "ISC",
@@ -46,6 +57,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.24.1",
     "body-parser": "^1.18.2",
+    "c2-semantic-release": "git+https://github.com/ClearC2/c2-semantic-release.git",
     "concurrently": "^3.5.1",
     "cors": "^2.8.4",
     "cross-env": "^5.1.4",
