@@ -160,7 +160,7 @@ export default class FormBuilder extends Component {
   }
 
   render = () => {
-    let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight, readonly} = this.props
+    let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true} = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
@@ -178,7 +178,7 @@ export default class FormBuilder extends Component {
       let {type = 'input', icon = '', cascade = {}} = config
       if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) config.readonly = true
       let {keyword = null, icon: cascadeIcon = ''} = cascade
-      type = this.uppercaseFirstLetter(type)
+      type = interactive ? this.uppercaseFirstLetter(type) : 'input'
       icon = this.uppercaseFirstLetter(icon)
       cascadeIcon = this.uppercaseFirstLetter(cascadeIcon)
       if (type === 'Textarea' && dimensions.h < 2) dimensions.h = 2
