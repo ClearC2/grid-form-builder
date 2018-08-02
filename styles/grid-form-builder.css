@@ -34,12 +34,12 @@ div.Select {
   width: 100%;
 }
 
-div.Select > div.Select-control > span > div.Select-value {
+div.Select > div.Select-control > span > div.Select-value, div.Select > div.Select-control > div > div.Select-value {
   display: flex;
   align-items: center;
 }
 
-div.Select > div.Select-control > span > div.Select-value > span {
+div.Select > div.Select-control > span > div.Select-value > span, div.Select > div.Select-control > div > div.Select-value > span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
