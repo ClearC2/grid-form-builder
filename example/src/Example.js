@@ -4,7 +4,7 @@ import {FormBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import ConditionTable from 'query-builder'
 
-const TEST_SEARCH = true // for conditional search forms
+const TEST_SEARCH = false // for conditional search forms
 
 export default class Example extends Component {
   state = {
@@ -13,6 +13,8 @@ export default class Example extends Component {
       textareatest: '1234 Main Street'
     }),
     inline: false,
+    draggable: false,
+    resizeable: false,
     formSchema: {
       'form': {
         'name': 'Company 1',
@@ -21,29 +23,13 @@ export default class Example extends Component {
           'layout': [
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 0, 'h': 1, 'w': 3},
+              'dimensions': {'x': 0, 'y': 0, 'h': 10, 'w': 6},
               'config': {
-                'name': 'inputtest',
+                'name': 'testerinput',
                 'label': 'Input',
-                'type': 'input',
+                'type': 'richtextarea',
                 'icon': 'facebook',
                 'iconStyle': {'color': 'blue'},
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 3, 'y': 0, 'h': 1, 'w': 3},
-              'config': {
-                'name': 'requiredTestField',
-                'type': 'icon',
-                'icon': 'trash',
-                'iconStyle': {
-                  'color': 'red'
-                },
                 'cascade': {
                   'keyword': 'C2_PEOPLE_SOMETHING',
                   'icon': 'tree'
@@ -284,11 +270,11 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 6, 'y': 5, 'h': 1, 'w': 6},
               'config': {
-                'name': 'typeaheadtest',
+                'name': 'companyname',
                 'label': 'Typeahead',
                 'required': true,
                 'type': 'typeahead',
-                'multi': true,
+                'allowcreate': true,
                 'typeahead': {
                   'key': 'c2_company',
                   'duplication': true,
@@ -568,6 +554,8 @@ export default class Example extends Component {
 
   toggleInline = () => this.setState({inline: !this.state.inline})
 
+  toggleDraggable = () => this.setState({draggable: !this.state.draggable})
+
   handleOnChange = e => {
     const input = e.target
     this.setState(s => {
@@ -625,6 +613,7 @@ export default class Example extends Component {
             display: 'flex',
             justifyContent: 'center'
           }}>
+            <button onClick={this.toggleDraggable} style={{marginRight: 10}}>{this.state.draggable ? 'Make Static' : 'Make Draggable'}</button>
             <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
             <button onClick={this.onSubmit} style={{marginLeft: 10}}>Submit</button>
             <DragUnit someProp='test' />
@@ -639,6 +628,7 @@ export default class Example extends Component {
             inline={this.state.inline}
             conditionalSearch={TEST_SEARCH}
             handleOnDrop={this.handleOnDrop}
+            draggable={this.state.draggable}
           />
         </div>
       )

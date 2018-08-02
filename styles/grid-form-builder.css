@@ -34,6 +34,16 @@ div.Select {
   width: 100%;
 }
 
+div.Select > div.Select-control > span > div.Select-value, div.Select > div.Select-control > div > div.Select-value {
+  display: flex;
+  align-items: center;
+}
+
+div.Select > div.Select-control > span > div.Select-value > span, div.Select > div.Select-control > div > div.Select-value > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .is-open > div.Select-control {
   background-color: transparent;
   border: 2px solid #a1c3fa;
@@ -230,4 +240,20 @@ div.Select-input {
 
 .radio-grid-input:checked {
   background: url(./check_radio_sheet.png) -57px top no-repeat;
+}
+
+.ck.ck-editor__main {
+  height: calc(100% - 55px);
+}
+
+.ck.ck-reset.ck-editor.ck-rounded-corners {
+  height: 100%;
+}
+
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-blurred.ck-editor__editable_inline {
+  height: 100%;
+}
+
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-focused.ck-editor__editable_inline {
+  height: 100%;
 }
