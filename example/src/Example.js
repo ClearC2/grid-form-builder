@@ -270,11 +270,11 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 6, 'y': 5, 'h': 1, 'w': 6},
               'config': {
-                'name': 'typeaheadtest',
+                'name': 'companyname',
                 'label': 'Typeahead',
                 'required': true,
                 'type': 'typeahead',
-                'multi': true,
+                'allowcreate': true,
                 'typeahead': {
                   'key': 'c2_company',
                   'duplication': true,

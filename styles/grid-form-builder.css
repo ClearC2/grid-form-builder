@@ -34,6 +34,16 @@ div.Select {
   width: 100%;
 }
 
+div.Select > div.Select-control > span > div.Select-value {
+  display: flex;
+  align-items: center;
+}
+
+div.Select > div.Select-control > span > div.Select-value > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .is-open > div.Select-control {
   background-color: transparent;
   border: 2px solid #a1c3fa;
