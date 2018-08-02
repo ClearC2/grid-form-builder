@@ -124,7 +124,7 @@ export default class FormBuilder extends Component {
   convertFieldToSearch = (field = {}) => {
     if (!unconditionalFields.has(field.config.type ? field.config.type.toLowerCase() : 'input')) {
       if (!field.config.forceUnconditional && !field.config.forceunconditional) {
-        if (field.config.type === 'typeahead' && !field.config.typeahead.fieldId) {
+        if (field.config.type === 'typeahead' && field.config.typeahead && !field.config.typeahead.fieldId) {
           field.config.typeahead.fieldId = 'value'
           field.config.multi = true
         }
