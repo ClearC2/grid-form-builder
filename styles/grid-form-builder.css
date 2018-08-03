@@ -1,81 +1,81 @@
-.warn-required::placeholder {
+div.grid-form-builder-parent .warn-required::placeholder {
   color: red;
   opacity: 1;
 }
 
-.warn-required:-ms-input-placeholder {
+div.grid-form-builder-parent .warn-required:-ms-input-placeholder {
   color: red;
 }
 
-.warn-required::-ms-input-placeholder {
+div.grid-form-builder-parent .warn-required::-ms-input-placeholder {
   color: red;
 }
 
-div.warn-required > div > span > div.Select-placeholder {
+div.grid-form-builder-parent div.warn-required > div > span > div.Select-placeholder {
   color: red;
   opacity: 1;
 }
 
-div.warn-required > div > span > div.Select-placeholder {
+div.grid-form-builder-parent div.warn-required > div > span > div.Select-placeholder {
   color: red;
 }
 
-div.warn-required > div > span > div.Select-placeholder {
+div.grid-form-builder-parent div.warn-required > div > span > div.Select-placeholder {
   color: red;
 }
 
-select.select-grid-input {
+div.grid-form-builder-parent select.select-grid-input {
   border: 0;
   background-color: transparent;
   border-bottom: 1px solid #a0a0a0;
 }
 
-div.Select {
+div.grid-form-builder-parent div.Select {
   width: 100%;
 }
 
-div.Select > div.Select-control > span > div.Select-value, div.Select > div.Select-control > div > div.Select-value {
+div.grid-form-builder-parent div.Select > div.Select-control > span > div.Select-value, div.Select > div.Select-control > div > div.Select-value {
   display: flex;
   align-items: center;
 }
 
-div.Select > div.Select-control > span > div.Select-value > span, div.Select > div.Select-control > div > div.Select-value > span {
+div.grid-form-builder-parent div.Select > div.Select-control > span > div.Select-value > span, div.Select > div.Select-control > div > div.Select-value > span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.is-open > div.Select-control {
+div.grid-form-builder-parent .is-open > div.Select-control {
   background-color: transparent;
   border: 2px solid #a1c3fa;
   border-radius: 2px;
 }
 
-.is-open > div.Select-control > span.Select-arrow-zone {
+div.grid-form-builder-parent .is-open > div.Select-control > span.Select-arrow-zone {
   margin-right: -4px;
 }
 
-div.select-grid-input {
+div.grid-form-builder-parent div.select-grid-input {
   height: 25px;
 }
 
-div.select-grid-input > div.Select-menu-outer {
+div.grid-form-builder-parent div.select-grid-input > div.Select-menu-outer {
   margin-left: 0;
 }
 
-div.select-grid-input.select-grid-input-inline {
+div.grid-form-builder-parent div.select-grid-input.select-grid-input-inline {
   height: 24px;
 }
 
-div.select-grid-input.select-grid-input-inline > div.Select-menu-outer {
+div.grid-form-builder-parent div.select-grid-input.select-grid-input-inline > div.Select-menu-outer {
   margin-left: 0;
 }
 
-div.select-grid-input.select-grid-input-inline > div.Select-control {
+div.grid-form-builder-parent div.select-grid-input.select-grid-input-inline > div.Select-control {
   border: 0;
   border-bottom: 1px solid #a0a0a0;
 }
 
-div.Select-control > span.Select-multi-value-wrapper > div.Select-value > span.Select-value-icon {
+div.grid-form-builder-parent div.Select-control > span.Select-multi-value-wrapper > div.Select-value > span.Select-value-icon {
   padding: 0;
   display: flex;
   align-items: center;
@@ -85,7 +85,7 @@ div.Select-control > span.Select-multi-value-wrapper > div.Select-value > span.S
   margin-left: -5px;
 }
 
-div.Select-control > span.Select-multi-value-wrapper > div.Select-value {
+div.grid-form-builder-parent div.Select-control > span.Select-multi-value-wrapper > div.Select-value {
   margin: 0;
   margin-right: 5px;
   display: flex;
@@ -93,74 +93,74 @@ div.Select-control > span.Select-multi-value-wrapper > div.Select-value {
   padding-left: 5px;
 }
 
-div.Select-control > span.Select-multi-value-wrapper {
+div.grid-form-builder-parent div.Select-control > span.Select-multi-value-wrapper {
   display: flex;
   height: 23px;
 }
 
-div.Select-control > div.Select-value > span {
+div.grid-form-builder-parent div.Select-control > div.Select-value > span {
   color: black !important;
 }
 
-div.Select-control > div.Select-value > span > div.Select-Value {
+div.grid-form-builder-parent div.Select-control > div.Select-value > span > div.Select-Value {
   padding-left: 5px !important;
   display: flex;
   align-items: center;
 }
 
-div.Select-control {
+div.grid-form-builder-parent div.Select-control {
   border: 1px solid #a0a0a0;
   border-radius: 1px;
   background-color: transparent;
   height: 24px;
 }
 
-div.Select-menu-outer > div.Select-menu > div.Select-option {
+div.grid-form-builder-parent div.Select-menu-outer > div.Select-menu > div.Select-option {
   overflow-x: visible;
   white-space: nowrap;
 }
 
-div.Select-menu-outer{
+div.grid-form-builder-parent div.Select-menu-outer{
   min-width: 275px;
 }
 
-div.Select-placeholder, div.Select--single > div.Select-control div.Select-value {
+div.grid-form-builder-parent div.Select-placeholder, div.Select--single > div.Select-control div.Select-value {
   color: #757575;
 }
 
-div.warn-required > div.Select-control {
+div.grid-form-builder-parent div.warn-required > div.Select-control {
   border: 1px solid #ec1c24;
 }
 
-.select-grid-input.select-grid-input-inline > div.Select-control > span > div.Select-placeholder {
+div.grid-form-builder-parent .select-grid-input.select-grid-input-inline > div.Select-control > span > div.Select-placeholder {
   line-height: 27px;
 }
 
-.select-grid-input > div.Select-control > span > div.Select-placeholder {
+div.grid-form-builder-parent .select-grid-input > div.Select-control > span > div.Select-placeholder {
   line-height: 25px;
 }
 
-.select-grid-input.warn-required > div.Select-control.warn-required > span > div.Select-placeholder {
+div.grid-form-builder-parent .select-grid-input.warn-required > div.Select-control.warn-required > span > div.Select-placeholder {
   line-height: 25px;
   border: 1px solid #ec1c24;
 }
 
-div.Select-menu-outer {
+div.grid-form-builder-parent div.Select-menu-outer {
   border: 1px solid #a0a0a0;
   margin-left: -2px;
   margin-top: 1px;
 }
 
-div.Select-menu-outer > div.Select-menu {
+div.grid-form-builder-parent div.Select-menu-outer > div.Select-menu {
   border: 0;
 }
 
-div.Select-menu-outer > div.Select-menu > div.is-focused {
+div.grid-form-builder-parent div.Select-menu-outer > div.Select-menu > div.is-focused {
   background-color: #36a9e1;
   color: #f5f5f5;
 }
 
-div.Select-menu-outer > div.Select-menu > div {
+div.grid-form-builder-parent div.Select-menu-outer > div.Select-menu > div {
   height: 30px;
   background-color: #f5f5f5;
   border-bottom: 1px solid #a0a0a0;
@@ -168,17 +168,17 @@ div.Select-menu-outer > div.Select-menu > div {
   padding-top: 4px;
 }
 
-div.Select-input > input {
+div.grid-form-builder-parent div.Select-input > input {
   height: 24px;
   padding: 0;
 }
 
-div.Select-input {
+div.grid-form-builder-parent div.Select-input {
   height: 24px;
   padding-left: 5px;
 }
 
-.date-wrapper-grid-input {
+div.grid-form-builder-parent .date-wrapper-grid-input {
   height: 27px;
   display: flex;
   flex-direction: column;
@@ -186,7 +186,7 @@ div.Select-input {
   min-width: 177px;
 }
 
-.date-wrapper-grid-input > input {
+div.grid-form-builder-parent .date-wrapper-grid-input > input {
   height: 25px;
   display: flex;
   flex-direction: row;
@@ -199,25 +199,25 @@ div.Select-input {
   color: black;
 }
 
-.date-wrapper-grid-input.warn-required > input {
+div.grid-form-builder-parent .date-wrapper-grid-input.warn-required > input {
   border: 1px solid #ec1c24;
 }
 
-.date-wrapper-grid-input.date-wrapper-grid-input-inline > input {
+div.grid-form-builder-parent .date-wrapper-grid-input.date-wrapper-grid-input-inline > input {
   height: 27px;
   border: 0;
   border-bottom: 1px solid #a0a0a0;
 }
 
-.date-wrapper-grid-input.date-wrapper-grid-input-inline.warn-required > input {
+div.grid-form-builder-parent .date-wrapper-grid-input.date-wrapper-grid-input-inline.warn-required > input {
   border-bottom: 1px solid #ec1c24;
 }
 
-.date-wrapper-grid-input > .rdtPicker {
+div.grid-form-builder-parent .date-wrapper-grid-input > .rdtPicker {
   margin-top: 27px;
 }
 
-.checkbox-grid-input {
+div.grid-form-builder-parent .checkbox-grid-input {
   margin-top: 1px;
   width: 17px;
   height: 17px;
@@ -225,11 +225,11 @@ div.Select-input {
   cursor: pointer;
 }
 
-.checkbox-grid-input:checked {
+div.grid-form-builder-parent .checkbox-grid-input:checked {
   background: url(./check_radio_sheet.png) -19px top no-repeat;
 }
 
-.radio-grid-input {
+div.grid-form-builder-parent .radio-grid-input {
   display: flex;
   margin-top: 2px;
   width: 15px;
@@ -238,22 +238,22 @@ div.Select-input {
   cursor: pointer;
 }
 
-.radio-grid-input:checked {
+div.grid-form-builder-parent .radio-grid-input:checked {
   background: url(./check_radio_sheet.png) -57px top no-repeat;
 }
 
-.ck.ck-editor__main {
+div.grid-form-builder-parent .ck.ck-editor__main {
   height: calc(100% - 55px);
 }
 
-.ck.ck-reset.ck-editor.ck-rounded-corners {
+div.grid-form-builder-parent .ck.ck-reset.ck-editor.ck-rounded-corners {
   height: 100%;
 }
 
-.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-blurred.ck-editor__editable_inline {
+div.grid-form-builder-parent .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-blurred.ck-editor__editable_inline {
   height: 100%;
 }
 
-.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-focused.ck-editor__editable_inline {
+div.grid-form-builder-parent .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-focused.ck-editor__editable_inline {
   height: 100%;
 }
