@@ -496,11 +496,11 @@ export default class Conditionalinput extends Component {
           <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
             <span>&times;</span>
           </button>
-          <div style={{display: 'flex', flexDirection: 'column', flex: 1, width: '100%', height: '100%', marginBottom: '-80px'}} >
+          <div style={{width: '100%', height: '100%', marginBottom: '-80px'}} >
             <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.modalFormValues} handleOnChange={this.handleOnChange} draggable={false} />
           </div>
           <button type='button' className='btn-primary pull-right' style={{paddingRight: '10px', paddingTop: '5px', marginRight: '30px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
-            <span>Ok</span>
+            Ok
           </button>
         </Dialog>}
       </div>
