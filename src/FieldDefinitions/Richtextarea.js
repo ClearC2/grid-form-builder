@@ -6,7 +6,14 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 class Richtextarea extends Component {
   handleOnChange = (e, editor) => {
-    // console.log(e, editor)
+    const {handleOnChange, config = {}} = this.props
+    const {name = null} = config
+    handleOnChange({
+      target: {
+        name,
+        value: editor.getData()
+      }
+    })
   }
 
   componentDidUpdate = p => {
@@ -59,6 +66,7 @@ class Richtextarea extends Component {
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     let {readonly = false, disabled = false} = config
     disabled = disabled || readonly
+    const value = formValues.get(name, '')
 
     const styles = {
       container: {
@@ -124,6 +132,7 @@ class Richtextarea extends Component {
           <CKEditor
             editor={ClassicEditor}
             onChange={this.handleOnChange}
+            data={value}
           />
         </div>
       )
