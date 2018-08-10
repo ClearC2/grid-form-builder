@@ -242,7 +242,7 @@ export class Typeahead extends Component {
     } else {
       return (
         connectDropTarget(
-          <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
+          <div style={styles.container} onClick={this.handleAnywhereClick}>
             <div style={styles.labelContainer}>
               {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
               {Icon && <Icon style={styles.icon} />}
