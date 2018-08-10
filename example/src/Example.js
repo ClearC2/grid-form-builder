@@ -564,7 +564,7 @@ export default class Example extends Component {
   }
 
   handleOnClick = (config, e) => {
-    console.log(config, e)
+    console.log('clicked', config.name)
   }
 
   onSubmit = () => {
