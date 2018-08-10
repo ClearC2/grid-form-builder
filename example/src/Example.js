@@ -563,8 +563,8 @@ export default class Example extends Component {
     })
   }
 
-  handleOnClick = e => {
-    // console.log(e)
+  handleOnClick = (config, e) => {
+    console.log(config, e)
   }
 
   onSubmit = () => {

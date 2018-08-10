@@ -144,9 +144,9 @@ export default class FormBuilder extends Component {
     return field
   }
 
-  handleAnywhereClick = e => {
+  handleAnywhereClick = (config, e) => {
     const {onClick = () => null} = this.props
-    onClick(e)
+    onClick(config, e)
   }
 
   handleDragDropOnInput = ({source, target}) => {
@@ -249,7 +249,7 @@ export default class FormBuilder extends Component {
       }
     })
     return (
-      <div className="grid-form-builder-parent" style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
+      <div className='grid-form-builder-parent' style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
         <WidgetGrid compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={rowHeight || inline ? 27 : 45}>
           {normalFields}
           {dateFields}
