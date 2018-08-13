@@ -549,8 +549,8 @@ export default class Example extends Component {
                 'name': 'number',
                 'label': 'Number Input',
                 'required': {
-                  'lowerBound': 100,
-                  'upperBound': 0
+                  'lowerBound': 0,
+                  'upperBound': 100
                 }
               }
             }

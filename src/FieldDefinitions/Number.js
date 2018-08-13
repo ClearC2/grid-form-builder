@@ -41,15 +41,34 @@ class Input extends Component {
   }
 
   validate = (value, required) => {
-    const lowerBound = Object.hasOwnProperty('lowerBound') && required.lowerBound
-    const upperBound = Object.hasOwnProperty('upperBound') && required.upperBound
+    const lowerBound = required.hasOwnProperty('lowerBound') && required.lowerBound
+    const upperBound = required.hasOwnProperty('upperBound') && required.upperBound
 
-    if ()
+    if (lowerBound !== false && upperBound !== false) {
+      if (value >= lowerBound && value <= upperBound) {
+        return true
+      }
+    } else if (lowerBound !== false && value >= lowerBound) {
+      return true
+    } else if (upperBound !== false && value <= upperBound) {
+      return true
+    }
+
+    return false
   }
 
   getWarningMessage = required => {
     if (typeof required === 'object') {
-      console.log('hi!')
+      const lowerBound = required.hasOwnProperty('lowerBound') && required.lowerBound
+      const upperBound = required.hasOwnProperty('upperBound') && required.upperBound
+
+      if (lowerBound !== false && upperBound !== false) {
+        return `* Value must be between ${lowerBound} and ${upperBound}`
+      } else if (lowerBound !== false) {
+        return `* Value must be greater than or equal to ${lowerBound}`
+      } else if (upperBound !== false) {
+        return `* Value must be less than or equal to ${upperBound}`
+      }
     } else {
       return '* This Field Is Required'
     }
@@ -133,6 +152,7 @@ class Input extends Component {
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
             <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
+            {value !== '' && <span style={{fontWeight: 'normal', fontSize: '9pt', marginLeft: 3, marginTop: -1, color: warn ? '#ec1c24' : '#383e4b', marginRight: 5}}>{placeholder}</span>}
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <input
