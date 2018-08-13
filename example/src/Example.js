@@ -540,6 +540,19 @@ export default class Example extends Component {
                 'name': 'inputtest',
                 'label': 'Input'
               }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 16, 'h': 1, 'w': 6},
+              'config': {
+                'type': 'number',
+                'name': 'number',
+                'label': 'Number Input',
+                'required': {
+                  'lowerBound': 0,
+                  'upperBound': 100
+                }
+              }
             }
           ]
         },
