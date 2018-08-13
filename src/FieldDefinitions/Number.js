@@ -40,9 +40,9 @@ class Input extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
 
-  validate = (value, required) => {
-    const lowerBound = required.hasOwnProperty('lowerBound') && required.lowerBound
-    const upperBound = required.hasOwnProperty('upperBound') && required.upperBound
+  validate = (value, validation) => {
+    const lowerBound = validation.hasOwnProperty('lowerBound') && validation.lowerBound
+    const upperBound = validation.hasOwnProperty('upperBound') && validation.upperBound
 
     if (lowerBound !== false && upperBound !== false) {
       if (value >= lowerBound && value <= upperBound) {
@@ -57,18 +57,16 @@ class Input extends Component {
     return false
   }
 
-  getWarningMessage = required => {
-    if (typeof required === 'object') {
-      const lowerBound = required.hasOwnProperty('lowerBound') && required.lowerBound
-      const upperBound = required.hasOwnProperty('upperBound') && required.upperBound
+  getWarningMessage = validation => {
+    const lowerBound = validation.hasOwnProperty('lowerBound') && validation.lowerBound
+    const upperBound = validation.hasOwnProperty('upperBound') && validation.upperBound
 
-      if (lowerBound !== false && upperBound !== false) {
-        return `* Value must be between ${lowerBound} and ${upperBound}`
-      } else if (lowerBound !== false) {
-        return `* Value must be greater than or equal to ${lowerBound}`
-      } else if (upperBound !== false) {
-        return `* Value must be less than or equal to ${upperBound}`
-      }
+    if (lowerBound !== false && upperBound !== false) {
+      return `* Value must be between ${lowerBound} and ${upperBound}`
+    } else if (lowerBound !== false) {
+      return `* Value must be greater than or equal to ${lowerBound}`
+    } else if (upperBound !== false) {
+      return `* Value must be less than or equal to ${upperBound}`
     } else {
       return '* This Field Is Required'
     }
@@ -76,7 +74,7 @@ class Input extends Component {
 
   render = () => {
     const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {name = null, required = false, onKeyDown = () => null} = config
+    const {name = null, required = false, validation = {}, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -85,12 +83,13 @@ class Input extends Component {
     if (!name) return null
     const {label = name} = config
     const value = formValues.get(name, '')
-    const validValue = typeof required === 'object' ? this.validate(value, required) : true
-    const warn = requiredWarning && required && (!validValue || formValues.get(name, '').length === 0)
+    const validateValue = Object.keys(validation).length > 0
+    const validValue = validateValue ? this.validate(value, validation) : true
+    const warn = requiredWarning && (required || validateValue) && ((!validValue && value.length > 0) || (required && value.length === 0))
     let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
 
-    placeholder = warn ? this.getWarningMessage(required) : placeholder
+    placeholder = warn ? this.getWarningMessage(validation) : placeholder
     const className = warn ? 'warn-required' : ''
 
     const styles = {

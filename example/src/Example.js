@@ -548,7 +548,8 @@ export default class Example extends Component {
                 'type': 'number',
                 'name': 'number',
                 'label': 'Number Input',
-                'required': {
+                'required': true,
+                'validation': {
                   'lowerBound': 0,
                   'upperBound': 100
                 }
