@@ -540,6 +540,16 @@ export default class Example extends Component {
                 'name': 'inputtest',
                 'label': 'Input'
               }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 15, 'h': 1, 'w': 6},
+              'config': {
+                'type': 'emailinput',
+                'name': 'email',
+                'label': 'Email Input',
+                'required': true
+              }
             }
           ]
         },
@@ -574,6 +584,7 @@ export default class Example extends Component {
   handleOnDrop = ({source, target}) => console.log(source, target)
 
   render = () => {
+    console.log(this.state, 'statee')
     const {formSchema} = this.state
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is false
