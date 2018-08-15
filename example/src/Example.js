@@ -540,6 +540,16 @@ export default class Example extends Component {
                 'name': 'inputtest',
                 'label': 'Input'
               }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 15, 'h': 1, 'w': 6},
+              'config': {
+                'type': 'emailinput',
+                'name': 'email',
+                'label': 'Email Input',
+                'required': true
+              }
             }
           ]
         },
