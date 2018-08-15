@@ -584,7 +584,6 @@ export default class Example extends Component {
   handleOnDrop = ({source, target}) => console.log(source, target)
 
   render = () => {
-    console.log(this.state, 'statee')
     const {formSchema} = this.state
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is false
