@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
 import Input from './FieldDefinitions/Input'
+import Emailinput from './FieldDefinitions/EmailInput'
 import Textarea from './FieldDefinitions/Textarea'
 import Richtextarea from './FieldDefinitions/Richtextarea'
 import Datetime from './FieldDefinitions/Datetime'
@@ -49,7 +50,7 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
 }
 // v fields that cannot be transformed into conditional inputs v
 const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
-let FormComponents = { Input, Textarea, Richtextarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon }
+let FormComponents = { Emailinput, Input, Textarea, Richtextarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon }
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
   FormComponents = {...FormComponents, ...defs}
@@ -148,7 +149,6 @@ export default class FormBuilder extends Component {
     const {onClick = () => null} = this.props
     onClick(config, e)
   }
-
   handleDragDropOnInput = ({source, target}) => {
     const {handleOnDrop = () => null} = this.props
     handleOnDrop({source, target})
