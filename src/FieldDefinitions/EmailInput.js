@@ -185,7 +185,7 @@ class EmailInput extends Component {
             style={styles.input}
             type='text'
             name={name}
-            value={value}
+            value={this.emailValidation(value) ? value : ''}
             disabled={disabled}
             onKeyDown={onKeyDown}
           />
