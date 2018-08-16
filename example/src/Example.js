@@ -160,7 +160,20 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 4, 'h': 5, 'w': 6},
+              'dimensions': {'x': 6, 'y': 4, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'time',
+                'label': 'Time',
+                'type': 'time',
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
+                }
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 5, 'h': 5, 'w': 6},
               'config': {
                 'name': 'listselecttest',
                 'label': 'List Select',
