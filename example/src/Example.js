@@ -48,7 +48,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 3},
+              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
               'config': {
                 'name': 'currencyinput',
                 'label': 'Currency Input',

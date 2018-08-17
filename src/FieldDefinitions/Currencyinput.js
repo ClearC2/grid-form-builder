@@ -136,7 +136,7 @@ class Currencyinput extends Component {
       input: {
         display: 'flex',
         flexGrow: inline ? 1 : 0,
-        paddingLeft: 5,
+        paddingRight: 5,
         backgroundColor: disabled ? '#eee' : 'white',
         borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
@@ -144,6 +144,7 @@ class Currencyinput extends Component {
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         minWidth: 90,
         height: inline ? 'auto' : 25,
+        textAlign: 'right',
         ...style
       },
       icon: {
