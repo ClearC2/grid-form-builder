@@ -20,6 +20,7 @@ export class Date extends Component {
       }
     }
   }
+
   handleAnywhereClick = e => {
     const {handleAnywhereClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
@@ -27,7 +28,8 @@ export class Date extends Component {
     config = {currentValue, ...config}
     handleAnywhereClick(config, e)
   }
-  handleCascadeKeywordClick = e => {
+
+  handleCascadeKeywordClick = () => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
@@ -46,6 +48,7 @@ export class Date extends Component {
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
   }
+
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
