@@ -3,6 +3,18 @@ import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 
 class Currencyinput extends Component {
+  state = {
+    alignRight: false
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown' , this.onMouseDown)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.onMouseDown)
+  }
+
   componentDidUpdate = p => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
@@ -38,6 +50,12 @@ class Currencyinput extends Component {
 
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
+    if (this.node.contains(e.target)) {
+      this.setState({alignRight: false})
+      return
+    }
+
+    this.setState({alignRight: true})
   }
 
   removeLeadingZeros = number => number.replace(/^0+([0-9]+)/, '$1')
@@ -144,7 +162,7 @@ class Currencyinput extends Component {
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         minWidth: 90,
         height: inline ? 'auto' : 25,
-        textAlign: 'right',
+        textAlign: this.state.alignRight ? 'right' : 'left',
         ...style
       },
       icon: {
@@ -158,7 +176,7 @@ class Currencyinput extends Component {
 
     return (
       connectDropTarget(
-        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
+        <div style={styles.container} onMouseUp={this.handleAnywhereClick} ref={node => this.node = node}>
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
