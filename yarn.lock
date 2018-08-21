@@ -1508,9 +1508,9 @@ bytes@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
 
-c2-dialog@ClearC2/c2-dialog#no-import:
+c2-dialog@ClearC2/c2-dialog:
   version "1.0.9"
-  resolved "https://codeload.github.com/ClearC2/c2-dialog/tar.gz/8505aa562f6cc67d22f2bdb441231a9ecd101c7e"
+  resolved "https://codeload.github.com/ClearC2/c2-dialog/tar.gz/8b7dcb35c3d754e3ed9de21d73ca8827eee18597"
   dependencies:
     jquery "^3.2.1"
     prop-types "^15.0.0"
