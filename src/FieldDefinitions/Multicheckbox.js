@@ -69,7 +69,7 @@ export class Multicheckbox extends Component {
   }
 
   render = () => {
-    const {inline, config = {}, Icon = null, requiredWarning, formValues, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, config = {}, Icon = null, requiredWarning, formValues, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -154,7 +154,7 @@ export class Multicheckbox extends Component {
             {options.map((option, i) => {
               return (
                 <label key={i} style={styles.label}>
-                  <input className='radio-grid-input' onChange={() => this.handleOnChange(option.value)} style={styles.input} type='checkbox' name={name} value={option.value} checked={value.indexOf(option.value) > -1} disabled={disabled} onKeyDown={onKeyDown} />
+                  <input tabIndex={tabIndex} className='radio-grid-input' onChange={() => this.handleOnChange(option.value)} style={styles.input} type='checkbox' name={name} value={option.value} checked={value.indexOf(option.value) > -1} disabled={disabled} onKeyDown={onKeyDown} />
                   {option.label ? option.label : option.value}
                 </label>
               )

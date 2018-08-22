@@ -170,12 +170,25 @@ export default class FormBuilder extends Component {
     jsonschema = jsonschema || form || {}
     let {layout = []} = jsonschema
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
+    let specifiedTabs = Set()
+    layout.map(field => {
+      const {config = {}} = field
+      if (config.tabindex) specifiedTabs = specifiedTabs.add(config.tabindex)
+    })
+    let tabNumber = 1
     layout.map((field, i) => {
       if (this.props.conditionalSearch) {
         field = this.convertFieldToSearch(field)
       }
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
-      let {type = 'input', icon = '', cascade = {}} = config
+      let {type = 'input', icon = '', cascade = {}, tabindex: tabIndex} = config
+      if (!tabIndex) {
+        while (specifiedTabs.has(tabNumber)) {
+          tabNumber++
+        }
+        tabIndex = tabNumber
+        specifiedTabs = specifiedTabs.add(tabIndex)
+      }
       if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) config.readonly = true
       let {keyword = null, icon: cascadeIcon = ''} = cascade
       type = interactive ? this.uppercaseFirstLetter(type) : 'input'
@@ -203,6 +216,7 @@ export default class FormBuilder extends Component {
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
+            tabIndex={+tabIndex}
           />
         )
       } else if (Type === 'Customcomponent') {
@@ -224,6 +238,7 @@ export default class FormBuilder extends Component {
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
+            tabIndex={+tabIndex}
           />
         )
       } else {
@@ -244,6 +259,7 @@ export default class FormBuilder extends Component {
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
+            tabIndex={+tabIndex}
           />
         )
       }

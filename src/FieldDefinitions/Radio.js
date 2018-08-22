@@ -34,7 +34,7 @@ export class Radio extends Component {
     handleCascadeKeywordClick(config)
   }
   render = () => {
-    const {inline, config = {}, handleOnChange = () => {}, formValues = Map(), Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, config = {}, handleOnChange = () => {}, formValues = Map(), Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -117,7 +117,7 @@ export class Radio extends Component {
             {options.map((option, i) => {
               return (
                 <label key={i} style={styles.label}>
-                  <input className='radio-grid-input' onChange={handleOnChange} style={styles.input} type='radio' name={name} value={option.value} checked={option.value.toLowerCase() === formValues.get(name, '').toLowerCase()} disabled={disabled} onKeyDown={onKeyDown} />
+                  <input tabIndex={tabIndex} className='radio-grid-input' onChange={handleOnChange} style={styles.input} type='radio' name={name} value={option.value} checked={option.value.toLowerCase() === formValues.get(name, '').toLowerCase()} disabled={disabled} onKeyDown={onKeyDown} />
                   {option.label ? option.label : option.value}
                 </label>
               )
