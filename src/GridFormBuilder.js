@@ -225,6 +225,8 @@ export default class FormBuilder extends Component {
         tabIndex = tabNumber + myOffset
         specifiedTabs = specifiedTabs.add(tabNumber)
         tabNumber++
+      } else {
+        tabIndex = tabIndex + myOffset
       }
       if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) config.readonly = true
       let {keyword = null, icon: cascadeIcon = ''} = cascade
