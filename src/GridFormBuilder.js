@@ -72,8 +72,11 @@ export default class FormBuilder extends Component {
     inline: false
   }
 
+  static tabOffset = 0
+
   state = {
-    requiredWarning: false
+    requiredWarning: false,
+    myOffset: FormBuilder.tabOffset
   }
 
   onSubmit = () => {
@@ -159,9 +162,42 @@ export default class FormBuilder extends Component {
     handleCascade(e)
   }
 
+  componentDidMount = () => {
+    let {formSchema = Map()} = this.props
+    formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
+    let {form, jsonschema} = formSchema
+    jsonschema = jsonschema || form || {}
+    let {layout = []} = jsonschema
+    this.updateStaticOffset(layout) // if we have a form on initial render, update static offset so next form will start correctly
+  }
+
+  componentDidUpdate = p => {
+    let {formSchema = Map()} = this.props
+    let {formSchema: pformSchema = Map()} = p
+    formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
+    pformSchema = (typeof pformSchema.toJS === 'function') ? pformSchema.toJS() : pformSchema
+    let {form, jsonschema} = formSchema
+    let {form: pform, jsonschema: pjsonschema} = pformSchema
+    jsonschema = jsonschema || form || {}
+    pjsonschema = pjsonschema || pform || {}
+    let {layout = []} = jsonschema
+    let {layout: playout = []} = pjsonschema
+    if (layout.length !== playout.length) {
+      this.updateMyOffset(layout)// if form was hot swapped or async loaded, just flat out treat it like a brand new form with a whole new offset
+    }
+  }
+
+  updateMyOffset = layout => {
+    this.setState({myOffset: FormBuilder.tabOffset + layout.length}, this.updateStaticOffset(layout))
+  }
+
+  updateStaticOffset = layout => {
+    FormBuilder.tabOffset = FormBuilder.tabOffset + layout.length
+  }
+
   render = () => {
     let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true} = this.props
-    const {requiredWarning} = this.state
+    const {requiredWarning, myOffset} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
     const dateFields = []
@@ -186,8 +222,8 @@ export default class FormBuilder extends Component {
         while (specifiedTabs.has(tabNumber)) {
           tabNumber++
         }
-        tabIndex = tabNumber
-        specifiedTabs = specifiedTabs.add(tabIndex)
+        tabIndex = tabNumber + myOffset
+        specifiedTabs = specifiedTabs.add(tabNumber)
         tabNumber++
       }
       if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) config.readonly = true
