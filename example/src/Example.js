@@ -8,6 +8,7 @@ const TEST_SEARCH = false // for conditional search forms
 
 export default class Example extends Component {
   state = {
+    loop: [],
     formValues: Map({
       inputtest: 'Clear C2, Inc.',
       textareatest: '1234 Main Street'
@@ -23,522 +24,38 @@ export default class Example extends Component {
           'layout': [
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 0, 'h': 10, 'w': 6},
+              'dimensions': {'x': 0, 'y': 0, 'h': 1, 'w': 12},
               'config': {
-                'name': 'testerinput',
-                'label': 'Input',
-                'type': 'richtextarea',
-                'icon': 'facebook',
-                'iconStyle': {'color': 'blue'},
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
+                'name': 'input 11'
               }
             },
             {
               'type': 'field',
-              'dimensions': {'x': 6, 'y': 0, 'h': 1, 'w': 3},
+              'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 12},
               'config': {
-                'name': 'unique-test-input',
-                'label': 'Test Input',
-                'type': 'input',
-                'disabled': true
+                'name': 'input 12'
               }
             },
             {
               'type': 'field',
-              'dimensions': {'x': 9, 'y': 0, 'h': 1, 'w': 3},
+              'dimensions': {'x': 0, 'y': 2, 'h': 1, 'w': 12},
               'config': {
-                'name': 'inputtest',
-                'label': 'Input',
-                'type': 'input'
+                'tabindex': 4,
+                'name': 'input 13'
               }
             },
             {
               'type': 'field',
-              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 3, 'h': 1, 'w': 12},
               'config': {
-                'name': 'phonetest',
-                'label': 'Phone',
-                'type': 'phone',
-                'delimiter': '-',
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
+                'name': 'input 14'
               }
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 4, 'h': 1, 'w': 12},
               'config': {
-                'name': 'c_registerddate',
-                'label': 'Registered',
-                'type': 'conditionalInput',
-                'inputType': 'input'
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'multiselecttest',
-                'label': 'Multiselect',
-                'required': true,
-                'type': 'multiselect',
-                'keyword': {
-                  'category': 'TASKS',
-                  'options': [
-                    {
-                      'label': 'Contract Signing',
-                      'value': 'Contract Signing'
-                    },
-                    {
-                      'label': 'Customer Service',
-                      'value': 'Customer Service'
-                    },
-                    {
-                      'label': 'Demonstration',
-                      'value': 'Demonstration'
-                    },
-                    {
-                      'label': 'Executive Meeting',
-                      'value': 'Executive Meeting'
-                    },
-                    {
-                      'label': 'Initial Meeting',
-                      'value': 'Initial Meeting'
-                    }
-                  ]
-                },
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 0, 'y': 2, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'checkboxtest',
-                'label': 'Checkbox',
-                'type': 'checkbox',
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 0, 'y': 3, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'datetest',
-                'label': 'Date',
-                'type': 'date',
-                'disabled': true,
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 3, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'datetimetest',
-                'label': 'Date Time',
-                'type': 'datetime',
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 0, 'y': 4, 'h': 5, 'w': 6},
-              'config': {
-                'name': 'listselecttest',
-                'label': 'List Select',
-                'type': 'listselect',
-                'required': true,
-                'keyword': {
-                  'category': 'TASKS',
-                  'options': [
-                    {
-                      'label': 'Contract Signing',
-                      'value': 'Contract Signing'
-                    },
-                    {
-                      'label': 'Customer Service',
-                      'value': 'Customer Service'
-                    },
-                    {
-                      'label': 'Demonstration',
-                      'value': 'Demonstration'
-                    },
-                    {
-                      'label': 'Executive Meeting',
-                      'value': 'Executive Meeting'
-                    },
-                    {
-                      'label': 'Initial Meeting',
-                      'value': 'Initial Meeting'
-                    },
-                    {
-                      'label': 'Kick Off Meeting',
-                      'value': 'Kick Off Meeting'
-                    },
-                    {
-                      'label': 'Internet Hub',
-                      'value': 'Internet Hub'
-                    }
-                  ]
-                },
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 0, 'y': 10, 'h': 4, 'w': 6},
-              'config': {
-                'name': 'multicheckboxtest',
-                'label': 'Multi-Checkbox',
-                'type': 'multicheckbox',
-                'required': true,
-                'keyword': {
-                  'category': 'TASKS',
-                  'options': [
-                    {
-                      'label': 'Contract Signing',
-                      'value': 1
-                    },
-                    {
-                      'label': 'Customer Service',
-                      'value': 2
-                    },
-                    {
-                      'label': 'Demonstration',
-                      'value': 3
-                    },
-                    {
-                      'label': 'Executive Meeting',
-                      'value': 'N/A'
-                    },
-                    {
-                      'label': 'Initial Meeting',
-                      'value': 'Exception'
-                    }
-                  ]
-                },
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 0, 'y': 2, 'h': 2, 'w': 6},
-              'config': {
-                'name': 'Detail/Summary',
-                'label': 'Detail/Summary',
-                'type': 'radio',
-                'boxed': true,
-                'required': true,
-                'keyword': {
-                  'options': [
-                    {'label': 'Detail Only', 'value': 'Detail Only'},
-                    {'label': 'Summary Only', 'value': 'Summary Only'},
-                    {'label': 'Both', 'value': 'Both'}
-                  ]
-                },
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 5, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'companyname',
-                'label': 'Typeahead',
-                'required': true,
-                'type': 'typeahead',
-                'allowcreate': true,
-                'typeahead': {
-                  'key': 'c2_company',
-                  'duplication': true,
-                  'fields': [
-                    'inputtest',
-                    'textareatest'
-                  ],
-                  'fieldId': 'value',
-                  'filter': {
-                    'type': 'and',
-                    'conditions': [
-                      {
-                        'type': 'or',
-                        'conditions': [
-                          {
-                            'type': 'and',
-                            'conditions': [
-                              {
-                                'name': 'inputtest',
-                                'comparator': 'is equal to',
-                                'values': []
-                              },
-                              {
-                                'name': 'inputtest',
-                                'comparator': 'is equal to',
-                                'values': []
-                              }
-                            ]
-                          },
-                          {
-                            'type': 'and',
-                            'conditions': [
-                              {
-                                'name': 'inputtest',
-                                'comparator': 'contains',
-                                'values': []
-                              },
-                              {
-                                'name': 'inputtest',
-                                'comparator': 'is not equal to',
-                                'values': []
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        'name': 'inputtest',
-                        'comparator': 'is equal to',
-                        'values': [1]
-                      }
-                    ]
-                  }
-                },
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 6, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'typeaheadtest2',
-                'label': 'Typeahead2',
-                'required': true,
-                'type': 'typeahead',
-                'multi': true,
-                'typeahead': {
-                  'key': 'c2_company',
-                  'duplication': true,
-                  'fields': [
-                    'inputtest',
-                    'textareatest'
-                  ],
-                  'fieldId': 'value'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 10, 'h': 4, 'w': 6},
-              'config': {
-                'name': 'radiotest',
-                'label': 'Radio',
-                'type': 'radio',
-                'required': true,
-                'keyword': {
-                  'category': 'TASKS',
-                  'options': [
-                    {
-                      'label': 'Contract Signing',
-                      'value': 'Contract Signing'
-                    },
-                    {
-                      'label': 'Customer Service',
-                      'value': 'Customer Service'
-                    },
-                    {
-                      'label': 'Demonstration',
-                      'value': 'Demonstration'
-                    },
-                    {
-                      'label': 'Executive Meeting',
-                      'value': 'Executive Meeting'
-                    },
-                    {
-                      'label': 'Initial Meeting',
-                      'value': 'Initial Meeting'
-                    }
-                  ]
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 0, 'y': 15, 'h': 2, 'w': 6},
-              'config': {
-                'name': 'textareatest',
-                'label': 'Textarea',
-                'required': true,
-                'type': 'textarea',
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 15, 'h': 4, 'w': 6},
-              'config': {
-                'name': 'textareatest',
-                'label': 'Textarea',
-                'readonly': true,
-                'type': 'textarea'
-              }
-            },
-            {
-              'type': 'header',
-              'dimensions': {'x': 6, 'y': 2, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'headertest',
-                'label': 'Example Header',
-                'type': 'header',
-                'style': {
-                  'color': 'grey'
-                },
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 2, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'selecttest',
-                'label': 'Select',
-                'type': 'select',
-                'required': true,
-                'keyword': {
-                  'category': 'TASKS',
-                  'options': [
-                    {
-                      'label': 'Contract Signing',
-                      'value': 'Contract Signing'
-                    },
-                    {
-                      'label': 'Customer Service',
-                      'value': 'Customer Service'
-                    },
-                    {
-                      'label': 'Demonstration',
-                      'value': 'Demonstration'
-                    },
-                    {
-                      'label': 'Executive Meeting',
-                      'value': 'Executive Meeting'
-                    },
-                    {
-                      'label': 'Initial Meeting',
-                      'value': 'Initial Meeting'
-                    },
-                    {
-                      'label': 'Kick Off Meeting',
-                      'value': 'Kick Off Meeting'
-                    },
-                    {
-                      'label': 'Internet Hub',
-                      'value': 'Internet Hub'
-                    }
-                  ]
-                },
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'inputtest',
-                'label': 'Input'
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 6, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'inputtest',
-                'label': 'Input'
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 7, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'inputtest',
-                'label': 'Input'
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 8, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'inputtest',
-                'label': 'Input'
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 9, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'inputtest',
-                'label': 'Input'
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 0, 'y': 9, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'inputtest',
-                'label': 'Input'
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 6, 'y': 14, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'inputtest',
-                'label': 'Input'
-              }
-            },
-            {
-              'type': 'field',
-              'dimensions': {'x': 0, 'y': 14, 'h': 1, 'w': 6},
-              'config': {
-                'name': 'inputtest',
-                'label': 'Input'
+                'name': 'input 15'
               }
             }
           ]
@@ -630,6 +147,80 @@ export default class Example extends Component {
             handleOnDrop={this.handleOnDrop}
             draggable={this.state.draggable}
           />
+          <FormBuilder
+            ref={ref => { this.exampleForm = ref }}
+            formName='form 2'
+            formSchema={{
+              'name': 'Company 2',
+              'description': 'Show company data on the screen.',
+              'jsonschema': {
+                'layout': [
+                  {
+                    'type': 'field',
+                    'dimensions': {'x': 0, 'y': 0, 'h': 1, 'w': 12},
+                    'config': {
+                      'name': 'input 21'
+                    }
+                  },
+                  {
+                    'type': 'field',
+                    'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 12},
+                    'config': {
+                      'name': 'input 22'
+                    }
+                  },
+                  {
+                    'type': 'field',
+                    'dimensions': {'x': 0, 'y': 2, 'h': 1, 'w': 12},
+                    'config': {
+                      'name': 'input 23'
+                    }
+                  },
+                  {
+                    'type': 'field',
+                    'dimensions': {'x': 0, 'y': 3, 'h': 1, 'w': 12},
+                    'config': {
+                      'name': 'input 24'
+                    }
+                  },
+                  {
+                    'type': 'field',
+                    'dimensions': {'x': 0, 'y': 4, 'h': 1, 'w': 12},
+                    'config': {
+                      'name': 'input 25'
+                    }
+                  }
+                ]
+              },
+              'id': 'FDC58F0F0B2099E61BE23AB6110572E1',
+              'lastUpdateDate': '2018-02-05 08:04:14',
+              'lastUpdateBy': 'kevin bull',
+              'createdDate': '2018-02-05 08:04:14',
+              'createdBy': 'kevin bull'
+            }}
+            formValues={this.state.formValues}
+            handleOnChange={this.handleOnChange}
+            onClick={this.handleOnClick}
+            inline={this.state.inline}
+            conditionalSearch={TEST_SEARCH}
+            handleOnDrop={this.handleOnDrop}
+            draggable={this.state.draggable}
+          />
+          {this.state.loop.map((n, i) => (
+            <FormBuilder
+              ref={ref => { this.exampleForm = ref }}
+              key={i}
+              formName={formSchema.form.name}
+              formSchema={formSchema.form}
+              formValues={this.state.formValues}
+              handleOnChange={this.handleOnChange}
+              onClick={this.handleOnClick}
+              inline={this.state.inline}
+              conditionalSearch={TEST_SEARCH}
+              handleOnDrop={this.handleOnDrop}
+              draggable={this.state.draggable}
+            />
+          ))}
         </div>
       )
     }
