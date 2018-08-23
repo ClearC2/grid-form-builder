@@ -18,6 +18,7 @@ import Conditionalinput from './FieldDefinitions/Conditionalinput'
 import Multiselect from './FieldDefinitions/Multiselect'
 import Phone from './FieldDefinitions/Phone'
 import Icon from './FieldDefinitions/Icon'
+import {timeStamp} from './utils'
 
 let IconLibrary = {}
 export function initComponentIconLibrary (defs = {}) {
@@ -77,6 +78,7 @@ export default class FormBuilder extends Component {
   constructor (props) {
     super(props)
     FormBuilder.count++
+    console.log(timeStamp())
     this.state = {
       requiredWarning: false
     }
