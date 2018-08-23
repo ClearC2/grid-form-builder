@@ -78,6 +78,7 @@ export default class FormBuilder extends Component {
   constructor (props) {
     super(props)
     FormBuilder.count++
+    console.log('constructor', props.formName, props.formSchema)
     this.state = {
       requiredWarning: false,
       timestamp: timeStamp()
