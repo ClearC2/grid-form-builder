@@ -77,7 +77,6 @@ export default class FormBuilder extends Component {
   constructor (props) {
     super(props)
     FormBuilder.count++
-    console.log('constructor', props.formName)
     this.state = {
       requiredWarning: false,
       myOffset: FormBuilder.count
@@ -168,7 +167,6 @@ export default class FormBuilder extends Component {
   }
 
   render = () => {
-    console.log(this.props.formName, this.state.myOffset, FormBuilder.count)
     let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true} = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
