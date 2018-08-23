@@ -18,7 +18,6 @@ import Conditionalinput from './FieldDefinitions/Conditionalinput'
 import Multiselect from './FieldDefinitions/Multiselect'
 import Phone from './FieldDefinitions/Phone'
 import Icon from './FieldDefinitions/Icon'
-import {timeStamp} from './utils'
 
 let IconLibrary = {}
 export function initComponentIconLibrary (defs = {}) {
@@ -78,10 +77,10 @@ export default class FormBuilder extends Component {
   constructor (props) {
     super(props)
     FormBuilder.count++
-    console.log('constructor', props.formName, props.formSchema)
+    console.log('constructor', props.formName)
     this.state = {
       requiredWarning: false,
-      timestamp: timeStamp()
+      myOffset: FormBuilder.count
     }
   }
 
@@ -169,7 +168,7 @@ export default class FormBuilder extends Component {
   }
 
   render = () => {
-    console.log(this.props.formName, this.state.timestamp, FormBuilder.count, this.props.formSchema)
+    console.log(this.props.formName, this.state.myOffset, FormBuilder.count)
     let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true} = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
@@ -196,11 +195,11 @@ export default class FormBuilder extends Component {
         while (specifiedTabs.has(tabNumber)) {
           tabNumber++
         }
-        tabIndex = FormBuilder.count + '' + tabNumber
+        tabIndex = this.state.myOffset + '' + tabNumber
         specifiedTabs = specifiedTabs.add(tabNumber)
         tabNumber++
       } else {
-        tabIndex = FormBuilder.count + '' + tabNumber
+        tabIndex = this.state.myOffset + '' + tabNumber
       }
       if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) config.readonly = true
       let {keyword = null, icon: cascadeIcon = ''} = cascade
