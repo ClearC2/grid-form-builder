@@ -85,7 +85,7 @@ export class Checkbox extends Component {
   falsey = [false, 0, '0', 'f', 'F', 'false', 'False', 'FALSE', 'n', 'N', 'No', 'NO', 'no', 'off', 'Off', 'OFF', '']
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, rowHeight, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, rowHeight, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, iconStyle = {}, required = false, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -148,7 +148,7 @@ export class Checkbox extends Component {
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <label style={styles.label} onMouseUp={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>
             {Icon && <Icon style={styles.icon} />}
-            <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} disabled={disabled} onKeyDown={onKeyDown} />
+            <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} disabled={disabled} onKeyDown={onKeyDown} tabIndex={tabIndex} />
             {label}
             <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>
               {required && '*'}
