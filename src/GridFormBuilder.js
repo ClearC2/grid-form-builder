@@ -3,11 +3,13 @@ import PropTypes from 'prop-types'
 import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
 import Input from './FieldDefinitions/Input'
+import Emailinput from './FieldDefinitions/Emailinput'
 import Currency from './FieldDefinitions/Currency'
 import Textarea from './FieldDefinitions/Textarea'
 import Richtextarea from './FieldDefinitions/Richtextarea'
 import Datetime from './FieldDefinitions/Datetime'
 import Date from './FieldDefinitions/Date'
+import Time from './FieldDefinitions/Time'
 import Select from './FieldDefinitions/Select'
 import Radio from './FieldDefinitions/Radio'
 import Checkbox from './FieldDefinitions/Checkbox'
@@ -50,7 +52,7 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
 }
 // v fields that cannot be transformed into conditional inputs v
 const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
-let FormComponents = { Input, Currency, Textarea, Richtextarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon }
+let FormComponents = { Input, Emailinput, Currency, Textarea, Richtextarea, Datetime, Time, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon }
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
   FormComponents = {...FormComponents, ...defs}
@@ -156,7 +158,7 @@ export default class FormBuilder extends Component {
     const {onClick = () => null} = this.props
     onClick(config, e)
   }
-
+  
   handleDragDropOnInput = ({source, target}) => {
     const {handleOnDrop = () => null} = this.props
     handleOnDrop({source, target})
@@ -209,7 +211,7 @@ export default class FormBuilder extends Component {
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
       icon = IconLibrary[icon] ? IconLibrary[icon] : null
       cascadeIcon = IconLibrary[cascadeIcon] ? IconLibrary[cascadeIcon] : null
-      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0) {
+      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0 || type.indexOf('Time') >= 0) {
         dateFields.unshift(
           <Component
             requiredWarning={requiredWarning}
