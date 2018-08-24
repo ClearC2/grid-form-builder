@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 
-class Currencyinput extends Component {
+class Currency extends Component {
   state = {
     alignRight: false
   }
@@ -219,4 +219,4 @@ const boxTarget = {
   }
 }
 
-export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Currencyinput)
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Currency)

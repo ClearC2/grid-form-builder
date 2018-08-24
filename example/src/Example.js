@@ -52,7 +52,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'currencyinput',
                 'label': 'Currency Input',
-                'type': 'currencyinput'
+                'type': 'currency'
               }
             },
             {
