@@ -567,7 +567,7 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 0, 'y': 15, 'h': 1, 'w': 6},
               'config': {
-                'type': 'emailinput',
+                'type': 'email',
                 'name': 'email',
                 'label': 'Email Input',
                 'required': true

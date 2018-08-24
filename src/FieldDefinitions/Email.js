@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 
-class Emailinput extends Component {
+class Email extends Component {
   componentDidUpdate = p => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
@@ -214,4 +214,4 @@ const boxTarget = {
   }
 }
 
-export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Emailinput)
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Email)
