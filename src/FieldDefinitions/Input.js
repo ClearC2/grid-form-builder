@@ -41,7 +41,7 @@ class Input extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -130,6 +130,7 @@ class Input extends Component {
             value={value}
             disabled={disabled}
             onKeyDown={onKeyDown}
+            tabIndex={tabIndex}
           />
         </div>
       )

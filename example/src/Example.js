@@ -48,6 +48,15 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
+              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
+              'config': {
+                'name': 'currencyinput',
+                'label': 'Currency Input',
+                'type': 'currency'
+              }
+            },
+            {
+              'type': 'field',
               'dimensions': {'x': 9, 'y': 0, 'h': 1, 'w': 3},
               'config': {
                 'name': 'inputtest',
@@ -576,8 +585,8 @@ export default class Example extends Component {
     })
   }
 
-  handleOnClick = (config, e) => {
-    console.log('clicked', config.name)
+  handleOnClick = e => {
+    // console.log(e)
   }
 
   onSubmit = () => {

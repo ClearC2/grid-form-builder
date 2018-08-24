@@ -37,7 +37,7 @@ export class Textarea extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, rows = 4, required = false, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -128,6 +128,7 @@ export class Textarea extends Component {
             disabled={disabled}
             onKeyDown={onKeyDown}
             placeholder={placeholder}
+            tabIndex={tabIndex}
           />
         </div>
       )

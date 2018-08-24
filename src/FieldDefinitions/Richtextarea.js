@@ -8,12 +8,15 @@ class Richtextarea extends Component {
   handleOnChange = (e, editor) => {
     const {handleOnChange, config = {}} = this.props
     const {name = null} = config
-    handleOnChange({
-      target: {
-        name,
-        value: editor.getData()
-      }
-    })
+    const value = editor.getData()
+    if (value !== '<p>&nbsp;</p>') { // when this component renders with no data it sends up this html string as an on change, just ignore it - JRA 08/21/2018
+      handleOnChange({
+        target: {
+          name,
+          value
+        }
+      })
+    }
   }
 
   componentDidUpdate = p => {
@@ -54,7 +57,7 @@ class Richtextarea extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -66,7 +69,7 @@ class Richtextarea extends Component {
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     let {readonly = false, disabled = false} = config
     disabled = disabled || readonly
-    const value = formValues.get(name, '')
+    const value = formValues.get(name, '<p>&nbsp;</p>')
 
     const styles = {
       container: {
@@ -133,6 +136,7 @@ class Richtextarea extends Component {
             editor={ClassicEditor}
             onChange={this.handleOnChange}
             data={value}
+            tabIndex={tabIndex}
           />
         </div>
       )

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
 import Input from './FieldDefinitions/Input'
+import Currency from './FieldDefinitions/Currency'
 import Textarea from './FieldDefinitions/Textarea'
 import Richtextarea from './FieldDefinitions/Richtextarea'
 import Datetime from './FieldDefinitions/Datetime'
@@ -50,7 +51,7 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
 }
 // v fields that cannot be transformed into conditional inputs v
 const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
-let FormComponents = { Input, Textarea, Richtextarea, Datetime, Date, Time, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon }
+let FormComponents = { Input, Currency, Textarea, Richtextarea, Datetime, Date, Time, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon }
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
   FormComponents = {...FormComponents, ...defs}
@@ -73,8 +74,15 @@ export default class FormBuilder extends Component {
     inline: false
   }
 
-  state = {
-    requiredWarning: false
+  static count = 0
+
+  constructor (props) {
+    super(props)
+    FormBuilder.count++
+    this.state = {
+      requiredWarning: false,
+      myOffset: FormBuilder.count
+    }
   }
 
   onSubmit = () => {
@@ -171,12 +179,28 @@ export default class FormBuilder extends Component {
     jsonschema = jsonschema || form || {}
     let {layout = []} = jsonschema
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
+    let specifiedTabs = Set()
+    layout.map(field => {
+      const {config = {}} = field
+      if (config.tabindex) specifiedTabs = specifiedTabs.add(config.tabindex)
+    })
+    let tabNumber = 1
     layout.map((field, i) => {
       if (this.props.conditionalSearch) {
         field = this.convertFieldToSearch(field)
       }
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
-      let {type = 'input', icon = '', cascade = {}} = config
+      let {type = 'input', icon = '', cascade = {}, tabindex: tabIndex} = config
+      if (!tabIndex) {
+        while (specifiedTabs.has(tabNumber)) {
+          tabNumber++
+        }
+        tabIndex = this.state.myOffset + '' + tabNumber
+        specifiedTabs = specifiedTabs.add(tabNumber)
+        tabNumber++
+      } else {
+        tabIndex = this.state.myOffset + '' + tabIndex
+      }
       if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) config.readonly = true
       let {keyword = null, icon: cascadeIcon = ''} = cascade
       type = interactive ? this.uppercaseFirstLetter(type) : 'input'
@@ -204,6 +228,7 @@ export default class FormBuilder extends Component {
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
+            tabIndex={+tabIndex}
           />
         )
       } else if (Type === 'Customcomponent') {
@@ -225,6 +250,7 @@ export default class FormBuilder extends Component {
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
+            tabIndex={+tabIndex}
           />
         )
       } else {
@@ -245,6 +271,7 @@ export default class FormBuilder extends Component {
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
+            tabIndex={+tabIndex}
           />
         )
       }

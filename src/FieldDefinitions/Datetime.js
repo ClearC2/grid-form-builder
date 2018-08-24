@@ -45,7 +45,7 @@ export class Datetime extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -122,7 +122,8 @@ export class Datetime extends Component {
               disabled: disabled,
               placeholder: placeholder,
               className: inputClass,
-              style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style}
+              style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style},
+              tabIndex
             }}
             onKeyDown={onKeyDown}
           />
