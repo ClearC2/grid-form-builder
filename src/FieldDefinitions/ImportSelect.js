@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
+import {Creatable} from 'react-select'
 import {DropTarget} from 'react-dnd'
 
-class Input extends Component {
+export class ImportSelect extends Component {
   componentDidUpdate = p => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
@@ -19,7 +20,6 @@ class Input extends Component {
       }
     }
   }
-
   handleAnywhereClick = e => {
     const {handleAnywhereClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
@@ -27,7 +27,6 @@ class Input extends Component {
     config = {currentValue, ...config}
     handleAnywhereClick(config, e)
   }
-
   handleCascadeKeywordClick = e => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
@@ -36,27 +35,35 @@ class Input extends Component {
     handleCascadeKeywordClick(config)
   }
 
-  onMouseDown = e => {
-    if (this.props.draggable) e.stopPropagation()
+  handleChange = data => {
+    const {config = {}} = this.props
+    const {value} = data
+    const target = {
+      name: config.name,
+      label: config.label,
+      value
+    }
+
+    this.props.handleOnChange({target})
   }
 
+  renderValue = option => {
+    return (
+      <span style={{color: 'green'}}>{option.label}</span>
+    )
+  }
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex, interactive} = this.props
-    const {name = null, required = false, onKeyDown = () => null} = config
+    const {inline, formValues = Map(), config = {}, Icon = null, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {name = null, required = false} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
-    const {label = name} = config
-    const value = formValues.get(name, '')
-    const warn = requiredWarning && formValues.get(name, '').length === 0 && required
-    let {readonly = false, disabled = false, placeholder = ''} = config
-    disabled = disabled || readonly
-
-    placeholder = warn ? '* This Field Is Required' : placeholder
-    const className = warn ? 'warn-required' : ''
+    const {label = name, keyword = {}} = config
+    const {options = []} = keyword
+    const value = {label: formValues.get(name), value: name}
 
     const styles = {
       container: {
@@ -83,30 +90,21 @@ class Input extends Component {
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         fontSize: inline ? '10pt' : '8pt',
-        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         background: 'transparent',
         marginRight: 5,
+        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         ...labelStyle
       },
       input: {
-        display: 'flex',
-        flexGrow: inline ? 1 : 0,
-        paddingLeft: 5,
-        backgroundColor: disabled ? '#eee' : 'white',
-        borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        minWidth: 90,
         height: inline ? 'auto' : 25,
-        color: !interactive ? 'green' : 'black',
+        minWidth: 170,
         ...style
       },
       icon: {
         marginRight: 5,
         width: 15,
         height: 15,
-        marginTop: inline ? 4 : -1,
+        marginTop: inline ? 3 : -1,
         ...iconStyle
       }
     }
@@ -120,18 +118,13 @@ class Input extends Component {
             <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
-          <input
-            className={className}
-            placeholder={placeholder}
-            onMouseDown={this.onMouseDown}
-            onChange={handleOnChange}
+          <Creatable
             style={styles.input}
-            type='text'
-            name={name}
+            options={options}
+            onChange={this.handleChange}
             value={value}
-            disabled={disabled}
-            onKeyDown={onKeyDown}
-            tabIndex={tabIndex}
+            clearable={false}
+            valueRenderer={this.renderValue}
           />
         </div>
       )
@@ -156,4 +149,4 @@ const boxTarget = {
   }
 }
 
-export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Input)
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(ImportSelect)
