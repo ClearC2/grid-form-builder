@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
 import Input from './FieldDefinitions/Input'
+import Number from './FieldDefinitions/Number'
 import Email from './FieldDefinitions/Email'
 import Currency from './FieldDefinitions/Currency'
 import Textarea from './FieldDefinitions/Textarea'
@@ -53,7 +54,7 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
 }
 // v fields that cannot be transformed into conditional inputs v
 const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
-let FormComponents = { Input, Email, Currency, Textarea, Richtextarea, Datetime, Time, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon, ImportSelect }
+let FormComponents = { Input, Email, Currency, Textarea, Richtextarea, Datetime, Time, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon, Number, ImportSelect }
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
   FormComponents = {...FormComponents, ...defs}
