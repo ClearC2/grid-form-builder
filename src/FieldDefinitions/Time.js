@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
+import DateTime from 'react-datetime'
 import {Map} from 'immutable'
-import Cleave from 'cleave.js/react'
-import 'cleave.js/dist/addons/cleave-phone.us'
 import {DropTarget} from 'react-dnd'
 
-export class Phone extends Component {
+export class Date extends Component {
   componentDidUpdate = p => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
@@ -30,7 +29,7 @@ export class Phone extends Component {
     handleAnywhereClick(config, e)
   }
 
-  handleCascadeKeywordClick = e => {
+  handleCascadeKeywordClick = () => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
@@ -38,18 +37,21 @@ export class Phone extends Component {
     handleCascadeKeywordClick(config)
   }
 
+  handleOnChange = val => {
+    const {handleOnChange = () => {}} = this.props
+    const name = this.props.config.name
+    const value = typeof val === 'object' ? val.format('hh:mm a') : val
+    const e = {target: {name, value}}
+    handleOnChange(e)
+  }
+
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
   }
 
-  handleChange = e => {
-    const {handleOnChange = () => {}} = this.props
-    handleOnChange(e)
-  }
-
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
-    const {name = null, required = false, delimiter = ' ', onKeyDown = () => null} = config
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {name = null, required = false, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -57,13 +59,9 @@ export class Phone extends Component {
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
-    const value = formValues.get(name, '')
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
-
-    placeholder = warn ? '* This Field Is Required' : placeholder
-    const className = warn ? 'warn-required' : ''
 
     const styles = {
       container: {
@@ -71,6 +69,7 @@ export class Phone extends Component {
         flex: 1,
         flexDirection: inline ? 'row' : 'column',
         background: 'transparent',
+        paddingBottom: 5,
         ...containerStyle
       },
       labelContainer: {
@@ -90,32 +89,24 @@ export class Phone extends Component {
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         fontSize: inline ? '10pt' : '8pt',
-        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         background: 'transparent',
+        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         marginRight: 5,
         ...labelStyle
-      },
-      input: {
-        display: 'flex',
-        flexGrow: inline ? 1 : 0,
-        paddingLeft: 5,
-        backgroundColor: disabled ? '#eee' : 'white',
-        borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        minWidth: 90,
-        height: inline ? 'auto' : 25,
-        ...style
       },
       icon: {
         marginRight: 5,
         width: 15,
         height: 15,
-        marginTop: inline ? 4 : -1,
+        marginTop: inline ? 3 : -1,
         ...iconStyle
       }
     }
+
+    let className = inline ? `date-wrapper-grid-input date-wrapper-grid-input-inline` : `date-wrapper-grid-input`
+    className = !warn ? className : className + ' warn-required'
+    const inputClass = warn ? 'warn-required' : ''
+    placeholder = warn ? '* This Field Is Required' : placeholder
 
     return (
       connectDropTarget(
@@ -126,19 +117,20 @@ export class Phone extends Component {
             <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
-          <Cleave
-            placeholder={placeholder}
-            options={{phone: true, phoneRegionCode: 'US', delimiter}}
+          <DateTime
             onMouseDown={this.onMouseDown}
-            onChange={this.handleChange}
-            style={styles.input}
-            type='text'
-            name={name}
-            value={value}
-            disabled={disabled}
-            onKeyDown={onKeyDown}
+            value={formValues.get(name, '')}
+            onChange={this.handleOnChange}
+            dateFormat={false}
+            timeFormat={'hh:mm a'}
             className={className}
-            tabIndex={tabIndex}
+            inputProps={{
+              disabled: disabled,
+              placeholder: placeholder,
+              className: inputClass,
+              style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style}
+            }}
+            onKeyDown={onKeyDown}
           />
         </div>
       )
@@ -163,4 +155,4 @@ const boxTarget = {
   }
 }
 
-export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Phone)
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Date)

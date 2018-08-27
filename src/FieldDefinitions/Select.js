@@ -34,7 +34,7 @@ export class Select extends Component {
     handleCascadeKeywordClick(config)
   }
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -111,7 +111,7 @@ export class Select extends Component {
             <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
-          <select onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')} disabled={disabled} onKeyDown={onKeyDown}>
+          <select tabIndex={tabIndex} onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')} disabled={disabled} onKeyDown={onKeyDown}>
             {placeholder && <option key='required' value='' disabled hidden>{placeholder}</option>}
             {!suppressBlankOption && !placeholder && <option key='blank' value='' /> /* {should all selects have a blank option?} */}
             {options.map((option, i) => <option key={i} value={option.value}>{option.label ? option.label : option.value}</option>)}

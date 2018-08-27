@@ -169,7 +169,7 @@ export class Typeahead extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -262,6 +262,7 @@ export class Typeahead extends Component {
               onKeyDown={onKeyDown}
               placeholder={placeholder}
               resetValue={{[name]: '', value: '', label: ''}}
+              tabIndex={tabIndex}
             />}
             {!allowcreate && <Async
               style={style}
@@ -276,6 +277,7 @@ export class Typeahead extends Component {
               onKeyDown={onKeyDown}
               placeholder={placeholder}
               resetValue={{[name]: '', value: '', label: ''}}
+              tabIndex={tabIndex}
             />}
           </div>
         )
