@@ -565,6 +565,20 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
+              'dimensions': {'x': 6, 'y': 16, 'h': 1, 'w': 6},
+              'config': {
+                'type': 'number',
+                'name': 'number',
+                'label': 'Number Input',
+                'required': true,
+                'validation': {
+                  'lowerBound': 0,
+                  'upperBound': 100
+                }
+              }
+            },
+            {
+              'type': 'field',
               'dimensions': {'x': 0, 'y': 15, 'h': 1, 'w': 6},
               'config': {
                 'type': 'email',
