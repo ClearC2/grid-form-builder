@@ -8,6 +8,7 @@ import Richtextarea from './FieldDefinitions/Richtextarea'
 import Datetime from './FieldDefinitions/Datetime'
 import Date from './FieldDefinitions/Date'
 import Select from './FieldDefinitions/Select'
+import ImportSelect from './FieldDefinitions/ImportSelect'
 import Radio from './FieldDefinitions/Radio'
 import Checkbox from './FieldDefinitions/Checkbox'
 import Multicheckbox from './FieldDefinitions/Multicheckbox'
@@ -49,7 +50,7 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
 }
 // v fields that cannot be transformed into conditional inputs v
 const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
-let FormComponents = { Input, Textarea, Richtextarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon }
+let FormComponents = { Input, Textarea, Richtextarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon, ImportSelect }
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
   FormComponents = {...FormComponents, ...defs}
@@ -178,14 +179,22 @@ export default class FormBuilder extends Component {
       let {type = 'input', icon = '', cascade = {}} = config
       if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) config.readonly = true
       let {keyword = null, icon: cascadeIcon = ''} = cascade
-      type = interactive ? this.uppercaseFirstLetter(type) : 'input'
+
+      if (interactive) {
+        type = this.uppercaseFirstLetter(type)
+      } else if (type === 'select') {
+        type = 'ImportSelect'
+      } else {
+        type = 'input'
+      }
+
       icon = this.uppercaseFirstLetter(icon)
       cascadeIcon = this.uppercaseFirstLetter(cascadeIcon)
       if (type === 'Textarea' && dimensions.h < 2) dimensions.h = 2
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
       icon = IconLibrary[icon] ? IconLibrary[icon] : null
       cascadeIcon = IconLibrary[cascadeIcon] ? IconLibrary[cascadeIcon] : null
-      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0) {
+      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0 || type.indexOf('ImportSelect') >= 0) {
         dateFields.unshift(
           <Component
             requiredWarning={requiredWarning}
@@ -244,6 +253,7 @@ export default class FormBuilder extends Component {
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
+            interactive={interactive}
           />
         )
       }
