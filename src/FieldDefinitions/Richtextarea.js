@@ -6,7 +6,17 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 
 class Richtextarea extends Component {
   handleOnChange = (e, editor) => {
-    // console.log(e, editor)
+    const {handleOnChange, config = {}} = this.props
+    const {name = null} = config
+    const value = editor.getData()
+    if (value !== '<p>&nbsp;</p>') { // when this component renders with no data it sends up this html string as an on change, just ignore it - JRA 08/21/2018
+      handleOnChange({
+        target: {
+          name,
+          value
+        }
+      })
+    }
   }
 
   componentDidUpdate = p => {
@@ -26,12 +36,12 @@ class Richtextarea extends Component {
     }
   }
 
-  handleAnywhereClick = () => {
+  handleAnywhereClick = e => {
     const {handleAnywhereClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
-    handleAnywhereClick(config)
+    handleAnywhereClick(config, e)
   }
 
   handleCascadeKeywordClick = e => {
@@ -47,7 +57,7 @@ class Richtextarea extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -59,6 +69,7 @@ class Richtextarea extends Component {
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     let {readonly = false, disabled = false} = config
     disabled = disabled || readonly
+    const value = formValues.get(name, '<p>&nbsp;</p>')
 
     const styles = {
       container: {
@@ -124,6 +135,8 @@ class Richtextarea extends Component {
           <CKEditor
             editor={ClassicEditor}
             onChange={this.handleOnChange}
+            data={value}
+            tabIndex={tabIndex}
           />
         </div>
       )

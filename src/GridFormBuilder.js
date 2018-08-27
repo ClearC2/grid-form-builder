@@ -4,10 +4,13 @@ import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
 import Input from './FieldDefinitions/Input'
 import Number from './FieldDefinitions/Number'
+import Email from './FieldDefinitions/Email'
+import Currency from './FieldDefinitions/Currency'
 import Textarea from './FieldDefinitions/Textarea'
 import Richtextarea from './FieldDefinitions/Richtextarea'
 import Datetime from './FieldDefinitions/Datetime'
 import Date from './FieldDefinitions/Date'
+import Time from './FieldDefinitions/Time'
 import Select from './FieldDefinitions/Select'
 import Radio from './FieldDefinitions/Radio'
 import Checkbox from './FieldDefinitions/Checkbox'
@@ -50,7 +53,7 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
 }
 // v fields that cannot be transformed into conditional inputs v
 const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
-let FormComponents = { Input, Textarea, Richtextarea, Datetime, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon, Number }
+let FormComponents = { Input, Email, Currency, Textarea, Richtextarea, Datetime, Time, Date, Select, Radio, Checkbox, Multicheckbox, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon, Number }
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
   FormComponents = {...FormComponents, ...defs}
@@ -73,8 +76,15 @@ export default class FormBuilder extends Component {
     inline: false
   }
 
-  state = {
-    requiredWarning: false
+  static count = 0
+
+  constructor (props) {
+    super(props)
+    FormBuilder.count++
+    this.state = {
+      requiredWarning: false,
+      myOffset: FormBuilder.count
+    }
   }
 
   onSubmit = () => {
@@ -145,9 +155,9 @@ export default class FormBuilder extends Component {
     return field
   }
 
-  handleAnywhereClick = e => {
+  handleAnywhereClick = (config, e) => {
     const {onClick = () => null} = this.props
-    onClick(e)
+    onClick(config, e)
   }
 
   handleDragDropOnInput = ({source, target}) => {
@@ -171,12 +181,28 @@ export default class FormBuilder extends Component {
     jsonschema = jsonschema || form || {}
     let {layout = []} = jsonschema
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
+    let specifiedTabs = Set()
+    layout.map(field => {
+      const {config = {}} = field
+      if (config.tabindex) specifiedTabs = specifiedTabs.add(config.tabindex)
+    })
+    let tabNumber = 1
     layout.map((field, i) => {
       if (this.props.conditionalSearch) {
         field = this.convertFieldToSearch(field)
       }
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
-      let {type = 'input', icon = '', cascade = {}} = config
+      let {type = 'input', icon = '', cascade = {}, tabindex: tabIndex} = config
+      if (!tabIndex) {
+        while (specifiedTabs.has(tabNumber)) {
+          tabNumber++
+        }
+        tabIndex = this.state.myOffset + '' + tabNumber
+        specifiedTabs = specifiedTabs.add(tabNumber)
+        tabNumber++
+      } else {
+        tabIndex = this.state.myOffset + '' + tabIndex
+      }
       if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) config.readonly = true
       let {keyword = null, icon: cascadeIcon = ''} = cascade
       type = interactive ? this.uppercaseFirstLetter(type) : 'input'
@@ -186,7 +212,7 @@ export default class FormBuilder extends Component {
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
       icon = IconLibrary[icon] ? IconLibrary[icon] : null
       cascadeIcon = IconLibrary[cascadeIcon] ? IconLibrary[cascadeIcon] : null
-      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0) {
+      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0 || type.indexOf('Time') >= 0) {
         dateFields.unshift(
           <Component
             requiredWarning={requiredWarning}
@@ -204,6 +230,7 @@ export default class FormBuilder extends Component {
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
+            tabIndex={+tabIndex}
           />
         )
       } else if (Type === 'Customcomponent') {
@@ -225,6 +252,7 @@ export default class FormBuilder extends Component {
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
+            tabIndex={+tabIndex}
           />
         )
       } else {
@@ -245,12 +273,13 @@ export default class FormBuilder extends Component {
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
+            tabIndex={+tabIndex}
           />
         )
       }
     })
     return (
-      <div className="grid-form-builder-parent" style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
+      <div className='grid-form-builder-parent' style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
         <WidgetGrid compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={rowHeight || inline ? 27 : 45}>
           {normalFields}
           {dateFields}

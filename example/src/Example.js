@@ -48,6 +48,15 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
+              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
+              'config': {
+                'name': 'currencyinput',
+                'label': 'Currency Input',
+                'type': 'currency'
+              }
+            },
+            {
+              'type': 'field',
               'dimensions': {'x': 9, 'y': 0, 'h': 1, 'w': 3},
               'config': {
                 'name': 'inputtest',
@@ -160,7 +169,20 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 4, 'h': 5, 'w': 6},
+              'dimensions': {'x': 6, 'y': 4, 'h': 1, 'w': 6},
+              'config': {
+                'name': 'time',
+                'label': 'Time',
+                'type': 'time',
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
+                }
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 5, 'h': 5, 'w': 6},
               'config': {
                 'name': 'listselecttest',
                 'label': 'List Select',
@@ -553,6 +575,16 @@ export default class Example extends Component {
                   'lowerBound': 0,
                   'upperBound': 100
                 }
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 15, 'h': 1, 'w': 6},
+              'config': {
+                'type': 'email',
+                'name': 'email',
+                'label': 'Email Input',
+                'required': true
               }
             }
           ]

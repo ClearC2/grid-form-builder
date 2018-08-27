@@ -42,12 +42,12 @@ export class Multiselect extends Component {
     }
   }
 
-  handleAnywhereClick = () => {
+  handleAnywhereClick = e => {
     const {handleAnywhereClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
-    handleAnywhereClick(config)
+    handleAnywhereClick(config, e)
   }
 
   handleCascadeKeywordClick = e => {
@@ -75,7 +75,7 @@ export class Multiselect extends Component {
   }
 
   render = () => {
-    const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, multi = true, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -157,6 +157,7 @@ export class Multiselect extends Component {
             disabled={disabled}
             onKeyDown={onKeyDown}
             placeholder={placeholder}
+            tabIndex={tabIndex}
           />
         </div>
       )

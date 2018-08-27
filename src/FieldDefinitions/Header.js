@@ -19,12 +19,12 @@ export class Header extends Component {
       }
     }
   }
-  handleAnywhereClick = () => {
+  handleAnywhereClick = e => {
     const {handleAnywhereClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
-    handleAnywhereClick(config)
+    handleAnywhereClick(config, e)
   }
   handleCascadeKeywordClick = e => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
