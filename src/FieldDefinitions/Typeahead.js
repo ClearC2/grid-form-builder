@@ -24,7 +24,7 @@ export class Typeahead extends Component {
   }
 
   componentDidUpdate = p => {
-    const {didDrop, isOver} = this.props
+    const {didDrop, isOver, formValues, config = {}, handleOnChange = () => null} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
       // if it was just previously over and dropped (this is to make this event only trigger once)
       let {droppedItem, handleDragDropOnInput, config = {}, formValues = Map()} = this.props
@@ -35,6 +35,24 @@ export class Typeahead extends Component {
         handleDragDropOnInput({
           source: droppedItem,
           target: config
+        })
+      }
+    }
+    const {name = null, typeahead = {}} = config
+    const {fieldvalue = null, fields = []} = typeahead
+    if (fieldvalue !== null) {
+      if (formValues.get(fieldvalue, '') !== p.formValues.get(fieldvalue, '')) {
+        let resetValues = {
+          [name]: ''
+        }
+        fields.map(field => { resetValues[field] = '' })
+        Object.keys(resetValues).forEach(field => {
+          handleOnChange({
+            target: {
+              name: field,
+              value: resetValues[field]
+            }
+          })
         })
       }
     }
@@ -138,18 +156,20 @@ export class Typeahead extends Component {
   }
 
   loadOptions = search => {
-    const {config = {}} = this.props
+    const {config = {}, formValues = Map()} = this.props
     const {name = null, typeahead = {}} = config
-    const {key = null, duplication = false} = typeahead
+    let {key = null, duplication = false, fieldvalue = null} = typeahead
     let {filter = {}} = typeahead
 
-    if (!key) {
-      console.error(`The JSON schema representation for ${name} does not have a typeahead key. A typeahead.key is required for this field type to search for results.`)
+    if (!key && !fieldvalue) {
+      console.error(`The JSON schema representation for ${name} does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}`)
       return Promise.resolve({options: []})
     }
 
     filter = JSON.parse(JSON.stringify(filter)) // deep clone the object as to not mutate the definition
     this.populateFilterBody(filter)
+
+    if (formValues.get(fieldvalue, '')) key = formValues.get(fieldvalue, '')
 
     if (search.length >= this.props.minChars || search === ' ') {
       if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
@@ -187,8 +207,10 @@ export class Typeahead extends Component {
     }
     if ((typeof value === 'string' || typeof v === 'number') && value.length > 0) value = {value, label: value}
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
-    let {readonly = false, disabled = false, placeholder = ''} = config
+    let {readonly = false, disabled = false, placeholder = '', typeahead = {}} = config
+    const {fieldvalue = null} = typeahead
     disabled = disabled || readonly
+    if (fieldvalue !== null && String(formValues.get(fieldvalue, '')).length === 0) disabled = true
 
     const styles = {
       container: {

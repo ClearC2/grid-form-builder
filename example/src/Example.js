@@ -42,8 +42,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'unique-test-input',
                 'label': 'Test Input',
-                'type': 'input',
-                'disabled': true
+                'type': 'input'
               }
             },
             {
@@ -59,9 +58,13 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 9, 'y': 0, 'h': 1, 'w': 3},
               'config': {
-                'name': 'inputtest',
-                'label': 'Input',
-                'type': 'input'
+                'name': 'companyname',
+                'label': 'Field Typeahead',
+                'type': 'typeahead',
+                'typeahead': {
+                  'fieldvalue': 'unique-test-input',
+                  'fields': ['inputtest']
+                }
               }
             },
             {
