@@ -38,51 +38,62 @@ export class Checkbox extends Component {
 
   handleOnChange = e => {
     const {formValues = Map(), handleOnChange = () => {}, config} = this.props
-    const {name = null} = config
+    const {name = null, onValue, offValue} = config
     let value = formValues.get(name, '0') // if the field value is undefined in the current form values, we are defaulting it to the c2 standard of a false string value of 0
-    switch (value) {
-      case true: value = false; break
-      case false: value = true; break
-      case 0: value = 1; break
-      case 1: value = 0; break
-      case '0': value = '1'; break
-      case '1': value = '0'; break
-      case 'true': value = 'false'; break
-      case 'false': value = 'true'; break
-      case 'True': value = 'False'; break
-      case 'False': value = 'True'; break
-      case 'TRUE': value = 'FALSE'; break
-      case 'FALSE': value = 'TRUE'; break
-      case 't': value = 'f'; break
-      case 'f': value = 't'; break
-      case 'T': value = 'F'; break
-      case 'F': value = 'T'; break
-      case 'y': value = 'n'; break
-      case 'n': value = 'y'; break
-      case 'Y': value = 'N'; break
-      case 'N': value = 'Y'; break
-      case 'Yes': value = 'No'; break
-      case 'No': value = 'Yes'; break
-      case 'YES': value = 'NO'; break
-      case 'NO': value = 'YES'; break
-      case 'yes': value = 'no'; break
-      case 'no': value = 'yes'; break
-      case 'On': value = 'Off'; break
-      case 'Off': value = 'On'; break
-      case 'ON': value = 'OFF'; break
-      case 'OFF': value = 'ON'; break
-      case 'on': value = 'off'; break
-      case 'off': value = 'on'; break
-      case name: value = ''; break // this might be dangerous to assume the checked value is the name of the field
-      case '': value = name; break // this might be dangerous to assume the unchecked value is a blank string
-      default: value = !!e.target.value
+    if (offValue && onValue) {
+      if (value === offValue) value = onValue
+      else if (value === onValue) value = offValue
+      else value = onValue // could be dangerous, this says if you provided an on and off value but the current value isn't either one of them, make the action set this to the true value
+    } else if (onValue) {
+      if (this.falsey.indexOf(value) > -1) value = onValue
+      else value = '' // put this weird check in to default off value to blank if only an onValue was provided
+    } else if (offValue) {
+      if (this.truthy.indexOf(value) > -1) value = offValue
+      else value = '1'// put this weird check in to default on value to 1 if only an offValue was provided
+    } else {
+      switch (value) {
+        case true: value = false; break
+        case false: value = true; break
+        case 0: value = 1; break
+        case 1: value = 0; break
+        case '0': value = '1'; break
+        case '1': value = '0'; break
+        case 'true': value = 'false'; break
+        case 'false': value = 'true'; break
+        case 'True': value = 'False'; break
+        case 'False': value = 'True'; break
+        case 'TRUE': value = 'FALSE'; break
+        case 'FALSE': value = 'TRUE'; break
+        case 't': value = 'f'; break
+        case 'f': value = 't'; break
+        case 'T': value = 'F'; break
+        case 'F': value = 'T'; break
+        case 'y': value = 'n'; break
+        case 'n': value = 'y'; break
+        case 'Y': value = 'N'; break
+        case 'N': value = 'Y'; break
+        case 'Yes': value = 'No'; break
+        case 'No': value = 'Yes'; break
+        case 'YES': value = 'NO'; break
+        case 'NO': value = 'YES'; break
+        case 'yes': value = 'no'; break
+        case 'no': value = 'yes'; break
+        case 'On': value = 'Off'; break
+        case 'Off': value = 'On'; break
+        case 'ON': value = 'OFF'; break
+        case 'OFF': value = 'ON'; break
+        case 'on': value = 'off'; break
+        case 'off': value = 'on'; break
+        case '': value = '1'; break // default the opposite of blank as '1'
+        default: value = !!e.target.value
+      }
     }
     handleOnChange({target: {name: e.target.name, value: value}})
   }
 
-  truthy = [true, 1, '1', 't', 'T', 'true', 'True', 'TRUE', 'y', 'Y', 'Yes', 'YES', 'yes', 'on', 'On', 'ON', this.props.config.name]
+  truthy = [true, 1, '1', 't', 'T', 'true', 'True', 'TRUE', 'y', 'Y', 'Yes', 'YES', 'yes', 'on', 'On', 'ON', this.props.config.onValue || this.props.config.name]
 
-  falsey = [false, 0, '0', 'f', 'F', 'false', 'False', 'FALSE', 'n', 'N', 'No', 'NO', 'no', 'off', 'Off', 'OFF', '']
+  falsey = [false, 0, '0', 'f', 'F', 'false', 'False', 'FALSE', 'n', 'N', 'No', 'NO', 'no', 'off', 'Off', 'OFF', this.props.config.offValue || '']
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, rowHeight, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
