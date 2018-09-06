@@ -10,7 +10,9 @@ export default class Example extends Component {
   state = {
     formValues: Map({
       inputtest: 'Clear C2, Inc.',
-      textareatest: '1234 Main Street'
+      textareatest: '1234 Main Street',
+      datetest: '65165165',
+      meta_created_date: 'swiggity swoogity here comes the moogity'
     }),
     inline: false,
     draggable: false,
@@ -143,12 +145,11 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 3, 'h': 1, 'w': 6},
+              'dimensions': {'x': 6, 'y': 2, 'h': 1, 'w': 6},
               'config': {
                 'name': 'datetest',
                 'label': 'Date',
                 'type': 'date',
-                'disabled': true,
                 'cascade': {
                   'keyword': 'C2_PEOPLE_SOMETHING',
                   'icon': 'tree'
@@ -439,7 +440,7 @@ export default class Example extends Component {
             },
             {
               'type': 'header',
-              'dimensions': {'x': 6, 'y': 2, 'h': 1, 'w': 6},
+              'dimensions': {'x': 6, 'y': 2, 'h': 1, 'w': 3},
               'config': {
                 'name': 'headertest',
                 'label': 'Example Header',
@@ -451,6 +452,15 @@ export default class Example extends Component {
                   'keyword': 'C2_PEOPLE_SOMETHING',
                   'icon': 'tree'
                 }
+              }
+            },
+            {
+              'type': 'header',
+              'dimensions': {'x': 10, 'y': 2, 'h': 1, 'w': 3},
+              'config': {
+                'name': 'meta_created_date',
+                'label': 'Last Did Something By:',
+                'type': 'metadata'
               }
             },
             {
