@@ -36,13 +36,13 @@ export class Header extends Component {
   render = () => {
     const {config = {}, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
     const {name = null} = config
-    let {style = {}} = config
+    let {style = {}, containerStyle = {}} = config
     style = typeof style === 'string' ? JSON.parse(style) : style
     if (!name) return null
     const {label = name} = config
     return (
       connectDropTarget(
-        <div style={{display: 'flex', flex: 1, flexDirection: 'row'}} onMouseUp={this.handleAnywhereClick}>
+        <div style={{display: 'flex', flex: 1, flexDirection: 'row', ...containerStyle}} onMouseUp={this.handleAnywhereClick}>
           <div style={{display: 'flex', flexDirection: 'row', width: 150, minWidth: 150, height: 15, marginTop: 4, alignItems: 'center', ...style}}>
             <strong
               style={{display: 'flex', justifyContent: 'flex-start', lineHeight: '23px', whiteSpace: 'nowrap', textOverflow: 'ellipsis', fontSize: '13pt', marginRight: 5, ...style}}

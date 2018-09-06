@@ -134,13 +134,11 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 0, 'y': 2, 'h': 1, 'w': 6},
               'config': {
-                'name': 'checkboxtest',
-                'label': 'Checkbox',
+                'name': 'is_user_awesome',
+                'label': 'Is Awesome',
                 'type': 'checkbox',
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
+                'onValue': 'cha',
+                'offValue': 'nah bro'
               }
             },
             {
