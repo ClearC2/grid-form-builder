@@ -60,7 +60,7 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 9, 'y': 0, 'h': 1, 'w': 3},
               'config': {
-                'name': 'companyname',
+                'name': 'meta_universalid',
                 'label': 'Field Typeahead',
                 'type': 'typeahead',
                 'typeahead': {
@@ -295,7 +295,7 @@ export default class Example extends Component {
               'dimensions': {'x': 6, 'y': 5, 'h': 1, 'w': 6},
               'config': {
                 'name': 'companyname',
-                'label': 'Typeahead',
+                'label': 'Normal Typeahead',
                 'required': true,
                 'type': 'typeahead',
                 'allowcreate': true,

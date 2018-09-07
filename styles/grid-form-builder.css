@@ -178,11 +178,13 @@ div.grid-form-builder-parent div.Select-menu-outer > div.Select-menu > div {
 div.grid-form-builder-parent div.Select-input > input {
   height: 24px;
   padding: 0;
+  width: 100% !important;
 }
 
 div.grid-form-builder-parent div.Select-input {
   height: 24px;
   padding-left: 5px;
+  width: 90%;
 }
 
 div.grid-form-builder-parent .date-wrapper-grid-input {

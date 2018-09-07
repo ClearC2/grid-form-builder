@@ -188,6 +188,19 @@ export class Typeahead extends Component {
     return Promise.resolve({options: []})
   }
 
+  handleOnFocus = () => {
+    const {config = {}, formValues = Map()} = this.props
+    const {persist = true, name = null} = config
+    let value = formValues.get(name, '')
+    value = typeof value.toJS === 'function' ? value.toJS() : value
+    value = typeof value === 'object' ? value.value || value.label || '' : value
+    if (this.input && persist) {
+      this.input.select.setState({
+        inputValue: value
+      })
+    }
+  }
+
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false} = config
@@ -272,6 +285,7 @@ export class Typeahead extends Component {
               {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
             </div>
             {allowcreate && <AsyncCreatable
+              ref={r => { this.input = r }}
               style={style}
               onMouseDown={this.onMouseDown}
               className={className}
@@ -285,8 +299,11 @@ export class Typeahead extends Component {
               placeholder={placeholder}
               resetValue={{[name]: '', value: '', label: ''}}
               tabIndex={tabIndex}
+              onFocus={this.handleOnFocus}
+              autoBlur={!multi}
             />}
             {!allowcreate && <Async
+              ref={r => { this.input = r }}
               style={style}
               onMouseDown={this.onMouseDown}
               className={className}
@@ -300,6 +317,8 @@ export class Typeahead extends Component {
               placeholder={placeholder}
               resetValue={{[name]: '', value: '', label: ''}}
               tabIndex={tabIndex}
+              onFocus={this.handleOnFocus}
+              autoBlur={!multi}
             />}
           </div>
         )
