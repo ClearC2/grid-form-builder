@@ -100,6 +100,14 @@ div.grid-form-builder-parent div.Select-control > span.Select-multi-value-wrappe
   padding-left: 5px;
 }
 
+div.grid-form-builder-parent div.Select-control > div.Select-multi-value-wrapper > div.Select-value {
+  margin: 0;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+}
+
 div.grid-form-builder-parent div.Select-control > span.Select-multi-value-wrapper {
   display: flex;
   height: 23px;
