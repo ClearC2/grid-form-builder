@@ -201,7 +201,7 @@ export class Typeahead extends Component {
     }
   }
 
-  shouldKeyDownEventCreateNewOption = e => e.keyCode === 9
+  shouldKeyDownEventCreateNewOption = e => (e.keyCode === 9 || e.keyCode === 13)
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
