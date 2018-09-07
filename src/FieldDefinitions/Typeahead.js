@@ -201,6 +201,8 @@ export class Typeahead extends Component {
     }
   }
 
+  shouldKeyDownEventCreateNewOption = e => e.keyCode === 9
+
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false} = config
@@ -301,6 +303,7 @@ export class Typeahead extends Component {
               tabIndex={tabIndex}
               onFocus={this.handleOnFocus}
               autoBlur={!multi}
+              shouldKeyDownEventCreateNewOption={this.shouldKeyDownEventCreateNewOption}
             />}
             {!allowcreate && <Async
               ref={r => { this.input = r }}
