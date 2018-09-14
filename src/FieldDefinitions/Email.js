@@ -91,7 +91,8 @@ class Email extends Component {
     }
 
     // Top level domains may not be entirely numeric
-    if (emailDomains[emailDomains.length - 1].match(/^[0-9]+$/)) {
+    const tld = emailDomains[emailDomains.length - 1]
+    if ((tld.length < 2) || (tld.match(/^[0-9]+$/))) {
       return false
     }
 
