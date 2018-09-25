@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, List} from 'immutable'
+import {Map} from 'immutable'
 import {AsyncCreatable, Async} from 'react-select'
 import PropTypes from 'prop-types'
 import GFBConfig from '../config'
@@ -213,15 +213,15 @@ export class Typeahead extends Component {
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
-    const Value = formValues.get(name, null)
-    let value = []
-    if ((Array.isArray(Value) || Value instanceof List) && value.length > 0) {
-      Value.forEach(v => {
-        if (typeof v === 'object') value.push(v)
-        if (typeof v === 'string' || typeof v === 'number') value.push({value: v, label: v})
+    let value = formValues.get(name, null)
+    value = (typeof value.fromJS === 'function') ? value.fromJS() : value
+    if (Array.isArray(value) && value.length > 0) {
+      value = value.map(v => {
+        if (typeof v === 'object') return v
+        if (typeof v === 'string' || typeof v === 'number') return {value: v, label: v}
       })
-    } else if ((typeof Value === 'string' || typeof Value === 'number') && Value.length > 0) value = {value, label: value}
-    else value = Value
+    }
+    if ((typeof value === 'string' || typeof value === 'number') && value.length > 0) value = {value, label: value}
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     let {readonly = false, disabled = false, placeholder = '', typeahead = {}} = config
     const {fieldvalue = null} = typeahead
