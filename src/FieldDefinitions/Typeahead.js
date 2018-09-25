@@ -213,14 +213,15 @@ export class Typeahead extends Component {
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
-    let value = formValues.get(name, null)
-    if ((Array.isArray(value) || value instanceof List) && value.length > 0) {
-      value = value.map(v => {
-        if (typeof v === 'object') return v
-        if (typeof v === 'string' || typeof v === 'number') return {value: v, label: v}
+    const Value = formValues.get(name, null)
+    let value = []
+    if ((Array.isArray(Value) || Value instanceof List) && value.length > 0) {
+      Value.forEach(v => {
+        if (typeof v === 'object') value.push(v)
+        if (typeof v === 'string' || typeof v === 'number') value.push({value: v, label: v})
       })
     }
-    if ((typeof value === 'string' || typeof v === 'number') && value.length > 0) value = {value, label: value}
+    if ((typeof Value === 'string' || typeof Value === 'number') && Value.length > 0) value = {value, label: value}
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     let {readonly = false, disabled = false, placeholder = '', typeahead = {}} = config
     const {fieldvalue = null} = typeahead
