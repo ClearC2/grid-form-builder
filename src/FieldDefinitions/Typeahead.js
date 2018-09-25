@@ -220,8 +220,8 @@ export class Typeahead extends Component {
         if (typeof v === 'object') value.push(v)
         if (typeof v === 'string' || typeof v === 'number') value.push({value: v, label: v})
       })
-    }
-    if ((typeof Value === 'string' || typeof Value === 'number') && Value.length > 0) value = {value, label: value}
+    } else if ((typeof Value === 'string' || typeof Value === 'number') && Value.length > 0) value = {value, label: value}
+    else value = Value
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     let {readonly = false, disabled = false, placeholder = '', typeahead = {}} = config
     const {fieldvalue = null} = typeahead
