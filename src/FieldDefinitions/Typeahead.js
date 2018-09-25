@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map} from 'immutable'
+import {Map, List} from 'immutable'
 import {AsyncCreatable, Async} from 'react-select'
 import PropTypes from 'prop-types'
 import GFBConfig from '../config'
@@ -214,7 +214,7 @@ export class Typeahead extends Component {
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, null)
-    if (Array.isArray(value) && value.length > 0) {
+    if ((Array.isArray(value) || value instanceof List) && value.length > 0) {
       value = value.map(v => {
         if (typeof v === 'object') return v
         if (typeof v === 'string' || typeof v === 'number') return {value: v, label: v}
