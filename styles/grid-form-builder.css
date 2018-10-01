@@ -44,7 +44,7 @@ div.grid-form-builder-parent div.Select > div.Select-control > span > div.Select
 div.grid-form-builder-parent div.Select > div.Select-control > span > div.Select-value > span, div.Select > div.Select-control > div > div.Select-value > span {
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 33px;
+  height: 23px;
   white-space: nowrap;
 }
 
@@ -192,7 +192,6 @@ div.grid-form-builder-parent div.Select-input > input {
 
 div.grid-form-builder-parent div.Select-input {
   height: 24px;
-  padding-left: 5px;
   width: 90%;
 }
 
