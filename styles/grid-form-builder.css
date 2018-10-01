@@ -46,6 +46,8 @@ div.grid-form-builder-parent div.Select > div.Select-control > span > div.Select
   text-overflow: ellipsis;
   height: 23px;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
 }
 
 div.grid-form-builder-parent div.Select > div.Select-control > span.Select-multi-value-wrapper, div.Select > div.Select-control > div.Select-multi-value-wrapper {
@@ -193,6 +195,7 @@ div.grid-form-builder-parent div.Select-input > input {
 div.grid-form-builder-parent div.Select-input {
   height: 24px;
   width: 90%;
+  padding-left: 5px;
 }
 
 div.grid-form-builder-parent .date-wrapper-grid-input {
