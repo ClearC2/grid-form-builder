@@ -45,6 +45,7 @@ div.grid-form-builder-parent div.Select > div.Select-control > span > div.Select
   overflow: hidden;
   text-overflow: ellipsis;
   height: 33px;
+  white-space: nowrap;
 }
 
 div.grid-form-builder-parent div.Select > div.Select-control > span.Select-multi-value-wrapper, div.Select > div.Select-control > div.Select-multi-value-wrapper {
