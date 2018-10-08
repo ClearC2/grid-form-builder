@@ -103,7 +103,7 @@ class Currency extends Component {
     handleOnChange(e)
   }
 
-  valueFormatter = value => value && '$' 
+  valueFormatter = value => value && ('$' + value )
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
@@ -194,7 +194,7 @@ class Currency extends Component {
             type='text'
             pattern='\d*'
             name={name}
-            value={this.valueFormatter(value) + value}
+            value={this.valueFormatter(value)}
             disabled={disabled}
             onKeyDown={onKeyDown}
           />
