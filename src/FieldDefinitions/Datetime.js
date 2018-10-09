@@ -4,6 +4,9 @@ import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 
 export class Datetime extends Component {
+  state = {
+    focus: false
+  }
   componentDidUpdate = p => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
@@ -35,6 +38,7 @@ export class Datetime extends Component {
     handleCascadeKeywordClick(config)
   }
   handleChange = val => {
+    if (this.state.focus) this.input.focus()
     const {handleOnChange = () => {}} = this.props
     const field = this.props.config.name
     const value = typeof val === 'object' ? val.format('M/D/YYYY h:mm a') : val
@@ -44,6 +48,12 @@ export class Datetime extends Component {
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
   }
+  onViewModeChange = (type) => {
+    if (type === 'time') this.setState({focus: true}, this.onNavigateBack)
+    else this.setState({focus: false}, this.onNavigateBack)
+  }
+  onNavigateBack = () => this.input.focus()
+  onNavigateForward = () => this.input.focus()
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
@@ -119,12 +129,16 @@ export class Datetime extends Component {
             dateFormat='M/D/YYYY'
             className={className}
             closeOnSelect
+            onViewModeChange={this.onViewModeChange}
+            onNavigateBack={this.onNavigateBack}
+            onNavigateForward={this.onNavigateForward}
             inputProps={{
               disabled: disabled,
               placeholder: placeholder,
               className: inputClass,
               style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style},
-              tabIndex
+              tabIndex,
+              ref: ref => { this.input = ref }
             }}
             onKeyDown={onKeyDown}
           />
