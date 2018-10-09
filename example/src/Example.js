@@ -630,6 +630,8 @@ export default class Example extends Component {
 
   handleOnDrop = ({source, target}) => console.log(source, target)
 
+  // componentDidMount = () => setTimeout(() => {debugger}, 3000)
+
   render = () => {
     const {formSchema} = this.state
     if (TEST_SEARCH) {

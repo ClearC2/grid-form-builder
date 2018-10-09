@@ -277,3 +277,11 @@ div.grid-form-builder-parent .ck.ck-content.ck-editor__editable.ck-rounded-corne
 div.grid-form-builder-parent .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-focused.ck-editor__editable_inline {
   height: 100%;
 }
+
+/*div.grid-form-builder-parent .react-grid-item {*/
+  /*z-index: -1;*/
+/*}*/
+
+/*div.grid-form-builder-parent .react-grid-item:hover {*/
+  /*z-index: auto;*/
+/*}*/
