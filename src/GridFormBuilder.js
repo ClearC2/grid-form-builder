@@ -222,7 +222,7 @@ export default class FormBuilder extends Component {
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
       icon = IconLibrary[icon] ? IconLibrary[icon] : null
       cascadeIcon = IconLibrary[cascadeIcon] ? IconLibrary[cascadeIcon] : null
-      if (type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0 || type.indexOf('Time') >= 0 || type.indexOf('ImportSelect') >= 0) {
+      if (type.indexOf('Select') >= 0 || type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0 || type.indexOf('Time') >= 0 || type.indexOf('ImportSelect') >= 0) {
         dateFields.unshift(
           <Component
             requiredWarning={requiredWarning}

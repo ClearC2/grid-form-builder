@@ -468,7 +468,7 @@ export default class Example extends Component {
               'dimensions': {'x': 6, 'y': 2, 'h': 1, 'w': 6},
               'config': {
                 'name': 'selecttest',
-                'label': 'Select',
+                'label': 'Normal Select',
                 'type': 'select',
                 'required': true,
                 'keyword': {

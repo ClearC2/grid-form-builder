@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
+import ReactSelect from 'react-select'
 import {DropTarget} from 'react-dnd'
 
 export class Select extends Component {
@@ -19,6 +20,7 @@ export class Select extends Component {
       }
     }
   }
+
   handleAnywhereClick = e => {
     const {handleAnywhereClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
@@ -26,6 +28,7 @@ export class Select extends Component {
     config = {currentValue, ...config}
     handleAnywhereClick(config, e)
   }
+
   handleCascadeKeywordClick = e => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
@@ -33,21 +36,33 @@ export class Select extends Component {
     config = {currentValue, ...config}
     handleCascadeKeywordClick(config)
   }
+
+  onChange = e => {
+    const {config = {}, handleOnChange = () => null} = this.props
+    const {name = null} = config
+    handleOnChange({
+      target: {
+        name,
+        value: e.value
+      }
+    })
+  }
+
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
-    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, keyword = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
-    const {label = name, keyword = {}, suppressBlankOption = false} = config
-    const {options = []} = keyword
-    const warn = requiredWarning && formValues.get(name, '').length === 0 && required
+    const {label = name} = config
+    const warn = requiredWarning && this.state.fieldValues.length === 0 && required
     let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
-    placeholder = warn ? '* This Field Is Required' : placeholder
+    const {options = []} = keyword
+    const value = formValues.get(name, '')
 
     const styles = {
       container: {
@@ -80,17 +95,9 @@ export class Select extends Component {
         ...labelStyle
       },
       input: {
-        display: 'flex',
-        flexGrow: inline ? 1 : 0,
         height: inline ? 'auto' : 25,
         backgroundColor: disabled ? '#eee' : 'white',
-        borderBottom: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderTop: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderLeft: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
-        paddingLeft: 5,
         minWidth: 170,
-        color: warn ? '#ec1c24' : placeholder ? formValues.get(name, '').length === 0 ? '#757575' : '#323232' : '#323232',
         ...style
       },
       icon: {
@@ -102,6 +109,10 @@ export class Select extends Component {
       }
     }
 
+    let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
+    className = !warn ? className : className + ' warn-required'
+    placeholder = warn ? '* This Field Is Required' : placeholder
+
     return (
       connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
@@ -111,11 +122,18 @@ export class Select extends Component {
             <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
-          <select tabIndex={tabIndex} onChange={handleOnChange} className='select-grid-input' style={styles.input} name={name} value={formValues.get(name, '')} disabled={disabled} onKeyDown={onKeyDown}>
-            {placeholder && <option key='required' value='' disabled hidden>{placeholder}</option>}
-            {!suppressBlankOption && !placeholder && <option key='blank' value='' /> /* {should all selects have a blank option?} */}
-            {options.map((option, i) => <option key={i} value={option.value}>{option.label ? option.label : option.value}</option>)}
-          </select>
+          <ReactSelect
+            onChange={this.onChange}
+            className={className}
+            style={styles.input}
+            name={name}
+            options={options}
+            value={value}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
+            placeholder={placeholder}
+            tabIndex={tabIndex}
+          />
         </div>
       )
     )
