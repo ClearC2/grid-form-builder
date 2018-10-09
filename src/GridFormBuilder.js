@@ -177,7 +177,6 @@ export default class FormBuilder extends Component {
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
-    const dateFields = []
     const normalFields = []
     let {form, jsonschema} = formSchema
     jsonschema = jsonschema || form || {}
@@ -222,28 +221,7 @@ export default class FormBuilder extends Component {
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
       icon = IconLibrary[icon] ? IconLibrary[icon] : null
       cascadeIcon = IconLibrary[cascadeIcon] ? IconLibrary[cascadeIcon] : null
-      if (type.indexOf('Select') >= 0 || type.indexOf('Date') >= 0 || type.indexOf('Typeahead') >= 0 || type.indexOf('Multiselect') >= 0 || type.indexOf('Time') >= 0 || type.indexOf('ImportSelect') >= 0) {
-        dateFields.unshift(
-          <Component
-            requiredWarning={requiredWarning}
-            rowHeight={rowHeight}
-            inline={inline}
-            draggable={draggable}
-            key={'' + i}
-            handleOnChange={handleOnChange}
-            handleAnywhereClick={this.handleAnywhereClick}
-            formValues={formValues}
-            config={config}
-            Icon={icon}
-            cascadingKeyword={keyword}
-            CascadeIcon={cascadeIcon}
-            handleCascadeKeywordClick={this.handleCascadeKeywordClick}
-            handleDragDropOnInput={this.handleDragDropOnInput}
-            defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
-            tabIndex={+tabIndex}
-          />
-        )
-      } else if (Type === 'Customcomponent') {
+      if (Type === 'Customcomponent') {
         normalFields.push(
           <Component
             requiredWarning={requiredWarning}
@@ -293,7 +271,6 @@ export default class FormBuilder extends Component {
       <div className='grid-form-builder-parent' style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
         <WidgetGrid compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={rowHeight || inline ? 27 : 45}>
           {normalFields}
-          {dateFields}
         </WidgetGrid>
       </div>
     )
