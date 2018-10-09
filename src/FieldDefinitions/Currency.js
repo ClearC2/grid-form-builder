@@ -91,17 +91,19 @@ class Currency extends Component {
     const digits = this.getDigitsFromValue(value)
     const digitsWithPadding = this.padDigits(digits)
 
-    return '$' + this.addDecimalToNumber(digitsWithPadding)
+    return this.addDecimalToNumber(digitsWithPadding)
   }
 
   handleOnChange = val => {
     const {handleOnChange = () => null} = this.props
     const name = val.target.name
     const value = this.toCurrency(val.target.value)
-
     const e = {target: {name, value}}
+    
     handleOnChange(e)
   }
+
+  valueFormatter = value => value && ('$' + value )
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
@@ -192,7 +194,7 @@ class Currency extends Component {
             type='text'
             pattern='\d*'
             name={name}
-            value={value}
+            value={this.valueFormatter(value)}
             disabled={disabled}
             onKeyDown={onKeyDown}
           />
