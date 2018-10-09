@@ -119,6 +119,7 @@ export class Date extends Component {
             dateFormat='M/D/YYYY'
             timeFormat={false}
             className={className}
+            closeOnSelect
             inputProps={{
               disabled: disabled,
               placeholder: placeholder,

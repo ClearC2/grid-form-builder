@@ -38,6 +38,7 @@ export class Date extends Component {
   }
 
   handleOnChange = val => {
+    this.input.focus()
     const {handleOnChange = () => {}} = this.props
     const name = this.props.config.name
     const value = typeof val === 'object' ? val.format('hh:mm a') : val
@@ -124,11 +125,13 @@ export class Date extends Component {
             dateFormat={false}
             timeFormat={'hh:mm a'}
             className={className}
+            closeOnSelect
             inputProps={{
               disabled: disabled,
               placeholder: placeholder,
               className: inputClass,
-              style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style}
+              style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style},
+              ref: ref => { this.input = ref }
             }}
             onKeyDown={onKeyDown}
           />

@@ -118,6 +118,7 @@ export class Datetime extends Component {
             onChange={this.handleChange}
             dateFormat='M/D/YYYY'
             className={className}
+            closeOnSelect
             inputProps={{
               disabled: disabled,
               placeholder: placeholder,
