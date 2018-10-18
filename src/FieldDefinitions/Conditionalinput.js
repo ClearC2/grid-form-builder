@@ -10,7 +10,7 @@ import FormBuilder from '../GridFormBuilder'
  */
 
 const SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselect', 'typeahead'])
-const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone'])
+const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'email', 'datetime', 'currency', 'time'])
 const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
 
 export const TEXT_INPUTS = ['textarea', 'checkbox', 'radio']
