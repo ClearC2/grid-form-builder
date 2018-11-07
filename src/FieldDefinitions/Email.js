@@ -100,7 +100,7 @@ class Email extends Component {
   }
 
   generateValidationError = value => {
-    return !this.emailValidation(value) && '* The field Email is not in a valid format. The field contents must follow email address standards'
+    return !this.emailValidation(value) && '* Invalid email'
   }
 
   handleOnChange = () => {}
