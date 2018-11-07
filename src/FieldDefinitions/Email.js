@@ -3,6 +3,18 @@ import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 
 class Email extends Component {
+  state = {
+    displayError: false
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown' , this.onMouseDown)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.onMouseDown)
+  }
+
   componentDidUpdate = p => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
@@ -18,6 +30,16 @@ class Email extends Component {
         })
       }
     }
+  }
+
+  onMouseDown = e => {
+    if (this.props.draggable) e.stopPropagation()
+    if (this.node.contains(e.target)) {
+      this.setState({displayError: false})
+      return
+    }
+
+    this.setState({displayError: true})
   }
 
   handleAnywhereClick = e => {
@@ -36,12 +58,6 @@ class Email extends Component {
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
     handleCascadeKeywordClick(config)
-  }
-
-  onMouseDown = e => {
-    if (this.props.draggable) {
-      e.stopPropagation()
-    }
   }
 
   // This could potentially be extracted into a helper function for reuse across projects.
@@ -100,7 +116,7 @@ class Email extends Component {
   }
 
   generateValidationError = value => {
-    return !this.emailValidation(value) && '* Invalid email'
+    return (!this.emailValidation(value) && this.state.displayError) && '* Invalid email'
   }
 
   handleOnChange = () => {}
@@ -187,7 +203,7 @@ class Email extends Component {
 
     return (
       connectDropTarget(
-        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
+        <div style={styles.container} onMouseUp={this.handleAnywhereClick} ref={node => this.node = node}>
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
