@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import DateTime from 'react-datetime'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
-
+import moment from 'moment'
 export class Date extends Component {
   componentDidUpdate = p => {
     const {didDrop, isOver} = this.props
@@ -108,6 +108,8 @@ export class Date extends Component {
     className = !warn ? className : className + ' warn-required'
     const inputClass = warn ? 'warn-required' : ''
     placeholder = warn ? '* This Field Is Required' : placeholder
+    const formattedValue = value => moment(value, 'hh:mm a')
+    
 
     return (
       connectDropTarget(
@@ -120,7 +122,7 @@ export class Date extends Component {
           </div>
           <DateTime
             onMouseDown={this.onMouseDown}
-            value={formValues.get(name, '')}
+            value={formattedValue(formValues.get(name, ''))}
             onChange={this.handleOnChange}
             dateFormat={false}
             timeFormat={'hh:mm a'}
