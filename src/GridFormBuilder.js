@@ -210,7 +210,7 @@ export default class FormBuilder extends Component {
       if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) config.readonly = true
       let {keyword = null, icon: cascadeIcon = ''} = cascade
 
-      if (interactive) {
+      if (interactive || type === 'header') {
         type = this.uppercaseFirstLetter(type)
       } else if (type === 'select') {
         type = 'ImportSelect'
