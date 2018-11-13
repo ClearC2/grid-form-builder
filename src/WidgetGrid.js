@@ -220,7 +220,7 @@ export class Grid extends Component {
       if (layouts.undef) layouts = {[breakpoint]: layout}
     }
 
-    const {verticalCompact = true, margin = [10, 10]} = this.props
+    const {verticalCompact = true, margin = [10, 10], ...rest} = this.props
 
     let rowHeight = 25
     if (this.props.rowHeight) {
@@ -241,7 +241,8 @@ export class Grid extends Component {
     return !(this.props.layouts || layout.length > 0) ? null : (
       <GridLayout
         ref={grid => { this.grid = grid }}
-        {...this.props}
+        {...rest}
+        compactType={verticalCompact ? 'vertical' : null}
         className='layout'
         layouts={layouts}
         verticalCompact={verticalCompact}
