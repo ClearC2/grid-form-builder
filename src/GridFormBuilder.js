@@ -71,7 +71,8 @@ export default class FormBuilder extends Component {
     draggable: PropTypes.bool,
     inline: PropTypes.bool,
     handleSubmit: PropTypes.func,
-    conditionalSearch: PropTypes.bool
+    conditionalSearch: PropTypes.bool,
+    noStore: PropTypes.bool
   }
 
   static defaultProps = {
@@ -270,9 +271,11 @@ export default class FormBuilder extends Component {
         )
       }
     })
+    let P = {}
+    if (this.props.noStore) P.store = {subscribe: () => {}, getState: () => Map(), dispatch: () => {}}
     return (
       <div className='grid-form-builder-parent' style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
-        <WidgetGrid compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={rowHeight || inline ? 27 : 45}>
+        <WidgetGrid {...P} compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={rowHeight || inline ? 27 : 45}>
           {normalFields}
         </WidgetGrid>
       </div>
