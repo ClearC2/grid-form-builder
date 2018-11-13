@@ -275,7 +275,7 @@ export default class FormBuilder extends Component {
     if (this.props.noStore) P.store = {subscribe: () => {}, getState: () => Map(), dispatch: () => {}}
     return (
       <div className='grid-form-builder-parent' style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
-        <WidgetGrid {...P} compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={rowHeight || inline ? 27 : 45}>
+        <WidgetGrid {...P} compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={rowHeight || (inline ? 27 : 45)}>
           {normalFields}
         </WidgetGrid>
       </div>
