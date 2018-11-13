@@ -66,8 +66,8 @@ class Currency extends Component {
     const centsStartingPosition = number.length - 2
     const dollars = this.removeLeadingZeros(number.substring(0, centsStartingPosition))
     const formattedDollar = this.formatDollar(dollars)
-
     const cents = number.substring(centsStartingPosition)
+    
     return `${formattedDollar}.${cents}`
   }
 
