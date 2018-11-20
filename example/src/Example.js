@@ -60,6 +60,25 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
+              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
+              'config': {
+                'name': 'tax',
+                'label': 'Tax Input',
+                'type': 'currency'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
+              'config': {
+                'name': 'total',
+                'label': 'Total Currency Input',
+                'type': 'total',
+                fields: ['currencyinput', 'tax']
+              }
+            },
+            {
+              'type': 'field',
               'dimensions': {'x': 9, 'y': 0, 'h': 1, 'w': 3},
               'config': {
                 'name': 'meta_universalid',

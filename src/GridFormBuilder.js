@@ -24,6 +24,7 @@ import Multiselect from './FieldDefinitions/Multiselect'
 import Phone from './FieldDefinitions/Phone'
 import Icon from './FieldDefinitions/Icon'
 import Metadata from './FieldDefinitions/Metadata'
+import Total from './FieldDefinitions/Total'
 
 let IconLibrary = {}
 export function initComponentIconLibrary (defs = {}) {
@@ -55,7 +56,31 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
 }
 // v fields that cannot be transformed into conditional inputs v
 const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
-let FormComponents = { Input, Email, Currency, Textarea, Richtextarea, Datetime, Time, Date, Select, Radio, Checkbox, Multicheckbox, Metadata, Header, Typeahead, Listselect, Conditionalinput, Multiselect, Phone, Icon, Number, ImportSelect }
+let FormComponents = {
+  Input,
+  Email,
+  Currency,
+  Textarea,
+  Richtextarea,
+  Datetime,
+  Time,
+  Date,
+  Select,
+  Radio,
+  Checkbox,
+  Multicheckbox,
+  Metadata,
+  Header,
+  Typeahead,
+  Listselect,
+  Conditionalinput,
+  Multiselect,
+  Phone,
+  Icon,
+  Number,
+  ImportSelect,
+  Total
+}
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
   FormComponents = {...FormComponents, ...defs}
