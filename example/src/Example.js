@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map} from 'immutable'
+import {Map, List} from 'immutable'
 import {FormBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import ConditionTable from 'query-builder'
@@ -12,7 +12,8 @@ export default class Example extends Component {
       inputtest: 'Clear C2, Inc.',
       textareatest: '1234 Main Street',
       datetest: '65165165',
-      meta_created_date: 'swiggity swoogity here comes the moogity'
+      meta_created_date: 'swiggity swoogity here comes the moogity',
+      multiselecttest: List(['Customer Service', 'Executive Meeting'])
     }),
     inline: false,
     draggable: false,

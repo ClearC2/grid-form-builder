@@ -19,6 +19,20 @@ export class Multiselect extends Component {
         }
       }
     }
+    if (Array.isArray(props.formValues.get(props.config.name)) || props.formValues.get(props.config.name) instanceof List) {
+      incomingValues = props.formValues.get(props.config.name).map(value => {
+        if (typeof value === 'string') {
+          return {
+            label: value,
+            value
+          }
+        } else {
+          if (typeof value.toJS === 'function') value = value.toJS()
+          return value
+        }
+      })
+    }
+    if (typeof incomingValues.toJS === 'function') incomingValues = incomingValues.toJS()
     this.state = {
       fieldValues: incomingValues || [],
       builtOptions: options
@@ -79,7 +93,6 @@ export class Multiselect extends Component {
   }
 
   render = () => {
-    console.log(this.props)
     const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, multi = true, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
@@ -141,7 +154,6 @@ export class Multiselect extends Component {
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
     placeholder = warn ? '* This Field Is Required' : placeholder
-
     return (
       connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
