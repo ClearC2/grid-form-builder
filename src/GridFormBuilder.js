@@ -219,6 +219,8 @@ export default class FormBuilder extends Component {
         type = 'input'
       }
 
+      console.log(formValues)
+
       icon = this.uppercaseFirstLetter(icon)
       cascadeIcon = this.uppercaseFirstLetter(cascadeIcon)
       if (type === 'Textarea' && dimensions.h < 2) dimensions.h = 2
@@ -267,6 +269,7 @@ export default class FormBuilder extends Component {
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
             interactive={interactive}
             tabIndex={+tabIndex}
+            conditionalSearch={this.props.conditionalSearch}
           />
         )
       }

@@ -70,11 +70,16 @@ export class Multiselect extends Component {
     if (e.length === 0) {
       this.props.handleOnChange({target: {name: this.props.config.name, value: ''}})
     } else {
-      this.props.handleOnChange({target: {name: this.props.config.name, value: fromJS({condition: 'is one of', values: List(e.map(val => val.value))})}})
+      if (this.props.conditionalSearch) {
+        this.props.handleOnChange({target: {name: this.props.config.name, value: fromJS({condition: 'is one of', values: List(e.map(val => val.value))})}})
+      } else {
+        this.props.handleOnChange({target: {name: this.props.config.name, value: fromJS(List(e.map(val => val.value)))}})
+      }
     }
   }
 
   render = () => {
+    console.log(this.props)
     const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, multi = true, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
