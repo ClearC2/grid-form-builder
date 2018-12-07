@@ -85,8 +85,14 @@ export default class FormBuilder extends Component {
     super(props)
     FormBuilder.count++
     this.state = {
-      requiredWarning: false,
+      requiredWarning: !!props.validate,
       myOffset: FormBuilder.count
+    }
+  }
+
+  componentDidUpdate = p => {
+    if (p.validate !== this.props.validate) {
+      this.setState({validate: this.props.validate})
     }
   }
 
