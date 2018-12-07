@@ -22,7 +22,7 @@ export class Multiselect extends Component {
     if (typeof incomingValues === 'string') incomingValues = incomingValues.split('¤')
     if (Array.isArray(incomingValues) || incomingValues instanceof List) {
       incomingValues = incomingValues.map(value => {
-        if (typeof value === 'string') {
+        if (typeof value === 'string' && value !== '') {
           return {
             label: value,
             value
@@ -34,7 +34,6 @@ export class Multiselect extends Component {
       })
     }
     if (typeof incomingValues.toJS === 'function') incomingValues = incomingValues.toJS()
-    console.log(incomingValues)
     this.state = {
       fieldValues: incomingValues || [],
       builtOptions: options
