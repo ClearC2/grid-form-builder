@@ -96,6 +96,22 @@ export default class Conditionalinput extends Component {
       i++
     })
     // take any form-builder values from props and convert them to contitional table form readable values
+    let conds = []
+    if (this.props.config.conditions) {
+      conds = this.props.config.conditions
+    } else {
+      conds = CONDITIONS
+    }
+    if (this.props.config.excludeConditions) {
+      let excludes = Set(this.props.config.excludeConditions)
+      let newConds = {}
+      conds.forEach((val, key) => {
+        if (!excludes.has(key)) {
+          newConds[key] = val
+        }
+      })
+      conds = newConds
+    }
     this.state = {
       modalFormValues: Map({
         condition: this.getConditionFromFormValues() || this.inputTypeOptionsList(this.inputType())[0],
@@ -103,7 +119,8 @@ export default class Conditionalinput extends Component {
       }),
       values: List(),
       showDialog: false,
-      typeaheadValues: List()
+      typeaheadValues: List(),
+      conditions: conds
     }
     // convert this.props.formValues to conditional form values
     this.props.handleOnChange({
@@ -183,8 +200,8 @@ export default class Conditionalinput extends Component {
     }
   }
 
-  maxFieldCount = () => CONDITIONS[this.condition()].maxFields
-  minFieldCount = () => CONDITIONS[this.condition()].minFields
+  maxFieldCount = () => this.state.conditions[this.condition()].maxFields
+  minFieldCount = () => this.state.conditions[this.condition()].minFields
   parentFieldName = () => this.props.config.name
   parentLabel = () => this.props.config.label || this.props.config.name
   inputType = () => (this.props.config.inputType || this.props.config.inputtype || 'input').toLowerCase()
@@ -204,8 +221,8 @@ export default class Conditionalinput extends Component {
   convertListToOptions = (list) => list.map(opt => { return {value: opt, label: opt} })
   inputTypeOptionsList = (type) => {
     let options = []
-    Object.keys(CONDITIONS).forEach((key) => {
-      if (!Set(CONDITIONS[key].invalidInputTypes).has(type)) {
+    Object.keys(this.state.conditions).forEach((key) => {
+      if (!Set(this.state.conditions[key].invalidInputTypes).has(type)) {
         options.push(key)
       }
     })
@@ -304,7 +321,7 @@ export default class Conditionalinput extends Component {
           config: {
             readonly: false,
             name: `${this.parentFieldName()}-${fieldCount}`,
-            label: CONDITIONS[this.condition()].joinString || `     ...or`,
+            label: this.state.conditions[this.condition()].joinString || `     ...or`,
             type: this.inputType()
           }
         }
