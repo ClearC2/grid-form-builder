@@ -34,6 +34,7 @@ export class Multiselect extends Component {
       })
     }
     if (typeof incomingValues.toJS === 'function') incomingValues = incomingValues.toJS()
+    console.log(incomingValues)
     this.state = {
       fieldValues: incomingValues || [],
       builtOptions: options
@@ -151,8 +152,6 @@ export class Multiselect extends Component {
         ...iconStyle
       }
     }
-
-    console.log(this.state.fieldValues)
 
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
