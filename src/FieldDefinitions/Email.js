@@ -7,11 +7,11 @@ class Email extends Component {
     displayError: false
   }
 
-  componentDidMount() {
-    document.addEventListener('mousedown' , this.onMouseDown)
+  componentDidMount () {
+    document.addEventListener('mousedown', this.onMouseDown)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     document.removeEventListener('mousedown', this.onMouseDown)
   }
 
@@ -116,7 +116,7 @@ class Email extends Component {
   }
 
   generateValidationError = value => {
-    return (!this.emailValidation(value) && this.state.displayError) && '* Invalid email'
+    return (!this.emailValidation(value) && this.state.displayError) ? '* Invalid email' : 'This Field Is Required'
   }
 
   handleOnChange = () => {}
@@ -203,7 +203,7 @@ class Email extends Component {
 
     return (
       connectDropTarget(
-        <div style={styles.container} onMouseUp={this.handleAnywhereClick} ref={node => this.node = node}>
+        <div style={styles.container} onMouseUp={this.handleAnywhereClick} ref={node => { this.node = node }}>
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}

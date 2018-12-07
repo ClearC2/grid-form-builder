@@ -8,6 +8,7 @@ const TEST_SEARCH = false // for conditional search forms
 
 export default class Example extends Component {
   state = {
+    isInvalidWarning: false,
     formValues: Map({
       inputtest: 'Clear C2, Inc.',
       textareatest: '1234 Main Street',
@@ -629,12 +630,16 @@ export default class Example extends Component {
     console.log(this.exampleForm.validate())
   }
 
+  toggleValidation = () => {
+    this.setState(s => ({isInvalidWarning: !s.isInvalidWarning}))
+  }
+
   handleOnDrop = ({source, target}) => console.log(source, target)
 
   // componentDidMount = () => setTimeout(() => {debugger}, 3000)
 
   render = () => {
-    const {formSchema} = this.state
+    const {formSchema, isInvalidWarning} = this.state
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is false
       return (<div style={{display: 'flex'}}>
@@ -676,6 +681,7 @@ export default class Example extends Component {
             <button onClick={this.toggleDraggable} style={{marginRight: 10}}>{this.state.draggable ? 'Make Static' : 'Make Draggable'}</button>
             <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
             <button onClick={this.onSubmit} style={{marginLeft: 10}}>Submit</button>
+            <button onClick={this.toggleValidation} style={{marginLeft: 10}}>Toggle Validation State</button>
             <DragUnit someProp='test' />
           </div>
           <FormBuilder
@@ -689,6 +695,7 @@ export default class Example extends Component {
             conditionalSearch={TEST_SEARCH}
             handleOnDrop={this.handleOnDrop}
             draggable={this.state.draggable}
+            validate={isInvalidWarning}
           />
         </div>
       )

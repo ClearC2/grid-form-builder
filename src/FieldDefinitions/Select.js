@@ -4,6 +4,9 @@ import ReactSelect from 'react-select'
 import {DropTarget} from 'react-dnd'
 
 export class Select extends Component {
+  state = {
+    fieldValues: []
+  }
   componentDidUpdate = p => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {

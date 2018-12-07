@@ -92,7 +92,7 @@ export default class FormBuilder extends Component {
 
   componentDidUpdate = p => {
     if (p.validate !== this.props.validate) {
-      this.setState({validate: this.props.validate})
+      this.setState({requiredWarning: this.props.validate})
     }
   }
 
