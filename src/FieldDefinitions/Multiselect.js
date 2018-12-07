@@ -9,8 +9,8 @@ export class Multiselect extends Component {
     const {config = {}} = props
     const {keyword = {}} = config
     const {options = []} = keyword
-    let incomingValues = null
-    if (props.formValues && props.formValues instanceof Map) {
+    let incomingValues = props.formValues.get(props.config.name, '')
+    if (incomingValues instanceof Map) {
       incomingValues = props.formValues.get(props.config.name, Map())
       if (incomingValues instanceof Map) {
         incomingValues = incomingValues.get('values', [])
@@ -19,8 +19,9 @@ export class Multiselect extends Component {
         }
       }
     }
-    if (Array.isArray(props.formValues.get(props.config.name)) || props.formValues.get(props.config.name) instanceof List) {
-      incomingValues = props.formValues.get(props.config.name).map(value => {
+    if (typeof incomingValues === 'string') incomingValues = incomingValues.split('¤')
+    if (Array.isArray(incomingValues) || incomingValues instanceof List) {
+      incomingValues = incomingValues.map(value => {
         if (typeof value === 'string') {
           return {
             label: value,
@@ -87,7 +88,7 @@ export class Multiselect extends Component {
       if (this.props.conditionalSearch) {
         this.props.handleOnChange({target: {name: this.props.config.name, value: fromJS({condition: 'is one of', values: List(e.map(val => val.value))})}})
       } else {
-        this.props.handleOnChange({target: {name: this.props.config.name, value: fromJS(List(e.map(val => val.value)))}})
+        this.props.handleOnChange({target: {name: this.props.config.name, value: e.map(val => val.value).join('¤')}})
       }
     }
   }
