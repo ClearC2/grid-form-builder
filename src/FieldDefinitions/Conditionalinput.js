@@ -97,13 +97,13 @@ export default class Conditionalinput extends Component {
     })
     // take any form-builder values from props and convert them to contitional table form readable values
     let conds = []
-    if (this.props.conditions) {
-      conds = this.props.conditions
+    if (this.props.config.conditions) {
+      conds = this.props.config.conditions
     } else {
       conds = CONDITIONS
     }
-    if (this.props.excludeConditions) {
-      let excludes = Set(this.props.excludeConditions)
+    if (this.props.config.excludeConditions) {
+      let excludes = Set(this.props.config.excludeConditions)
       let newConds = {}
       conds.forEach((val, key) => {
         if (!excludes.has(key)) {
