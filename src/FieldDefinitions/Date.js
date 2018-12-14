@@ -3,6 +3,8 @@ import DateTime from 'react-datetime'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 import moment from 'moment'
+// https://github.com/moment/moment/issues/3488
+moment.suppressDeprecationWarnings = true
 
 export class Date extends Component {
   state = {
@@ -109,12 +111,12 @@ export class Date extends Component {
         ...iconStyle
       }
     }
-
+    
     let className = inline ? `date-wrapper-grid-input date-wrapper-grid-input-inline` : `date-wrapper-grid-input`
     className = !warn ? className : className + ' warn-required'
     const inputClass = warn ? 'warn-required' : ''
     placeholder = warn ? '* This Field Is Required' : placeholder
-    const formatValue = value => moment(new Date(value)).format('M/D/YYYY')
+    const formatValue = value => moment(value).format('M/D/YYYY')
 
     return (
       connectDropTarget(
