@@ -64,7 +64,7 @@ class Currency extends Component {
 
   addDecimalToNumber = number => {
     const format = number => {
-      number = +number.toFixed(2)
+      number = number.toFixed(2)
       const centsStartingPosition = number.length - 2
       const dollars = this.removeLeadingZeros(number.substring(0, centsStartingPosition))
       const formattedDollar = this.formatDollar(dollars)
