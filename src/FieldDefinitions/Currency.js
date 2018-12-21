@@ -63,6 +63,8 @@ class Currency extends Component {
   formatDollar = dollars => parseFloat(dollars).toLocaleString('en')
 
   addDecimalToNumber = number => {
+    if (typeof number === 'string') number = +number
+    if (isNaN(number)) number = ''
     number = +number.toFixed(2)
     const centsStartingPosition = number.length - 2
     const dollars = this.removeLeadingZeros(number.substring(0, centsStartingPosition))
