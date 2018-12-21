@@ -63,11 +63,11 @@ class Currency extends Component {
   formatDollar = dollars => parseFloat(dollars).toLocaleString('en')
 
   addDecimalToNumber = number => {
+    number = +number.toFixed(2)
     const centsStartingPosition = number.length - 2
     const dollars = this.removeLeadingZeros(number.substring(0, centsStartingPosition))
     const formattedDollar = this.formatDollar(dollars)
     const cents = number.substring(centsStartingPosition)
-    
     return `${formattedDollar}.${cents}`
   }
 
@@ -99,7 +99,7 @@ class Currency extends Component {
     const name = val.target.name
     const value = this.toCurrency(val.target.value)
     const e = {target: {name, value}}
-    
+
     handleOnChange(e)
   }
 
