@@ -63,14 +63,20 @@ class Currency extends Component {
   formatDollar = dollars => parseFloat(dollars).toLocaleString('en')
 
   addDecimalToNumber = number => {
+    const format = number => {
+      number = +number.toFixed(2)
+      const centsStartingPosition = number.length - 2
+      const dollars = this.removeLeadingZeros(number.substring(0, centsStartingPosition))
+      const formattedDollar = this.formatDollar(dollars)
+      const cents = number.substring(centsStartingPosition)
+      return `${formattedDollar}.${cents}`
+    }
     if (typeof number === 'string') number = +number
-    if (isNaN(number)) number = ''
-    number = +number.toFixed(2)
-    const centsStartingPosition = number.length - 2
-    const dollars = this.removeLeadingZeros(number.substring(0, centsStartingPosition))
-    const formattedDollar = this.formatDollar(dollars)
-    const cents = number.substring(centsStartingPosition)
-    return `${formattedDollar}.${cents}`
+    if (!number) {
+      if (number === 0) return format(number)
+      return number
+    }
+    return format(number)
   }
 
   getDigitsFromValue = (value = '') => value.replace(/(-(?!\d))|[^0-9|-]/g, '') || ''
