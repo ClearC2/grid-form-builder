@@ -3,10 +3,6 @@ import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 
 class Currency extends Component {
-  state = {
-    alignRight: false
-  }
-
   componentDidMount() {
     document.addEventListener('mousedown' , this.onMouseDown)
   }
@@ -50,12 +46,6 @@ class Currency extends Component {
 
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
-    if (this.node.contains(e.target)) {
-      this.setState({alignRight: false})
-      return
-    }
-
-    this.setState({alignRight: true})
   }
 
   removeLeadingZeros = number => number.replace(/^0+([0-9]+)/, '$1')
@@ -165,7 +155,7 @@ class Currency extends Component {
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         minWidth: 90,
         height: inline ? 'auto' : 25,
-        textAlign: this.state.alignRight ? 'right' : 'left',
+        textAlign: 'right',
         ...style
       },
       icon: {
