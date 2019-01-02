@@ -116,7 +116,7 @@ class Email extends Component {
   }
 
   generateValidationError = value => {
-    return (!this.emailValidation(value) && this.state.displayError) ? '* Invalid email' : 'This Field Is Required'
+    if (value) return (!this.emailValidation(value) && this.state.displayError) && '* Invalid email' 
   }
 
   handleOnChange = () => {}
@@ -138,7 +138,7 @@ class Email extends Component {
     let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
 
-    placeholder = warn ? this.generateValidationError(value) : placeholder
+    placeholder = warn ? '* This Field Is Required' : placeholder
     const className = warn ? 'warn-required' : ''
 
     const styles = {
@@ -203,12 +203,12 @@ class Email extends Component {
 
     return (
       connectDropTarget(
-        <div style={styles.container} onMouseUp={this.handleAnywhereClick} ref={node => { this.node = node }}>
+        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}
             <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
-            {value !== '' && <span style={styles.placeholder}>{this.generateValidationError(value)}</span>}
+            <span style={styles.placeholder}>{this.generateValidationError(value)}</span>
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <input
@@ -217,6 +217,7 @@ class Email extends Component {
             onMouseDown={this.onMouseDown}
             onChange={handleOnChange}
             style={styles.input}
+            ref={node => { this.node = node }}
             type='text'
             name={name}
             value={value}
