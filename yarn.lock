@@ -3536,7 +3536,7 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4, graceful-fs@^4.1.6,
 
 "grid-form-builder@git+ssh://git@github.com:ClearC2/grid-form-builder.git":
   version "1.0.0"
-  resolved "git+ssh://git@github.com:ClearC2/grid-form-builder.git#d7ac88d8463cec2995c2168d292c039525fefe8c"
+  resolved "git+ssh://git@github.com:ClearC2/grid-form-builder.git#28bd02bb67c4a6c53c7c224b9bbdbd43fb91b7b6"
   dependencies:
     c2-dialog "git+ssh://git@github.com:ClearC2/c2-dialog.git"
     cleave.js "^1.1.1"

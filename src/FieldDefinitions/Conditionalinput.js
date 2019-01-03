@@ -382,6 +382,7 @@ export default class Conditionalinput extends Component {
     }
  */
   handleOnChange = e => {
+    console.log(e, this.state, this.props, 'state props logggggggggg')
     if (e.target.name === 'condition') {
       this.handleConditionChange(e)
       return
