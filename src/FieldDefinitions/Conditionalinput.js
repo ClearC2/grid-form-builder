@@ -230,7 +230,7 @@ export default class Conditionalinput extends Component {
       })
       return options
     } else {
-      return []
+      return Object.keys(CONDITIONS)
     }
   }
 
