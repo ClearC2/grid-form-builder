@@ -222,7 +222,6 @@ export default class Conditionalinput extends Component {
   inputTypeOptionsList = (type) => {
     const {conditions} = this.state
     let options = []
-    console.log(this.state, 'console logggggggggg')
     Object.keys(conditions).forEach((key) => {
       if (!Set(conditions[key].invalidInputTypes).has(type)) {
         options.push(key)
