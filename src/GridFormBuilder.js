@@ -274,7 +274,7 @@ export default class FormBuilder extends Component {
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
             interactive={interactive}
             tabIndex={+tabIndex}
-            conditionalSearch={this.props.conditionalSearch || this.propss.conditionalFieldValues}
+            conditionalSearch={this.props.conditionalSearch || this.props.conditionalFieldValues}
           />
         )
       }
