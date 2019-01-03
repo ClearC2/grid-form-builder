@@ -220,14 +220,18 @@ export default class Conditionalinput extends Component {
 
   convertListToOptions = (list) => list.map(opt => { return {value: opt, label: opt} })
   inputTypeOptionsList = (type) => {
-    const {conditions} = this.state
-    let options = []
-    Object.keys(conditions).forEach((key) => {
-      if (!Set(conditions[key].invalidInputTypes).has(type)) {
-        options.push(key)
-      }
-    })
-    return options
+    if (this.state) {
+      const {conditions} = this.state
+      let options = []
+      Object.keys(conditions).forEach((key) => {
+        if (!Set(conditions[key].invalidInputTypes).has(type)) {
+          options.push(key)
+        }
+      })
+      return options
+    } else {
+      return []
+    }
   }
 
   calculateModalHeight = () => {
