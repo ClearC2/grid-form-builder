@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import DateTime from 'react-datetime'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
+import moment from 'moment'
 
 export class Datetime extends Component {
   state = {
@@ -57,6 +58,7 @@ export class Datetime extends Component {
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
+    const value = formValues.get(name, '')
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -112,6 +114,7 @@ export class Datetime extends Component {
     className = !warn ? className : className + ' warn-required'
     const inputClass = warn ? 'warn-required' : ''
     placeholder = warn ? '* This Field Is Required' : placeholder
+    const formatValue = value => moment(value).isValid() && moment(value).format('M/D/YYYY hh:mm')
 
     return (
       connectDropTarget(
@@ -124,7 +127,7 @@ export class Datetime extends Component {
           </div>
           <DateTime
             onMouseDown={this.onMouseDown}
-            value={formValues.get(name, '')}
+            value={formatValue(value)}
             onChange={this.handleChange}
             dateFormat='M/D/YYYY'
             className={className}
