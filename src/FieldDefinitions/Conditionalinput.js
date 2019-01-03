@@ -230,7 +230,7 @@ export default class Conditionalinput extends Component {
       })
       return options
     } else {
-      const {conditions} = CONDITIONS
+      const conditions = CONDITIONS
       let options = []
       Object.keys(conditions).forEach((key) => {
         if (!Set(conditions[key].invalidInputTypes).has(type)) {
