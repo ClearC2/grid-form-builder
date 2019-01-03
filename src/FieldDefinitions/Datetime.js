@@ -114,7 +114,7 @@ export class Datetime extends Component {
     className = !warn ? className : className + ' warn-required'
     const inputClass = warn ? 'warn-required' : ''
     placeholder = warn ? '* This Field Is Required' : placeholder
-    const formatValue = value => moment(value).isValid() && moment(value).format('M/D/YYYY hh:mm')
+    const formatValue = value => moment(value).isValid() && moment(value).format('M/D/YYYY hh:mm a')
 
     return (
       connectDropTarget(
