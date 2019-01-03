@@ -122,12 +122,6 @@ export default class Conditionalinput extends Component {
       typeaheadValues: List(),
       conditions: conds
     }
-    this.setState({
-      modalFormValues: Map({
-        condition: this.getConditionFromFormValues() || this.inputTypeOptionsList(this.inputType())[0],
-        ...conditionalFieldValues.toJS()
-      })
-    })
     // convert this.props.formValues to conditional form values
     this.props.handleOnChange({
       target: {
@@ -137,6 +131,14 @@ export default class Conditionalinput extends Component {
           values: valueList
         })
       }
+    })
+  }
+  componentDidMount () {
+    this.setState({
+      modalFormValues: Map({
+        condition: this.getConditionFromFormValues() || this.inputTypeOptionsList(this.inputType())[0],
+        ...conditionalFieldValues.toJS()
+      })
     })
   }
 
