@@ -114,7 +114,7 @@ export default class Conditionalinput extends Component {
     }
     this.state = {
       modalFormValues: Map({
-        condition: this.getConditionFromFormValues(),
+        condition: this.getConditionFromFormValues() || this.inputTypeOptionsList(this.inputType())[0],
         ...conditionalFieldValues.toJS()
       }),
       values: List(),
@@ -131,14 +131,6 @@ export default class Conditionalinput extends Component {
           values: valueList
         })
       }
-    })
-  }
-  componentDidMount () {
-    this.setState({
-      modalFormValues: Map({
-        condition: this.getConditionFromFormValues() || this.inputTypeOptionsList(this.inputType())[0],
-        ...conditionalFieldValues.toJS()
-      })
     })
   }
 
@@ -238,7 +230,14 @@ export default class Conditionalinput extends Component {
       })
       return options
     } else {
-      return Object.keys(CONDITIONS)
+      const {conditions} = CONDITIONS
+      let options = []
+      Object.keys(conditions).forEach((key) => {
+        if (!Set(conditions[key].invalidInputTypes).has(type)) {
+          options.push(key)
+        }
+      })
+      return options
     }
   }
 
