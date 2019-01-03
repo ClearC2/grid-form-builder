@@ -72,6 +72,7 @@ export default class FormBuilder extends Component {
     inline: PropTypes.bool,
     handleSubmit: PropTypes.func,
     conditionalSearch: PropTypes.bool,
+    conditionalFieldValues: PropTypes.bool,
     noStore: PropTypes.bool
   }
 
@@ -273,7 +274,7 @@ export default class FormBuilder extends Component {
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
             interactive={interactive}
             tabIndex={+tabIndex}
-            conditionalSearch={this.props.conditionalSearch}
+            conditionalSearch={this.props.conditionalSearch || this.propss.conditionalFieldValues}
           />
         )
       }

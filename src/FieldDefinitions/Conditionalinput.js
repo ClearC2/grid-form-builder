@@ -382,7 +382,6 @@ export default class Conditionalinput extends Component {
     }
  */
   handleOnChange = e => {
-    console.log(e, this.state, this.props, 'state props logggggggggg')
     if (e.target.name === 'condition') {
       this.handleConditionChange(e)
       return
@@ -527,7 +526,7 @@ export default class Conditionalinput extends Component {
             <span>&times;</span>
           </button>
           <div style={{width: '90%', height: '70%', marginTop: '30px'}} >
-            <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.modalFormValues} handleOnChange={this.handleOnChange} draggable={false} />
+            <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.modalFormValues} conditionalFieldValues={true} handleOnChange={this.handleOnChange} draggable={false} />
           </div>
           <div>
             <button type='button' className='btn-primary pull-right' style={{paddingRight: '10px', paddingTop: '5px', marginRight: '30px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
