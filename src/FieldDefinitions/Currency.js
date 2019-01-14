@@ -3,11 +3,18 @@ import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 
 class Currency extends Component {
-  componentDidMount() {
+  state = {
+    format: false
+  }
+
+  allowFormat = () => this.setState(() => ({format: true}))
+  blockFormat = () => this.setState(() => ({format: false}))
+
+  componentDidMount () {
     document.addEventListener('mousedown' , this.onMouseDown)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     document.removeEventListener('mousedown', this.onMouseDown)
   }
 
@@ -85,16 +92,17 @@ class Currency extends Component {
     return this.addDecimalToNumber(digitsWithPadding)
   }
 
-  handleOnChange = val => {
+  handleOnChange = e => {
     const {handleOnChange = () => null} = this.props
-    const name = val.target.name
-    const value = this.toCurrency(val.target.value)
-    const e = {target: {name, value}}
-
     handleOnChange(e)
   }
 
-  valueFormatter = (value = '') => value && ('$' + this.toCurrency(value))
+  valueFormatter = (value = '') => {
+    if (value && this.state.format) {
+      return '$' + this.toCurrency(value)
+    }
+    return value
+  }
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
@@ -188,6 +196,8 @@ class Currency extends Component {
             value={this.valueFormatter(value)}
             disabled={disabled}
             onKeyDown={onKeyDown}
+            onFocus={this.blockFormat}
+            onBlur={this.allowFormat}
           />
         </div>
       )
