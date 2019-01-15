@@ -4,7 +4,7 @@ import {DropTarget} from 'react-dnd'
 
 class Currency extends Component {
   state = {
-    format: false
+    format: true
   }
 
   allowFormat = () => this.setState(() => ({format: true}))
