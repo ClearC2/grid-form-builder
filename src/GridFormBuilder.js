@@ -25,6 +25,7 @@ import Phone from './FieldDefinitions/Phone'
 import Icon from './FieldDefinitions/Icon'
 import Metadata from './FieldDefinitions/Metadata'
 import Total from './FieldDefinitions/Total'
+import Percentage from './FieldDefinitions/Percentage'
 
 let IconLibrary = {}
 export function initComponentIconLibrary (defs = {}) {
@@ -79,7 +80,8 @@ let FormComponents = {
   Icon,
   Number,
   ImportSelect,
-  Total
+  Total,
+  Percentage
 }
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
