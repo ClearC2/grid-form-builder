@@ -58,10 +58,23 @@ class Total extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
 
+  calculatePriceTimesDiscount = (props) => {
+    props = props || this.props
+    const priceString = String(props.formValues.get('price') || '').replace(/,/g, '')
+    const price = this.toNumber(priceString)
+    const discountString = String(props.formValues.get('discount') || '').replace(/%/g, '')
+    let discount = this.toNumber(discountString)
+    discount = discount >= 0 && discount <= 100 ? discount / 100 : 0
+    const discountAmount = price * discount
+    return price - discountAmount
+  }
   calculateNumericValue = (props) => {
     props = props || this.props
+    const {fields = [], formula} = props.config
+    if (formula === 'price x discount') {
+      return this.calculatePriceTimesDiscount(props)
+    }
     let total = 0
-    const {fields = []} = props.config
     fields.forEach(field => {
       let value = String(props.formValues.get(field) || '').replace(/,/g, '')
       total += this.toNumber(value)
@@ -91,9 +104,7 @@ class Total extends Component {
       config = {},
       Icon = null,
       requiredWarning,
-      connectDropTarget,
-      cascadingKeyword,
-      CascadeIcon
+      connectDropTarget
     } = this.props
 
     const {
@@ -147,7 +158,7 @@ class Total extends Component {
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis',
         fontSize: inline ? '10pt' : '8pt',
-        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
+        color: '#383e4b',
         background: 'transparent',
         marginRight: 5,
         ...labelStyle
@@ -196,16 +207,9 @@ class Total extends Component {
               </div>
             )}
             {Icon && <Icon style={styles.icon} />}
-            <strong
-              style={styles.label}
-              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
-              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
-            >
+            <strong style={styles.label}>
               {label}
             </strong>
-            {!!cascadingKeyword && !!CascadeIcon && (
-              <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
-            )}
           </div>
           <input
             className={className}
