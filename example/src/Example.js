@@ -53,9 +53,37 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
               'config': {
-                'name': 'currencyinput',
+                'name': 'price',
                 'label': 'Currency Input',
                 'type': 'currency'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
+              'config': {
+                'name': 'tax',
+                'label': 'Tax Input',
+                'type': 'currency'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
+              'config': {
+                'name': 'discount',
+                'label': 'Discount',
+                'type': 'percentage'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
+              'config': {
+                'name': 'total',
+                'label': 'Total Currency Input',
+                'type': 'total',
+                'formula': 'price x discount'
               }
             },
             {
