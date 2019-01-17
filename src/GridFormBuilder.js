@@ -145,7 +145,7 @@ export default class FormBuilder extends Component {
       inputs.on('blur', e => {
         $(e.target).parents('.react-grid-item').removeClass('react-grid-item-focus-within')
       })
-    }, 1000)
+    }, 500)
   }
 
   detatchInputFocusListeners = () => {
