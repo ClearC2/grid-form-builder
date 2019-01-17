@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+import $ from 'jquery'
 import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
 import Input from './FieldDefinitions/Input'
@@ -113,6 +114,7 @@ export default class FormBuilder extends Component {
     super(props)
     FormBuilder.count++
     this.state = {
+      id: `gfb-${Math.floor(Math.random() * 10000) + 1}`,
       requiredWarning: !!props.validate,
       myOffset: FormBuilder.count
     }
@@ -122,6 +124,35 @@ export default class FormBuilder extends Component {
     if (p.validate !== this.props.validate) {
       this.setState({requiredWarning: this.props.validate})
     }
+  }
+
+  componentWillUnmount = () => {
+    this.detatchInputFocusListeners()
+  }
+
+  attachBuffer = null
+  attachInputFocusListeners = () => {
+    clearTimeout(this.attachBuffer)
+    this.attachBuffer = null
+    this.attachBuffer = setTimeout(() => {
+      const {id} = this.state
+      const inputs = $(`#${id} :input`)
+      inputs.off('focus')
+      inputs.off('blur')
+      inputs.on('focus', e => {
+        $(e.target).parents('.react-grid-item').addClass('react-grid-item-focus-within')
+      })
+      inputs.on('blur', e => {
+        $(e.target).parents('.react-grid-item').removeClass('react-grid-item-focus-within')
+      })
+    }, 1000)
+  }
+
+  detatchInputFocusListeners = () => {
+    const {id} = this.state
+    const inputs = $(`#${id} :input`)
+    inputs.off('focus')
+    inputs.off('blur')
   }
 
   onSubmit = () => {
@@ -211,6 +242,7 @@ export default class FormBuilder extends Component {
   }
 
   render = () => {
+    this.attachInputFocusListeners()
     let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true} = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
@@ -309,7 +341,7 @@ export default class FormBuilder extends Component {
     let P = {}
     if (this.props.noStore) P.store = {subscribe: () => {}, getState: () => Map(), dispatch: () => {}}
     return (
-      <div className='grid-form-builder-parent' style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
+      <div id={this.state.id} className='grid-form-builder-parent' style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
         <WidgetGrid {...P} compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={rowHeight || (inline ? 27 : 45)}>
           {normalFields}
         </WidgetGrid>

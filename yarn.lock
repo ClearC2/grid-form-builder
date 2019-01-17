@@ -3535,9 +3535,11 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4, graceful-fs@^4.1.6,
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
 "grid-form-builder@git+ssh://git@github.com:ClearC2/grid-form-builder.git":
-  version "1.0.0"
+  version "1.0.1"
   resolved "git+ssh://git@github.com:ClearC2/grid-form-builder.git#28bd02bb67c4a6c53c7c224b9bbdbd43fb91b7b6"
   dependencies:
+    "@ckeditor/ckeditor5-build-classic" "^11.0.1"
+    "@ckeditor/ckeditor5-react" "^1.0.0-beta.1"
     c2-dialog "git+ssh://git@github.com:ClearC2/c2-dialog.git"
     cleave.js "^1.1.1"
     moment "^2.20.1"
@@ -4393,7 +4395,7 @@ java-properties@^0.2.9:
   version "0.2.10"
   resolved "https://registry.yarnpkg.com/java-properties/-/java-properties-0.2.10.tgz#2551560c25fa1ad94d998218178f233ad9b18f60"
 
-jquery@^3.2.1:
+jquery@^3.2.1, jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 

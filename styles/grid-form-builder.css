@@ -281,3 +281,7 @@ div.grid-form-builder-parent .ck.ck-content.ck-editor__editable.ck-rounded-corne
 div.grid-form-builder-parent .react-grid-item:focus-within, div.grid-form-builder-parent .react-grid-item:active {
   z-index: 2;
 }
+
+.react-grid-item-focus-within {
+  z-index: 3 !important;
+}

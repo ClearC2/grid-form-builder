@@ -95,6 +95,7 @@
     "@ckeditor/ckeditor5-react": "^1.0.0-beta.1",
     "c2-dialog": "git+ssh://git@github.com:ClearC2/c2-dialog.git",
     "cleave.js": "^1.1.1",
+    "jquery": "^3.3.1",
     "moment": "^2.20.1",
     "node-sass": "^4.7.2",
     "prop-types": "^15.0.0",
