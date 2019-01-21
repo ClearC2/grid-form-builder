@@ -21,5 +21,6 @@ export {default as Richtextarea} from './FieldDefinitions/Richtextarea'
 export {default as Select} from './FieldDefinitions/Select'
 export {default as Textarea} from './FieldDefinitions/Textarea'
 export {default as Time} from './FieldDefinitions/Time'
+export {default as Percentage} from './FieldDefinitions/Percentage'
 
 setPortalNode(document.getElementById('dialogs'))
