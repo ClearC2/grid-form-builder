@@ -73,17 +73,17 @@ export default class Example extends Component {
               'config': {
                 'name': 'discount',
                 'label': 'Discount',
-                'type': 'percentage'
+                'type': 'currency'
               }
             },
             {
               'type': 'field',
               'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
               'config': {
-                'name': 'total',
+                'name': 'cfd_total',
                 'label': 'Total Currency Input',
                 'type': 'total',
-                'formula': 'quantity x price x discount'
+                'formula': '(quantity x price) - discount'
               }
             },
             {
