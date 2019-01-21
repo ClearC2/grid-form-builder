@@ -54,7 +54,7 @@ export default class Example extends Component {
               'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
               'config': {
                 'name': 'price',
-                'label': 'Currency Input',
+                'label': 'Price (Currency Input)',
                 'type': 'currency'
               }
             },
@@ -62,9 +62,9 @@ export default class Example extends Component {
               'type': 'field',
               'dimensions': {'x': 6, 'y': 1, 'h': 1, 'w': 2},
               'config': {
-                'name': 'tax',
-                'label': 'Tax Input',
-                'type': 'currency'
+                'name': 'quantity',
+                'label': 'Quantity',
+                'type': 'number'
               }
             },
             {
@@ -83,7 +83,7 @@ export default class Example extends Component {
                 'name': 'total',
                 'label': 'Total Currency Input',
                 'type': 'total',
-                'formula': 'price x discount'
+                'formula': 'quantity x price x discount'
               }
             },
             {
