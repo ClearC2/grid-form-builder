@@ -83,7 +83,7 @@ export default class Example extends Component {
                 'name': 'cfd_total',
                 'label': 'Total Currency Input',
                 'type': 'total',
-                'formula': '(quantity x price) - discount'
+                'formula': '(quantity x price) - (quantity x discount)'
               }
             },
             {

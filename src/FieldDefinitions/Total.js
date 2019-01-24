@@ -67,12 +67,12 @@ class Total extends Component {
     let discount = this.toNumber(discountString)
     const quantityString = String(formValues.get('quantity') || '').replace(/,/g, '')
     const quantity = this.toNumber(quantityString)
-    return (quantity * price) - discount
+    return (quantity * price) - (quantity * discount)
   }
   calculateNumericValue = (props) => {
     props = props || this.props
     const {fields = [], formula} = props.config
-    if (formula === '(quantity x price) - discount') {
+    if (formula === '(quantity x price) - (quantity x discount)') {
       return this.calculatePriceTimesDiscount(props)
     }
     let total = 0
