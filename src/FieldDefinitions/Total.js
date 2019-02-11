@@ -5,6 +5,12 @@ import {DropTarget} from 'react-dnd'
 class Total extends Component {
   componentDidMount () {
     document.addEventListener('mousedown', this.onMouseDown)
+    this.props.handleOnChange({
+      target: {
+        name: this.props.config.name,
+        value: this.calculateNumericValue(this.props).toFixed(2)
+      }
+    })
   }
 
   componentWillUnmount () {
