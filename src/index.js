@@ -1,4 +1,3 @@
-import {setPortalNode} from 'c2-dialog'
 export {default as reducer} from './redux'
 export {default as FormDroppable} from './FormDroppable'
 export {default as FormBuilder, updateFormValues, initCustomFormComponents, initComponentIconLibrary} from './GridFormBuilder'
@@ -22,5 +21,3 @@ export {default as Select} from './FieldDefinitions/Select'
 export {default as Textarea} from './FieldDefinitions/Textarea'
 export {default as Time} from './FieldDefinitions/Time'
 export {default as Percentage} from './FieldDefinitions/Percentage'
-
-setPortalNode(document.getElementById('dialogs'))
