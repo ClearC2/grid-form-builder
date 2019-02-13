@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
+import {setPortalNode} from 'c2-dialog'
 import store from './store'
 import Example from './Example'
 import {initFormBuilderAjax} from '../../src/config'
@@ -16,6 +17,8 @@ import 'react-datetime/css/react-datetime.css'
 import '../../styles/grid-form-builder.css'
 
 import './Icons'
+
+setPortalNode(document.getElementById('dialogs'))
 
 initFormBuilderAjax(config => { config.ajax = ajax })
 

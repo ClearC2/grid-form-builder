@@ -1,6 +1,6 @@
 {
   "name": "grid-form-builder",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Form Builder built on top of React Grid Layout",
   "repository": {
     "type": "git",
@@ -56,6 +56,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.16.0",
     "body-parser": "^1.18.2",
+    "c2-dialog": "ClearC2/c2-dialog#^2.0.0",
     "c2-semantic-release": "git+https://github.com/ClearC2/c2-semantic-release.git",
     "concurrently": "^3.5.1",
     "cors": "^2.8.4",
@@ -88,12 +89,12 @@
     "moment": "^2.20.1",
     "react": "^15.0.0 || ^16.0.0",
     "react-dom": "^15.0.0 || ^16.0.0",
-    "react-redux": "^4.0.0 || ^5.0.0"
+    "react-redux": "^4.0.0 || ^5.0.0",
+    "c2-dialog": "ClearC2/c2-dialog#^2.0.0"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^11.0.1",
     "@ckeditor/ckeditor5-react": "^1.0.0-beta.1",
-    "c2-dialog": "git+ssh://git@github.com:ClearC2/c2-dialog.git",
     "cleave.js": "^1.1.1",
     "jquery": "^3.3.1",
     "moment": "^2.20.1",
