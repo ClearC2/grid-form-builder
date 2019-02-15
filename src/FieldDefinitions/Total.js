@@ -5,12 +5,6 @@ import {DropTarget} from 'react-dnd'
 class Total extends Component {
   componentDidMount () {
     document.addEventListener('mousedown', this.onMouseDown)
-    this.props.handleOnChange({
-      target: {
-        name: this.props.config.name,
-        value: this.calculateNumericValue(this.props).toFixed(2)
-      }
-    })
   }
 
   componentWillUnmount () {
@@ -31,16 +25,6 @@ class Total extends Component {
           target: config
         })
       }
-    }
-    const oldValue = this.calculateNumericValue(p)
-    const newValue = this.calculateNumericValue(this.props)
-    if (newValue !== oldValue) {
-      this.props.handleOnChange({
-        target: {
-          name: this.props.config.name,
-          value: newValue.toFixed(2)
-        }
-      })
     }
   }
 
@@ -101,8 +85,8 @@ class Total extends Component {
       })
   }
   getInputValue = () => {
-    const {formValues, config} = this.props
-    return this.formatNumber(formValues.get(config.name))
+    const value = this.calculateNumericValue()
+    return this.formatNumber(value)
   }
   render = () => {
     const {
