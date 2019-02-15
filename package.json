@@ -69,7 +69,7 @@
     "immutable": "^3.8.2",
     "lodash.delay": "^4.1.1",
     "nodemon": "^1.17.2",
-    "query-builder": "git+ssh://git@github.com:ClearC2/query-builder.git",
+    "query-builder": "ClearC2/query-builder",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
