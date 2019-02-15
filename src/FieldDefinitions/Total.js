@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
+import hoistNonReactStatic from 'hoist-non-react-statics'
 
 class Total extends Component {
   static calculatePriceTimesDiscount = (props) => {
@@ -238,4 +239,8 @@ const boxTarget = {
   }
 }
 
-export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Total)
+const ConnectedTotal = DropTarget('FormBuilderDraggable', boxTarget, collect)(Total)
+
+hoistNonReactStatic(ConnectedTotal, Total)
+
+export default ConnectedTotal
