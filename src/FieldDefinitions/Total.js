@@ -3,6 +3,41 @@ import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 
 class Total extends Component {
+  static calculatePriceTimesDiscount = (props) => {
+    const {formValues} = props
+    const priceString = String(formValues.get('price') || '').replace(/,/g, '')
+    const price = Total.toNumber(priceString)
+    const discountString = String(formValues.get('discount') || '').replace(/%/g, '')
+    let discount = Total.toNumber(discountString)
+    const quantityString = String(formValues.get('quantity') || '').replace(/,/g, '')
+    const quantity = Total.toNumber(quantityString)
+    return (quantity * price) - (quantity * discount)
+  }
+  static calculateNumericValue = (props) => {
+    const {fields = [], formula} = props.config
+    if (formula === '(quantity x price) - (quantity x discount)') {
+      return Total.calculatePriceTimesDiscount(props)
+    }
+    let total = 0
+    fields.forEach(field => {
+      let value = String(props.formValues.get(field) || '').replace(/,/g, '')
+      total += Total.toNumber(value)
+    })
+    return total
+  }
+  static toNumber (value) {
+    value = Number(value)
+    return isNaN(value) ? 0 : value
+  }
+  static formatNumber (value) {
+    return this
+      .toNumber(value)
+      .toLocaleString('en', {
+        style: 'currency',
+        currency: 'USD'
+      })
+  }
+
   componentDidMount () {
     document.addEventListener('mousedown', this.onMouseDown)
   }
@@ -48,46 +83,11 @@ class Total extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
 
-  calculatePriceTimesDiscount = (props) => {
-    props = props || this.props
-    const {formValues} = props
-    const priceString = String(formValues.get('price') || '').replace(/,/g, '')
-    const price = this.toNumber(priceString)
-    const discountString = String(formValues.get('discount') || '').replace(/%/g, '')
-    let discount = this.toNumber(discountString)
-    const quantityString = String(formValues.get('quantity') || '').replace(/,/g, '')
-    const quantity = this.toNumber(quantityString)
-    return (quantity * price) - (quantity * discount)
-  }
-  calculateNumericValue = (props) => {
-    props = props || this.props
-    const {fields = [], formula} = props.config
-    if (formula === '(quantity x price) - (quantity x discount)') {
-      return this.calculatePriceTimesDiscount(props)
-    }
-    let total = 0
-    fields.forEach(field => {
-      let value = String(props.formValues.get(field) || '').replace(/,/g, '')
-      total += this.toNumber(value)
-    })
-    return total
-  }
-  toNumber (value) {
-    value = Number(value)
-    return isNaN(value) ? 0 : value
-  }
-  formatNumber (value) {
-    return this
-      .toNumber(value)
-      .toLocaleString('en', {
-        style: 'currency',
-        currency: 'USD'
-      })
-  }
   getInputValue = () => {
-    const value = this.calculateNumericValue()
-    return this.formatNumber(value)
+    const value = Total.calculateNumericValue(this.props)
+    return Total.formatNumber(value)
   }
+
   render = () => {
     const {
       inline,
