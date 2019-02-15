@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/ClearC2/grid-form-builder/compare/v1.0.0...v1.0.1) (2019-02-15)
+
+
+### Bug Fixes
+
+* **total:** add Total to package export ([2bde2a7](https://github.com/ClearC2/grid-form-builder/commit/2bde2a7))
+
 # 1.0.0 (2019-02-15)
 
 
