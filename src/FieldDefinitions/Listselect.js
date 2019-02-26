@@ -6,15 +6,20 @@ import {DropTarget} from 'react-dnd'
 export class Listselect extends Component {
   constructor (props) {
     super(props)
-    const {field, formValues = Map(), opts = {}} = props
-    const value = formValues.get(field, List())
-    const {options = List()} = opts
-    let currentVals = List()
-    options.map(option => {
-      if (value.indexOf(option) > -1) currentVals = currentVals.push(option)
-    })
+    let incomingValues = props.formValues.get(props.config.name, '')
+    if (incomingValues instanceof Map) {
+      incomingValues = props.formValues.get(props.config.name, Map())
+      if (incomingValues instanceof Map) {
+        incomingValues = incomingValues.get('values', [])
+        if (incomingValues instanceof List) {
+          incomingValues = incomingValues.toJS()
+        }
+      }
+    }
+    if (typeof incomingValues === 'string') incomingValues = incomingValues.split('¤')
+    incomingValues = fromJS(incomingValues)
     this.state = {
-      value: currentVals
+      value: incomingValues
     }
   }
 
@@ -30,7 +35,7 @@ export class Listselect extends Component {
     } else {
       value = value.push(updatingValue)
     }
-    this.setState({value})
+    this.setState(() => ({value}))
   }
 
   selectAllOptions = () => {
