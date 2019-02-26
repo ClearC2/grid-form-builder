@@ -99,7 +99,7 @@ class Input extends Component {
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         minWidth: 90,
         height: inline ? 'auto' : 25,
-        color: !interactive ? 'green' : 'black',
+        color: !interactive ? 'green' : '#333',
         ...style
       },
       icon: {
