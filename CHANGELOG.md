@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/ClearC2/grid-form-builder/compare/v1.0.1...v1.1.0) (2019-02-26)
+
+
+### Features
+
+* **multiselect:** multiselect values now get sent back to the implementor as an array ([339191f](https://github.com/ClearC2/grid-form-builder/commit/339191f))
+
 ## [1.0.1](https://github.com/ClearC2/grid-form-builder/compare/v1.0.0...v1.0.1) (2019-02-15)
 
 
