@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/ClearC2/grid-form-builder/compare/v1.1.0...v1.2.0) (2019-02-26)
+
+
+### Features
+
+* **input:** default color is now [#333](https://github.com/ClearC2/grid-form-builder/issues/333) instead of black ([acb25af](https://github.com/ClearC2/grid-form-builder/commit/acb25af))
+* **listselect:** list select can now accept values as a string or an array, but only returns values as an array ([10124dd](https://github.com/ClearC2/grid-form-builder/commit/10124dd))
+
 # [1.1.0](https://github.com/ClearC2/grid-form-builder/compare/v1.0.1...v1.1.0) (2019-02-26)
 
 
