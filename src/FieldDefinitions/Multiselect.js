@@ -88,7 +88,7 @@ export class Multiselect extends Component {
       if (this.props.conditionalSearch) {
         this.props.handleOnChange({target: {name: this.props.config.name, value: fromJS({condition: 'is one of', values: List(e.map(val => val.value))})}})
       } else {
-        this.props.handleOnChange({target: {name: this.props.config.name, value: e.map(val => val.value).join('¤')}})
+        this.props.handleOnChange({target: {name: this.props.config.name, value: fromJS(e.map(val => val.value))}})
       }
     }
   }

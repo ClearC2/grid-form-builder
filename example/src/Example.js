@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map} from 'immutable'
+import {Map, List} from 'immutable'
 import {FormBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import ConditionTable from 'query-builder'
@@ -14,7 +14,7 @@ export default class Example extends Component {
       textareatest: '1234 Main Street',
       datetest: '65165165',
       meta_created_date: 'swiggity swoogity here comes the moogity',
-      multiselecttest: 'Customer Service¤Executive Meeting'
+      multiselecttest: List(['Customer Service', 'Executive Meeting'])
     }),
     inline: false,
     draggable: false,
@@ -668,6 +668,7 @@ export default class Example extends Component {
 
   render = () => {
     const {formSchema, isInvalidWarning} = this.state
+    console.log(this.state.formValues)
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is false
       return (<div style={{display: 'flex'}}>
