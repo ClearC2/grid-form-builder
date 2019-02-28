@@ -122,7 +122,7 @@ class Email extends Component {
   handleOnChange = () => {}
 
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = this.handleOnChange, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), handleOnChange = this.handleOnChange, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
     if (!name) {
       return null
@@ -223,6 +223,7 @@ class Email extends Component {
             value={value}
             disabled={disabled}
             onKeyDown={onKeyDown}
+            tabIndex={tabIndex}
           />
         </div>
       )
