@@ -27,6 +27,7 @@ import Icon from './FieldDefinitions/Icon'
 import Metadata from './FieldDefinitions/Metadata'
 import Total from './FieldDefinitions/Total'
 import Percentage from './FieldDefinitions/Percentage'
+import {emailValidator} from './utils'
 
 let IconLibrary = {}
 export function initComponentIconLibrary (defs = {}) {
@@ -184,12 +185,19 @@ export default class FormBuilder extends Component {
     let reasons = []
     layout.map(field => {
       const {config = {}} = field
-      const {required = false, name, label = name} = config
+      const {required = false, name, label = name, type} = config
       if (required && formValues.get(name, '').length === 0) {
         reasons.push({
           reason: 'required',
           message: `${label} cannot be blank.`,
           description: `The field ${name} is marked as required, but its value is empty.`
+        })
+      }
+      if (type === 'email' && !emailValidator(formValues.get(name, ''))) {
+        reasons.push({
+          reason: 'incorrect format',
+          message: `${label} is invalid`,
+          description: `The field ${name} has an invalid email`
         })
       }
     })
