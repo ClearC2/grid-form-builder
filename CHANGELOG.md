@@ -1,3 +1,15 @@
+# [1.3.0](https://github.com/ClearC2/grid-form-builder/compare/v1.2.0...v1.3.0) (2019-03-01)
+
+
+### Bug Fixes
+
+* **email:** fix tab index on email field ([5e9c43d](https://github.com/ClearC2/grid-form-builder/commit/5e9c43d))
+
+
+### Features
+
+* **validation:** cannot save when email is invalid ([753bf7e](https://github.com/ClearC2/grid-form-builder/commit/753bf7e))
+
 # [1.2.0](https://github.com/ClearC2/grid-form-builder/compare/v1.1.0...v1.2.0) (2019-02-26)
 
 
