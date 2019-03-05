@@ -4,14 +4,18 @@ import ReactSelect from 'react-select'
 import {DropTarget} from 'react-dnd'
 
 export class Multiselect extends Component {
-  constructor (props) {
-    super(props)
-    const {config = {}} = props
+  state = {
+    fieldValues: [],
+    builtOptions: [],
+  }
+
+  static getDerivedStateFromProps(prevProps) {
+    const {config = {}} = prevProps
     const {keyword = {}} = config
     const {options = []} = keyword
-    let incomingValues = props.formValues.get(props.config.name, '')
+    let incomingValues = prevProps.formValues.get(prevProps.config.name, '')
     if (incomingValues instanceof Map) {
-      incomingValues = props.formValues.get(props.config.name, Map())
+      incomingValues = prevProps.formValues.get(prevProps.config.name, Map())
       if (incomingValues instanceof Map) {
         incomingValues = incomingValues.get('values', [])
         if (incomingValues instanceof List) {
@@ -33,11 +37,15 @@ export class Multiselect extends Component {
         }
       })
     }
-    if (typeof incomingValues.toJS === 'function') incomingValues = incomingValues.toJS()
-    this.state = {
+    if (typeof incomingValues.toJS === 'function') {
+      incomingValues = incomingValues.toJS()
+    }
+
+    return {
       fieldValues: incomingValues || [],
       builtOptions: options
     }
+
   }
 
   componentDidUpdate = p => {
@@ -71,13 +79,6 @@ export class Multiselect extends Component {
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
     handleCascadeKeywordClick(config)
-  }
-
-  componentWillReceiveProps (props) {
-    let val = props.formValues.get(props.config.name, null)
-    if (!val && this.state.fieldValues !== []) {
-      this.setState({fieldValues: []})
-    }
   }
 
   onChange = (e) => {
