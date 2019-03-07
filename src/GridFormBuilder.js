@@ -229,6 +229,7 @@ export default class FormBuilder extends Component {
         field.config.type = 'conditionalInput'
       }
     }
+    field.config.required = false
     field.config.readonly = false
     field.config.disabled = false
     return field
