@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/ClearC2/grid-form-builder/compare/v1.3.0...v1.3.1) (2019-03-08)
+
+
+### Bug Fixes
+
+* **Select:** fix issue where select inputs cannot be cleared ([66c48aa](https://github.com/ClearC2/grid-form-builder/commit/66c48aa))
+
 # [1.3.0](https://github.com/ClearC2/grid-form-builder/compare/v1.2.0...v1.3.0) (2019-03-01)
 
 
