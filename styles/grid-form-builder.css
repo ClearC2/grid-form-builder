@@ -285,3 +285,8 @@ div.grid-form-builder-parent .react-grid-item:focus-within, div.grid-form-builde
 .react-grid-item-focus-within {
   z-index: 3 !important;
 }
+
+/* https://github.com/ClearC2/bleu/issues/1154 */
+:-moz-ui-invalid {
+  box-shadow: none;
+}
