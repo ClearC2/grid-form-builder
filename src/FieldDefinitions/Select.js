@@ -40,13 +40,16 @@ export class Select extends Component {
     handleCascadeKeywordClick(config)
   }
 
+  handleOnChange = () => {}
+
   onChange = e => {
-    const {config = {}, handleOnChange = () => null} = this.props
+    const {config = {}, handleOnChange = this.handleOnChange} = this.props
     const {name = null} = config
+    const value = e === null ? e = '' : e.value
     handleOnChange({
       target: {
         name,
-        value: e.value
+        value
       }
     })
   }
