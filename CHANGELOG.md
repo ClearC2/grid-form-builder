@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/ClearC2/grid-form-builder/compare/v1.3.1...v1.3.2) (2019-03-11)
+
+
+### Bug Fixes
+
+* **firefox:** prevent red highlight on inputFields ([a38c6da](https://github.com/ClearC2/grid-form-builder/commit/a38c6da))
+
 ## [1.3.1](https://github.com/ClearC2/grid-form-builder/compare/v1.3.0...v1.3.1) (2019-03-08)
 
 
