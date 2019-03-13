@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/ClearC2/grid-form-builder/compare/v1.4.0...v1.5.0) (2019-03-13)
+
+
+### Features
+
+* **add-rte-image:** add rte image uploader ([ebb2098](https://github.com/ClearC2/grid-form-builder/commit/ebb2098))
+
 # [1.4.0](https://github.com/ClearC2/grid-form-builder/compare/v1.3.2...v1.4.0) (2019-03-13)
 
 
