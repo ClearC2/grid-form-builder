@@ -252,7 +252,8 @@ export default class FormBuilder extends Component {
 
   render = () => {
     this.attachInputFocusListeners()
-    let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true} = this.props
+    let {
+      formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true} = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
@@ -272,7 +273,8 @@ export default class FormBuilder extends Component {
         field = this.convertFieldToSearch(field)
       }
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
-      let {type = 'input', icon = '', cascade = {}, tabindex: tabIndex} = config
+      // AutoComplete OFF does not turn off autocomplete browser feature, you need to pass anything other than 'off' to turn off autocomplete because latest browsers stopped supporting 'off'
+      let {type = 'input', icon = '', cascade = {}, tabindex: tabIndex, autoComplete = 'off'} = config
       if (!tabIndex) {
         while (specifiedTabs.has(tabNumber)) {
           tabNumber++
@@ -303,6 +305,7 @@ export default class FormBuilder extends Component {
       if (Type === 'Customcomponent') {
         normalFields.push(
           <Component
+            autoComplete={autoComplete}
             requiredWarning={requiredWarning}
             rowHeight={rowHeight}
             inline={inline}
@@ -325,6 +328,7 @@ export default class FormBuilder extends Component {
       } else {
         normalFields.push(
           <Component
+            autoComplete={autoComplete}
             requiredWarning={requiredWarning}
             rowHeight={rowHeight}
             inline={inline}
