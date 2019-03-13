@@ -9,6 +9,7 @@ import Email from './FieldDefinitions/Email'
 import Currency from './FieldDefinitions/Currency'
 import Textarea from './FieldDefinitions/Textarea'
 import Richtextarea from './FieldDefinitions/Richtextarea'
+import Richtextareaquill from './FieldDefinitions/Richtextareaquill'
 import Datetime from './FieldDefinitions/Datetime'
 import Date from './FieldDefinitions/Date'
 import Time from './FieldDefinitions/Time'
@@ -65,6 +66,7 @@ let FormComponents = {
   Currency,
   Textarea,
   Richtextarea,
+  Richtextareaquill,
   Datetime,
   Time,
   Date,
@@ -250,9 +252,18 @@ export default class FormBuilder extends Component {
     handleCascade(e)
   }
 
+  handleRTEImageClick = e => {
+    const {handleRTEImageClick = () => null} = this.props
+    handleRTEImageClick()
+  }
+
   render = () => {
     this.attachInputFocusListeners()
-    let {formSchema = Map(), formValues = Map(), handleOnChange = () => {}, formName = 'form', draggable = false, inline = false, style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true} = this.props
+    let {formSchema = Map(), formValues = Map(),
+      handleOnChange = () => {}, formName = 'form', draggable = false, inline = false,
+      style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true,
+      handleRTEImageClick = () => {},
+      rteImageUrl} = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
@@ -317,6 +328,8 @@ export default class FormBuilder extends Component {
             cascadingKeyword={keyword}
             CascadeIcon={cascadeIcon}
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
+            handleRTEImageClick={handleRTEImageClick}
+            rteImageUrl={rteImageUrl}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
             tabIndex={+tabIndex}
@@ -338,6 +351,8 @@ export default class FormBuilder extends Component {
             cascadingKeyword={keyword}
             CascadeIcon={cascadeIcon}
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
+            handleRTEImageClick={handleRTEImageClick}
+            rteImageUrl={rteImageUrl}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
             interactive={interactive}

@@ -4,7 +4,7 @@ import {FormBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import {ConditionalTable} from 'query-builder'
 
-const TEST_SEARCH = true // for conditional search forms
+const TEST_SEARCH = false // for conditional search forms
 
 export default class Example extends Component {
   state = {
@@ -115,7 +115,20 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 1, 'h': 10, 'w': 6},
+              'config': {
+                'name': 'rich-text-input',
+                'label': 'Rich Text Input',
+                'type': 'richtextareaquill',
+                'cascade': {
+                  'keyword': 'C2_PEOPLE_SOMETHING',
+                  'icon': 'tree'
+                }
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 2, 'h': 1, 'w': 6},
               'config': {
                 'name': 'c_registerddate',
                 'label': 'Registered',
@@ -125,7 +138,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 2, 'h': 1, 'w': 6},
               'config': {
                 'name': 'multiselecttest',
                 'label': 'Multiselect',
