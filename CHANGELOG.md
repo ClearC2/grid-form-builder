@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/ClearC2/grid-form-builder/compare/v1.5.0...v1.5.1) (2019-03-15)
+
+
+### Bug Fixes
+
+* **multiple-rte:** fix multiple rte on same page ([bec329d](https://github.com/ClearC2/grid-form-builder/commit/bec329d))
+
 # [1.5.0](https://github.com/ClearC2/grid-form-builder/compare/v1.4.0...v1.5.0) (2019-03-13)
 
 
