@@ -115,15 +115,22 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 1, 'h': 10, 'w': 6},
+              'dimensions': {'x': 0, 'y': 1, 'h': 6, 'w': 6},
               'config': {
-                'name': 'rich-text-input',
+                'name': 'rich-text-input-1',
                 'label': 'Rich Text Input',
                 'type': 'richtextareaquill',
-                'cascade': {
-                  'keyword': 'C2_PEOPLE_SOMETHING',
-                  'icon': 'tree'
-                }
+                'rteImageUrl': 'http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/RadioInformation1_IOPMobile.png'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 1, 'h': 6, 'w': 6},
+              'config': {
+                'name': 'rich-text-input-2',
+                'label': 'Rich Text Input',
+                'type': 'richtextareaquill',
+                'rteImageUrl': 'http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/Screen Shot 2018-09-11 at 12.51.44 PM (1).png'
               }
             },
             {

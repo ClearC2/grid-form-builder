@@ -262,8 +262,7 @@ export default class FormBuilder extends Component {
     let {formSchema = Map(), formValues = Map(),
       handleOnChange = () => {}, formName = 'form', draggable = false, inline = false,
       style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true,
-      handleRTEImageClick = () => {},
-      rteImageUrl} = this.props
+      handleRTEImageClick = () => {}} = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
@@ -331,7 +330,6 @@ export default class FormBuilder extends Component {
             CascadeIcon={cascadeIcon}
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleRTEImageClick={handleRTEImageClick}
-            rteImageUrl={rteImageUrl}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
             tabIndex={+tabIndex}
@@ -355,7 +353,6 @@ export default class FormBuilder extends Component {
             CascadeIcon={cascadeIcon}
             handleCascadeKeywordClick={this.handleCascadeKeywordClick}
             handleRTEImageClick={handleRTEImageClick}
-            rteImageUrl={rteImageUrl}
             handleDragDropOnInput={this.handleDragDropOnInput}
             defaultDataGrid={{i: '' + i, isResizable: false, isDraggable: draggable, ...dimensions}}
             interactive={interactive}

@@ -5,9 +5,10 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import 'react-quill/dist/quill.core.css'
 import Image from 'react-icons/lib/fa/image'
+import uniqueId from 'react-html-id'
 
-const CustomToolbar = () => (
-  <div id='toolbar' style={{backgroundColor: '#fafafa'}}>
+const CustomToolbar = ({ID}) => (
+  <div id={ID} style={{backgroundColor: '#fafafa'}}>
     <select className='ql-header' defaultValue={'normal'} onChange={e => e.persist()}>
       <option value='1' />
       <option value='2' />
@@ -32,9 +33,12 @@ class Richtextareaquill extends React.Component {
     super(props)
     this.quillRef = null
     this.reactQuillRef = null
+    uniqueId.enableUniqueIds(this)
+    this.nextUniqueId()
+    this.latestUniqueId = this.lastUniqueId()
     this.modules = {
       toolbar: {
-        container: '#toolbar',
+        container: `#${this.latestUniqueId}`,
         handlers: {
           insertImage: () => this.insertImage(this.props)
         }
@@ -43,6 +47,7 @@ class Richtextareaquill extends React.Component {
         matchVisual: false
       }
     }
+
     this.formats = [
       'header',
       'font',
@@ -66,9 +71,11 @@ class Richtextareaquill extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState, snapshot) {
+    const {rteImageUrl: rteImageUrlPrev} = prevProps.config
+    const {rteImageUrl} = this.props.config
     this.attachQuillRefs()
-    if (prevProps.rteImageUrl !== this.props.rteImageUrl) {
-      this.handleImageInsertion(this.props.rteImageUrl)
+    if (rteImageUrl && (rteImageUrlPrev !== rteImageUrl)) {
+      this.handleImageInsertion(rteImageUrl)
     }
   }
 
@@ -91,7 +98,7 @@ class Richtextareaquill extends React.Component {
   }
 
   insertImage (props) {
-    props.handleRTEImageClick()
+    props.handleRTEImageClick(props.config.name)
   }
 
   handleImageInsertion = (url) => {
@@ -121,6 +128,7 @@ class Richtextareaquill extends React.Component {
         flex: 1,
         flexDirection: inline ? 'row' : 'column',
         background: 'transparent',
+        height: 'calc(100%-55px)',
         ...containerStyle
       },
       labelContainer: {
@@ -162,7 +170,7 @@ class Richtextareaquill extends React.Component {
             {Icon && <Icon style={styles.icon} />}
             <strong style={styles.label} >{label}</strong>
           </div>
-          <CustomToolbar />
+          <CustomToolbar ID={this.latestUniqueId} />
           <ReactQuill
             ref={el => {
               this.reactQuillRef = el
