@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/ClearC2/grid-form-builder/compare/v1.5.1...v1.5.2) (2019-03-18)
+
+
+### Bug Fixes
+
+* **multiSelect:** fix bug where values are not loaded on initial render ([2e99ece](https://github.com/ClearC2/grid-form-builder/commit/2e99ece))
+
 ## [1.5.1](https://github.com/ClearC2/grid-form-builder/compare/v1.5.0...v1.5.1) (2019-03-15)
 
 
