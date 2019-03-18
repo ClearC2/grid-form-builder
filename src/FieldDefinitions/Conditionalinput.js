@@ -508,15 +508,16 @@ export default class Conditionalinput extends Component {
             width: '40%',
             height: this.calculateModalHeight()
           }}
+          default={{
+            y: ((window.innerHeight / 2) - 250 + window.scrollY),
+            x: ((window.innerWidth / 2) - 260)
+          }}
           center
           style={{
             background: '#fff',
             boxShadow: '0px 0px 15px #444',
             borderRadius: '5px',
             border: '2px solid #36a9e1',
-            position: 'fixed',
-            top: '30%', // `${this.state.fieldPos.top - 180 > 0 ? this.state.fieldPos.top - 180 : 30}px`,
-            left: '30%', // `${this.state.fieldPos.left + 100}px`,
             overflowY: 'visible'
           }}
           enableResizing

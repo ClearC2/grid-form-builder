@@ -1,3 +1,38 @@
+## [1.5.1](https://github.com/ClearC2/grid-form-builder/compare/v1.5.0...v1.5.1) (2019-03-15)
+
+
+### Bug Fixes
+
+* **multiple-rte:** fix multiple rte on same page ([bec329d](https://github.com/ClearC2/grid-form-builder/commit/bec329d))
+
+# [1.5.0](https://github.com/ClearC2/grid-form-builder/compare/v1.4.0...v1.5.0) (2019-03-13)
+
+
+### Features
+
+* **add-rte-image:** add rte image uploader ([ebb2098](https://github.com/ClearC2/grid-form-builder/commit/ebb2098))
+
+# [1.4.0](https://github.com/ClearC2/grid-form-builder/compare/v1.3.2...v1.4.0) (2019-03-13)
+
+
+### Features
+
+* **autocomplete-prop:** add autocomplete prop to disable autocomplete on modern browsers ([d9088a6](https://github.com/ClearC2/grid-form-builder/commit/d9088a6))
+
+## [1.3.2](https://github.com/ClearC2/grid-form-builder/compare/v1.3.1...v1.3.2) (2019-03-11)
+
+
+### Bug Fixes
+
+* **firefox:** prevent red highlight on inputFields ([a38c6da](https://github.com/ClearC2/grid-form-builder/commit/a38c6da))
+
+## [1.3.1](https://github.com/ClearC2/grid-form-builder/compare/v1.3.0...v1.3.1) (2019-03-08)
+
+
+### Bug Fixes
+
+* **Select:** fix issue where select inputs cannot be cleared ([66c48aa](https://github.com/ClearC2/grid-form-builder/commit/66c48aa))
+
 # [1.3.0](https://github.com/ClearC2/grid-form-builder/compare/v1.2.0...v1.3.0) (2019-03-01)
 
 

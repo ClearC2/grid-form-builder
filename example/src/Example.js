@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Map, List} from 'immutable'
 import {FormBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
-import ConditionTable from 'query-builder'
+import {ConditionalTable} from 'query-builder'
 
 const TEST_SEARCH = false // for conditional search forms
 
@@ -115,7 +115,27 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 1, 'h': 6, 'w': 6},
+              'config': {
+                'name': 'rich-text-input-1',
+                'label': 'Rich Text Input',
+                'type': 'richtextareaquill',
+                'rteImageUrl': 'http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/RadioInformation1_IOPMobile.png'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 1, 'h': 6, 'w': 6},
+              'config': {
+                'name': 'rich-text-input-2',
+                'label': 'Rich Text Input',
+                'type': 'richtextareaquill',
+                'rteImageUrl': 'http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/Screen Shot 2018-09-11 at 12.51.44 PM (1).png'
+              }
+            },
+            {
+              'type': 'field',
+              'dimensions': {'x': 0, 'y': 2, 'h': 1, 'w': 6},
               'config': {
                 'name': 'c_registerddate',
                 'label': 'Registered',
@@ -125,7 +145,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 1, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 2, 'h': 1, 'w': 6},
               'config': {
                 'name': 'multiselecttest',
                 'label': 'Multiselect',
@@ -669,7 +689,7 @@ export default class Example extends Component {
   render = () => {
     const {formSchema, isInvalidWarning} = this.state
     if (TEST_SEARCH) {
-      // will mode: TEST_SEARCH constant at top is false
+      // will mode: TEST_SEARCH constant at top is true
       return (<div style={{display: 'flex'}}>
         <div style={{width: '66%'}}>
           <FormBuilder
@@ -684,12 +704,12 @@ export default class Example extends Component {
           />
         </div>
         <div style={{width: '33%', marginTop: '150px'}}>
-          <ConditionTable
+          <ConditionalTable
             formName={formSchema.form.name}
             title={'Conditional Table Title'}
             searchFunction={(req) => { console.log(req, 'Search function not implemented yet') }} // eslint-disable-line
             formSchema={formSchema.form}
-            handleOnChange={this.handleOnChange}
+            handleFormValueChange={this.handleOnChange}
             formValues={this.state.formValues}
           />
         </div>
