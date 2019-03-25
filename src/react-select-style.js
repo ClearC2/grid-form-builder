@@ -6,7 +6,7 @@ const reactSelectStyles = {
     minHeight: '27px',
     paddingBottom: '10px',
   }),
-  control: base => ({
+  control: (base) => ({
     ...base,
     border: '1px solid #a0a0a0',
     borderRadius: '1px',
@@ -30,7 +30,7 @@ const reactSelectStyles = {
     minHeight: '27px',
     marginBottom: '10px',
   }),
-  menu: base => ({
+  menu: (base) => ({
     ...base,
     borderRadius: '1px',
     height: '30px',
@@ -41,7 +41,24 @@ const reactSelectStyles = {
     border: '1px solid #a0a0a0',
     color: '#404d54'
   }),
-  option: base => ({
+  multiValue: (base) => ({
+    ...base,
+    background: 'rgba(0, 126, 225, 0.08)',
+    height: '24px',
+    minHeight: '24px',
+    margin: 0,
+    marginBottom: '14px',
+  }),
+  multiValueLabel: (base) => ({
+    ...base,
+    color: '#007eff',
+  }),
+  multiValueRemove: (base) => ({
+    ...base,
+    color: '007eff',
+    cursor: 'pointer'
+  }),
+  option: (base) => ({
     ...base,
     borderBottom: '1px solid #a0a0a0',
     paddingTop: '4px',
@@ -51,12 +68,14 @@ const reactSelectStyles = {
       color: '#f5f5f5'
     }
   }),
-  valueContainer: base => {
+  valueContainer: (base) => {
     return {
       ...base,
+      margin: 0,
       height: '27px',
       minHeight: '27px',
       marginBottom: '10px',
+      padding: 0
     }
   }
 }

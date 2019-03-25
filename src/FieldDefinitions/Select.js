@@ -131,16 +131,16 @@ export class Select extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <ReactSelect
-          className={className}
-          isClearable
-          isDisabled={disabled}
-          name={name}
-          onChange={this.onChange}
-          onKeyDown={onKeyDown}
-          options={options}
-          placeholder={placeholder}
-          styles={reactSelectStyles}
-          tabIndex={tabIndex}
+            className={className}
+            isClearable
+            isDisabled={disabled}
+            name={name}
+            onChange={this.onChange}
+            onKeyDown={onKeyDown}
+            options={options}
+            placeholder={placeholder}
+            styles={reactSelectStyles}
+            tabIndex={tabIndex}
         />
         </div>
       )
