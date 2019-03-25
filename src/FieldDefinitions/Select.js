@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Map} from 'immutable'
 import ReactSelect from 'react-select'
 import {DropTarget} from 'react-dnd'
+import {reactSelectStyles} from '../react-select-style'
 
 export class Select extends Component {
   state = {
@@ -115,8 +116,9 @@ export class Select extends Component {
       }
     }
 
-    let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
-    className = !warn ? className : className + ' warn-required'
+    // let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
+    // className = !warn ? className : className + ' warn-required'
+    let className = warn ? 'warn-required' : ''
     placeholder = warn ? '* This Field Is Required' : placeholder
 
     return (
@@ -129,17 +131,17 @@ export class Select extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <ReactSelect
-            onChange={this.onChange}
-            className={className}
-            style={styles.input}
-            name={name}
-            options={options}
-            value={value}
-            disabled={disabled}
-            onKeyDown={onKeyDown}
-            placeholder={placeholder}
-            tabIndex={tabIndex}
-          />
+          className={className}
+          isClearable
+          isDisabled={disabled}
+          name={name}
+          onChange={this.onChange}
+          onKeyDown={onKeyDown}
+          options={options}
+          placeholder={placeholder}
+          styles={reactSelectStyles}
+          tabIndex={tabIndex}
+        />
         </div>
       )
     )
