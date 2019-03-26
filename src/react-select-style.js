@@ -1,34 +1,29 @@
-const reactSelectStyles = {
+const reactSelectStyles = () => ({
   clearIndicator: () => ({
     color: '#a0a0a0',
     cursor: 'pointer',
-    height: '27px',
-    minHeight: '27px',
-    paddingBottom: '10px',
+    height: '25px',
+    marginTop: '3px',
+    minHeight: '25px',
   }),
   control: (base) => ({
     ...base,
     border: '1px solid #a0a0a0',
     borderRadius: '1px',
-    height: '27px',
-    minHeight: '27px',
+    height: '25px',
+    minHeight: '25px',
   }),
   dropdownIndicator: () => ({
     color: '#a0a0a0',
     cursor: 'pointer',
-    height: '27px',
-    minHeight: '27px',
+    height: '25px',
+    marginTop: '3px',
+    minHeight: '25px',
     marginRight: '4px'
   }),
   indicatorSeparator: (base) => ({
     ...base,
     display: 'none'
-  }),
-  input: (base) => ({
-    ...base,
-    height: '27px',
-    minHeight: '27px',
-    marginBottom: '10px',
   }),
   menu: (base) => ({
     ...base,
@@ -44,10 +39,10 @@ const reactSelectStyles = {
   multiValue: (base) => ({
     ...base,
     background: 'rgba(0, 126, 225, 0.08)',
-    height: '24px',
-    minHeight: '24px',
+    height: '23px',
+    minHeight: '23px',
     margin: 0,
-    marginBottom: '14px',
+    marginBottom: '15px',
   }),
   multiValueLabel: (base) => ({
     ...base,
@@ -71,14 +66,13 @@ const reactSelectStyles = {
   valueContainer: (base) => {
     return {
       ...base,
-      margin: 0,
-      height: '27px',
-      minHeight: '27px',
-      marginBottom: '10px',
+      height: '23px',
+      marginBottom: '3px',
+      minHeight: '23px',
       padding: 0
     }
   }
-}
+})
 
 export {
   reactSelectStyles

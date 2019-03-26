@@ -139,12 +139,6 @@ export class Multiselect extends Component {
         color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         ...labelStyle
       },
-      input: {
-        height: inline ? 'auto' : 25,
-        backgroundColor: disabled ? '#eee' : 'white',
-        minWidth: 170,
-        ...style
-      },
       icon: {
         marginRight: 5,
         width: 15,
@@ -152,6 +146,16 @@ export class Multiselect extends Component {
         marginTop: inline ? 3 : -1,
         ...iconStyle
       }
+    }
+
+    const inputStyles = {
+      input: (base) => ({
+        ...base,
+        height: inline ? 'auto' : 25,
+        marginBottom: '10px',
+        minWidth: 170,
+        ...style
+      })
     }
 
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
@@ -175,8 +179,9 @@ export class Multiselect extends Component {
             onKeyDown={onKeyDown}
             options={this.state.builtOptions}
             placeholder={placeholder}
-            styles={reactSelectStyles}
+            styles={{...reactSelectStyles(), ...inputStyles}}
             tabIndex={tabIndex}
+            value={this.state.fieldValues}
           />
         </div>
       )
