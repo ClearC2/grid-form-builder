@@ -151,11 +151,14 @@ export class Multiselect extends Component {
     const inputStyles = {
       input: (base) => ({
         ...base,
-        height: inline ? 'auto' : 25,
-        marginBottom: '10px',
-        minWidth: 170,
         ...style
-      })
+      }),
+      valueContainer: (base) => {
+        return {
+          ...base,
+          padding: 0,
+        }
+      }
     }
 
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`

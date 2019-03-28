@@ -5,6 +5,9 @@ const reactSelectStyles = () => ({
     height: '25px',
     marginTop: '3px',
     minHeight: '25px',
+    '&:hover': {
+      color: '#ec1c24'
+    } 
   }),
   control: (base) => ({
     ...base,
@@ -34,15 +37,14 @@ const reactSelectStyles = () => ({
   menuList: () => ({
     background: '#f5f5f5',
     border: '1px solid #a0a0a0',
-    color: '#404d54'
+    maxHeight: '250px',
+    color: '#404d54',
+    overflow: 'scroll'
   }),
   multiValue: (base) => ({
     ...base,
     background: 'rgba(0, 126, 225, 0.08)',
-    height: '23px',
-    minHeight: '23px',
-    margin: 0,
-    marginBottom: '15px',
+    paddingLeft: 0
   }),
   multiValueLabel: (base) => ({
     ...base,
@@ -66,10 +68,10 @@ const reactSelectStyles = () => ({
   valueContainer: (base) => {
     return {
       ...base,
-      height: '23px',
-      marginBottom: '3px',
-      minHeight: '23px',
-      padding: 0
+      padding: 0,
+      marginTop: '-4px',
+      paddingBottom: '4px',
+      paddingLeft: '4px'
     }
   }
 })

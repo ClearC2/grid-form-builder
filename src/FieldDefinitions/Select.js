@@ -112,7 +112,6 @@ export class Select extends Component {
 
     const inputStyles = {
       input: () => ({
-        backgroundColor: disabled && '#eee',
         height: inline ? 'auto' : 25,
         minWidth: 170,
         paddingLeft: '2px',
