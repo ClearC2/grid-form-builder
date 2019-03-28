@@ -41,6 +41,10 @@ const reactSelectStyles = () => ({
     color: '#404d54',
     overflow: 'scroll'
   }),
+  menuPortal: base => ({
+    ...base, 
+    zIndex: Number.MAX_SAFE_INTEGER
+  }),
   multiValue: (base) => ({
     ...base,
     background: 'rgba(0, 126, 225, 0.08)',
