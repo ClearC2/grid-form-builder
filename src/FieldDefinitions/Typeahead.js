@@ -310,6 +310,7 @@ export class Typeahead extends Component {
               isMulti={multi}
               loadOptions={this.loadOptions}
               menuPortalTarget={document.body}
+              menuShouldBlockScroll
               name={name}
               onChange={this.handleChange}
               onFocus={this.handleOnFocus}
@@ -329,6 +330,7 @@ export class Typeahead extends Component {
               isMulti={multi}
               loadOptions={this.loadOptions}
               menuPortalTarget={document.body}
+              menuShouldBlockScroll
               name={name}
               onChange={this.handleChange}
               onKeyDown={onKeyDown}
