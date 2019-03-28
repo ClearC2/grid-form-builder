@@ -302,6 +302,7 @@ export class Typeahead extends Component {
             </div>
             {allowcreate && <AsyncCreatable
               blurInputOnSelect={!multi}
+              cacheOptions
               className={className}
               createOptionPosition='first'
               isClearable
@@ -321,6 +322,7 @@ export class Typeahead extends Component {
             />}
             {!allowcreate && <Async
               blurInputOnSelect={!multi}
+              cacheOptions
               className={className}
               isDisabled={disabled}
               isMulti={multi}
