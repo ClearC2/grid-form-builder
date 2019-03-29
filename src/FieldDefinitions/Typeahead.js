@@ -311,6 +311,12 @@ export class Typeahead extends Component {
               style={style}
               onMouseDown={this.onMouseDown}
               className={className}
+              isClearable
+              isDisabled={disabled}
+              isMulti={multi}
+              loadOptions={this.loadOptions}
+              menuPortalTarget={document.body}
+              menuShouldBlockScroll
               name={name}
               multi={multi}
               value={value}

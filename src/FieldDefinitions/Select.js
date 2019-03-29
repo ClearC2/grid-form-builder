@@ -139,7 +139,8 @@ export class Select extends Component {
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             tabIndex={tabIndex}
-          />
+            value={{label: value, value}}
+        />
         </div>
       )
     )
