@@ -4,6 +4,7 @@ import {AsyncCreatable, Async} from 'react-select'
 import PropTypes from 'prop-types'
 import GFBConfig from '../config'
 import {DropTarget} from 'react-dnd'
+import {reactSelectStyles} from '../react-select-style'
 
 class Placeholder extends Component {
   static propTypes = {
@@ -80,14 +81,24 @@ export class Typeahead extends Component {
 
   setShouldRemount = (shouldRemount = true) => this.setState({shouldRemount})
 
-  handleChange = newValue => {
+  handleChange = (newValue, {action}) => {
+    const {handleOnChange, config = {}} = this.props
+    const {name = null} = config
+    const target = {
+      name: name,
+      value: action === 'create-option' ? newValue.value : newValue
+    }
+
+    switch(action) {
+      case 'create-option':
+        handleOnChange({target})
+        return
+      case 'clear':
+        handleOnChange({target}) 
+        return
+    }
+
     if (Array.isArray(newValue)) {
-      const {handleOnChange, config = {}} = this.props
-      const {name = null} = config
-      let target = {
-        name: name,
-        value: newValue
-      }
       // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
       // so I'll give it back to the developer raw and let them figure it out -- JRA 7/5/2018
       handleOnChange({target})
@@ -181,7 +192,7 @@ export class Typeahead extends Component {
             }
             return value
           })
-          return {options: results}
+          return results
         })
     }
 
@@ -191,7 +202,7 @@ export class Typeahead extends Component {
   handleOnFocus = () => {
     const {config = {}, formValues = Map()} = this.props
     const {persist = true, name = null} = config
-    let value = formValues.get(name, '')
+    let value = formValues.get(name, '') || ''
     value = typeof value.toJS === 'function' ? value.toJS() : value
     value = typeof value === 'object' ? value.value || value.label || '' : value
     if (this.input && persist) {
@@ -201,7 +212,6 @@ export class Typeahead extends Component {
     }
   }
 
-  shouldKeyDownEventCreateNewOption = e => (e.keyCode === 9 || e.keyCode === 13)
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
@@ -258,11 +268,6 @@ export class Typeahead extends Component {
         color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         ...labelStyle
       },
-      input: {
-        backgroundColor: disabled ? '#eee' : 'white',
-        minWidth: 177,
-        ...style
-      },
       icon: {
         marginRight: 5,
         width: 15,
@@ -270,6 +275,14 @@ export class Typeahead extends Component {
         marginTop: inline ? 4 : 0,
         ...iconStyle
       }
+    }
+
+    const inputStyles = {
+      input: (base) => ({
+        ...base,
+        padding: 0,
+        ...style
+      })
     }
 
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
@@ -288,28 +301,30 @@ export class Typeahead extends Component {
               {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
             </div>
             {allowcreate && <AsyncCreatable
-              ref={r => { this.input = r }}
-              style={style}
-              onMouseDown={this.onMouseDown}
+              blurInputOnSelect={!multi}
+              cacheOptions
               className={className}
-              name={name}
-              multi={multi}
-              value={value}
-              onChange={this.handleChange}
+              createOptionPosition='first'
+              isClearable
+              isDisabled={disabled}
+              isMulti={multi}
               loadOptions={this.loadOptions}
-              disabled={disabled}
-              onKeyDown={onKeyDown}
-              placeholder={placeholder}
-              resetValue={{[name]: '', value: '', label: ''}}
-              tabIndex={tabIndex}
+              menuPortalTarget={document.body}
+              menuShouldBlockScroll
+              name={name}
+              onChange={this.handleChange}
               onFocus={this.handleOnFocus}
-              autoBlur={!multi}
-              shouldKeyDownEventCreateNewOption={this.shouldKeyDownEventCreateNewOption}
+              onKeyDown={onKeyDown}
+              onMouseDown={this.onMouseDown}
+              placeholder={placeholder}
+              ref={r => { this.input = r }}
+              styles={{...reactSelectStyles(), ...inputStyles}}
+              tabIndex={tabIndex}
+              value={value}
             />}
             {!allowcreate && <Async
-              ref={r => { this.input = r }}
-              style={style}
-              onMouseDown={this.onMouseDown}
+              blurInputOnSelect={!multi}
+              cacheOptions
               className={className}
               isClearable
               isDisabled={disabled}
@@ -318,17 +333,14 @@ export class Typeahead extends Component {
               menuPortalTarget={document.body}
               menuShouldBlockScroll
               name={name}
-              multi={multi}
-              value={value}
               onChange={this.handleChange}
-              loadOptions={this.loadOptions}
-              disabled={disabled}
               onKeyDown={onKeyDown}
+              onMouseDown={this.onMouseDown}
               placeholder={placeholder}
-              resetValue={{[name]: '', value: '', label: ''}}
+              ref={r => { this.input = r }}
+              styles={{...reactSelectStyles(), ...inputStyles}}
               tabIndex={tabIndex}
-              onFocus={this.handleOnFocus}
-              autoBlur={!multi}
+              value={value}
             />}
           </div>
         )
@@ -355,3 +367,4 @@ const boxTarget = {
 }
 
 export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Typeahead)
+
