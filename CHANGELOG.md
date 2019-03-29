@@ -1,3 +1,11 @@
+## [1.6.1](https://github.com/ClearC2/grid-form-builder/compare/v1.6.0...v1.6.1) (2019-03-29)
+
+
+### Bug Fixes
+
+* **react-select:** fix value rendering and add isclearable to typeahead ([4ed7598](https://github.com/ClearC2/grid-form-builder/commit/4ed7598))
+* **typeahead:** fix bug where values did not load ([be20e94](https://github.com/ClearC2/grid-form-builder/commit/be20e94))
+
 # [1.6.0](https://github.com/ClearC2/grid-form-builder/compare/v1.5.2...v1.6.0) (2019-03-29)
 
 
