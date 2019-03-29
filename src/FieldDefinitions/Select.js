@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {Map} from 'immutable'
 import ReactSelect from 'react-select'
 import {DropTarget} from 'react-dnd'
-import {reactSelectStyles} from '../react-select-style'
 
 export class Select extends Component {
   state = {
@@ -101,6 +100,12 @@ export class Select extends Component {
         color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         ...labelStyle
       },
+      input: {
+        height: inline ? 'auto' : 25,
+        backgroundColor: disabled ? '#eee' : 'white',
+        minWidth: 170,
+        ...style
+      },
       icon: {
         marginRight: 5,
         width: 15,
@@ -110,18 +115,8 @@ export class Select extends Component {
       }
     }
 
-    const inputStyles = {
-      input: () => ({
-        height: inline ? 'auto' : 25,
-        minWidth: 170,
-        paddingLeft: '2px',
-        ...style
-      })
-    }
-
-    // let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
-    // className = !warn ? className : className + ' warn-required'
-    let className = warn ? 'warn-required' : ''
+    let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
+    className = !warn ? className : className + ' warn-required'
     placeholder = warn ? '* This Field Is Required' : placeholder
 
     return (
@@ -134,15 +129,15 @@ export class Select extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <ReactSelect
-            className={className}
-            isClearable
-            isDisabled={disabled}
-            name={name}
             onChange={this.onChange}
-            onKeyDown={onKeyDown}
+            className={className}
+            style={styles.input}
+            name={name}
             options={options}
+            value={value}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
             placeholder={placeholder}
-            styles={{...reactSelectStyles(), ...inputStyles}}
             tabIndex={tabIndex}
             value={{label: value, value}}
         />

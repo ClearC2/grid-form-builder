@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {List, fromJS, Map} from 'immutable'
 import ReactSelect from 'react-select'
 import {DropTarget} from 'react-dnd'
-import {reactSelectStyles} from '../react-select-style'
 
 export class Multiselect extends Component {
   state = {
@@ -139,25 +138,18 @@ export class Multiselect extends Component {
         color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
         ...labelStyle
       },
+      input: {
+        height: inline ? 'auto' : 25,
+        backgroundColor: disabled ? '#eee' : 'white',
+        minWidth: 170,
+        ...style
+      },
       icon: {
         marginRight: 5,
         width: 15,
         height: 15,
         marginTop: inline ? 3 : -1,
         ...iconStyle
-      }
-    }
-
-    const inputStyles = {
-      input: (base) => ({
-        ...base,
-        ...style
-      }),
-      valueContainer: (base) => {
-        return {
-          ...base,
-          padding: 0,
-        }
       }
     }
 
@@ -174,17 +166,17 @@ export class Multiselect extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <ReactSelect
-            className={className}
-            isDisabled={disabled}
-            isMulti={multi}
-            name={name}
             onChange={this.onChange}
-            onKeyDown={onKeyDown}
+            className={className}
+            style={styles.input}
+            multi={multi}
+            name={name}
             options={this.state.builtOptions}
-            placeholder={placeholder}
-            styles={{...reactSelectStyles(), ...inputStyles}}
-            tabIndex={tabIndex}
             value={this.state.fieldValues}
+            disabled={disabled}
+            onKeyDown={onKeyDown}
+            placeholder={placeholder}
+            tabIndex={tabIndex}
           />
         </div>
       )
