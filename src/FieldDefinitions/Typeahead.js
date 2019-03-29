@@ -86,7 +86,7 @@ export class Typeahead extends Component {
     const {name = null} = config
     const target = {
       name: name,
-      value: newValue
+      value: action === 'create-option' ? newValue.value : newValue
     }
 
     switch(action) {
