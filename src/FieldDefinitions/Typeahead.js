@@ -94,7 +94,7 @@ export class Typeahead extends Component {
         handleOnChange({target})
         return
       case 'clear':
-        handleOnChange({target}) 
+        handleOnChange({target})
         return
     }
 
@@ -326,6 +326,7 @@ export class Typeahead extends Component {
               blurInputOnSelect={!multi}
               cacheOptions
               className={className}
+              isClearable
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}

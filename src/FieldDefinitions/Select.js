@@ -144,6 +144,7 @@ export class Select extends Component {
             placeholder={placeholder}
             styles={{...reactSelectStyles(), ...inputStyles}}
             tabIndex={tabIndex}
+            value={{label: value, value}}
         />
         </div>
       )
