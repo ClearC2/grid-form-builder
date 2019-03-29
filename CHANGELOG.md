@@ -1,3 +1,18 @@
+# [1.6.0](https://github.com/ClearC2/grid-form-builder/compare/v1.5.2...v1.6.0) (2019-03-29)
+
+
+### Bug Fixes
+
+* **react-select:** fix styling ([dc7890d](https://github.com/ClearC2/grid-form-builder/commit/dc7890d))
+* **style:** react select ([647c164](https://github.com/ClearC2/grid-form-builder/commit/647c164))
+* **Typeahead:** fix menu position moving on scroll ([409dc49](https://github.com/ClearC2/grid-form-builder/commit/409dc49))
+
+
+### Features
+
+* **typeahead:** add caching ([ed0ccdf](https://github.com/ClearC2/grid-form-builder/commit/ed0ccdf))
+* **typeahead:** place typeahead in portal ([b8c380c](https://github.com/ClearC2/grid-form-builder/commit/b8c380c))
+
 ## [1.5.2](https://github.com/ClearC2/grid-form-builder/compare/v1.5.1...v1.5.2) (2019-03-18)
 
 
