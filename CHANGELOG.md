@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/ClearC2/grid-form-builder/compare/v1.6.1...v1.6.2) (2019-03-29)
+
+
+### Bug Fixes
+
+* **react-select:** remove old style ([b5d9c52](https://github.com/ClearC2/grid-form-builder/commit/b5d9c52))
+
 ## [1.6.1](https://github.com/ClearC2/grid-form-builder/compare/v1.6.0...v1.6.1) (2019-03-29)
 
 
