@@ -9544,7 +9544,7 @@ qs@6.5.2, qs@~6.5.2:
 
 query-builder@ClearC2/query-builder:
   version "0.0.0"
-  resolved "git+ssh://git@github.com/ClearC2/query-builder.git#5ac0e55ee36c3dca38ff16eb52aa279715104aed"
+  resolved "git+ssh://git@github.com/ClearC2/query-builder.git#3176175d19d57007e4af76f4e110d917a284ea3c"
   dependencies:
     c2-ag-grid "git+ssh://git@github.com/ClearC2/c2-ag-grid.git"
     c2-form "https://github.com/ClearC2/c2-form.git"
