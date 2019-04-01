@@ -354,7 +354,8 @@ export default class Example extends Component {
                   'duplication': true,
                   'fields': [
                     'inputtest',
-                    'textareatest'
+                    'textareatest',
+                    'meta_universalid'
                   ],
                   'fieldId': 'value',
                   'filter': {
