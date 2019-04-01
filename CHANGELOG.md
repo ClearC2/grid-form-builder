@@ -1,3 +1,16 @@
+# [1.7.0](https://github.com/ClearC2/grid-form-builder/compare/v1.6.0...v1.7.0) (2019-04-01)
+
+
+### Bug Fixes
+
+* **select:** fix values not rendering ([f745c69](https://github.com/ClearC2/grid-form-builder/commit/f745c69))
+* **typeahead:** fix values not rendering ([a751712](https://github.com/ClearC2/grid-form-builder/commit/a751712))
+
+
+### Features
+
+* **typeahead:** add clearing functionality ([65f5b61](https://github.com/ClearC2/grid-form-builder/commit/65f5b61))
+
 # [1.6.0](https://github.com/ClearC2/grid-form-builder/compare/v1.5.2...v1.6.0) (2019-03-29)
 
 
