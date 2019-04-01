@@ -2513,10 +2513,9 @@ c2-dialog@ClearC2/c2-dialog#^2.0.0:
     react-rnd "^9.0.0"
 
 "c2-dialog@git+ssh://git@github.com:ClearC2/c2-dialog.git":
-  version "2.1.1"
-  resolved "git+ssh://git@github.com:ClearC2/c2-dialog.git#d5185ab064ec0f94473049f16db9d765d5df9f37"
+  version "2.1.2"
+  resolved "git+ssh://git@github.com:ClearC2/c2-dialog.git#168be5a58953de5ac446118f44776a69b0867274"
   dependencies:
-    c2-react-config ClearC2/c2-react-config#^1.0.0
     jquery "^3.2.1"
     prop-types "^15.0.0"
     react-portal "^4.1.2"
