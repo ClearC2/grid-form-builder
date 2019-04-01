@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/ClearC2/grid-form-builder/compare/v1.7.0...v1.7.1) (2019-04-01)
+
+
+### Bug Fixes
+
+* **typeahead:** using the clear feature should now correctly clear all fields specified in the fields array in the typeahead schema ([bc49a44](https://github.com/ClearC2/grid-form-builder/commit/bc49a44))
+
 # [1.7.0](https://github.com/ClearC2/grid-form-builder/compare/v1.6.0...v1.7.0) (2019-04-01)
 
 
