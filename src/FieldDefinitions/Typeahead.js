@@ -326,6 +326,7 @@ export class Typeahead extends Component {
               blurInputOnSelect={!multi}
               cacheOptions
               className={className}
+              isClearable
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}
