@@ -86,7 +86,7 @@ export class Typeahead extends Component {
     const {name = null} = config
     const target = {
       name: name,
-      value: newValue
+      value: action === 'create-option' ? newValue.value : newValue
     }
 
     switch(action) {
@@ -326,6 +326,7 @@ export class Typeahead extends Component {
               blurInputOnSelect={!multi}
               cacheOptions
               className={className}
+              isClearable
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}

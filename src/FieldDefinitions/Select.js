@@ -69,7 +69,8 @@ export class Select extends Component {
     let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
     const {options = []} = keyword
-    const value = formValues.get(name, '')
+    let value = formValues.get(name, '')
+    value = typeof value === 'string' ? {label: value, value} : value
 
     const styles = {
       container: {
@@ -143,6 +144,7 @@ export class Select extends Component {
             options={options}
             placeholder={placeholder}
             styles={{...reactSelectStyles(), ...inputStyles}}
+            value={value}
             tabIndex={tabIndex}
         />
         </div>
