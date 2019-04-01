@@ -156,7 +156,9 @@ export class Multiselect extends Component {
       valueContainer: (base) => {
         return {
           ...base,
-          padding: 0,
+          marginTop: '-4px',
+          paddingBottom: '4px',
+          paddingLeft: 0,
         }
       }
     }

@@ -49,7 +49,6 @@ const reactSelectStyles = () => ({
   multiValue: (base) => ({
     ...base,
     background: 'rgba(0, 126, 225, 0.08)',
-    paddingLeft: 0
   }),
   multiValueLabel: (base) => ({
     ...base,
