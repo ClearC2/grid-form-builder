@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/ClearC2/grid-form-builder/compare/v1.7.1...v1.7.2) (2019-04-02)
+
+
+### Bug Fixes
+
+* **select:** correct label now shows ([9daa4e2](https://github.com/ClearC2/grid-form-builder/commit/9daa4e2))
+
 ## [1.7.1](https://github.com/ClearC2/grid-form-builder/compare/v1.7.0...v1.7.1) (2019-04-01)
 
 
