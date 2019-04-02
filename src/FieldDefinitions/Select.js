@@ -46,7 +46,7 @@ export class Select extends Component {
   onChange = e => {
     const {config = {}, handleOnChange = this.handleOnChange} = this.props
     const {name = null} = config
-    const value = e === null ? e = '' : e.value
+    const value = e === null ? e = '' : e.label
     handleOnChange({
       target: {
         name,
