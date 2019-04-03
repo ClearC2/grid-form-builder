@@ -15,6 +15,7 @@ const reactSelectStyles = () => ({
     borderRadius: '1px',
     height: '25px',
     minHeight: '25px',
+    minWidth: '200px'
   }),
   dropdownIndicator: () => ({
     color: '#a0a0a0',
