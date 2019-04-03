@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/ClearC2/grid-form-builder/compare/v1.7.2...v1.7.3) (2019-04-03)
+
+
+### Bug Fixes
+
+* **typeahead:** create option clears all fields ([99d67eb](https://github.com/ClearC2/grid-form-builder/commit/99d67eb))
+
 ## [1.7.2](https://github.com/ClearC2/grid-form-builder/compare/v1.7.1...v1.7.2) (2019-04-02)
 
 
