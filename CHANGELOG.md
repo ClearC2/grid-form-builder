@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/ClearC2/grid-form-builder/compare/v1.7.3...v1.8.0) (2019-04-03)
+
+
+### Features
+
+* **fields:** autoMinWidth for every field ([e6e156d](https://github.com/ClearC2/grid-form-builder/commit/e6e156d))
+
 ## [1.7.3](https://github.com/ClearC2/grid-form-builder/compare/v1.7.2...v1.7.3) (2019-04-03)
 
 
