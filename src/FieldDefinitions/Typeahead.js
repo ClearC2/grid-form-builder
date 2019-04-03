@@ -79,31 +79,39 @@ export class Typeahead extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
 
+  
+
   setShouldRemount = (shouldRemount = true) => this.setState({shouldRemount})
+
+  emptyFields = (fields, changeHandler) => {
+    fields.forEach(field => {
+      const e = {
+        target: {
+          name: field,
+          value: ''
+        }
+      }
+      changeHandler(e) 
+    })
+  }
 
   handleChange = (newValue, {action}) => {
     const {handleOnChange, config = {}} = this.props
     const {name = null, typeahead = {}} = config
+    const {fields = []} = typeahead
     const target = {
       name: name,
       value: action === 'create-option' ? newValue.value : newValue
     }
 
+
     switch (action) {
       case 'create-option':
+        this.emptyFields(fields, handleOnChange )
         handleOnChange({target})
         return
       case 'clear': {
-        const {fields = []} = typeahead
-        fields.forEach(field => {
-          const e = {
-            target: {
-              name: field,
-              value: ''
-            }
-          }
-          handleOnChange(e)
-        })
+        this.emptyFields(fields, handleOnChange )
         handleOnChange({target: {name, value: ''}})
         return
       }
