@@ -79,23 +79,42 @@ export class Typeahead extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
 
+  
+
   setShouldRemount = (shouldRemount = true) => this.setState({shouldRemount})
+
+  emptyFields = (fields, changeHandler) => {
+    fields.forEach(field => {
+      const e = {
+        target: {
+          name: field,
+          value: ''
+        }
+      }
+      changeHandler(e) 
+    })
+  }
 
   handleChange = (newValue, {action}) => {
     const {handleOnChange, config = {}} = this.props
-    const {name = null} = config
+    const {name = null, typeahead = {}} = config
+    const {fields = []} = typeahead
     const target = {
       name: name,
       value: action === 'create-option' ? newValue.value : newValue
     }
 
-    switch(action) {
+
+    switch (action) {
       case 'create-option':
+        this.emptyFields(fields, handleOnChange )
         handleOnChange({target})
         return
-      case 'clear':
-        handleOnChange({target}) 
+      case 'clear': {
+        this.emptyFields(fields, handleOnChange )
+        handleOnChange({target: {name, value: ''}})
         return
+      }
     }
 
     if (Array.isArray(newValue)) {
@@ -108,34 +127,11 @@ export class Typeahead extends Component {
   }
 
   handleSingleValueChange = newValue => {
-    const {handleOnChange, config = {}} = this.props
-    const {name = null, typeahead = {}} = config
-    if (newValue.className || (
-      (typeof newValue.value !== 'number') && (typeof newValue.label !== 'number') &&
-        newValue.value.trim() === '' && newValue.label.trim() === '')) {
-      newValue[name] = newValue.value || ''
-      const {fields = []} = typeahead
-      let resetValues = {
-        [name]: ''
-      }
-      fields.map(field => { resetValues[field] = '' })
-      Object.keys(resetValues).forEach(field => {
-        handleOnChange({
-          target: {
-            name: field,
-            value: resetValues[field]
-          }
-        })
-      })
-    }
+    const {handleOnChange} = this.props
     Object.keys(newValue).forEach(field => {
       let value = newValue[field]
       if (field === 'duplication') value = newValue.value
       let id = null
-      // if (field === 'label') {
-      //   id = newValue[this.props.config.typeahead.fieldId || this.props.config.typeahead.fieldid || 'value'] || newValue.label
-      //   field = name
-      // }
       let e = {
         target: {
           name: field,
