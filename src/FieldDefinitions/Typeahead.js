@@ -79,8 +79,6 @@ export class Typeahead extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
 
-  
-
   setShouldRemount = (shouldRemount = true) => this.setState({shouldRemount})
 
   emptyFields = (fields, changeHandler) => {
@@ -101,9 +99,8 @@ export class Typeahead extends Component {
     const {fields = []} = typeahead
     const target = {
       name: name,
-      value: action === 'create-option' ? newValue.value : newValue
+      value: (action === 'create-option' && !config.multi) ? newValue.value : newValue
     }
-
 
     switch (action) {
       case 'create-option':
