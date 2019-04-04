@@ -387,12 +387,19 @@ export default class Conditionalinput extends Component {
       return
     }
     if (this.inputType() === 'typeahead') {
+
       if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
       }
       this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
-      if (e.target.value) {
-        let oldValue = this.props.formValues.get(this.parentFieldName(), Map()).setIn(['values'], List(e.target.value))
+      if (e.target.value !== undefined || e.target.value !== null) {
+        let oldValue
+        if (typeof e.target.value === 'string') {
+          oldValue = this.props.formValues.get(this.parentFieldName(), Map()).setIn(['values'], List([e.target.value]))
+        } else {
+          oldValue = this.props.formValues.get(this.parentFieldName(), Map()).setIn(['values'], List(e.target.value))
+        }
+
         this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
         this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
       }
