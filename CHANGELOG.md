@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/ClearC2/grid-form-builder/compare/v1.8.1...v1.8.2) (2019-04-08)
+
+
+### Bug Fixes
+
+* **select:** fix label and value of select ([#54](https://github.com/ClearC2/grid-form-builder/issues/54)) ([868b896](https://github.com/ClearC2/grid-form-builder/commit/868b896))
+
 ## [1.8.1](https://github.com/ClearC2/grid-form-builder/compare/v1.8.0...v1.8.1) (2019-04-04)
 
 
