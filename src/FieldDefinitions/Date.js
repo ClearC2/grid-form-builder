@@ -52,11 +52,21 @@ export class Date extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   onViewModeChange = (type) => {
-    if (type === 'time') this.setState({focus: true}, this.input.focus)
-    else this.setState({focus: false}, this.input.focus)
+
+    if (type === 'time') this.setState({focus: true}, () => { this.input.focus() })
+    else this.setState({focus: false}, () => { this.input.focus() })
+
   }
-  onNavigateBack = () => this.input.focus()
-  onNavigateForward = () => this.input.focus()
+  onNavigateBack = () => {
+    // if (this.input) {
+      this.input.focus()
+    // }
+  }
+  onNavigateForward = () => {
+    // if (this.input) {
+      this.input.focus()
+    // }
+  }
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
