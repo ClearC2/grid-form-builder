@@ -46,13 +46,24 @@ export class Select extends Component {
   onChange = e => {
     const {config = {}, handleOnChange = this.handleOnChange} = this.props
     const {name = null} = config
-    const value = e === null ? e = '' : e.label
+    const value = e === null ? e = '' : e.value
     handleOnChange({
       target: {
         name,
         value
       }
     })
+  }
+
+  getValue = (value, options) => {
+    if (value) {
+      const keyMap = options.reduce((acc, cv) => {
+        acc[cv.value] = cv.label
+        return acc
+      }, {})
+
+      return {label: keyMap[value], value}
+    }
   }
 
   render = () => {
@@ -70,7 +81,7 @@ export class Select extends Component {
     disabled = disabled || readonly
     const {options = []} = keyword
     let value = formValues.get(name, '')
-    value = typeof value === 'string' ? {label: value, value} : value
+    value = typeof value === 'string' ? this.getValue(value, options) : value
 
     const styles = {
       container: {
