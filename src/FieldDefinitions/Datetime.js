@@ -126,22 +126,22 @@ export class Datetime extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <DateTime
-            onMouseDown={this.onMouseDown}
-            value={formatValue(value)}
-            onChange={this.handleChange}
-            dateFormat='M/D/YYYY'
             className={className}
             closeOnSelect
-            onViewModeChange={this.onViewModeChange}
+            dateFormat='M/D/YYYY'
+            onChange={this.handleChange}
+            onMouseDown={this.onMouseDown}
             onNavigateBack={this.onNavigateBack}
             onNavigateForward={this.onNavigateForward}
+            onViewModeChange={this.onViewModeChange}
+            value={formatValue(value)}
             inputProps={{
+              className: inputClass,
               disabled: disabled,
               placeholder: placeholder,
-              className: inputClass,
+              ref: ref => { this.input = ref },
               style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style},
-              tabIndex,
-              ref: ref => { this.input = ref }
+              tabIndex
             }}
             onKeyDown={onKeyDown}
           />
