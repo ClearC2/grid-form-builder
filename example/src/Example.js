@@ -665,13 +665,12 @@ export default class Example extends Component {
   toggleDraggable = () => this.setState({draggable: !this.state.draggable})
 
   handleOnChange = e => {
-    const input = e.target
-    const {value, values} = input
+    const {name, value, values} = e.target
     this.setState(s => {
       return {
         formValues: values
           ? s.formValues.merge(fromJS(values))
-          : s.formValues.set(input.name, value)
+          : s.formValues.set(name, value)
       }
     })
   }
