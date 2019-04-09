@@ -88,7 +88,7 @@ export class Typeahead extends Component {
           value: ''
         }
       }
-      changeHandler(e) 
+      changeHandler(e)
     })
   }
 
@@ -124,21 +124,15 @@ export class Typeahead extends Component {
 
   handleSingleValueChange = newValue => {
     const {handleOnChange} = this.props
-    Object.keys(newValue).forEach(field => {
-      let value = newValue[field]
-      if (field === 'duplication') value = newValue.value
-      let id = null
-      let e = {
-        target: {
-          name: field,
-          value,
-          id
-        }
-      }
-      if (field !== 'className' && field !== 'value' && field !== 'label') {
-        handleOnChange(e)
-      }
-    })
+    const values = {}
+    Object.keys(newValue)
+      .filter(field => !['className', 'value', 'label'].includes(field))
+      .forEach(field => {
+        let value = newValue[field]
+        if (field === 'duplication') value = newValue.value
+        values[field] = value
+      })
+    handleOnChange({target: {values}})
   }
 
   populateFilterBody = (filter = {}) => {
@@ -358,4 +352,3 @@ const boxTarget = {
 }
 
 export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Typeahead)
-

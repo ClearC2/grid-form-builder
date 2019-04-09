@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, List} from 'immutable'
+import {Map, List, fromJS} from 'immutable'
 import {FormBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import {ConditionalTable} from 'query-builder'
@@ -666,8 +666,13 @@ export default class Example extends Component {
 
   handleOnChange = e => {
     const input = e.target
+    const {value, values} = input
     this.setState(s => {
-      return {formValues: s.formValues.set(input.name, input.value)}
+      return {
+        formValues: values
+          ? s.formValues.merge(fromJS(values))
+          : s.formValues.set(input.name, value)
+      }
     })
   }
 
