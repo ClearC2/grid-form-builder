@@ -89,7 +89,7 @@ export class Typeahead extends Component {
           value: ''
         }
       }
-      changeHandler(e) 
+      changeHandler(e)
     })
   }
 
@@ -218,6 +218,7 @@ export class Typeahead extends Component {
     const {label = name} = config
     let value = formValues.get(name, null)
     value = (value && typeof value.fromJS === 'function') ? value.fromJS() : value
+    value = !!value && value.toJS()
     if (Array.isArray(value) && value.length > 0) {
       value = value.map(v => {
         if (typeof v === 'object') return v
