@@ -13,7 +13,6 @@ class Placeholder extends Component {
   componentDidMount = () => this.props.handleMount()
   render = () => null
 }
-
 export class Typeahead extends Component {
   static defaultProps = {
     minChars: 1
@@ -204,7 +203,6 @@ export class Typeahead extends Component {
       })
     }
   }
-
 
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
