@@ -511,7 +511,16 @@ export default class Example extends Component {
               'config': {
                 'name': 'meta_created_date',
                 'label': 'Last Did Something By:',
-                'type': 'metadata'
+                'type': 'metadata',
+                'conditionalConfig': {
+                  'name': 'cfd_performer',
+                  'label': 'Assigned To',
+                  'type': 'typeahead',
+                  'typeahead': {
+                    'key': 'c3_sec_performer',
+                    'fields': ['performer', 'performerid', 'role', 'cfd_performer']
+                  }
+                }
               }
             },
             {
