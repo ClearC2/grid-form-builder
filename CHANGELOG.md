@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/ClearC2/grid-form-builder/compare/v1.9.0...v1.9.1) (2019-04-10)
+
+
+### Bug Fixes
+
+* **styling-typeahead:** add new attribute typeahead styling to pass from config ([ed00618](https://github.com/ClearC2/grid-form-builder/commit/ed00618))
+
 # [1.9.0](https://github.com/ClearC2/grid-form-builder/compare/v1.8.3...v1.9.0) (2019-04-10)
 
 
