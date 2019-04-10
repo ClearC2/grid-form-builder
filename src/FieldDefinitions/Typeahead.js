@@ -207,8 +207,9 @@ export class Typeahead extends Component {
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false} = config
-    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, typeaheadStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
+    typeaheadStyle = typeof typeaheadStyle === 'string' ? JSON.parse(typeaheadStyle) : typeaheadStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
@@ -270,10 +271,15 @@ export class Typeahead extends Component {
     }
 
     const inputStyles = {
+      ...reactSelectStyles(),
       input: (base) => ({
         ...base,
         padding: 0,
         ...style
+      }),
+      control: (base) => ({
+        ...base,
+        ...typeaheadStyle
       })
     }
 
@@ -330,7 +336,7 @@ export class Typeahead extends Component {
               onMouseDown={this.onMouseDown}
               placeholder={placeholder}
               ref={r => { this.input = r }}
-              styles={{...reactSelectStyles(), ...inputStyles}}
+              styles={{...inputStyles}}
               tabIndex={tabIndex}
               value={value}
             />}
