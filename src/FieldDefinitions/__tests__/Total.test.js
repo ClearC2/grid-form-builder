@@ -1,6 +1,6 @@
 import React from 'react'
 import {Map} from 'immutable'
-import {waitForElement} from 'react-testing-library'
+import {fireEvent, waitForElement} from 'react-testing-library'
 import GridFormBuilder from '../../GridFormBuilder'
 
 function getForm (totalFieldProps = {}) {
@@ -86,5 +86,61 @@ describe('Total', function () {
     const {getByTestId} = global.render(<Test />)
     const input = await waitForElement(() => getByTestId('grand-total-input'))
     expect(input.value).toBe('$6.00')
+  })
+
+  test('it recalculates using formula', async () => {
+    const form = getForm({formula: '(quantity x price) - (quantity x discount)'})
+    const Test = () => {
+      const [values, setValues] = React.useState(Map({
+        quantity: 2,
+        price: 3,
+        discount: 1
+      }))
+      const onChange = (e) => {
+        const {name, value} = e.target
+        setValues(values.set(name, value))
+      }
+      return (
+        <GridFormBuilder
+          formName={form.name}
+          formSchema={form}
+          formValues={values}
+          handleOnChange={onChange}
+        />
+      )
+    }
+    const {getByTestId} = global.render(<Test />)
+    const discountInput = await waitForElement(() => getByTestId('discount-input'))
+    fireEvent.change(discountInput, {target: {name: 'discount', value: '2'}})
+    const totalInput = getByTestId('grand-total-input')
+    expect(totalInput.value).toBe('$2.00')
+  })
+
+  test('it recalculates using fields', async () => {
+    const form = getForm({fields: ['price', 'foo', 'bar']})
+    const Test = () => {
+      const [values, setValues] = React.useState(Map({
+        price: 3,
+        foo: 1,
+        bar: 2
+      }))
+      const onChange = (e) => {
+        const {name, value} = e.target
+        setValues(values.set(name, value))
+      }
+      return (
+        <GridFormBuilder
+          formName={form.name}
+          formSchema={form}
+          formValues={values}
+          handleOnChange={onChange}
+        />
+      )
+    }
+    const {getByTestId} = global.render(<Test />)
+    const priceInput = await waitForElement(() => getByTestId('price-input'))
+    fireEvent.change(priceInput, {target: {name: 'price', value: '5'}})
+    const totalInput = getByTestId('grand-total-input')
+    expect(totalInput.value).toBe('$8.00')
   })
 })
