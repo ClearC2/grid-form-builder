@@ -133,6 +133,7 @@ class Input extends Component {
             disabled={disabled}
             onKeyDown={onKeyDown}
             tabIndex={tabIndex}
+            data-testid={`${name}-input`}
           />
         </div>
       )

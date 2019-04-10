@@ -199,6 +199,7 @@ class Currency extends Component {
             tabIndex={tabIndex}
             type='text'
             value={this.valueFormatter(value)}
+            data-testid={`${name}-input`}
           />
         </div>
       )

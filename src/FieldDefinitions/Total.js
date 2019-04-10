@@ -215,6 +215,7 @@ class Total extends Component {
             value={this.getInputValue()}
             disabled
             onKeyDown={onKeyDown}
+            data-testid={`${name}-input`}
           />
         </div>
       )
