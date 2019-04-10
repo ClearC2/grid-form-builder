@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/ClearC2/grid-form-builder/compare/v1.8.2...v1.8.3) (2019-04-10)
+
+
+### Bug Fixes
+
+* **date:** prevent date from losing focus onClick ([0c1208c](https://github.com/ClearC2/grid-form-builder/commit/0c1208c))
+
 ## [1.8.2](https://github.com/ClearC2/grid-form-builder/compare/v1.8.1...v1.8.2) (2019-04-08)
 
 
