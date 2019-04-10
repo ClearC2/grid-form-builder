@@ -1,3 +1,16 @@
+# [1.9.0](https://github.com/ClearC2/grid-form-builder/compare/v1.8.3...v1.9.0) (2019-04-10)
+
+
+### Bug Fixes
+
+* **typeahead-value:** checking if immutable list before making the value as js object ([205a8e9](https://github.com/ClearC2/grid-form-builder/commit/205a8e9))
+* **typeahead-value:** converting typeahead value to regular object before sending to Asyncselect ([d96ee85](https://github.com/ClearC2/grid-form-builder/commit/d96ee85))
+
+
+### Features
+
+* **conditionalInput:** metaData fields are converted to whatever conditionalConfig object is provided, else into inputs ([2b774d0](https://github.com/ClearC2/grid-form-builder/commit/2b774d0))
+
 ## [1.8.3](https://github.com/ClearC2/grid-form-builder/compare/v1.8.2...v1.8.3) (2019-04-10)
 
 
