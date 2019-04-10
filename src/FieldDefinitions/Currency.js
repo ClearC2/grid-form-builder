@@ -105,7 +105,7 @@ class Currency extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
     if (!name) return null
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
@@ -186,18 +186,19 @@ class Currency extends Component {
           </div>
           <input
             className={className}
-            placeholder={placeholder}
-            onMouseDown={this.onMouseDown}
-            onChange={this.handleOnChange}
-            style={styles.input}
-            type='text'
-            pattern='\d*'
-            name={name}
-            value={this.valueFormatter(value)}
             disabled={disabled}
-            onKeyDown={onKeyDown}
-            onFocus={this.blockFormat}
+            name={name}
             onBlur={this.allowFormat}
+            onChange={this.handleOnChange}
+            onFocus={this.blockFormat}
+            onKeyDown={onKeyDown}
+            onMouseDown={this.onMouseDown}
+            pattern='\d*'
+            placeholder={placeholder}
+            style={styles.input}
+            tabIndex={tabIndex}
+            type='text'
+            value={this.valueFormatter(value)}
           />
         </div>
       )

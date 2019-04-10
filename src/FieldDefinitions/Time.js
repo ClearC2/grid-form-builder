@@ -51,7 +51,7 @@ export class Date extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -109,7 +109,6 @@ export class Date extends Component {
     const inputClass = warn ? 'warn-required' : ''
     placeholder = warn ? '* This Field Is Required' : placeholder
     const formattedValue = value => moment(value, 'hh:mm a')
-    
 
     return (
       connectDropTarget(
@@ -121,21 +120,22 @@ export class Date extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <DateTime
-            onMouseDown={this.onMouseDown}
-            value={formattedValue(formValues.get(name, ''))}
-            onChange={this.handleOnChange}
-            dateFormat={false}
-            timeFormat={'hh:mm a'}
             className={className}
             closeOnSelect
+            dateFormat={false}
+            onChange={this.handleOnChange}
+            onKeyDown={onKeyDown}
+            onMouseDown={this.onMouseDown}
+            timeFormat={'hh:mm a'}
+            value={formattedValue(formValues.get(name, ''))}
             inputProps={{
+              className: inputClass,
               disabled: disabled,
               placeholder: placeholder,
-              className: inputClass,
+              ref: ref => { this.input = ref },
               style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style},
-              ref: ref => { this.input = ref }
+              tabIndex
             }}
-            onKeyDown={onKeyDown}
           />
         </div>
       )
