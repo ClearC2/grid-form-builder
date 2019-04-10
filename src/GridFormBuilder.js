@@ -229,6 +229,17 @@ export default class FormBuilder extends Component {
         if (field.config.type === 'email') {
           field.config.type = 'input'
         }
+        if (field.config.type === 'metadata') {
+          if (field.config.conditionalConfig) {
+            let conditionalConfig = {...field.config.conditionalConfig}
+            let metaConfig = {...field.config}
+            delete metaConfig.conditionalConfig
+            field.config = conditionalConfig
+            field.config.metaConfig = metaConfig
+          } else {
+            field.config.type = 'input'
+          }
+        }
         field.config.inputType = field.config.type || 'input'
         field.config.type = 'conditionalInput'
       }
