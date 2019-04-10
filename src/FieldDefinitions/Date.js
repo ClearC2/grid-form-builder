@@ -31,6 +31,13 @@ export class Date extends Component {
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
+    if (e &&
+      e.target &&
+      (e.target.className === 'rdtSwitch' ||
+      e.target.className === 'dow') &&
+      !!this.input) {
+      setTimeout(() => { this.input.focus() }, 0)
+    }
     handleAnywhereClick(config, e)
   }
   handleCascadeKeywordClick = e => {
@@ -52,20 +59,15 @@ export class Date extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
   onViewModeChange = (type) => {
-
     if (type === 'time') this.setState({focus: true}, () => { this.input.focus() })
     else this.setState({focus: false}, () => { this.input.focus() })
-
   }
+
   onNavigateBack = () => {
-    // if (this.input) {
-      this.input.focus()
-    // }
+    this.input.focus()
   }
   onNavigateForward = () => {
-    // if (this.input) {
-      this.input.focus()
-    // }
+    this.input.focus()
   }
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
