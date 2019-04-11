@@ -1,3 +1,10 @@
+## [1.9.3](https://github.com/ClearC2/grid-form-builder/compare/v1.9.2...v1.9.3) (2019-04-11)
+
+
+### Bug Fixes
+
+* **queryBuilder:** cond table classname change ([d5a6822](https://github.com/ClearC2/grid-form-builder/commit/d5a6822))
+
 ## [1.9.2](https://github.com/ClearC2/grid-form-builder/compare/v1.9.1...v1.9.2) (2019-04-11)
 
 
