@@ -670,13 +670,7 @@
     pirates "^4.0.0"
     source-map-support "^0.5.9"
 
-"@babel/runtime@^7.1.2":
-  version "7.4.2"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.2.tgz#f5ab6897320f16decd855eed70b705908a313fe8"
-  dependencies:
-    regenerator-runtime "^0.13.2"
-
-"@babel/runtime@^7.3.4", "@babel/runtime@^7.4.2":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.2":
   version "7.4.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.3.tgz#79888e452034223ad9609187a0ad1fe0d2ad4bdc"
   dependencies:
@@ -2585,8 +2579,8 @@ bytes@3.0.0:
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
 
 "c2-ag-grid@git+ssh://git@github.com/ClearC2/c2-ag-grid.git":
-  version "20.2.0"
-  resolved "git+ssh://git@github.com/ClearC2/c2-ag-grid.git#2287ac2dcaceb25fbd78a955eaaeb1efa4152a37"
+  version "20.2.1"
+  resolved "git+ssh://git@github.com/ClearC2/c2-ag-grid.git#5f06cd20b35ca7aa31781f1882d4887166c4ac4d"
   dependencies:
     ag-grid-community "^20.2.0"
     ag-grid-enterprise "^20.2.0"
@@ -7037,7 +7031,11 @@ jest@^23.0.0:
     import-local "^1.0.0"
     jest-cli "^23.6.0"
 
-jquery@^3.2.1, jquery@^3.3.1:
+jquery@^3.2.1:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.0.tgz#8de513fa0fa4b2c7d2e48a530e26f0596936efdf"
+
+jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
@@ -7332,8 +7330,8 @@ libnpx@^10.2.0:
     yargs "^11.0.0"
 
 libphonenumber-js@^1.7.13:
-  version "1.7.14"
-  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.7.14.tgz#e1182323a780db1bd704495355a858e3f40e9293"
+  version "1.7.15"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.7.15.tgz#2ad337e94c24cb810813554f6cf4a19f1246d3b9"
   dependencies:
     minimist "^1.2.0"
     semver-compare "^1.0.0"
@@ -11795,8 +11793,8 @@ spdx-expression-parse@^3.0.0:
     spdx-license-ids "^3.0.0"
 
 spdx-license-ids@^3.0.0:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.3.tgz#81c0ce8f21474756148bbb5f3bfc0f36bf15d76e"
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.4.tgz#75ecd1a88de8c184ef015eafb51b5b48bfd11bb1"
 
 spdy-transport@^3.0.0:
   version "3.0.0"
