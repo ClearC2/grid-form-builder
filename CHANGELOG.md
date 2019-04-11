@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/ClearC2/grid-form-builder/compare/v1.9.1...v1.9.2) (2019-04-11)
+
+
+### Bug Fixes
+
+* **condTable:** upgrade query-builder ([9f71a17](https://github.com/ClearC2/grid-form-builder/commit/9f71a17))
+
 ## [1.9.1](https://github.com/ClearC2/grid-form-builder/compare/v1.9.0...v1.9.1) (2019-04-10)
 
 
