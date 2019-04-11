@@ -1,3 +1,10 @@
+## [1.9.5](https://github.com/ClearC2/grid-form-builder/compare/v1.9.4...v1.9.5) (2019-04-11)
+
+
+### Bug Fixes
+
+* **typeahead:** values will now properly convert from immutable into their mutable counterparts to be passed into react-select ([5cb46bb](https://github.com/ClearC2/grid-form-builder/commit/5cb46bb))
+
 ## [1.9.4](https://github.com/ClearC2/grid-form-builder/compare/v1.9.3...v1.9.4) (2019-04-11)
 
 
