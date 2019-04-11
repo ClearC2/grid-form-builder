@@ -1,3 +1,10 @@
+## [1.9.4](https://github.com/ClearC2/grid-form-builder/compare/v1.9.3...v1.9.4) (2019-04-11)
+
+
+### Bug Fixes
+
+* **styling-typeahead:** add style to control specific to typeahead ([2e80aa0](https://github.com/ClearC2/grid-form-builder/commit/2e80aa0))
+
 ## [1.9.3](https://github.com/ClearC2/grid-form-builder/compare/v1.9.2...v1.9.3) (2019-04-11)
 
 
