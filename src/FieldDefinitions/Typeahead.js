@@ -221,8 +221,7 @@ export class Typeahead extends Component {
     if (!name) return null
     const {label = name} = config
     let value = formValues.get(name, null)
-    value = (value && typeof value.fromJS === 'function') ? value.fromJS() : value
-    value = !!value && List.isList(value) && value.toJS()
+    value = (value && typeof value.toJS === 'function') ? value.toJS() : value
     if (Array.isArray(value) && value.length > 0) {
       value = value.map(v => {
         if (typeof v === 'object') return v
