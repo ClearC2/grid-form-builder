@@ -90,7 +90,7 @@ export default class Conditionalinput extends Component {
     super(props)
     let conditionalFieldValues = Map()
     let i = 0
-    let valueList = this.getValuesFromFormValues()
+    let valueList = this.getValuesFromFormValues(props.formValues, true)
     valueList.forEach((value) => {
       conditionalFieldValues = conditionalFieldValues.set(`${this.parentFieldName()}-${i}`, value)
       i++
@@ -122,7 +122,7 @@ export default class Conditionalinput extends Component {
       typeaheadValues: List(),
       conditions: conds
     }
-    // convert this.props.formValues to conditional form values
+
     this.props.handleOnChange({
       target: {
         name: this.parentFieldName(),
@@ -142,8 +142,13 @@ export default class Conditionalinput extends Component {
       return null
     }
   }
-  getValuesFromFormValues = (formValues = this.props.formValues) => {
-    let val = formValues.get(this.parentFieldName())
+  getValuesFromFormValues = (formValues = this.props.formValues, isConstructor = false) => {
+    let val
+    if (isConstructor && this.props.config.metaConfig) {
+      val = formValues.get(this.props.config.metaConfig.name)
+    } else {
+      val = formValues.get(this.parentFieldName())
+    }
     if (val) {
       if (val instanceof Map) {
         return val.get('values', List())

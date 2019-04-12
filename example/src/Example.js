@@ -4,7 +4,7 @@ import {FormBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import {ConditionalTable} from 'query-builder'
 
-const TEST_SEARCH = false // for conditional search forms
+const TEST_SEARCH = true // for conditional search forms
 
 export default class Example extends Component {
   state = {
@@ -516,6 +516,7 @@ export default class Example extends Component {
                   'name': 'cfd_performer',
                   'label': 'Assigned To',
                   'type': 'typeahead',
+                  'allowcreate': true,
                   'typeahead': {
                     'key': 'c3_sec_performer',
                     'fields': ['performer', 'performerid', 'role', 'cfd_performer']
@@ -721,6 +722,9 @@ export default class Example extends Component {
             formSchema={formSchema.form}
             handleFormValueChange={this.handleOnChange}
             formValues={this.state.formValues}
+            onNextClick={() => {
+            }}
+            enableNextButton
           />
         </div>
       </div>)
