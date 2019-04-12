@@ -1,3 +1,10 @@
+## [1.9.6](https://github.com/ClearC2/grid-form-builder/compare/v1.9.5...v1.9.6) (2019-04-12)
+
+
+### Bug Fixes
+
+* **metaData:** use conditionalConfig name ([0955f25](https://github.com/ClearC2/grid-form-builder/commit/0955f25))
+
 ## [1.9.5](https://github.com/ClearC2/grid-form-builder/compare/v1.9.4...v1.9.5) (2019-04-11)
 
 
