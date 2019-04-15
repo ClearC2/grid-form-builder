@@ -20,7 +20,8 @@ export class Typeahead extends Component {
 
   state = {
     shouldRemount: false,
-    currentOptions: {}
+    currentOptions: {},
+    inputValue: '' // used to keep previous input in typeahead if supressInputReset is true
   }
 
   componentDidUpdate = p => {
@@ -90,6 +91,17 @@ export class Typeahead extends Component {
       }
       changeHandler(e)
     })
+  }
+
+  onInputChange = (val, e, e2) => {
+    console.log(val, e, e2, 'val logggggggggggggg')
+    if (this.props.config.supressInputReset) {
+      if (e.action === 'input-change') {
+        this.setState({inputValue: val})
+      }
+    } else {
+      this.setState({inputValue: val})
+    }
   }
 
   handleChange = (newValue, {action}) => {
@@ -290,6 +302,7 @@ export class Typeahead extends Component {
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
     placeholder = warn ? '* This Field Is Required' : placeholder
+    console.log(value, 'value loggggggggggg')
     if (this.state.shouldRemount) {
       return <Placeholder handleMount={this.setShouldRemount} />
     } else {
@@ -323,6 +336,8 @@ export class Typeahead extends Component {
               styles={{...reactSelectStyles(), ...inputStyles}}
               tabIndex={tabIndex}
               value={value}
+              inputValue={this.state.inputValue}
+              onInputChange={this.onInputChange}
             />}
             {!allowcreate && <Async
               blurInputOnSelect={!multi}
@@ -343,6 +358,8 @@ export class Typeahead extends Component {
               styles={{...inputStyles}}
               tabIndex={tabIndex}
               value={value}
+              inputValue={this.state.inputValue}
+              onInputChange={this.onInputChange}
             />}
           </div>
         )

@@ -3,7 +3,7 @@ import {Map, List} from 'immutable'
 import {FormBuilder, ConditionalTable} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 
-const TEST_SEARCH = true // for conditional search forms
+const TEST_SEARCH = false // for conditional search forms
 
 export default class Example extends Component {
   state = {
@@ -344,6 +344,7 @@ export default class Example extends Component {
               'dimensions': {'x': 6, 'y': 5, 'h': 1, 'w': 6},
               'config': {
                 'name': 'companyname',
+                'supressInputReset': true,
                 'label': 'Normal Typeahead',
                 'required': true,
                 'type': 'typeahead',
