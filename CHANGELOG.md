@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/ClearC2/grid-form-builder/compare/v1.9.7...v1.10.0) (2019-04-15)
+
+
+### Features
+
+* **queryBuilder:** merge query-builder into grid-form-builder where it belongs ([68789a0](https://github.com/ClearC2/grid-form-builder/commit/68789a0))
+
 ## [1.9.7](https://github.com/ClearC2/grid-form-builder/compare/v1.9.6...v1.9.7) (2019-04-12)
 
 
