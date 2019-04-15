@@ -8,7 +8,6 @@ import Number from './FieldDefinitions/Number'
 import Email from './FieldDefinitions/Email'
 import Currency from './FieldDefinitions/Currency'
 import Textarea from './FieldDefinitions/Textarea'
-import Richtextarea from './FieldDefinitions/Richtextarea'
 import Richtextareaquill from './FieldDefinitions/Richtextareaquill'
 import Datetime from './FieldDefinitions/Datetime'
 import Date from './FieldDefinitions/Date'
@@ -65,7 +64,6 @@ let FormComponents = {
   Email,
   Currency,
   Textarea,
-  Richtextarea,
   Richtextareaquill,
   Datetime,
   Time,
@@ -291,6 +289,10 @@ export default class FormBuilder extends Component {
     })
     let tabNumber = 1
     layout.map((field, i) => {
+      if (field.config.type && field.config.type.toLowerCase() === 'richtextarea') {
+        // ck editor was removed. if any form schemas still use Richtextarea, they should use Richtextareaquill now.
+        field.config.type = 'Richtextareaquill'
+      }
       if (this.props.conditionalSearch) {
         field = this.convertFieldToSearch(field)
       }

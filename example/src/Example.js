@@ -30,7 +30,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'testerinput',
                 'label': 'Input',
-                'type': 'richtextarea',
+                'type': 'richtextareaquill',
                 'icon': 'facebook',
                 'iconStyle': {'color': 'blue'},
                 'cascade': {
