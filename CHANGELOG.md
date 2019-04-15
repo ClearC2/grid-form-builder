@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/ClearC2/grid-form-builder/compare/v1.10.0...v1.11.0) (2019-04-15)
+
+
+### Features
+
+* **typeahead:** add supressInputReset config prop option to typeaheads ([b48b4ad](https://github.com/ClearC2/grid-form-builder/commit/b48b4ad))
+
 # [1.10.0](https://github.com/ClearC2/grid-form-builder/compare/v1.9.7...v1.10.0) (2019-04-15)
 
 
