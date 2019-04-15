@@ -23,3 +23,6 @@ export {default as Textarea} from './FieldDefinitions/Textarea'
 export {default as Time} from './FieldDefinitions/Time'
 export {default as Percentage} from './FieldDefinitions/Percentage'
 export {default as Total} from './FieldDefinitions/Total'
+// Components from the proud package formerly known as query-builder the magnificent
+export {default as ConditionalTable, convertQueryToFormValues} from './QueryBuilder/Where/ConditionalTable/ConditionalTableContainer'
+export {ReportBuilder, buildAvailableColumnsFromFieldDefs, buildDefaultColumnsFromQuery} from './QueryBuilder/ReportBuilder/ReportBuilder'

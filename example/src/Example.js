@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {Map, List} from 'immutable'
-import {FormBuilder} from '../../src/index'
+import {FormBuilder, ConditionalTable} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
-import {ConditionalTable} from 'query-builder'
 
 const TEST_SEARCH = true // for conditional search forms
 
