@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/ClearC2/grid-form-builder/compare/v1.11.0...v1.12.0) (2019-04-15)
+
+
+### Features
+
+* **ckeditor:** removed ck so bleu can run on internet explorer now. ([1793a14](https://github.com/ClearC2/grid-form-builder/commit/1793a14))
+
 # [1.11.0](https://github.com/ClearC2/grid-form-builder/compare/v1.10.0...v1.11.0) (2019-04-15)
 
 
