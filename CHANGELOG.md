@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/ClearC2/grid-form-builder/compare/v1.12.0...v1.12.1) (2019-04-16)
+
+
+### Bug Fixes
+
+* **email:** email validation occurs when required ([#65](https://github.com/ClearC2/grid-form-builder/issues/65)) ([104808d](https://github.com/ClearC2/grid-form-builder/commit/104808d))
+
 # [1.12.0](https://github.com/ClearC2/grid-form-builder/compare/v1.11.0...v1.12.0) (2019-04-15)
 
 
