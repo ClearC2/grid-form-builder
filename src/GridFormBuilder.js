@@ -193,7 +193,7 @@ export default class FormBuilder extends Component {
           description: `The field ${name} is marked as required, but its value is empty.`
         })
       }
-      if (type === 'email' && !emailValidator(formValues.get(name, ''))) {
+      if (required && type === 'email' && !emailValidator(formValues.get(name, ''))) {
         reasons.push({
           reason: 'incorrect format',
           message: `${label} is invalid`,
