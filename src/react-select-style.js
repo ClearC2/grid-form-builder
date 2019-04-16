@@ -74,8 +74,6 @@ const reactSelectStyles = () => ({
     return {
       ...base,
       padding: 0,
-      marginTop: '-4px',
-      paddingBottom: '4px',
       paddingLeft: '4px'
     }
   }
