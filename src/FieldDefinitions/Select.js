@@ -123,16 +123,18 @@ export class Select extends Component {
     }
 
     const inputStyles = {
-      input: () => ({
-        height: inline ? 'auto' : 25,
-        minWidth: 170,
-        paddingLeft: '2px',
-        ...style
-      })
-    }
+      ...reactSelectStyles(),
+        control: (base) => ({
+          ...base,
+          border: '1px solid #a0a0a0',
+          borderRadius: '1px',
+          height: inline ? 'auto' : 25,
+          minHeight: '25px',
+          minWidth: '170px',
+          ...style
+        }),
+      }
 
-    // let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
-    // className = !warn ? className : className + ' warn-required'
     let className = warn ? 'warn-required' : ''
     placeholder = warn ? '* This Field Is Required' : placeholder
 
@@ -154,7 +156,7 @@ export class Select extends Component {
             onKeyDown={onKeyDown}
             options={options}
             placeholder={placeholder}
-            styles={{...reactSelectStyles(), ...inputStyles}}
+            styles={inputStyles}
             value={value}
             tabIndex={tabIndex}
         />
