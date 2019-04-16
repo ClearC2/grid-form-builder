@@ -1,3 +1,10 @@
+## [1.12.2](https://github.com/ClearC2/grid-form-builder/compare/v1.12.1...v1.12.2) (2019-04-16)
+
+
+### Bug Fixes
+
+* **react-select:** fix styling on react-select ([#67](https://github.com/ClearC2/grid-form-builder/issues/67)) ([55e9873](https://github.com/ClearC2/grid-form-builder/commit/55e9873))
+
 ## [1.12.1](https://github.com/ClearC2/grid-form-builder/compare/v1.12.0...v1.12.1) (2019-04-16)
 
 
