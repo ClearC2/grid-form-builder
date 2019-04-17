@@ -7,7 +7,7 @@ const reactSelectStyles = () => ({
     minHeight: '25px',
     '&:hover': {
       color: '#ec1c24'
-    } 
+    }
   }),
   control: (base) => ({
     ...base,
@@ -44,16 +44,16 @@ const reactSelectStyles = () => ({
     overflow: 'scroll'
   }),
   menuPortal: base => ({
-    ...base, 
+    ...base,
     zIndex: Number.MAX_SAFE_INTEGER
   }),
   multiValue: (base) => ({
     ...base,
-    background: 'rgba(0, 126, 225, 0.08)',
+    background: 'rgba(0, 126, 225, 0.08)'
   }),
   multiValueLabel: (base) => ({
     ...base,
-    color: '#007eff',
+    color: '#007eff'
   }),
   multiValueRemove: (base) => ({
     ...base,
@@ -74,7 +74,9 @@ const reactSelectStyles = () => ({
     return {
       ...base,
       padding: 0,
-      paddingLeft: '4px'
+      paddingLeft: '4px',
+      marginTop: '-4px',
+      paddingBottom: '4px'
     }
   }
 })

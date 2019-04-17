@@ -114,11 +114,11 @@ export class Typeahead extends Component {
 
     switch (action) {
       case 'create-option':
-        this.emptyFields(fields, handleOnChange )
+        this.emptyFields(fields, handleOnChange)
         handleOnChange({target})
         return
       case 'clear': {
-        this.emptyFields(fields, handleOnChange )
+        this.emptyFields(fields, handleOnChange)
         handleOnChange({target: {name, value: ''}})
         return
       }
@@ -304,8 +304,15 @@ export class Typeahead extends Component {
       }),
       indicatorsContainer: (base) => {
         return {
-        ...base,
-        alignItems: 'flex-start',
+          ...base,
+          alignItems: 'flex-start'
+        }
+      },
+      valueContainer: (base) => {
+        return {
+          ...base,
+          padding: 0,
+          paddingLeft: '4px'
         }
       }
     }
@@ -396,4 +403,3 @@ const boxTarget = {
 }
 
 export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Typeahead)
-
