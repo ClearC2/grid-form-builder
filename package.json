@@ -15,11 +15,12 @@
     "build": "babel -d lib/ src/ --ignore '**/*.test.js'",
     "build:watch": "babel -d lib/ src/ --watch",
     "prepublish": "npm run build",
-    "lint": "standard \"src/**/*.js\"",
     "install:yarn": "./install-yarn.sh",
     "cm": "git-cz",
     "semantic-release": "semantic-release",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint",
+    "lint-fix": "eslint src/ --fix"
   },
   "config": {
     "commitizen": {
@@ -29,6 +30,16 @@
   "release": {
     "branch": "master",
     "extends": "c2-semantic-release"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.js": "eslint",
+    "server/**/*.js": "eslint",
+    "test/**/*.js": "eslint"
   },
   "author": "Jacob Allen",
   "license": "ISC",
@@ -50,10 +61,10 @@
     ]
   },
   "devDependencies": {
+    "@clearc2/eslint-config-c2-react": "^2.0.0",
     "axios": "^0.18.0",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.26.3",
-    "babel-eslint": "7.0.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^6.2.8",
     "babel-plugin-transform-class-properties": "^6.19.0",
@@ -67,7 +78,6 @@
     "cors": "^2.8.4",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.1",
-    "eslint": "3.19.0",
     "express": "^4.16.3",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^1.1.6",
