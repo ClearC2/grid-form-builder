@@ -1,3 +1,10 @@
+## [1.12.3](https://github.com/ClearC2/grid-form-builder/compare/v1.12.2...v1.12.3) (2019-04-17)
+
+
+### Bug Fixes
+
+* **react-select:** center text ([#69](https://github.com/ClearC2/grid-form-builder/issues/69)) ([d756f8a](https://github.com/ClearC2/grid-form-builder/commit/d756f8a))
+
 ## [1.12.2](https://github.com/ClearC2/grid-form-builder/compare/v1.12.1...v1.12.2) (2019-04-16)
 
 
