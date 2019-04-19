@@ -3,7 +3,7 @@ import {Map, List} from 'immutable'
 import {FormBuilder, ConditionalTable} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 
-const TEST_SEARCH = false // for conditional search forms
+const TEST_SEARCH = true // for conditional search forms
 
 export default class Example extends Component {
   state = {
@@ -514,7 +514,7 @@ export default class Example extends Component {
                 'type': 'metadata',
                 'conditionalConfig': {
                   'name': 'cfd_performer',
-                  'label': 'Assigned To',
+                  'label': 'Assigned To Test Label Chnage',
                   'type': 'typeahead',
                   'allowcreate': true,
                   'typeahead': {

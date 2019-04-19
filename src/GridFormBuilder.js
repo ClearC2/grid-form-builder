@@ -229,8 +229,8 @@ export default class FormBuilder extends Component {
         }
         if (field.config.type === 'metadata') {
           if (field.config.conditionalConfig) {
-            let conditionalConfig = {...field.config.conditionalConfig}
-            let metaConfig = {...field.config}
+            let conditionalConfig = Object.assign({}, field.config.conditionalConfig)
+            let metaConfig = Object.assign({}, field.config)
             delete metaConfig.conditionalConfig
             field.config = conditionalConfig
             field.config.metaConfig = metaConfig
