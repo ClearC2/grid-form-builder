@@ -1,3 +1,10 @@
+## [1.12.5](https://github.com/ClearC2/grid-form-builder/compare/v1.12.4...v1.12.5) (2019-04-22)
+
+
+### Bug Fixes
+
+* **query:** metaData labels ([a6ea193](https://github.com/ClearC2/grid-form-builder/commit/a6ea193))
+
 ## [1.12.4](https://github.com/ClearC2/grid-form-builder/compare/v1.12.3...v1.12.4) (2019-04-19)
 
 
