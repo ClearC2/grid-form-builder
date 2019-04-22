@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {fromJS, Map, List, Set} from 'immutable'
 import ConditionalTable from './ConditionalTable'
 import {CONDITIONS, TEXT_INPUTS} from '../../../index'
+import {convertFormSchemaToSearch} from '../../Utils'
 
 const getDefaultCondition = (inputType) => {
   let i = 0
@@ -18,6 +19,7 @@ const getDefaultCondition = (inputType) => {
 }
 const getFieldSchema = (key, formSchema) => {
   if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
+    formSchema = convertFormSchemaToSearch(formSchema)
     return List(formSchema.jsonschema.layout).find(row => row.config.name === key)
   } else {
     return undefined
@@ -96,8 +98,21 @@ class _ConditionalTableContainer extends Component {
     enableDelete: true
   }
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      formSchema: convertFormSchemaToSearch(props.formSchema)
+    }
+  }
+
+  componentDidUpdate (props) {
+    if (Object.keys(props.formSchema).length !== Object.keys(this.state.formSchema).length) {
+      this.setState({formSchema: convertFormSchemaToSearch(props.formSchema)})
+    }
+  }
+
   convertQueryToFormValues = (query, clearExistingValues = true) => {
-    return convertQueryToFormValues(query, clearExistingValues, this.props.formValues, this.props.formSchema)
+    return convertQueryToFormValues(query, clearExistingValues, this.props.formValues, this.state.formSchema)
   }
 
   getDefaultCondition = (inputType) => {
@@ -113,7 +128,7 @@ class _ConditionalTableContainer extends Component {
   }
 
   getFieldSchema = (key) => {
-    let formSchema = this.props.formSchema
+    let formSchema = this.state.formSchema
     if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
       return List(formSchema.jsonschema.layout).find(row => row.config.name === key)
     } else {
@@ -123,7 +138,7 @@ class _ConditionalTableContainer extends Component {
   render () {
     return (
       <ConditionalTable
-        formSchema={this.props.formSchema}
+        formSchema={this.state.formSchema}
         formValues={fromJS(this.props.formValues).toJS()}
         title={this.props.title || 'Query:'}
         handleOnChange={this.props.handleFormValueChange}

@@ -3,7 +3,6 @@ import {Map, List, Set} from 'immutable'
 import PropTypes from 'prop-types'
 import Toggle from './Toggle'
 import {CONDITIONS} from '../../../index'
-
 const X_ICON_CLASS = 'icon-close pull-right pointer'
 
 export default class ConditionalTable extends Component {
@@ -96,7 +95,7 @@ export default class ConditionalTable extends Component {
       let fieldSchema = this.props.getFieldSchema(key)
       let name = ''
       if (fieldSchema) {
-        name = fieldSchema.config.label
+        name = fieldSchema.config.label || (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.label)
       }
       return name || ''
     } else {
