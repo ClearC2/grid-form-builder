@@ -1,3 +1,10 @@
+## [1.12.4](https://github.com/ClearC2/grid-form-builder/compare/v1.12.3...v1.12.4) (2019-04-19)
+
+
+### Bug Fixes
+
+* **query:** deep clone meta data fields, not copy by ref ([a7831e6](https://github.com/ClearC2/grid-form-builder/commit/a7831e6))
+
 ## [1.12.3](https://github.com/ClearC2/grid-form-builder/compare/v1.12.2...v1.12.3) (2019-04-17)
 
 
