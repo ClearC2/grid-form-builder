@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/ClearC2/grid-form-builder/compare/v1.12.5...v1.13.0) (2019-04-23)
+
+
+### Features
+
+* **linting:** add linter ([6c0815f](https://github.com/ClearC2/grid-form-builder/commit/6c0815f))
+
 ## [1.12.5](https://github.com/ClearC2/grid-form-builder/compare/v1.12.4...v1.12.5) (2019-04-22)
 
 
