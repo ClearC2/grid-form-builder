@@ -1,3 +1,87 @@
+# [1.13.0](https://github.com/ClearC2/grid-form-builder/compare/v1.12.5...v1.13.0) (2019-04-23)
+
+
+### Features
+
+* **linting:** add linter ([6c0815f](https://github.com/ClearC2/grid-form-builder/commit/6c0815f))
+
+## [1.12.5](https://github.com/ClearC2/grid-form-builder/compare/v1.12.4...v1.12.5) (2019-04-22)
+
+
+### Bug Fixes
+
+* **query:** metaData labels ([a6ea193](https://github.com/ClearC2/grid-form-builder/commit/a6ea193))
+
+## [1.12.4](https://github.com/ClearC2/grid-form-builder/compare/v1.12.3...v1.12.4) (2019-04-19)
+
+
+### Bug Fixes
+
+* **query:** deep clone meta data fields, not copy by ref ([a7831e6](https://github.com/ClearC2/grid-form-builder/commit/a7831e6))
+
+## [1.12.3](https://github.com/ClearC2/grid-form-builder/compare/v1.12.2...v1.12.3) (2019-04-17)
+
+
+### Bug Fixes
+
+* **react-select:** center text ([#69](https://github.com/ClearC2/grid-form-builder/issues/69)) ([d756f8a](https://github.com/ClearC2/grid-form-builder/commit/d756f8a))
+
+## [1.12.2](https://github.com/ClearC2/grid-form-builder/compare/v1.12.1...v1.12.2) (2019-04-16)
+
+
+### Bug Fixes
+
+* **react-select:** fix styling on react-select ([#67](https://github.com/ClearC2/grid-form-builder/issues/67)) ([55e9873](https://github.com/ClearC2/grid-form-builder/commit/55e9873))
+
+## [1.12.1](https://github.com/ClearC2/grid-form-builder/compare/v1.12.0...v1.12.1) (2019-04-16)
+
+
+### Bug Fixes
+
+* **email:** email validation occurs when required ([#65](https://github.com/ClearC2/grid-form-builder/issues/65)) ([104808d](https://github.com/ClearC2/grid-form-builder/commit/104808d))
+
+# [1.12.0](https://github.com/ClearC2/grid-form-builder/compare/v1.11.0...v1.12.0) (2019-04-15)
+
+
+### Features
+
+* **ckeditor:** removed ck so bleu can run on internet explorer now. ([1793a14](https://github.com/ClearC2/grid-form-builder/commit/1793a14))
+
+# [1.11.0](https://github.com/ClearC2/grid-form-builder/compare/v1.10.0...v1.11.0) (2019-04-15)
+
+
+### Features
+
+* **typeahead:** add supressInputReset config prop option to typeaheads ([b48b4ad](https://github.com/ClearC2/grid-form-builder/commit/b48b4ad))
+
+# [1.10.0](https://github.com/ClearC2/grid-form-builder/compare/v1.9.7...v1.10.0) (2019-04-15)
+
+
+### Features
+
+* **queryBuilder:** merge query-builder into grid-form-builder where it belongs ([68789a0](https://github.com/ClearC2/grid-form-builder/commit/68789a0))
+
+## [1.9.7](https://github.com/ClearC2/grid-form-builder/compare/v1.9.6...v1.9.7) (2019-04-12)
+
+
+### Bug Fixes
+
+* **query-builder:** update query-builder ([3bc1d1d](https://github.com/ClearC2/grid-form-builder/commit/3bc1d1d))
+
+## [1.9.6](https://github.com/ClearC2/grid-form-builder/compare/v1.9.5...v1.9.6) (2019-04-12)
+
+
+### Bug Fixes
+
+* **metaData:** use conditionalConfig name ([0955f25](https://github.com/ClearC2/grid-form-builder/commit/0955f25))
+
+## [1.9.5](https://github.com/ClearC2/grid-form-builder/compare/v1.9.4...v1.9.5) (2019-04-11)
+
+
+### Bug Fixes
+
+* **typeahead:** values will now properly convert from immutable into their mutable counterparts to be passed into react-select ([5cb46bb](https://github.com/ClearC2/grid-form-builder/commit/5cb46bb))
+
 ## [1.9.4](https://github.com/ClearC2/grid-form-builder/compare/v1.9.3...v1.9.4) (2019-04-11)
 
 

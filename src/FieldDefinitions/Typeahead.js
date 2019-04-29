@@ -20,7 +20,8 @@ export class Typeahead extends Component {
 
   state = {
     shouldRemount: false,
-    currentOptions: {}
+    currentOptions: {},
+    inputValue: '' // used to keep previous input in typeahead if supressInputReset is true
   }
 
   componentDidUpdate = p => {
@@ -92,6 +93,16 @@ export class Typeahead extends Component {
     })
   }
 
+  onInputChange = (val, e, e2) => {
+    if (this.props.config.supressInputReset) {
+      if (e.action === 'input-change') {
+        this.setState({inputValue: val})
+      }
+    } else {
+      this.setState({inputValue: val})
+    }
+  }
+
   handleChange = (newValue, {action}) => {
     const {handleOnChange, config = {}} = this.props
     const {name = null, typeahead = {}} = config
@@ -103,11 +114,11 @@ export class Typeahead extends Component {
 
     switch (action) {
       case 'create-option':
-        this.emptyFields(fields, handleOnChange )
+        this.emptyFields(fields, handleOnChange)
         handleOnChange({target})
         return
       case 'clear': {
-        this.emptyFields(fields, handleOnChange )
+        this.emptyFields(fields, handleOnChange)
         handleOnChange({target: {name, value: ''}})
         return
       }
@@ -205,16 +216,10 @@ export class Typeahead extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
+    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex, taMaxHeight = '90px'} = this.props
     const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false} = config
-    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, typeaheadStyle = { control: {
-      border: '1px solid #a0a0a0',
-      borderRadius: '1px',
-      height: '25px',
-      minHeight: '25px',
-      minWidth: '200px'}}} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
-    typeaheadStyle = typeof typeaheadStyle === 'string' ? JSON.parse(typeaheadStyle) : typeaheadStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
@@ -274,17 +279,42 @@ export class Typeahead extends Component {
       }
     }
 
-    const inputStyles = {
+    const selectStyles = {
       ...reactSelectStyles(),
-      input: (base) => ({
-        ...base,
-        padding: 0,
-        ...style
-      }),
       control: (base) => ({
         ...base,
-        ...typeaheadStyle.control
+        border: '1px solid #a0a0a0',
+        borderRadius: '1px',
+        height: '25px',
+        minHeight: '25px',
+        minWidth: '200px',
+        ...style
       })
+    }
+
+    const multiSelectStyles = {
+      ...reactSelectStyles(),
+      control: (base) => ({
+        ...base,
+        border: '1px solid #a0a0a0',
+        borderRadius: '1px',
+        maxHeight: taMaxHeight,
+        overflowY: 'scroll',
+        minWidth: '200px'
+      }),
+      indicatorsContainer: (base) => {
+        return {
+          ...base,
+          alignItems: 'flex-start'
+        }
+      },
+      valueContainer: (base) => {
+        return {
+          ...base,
+          padding: 0,
+          paddingLeft: '4px'
+        }
+      }
     }
 
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
@@ -320,9 +350,11 @@ export class Typeahead extends Component {
               onMouseDown={this.onMouseDown}
               placeholder={placeholder}
               ref={r => { this.input = r }}
-              styles={{...reactSelectStyles(), ...inputStyles}}
+              styles={multi ? multiSelectStyles : selectStyles}
               tabIndex={tabIndex}
               value={value}
+              inputValue={this.state.inputValue}
+              onInputChange={this.onInputChange}
             />}
             {!allowcreate && <Async
               blurInputOnSelect={!multi}
@@ -340,9 +372,11 @@ export class Typeahead extends Component {
               onMouseDown={this.onMouseDown}
               placeholder={placeholder}
               ref={r => { this.input = r }}
-              styles={{...inputStyles}}
+              styles={multi ? multiSelectStyles : selectStyles}
               tabIndex={tabIndex}
               value={value}
+              inputValue={this.state.inputValue}
+              onInputChange={this.onInputChange}
             />}
           </div>
         )
@@ -369,4 +403,3 @@ const boxTarget = {
 }
 
 export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Typeahead)
-

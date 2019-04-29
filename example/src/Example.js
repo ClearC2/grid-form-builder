@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {Map, List} from 'immutable'
-import {FormBuilder} from '../../src/index'
+import {FormBuilder, ConditionalTable} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
-import {ConditionalTable} from 'query-builder'
 
-const TEST_SEARCH = false // for conditional search forms
+const TEST_SEARCH = true // for conditional search forms
 
 export default class Example extends Component {
   state = {
@@ -31,7 +30,7 @@ export default class Example extends Component {
               'config': {
                 'name': 'testerinput',
                 'label': 'Input',
-                'type': 'richtextarea',
+                'type': 'richtextareaquill',
                 'icon': 'facebook',
                 'iconStyle': {'color': 'blue'},
                 'cascade': {
@@ -345,6 +344,7 @@ export default class Example extends Component {
               'dimensions': {'x': 6, 'y': 5, 'h': 1, 'w': 6},
               'config': {
                 'name': 'companyname',
+                'supressInputReset': true,
                 'label': 'Normal Typeahead',
                 'required': true,
                 'type': 'typeahead',
@@ -514,8 +514,9 @@ export default class Example extends Component {
                 'type': 'metadata',
                 'conditionalConfig': {
                   'name': 'cfd_performer',
-                  'label': 'Assigned To',
+                  'label': 'Assigned To Test Label Chnage',
                   'type': 'typeahead',
+                  'allowcreate': true,
                   'typeahead': {
                     'key': 'c3_sec_performer',
                     'fields': ['performer', 'performerid', 'role', 'cfd_performer']
@@ -721,6 +722,9 @@ export default class Example extends Component {
             formSchema={formSchema.form}
             handleFormValueChange={this.handleOnChange}
             formValues={this.state.formValues}
+            onNextClick={() => {
+            }}
+            enableNextButton
           />
         </div>
       </div>)

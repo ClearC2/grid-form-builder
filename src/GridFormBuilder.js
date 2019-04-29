@@ -8,7 +8,6 @@ import Number from './FieldDefinitions/Number'
 import Email from './FieldDefinitions/Email'
 import Currency from './FieldDefinitions/Currency'
 import Textarea from './FieldDefinitions/Textarea'
-import Richtextarea from './FieldDefinitions/Richtextarea'
 import Richtextareaquill from './FieldDefinitions/Richtextareaquill'
 import Datetime from './FieldDefinitions/Datetime'
 import Date from './FieldDefinitions/Date'
@@ -29,6 +28,7 @@ import Metadata from './FieldDefinitions/Metadata'
 import Total from './FieldDefinitions/Total'
 import Percentage from './FieldDefinitions/Percentage'
 import {emailValidator} from './utils'
+import {convertFieldToSearch} from './QueryBuilder/Utils'
 
 let IconLibrary = {}
 export function initComponentIconLibrary (defs = {}) {
@@ -59,13 +59,12 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
   return formValues
 }
 // v fields that cannot be transformed into conditional inputs v
-const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
+
 let FormComponents = {
   Input,
   Email,
   Currency,
   Textarea,
-  Richtextarea,
   Richtextareaquill,
   Datetime,
   Time,
@@ -195,7 +194,7 @@ export default class FormBuilder extends Component {
           description: `The field ${name} is marked as required, but its value is empty.`
         })
       }
-      if (type === 'email' && !emailValidator(formValues.get(name, ''))) {
+      if (required && type === 'email' && !emailValidator(formValues.get(name, ''))) {
         reasons.push({
           reason: 'incorrect format',
           message: `${label} is invalid`,
@@ -211,44 +210,7 @@ export default class FormBuilder extends Component {
 
   uppercaseFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 
-  convertFieldToSearch = (field = {}) => {
-    if (!unconditionalFields.has(field.config.type ? field.config.type.toLowerCase() : 'input')) {
-      if (!field.config.forceUnconditional && !field.config.forceunconditional) {
-        if (field.config.type === 'typeahead') {
-          if (field.config.typeahead && !field.config.typeahead.fieldId) {
-            field.config.typeahead.fieldId = 'value'
-          }
-          field.config.multi = true
-        }
-        if (field.config.type === 'radio') { // inputs that are normally radios should be multicheckboxes in search
-          field.config.type = 'multicheckbox'
-        }
-        if (field.config.type === 'select') {
-          field.config.type = 'multiselect'
-        }
-        if (field.config.type === 'email') {
-          field.config.type = 'input'
-        }
-        if (field.config.type === 'metadata') {
-          if (field.config.conditionalConfig) {
-            let conditionalConfig = {...field.config.conditionalConfig}
-            let metaConfig = {...field.config}
-            delete metaConfig.conditionalConfig
-            field.config = conditionalConfig
-            field.config.metaConfig = metaConfig
-          } else {
-            field.config.type = 'input'
-          }
-        }
-        field.config.inputType = field.config.type || 'input'
-        field.config.type = 'conditionalInput'
-      }
-    }
-    field.config.required = false
-    field.config.readonly = false
-    field.config.disabled = false
-    return field
-  }
+
 
   handleAnywhereClick = (config, e) => {
     const {onClick = () => null} = this.props
@@ -291,8 +253,12 @@ export default class FormBuilder extends Component {
     })
     let tabNumber = 1
     layout.map((field, i) => {
+      if (field.config.type && field.config.type.toLowerCase() === 'richtextarea') {
+        // ck editor was removed. if any form schemas still use Richtextarea, they should use Richtextareaquill now.
+        field.config.type = 'Richtextareaquill'
+      }
       if (this.props.conditionalSearch) {
-        field = this.convertFieldToSearch(field)
+        field = convertFieldToSearch(field)
       }
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
       // AutoComplete OFF does not turn off autocomplete browser feature, you need to pass anything other than 'off' to turn off autocomplete because latest browsers stopped supporting 'off'

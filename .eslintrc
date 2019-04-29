@@ -1,6 +1,5 @@
 {
-  "parser": "babel-eslint",
-  "extends": ["standard", "standard-react"],
-  "globals": {
-  }
+  "extends": [
+    "@clearc2/c2-react"
+  ]
 }
