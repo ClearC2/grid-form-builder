@@ -130,7 +130,7 @@ export class Select extends Component {
           borderRadius: '1px',
           height: inline ? 'auto' : 25,
           minHeight: '25px',
-          minWidth: '170px',
+          minWidth: '200px',
           ...style
         }),
       }
