@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/ClearC2/grid-form-builder/compare/v1.13.0...v1.14.0) (2019-05-07)
+
+
+### Features
+
+* **Input:** add password input type ([caef279](https://github.com/ClearC2/grid-form-builder/commit/caef279))
+
 # [1.13.0](https://github.com/ClearC2/grid-form-builder/compare/v1.12.5...v1.13.0) (2019-04-23)
 
 
