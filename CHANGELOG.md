@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/ClearC2/grid-form-builder/compare/v1.14.0...v1.15.0) (2019-05-07)
+
+
+### Features
+
+* **typeahead:** typeahead now accepts a stringify config bool which will force the typeahead to JSON stringify the result on the way up, and JSON parse it back into an array on the way in so that it will be properly formatted for React Select ([af85a0c](https://github.com/ClearC2/grid-form-builder/commit/af85a0c))
+
 # [1.14.0](https://github.com/ClearC2/grid-form-builder/compare/v1.13.0...v1.14.0) (2019-05-07)
 
 
