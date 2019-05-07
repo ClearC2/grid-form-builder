@@ -292,7 +292,7 @@ export default class Conditionalinput extends Component {
             },
             {
               type: 'field',
-              dimensions: {x: 1, y: 1, h: 1, w: 6},
+              dimensions: {x: 1, y: 1, h: 1, w: 8},
               config: {
                 name: 'condition',
                 label: 'Condition',
@@ -325,7 +325,10 @@ export default class Conditionalinput extends Component {
           readonly: false,
           name: `${this.parentFieldName()}-0`,
           label: `${this.parentLabel()}`,
-          type: this.inputType()
+          type: this.inputType(),
+          style: {
+            marginTop: '3px'
+          }
         }
       })
       fieldCount++
@@ -334,7 +337,7 @@ export default class Conditionalinput extends Component {
       while (fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < this.nFieldsWithValues() + 1)) {
         let newField = {
           type: 'field',
-          dimensions: {x: 1, y: fieldCount + 2, h: this.calculateFieldHeight(this.inputType()), w: 8},
+          dimensions: {x: 1, y: fieldCount + 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
           config: {
             readonly: false,
             name: `${this.parentFieldName()}-${fieldCount}`,
@@ -376,7 +379,7 @@ export default class Conditionalinput extends Component {
     list = list.delete(copyField)
     return list
   }
-/*
+  /*
   this.props.formValues: {
     key: [values]
   }
@@ -392,7 +395,6 @@ export default class Conditionalinput extends Component {
       return
     }
     if (this.inputType() === 'typeahead') {
-
       if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
       }
@@ -539,7 +541,7 @@ export default class Conditionalinput extends Component {
             <span>&times;</span>
           </button>
           <div style={{width: '90%', height: '70%', marginTop: '30px'}} >
-            <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.modalFormValues} conditionalFieldValues={true} handleOnChange={this.handleOnChange} draggable={false} />
+            <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.modalFormValues} conditionalFieldValues handleOnChange={this.handleOnChange} draggable={false} />
           </div>
           <div>
             <button type='button' className='btn-primary pull-right' style={{paddingRight: '10px', paddingTop: '5px', marginRight: '30px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
