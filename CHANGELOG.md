@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/ClearC2/grid-form-builder/compare/v1.16.0...v1.17.0) (2019-05-07)
+
+
+### Features
+
+* **typeahead:** more improvements to the multi typeahead. delimit can now be a string, and delmit no longer requires stringification ([55f3e1d](https://github.com/ClearC2/grid-form-builder/commit/55f3e1d))
+
 # [1.16.0](https://github.com/ClearC2/grid-form-builder/compare/v1.15.1...v1.16.0) (2019-05-07)
 
 
