@@ -105,7 +105,9 @@ export class Typeahead extends Component {
 
   handleChange = (newValue, {action}) => {
     const {handleOnChange, config = {}} = this.props
-    const {name = null, typeahead = {}, stringify} = config
+    const {name = null, typeahead = {}, stringify, delimit} = config
+    let {delimiter} = config
+    if (delimiter && typeof delimiter !== 'string') delimiter = '¤'
     const {fields = []} = typeahead
     let target = {
       name: name,
@@ -127,9 +129,32 @@ export class Typeahead extends Component {
     if (Array.isArray(newValue)) {
       // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
       // so I'll give it back to the developer raw and let them figure it out -- JRA 7/5/2018
-
       if (stringify) {
-        target.value = JSON.stringify(target.value)
+        if (delimiter) {
+          let value = ''
+          if (delimit && Array.isArray(delimit)) {
+            // if we were provided field(s) to delimit by, build up a special string with just those values
+            target.value.forEach(option => {
+              delimit.forEach(field => {
+                if (value.indexOf(option[field]) === -1) {
+                  value = value + option[field] + delimiter
+                }
+              })
+            })
+            value = value.slice(0, -1)
+            target.value = value
+          } else {
+            // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
+            target.value.forEach(option => {
+              value = value + JSON.stringify(option) + delimiter
+            })
+            value = value.slice(0, -1)
+            target.value = value
+          }
+        } else {
+          // if all we want to do is stringify the value, send it back up unmodified but stringified
+          target.value = JSON.stringify(target.value)
+        }
       }
 
       handleOnChange({target})
@@ -223,12 +248,26 @@ export class Typeahead extends Component {
   convertValueStringToValueArrayIfNeeded = value => {
     const {config = {}} = this.props
     const {multi = false, stringify = false, name} = config
-    if (multi && stringify && value && typeof value === 'string') {
+    let {delimiter} = config
+    if (delimiter && typeof delimiter !== 'string') delimiter = '¤'
+    const attemptConvertStringObjectToObject = string => {
       try {
-        value = JSON.parse(value)
+        return JSON.parse(string)
       } catch (e) {
-        console.error('The typeahead field >>', name, '<< attempted to JSON parse >>', value, '<< into an array but the string is not proper JSON. This is a no-op which will cause this typeahead to start with no values.')
-        value = []
+        return string
+      }
+    }
+    if (multi && stringify && value && typeof value === 'string') {
+      if (delimiter) {
+        value = value.split(delimiter)
+        value = value.map(option => attemptConvertStringObjectToObject(option))
+      } else {
+        try {
+          value = JSON.parse(value)
+        } catch (e) {
+          console.error('The typeahead field >>', name, '<< attempted to JSON parse >>', value, '<< into an array but the string is not proper JSON. This is a no-op which will cause this typeahead to start with no values.')
+          value = []
+        }
       }
     }
     return value
