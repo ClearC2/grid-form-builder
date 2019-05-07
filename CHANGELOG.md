@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/ClearC2/grid-form-builder/compare/v1.15.1...v1.16.0) (2019-05-07)
+
+
+### Features
+
+* **typeahead:** typeahead now accepts a delimit and a delimiter config option ([639f9e0](https://github.com/ClearC2/grid-form-builder/commit/639f9e0))
+
 ## [1.15.1](https://github.com/ClearC2/grid-form-builder/compare/v1.15.0...v1.15.1) (2019-05-07)
 
 
