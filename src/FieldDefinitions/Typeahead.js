@@ -105,9 +105,9 @@ export class Typeahead extends Component {
 
   handleChange = (newValue, {action}) => {
     const {handleOnChange, config = {}} = this.props
-    const {name = null, typeahead = {}} = config
+    const {name = null, typeahead = {}, stringify} = config
     const {fields = []} = typeahead
-    const target = {
+    let target = {
       name: name,
       value: (action === 'create-option' && !config.multi) ? newValue.value : newValue
     }
@@ -127,6 +127,11 @@ export class Typeahead extends Component {
     if (Array.isArray(newValue)) {
       // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
       // so I'll give it back to the developer raw and let them figure it out -- JRA 7/5/2018
+
+      if (stringify) {
+        target.value = JSON.stringify(target.value)
+      }
+
       handleOnChange({target})
     } else {
       this.handleSingleValueChange(newValue)
@@ -215,6 +220,20 @@ export class Typeahead extends Component {
     }
   }
 
+  convertValueStringToValueArrayIfNeeded = value => {
+    const {config = {}} = this.props
+    const {multi = false, stringify = false, name} = config
+    if (multi && stringify && value && typeof value === 'string') {
+      try {
+        value = JSON.parse(value)
+      } catch (e) {
+        console.error('The typeahead field >>', name, '<< attempted to JSON parse >>', value, '<< into an array but the string is not proper JSON. This is a no-op which will cause this typeahead to start with no values.')
+        value = []
+      }
+    }
+    return value
+  }
+
   render = () => {
     const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex, taMaxHeight = '90px'} = this.props
     const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false} = config
@@ -227,6 +246,7 @@ export class Typeahead extends Component {
     const {label = name} = config
     let value = formValues.get(name, null)
     value = (value && typeof value.toJS === 'function') ? value.toJS() : value
+    value = this.convertValueStringToValueArrayIfNeeded(value)
     if (Array.isArray(value) && value.length > 0) {
       value = value.map(v => {
         if (typeof v === 'object') return v
