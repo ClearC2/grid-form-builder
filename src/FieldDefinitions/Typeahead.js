@@ -105,8 +105,9 @@ export class Typeahead extends Component {
 
   handleChange = (newValue, {action}) => {
     const {handleOnChange, config = {}} = this.props
-    const {name = null, typeahead = {}, stringify, delimit} = config
-    let {delimiter} = config
+    const {name = null, typeahead = {}, stringify} = config
+    let {delimiter, delimit} = config
+    if (typeof delimit === 'string') delimit = [delimit]
     if (delimiter && typeof delimiter !== 'string') delimiter = '¤'
     const {fields = []} = typeahead
     let target = {
@@ -126,12 +127,12 @@ export class Typeahead extends Component {
       }
     }
 
+    let value = ''
     if (Array.isArray(newValue)) {
       // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
       // so I'll give it back to the developer raw and let them figure it out -- JRA 7/5/2018
       if (stringify) {
         if (delimiter) {
-          let value = ''
           if (delimit && Array.isArray(delimit)) {
             // if we were provided field(s) to delimit by, build up a special string with just those values
             target.value.forEach(option => {
@@ -151,10 +152,33 @@ export class Typeahead extends Component {
             value = value.slice(0, -1)
             target.value = value
           }
+        } else if (delimit && !delimiter) {
+          // special case where they decided to delimit by some field but don't have a delimiter, we are going to it up as a stringified array
+          value = []
+          target.value.forEach(option => {
+            delimit.forEach(field => {
+              if (value.indexOf(option[field]) === -1) {
+                value.push(option[field])
+              }
+            })
+          })
+          value = JSON.stringify(value)
+          target.value = value
         } else {
           // if all we want to do is stringify the value, send it back up unmodified but stringified
           target.value = JSON.stringify(target.value)
         }
+      } else if (delimit && !delimiter) {
+        // special case where they decided to delimit by some field but don't have a delimiter, we are going to it up as an array
+        value = []
+        target.value.forEach(option => {
+          delimit.forEach(field => {
+            if (value.indexOf(option[field]) === -1) {
+              value.push(option[field])
+            }
+          })
+        })
+        target.value = value
       }
 
       handleOnChange({target})

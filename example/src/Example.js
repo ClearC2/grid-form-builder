@@ -420,8 +420,8 @@ export default class Example extends Component {
                 'type': 'typeahead',
                 'multi': true,
                 'stringify': true,
-                'delimiter': '¤',
                 'delimit': ['label'],
+                'delimiter': '¤',
                 'typeahead': {
                   'key': 'c2_company',
                   'duplication': true,
