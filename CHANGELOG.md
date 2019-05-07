@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/ClearC2/grid-form-builder/compare/v1.15.0...v1.15.1) (2019-05-07)
+
+
+### Bug Fixes
+
+* **cond input:** styling ([5a2fb2b](https://github.com/ClearC2/grid-form-builder/commit/5a2fb2b))
+
 # [1.15.0](https://github.com/ClearC2/grid-form-builder/compare/v1.14.0...v1.15.0) (2019-05-07)
 
 
