@@ -1,6 +1,6 @@
 {
   "name": "grid-form-builder",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "Form Builder built on top of React Grid Layout",
   "repository": {
     "type": "git",
