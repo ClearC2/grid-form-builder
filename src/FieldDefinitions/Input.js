@@ -42,7 +42,7 @@ class Input extends Component {
 
   render = () => {
     const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex, interactive, autoComplete} = this.props
-    const {name = null, required = false, onKeyDown = () => null} = config
+    const {name = null, required = false, onKeyDown = () => null, inputType} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -127,7 +127,7 @@ class Input extends Component {
             onMouseDown={this.onMouseDown}
             onChange={handleOnChange}
             style={styles.input}
-            type='text'
+            type={inputType || 'text'}
             name={name}
             value={value}
             disabled={disabled}
