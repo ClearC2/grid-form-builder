@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/ClearC2/grid-form-builder/compare/v1.17.0...v1.17.1) (2019-05-17)
+
+
+### Bug Fixes
+
+* **multiselect:** allow objects as value ([263ddb6](https://github.com/ClearC2/grid-form-builder/commit/263ddb6))
+
 # [1.17.0](https://github.com/ClearC2/grid-form-builder/compare/v1.16.0...v1.17.0) (2019-05-07)
 
 
