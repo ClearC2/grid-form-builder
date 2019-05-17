@@ -144,7 +144,7 @@ export default class Example extends Component {
             },
             {
               'type': 'field',
-              'dimensions': {'x': 0, 'y': 2, 'h': 1, 'w': 6},
+              'dimensions': {'x': 0, 'y': 2, 'h': 3, 'w': 6},
               'config': {
                 'name': 'multiselecttest',
                 'label': 'Multiselect',
@@ -172,6 +172,34 @@ export default class Example extends Component {
                     {
                       'label': 'Initial Meeting',
                       'value': 'Initial Meeting'
+                    },
+                    {
+                      'label': 'Contract Signing',
+                      'value': 'Contract Signing'
+                    },
+                    {
+                      'label': 'Customer Service',
+                      'value': 'Customer Service'
+                    },
+                    {
+                      'label': 'Demonstration',
+                      'value': 'Demonstration'
+                    },
+                    {
+                      'label': 'Executive Meeting',
+                      'value': 'Executive Meeting'
+                    },
+                    {
+                      'label': 'Initial Meeting',
+                      'value': 'Initial Meeting'
+                    },
+                    {
+                      'label': 'Kick Off Meeting',
+                      'value': 'Kick Off Meeting'
+                    },
+                    {
+                      'label': 'Internet Hub',
+                      'value': 'Internet Hub'
                     }
                   ]
                 },

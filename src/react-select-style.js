@@ -13,7 +13,9 @@ const reactSelectStyles = () => ({
     ...base,
     border: '1px solid #a0a0a0',
     borderRadius: '1px',
-    height: '25px',
+    /* this breaks mutliselects so that they do not grow in height. If you really need a Multiselect to not grow, or
+    // height: '25px',
+* some other control to be 25px, use the config object inside your formschema */
     minHeight: '25px',
     minWidth: '200px'
   }),
