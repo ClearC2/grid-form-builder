@@ -1,3 +1,10 @@
+## [1.17.4](https://github.com/ClearC2/grid-form-builder/compare/v1.17.3...v1.17.4) (2019-05-17)
+
+
+### Bug Fixes
+
+* **multiselect:** values and labels can be different now ([9fd5640](https://github.com/ClearC2/grid-form-builder/commit/9fd5640))
+
 ## [1.17.3](https://github.com/ClearC2/grid-form-builder/compare/v1.17.2...v1.17.3) (2019-05-17)
 
 
