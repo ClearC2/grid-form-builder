@@ -13,7 +13,8 @@ export default class Example extends Component {
       textareatest: '1234 Main Street',
       datetest: '65165165',
       meta_created_date: 'swiggity swoogity here comes the moogity',
-      listselecttest: List(['Customer Service', 'Executive Meeting'])
+      listselecttest: List(['Customer Service', 'Executive Meeting']),
+      multiselecttest: ['Contract SigningTestValue']
     }),
     inline: false,
     draggable: false,
@@ -155,19 +156,19 @@ export default class Example extends Component {
                   'options': [
                     {
                       'label': 'Contract Signing',
-                      'value': 'Contract Signing'
+                      'value': 'Contract SigningTestValue'
                     },
                     {
                       'label': 'Customer Service',
-                      'value': 'Customer Service'
+                      'value': 'Customer Service123123123'
                     },
                     {
                       'label': 'Demonstration',
-                      'value': 'Demonstration'
+                      'value': 'Demonstration123123123'
                     },
                     {
                       'label': 'Executive Meeting',
-                      'value': 'Executive Meeting'
+                      'value': 'Executive Meeting123123123'
                     },
                     {
                       'label': 'Initial Meeting',

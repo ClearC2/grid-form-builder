@@ -43,9 +43,16 @@ export class Multiselect extends Component {
     if (Array.isArray(incomingValues) || incomingValues instanceof List) {
       incomingValues = incomingValues.map(value => {
         if (typeof value === 'string' && value !== '') {
-          return {
-            label: value,
-            value
+          let i = options.findIndex((o) => {
+            return o.value === value
+          })
+          if (i !== -1) {
+            return options[i]
+          } else {
+            return {
+              label: value,
+              value: value
+            }
           }
         } else {
           if (typeof value.toJS === 'function') value = value.toJS()
@@ -56,7 +63,6 @@ export class Multiselect extends Component {
     if (typeof incomingValues.toJS === 'function') {
       incomingValues = incomingValues.toJS()
     }
-
     return {
       fieldValues: incomingValues || [],
       builtOptions: options
