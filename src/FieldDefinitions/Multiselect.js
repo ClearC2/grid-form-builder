@@ -3,14 +3,29 @@ import {List, fromJS, Map} from 'immutable'
 import ReactSelect from 'react-select'
 import {DropTarget} from 'react-dnd'
 import {reactSelectStyles} from '../react-select-style'
+import PropTypes from 'prop-types'
 
 export class Multiselect extends Component {
-  state = {
-    fieldValues: [],
-    builtOptions: [],
+  static propTypes = {
+    config: PropTypes.object,
+    formValues: PropTypes.object,
+    didDrop: PropTypes.bool,
+    isOver: PropTypes.bool,
+    droppedItem: PropTypes.object,
+    handleDragDropOnInput: PropTypes.func,
+    handleCascadeKeywordClick: PropTypes.func,
+    handleAnywhereClick: PropTypes.func,
+    handleOnChange: PropTypes.func,
+    inline: PropTypes.bool,
+    Icon: PropTypes.object
   }
 
-  static getDerivedStateFromProps(prevProps) {
+  state = {
+    fieldValues: [],
+    builtOptions: []
+  }
+
+  static getDerivedStateFromProps (prevProps) {
     const {config = {}} = prevProps
     const {keyword = {}} = config
     const {options = []} = keyword
@@ -46,7 +61,6 @@ export class Multiselect extends Component {
       fieldValues: incomingValues || [],
       builtOptions: options
     }
-
   }
 
   componentDidUpdate = p => {
@@ -83,7 +97,6 @@ export class Multiselect extends Component {
   }
 
   onChange = (e) => {
-    this.setState({fieldValues: e})
     if (e.length === 0) {
       this.props.handleOnChange({target: {name: this.props.config.name, value: ''}})
     } else {
@@ -158,7 +171,7 @@ export class Multiselect extends Component {
           ...base,
           marginTop: '-4px',
           paddingBottom: '4px',
-          paddingLeft: 0,
+          paddingLeft: 0
         }
       }
     }
@@ -177,6 +190,7 @@ export class Multiselect extends Component {
           </div>
           <ReactSelect
             className={className}
+            defaultValue={this.state.fieldValues}
             isDisabled={disabled}
             isMulti={multi}
             name={name}
@@ -186,7 +200,6 @@ export class Multiselect extends Component {
             placeholder={placeholder}
             styles={{...reactSelectStyles(), ...inputStyles}}
             tabIndex={tabIndex}
-            value={this.state.fieldValues}
           />
         </div>
       )
