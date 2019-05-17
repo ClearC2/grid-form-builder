@@ -190,7 +190,6 @@ export class Multiselect extends Component {
           </div>
           <ReactSelect
             className={className}
-            defaultValue={this.state.fieldValues}
             isDisabled={disabled}
             isMulti={multi}
             name={name}
@@ -200,6 +199,7 @@ export class Multiselect extends Component {
             placeholder={placeholder}
             styles={{...reactSelectStyles(), ...inputStyles}}
             tabIndex={tabIndex}
+            value={this.state.fieldValues}
           />
         </div>
       )
