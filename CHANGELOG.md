@@ -1,3 +1,10 @@
+## [1.17.3](https://github.com/ClearC2/grid-form-builder/compare/v1.17.2...v1.17.3) (2019-05-17)
+
+
+### Bug Fixes
+
+* **multiselect:** revert breaking style change ([a0fe5ec](https://github.com/ClearC2/grid-form-builder/commit/a0fe5ec))
+
 ## [1.17.2](https://github.com/ClearC2/grid-form-builder/compare/v1.17.1...v1.17.2) (2019-05-17)
 
 
