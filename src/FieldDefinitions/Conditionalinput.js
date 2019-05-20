@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Map, Set, List} from 'immutable'
 import {Dialog} from 'c2-dialog'
 import FormBuilder from '../GridFormBuilder'
-
+import PropTypes from 'prop-types'
 /*
   Select Fields are converted to multiselects
   radio buttons are converted to multicheckboxes
@@ -105,9 +105,9 @@ export default class Conditionalinput extends Component {
     if (this.props.config.excludeConditions) {
       let excludes = Set(this.props.config.excludeConditions)
       let newConds = {}
-      conds.forEach((val, key) => {
+      Object.keys(conds).forEach((key) => {
         if (!excludes.has(key)) {
-          newConds[key] = val
+          newConds[key] = conds[key]
         }
       })
       conds = newConds
@@ -132,6 +132,14 @@ export default class Conditionalinput extends Component {
         })
       }
     })
+  }
+
+  static propTypes = {
+    handleOnChange: PropTypes.func,
+    config: PropTypes.object,
+    formValues: PropTypes.object,
+    inline: PropTypes.bool,
+    Icon: PropTypes.object
   }
 
   getConditionFromFormValues = (formValues = this.props.formValues) => {
