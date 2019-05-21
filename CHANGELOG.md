@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/ClearC2/grid-form-builder/compare/v1.18.0...v1.18.1) (2019-05-21)
+
+
+### Bug Fixes
+
+* **conditionalInput:** enforce maxField count ([2890430](https://github.com/ClearC2/grid-form-builder/commit/2890430))
+
 # [1.18.0](https://github.com/ClearC2/grid-form-builder/compare/v1.17.5...v1.18.0) (2019-05-21)
 
 
