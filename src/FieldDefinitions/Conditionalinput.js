@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, Set, List} from 'immutable'
+import {Map, Set, List, fromJS} from 'immutable'
 import {Dialog} from 'c2-dialog'
 import FormBuilder from '../GridFormBuilder'
 import PropTypes from 'prop-types'
@@ -383,6 +383,10 @@ export default class Conditionalinput extends Component {
     let oldValue = this.props.formValues.get(this.parentFieldName())
     if (oldValue && oldValue instanceof Map) {
       let newFieldValue = this.props.formValues.get(this.parentFieldName(), Map()).set(e.target.name, e.target.value)
+      let maxFieldValues = this.state.conditions[newFieldValue.get('condition', 'contains')].maxFields
+      if (newFieldValue.get('values', List()).size >= maxFieldValues) {
+        newFieldValue = newFieldValue.set('values', newFieldValue.get('values', List()).slice(0, maxFieldValues))
+      }
       this.props.handleOnChange({target: {name: this.parentFieldName(), value: newFieldValue}})
     }
   }
@@ -415,8 +419,24 @@ export default class Conditionalinput extends Component {
       this.handleConditionChange(e)
       return
     }
-    if (typeof e.target.value !== 'string' &&
-      this.maxFieldCount() < e.target.value.values.length) {
+    let values = List()
+    if (this.inputType() === 'typeahead' || e.target.value instanceof List) {
+      values = e.target.value
+    } else {
+      if (typeof e.target.value === 'string') {
+        if (e.target.value === '' && this.inputType() === 'multiselect') {
+          values = List()
+        } else {
+          values = e.target.value
+        }
+      } else {
+        values = e.target.value.get('values')
+      }
+    }
+    if (!(values instanceof List)) {
+      values = fromJS(values)
+    }
+    if (this.maxFieldCount() < values.size) {
       return // escape if more values than allowed selected
     }
     if (this.inputType() === 'typeahead') {
