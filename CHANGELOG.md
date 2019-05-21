@@ -1,3 +1,10 @@
+## [1.18.4](https://github.com/ClearC2/grid-form-builder/compare/v1.18.3...v1.18.4) (2019-05-21)
+
+
+### Bug Fixes
+
+* **undefined:** on maxField calculation when 2 modals opened at once ([9e14ddc](https://github.com/ClearC2/grid-form-builder/commit/9e14ddc))
+
 ## [1.18.3](https://github.com/ClearC2/grid-form-builder/compare/v1.18.2...v1.18.3) (2019-05-21)
 
 
