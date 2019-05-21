@@ -1,3 +1,10 @@
+## [1.17.5](https://github.com/ClearC2/grid-form-builder/compare/v1.17.4...v1.17.5) (2019-05-20)
+
+
+### Bug Fixes
+
+* **queryBuilder:** allow excluded conditons ([0ac3bd2](https://github.com/ClearC2/grid-form-builder/commit/0ac3bd2))
+
 ## [1.17.4](https://github.com/ClearC2/grid-form-builder/compare/v1.17.3...v1.17.4) (2019-05-17)
 
 
