@@ -124,20 +124,23 @@ export class Select extends Component {
 
     const inputStyles = {
       ...reactSelectStyles(),
-        control: (base) => ({
-          ...base,
-          border: '1px solid #a0a0a0',
-          borderRadius: '1px',
-          height: inline ? 'auto' : 25,
-          minHeight: '25px',
-          minWidth: '200px',
-          ...style
-        }),
-      }
+      control: (base) => ({
+        ...base,
+        border: '1px solid #a0a0a0',
+        borderRadius: '1px',
+        height: inline ? 'auto' : 25,
+        minHeight: '25px',
+        minWidth: '200px',
+        ...style
+      })
+    }
 
     let className = warn ? 'warn-required' : ''
     placeholder = warn ? '* This Field Is Required' : placeholder
-
+    let clearable = true
+    if (config.clearable === false) {
+      clearable = false
+    }
     return (
       connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
@@ -149,7 +152,7 @@ export class Select extends Component {
           </div>
           <ReactSelect
             className={className}
-            isClearable
+            isClearable={clearable}
             isDisabled={disabled}
             name={name}
             onChange={this.onChange}
@@ -159,7 +162,7 @@ export class Select extends Component {
             styles={inputStyles}
             value={value}
             tabIndex={tabIndex}
-        />
+          />
         </div>
       )
     )

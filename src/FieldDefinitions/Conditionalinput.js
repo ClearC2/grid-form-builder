@@ -139,7 +139,7 @@ export default class Conditionalinput extends Component {
     config: PropTypes.object,
     formValues: PropTypes.object,
     inline: PropTypes.bool,
-    Icon: PropTypes.object
+    Icon: PropTypes.func
   }
 
   getConditionFromFormValues = (formValues = this.props.formValues) => {
@@ -306,6 +306,7 @@ export default class Conditionalinput extends Component {
                 label: 'Condition',
                 type: 'select',
                 suppressBlankOption: true,
+                clearable: false,
                 keyword: {
                   category: 'NONE',
                   options: this.convertListToOptions(this.inputTypeOptionsList(this.inputType()))
