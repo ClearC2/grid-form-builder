@@ -1,3 +1,10 @@
+## [1.18.3](https://github.com/ClearC2/grid-form-builder/compare/v1.18.2...v1.18.3) (2019-05-21)
+
+
+### Bug Fixes
+
+* **typeahead:** create label ([#71](https://github.com/ClearC2/grid-form-builder/issues/71)) ([6947367](https://github.com/ClearC2/grid-form-builder/commit/6947367))
+
 ## [1.18.2](https://github.com/ClearC2/grid-form-builder/compare/v1.18.1...v1.18.2) (2019-05-21)
 
 
