@@ -1,3 +1,11 @@
+# [1.18.0](https://github.com/ClearC2/grid-form-builder/compare/v1.17.5...v1.18.0) (2019-05-21)
+
+
+### Features
+
+* **select:** if clearable given is false, select cant be cleared. still clearable if undefined ([a3babd0](https://github.com/ClearC2/grid-form-builder/commit/a3babd0))
+* **select:** if clearable given is false, select cant be cleared. still clearable if undefined ([d0ad94b](https://github.com/ClearC2/grid-form-builder/commit/d0ad94b))
+
 ## [1.17.5](https://github.com/ClearC2/grid-form-builder/compare/v1.17.4...v1.17.5) (2019-05-20)
 
 
