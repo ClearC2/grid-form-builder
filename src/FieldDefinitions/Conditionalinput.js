@@ -28,7 +28,7 @@ export const CONDITIONS = {
     joinString: `       and`
   },
   'is equal to': {
-    maxFields: 999,
+    maxFields: 1,
     minFields: 1,
     invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
   },
@@ -59,7 +59,7 @@ export const CONDITIONS = {
     invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
   },
   'is not equal to': {
-    maxFields: 999,
+    maxFields: 1,
     minFields: 1,
     invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
   },
@@ -325,10 +325,22 @@ export default class Conditionalinput extends Component {
     const maxFieldCount = this.maxFieldCount()
     const minFieldCount = this.minFieldCount()
     let fieldCount = 0
+    if (maxFieldCount < 3 && maxFieldCount > 0) {
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {x: 4, y: 2, h: 1, w: 6},
+        config: {
+          name: this.parentFieldName(),
+          type: 'header',
+          style: {lineHeight: '12px', fontSize: '12px'},
+          label: `(${maxFieldCount} value${maxFieldCount === 1 ? '' : 's'} allowed)`
+        }
+      })
+    }
     if (fieldCount < this.maxFieldCount()) {
       schema.form.jsonschema.layout.push({
         type: 'field',
-        dimensions: {x: 1, y: 2, h: this.calculateFieldHeight(this.inputType()), w: 8},
+        dimensions: {x: 1, y: 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
         config: {
           ...this.props.config,
           readonly: false,
@@ -402,6 +414,10 @@ export default class Conditionalinput extends Component {
     if (e.target.name === 'condition') {
       this.handleConditionChange(e)
       return
+    }
+    if (typeof e.target.value !== 'string' &&
+      this.maxFieldCount() < e.target.value.values.length) {
+      return // escape if more values than allowed selected
     }
     if (this.inputType() === 'typeahead') {
       if (this.parentFieldName() !== e.target.name.split('-')[0]) {
