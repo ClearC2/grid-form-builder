@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, List} from 'immutable'
+import {Map} from 'immutable'
 import {AsyncCreatable, Async} from 'react-select'
 import PropTypes from 'prop-types'
 import GFBConfig from '../config'
@@ -14,6 +14,28 @@ class Placeholder extends Component {
   render = () => null
 }
 export class Typeahead extends Component {
+  static propTypes = {
+    autoComplete: PropTypes.string,
+    didDrop: PropTypes.bool,
+    isOver: PropTypes.bool,
+    CascadeIcon: PropTypes.any,
+    cascadingKeyword: PropTypes.any,
+    config: PropTypes.object,
+    connectDropTarget: PropTypes.any,
+    droppedItem: PropTypes.any,
+    handleOnChange: PropTypes.func.isRequired,
+    handleDragDropOnInput: PropTypes.func,
+    handleAnywhereClick: PropTypes.func,
+    handleCascadeKeywordClick: PropTypes.func,
+    draggable: PropTypes.bool,
+    minChars: PropTypes.number,
+    formValues: PropTypes.instanceOf(Map),
+    Icon: PropTypes.any,
+    requiredWarning: PropTypes.bool,
+    inline: PropTypes.bool,
+    tabIndex: PropTypes.number,
+    taMaxHeight: PropTypes.string
+  }
   static defaultProps = {
     minChars: 1
   }
@@ -230,6 +252,7 @@ export class Typeahead extends Component {
     let {filter = {}} = typeahead
 
     if (!key && !fieldvalue) {
+      // eslint-disable-next-line
       console.error(`The JSON schema representation for ${name} does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}`)
       return Promise.resolve({options: []})
     }
@@ -289,6 +312,7 @@ export class Typeahead extends Component {
         try {
           value = JSON.parse(value)
         } catch (e) {
+          // eslint-disable-next-line
           console.error('The typeahead field >>', name, '<< attempted to JSON parse >>', value, '<< into an array but the string is not proper JSON. This is a no-op which will cause this typeahead to start with no values.')
           value = []
         }
@@ -298,7 +322,18 @@ export class Typeahead extends Component {
   }
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex, taMaxHeight = '90px'} = this.props
+    const {
+      inline,
+      formValues = Map(),
+      config = {},
+      Icon = null,
+      requiredWarning,
+      connectDropTarget,
+      cascadingKeyword,
+      CascadeIcon,
+      tabIndex,
+      taMaxHeight = '90px'
+    } = this.props
     const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -410,10 +445,16 @@ export class Typeahead extends Component {
         connectDropTarget(
           <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
             <div style={styles.labelContainer}>
-              {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+              {required && (
+                <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>)}
               {Icon && <Icon style={styles.icon} />}
-              <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
-              {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
+              <strong
+                style={styles.label}
+                onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
+                className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}
+              </strong>
+              {!!cascadingKeyword && !!CascadeIcon && (
+                <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />)}
             </div>
             {allowcreate && <AsyncCreatable
               blurInputOnSelect={!multi}
