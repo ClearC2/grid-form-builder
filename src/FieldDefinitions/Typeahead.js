@@ -461,6 +461,7 @@ export class Typeahead extends Component {
               cacheOptions
               className={className}
               createOptionPosition='first'
+              formatCreateLabel={val => `Click or Tab to Create "${val}"`}
               isClearable
               isDisabled={disabled}
               isMulti={multi}
