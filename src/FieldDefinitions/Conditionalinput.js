@@ -213,7 +213,13 @@ export default class Conditionalinput extends Component {
     }
   }
 
-  maxFieldCount = () => this.state.conditions[this.condition()].maxFields
+  maxFieldCount = () => {
+    if (this.state.conditions[this.condition()]) {
+      return this.state.conditions[this.condition()].maxFields
+    } else {
+      return 999
+    }
+  }
   minFieldCount = () => this.state.conditions[this.condition()].minFields
   parentFieldName = () => this.props.config.name
   parentLabel = () => this.props.config.label || this.props.config.name
