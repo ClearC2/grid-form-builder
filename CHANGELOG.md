@@ -1,3 +1,10 @@
+## [1.18.2](https://github.com/ClearC2/grid-form-builder/compare/v1.18.1...v1.18.2) (2019-05-21)
+
+
+### Bug Fixes
+
+* **conditionalInput:** slice input if condition changes to have lower max values ([300f0a5](https://github.com/ClearC2/grid-form-builder/commit/300f0a5))
+
 ## [1.18.1](https://github.com/ClearC2/grid-form-builder/compare/v1.18.0...v1.18.1) (2019-05-21)
 
 
