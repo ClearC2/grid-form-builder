@@ -1,3 +1,11 @@
+## [1.18.5](https://github.com/ClearC2/grid-form-builder/compare/v1.18.4...v1.18.5) (2019-05-21)
+
+
+### Bug Fixes
+
+* **undefined:** on minField calculation when 2 modals opened at once ([45f3752](https://github.com/ClearC2/grid-form-builder/commit/45f3752))
+* **undefined:** on minField calculation when 2 modals opened at once ([0fa30e0](https://github.com/ClearC2/grid-form-builder/commit/0fa30e0))
+
 ## [1.18.4](https://github.com/ClearC2/grid-form-builder/compare/v1.18.3...v1.18.4) (2019-05-21)
 
 
