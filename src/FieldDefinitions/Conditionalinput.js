@@ -364,7 +364,6 @@ export default class Conditionalinput extends Component {
       fieldCount++
     }
     if (MULTI_FIELD_INPUTS.has(this.inputType())) {
-      console.log(fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < this.nFieldsWithValues() + 1), minFieldCount, maxFieldCount, fieldCount, this.nFieldsWithValues() + 1, fieldCount < minFieldCount, (fieldCount < maxFieldCount && fieldCount < this.nFieldsWithValues() + 1),'field val loggggggg') // eslint-disable-line
       while (fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < this.nFieldsWithValues() + 1)) {
         let label = this.state.conditions[this.condition()]
         if (typeof label === 'object') {
