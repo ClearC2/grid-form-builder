@@ -368,13 +368,19 @@ export default class Conditionalinput extends Component {
     }
     if (MULTI_FIELD_INPUTS.has(this.inputType())) {
       while (fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < this.nFieldsWithValues() + 1)) {
+        let label = this.state.conditions[this.condition()]
+        if (typeof label === 'object') {
+          label = label.joinString
+        } else {
+          label = `     ...or`
+        }
         let newField = {
           type: 'field',
           dimensions: {x: 1, y: fieldCount + 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
           config: {
             readonly: false,
             name: `${this.parentFieldName()}-${fieldCount}`,
-            label: this.state.conditions[this.condition()].joinString || `     ...or`,
+            label: label,
             type: this.inputType()
           }
         }
