@@ -349,7 +349,7 @@ export default class Conditionalinput extends Component {
         }
       })
     }
-    if (fieldCount < this.maxFieldCount()) {
+    if (fieldCount < this.nFieldsWithValues() + 1) {
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {x: 1, y: 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
