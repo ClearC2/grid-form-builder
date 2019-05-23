@@ -1,3 +1,10 @@
+## [1.18.7](https://github.com/ClearC2/grid-form-builder/compare/v1.18.6...v1.18.7) (2019-05-23)
+
+
+### Bug Fixes
+
+* **condInput:** drawing 999 fields bug ([d69a481](https://github.com/ClearC2/grid-form-builder/commit/d69a481))
+
 ## [1.18.6](https://github.com/ClearC2/grid-form-builder/compare/v1.18.5...v1.18.6) (2019-05-23)
 
 
