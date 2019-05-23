@@ -1,3 +1,10 @@
+## [1.18.6](https://github.com/ClearC2/grid-form-builder/compare/v1.18.5...v1.18.6) (2019-05-23)
+
+
+### Bug Fixes
+
+* **conditionalInput:** undefined error on opening 2 fields at the same time ([c4f638d](https://github.com/ClearC2/grid-form-builder/commit/c4f638d))
+
 ## [1.18.5](https://github.com/ClearC2/grid-form-builder/compare/v1.18.4...v1.18.5) (2019-05-21)
 
 
