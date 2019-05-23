@@ -1,3 +1,11 @@
+## [1.18.8](https://github.com/ClearC2/grid-form-builder/compare/v1.18.7...v1.18.8) (2019-05-23)
+
+
+### Bug Fixes
+
+* **multiSelect:** styles for scrolling ([ee9468c](https://github.com/ClearC2/grid-form-builder/commit/ee9468c))
+* **multiSelect:** styles for scrolling ([1bd1611](https://github.com/ClearC2/grid-form-builder/commit/1bd1611))
+
 ## [1.18.7](https://github.com/ClearC2/grid-form-builder/compare/v1.18.6...v1.18.7) (2019-05-23)
 
 
