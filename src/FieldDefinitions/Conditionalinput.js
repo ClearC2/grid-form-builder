@@ -21,16 +21,16 @@ export const CONDITIONS = {
     minFields: 1,
     invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
   },
+  'is equal to': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
+  },
   'is between': {
     maxFields: 2,
     minFields: 2,
     invalidInputTypes: [...ONLY_CATEGORICAL_INPUT],
     joinString: `       and`
-  },
-  'is equal to': {
-    maxFields: 1,
-    minFields: 1,
-    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
   },
   'is greater than': {
     maxFields: 1,
@@ -358,10 +358,7 @@ export default class Conditionalinput extends Component {
           readonly: false,
           name: `${this.parentFieldName()}-0`,
           label: `${this.parentLabel()}`,
-          type: this.inputType(),
-          style: {
-            marginTop: '3px'
-          }
+          type: this.inputType()
         }
       })
       fieldCount++
@@ -380,6 +377,7 @@ export default class Conditionalinput extends Component {
           type: 'field',
           dimensions: {x: 1, y: fieldCount + 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
           config: {
+            ...this.props.config,
             readonly: false,
             name: `${this.parentFieldName()}-${fieldCount}`,
             label: label,
