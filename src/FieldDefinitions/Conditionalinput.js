@@ -224,7 +224,7 @@ export default class Conditionalinput extends Component {
     if (this.state.conditions[this.condition()]) {
       return this.state.conditions[this.condition()].minFields
     } else {
-      return 999
+      return 0
     }
   }
   parentFieldName = () => this.props.config.name
