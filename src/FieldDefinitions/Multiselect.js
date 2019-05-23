@@ -172,6 +172,14 @@ export class Multiselect extends Component {
         ...base,
         ...style
       }),
+      control: (base) => ({
+        ...base,
+        border: '1px solid #a0a0a0',
+        borderRadius: '1px',
+        maxHeight: '90px',
+        overflowY: 'scroll',
+        minWidth: '200px'
+      }),
       valueContainer: (base) => {
         return {
           ...base,
