@@ -42,7 +42,7 @@ class Input extends Component {
 
   render = () => {
     const {inline, formValues = Map(), handleOnChange = () => {}, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex, interactive, autoComplete} = this.props
-    const {name = null, required = false, onKeyDown = () => null, inputType} = config
+    const {name = null, required = false, onKeyDown = () => null, inputType, autofocus} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -121,6 +121,7 @@ class Input extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <input
+            autoFocus={this.props.config.autofocus}
             autoComplete={autoComplete}
             className={className}
             placeholder={placeholder}

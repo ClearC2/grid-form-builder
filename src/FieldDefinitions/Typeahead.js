@@ -480,9 +480,11 @@ export class Typeahead extends Component {
               value={value}
               inputValue={this.state.inputValue}
               onInputChange={this.onInputChange}
+              autoFocus={this.props.config.autofocus}
             />}
             {!allowcreate && <Async
               blurInputOnSelect={!multi}
+              autoFocus={this.props.config.autofocus}
               cacheOptions
               className={className}
               isClearable

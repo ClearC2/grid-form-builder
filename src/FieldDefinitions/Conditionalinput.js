@@ -355,6 +355,7 @@ export default class Conditionalinput extends Component {
         dimensions: {x: 1, y: 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
         config: {
           ...this.props.config,
+          autofocus: true,
           readonly: false,
           name: `${this.parentFieldName()}-0`,
           label: `${this.parentLabel()}`,
