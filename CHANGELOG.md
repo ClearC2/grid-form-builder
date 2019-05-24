@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/ClearC2/grid-form-builder/compare/v1.18.8...v1.19.0) (2019-05-24)
+
+
+### Features
+
+* **autofocus:** give autofocus true in config to text based fields to autofocus them. ([2513837](https://github.com/ClearC2/grid-form-builder/commit/2513837))
+
 ## [1.18.8](https://github.com/ClearC2/grid-form-builder/compare/v1.18.7...v1.18.8) (2019-05-23)
 
 
