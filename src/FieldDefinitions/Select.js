@@ -151,6 +151,7 @@ export class Select extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <ReactSelect
+            autoFocus={this.props.config.autofocus}
             className={className}
             isClearable={clearable}
             isDisabled={disabled}

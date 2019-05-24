@@ -185,6 +185,7 @@ class Currency extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <input
+            autoFocus={this.props.config.autofocus}
             className={className}
             disabled={disabled}
             name={name}

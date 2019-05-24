@@ -158,6 +158,7 @@ class Email extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <input
+            autoFocus={this.props.config.autofocus}
             className={className}
             placeholder={placeholder}
             onMouseDown={this.onMouseDown}

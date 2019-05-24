@@ -203,6 +203,7 @@ export class Multiselect extends Component {
             {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
           </div>
           <ReactSelect
+            autoFocus={this.props.config.autofocus}
             className={className}
             isDisabled={disabled}
             isMulti={multi}

@@ -200,6 +200,7 @@ class Percentage extends Component {
             </strong>
           </div>
           <input
+            autoFocus={this.props.config.autofocus}
             className={className}
             placeholder={placeholder}
             onMouseDown={this.onMouseDown}
