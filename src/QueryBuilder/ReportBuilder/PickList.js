@@ -40,7 +40,11 @@ class Pane extends Component {
     onFlush = () => {
       const {valueKey} = this.props
       const items = this.items().filter(item => this.state.selected[item[valueKey]])
-      this.props.onAction(items)
+      if (this.state.search) {
+        this.props.onAction(items)
+      } else {
+        this.props.onAction(this.items().map(c => c))
+      }
       this.setState({selectAll: false, selected: {}, searchText: ''})
     }
 
@@ -167,7 +171,7 @@ export default class PickList extends Component {
       options.forEach(option => {
         const found = values.find(o => o[valueKey] === option[valueKey])
         if (!found) {
-          values.push(option)
+          values.unshift(option)
         }
       })
 
@@ -192,9 +196,7 @@ export default class PickList extends Component {
           values.splice(index, 1)
         }
       })
-      if (options.length === 1) {
-        onChange(values)
-      }
+      onChange(values)
     }
 
     render () {
@@ -206,7 +208,7 @@ export default class PickList extends Component {
               {...this.props}
               paneLabel={leftPaneLabel}
               items={options}
-              paneRef={div => this.optionsDiv = div}
+              paneRef={div => { this.optionsDiv = div }}
               onAction={options => this.add(options)}
               actionElement='Add All'
             />
@@ -216,7 +218,7 @@ export default class PickList extends Component {
               {...this.props}
               paneLabel={rightPaneLabel}
               items={value}
-              paneRef={div => this.valueDiv = div}
+              paneRef={div => { this.valueDiv = div }}
               onAction={options => this.remove(options)}
               actionElement='Remove All'
             />

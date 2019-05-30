@@ -69,7 +69,7 @@ export class ReportBuilder extends Component {
           }
           return val
         } else {
-          console.warn('Query-builder was unable to read col.data[col.colDef.field] of a boolean field. returning blank string', col)
+          console.warn('Query-builder was unable to read col.data[col.colDef.field] of a boolean field. returning blank string', col)// eslint-disable-line
           return ''
         }
       }
@@ -99,6 +99,7 @@ export class ReportBuilder extends Component {
   }
 
   onColumnChange = (colList) => {
+    // colList.sort((a, b) => a.label < b.label ? -1 : 1)
     if (this.props.onColDefChange) {
       this.props.onColDefChange(this.buildColumnDefs(colList))
     }
@@ -192,7 +193,7 @@ export function buildDefaultColumnsFromQuery (query, availableColumns = []) {
       }
     }
   } else {
-    console.warn('Could not find query.query; please provide the raw query returned by ConditionalTable ')
+    console.warn('Could not find query.query; please provide the raw query returned by ConditionalTable ')// eslint-disable-line
   }
   return selected
 }

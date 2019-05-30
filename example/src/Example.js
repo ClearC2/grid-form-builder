@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, List, Set} from 'immutable'
+import {Map, List} from 'immutable'
 import {FormBuilder, ConditionalTable, ReportBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 
@@ -778,7 +778,6 @@ export default class Example extends Component {
   handleOnDrop = ({source, target}) => console.log(source, target)
 
   // componentDidMount = () => setTimeout(() => {debugger}, 3000)
-
 
   render = () => {
     const {formSchema, isInvalidWarning} = this.state
