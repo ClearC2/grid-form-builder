@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/ClearC2/grid-form-builder/compare/v1.19.0...v1.19.1) (2019-05-30)
+
+
+### Bug Fixes
+
+* **colPicker:** remove all doesnt just obliterate all options now ([e87bc74](https://github.com/ClearC2/grid-form-builder/commit/e87bc74))
+
 # [1.19.0](https://github.com/ClearC2/grid-form-builder/compare/v1.18.8...v1.19.0) (2019-05-24)
 
 
