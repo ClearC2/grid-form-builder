@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/ClearC2/grid-form-builder/compare/v1.20.0...v1.20.1) (2019-06-03)
+
+
+### Bug Fixes
+
+* **date:** month pickers should now pick changeable ([bcc0e1a](https://github.com/ClearC2/grid-form-builder/commit/bcc0e1a))
+
 # [1.20.0](https://github.com/ClearC2/grid-form-builder/compare/v1.19.1...v1.20.0) (2019-06-03)
 
 
