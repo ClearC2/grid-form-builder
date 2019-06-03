@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/ClearC2/grid-form-builder/compare/v1.19.1...v1.20.0) (2019-06-03)
+
+
+### Features
+
+* **date:** date time will only format on blur ([3eadb5f](https://github.com/ClearC2/grid-form-builder/commit/3eadb5f))
+
 ## [1.19.1](https://github.com/ClearC2/grid-form-builder/compare/v1.19.0...v1.19.1) (2019-05-30)
 
 
