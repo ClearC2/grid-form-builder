@@ -29,13 +29,13 @@ export class Date extends Component {
   }
 
   state = {
-    focus: false,
+    focus: true,
     value: ''
   }
 
   handleValueUpdated = (value, format) => {
     value = (format && moment(value).isValid()) ? moment(value).format('M/D/YYYY') : value
-    this.setState(() => ({value}))
+    this.setState(() => ({value, focus: format}))
   }
 
   componentDidMount = () => {
@@ -95,6 +95,9 @@ export class Date extends Component {
 
   handleChange = val => {
     if (this.state.focus) this.input.focus()
+    if (typeof val === 'string') {
+      this.setState(() => ({focus: false}))
+    }
     this.handleValueUpdated(val)
   }
 
@@ -102,9 +105,8 @@ export class Date extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
 
-  onViewModeChange = (type) => {
-    if (type === 'time') this.setState({focus: true}, () => { this.input.focus() })
-    else this.setState({focus: false}, () => { this.input.focus() })
+  onViewModeChange = () => {
+    this.input.focus()
   }
 
   onNavigateBack = () => {
@@ -117,26 +119,28 @@ export class Date extends Component {
 
   debounceBlur = null
   handleOnBlur = () => {
-    clearTimeout(this.debounceBlur)
-    this.debounceBlur = setTimeout(() => {
-      let {value} = this.state
-      const {handleOnChange, config = {}, formValues = Map()} = this.props
-      const {name = null} = config
-      if (typeof value.format === 'function') {
-        value = value.format('M/D/YYYY')
-      }
-      if (moment(value).isValid()) {
-        handleOnChange({
-          target: {
-            name,
-            value
-          }
-        })
-      } else {
-        const value = formValues.get(name, '')
-        this.handleValueUpdated(value, true)
-      }
-    }, 250)
+    if (!this.state.focus) {
+      clearTimeout(this.debounceBlur)
+      this.debounceBlur = setTimeout(() => {
+        let {value} = this.state
+        const {handleOnChange, config = {}, formValues = Map()} = this.props
+        const {name = null} = config
+        if (typeof value.format === 'function') {
+          value = value.format('M/D/YYYY')
+        }
+        if (moment(value).isValid()) {
+          handleOnChange({
+            target: {
+              name,
+              value
+            }
+          })
+        } else {
+          const value = formValues.get(name, '')
+          this.handleValueUpdated(value, true)
+        }
+      }, 250)
+    }
   }
 
   render = () => {
