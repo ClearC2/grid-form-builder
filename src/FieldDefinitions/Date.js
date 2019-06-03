@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import DateTime from 'react-datetime'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
@@ -7,11 +8,53 @@ import moment from 'moment'
 moment.suppressDeprecationWarnings = true
 
 export class Date extends Component {
-  state = {
-    focus: false
+  static propTypes = {
+    formValues: PropTypes.object,
+    config: PropTypes.object,
+    didDrop: PropTypes.bool,
+    isOver: PropTypes.bool,
+    droppedItem: PropTypes.object,
+    handleDragDropOnInput: PropTypes.func,
+    handleAnywhereClick: PropTypes.func,
+    handleCascadeKeywordClick: PropTypes.func,
+    handleOnChange: PropTypes.func,
+    draggable: PropTypes.bool,
+    inline: PropTypes.bool,
+    Icon: PropTypes.node,
+    requiredWarning: PropTypes.bool,
+    connectDropTarget: PropTypes.func,
+    cascadingKeyword: PropTypes.string,
+    CascadeIcon: PropTypes.func,
+    tabIndex: PropTypes.number
   }
+
+  state = {
+    focus: false,
+    value: ''
+  }
+
+  handleValueUpdated = (value, format) => {
+    value = (format && moment(value).isValid()) ? moment(value).format('M/D/YYYY') : value
+    this.setState(() => ({value}))
+  }
+
+  componentDidMount = () => {
+    const {formValues = Map(), config = {}} = this.props
+    const {name = null} = config
+    const value = formValues.get(name, '')
+    this.handleValueUpdated(value, true)
+  }
+
   componentDidUpdate = p => {
-    const {didDrop, isOver} = this.props
+    const {didDrop, isOver, formValues: fV = Map(), config: c = {}} = this.props
+    const {name: n = null} = c
+    const {formValues = Map(), config = {}} = p
+    const {name = null} = config
+    const v = fV.get(n, '')
+    const value = formValues.get(name, '')
+    if (v !== value) {
+      this.handleValueUpdated(v, true)
+    }
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
       // if it was just previously over and dropped (this is to make this event only trigger once)
       let {droppedItem, handleDragDropOnInput, config = {}, formValues = Map()} = this.props
@@ -26,6 +69,7 @@ export class Date extends Component {
       }
     }
   }
+
   handleAnywhereClick = e => {
     const {handleAnywhereClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
@@ -40,6 +84,7 @@ export class Date extends Component {
     }
     handleAnywhereClick(config, e)
   }
+
   handleCascadeKeywordClick = e => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
@@ -47,17 +92,16 @@ export class Date extends Component {
     config = {currentValue, ...config}
     handleCascadeKeywordClick(config)
   }
+
   handleChange = val => {
     if (this.state.focus) this.input.focus()
-    const {handleOnChange = () => {}} = this.props
-    const field = this.props.config.name
-    const value = typeof val === 'object' ? val.format('M/D/YYYY') : val
-    let e = {target: {name: field, value}}
-    handleOnChange(e)
+    this.handleValueUpdated(val)
   }
+
   onMouseDown = e => {
     if (this.props.draggable) e.stopPropagation()
   }
+
   onViewModeChange = (type) => {
     if (type === 'time') this.setState({focus: true}, () => { this.input.focus() })
     else this.setState({focus: false}, () => { this.input.focus() })
@@ -66,13 +110,48 @@ export class Date extends Component {
   onNavigateBack = () => {
     this.input.focus()
   }
+
   onNavigateForward = () => {
     this.input.focus()
   }
+
+  debounceBlur = null
+  handleOnBlur = () => {
+    clearTimeout(this.debounceBlur)
+    this.debounceBlur = setTimeout(() => {
+      let {value} = this.state
+      const {handleOnChange, config = {}, formValues = Map()} = this.props
+      const {name = null} = config
+      if (typeof value.format === 'function') {
+        value = value.format('M/D/YYYY')
+      }
+      if (moment(value).isValid()) {
+        handleOnChange({
+          target: {
+            name,
+            value
+          }
+        })
+      } else {
+        const value = formValues.get(name, '')
+        this.handleValueUpdated(value, true)
+      }
+    }, 250)
+  }
+
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
+    const {
+      inline,
+      formValues = Map(),
+      config = {},
+      Icon = null,
+      requiredWarning,
+      connectDropTarget,
+      cascadingKeyword,
+      CascadeIcon,
+      tabIndex
+    } = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
-    const value = formValues.get(name, '')
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -128,20 +207,29 @@ export class Date extends Component {
     className = !warn ? className : className + ' warn-required'
     const inputClass = warn ? 'warn-required' : ''
     placeholder = warn ? '* This Field Is Required' : placeholder
-    const formatValue = value => moment(value).isValid() && moment(value).format('M/D/YYYY')
 
     return (
       connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <div style={styles.labelContainer}>
-            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+            {required && (
+              <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>
+            )}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
-            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
+            <strong
+              style={styles.label}
+              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
+              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+            >
+              {label}
+            </strong>
+            {!!cascadingKeyword && !!CascadeIcon && (
+              <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+            )}
           </div>
           <DateTime
             onMouseDown={this.onMouseDown}
-            value={formatValue(value)}
+            value={this.state.value}
             onChange={this.handleChange}
             dateFormat='M/D/YYYY'
             timeFormat={false}
@@ -156,9 +244,11 @@ export class Date extends Component {
               className: inputClass,
               style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style},
               tabIndex,
-              ref: ref => { this.input = ref }
+              ref: ref => { this.input = ref },
+              onBlurCapture: this.handleOnBlur
             }}
             onKeyDown={onKeyDown}
+            onBlur={this.handleOnBlur}
           />
         </div>
       )
