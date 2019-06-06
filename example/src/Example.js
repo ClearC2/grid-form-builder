@@ -37,7 +37,7 @@ export default class Example extends Component {
                 'label': 'Input',
                 'type': 'richtextareaquill',
                 'icon': 'facebook',
-                'iconStyle': {'color': 'blue'},
+                'iconStyle': {'color': '#FF00FF'},
                 'cascade': {
                   'keyword': 'C2_PEOPLE_SOMETHING',
                   'icon': 'tree'
@@ -51,10 +51,17 @@ export default class Example extends Component {
                 'name': 'unique-test-input',
                 'label': 'Test Input',
                 'type': 'input',
+                'labelStyle': {
+                  'color': 'blue',
+                  'textDecoration': 'underline'
+                },
                 'link': {
                   'type': 'c2company',
                   'id': 'parentid',
-                  'icon': 'externallink'
+                  'icon': 'externallink',
+                  'style': {
+                    'color': 'red'
+                  }
                 }
               }
             },

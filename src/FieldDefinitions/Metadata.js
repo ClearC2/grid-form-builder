@@ -72,6 +72,7 @@ export class Header extends Component {
     style = typeof style === 'string' ? JSON.parse(style) : style
     if (!name) return null
     const {label = name} = config
+    const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
     return (
       connectDropTarget(
         <div
@@ -133,7 +134,7 @@ export class Header extends Component {
               <CascadeIcon size={13} onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
             )}
             {!!link && !!LinkIcon && (
-              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={linkIconStyle} />
             )}
           </div>
         </div>

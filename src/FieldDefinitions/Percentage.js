@@ -157,6 +157,7 @@ class Percentage extends Component {
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     disabled = disabled || readonly
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
+    const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
 
     placeholder = warn ? '* This Field Is Required' : placeholder
     const className = warn ? 'warn-required' : ''
@@ -211,7 +212,8 @@ class Percentage extends Component {
         height: 15,
         marginTop: inline ? 4 : -1,
         ...iconStyle
-      }
+      },
+      linkIconStyle
     }
     return (
       connectDropTarget(
@@ -242,7 +244,7 @@ class Percentage extends Component {
               {label}
             </strong>
             {!!link && !!LinkIcon && (
-              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </div>
           <input

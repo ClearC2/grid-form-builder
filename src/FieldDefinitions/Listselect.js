@@ -150,6 +150,7 @@ export class Listselect extends Component {
     let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
     placeholder = warn ? 'This Field Is Required' : placeholder
+    const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
 
     const styles = {
       container: {
@@ -199,7 +200,8 @@ export class Listselect extends Component {
         height: 15,
         marginTop: inline ? 4 : -1,
         ...iconStyle
-      }
+      },
+      linkIconStyle
     }
 
     return (
@@ -233,7 +235,7 @@ export class Listselect extends Component {
               <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
             )}
             {!!link && !!LinkIcon && (
-              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </div>
           <div style={styles.input}>

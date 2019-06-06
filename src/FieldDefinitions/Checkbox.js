@@ -186,6 +186,7 @@ export class Checkbox extends Component {
     disabled = disabled || readonly
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     placeholder = warn ? 'This Field Is Required' : placeholder
+    const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
 
     const styles = {
       container: {
@@ -223,7 +224,8 @@ export class Checkbox extends Component {
         height: 15,
         marginTop: -1,
         ...iconStyle
-      }
+      },
+      linkIconStyle
     }
 
     let value = formValues.get(name, '')
@@ -280,7 +282,7 @@ export class Checkbox extends Component {
               />
             )}
             {!!link && !!LinkIcon && (
-              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </label>
         </div>
