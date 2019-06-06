@@ -231,7 +231,8 @@ export default class FormBuilder extends Component {
   }
 
   handleLinkClick = link => {
-    const {formValues = Map(), handleLinkClick = () => null} = this.props
+    let {formValues = Map(), handleLinkClick = () => null} = this.props
+    formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     const {type = '', id = null} = link
     const value = formValues.get(id, null)
     handleLinkClick({
