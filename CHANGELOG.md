@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/ClearC2/grid-form-builder/compare/v1.20.1...v1.21.0) (2019-06-06)
+
+
+### Features
+
+* **links:** form schema field objects now support a link object to include an id, type, and icon ([6e26cde](https://github.com/ClearC2/grid-form-builder/commit/6e26cde))
+
 ## [1.20.1](https://github.com/ClearC2/grid-form-builder/compare/v1.20.0...v1.20.1) (2019-06-03)
 
 
