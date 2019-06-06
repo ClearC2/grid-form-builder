@@ -21,7 +21,9 @@ export class Header extends Component {
     connectDropTarget: PropTypes.func,
     cascadingKeyword: PropTypes.string,
     CascadeIcon: PropTypes.func,
-    tabIndex: PropTypes.number
+    tabIndex: PropTypes.number,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func
   }
 
   componentDidUpdate = p => {
@@ -56,9 +58,15 @@ export class Header extends Component {
     handleCascadeKeywordClick(config)
   }
 
+  handleLinkClick = () => {
+    const {config = {}, handleLinkClick} = this.props
+    const {link} = config
+    handleLinkClick(link)
+  }
+
   render = () => {
-    const {config = {}, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {name = null} = config
+    const {config = {}, connectDropTarget, cascadingKeyword, CascadeIcon, LinkIcon} = this.props
+    const {name = null, link} = config
     let {style = {}, containerStyle = {}} = config
     style = typeof style === 'string' ? JSON.parse(style) : style
     if (!name) return null
@@ -97,13 +105,19 @@ export class Header extends Component {
                 marginRight: 5,
                 ...style
               }}
-              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
-              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+              onClick={
+                !!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick
+                  : link ? this.handleLinkClick : null
+              }
+              className={(!!cascadingKeyword && !CascadeIcon) || link ? 'cursor-hand' : ''}
             >
               {label}
             </strong>
             {!!cascadingKeyword && !!CascadeIcon && (
               <CascadeIcon size={13} onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+            )}
+            {!!link && !!LinkIcon && (
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
             )}
           </div>
         </div>

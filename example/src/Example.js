@@ -387,6 +387,11 @@ export default class Example extends Component {
                 'required': true,
                 'type': 'typeahead',
                 'allowcreate': true,
+                'link': {
+                  'id': 'parentid',
+                  'type': 'c2company',
+                  'icon': 'externallink'
+                },
                 'typeahead': {
                   'key': 'c2_company',
                   'duplication': true,
@@ -782,6 +787,10 @@ export default class Example extends Component {
 
   handleOnDrop = ({source, target}) => console.log(source, target)
 
+  handleLinkClick = link => {
+    console.log(link)
+  }
+
   // componentDidMount = () => setTimeout(() => {debugger}, 3000)
 
   render = () => {
@@ -860,6 +869,7 @@ export default class Example extends Component {
             handleOnDrop={this.handleOnDrop}
             draggable={this.state.draggable}
             validate={isInvalidWarning}
+            handleLinkClick={this.handleLinkClick}
           />
         </div>
       )

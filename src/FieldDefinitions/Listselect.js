@@ -22,7 +22,9 @@ export class Listselect extends Component {
     connectDropTarget: PropTypes.func,
     cascadingKeyword: PropTypes.string,
     CascadeIcon: PropTypes.func,
-    tabIndex: PropTypes.number
+    tabIndex: PropTypes.number,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func
   }
 
   constructor (props) {
@@ -117,6 +119,12 @@ export class Listselect extends Component {
     handleCascadeKeywordClick(config)
   }
 
+  handleLinkClick = () => {
+    const {config = {}, handleLinkClick} = this.props
+    const {link} = config
+    handleLinkClick(link)
+  }
+
   render = () => {
     const {
       inline,
@@ -125,9 +133,10 @@ export class Listselect extends Component {
       requiredWarning,
       connectDropTarget,
       cascadingKeyword,
-      CascadeIcon
+      CascadeIcon,
+      LinkIcon
     } = this.props
-    const {name = null, required = false} = config
+    const {name = null, required = false, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -222,6 +231,9 @@ export class Listselect extends Component {
             </span>
             {!!cascadingKeyword && !!CascadeIcon && (
               <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+            )}
+            {!!link && !!LinkIcon && (
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
             )}
           </div>
           <div style={styles.input}>

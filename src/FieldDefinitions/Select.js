@@ -23,12 +23,15 @@ export class Select extends Component {
     connectDropTarget: PropTypes.func,
     cascadingKeyword: PropTypes.string,
     CascadeIcon: PropTypes.func,
-    tabIndex: PropTypes.number
+    tabIndex: PropTypes.number,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func
   }
 
   state = {
     fieldValues: []
   }
+
   componentDidUpdate = p => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
@@ -87,6 +90,12 @@ export class Select extends Component {
     }
   }
 
+  handleLinkClick = () => {
+    const {config = {}, handleLinkClick} = this.props
+    const {link} = config
+    handleLinkClick(link)
+  }
+
   render = () => {
     const {
       inline,
@@ -97,9 +106,10 @@ export class Select extends Component {
       connectDropTarget,
       cascadingKeyword,
       CascadeIcon,
-      tabIndex
+      tabIndex,
+      LinkIcon
     } = this.props
-    const {name = null, required = false, onKeyDown = () => null} = config
+    const {name = null, required = false, onKeyDown = () => null, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, keyword = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -182,13 +192,19 @@ export class Select extends Component {
             {Icon && <Icon style={styles.icon} />}
             <strong
               style={styles.label}
-              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
-              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+              onClick={
+                !!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick
+                  : link ? this.handleLinkClick : null
+              }
+              className={(!!cascadingKeyword && !CascadeIcon) || link ? 'cursor-hand' : ''}
             >
               {label}
             </strong>
             {!!cascadingKeyword && !!CascadeIcon && (
               <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+            )}
+            {!!link && !!LinkIcon && (
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
             )}
           </div>
           <ReactSelect

@@ -22,7 +22,9 @@ class Total extends Component {
     connectDropTarget: PropTypes.func,
     cascadingKeyword: PropTypes.string,
     CascadeIcon: PropTypes.func,
-    tabIndex: PropTypes.number
+    tabIndex: PropTypes.number,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func
   }
 
   static calculatePriceTimesDiscount = (props) => {
@@ -110,6 +112,12 @@ class Total extends Component {
     return Total.formatNumber(value)
   }
 
+  handleLinkClick = () => {
+    const {config = {}, handleLinkClick} = this.props
+    const {link} = config
+    handleLinkClick(link)
+  }
+
   render = () => {
     const {
       inline,
@@ -117,14 +125,16 @@ class Total extends Component {
       config = {},
       Icon = null,
       requiredWarning,
-      connectDropTarget
+      connectDropTarget,
+      LinkIcon
     } = this.props
 
     const {
       name = null,
       label,
       required = false,
-      onKeyDown = () => null
+      onKeyDown = () => null,
+      link
     } = config
 
     if (!name) return null
@@ -220,9 +230,16 @@ class Total extends Component {
               </div>
             )}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label}>
+            <strong
+              style={styles.label}
+              onClick={link ? this.handleLinkClick : null}
+              className={link ? 'cursor-hand' : ''}
+            >
               {label}
             </strong>
+            {!!link && !!LinkIcon && (
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+            )}
           </div>
           <input
             className={className}

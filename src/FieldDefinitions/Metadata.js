@@ -21,7 +21,9 @@ export class Header extends Component {
     connectDropTarget: PropTypes.func,
     cascadingKeyword: PropTypes.string,
     CascadeIcon: PropTypes.func,
-    tabIndex: PropTypes.number
+    tabIndex: PropTypes.number,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func
   }
 
   componentDidUpdate = p => {
@@ -40,6 +42,7 @@ export class Header extends Component {
       }
     }
   }
+
   handleAnywhereClick = e => {
     const {handleAnywhereClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
@@ -47,6 +50,7 @@ export class Header extends Component {
     config = {currentValue, ...config}
     handleAnywhereClick(config, e)
   }
+
   handleCascadeKeywordClick = e => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
@@ -54,9 +58,16 @@ export class Header extends Component {
     config = {currentValue, ...config}
     handleCascadeKeywordClick(config)
   }
+
+  handleLinkClick = () => {
+    const {config = {}, handleLinkClick} = this.props
+    const {link} = config
+    handleLinkClick(link)
+  }
+
   render = () => {
-    const {config = {}, connectDropTarget, cascadingKeyword, CascadeIcon, formValues = Map()} = this.props
-    const {name = null} = config
+    const {config = {}, connectDropTarget, cascadingKeyword, CascadeIcon, formValues = Map(), LinkIcon} = this.props
+    const {name = null, link} = config
     let {style = {}, containerStyle = {}, labelStyle = {}} = config
     style = typeof style === 'string' ? JSON.parse(style) : style
     if (!name) return null
@@ -110,13 +121,19 @@ export class Header extends Component {
                 marginRight: 5,
                 ...style
               }}
-              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
-              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+              onClick={
+                !!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick
+                  : link ? this.handleLinkClick : null
+              }
+              className={(!!cascadingKeyword && !CascadeIcon) || link ? 'cursor-hand' : ''}
             >
               {formValues.get(name, '')}
             </span>
             {!!cascadingKeyword && !!CascadeIcon && (
               <CascadeIcon size={13} onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+            )}
+            {!!link && !!LinkIcon && (
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
             )}
           </div>
         </div>

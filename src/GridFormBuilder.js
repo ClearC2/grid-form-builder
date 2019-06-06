@@ -210,8 +210,6 @@ export default class FormBuilder extends Component {
 
   uppercaseFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
 
-
-
   handleAnywhereClick = (config, e) => {
     const {onClick = () => null} = this.props
     onClick(config, e)
@@ -232,12 +230,33 @@ export default class FormBuilder extends Component {
     handleRTEImageClick()
   }
 
+  handleLinkClick = link => {
+    const {formValues = Map(), handleLinkClick = () => null} = this.props
+    const {type = '', id = null} = link
+    const value = formValues.get(id, null)
+    handleLinkClick({
+      type,
+      id: value
+    })
+  }
+
   render = () => {
     this.attachInputFocusListeners()
-    let {formSchema = Map(), formValues = Map(),
-      handleOnChange = () => {}, formName = 'form', draggable = false, inline = false,
-      style = {}, marginX = 40, marginY = 5, rowHeight, readonly, interactive = true,
-      handleRTEImageClick = () => {}} = this.props
+    let {
+      formSchema = Map(),
+      formValues = Map(),
+      handleOnChange = () => {},
+      formName = 'form',
+      draggable = false,
+      inline = false,
+      style = {},
+      marginX = 40,
+      marginY = 5,
+      rowHeight,
+      readonly,
+      interactive = true,
+      handleRTEImageClick = () => {}
+    } = this.props
     const {requiredWarning} = this.state
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
@@ -262,7 +281,7 @@ export default class FormBuilder extends Component {
       }
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
       // AutoComplete OFF does not turn off autocomplete browser feature, you need to pass anything other than 'off' to turn off autocomplete because latest browsers stopped supporting 'off'
-      let {type = 'input', icon = '', cascade = {}, tabindex: tabIndex, autoComplete = 'off'} = config
+      let {type = 'input', icon = '', cascade = {}, tabindex: tabIndex, autoComplete = 'off', link = {}} = config
       if (!tabIndex) {
         while (specifiedTabs.has(tabNumber)) {
           tabNumber++
@@ -284,15 +303,20 @@ export default class FormBuilder extends Component {
         type = 'input'
       }
 
+      let {icon: linkIcon = ''} = link
+      linkIcon = this.uppercaseFirstLetter(linkIcon)
       icon = this.uppercaseFirstLetter(icon)
       cascadeIcon = this.uppercaseFirstLetter(cascadeIcon)
       if (type === 'Textarea' && dimensions.h < 2) dimensions.h = 2
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
       icon = IconLibrary[icon] ? IconLibrary[icon] : null
       cascadeIcon = IconLibrary[cascadeIcon] ? IconLibrary[cascadeIcon] : null
+      linkIcon = IconLibrary[linkIcon] ? IconLibrary[linkIcon] : null
       if (Type === 'Customcomponent') {
         normalFields.push(
           <Component
+            handleLinkClick={this.handleLinkClick}
+            LinkIcon={linkIcon}
             autoComplete={autoComplete}
             requiredWarning={requiredWarning}
             rowHeight={rowHeight}
@@ -317,6 +341,8 @@ export default class FormBuilder extends Component {
       } else {
         normalFields.push(
           <Component
+            handleLinkClick={this.handleLinkClick}
+            LinkIcon={linkIcon}
             autoComplete={autoComplete}
             requiredWarning={requiredWarning}
             rowHeight={rowHeight}

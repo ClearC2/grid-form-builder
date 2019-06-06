@@ -24,7 +24,9 @@ export class Multicheckbox extends Component {
     CascadeIcon: PropTypes.func,
     tabIndex: PropTypes.number,
     field: PropTypes.string,
-    opts: PropTypes.object
+    opts: PropTypes.object,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func
   }
 
   constructor (props) {
@@ -91,6 +93,12 @@ export class Multicheckbox extends Component {
     handleCascadeKeywordClick(config)
   }
 
+  handleLinkClick = () => {
+    const {config = {}, handleLinkClick} = this.props
+    const {link} = config
+    handleLinkClick(link)
+  }
+
   render = () => {
     const {
       inline,
@@ -101,9 +109,10 @@ export class Multicheckbox extends Component {
       connectDropTarget,
       cascadingKeyword,
       CascadeIcon,
-      tabIndex
+      tabIndex,
+      LinkIcon
     } = this.props
-    const {name = null, required = false, onKeyDown = () => null} = config
+    const {name = null, required = false, onKeyDown = () => null, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -183,8 +192,11 @@ export class Multicheckbox extends Component {
             {Icon && <Icon style={styles.icon} />}
             <strong
               style={styles.label}
-              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
-              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+              onClick={
+                !!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick
+                  : link ? this.handleLinkClick : null
+              }
+              className={(!!cascadingKeyword && !CascadeIcon) || link ? 'cursor-hand' : ''}
             >
               {label}
             </strong>
@@ -202,6 +214,9 @@ export class Multicheckbox extends Component {
             </span>
             {!!cascadingKeyword && !!CascadeIcon && (
               <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+            )}
+            {!!link && !!LinkIcon && (
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
             )}
           </div>
           <div style={styles.optionsContainer}>

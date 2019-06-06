@@ -24,7 +24,9 @@ export class Multiselect extends Component {
     cascadingKeyword: PropTypes.string,
     CascadeIcon: PropTypes.func,
     tabIndex: PropTypes.number,
-    conditionalSearch: PropTypes.bool
+    conditionalSearch: PropTypes.bool,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func
   }
 
   state = {
@@ -131,6 +133,12 @@ export class Multiselect extends Component {
     }
   }
 
+  handleLinkClick = () => {
+    const {config = {}, handleLinkClick} = this.props
+    const {link} = config
+    handleLinkClick(link)
+  }
+
   render = () => {
     const {
       inline,
@@ -140,9 +148,10 @@ export class Multiselect extends Component {
       connectDropTarget,
       cascadingKeyword,
       CascadeIcon,
-      tabIndex
+      tabIndex,
+      LinkIcon
     } = this.props
-    const {name = null, required = false, multi = true, onKeyDown = () => null} = config
+    const {name = null, required = false, multi = true, onKeyDown = () => null, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -238,13 +247,19 @@ export class Multiselect extends Component {
             {Icon && <Icon style={styles.icon} />}
             <strong
               style={styles.label}
-              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
-              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+              onClick={
+                !!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick
+                  : link ? this.handleLinkClick : null
+              }
+              className={(!!cascadingKeyword && !CascadeIcon) || link ? 'cursor-hand' : ''}
             >
               {label}
             </strong>
             {!!cascadingKeyword && !!CascadeIcon && (
               <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+            )}
+            {!!link && !!LinkIcon && (
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
             )}
           </div>
           <ReactSelect

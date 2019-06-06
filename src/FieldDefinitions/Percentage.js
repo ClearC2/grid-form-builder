@@ -21,12 +21,15 @@ class Percentage extends Component {
     connectDropTarget: PropTypes.func,
     cascadingKeyword: PropTypes.string,
     CascadeIcon: PropTypes.func,
-    tabIndex: PropTypes.number
+    tabIndex: PropTypes.number,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func
   }
 
   state = {
     format: true
   }
+
   componentDidMount () {
     document.addEventListener('mousedown', this.onMouseDown)
   }
@@ -59,13 +62,16 @@ class Percentage extends Component {
       })
     }
   }
+
   isValidValue = () => {
     let value = this.props.formValues.get(this.props.config.name)
     value = this.toNumber(value)
     return value >= 0 && value <= 100
   }
   allowFormat = () => this.setState(() => ({format: true}))
+
   blockFormat = () => this.setState(() => ({format: false}))
+
   handleAnywhereClick = e => {
     const {handleAnywhereClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
@@ -91,18 +97,28 @@ class Percentage extends Component {
     const number = this.toNumber(value)
     return number >= 0 && number <= 100 ? number : 0
   }
+
   toNumber (value) {
     value = Number(value)
     return isNaN(value) ? 0 : value
   }
+
   formatNumber (value) {
     return this.toNumber(value) + '%'
   }
+
   getInputValue = () => {
     const {formValues, config} = this.props
     const value = formValues.get(config.name)
     return value && this.state.format ? this.formatNumber(value) : (value || '')
   }
+
+  handleLinkClick = () => {
+    const {config = {}, handleLinkClick} = this.props
+    const {link} = config
+    handleLinkClick(link)
+  }
+
   render = () => {
     const {
       inline,
@@ -111,14 +127,16 @@ class Percentage extends Component {
       Icon = null,
       requiredWarning,
       connectDropTarget,
-      handleOnChange = () => {}
+      handleOnChange = () => {},
+      LinkIcon
     } = this.props
 
     const {
       name = null,
       label,
       required = false,
-      onKeyDown = () => null
+      onKeyDown = () => null,
+      link
     } = config
 
     if (!name) return null
@@ -216,9 +234,16 @@ class Percentage extends Component {
               </div>
             )}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label}>
+            <strong
+              style={styles.label}
+              onClick={link ? this.handleLinkClick : null}
+              className={link ? 'cursor-hand' : ''}
+            >
               {label}
             </strong>
+            {!!link && !!LinkIcon && (
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+            )}
           </div>
           <input
             autoFocus={this.props.config.autofocus}

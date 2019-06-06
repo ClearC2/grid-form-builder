@@ -34,7 +34,9 @@ export class Typeahead extends Component {
     requiredWarning: PropTypes.bool,
     inline: PropTypes.bool,
     tabIndex: PropTypes.number,
-    taMaxHeight: PropTypes.string
+    taMaxHeight: PropTypes.string,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func
   }
   static defaultProps = {
     minChars: 1
@@ -321,6 +323,12 @@ export class Typeahead extends Component {
     return value
   }
 
+  handleLinkClick = () => {
+    const {config = {}, handleLinkClick} = this.props
+    const {link} = config
+    handleLinkClick(link)
+  }
+
   render = () => {
     const {
       inline,
@@ -332,9 +340,10 @@ export class Typeahead extends Component {
       cascadingKeyword,
       CascadeIcon,
       tabIndex,
-      taMaxHeight = '90px'
+      taMaxHeight = '90px',
+      LinkIcon
     } = this.props
-    const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false} = config
+    const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -450,11 +459,20 @@ export class Typeahead extends Component {
               {Icon && <Icon style={styles.icon} />}
               <strong
                 style={styles.label}
-                onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
-                className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}
+                onClick={
+                  !!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick
+                    : link ? this.handleLinkClick : null
+                }
+                className={(!!cascadingKeyword && !CascadeIcon) || link ? 'cursor-hand' : ''}
+              >
+                {label}
               </strong>
               {!!cascadingKeyword && !!CascadeIcon && (
-                <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />)}
+                <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+              )}
+              {!!link && !!LinkIcon && (
+                <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+              )}
             </div>
             {allowcreate && <AsyncCreatable
               blurInputOnSelect={!multi}

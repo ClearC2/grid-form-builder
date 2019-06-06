@@ -21,7 +21,9 @@ export class Icon extends Component {
     connectDropTarget: PropTypes.func,
     cascadingKeyword: PropTypes.string,
     CascadeIcon: PropTypes.func,
-    tabIndex: PropTypes.number
+    tabIndex: PropTypes.number,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func
   }
 
   componentDidUpdate = p => {
@@ -56,9 +58,15 @@ export class Icon extends Component {
     handleCascadeKeywordClick(config)
   }
 
+  handleLinkClick = () => {
+    const {config = {}, handleLinkClick} = this.props
+    const {link} = config
+    handleLinkClick(link)
+  }
+
   render = () => {
-    const {config = {}, Icon = null, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
-    const {onClick = () => null} = config
+    const {config = {}, Icon = null, connectDropTarget, cascadingKeyword, CascadeIcon, LinkIcon} = this.props
+    const {onClick = () => null, link} = config
     let {style = {}, iconStyle = {}} = config
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
@@ -80,12 +88,18 @@ export class Icon extends Component {
           {Icon && (
             <Icon
               style={{height: 20, width: 20, marginRight: 5, ...iconStyle}}
-              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
-              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+              onClick={
+                !!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick
+                  : link ? this.handleLinkClick : null
+              }
+              className={(!!cascadingKeyword && !CascadeIcon) || link ? 'cursor-hand' : ''}
             />
           )}
           {!!cascadingKeyword && !!CascadeIcon && (
             <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+          )}
+          {!!link && !!LinkIcon && (
+            <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
           )}
         </div>
       )
