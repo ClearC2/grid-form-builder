@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/ClearC2/grid-form-builder/compare/v1.21.2...v1.22.0) (2019-06-06)
+
+
+### Features
+
+* **links:** link icons now accept style ([595a4d6](https://github.com/ClearC2/grid-form-builder/commit/595a4d6))
+
 ## [1.21.2](https://github.com/ClearC2/grid-form-builder/compare/v1.21.1...v1.21.2) (2019-06-06)
 
 
