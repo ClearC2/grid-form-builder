@@ -1,3 +1,10 @@
+## [1.21.1](https://github.com/ClearC2/grid-form-builder/compare/v1.21.0...v1.21.1) (2019-06-06)
+
+
+### Bug Fixes
+
+* **link:** link functionality should now work if form values are immutable ([8f2c7d8](https://github.com/ClearC2/grid-form-builder/commit/8f2c7d8))
+
 # [1.21.0](https://github.com/ClearC2/grid-form-builder/compare/v1.20.1...v1.21.0) (2019-06-06)
 
 
