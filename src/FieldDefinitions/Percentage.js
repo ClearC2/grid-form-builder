@@ -16,7 +16,7 @@ class Percentage extends Component {
     handleOnChange: PropTypes.func,
     draggable: PropTypes.bool,
     inline: PropTypes.bool,
-    Icon: PropTypes.node,
+    Icon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     requiredWarning: PropTypes.bool,
     connectDropTarget: PropTypes.func,
     cascadingKeyword: PropTypes.string,
