@@ -67,6 +67,7 @@ import CaretDown from 'react-icons/lib/fa/caret-down'
 import CaretUp from 'react-icons/lib/fa/caret-up'
 import Nav from 'react-icons/lib/fa/bars'
 import Tree from 'react-icons/lib/fa/sitemap'
+import ExternalLink from 'react-icons/lib/fa/external-link'
 
 export {
   User,
@@ -136,7 +137,8 @@ export {
   CaretDown,
   CaretUp,
   Nav,
-  Tree
+  Tree,
+  ExternalLink
 }
 
 initComponentIconLibrary({
@@ -207,5 +209,6 @@ initComponentIconLibrary({
   CaretDown,
   CaretUp,
   Nav,
-  Tree
+  Tree,
+  ExternalLink
 })

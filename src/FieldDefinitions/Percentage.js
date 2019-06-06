@@ -1,8 +1,29 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
+import PropTypes from 'prop-types'
 
 class Percentage extends Component {
+  static propTypes = {
+    formValues: PropTypes.object,
+    config: PropTypes.object,
+    didDrop: PropTypes.bool,
+    isOver: PropTypes.bool,
+    droppedItem: PropTypes.object,
+    handleDragDropOnInput: PropTypes.func,
+    handleAnywhereClick: PropTypes.func,
+    handleCascadeKeywordClick: PropTypes.func,
+    handleOnChange: PropTypes.func,
+    draggable: PropTypes.bool,
+    inline: PropTypes.bool,
+    Icon: PropTypes.node,
+    requiredWarning: PropTypes.bool,
+    connectDropTarget: PropTypes.func,
+    cascadingKeyword: PropTypes.string,
+    CascadeIcon: PropTypes.func,
+    tabIndex: PropTypes.number
+  }
+
   state = {
     format: true
   }

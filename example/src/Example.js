@@ -6,7 +6,6 @@ import DragUnit from './TestDraggableUnit'
 const TEST_SEARCH = false // for conditional search forms
 
 export default class Example extends Component {
-
   state = {
     isInvalidWarning: false,
     formValues: Map({
@@ -15,7 +14,8 @@ export default class Example extends Component {
       datetest: '12/12/12',
       meta_created_date: 'swiggity swoogity here comes the moogity',
       listselecttest: List(['Customer Service', 'Executive Meeting']),
-      multiselecttest: ['Contract SigningTestValue']
+      multiselecttest: ['Contract SigningTestValue'],
+      parentid: '00112233445566778899AABBCCEEFFFF'
     }),
     inline: false,
     draggable: false,
@@ -50,7 +50,12 @@ export default class Example extends Component {
               'config': {
                 'name': 'unique-test-input',
                 'label': 'Test Input',
-                'type': 'input'
+                'type': 'input',
+                'link': {
+                  'type': 'c2company',
+                  'id': 'parentid',
+                  'icon': 'externallink'
+                }
               }
             },
             {

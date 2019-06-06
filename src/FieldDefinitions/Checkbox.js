@@ -1,8 +1,30 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 
 export class Checkbox extends Component {
+  static propTypes = {
+    formValues: PropTypes.object,
+    config: PropTypes.object,
+    didDrop: PropTypes.bool,
+    isOver: PropTypes.bool,
+    droppedItem: PropTypes.object,
+    handleDragDropOnInput: PropTypes.func,
+    handleAnywhereClick: PropTypes.func,
+    handleCascadeKeywordClick: PropTypes.func,
+    handleOnChange: PropTypes.func,
+    draggable: PropTypes.bool,
+    inline: PropTypes.bool,
+    Icon: PropTypes.node,
+    requiredWarning: PropTypes.bool,
+    connectDropTarget: PropTypes.func,
+    cascadingKeyword: PropTypes.string,
+    CascadeIcon: PropTypes.func,
+    tabIndex: PropTypes.number,
+    rowHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  }
+
   componentDidUpdate = p => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
@@ -91,12 +113,59 @@ export class Checkbox extends Component {
     handleOnChange({target: {name: e.target.name, value: value}})
   }
 
-  truthy = [true, 1, '1', 't', 'T', 'true', 'True', 'TRUE', 'y', 'Y', 'Yes', 'YES', 'yes', 'on', 'On', 'ON', this.props.config.onValue || this.props.config.name]
+  truthy = [
+    true,
+    1,
+    '1',
+    't',
+    'T',
+    'true',
+    'True',
+    'TRUE',
+    'y',
+    'Y',
+    'Yes',
+    'YES',
+    'yes',
+    'on',
+    'On',
+    'ON',
+    this.props.config.onValue || this.props.config.name
+  ]
 
-  falsey = [false, 0, '0', 'f', 'F', 'false', 'False', 'FALSE', 'n', 'N', 'No', 'NO', 'no', 'off', 'Off', 'OFF', this.props.config.offValue || '']
+  falsey = [
+    false,
+    0,
+    '0',
+    'f',
+    'F',
+    'false',
+    'False',
+    'FALSE',
+    'n',
+    'N',
+    'No',
+    'NO',
+    'no',
+    'off',
+    'Off',
+    'OFF',
+    this.props.config.offValue || ''
+  ]
 
   render = () => {
-    const {inline, formValues = Map(), config = {}, Icon = null, requiredWarning, rowHeight, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
+    const {
+      inline,
+      formValues = Map(),
+      config = {},
+      Icon = null,
+      requiredWarning,
+      rowHeight,
+      connectDropTarget,
+      cascadingKeyword,
+      CascadeIcon,
+      tabIndex
+    } = this.props
     const {name = null, iconStyle = {}, required = false, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -157,15 +226,47 @@ export class Checkbox extends Component {
     return (
       connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
-          <label style={styles.label} onMouseUp={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>
+          <label
+            style={styles.label}
+            onMouseUp={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
+            className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+          >
             {Icon && <Icon style={styles.icon} />}
-            <input className='checkbox-grid-input' onChange={this.handleOnChange} style={styles.input} type='checkbox' name={name} checked={value} disabled={disabled} onKeyDown={onKeyDown} tabIndex={tabIndex} />
+            <input
+              className='checkbox-grid-input'
+              onChange={this.handleOnChange}
+              style={styles.input}
+              type='checkbox'
+              name={name}
+              checked={value}
+              disabled={disabled}
+              onKeyDown={onKeyDown}
+              tabIndex={tabIndex}
+            />
             {label}
             <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>
               {required && '*'}
-              {placeholder && <span style={{fontWeight: 'normal', fontSize: '9pt', color: warn ? '#ec1c24' : '#383e4b', marginLeft: 5}}>{placeholder}</span>}
+              {placeholder && (
+                <span
+                  style={{
+                    fontWeight: 'normal',
+                    fontSize: '9pt',
+                    color: warn ? '#ec1c24' : '#383e4b',
+                    marginLeft: 5
+                  }}
+                >
+                  {placeholder}
+                </span>
+              )}
             </div>
-            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon style={{marginLeft: 5}} size={14} onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
+            {!!cascadingKeyword && !!CascadeIcon && (
+              <CascadeIcon
+                style={{marginLeft: 5}}
+                size={14}
+                onClick={this.handleCascadeKeywordClick}
+                className='cursor-hand'
+              />
+            )}
           </label>
         </div>
       )

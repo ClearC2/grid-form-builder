@@ -7,17 +7,24 @@ import PropTypes from 'prop-types'
 
 export class Multiselect extends Component {
   static propTypes = {
-    config: PropTypes.object,
     formValues: PropTypes.object,
+    config: PropTypes.object,
     didDrop: PropTypes.bool,
     isOver: PropTypes.bool,
     droppedItem: PropTypes.object,
     handleDragDropOnInput: PropTypes.func,
-    handleCascadeKeywordClick: PropTypes.func,
     handleAnywhereClick: PropTypes.func,
+    handleCascadeKeywordClick: PropTypes.func,
     handleOnChange: PropTypes.func,
+    draggable: PropTypes.bool,
     inline: PropTypes.bool,
-    Icon: PropTypes.object
+    Icon: PropTypes.node,
+    requiredWarning: PropTypes.bool,
+    connectDropTarget: PropTypes.func,
+    cascadingKeyword: PropTypes.string,
+    CascadeIcon: PropTypes.func,
+    tabIndex: PropTypes.number,
+    conditionalSearch: PropTypes.bool
   }
 
   state = {
@@ -107,15 +114,34 @@ export class Multiselect extends Component {
       this.props.handleOnChange({target: {name: this.props.config.name, value: ''}})
     } else {
       if (this.props.conditionalSearch) {
-        this.props.handleOnChange({target: {name: this.props.config.name, value: fromJS({condition: 'is one of', values: List(e.map(val => val.value))})}})
+        this.props.handleOnChange({
+          target: {
+            name: this.props.config.name,
+            value: fromJS({condition: 'is one of', values: List(e.map(val => val.value))})
+          }
+        })
       } else {
-        this.props.handleOnChange({target: {name: this.props.config.name, value: fromJS(e.map(val => val.value))}})
+        this.props.handleOnChange({
+          target: {
+            name: this.props.config.name,
+            value: fromJS(e.map(val => val.value))
+          }
+        })
       }
     }
   }
 
   render = () => {
-    const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
+    const {
+      inline,
+      config = {},
+      Icon = null,
+      requiredWarning,
+      connectDropTarget,
+      cascadingKeyword,
+      CascadeIcon,
+      tabIndex
+    } = this.props
     const {name = null, required = false, multi = true, onKeyDown = () => null} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -197,10 +223,29 @@ export class Multiselect extends Component {
       connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <div style={styles.labelContainer}>
-            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+            {required && (
+              <div
+                style={{
+                  color: '#ec1c24',
+                  fontWeight: 'bold',
+                  fontSize: '15pt',
+                  lineHeight: '10pt'
+                }}
+              >
+                *
+              </div>
+            )}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
-            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
+            <strong
+              style={styles.label}
+              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
+              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+            >
+              {label}
+            </strong>
+            {!!cascadingKeyword && !!CascadeIcon && (
+              <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+            )}
           </div>
           <ReactSelect
             autoFocus={this.props.config.autofocus}

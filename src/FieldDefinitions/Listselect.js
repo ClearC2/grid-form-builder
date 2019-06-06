@@ -1,9 +1,30 @@
 import React, {Component} from 'react'
 import {Map, List, fromJS} from 'immutable'
 import {DropTarget} from 'react-dnd'
+import PropTypes from 'prop-types'
 
 // this component is designed to return a List() of selected values to the forms handle change function
 export class Listselect extends Component {
+  static propTypes = {
+    formValues: PropTypes.object,
+    config: PropTypes.object,
+    didDrop: PropTypes.bool,
+    isOver: PropTypes.bool,
+    droppedItem: PropTypes.object,
+    handleDragDropOnInput: PropTypes.func,
+    handleAnywhereClick: PropTypes.func,
+    handleCascadeKeywordClick: PropTypes.func,
+    handleOnChange: PropTypes.func,
+    draggable: PropTypes.bool,
+    inline: PropTypes.bool,
+    Icon: PropTypes.node,
+    requiredWarning: PropTypes.bool,
+    connectDropTarget: PropTypes.func,
+    cascadingKeyword: PropTypes.string,
+    CascadeIcon: PropTypes.func,
+    tabIndex: PropTypes.number
+  }
+
   constructor (props) {
     super(props)
     let incomingValues = props.formValues.get(props.config.name, '')
@@ -97,7 +118,15 @@ export class Listselect extends Component {
   }
 
   render = () => {
-    const {inline, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon} = this.props
+    const {
+      inline,
+      config = {},
+      Icon = null,
+      requiredWarning,
+      connectDropTarget,
+      cascadingKeyword,
+      CascadeIcon
+    } = this.props
     const {name = null, required = false} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -168,14 +197,45 @@ export class Listselect extends Component {
       connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <div style={styles.labelContainer}>
-            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+            {required && (
+              <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>
+            )}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
-            <span style={{fontWeight: 'normal', fontSize: '9pt', marginLeft: 3, marginTop: -1, color: warn ? '#ec1c24' : '#383e4b', marginRight: 5}}>{placeholder}</span>
-            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
+            <strong
+              style={styles.label}
+              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
+              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+            >
+              {label}
+            </strong>
+            <span
+              style={{
+                fontWeight: 'normal',
+                fontSize: '9pt',
+                marginLeft: 3,
+                marginTop: -1,
+                color: warn ? '#ec1c24' : '#383e4b',
+                marginRight: 5
+              }}
+            >
+              {placeholder}
+            </span>
+            {!!cascadingKeyword && !!CascadeIcon && (
+              <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+            )}
           </div>
           <div style={styles.input}>
-            <div style={{display: 'flex', flex: 1, flexDirection: 'column', minHeight: 10, border: warn ? '1px solid #ec1c24' : '1px solid lightgrey', height: 'calc(100% - 18px)', overflowY: 'scroll'}}>
+            <div
+              style={{
+                display: 'flex',
+                flex: 1,
+                flexDirection: 'column',
+                minHeight: 10,
+                border: warn ? '1px solid #ec1c24' : '1px solid lightgrey',
+                height: 'calc(100% - 18px)',
+                overflowY: 'scroll'
+              }}
+            >
               {options.map((option, i) => {
                 return (
                   <div
@@ -199,8 +259,30 @@ export class Listselect extends Component {
               })}
             </div>
             <div style={{display: 'flex', justifyContent: 'flex-end', height: 15, minHeight: 15}}>
-              <span onClick={this.selectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue', cursor: 'pointer'}} >Select All</span>
-              <span onClick={this.deselectAllOptions} style={{marginRight: 5, fontSize: '8pt', textDecoration: 'underline', color: 'blue', cursor: 'pointer'}} >Deselect All</span>
+              <span
+                onClick={this.selectAllOptions}
+                style={{
+                  marginRight: 5,
+                  fontSize: '8pt',
+                  textDecoration: 'underline',
+                  color: 'blue',
+                  cursor: 'pointer'
+                }}
+              >
+                Select All
+              </span>
+              <span
+                onClick={this.deselectAllOptions}
+                style={{
+                  marginRight: 5,
+                  fontSize: '8pt',
+                  textDecoration: 'underline',
+                  color: 'blue',
+                  cursor: 'pointer'
+                }}
+              >
+                Deselect All
+              </span>
             </div>
           </div>
         </div>

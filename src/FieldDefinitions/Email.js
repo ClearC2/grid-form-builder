@@ -2,8 +2,29 @@ import React, {Component} from 'react'
 import {Map} from 'immutable'
 import {emailValidator} from '../utils'
 import {DropTarget} from 'react-dnd'
+import PropTypes from 'prop-types'
 
 class Email extends Component {
+  static propTypes = {
+    formValues: PropTypes.object,
+    config: PropTypes.object,
+    didDrop: PropTypes.bool,
+    isOver: PropTypes.bool,
+    droppedItem: PropTypes.object,
+    handleDragDropOnInput: PropTypes.func,
+    handleAnywhereClick: PropTypes.func,
+    handleCascadeKeywordClick: PropTypes.func,
+    handleOnChange: PropTypes.func,
+    draggable: PropTypes.bool,
+    inline: PropTypes.bool,
+    Icon: PropTypes.node,
+    requiredWarning: PropTypes.bool,
+    connectDropTarget: PropTypes.func,
+    cascadingKeyword: PropTypes.string,
+    CascadeIcon: PropTypes.func,
+    tabIndex: PropTypes.number
+  }
+
   state = {
     displayError: false
   }
@@ -53,7 +74,7 @@ class Email extends Component {
 
   // This seems like an antipattern - a function and a prop named the same thing with the function
   // calling the prop provided function, maybe the component function should be called onCascadeKeywordClick???
-  handleCascadeKeywordClick = e => {
+  handleCascadeKeywordClick = () => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
@@ -62,13 +83,24 @@ class Email extends Component {
   }
 
   generateValidationError = value => {
-    if (value) return (!emailValidator(value) && this.state.displayError) && '* Invalid email' 
+    if (value) return (!emailValidator(value) && this.state.displayError) && '* Invalid email'
   }
 
   handleOnChange = () => {}
 
   render = () => {
-    const {inline, formValues = Map(), handleOnChange = this.handleOnChange, config = {}, Icon = null, requiredWarning, connectDropTarget, cascadingKeyword, CascadeIcon, tabIndex} = this.props
+    const {
+      inline,
+      formValues = Map(),
+      handleOnChange = this.handleOnChange,
+      config = {},
+      Icon = null,
+      requiredWarning,
+      connectDropTarget,
+      cascadingKeyword,
+      CascadeIcon,
+      tabIndex
+    } = this.props
     const {name = null, required = false, onKeyDown = () => null} = config
     if (!name) {
       return null
@@ -151,11 +183,21 @@ class Email extends Component {
       connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <div style={styles.labelContainer}>
-            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+            {required && (
+              <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>
+            )}
             {Icon && <Icon style={styles.icon} />}
-            <strong style={styles.label} onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null} className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}>{label}</strong>
+            <strong
+              style={styles.label}
+              onClick={!!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick : null}
+              className={!!cascadingKeyword && !CascadeIcon ? 'cursor-hand' : ''}
+            >
+              {label}
+            </strong>
             <span style={styles.placeholder}>{this.generateValidationError(value)}</span>
-            {!!cascadingKeyword && !!CascadeIcon && <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />}
+            {!!cascadingKeyword && !!CascadeIcon && (
+              <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+            )}
           </div>
           <input
             autoFocus={this.props.config.autofocus}
