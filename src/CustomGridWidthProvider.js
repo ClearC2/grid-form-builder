@@ -8,7 +8,9 @@ const WidthProvider = ComposedComponent => class extends React.Component {
   }
 
   static propTypes = {
-    measureBeforeMount: PropTypes.bool
+    measureBeforeMount: PropTypes.bool,
+    style: PropTypes.object,
+    className: PropTypes.string
   }
 
   state = {
@@ -26,19 +28,28 @@ const WidthProvider = ComposedComponent => class extends React.Component {
     this.mounted = true
     window.addEventListener('resize', this.onResize)
     window.addEventListener('mousemove', this.onResize)
-    this.onResize()
+    this.onResize(true)
   }
 
   componentWillUnmount = () => {
     window.removeEventListener('resize', this.onResize)
-    window.removeEventListener('mouseenter', this.onResize)
+    window.removeEventListener('mousemove', this.onResize)
     this.mounted = false
   }
 
-  onResize = () => {
+  debounce = null
+  onResize = bypass => {
     if (!this.mounted) return
-    const node = ReactDOM.findDOMNode(this)
-    if (node instanceof window.HTMLElement) this.setState({width: node.offsetWidth})
+    if (bypass === true) {
+      const node = ReactDOM.findDOMNode(this)
+      if (node instanceof window.HTMLElement) this.setState({width: node.offsetWidth})
+    } else {
+      clearTimeout(this.debounce)
+      this.debounce = setTimeout(() => {
+        const node = ReactDOM.findDOMNode(this)
+        if (node instanceof window.HTMLElement) this.setState({width: node.offsetWidth})
+      }, 25)
+    }
   }
 
   render = () => {
