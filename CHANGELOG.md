@@ -1,3 +1,17 @@
+# [1.22.0](https://github.com/ClearC2/grid-form-builder/compare/v1.21.2...v1.22.0) (2019-06-06)
+
+
+### Features
+
+* **links:** link icons now accept style ([595a4d6](https://github.com/ClearC2/grid-form-builder/commit/595a4d6))
+
+## [1.21.2](https://github.com/ClearC2/grid-form-builder/compare/v1.21.1...v1.21.2) (2019-06-06)
+
+
+### Bug Fixes
+
+* **lint:** proptype for the icon prop should no longer fail if a function is provided ([bda7a2c](https://github.com/ClearC2/grid-form-builder/commit/bda7a2c))
+
 ## [1.21.1](https://github.com/ClearC2/grid-form-builder/compare/v1.21.0...v1.21.1) (2019-06-06)
 
 

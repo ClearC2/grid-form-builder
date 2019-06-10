@@ -155,6 +155,7 @@ class Total extends Component {
 
     placeholder = warn ? '* This Field Is Required' : placeholder
     const className = warn ? 'warn-required' : ''
+    const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
 
     const styles = {
       container: {
@@ -206,7 +207,8 @@ class Total extends Component {
         height: 15,
         marginTop: inline ? 4 : -1,
         ...iconStyle
-      }
+      },
+      linkIconStyle
     }
 
     return (
@@ -238,7 +240,7 @@ class Total extends Component {
               {label}
             </strong>
             {!!link && !!LinkIcon && (
-              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </div>
           <input

@@ -123,6 +123,7 @@ export class Select extends Component {
     const {options = []} = keyword
     let value = formValues.get(name, '')
     value = typeof value === 'string' ? this.getValue(value, options) : value
+    const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
 
     const styles = {
       container: {
@@ -160,7 +161,8 @@ export class Select extends Component {
         height: 15,
         marginTop: inline ? 3 : -1,
         ...iconStyle
-      }
+      },
+      linkIconStyle
     }
 
     const inputStyles = {
@@ -204,7 +206,7 @@ export class Select extends Component {
               <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
             )}
             {!!link && !!LinkIcon && (
-              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </div>
           <ReactSelect

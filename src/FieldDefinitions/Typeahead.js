@@ -366,6 +366,7 @@ export class Typeahead extends Component {
     const {fieldvalue = null} = typeahead
     disabled = disabled || readonly
     if (fieldvalue !== null && String(formValues.get(fieldvalue, '')).length === 0) disabled = true
+    const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
 
     const styles = {
       container: {
@@ -403,7 +404,8 @@ export class Typeahead extends Component {
         height: 15,
         marginTop: inline ? 4 : 0,
         ...iconStyle
-      }
+      },
+      linkIconStyle
     }
 
     const selectStyles = {
@@ -471,7 +473,7 @@ export class Typeahead extends Component {
                 <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
               )}
               {!!link && !!LinkIcon && (
-                <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+                <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
               )}
             </div>
             {allowcreate && <AsyncCreatable

@@ -127,6 +127,7 @@ export class Multicheckbox extends Component {
     disabled = disabled || readonly
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     placeholder = warn ? 'This Field Is Required' : placeholder
+    const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
 
     const styles = {
       container: {
@@ -179,7 +180,8 @@ export class Multicheckbox extends Component {
         height: 15,
         marginTop: -1,
         ...iconStyle
-      }
+      },
+      linkIconStyle
     }
 
     return (
@@ -216,7 +218,7 @@ export class Multicheckbox extends Component {
               <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
             )}
             {!!link && !!LinkIcon && (
-              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </div>
           <div style={styles.optionsContainer}>

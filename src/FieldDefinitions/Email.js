@@ -124,6 +124,7 @@ class Email extends Component {
     const warn = requiredWarning && formValues.get(name, '').length === 0 && required
     let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
+    const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
 
     placeholder = warn ? '* This Field Is Required' : placeholder
     const className = warn ? 'warn-required' : ''
@@ -185,7 +186,8 @@ class Email extends Component {
         marginTop: -1,
         color: !emailValidator(value) && '#ec1c24',
         marginRight: 5
-      }
+      },
+      linkIconStyle
     }
 
     return (
@@ -211,7 +213,7 @@ class Email extends Component {
               <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
             )}
             {!!link && !!LinkIcon && (
-              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' />
+              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </div>
           <input
