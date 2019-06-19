@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/ClearC2/grid-form-builder/compare/v1.22.0...v1.23.0) (2019-06-10)
+
+
+### Features
+
+* **width:** width provider debounces the callbacks in attempt to make resizing more performant ([0289a1c](https://github.com/ClearC2/grid-form-builder/commit/0289a1c))
+
 # [1.22.0](https://github.com/ClearC2/grid-form-builder/compare/v1.21.2...v1.22.0) (2019-06-06)
 
 
