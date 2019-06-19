@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/ClearC2/grid-form-builder/compare/v1.23.0...v1.23.1) (2019-06-19)
+
+
+### Bug Fixes
+
+* **version:** fix semantic release ([d9a0d02](https://github.com/ClearC2/grid-form-builder/commit/d9a0d02))
+
 # [1.23.0](https://github.com/ClearC2/grid-form-builder/compare/v1.22.0...v1.23.0) (2019-06-10)
 
 
