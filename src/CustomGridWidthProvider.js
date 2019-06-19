@@ -32,6 +32,7 @@ const WidthProvider = ComposedComponent => class extends React.Component {
   }
 
   componentWillUnmount = () => {
+    clearTimeout(this.debounce)
     window.removeEventListener('resize', this.onResize)
     window.removeEventListener('mousemove', this.onResize)
     this.mounted = false
