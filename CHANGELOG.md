@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/ClearC2/grid-form-builder/compare/v1.23.1...v1.24.0) (2019-06-20)
+
+
+### Features
+
+* **add-menustyling-typeahead:** add dynamic menu styling to typeahead ([#74](https://github.com/ClearC2/grid-form-builder/issues/74)) ([5cb3a6a](https://github.com/ClearC2/grid-form-builder/commit/5cb3a6a))
+
 ## [1.23.1](https://github.com/ClearC2/grid-form-builder/compare/v1.23.0...v1.23.1) (2019-06-19)
 
 
