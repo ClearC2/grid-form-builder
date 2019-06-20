@@ -344,9 +344,10 @@ export class Typeahead extends Component {
       LinkIcon
     } = this.props
     const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false, link} = config
-    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, menuStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
+    menuStyle = typeof menuStyle === 'string' ? JSON.parse(menuStyle) : menuStyle
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
@@ -418,6 +419,13 @@ export class Typeahead extends Component {
         minHeight: '25px',
         minWidth: '200px',
         ...style
+      }),
+      menu: (base) => ({
+        ...base,
+        borderRadius: '1px',
+        height: '30px',
+        margin: 0,
+        ...menuStyle
       })
     }
 
