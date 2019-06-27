@@ -1,3 +1,15 @@
+# [1.25.0](https://github.com/ClearC2/grid-form-builder/compare/v1.24.0...v1.25.0) (2019-06-27)
+
+
+### Bug Fixes
+
+* **compile:** files ([8f0cd29](https://github.com/ClearC2/grid-form-builder/commit/8f0cd29))
+
+
+### Features
+
+* **phone:** dynamic fieldDefs support phonenumbers ([aaf52f4](https://github.com/ClearC2/grid-form-builder/commit/aaf52f4))
+
 # [1.24.0](https://github.com/ClearC2/grid-form-builder/compare/v1.23.1...v1.24.0) (2019-06-20)
 
 
