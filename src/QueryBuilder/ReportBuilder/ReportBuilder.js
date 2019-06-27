@@ -165,7 +165,7 @@ export function buildAvailableColumnsFromFieldDefs (fieldDefs, withFieldNames) {
       label: withFieldNames ? `${rawLabel} (${fieldNames[i]})` : rawLabel,
       value: fieldNames[i],
       type: FIELD_TYPE_MAP[`${fieldDef.datatype}`],
-      format: fieldDef.format
+      format: (fieldDef.format === 'phone') ? 'dashes' : fieldDef.format
     })
   }
   return List(availableColumns).sort((a, b) => a.label.localeCompare(b.label)).toJS()
