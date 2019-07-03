@@ -1,3 +1,10 @@
+## [1.25.2](https://github.com/ClearC2/grid-form-builder/compare/v1.25.1...v1.25.2) (2019-07-03)
+
+
+### Bug Fixes
+
+* **defs:** only accept valid aggrid column types ([21ed7d8](https://github.com/ClearC2/grid-form-builder/commit/21ed7d8))
+
 ## [1.25.1](https://github.com/ClearC2/grid-form-builder/compare/v1.25.0...v1.25.1) (2019-07-03)
 
 
