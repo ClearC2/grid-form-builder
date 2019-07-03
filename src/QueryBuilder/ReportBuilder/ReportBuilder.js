@@ -37,23 +37,31 @@ export class ReportBuilder extends Component {
   }
 
   buildStringColDef = (col) => {
-    return {
+    let def = {
       ...col,
       headerName: col.label.split(' (')[0],
       field: col.value
     }
+    if (!def.type.includes('Column')) {
+      delete def.type
+    }
+    return def
   }
 
   buildDateColDef = (col) => {
-    return {
+    let def = {
       ...col,
       headerName: col.label.split(' (')[0],
       field: col.value,
       filter: 'date'
     }
+    if (!def.type.includes('Column')) {
+      delete def.type
+    }
+    return def
   }
   buildBoolColDef = (col) => {
-    return {
+    let def = {
       ...col,
       headerName: col.label.split(' (')[0],
       field: col.value,
@@ -77,6 +85,10 @@ export class ReportBuilder extends Component {
         }
       }
     }
+    if (!def.type.includes('Column')) {
+      delete def.type
+    }
+    return def
   }
 
   buildColumnDefs = (cols) => {
