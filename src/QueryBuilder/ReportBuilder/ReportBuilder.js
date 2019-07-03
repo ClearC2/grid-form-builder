@@ -38,6 +38,7 @@ export class ReportBuilder extends Component {
 
   buildStringColDef = (col) => {
     return {
+      ...col,
       headerName: col.label.split(' (')[0],
       field: col.value
     }
@@ -45,6 +46,7 @@ export class ReportBuilder extends Component {
 
   buildDateColDef = (col) => {
     return {
+      ...col,
       headerName: col.label.split(' (')[0],
       field: col.value,
       filter: 'date'
@@ -52,6 +54,7 @@ export class ReportBuilder extends Component {
   }
   buildBoolColDef = (col) => {
     return {
+      ...col,
       headerName: col.label.split(' (')[0],
       field: col.value,
       valueGetter: (col) => {
