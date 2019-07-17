@@ -214,14 +214,15 @@ export class Select extends Component {
             className={className}
             isClearable={clearable}
             isDisabled={disabled}
+            menuPortalTarget={document.body}
             name={name}
             onChange={this.onChange}
             onKeyDown={onKeyDown}
             options={options}
             placeholder={placeholder}
             styles={inputStyles}
-            value={value}
             tabIndex={tabIndex}
+            value={value}
           />
         </div>
       )
