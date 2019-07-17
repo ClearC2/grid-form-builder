@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/ClearC2/grid-form-builder/compare/v1.25.2...v1.26.0) (2019-07-17)
+
+
+### Features
+
+* **select:** make select component overflow ([#75](https://github.com/ClearC2/grid-form-builder/issues/75)) ([2da4e43](https://github.com/ClearC2/grid-form-builder/commit/2da4e43))
+
 ## [1.25.2](https://github.com/ClearC2/grid-form-builder/compare/v1.25.1...v1.25.2) (2019-07-03)
 
 
