@@ -488,12 +488,14 @@ export class Typeahead extends Component {
               blurInputOnSelect={!multi}
               cacheOptions
               className={className}
+              closeMenuOnScroll={() => true} // needs to be a function
               createOptionPosition='first'
               formatCreateLabel={val => `Click or Tab to Create "${val}"`}
               isClearable
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}
+              menuPlacement={'auto'}
               menuPortalTarget={document.body}
               menuShouldBlockScroll
               name={name}
@@ -515,10 +517,12 @@ export class Typeahead extends Component {
               autoFocus={this.props.config.autofocus}
               cacheOptions
               className={className}
+              closeMenuOnScroll={() => true} // needs to be a function
               isClearable
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}
+              menuPlacement={'auto'}
               menuPortalTarget={document.body}
               menuShouldBlockScroll
               name={name}

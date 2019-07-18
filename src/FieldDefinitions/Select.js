@@ -212,8 +212,10 @@ export class Select extends Component {
           <ReactSelect
             autoFocus={this.props.config.autofocus}
             className={className}
+            closeMenuOnScroll={() => true} // needs to be a function
             isClearable={clearable}
             isDisabled={disabled}
+            menuPlacement={'auto'}
             menuPortalTarget={document.body}
             name={name}
             onChange={this.onChange}
