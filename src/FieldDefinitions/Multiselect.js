@@ -267,8 +267,11 @@ export class Multiselect extends Component {
           <ReactSelect
             autoFocus={this.props.config.autofocus}
             className={className}
+            closeMenuOnScroll={() => true} // needs to be a function
             isDisabled={disabled}
             isMulti={multi}
+            menuPlacement={'auto'}
+            menuPortalTarget={document.body}
             name={name}
             onChange={this.onChange}
             onKeyDown={onKeyDown}
