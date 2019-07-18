@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/ClearC2/grid-form-builder/compare/v1.26.0...v1.27.0) (2019-07-18)
+
+
+### Features
+
+* **reactSelect:** dynamically render components ([#76](https://github.com/ClearC2/grid-form-builder/issues/76)) ([99e0e49](https://github.com/ClearC2/grid-form-builder/commit/99e0e49))
+
 # [1.26.0](https://github.com/ClearC2/grid-form-builder/compare/v1.25.2...v1.26.0) (2019-07-17)
 
 
