@@ -1,3 +1,10 @@
+## [1.26.1](https://github.com/ClearC2/grid-form-builder/compare/v1.26.0...v1.26.1) (2019-07-22)
+
+
+### Bug Fixes
+
+* **quill:** changed rich text area to be a controlled input rather than setting the initial value as the default value, which would sometimes cause the element to have a blank value if a race condition failed where there was no data for the field until after the component mounted ([c94bbda](https://github.com/ClearC2/grid-form-builder/commit/c94bbda))
+
 # [1.26.0](https://github.com/ClearC2/grid-form-builder/compare/v1.25.2...v1.26.0) (2019-07-17)
 
 
