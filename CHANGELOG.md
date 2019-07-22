@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/ClearC2/grid-form-builder/compare/v1.26.1...v1.27.0) (2019-07-22)
+
+
+### Features
+
+* **richtext:** quill will no longer send a change even up for its default behavior of trying to provide a paragraph tag with a line break in it ([9f504c1](https://github.com/ClearC2/grid-form-builder/commit/9f504c1))
+
 ## [1.26.1](https://github.com/ClearC2/grid-form-builder/compare/v1.26.0...v1.26.1) (2019-07-22)
 
 
