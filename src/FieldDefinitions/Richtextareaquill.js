@@ -89,12 +89,14 @@ class Richtextareaquill extends React.Component {
     const {name = null} = config
     const value = html
 
-    handleOnChange({
-      target: {
-        name,
-        value
-      }
-    })
+    if (value !== '<p><br></p>') {
+      handleOnChange({
+        target: {
+          name,
+          value
+        }
+      })
+    }
   }
 
   insertImage (props) {
