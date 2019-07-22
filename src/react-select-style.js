@@ -33,9 +33,8 @@ const reactSelectStyles = () => ({
   }),
   menu: (base) => ({
     ...base,
-    borderRadius: '1px',
-    height: '30px',
-    margin: 0
+    marginTop: '0px',
+    marginBottom: '0px'
   }),
   menuList: (base) => ({
     ...base,

@@ -5,6 +5,8 @@ import {DropTarget} from 'react-dnd'
 import {reactSelectStyles} from '../react-select-style'
 import PropTypes from 'prop-types'
 
+const viewPortHeight = document.documentElement.clientHeight
+
 export class Select extends Component {
   static propTypes = {
     formValues: PropTypes.object,
@@ -29,10 +31,13 @@ export class Select extends Component {
   }
 
   state = {
-    fieldValues: []
+    fieldPosition: 0,
+    fieldValues: [],
+    menuIsOpen: false,
+    openMenu: 'bottom'
   }
 
-  componentDidUpdate = p => {
+  componentDidUpdate = (p, s) => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
       // if it was just previously over and dropped (this is to make this event only trigger once)
@@ -47,6 +52,10 @@ export class Select extends Component {
         })
       }
     }
+
+    if (s.fieldPosition !== this.state.fieldPosition) {
+      this.setMenuOpenPosition()
+    }
   }
 
   handleAnywhereClick = e => {
@@ -55,7 +64,10 @@ export class Select extends Component {
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
     handleAnywhereClick(config, e)
+    this.setInputFieldPosition(this.input)
   }
+
+  onMouseOut = () => this.setState({openMenu: 'top', menuIsOpen: false})
 
   handleCascadeKeywordClick = e => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
@@ -94,6 +106,19 @@ export class Select extends Component {
     const {config = {}, handleLinkClick} = this.props
     const {link} = config
     handleLinkClick(link)
+  }
+
+  setInputFieldPosition = () => {
+    if (this.state.fieldPosition !== this.input.getBoundingClientRect().top) {
+      this.setState({fieldPosition: this.input.getBoundingClientRect().top})
+    } else {
+      this.setMenuOpenPosition()
+    }
+  }
+
+  setMenuOpenPosition = () => {
+    const openMenu = this.state.fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
+    this.setState({openMenu}, () => this.setState({menuIsOpen: true}))
   }
 
   render = () => {
@@ -186,7 +211,12 @@ export class Select extends Component {
     }
     return (
       connectDropTarget(
-        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
+        <div
+          style={styles.container}
+          ref={r => { this.input = r }}
+          onMouseUp={this.handleAnywhereClick}
+          onBlur={this.onMouseOut}
+        >
           <div style={styles.labelContainer}>
             {required && (
               <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>
@@ -214,6 +244,9 @@ export class Select extends Component {
             className={className}
             isClearable={clearable}
             isDisabled={disabled}
+            menuIsOpen={this.state.menuIsOpen}
+            menuPlacement={this.state.openMenu}
+            menuShouldBlockScroll
             menuPortalTarget={document.body}
             name={name}
             onChange={this.onChange}
