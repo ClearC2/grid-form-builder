@@ -1,3 +1,10 @@
+## [1.28.1](https://github.com/ClearC2/grid-form-builder/compare/v1.28.0...v1.28.1) (2019-07-22)
+
+
+### Bug Fixes
+
+* trigger release ([80bbcec](https://github.com/ClearC2/grid-form-builder/commit/80bbcec))
+
 # [1.27.0](https://github.com/ClearC2/grid-form-builder/compare/v1.26.1...v1.27.0) (2019-07-22)
 
 
