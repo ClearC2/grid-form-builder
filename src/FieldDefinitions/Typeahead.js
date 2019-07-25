@@ -6,6 +6,8 @@ import GFBConfig from '../config'
 import {DropTarget} from 'react-dnd'
 import {reactSelectStyles} from '../react-select-style'
 
+const viewPortHeight = document.documentElement.clientHeight
+
 class Placeholder extends Component {
   static propTypes = {
     handleMount: PropTypes.func.isRequired
@@ -43,12 +45,15 @@ export class Typeahead extends Component {
   }
 
   state = {
-    shouldRemount: false,
     currentOptions: {},
-    inputValue: '' // used to keep previous input in typeahead if supressInputReset is true
+    fieldPosition: 0,
+    inputValue: '', // used to keep previous input in typeahead if supressInputReset is true
+    menuIsOpen: false,
+    menuPlacement: 'bottom',
+    shouldRemount: false
   }
 
-  componentDidUpdate = p => {
+  componentDidUpdate = (p, s) => {
     const {didDrop, isOver, formValues, config = {}, handleOnChange = () => null} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
       // if it was just previously over and dropped (this is to make this event only trigger once)
@@ -81,6 +86,10 @@ export class Typeahead extends Component {
         })
       }
     }
+
+    if (s.fieldPosition !== this.state.fieldPosition) {
+      this.setMenuOpenPosition()
+    }
   }
 
   handleAnywhereClick = e => {
@@ -89,7 +98,10 @@ export class Typeahead extends Component {
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
     handleAnywhereClick(config, e)
+    this.setInputFieldPosition(this.inputContainer)
   }
+
+  onMouseOut = () => this.setState({menuPlacement: 'top', menuIsOpen: false})
 
   handleCascadeKeywordClick = e => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
@@ -209,6 +221,7 @@ export class Typeahead extends Component {
     } else {
       this.handleSingleValueChange(newValue)
     }
+    this.setState({menuIsOpen: false})
   }
 
   handleSingleValueChange = newValue => {
@@ -329,6 +342,19 @@ export class Typeahead extends Component {
     handleLinkClick(link)
   }
 
+  setInputFieldPosition = () => {
+    if (this.state.fieldPosition !== this.inputContainer.getBoundingClientRect().top) {
+      this.setState({fieldPosition: this.inputContainer.getBoundingClientRect().top})
+    } else {
+      this.setMenuOpenPosition()
+    }
+  }
+
+  setMenuOpenPosition = () => {
+    const menuPlacement = this.state.fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
+    this.setState({menuPlacement}, () => this.setState({menuIsOpen: true}))
+  }
+
   render = () => {
     const {
       inline,
@@ -423,7 +449,6 @@ export class Typeahead extends Component {
       menu: (base) => ({
         ...base,
         borderRadius: '1px',
-        height: '30px',
         margin: 0,
         ...menuStyle
       })
@@ -462,7 +487,12 @@ export class Typeahead extends Component {
     } else {
       return (
         connectDropTarget(
-          <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
+          <div
+            style={styles.container}
+            onMouseUp={this.handleAnywhereClick}
+            onBlur={this.onMouseOut}
+            ref={r => { this.inputContainer = r }}
+          >
             <div style={styles.labelContainer}>
               {required && (
                 <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>)}
@@ -494,6 +524,8 @@ export class Typeahead extends Component {
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}
+              menuIsOpen={this.state.menuIsOpen}
+              menuPlacement={this.state.menuPlacement}
               menuPortalTarget={document.body}
               menuShouldBlockScroll
               name={name}
@@ -519,6 +551,8 @@ export class Typeahead extends Component {
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}
+              menuIsOpen={this.state.menuIsOpen}
+              menuPlacement={this.state.menuPlacement}
               menuPortalTarget={document.body}
               menuShouldBlockScroll
               name={name}
