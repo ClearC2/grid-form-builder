@@ -98,7 +98,7 @@ export class Typeahead extends Component {
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
     handleAnywhereClick(config, e)
-    this.setInputFieldPosition(this.inputContainer)
+    this.setInputFieldPosition(this.inputContainer) // position gets set when menu opens
   }
 
   onMouseOut = () => this.setState({menuPlacement: 'top', menuIsOpen: false})
@@ -221,7 +221,7 @@ export class Typeahead extends Component {
     } else {
       this.handleSingleValueChange(newValue)
     }
-    this.setState({menuIsOpen: false})
+    this.setState({menuIsOpen: false}) // closes menu when new option gets selected
   }
 
   handleSingleValueChange = newValue => {
