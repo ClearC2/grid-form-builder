@@ -34,7 +34,7 @@ export class Select extends Component {
     fieldPosition: 0,
     fieldValues: [],
     menuIsOpen: false,
-    openMenu: 'bottom'
+    menuPlacement: 'bottom'
   }
 
   componentDidUpdate = (p, s) => {
@@ -67,7 +67,7 @@ export class Select extends Component {
     this.setInputFieldPosition(this.input)
   }
 
-  onMouseOut = () => this.setState({openMenu: 'top', menuIsOpen: false})
+  onMouseOut = () => this.setState({menuPlacement: 'top', menuIsOpen: false})
 
   handleCascadeKeywordClick = e => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
@@ -83,6 +83,7 @@ export class Select extends Component {
     const {config = {}, handleOnChange = this.handleOnChange} = this.props
     const {name = null} = config
     const value = e === null ? e = '' : e.value
+    this.setState({menuIsOpen: false})
     handleOnChange({
       target: {
         name,
@@ -117,8 +118,8 @@ export class Select extends Component {
   }
 
   setMenuOpenPosition = () => {
-    const openMenu = this.state.fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
-    this.setState({openMenu}, () => this.setState({menuIsOpen: true}))
+    const menuPlacement = this.state.fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
+    this.setState({menuPlacement}, () => this.setState({menuIsOpen: true}))
   }
 
   render = () => {
@@ -245,7 +246,7 @@ export class Select extends Component {
             isClearable={clearable}
             isDisabled={disabled}
             menuIsOpen={this.state.menuIsOpen}
-            menuPlacement={this.state.openMenu}
+            menuPlacement={this.state.menuPlacement}
             menuShouldBlockScroll
             menuPortalTarget={document.body}
             name={name}
