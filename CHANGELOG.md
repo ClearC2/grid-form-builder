@@ -1,3 +1,10 @@
+## [1.28.2](https://github.com/ClearC2/grid-form-builder/compare/v1.28.1...v1.28.2) (2019-07-25)
+
+
+### Bug Fixes
+
+* **react-select:** menu fix ([#79](https://github.com/ClearC2/grid-form-builder/issues/79)) ([9c8a3ce](https://github.com/ClearC2/grid-form-builder/commit/9c8a3ce))
+
 ## [1.28.1](https://github.com/ClearC2/grid-form-builder/compare/v1.28.0...v1.28.1) (2019-07-22)
 
 
