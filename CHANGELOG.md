@@ -1,3 +1,10 @@
+## [1.28.3](https://github.com/ClearC2/grid-form-builder/compare/v1.28.2...v1.28.3) (2019-07-26)
+
+
+### Bug Fixes
+
+* **selectMenu:** close on select ([#80](https://github.com/ClearC2/grid-form-builder/issues/80)) ([6523f01](https://github.com/ClearC2/grid-form-builder/commit/6523f01))
+
 ## [1.28.2](https://github.com/ClearC2/grid-form-builder/compare/v1.28.1...v1.28.2) (2019-07-25)
 
 
