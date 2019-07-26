@@ -4,6 +4,8 @@ export const timeStamp = () => {
   return +ms
 }
 
+export const isMobile = !!('ontouchstart' in document.documentElement && navigator.userAgent.match(/Mobi/))
+
 export const emailValidator = email => {
   // If email is null, undefined, empty array or string
   if (!email) {
@@ -41,6 +43,7 @@ export const emailValidator = email => {
 
   const validateDomainSegment = (segment) => {
     // A true here means the domain segment failed validation
+    // eslint-disable-next-line
     return ((segment.length > 63) || (segment.length < 1) || (segment[0] === '-') || (segment[segment.length - 1] === '-'))
   }
 

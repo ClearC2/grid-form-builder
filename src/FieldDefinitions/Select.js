@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
+import PropTypes from 'prop-types'
 import ReactSelect from 'react-select'
 import {DropTarget} from 'react-dnd'
 import {reactSelectStyles} from '../react-select-style'
-import PropTypes from 'prop-types'
+import {isMobile} from '../utils'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -245,8 +246,8 @@ export class Select extends Component {
             className={className}
             isClearable={clearable}
             isDisabled={disabled}
-            menuIsOpen={this.state.menuIsOpen}
-            menuPlacement={this.state.menuPlacement}
+            menuIsOpen={!isMobile ? this.state.menuIsOpen : undefined}
+            menuPlacement={!isMobile ? this.state.menuPlacement : undefined}
             menuShouldBlockScroll
             menuPortalTarget={document.body}
             name={name}

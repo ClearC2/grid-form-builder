@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import GFBConfig from '../config'
 import {DropTarget} from 'react-dnd'
 import {reactSelectStyles} from '../react-select-style'
+import {isMobile} from '../utils'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -524,8 +525,8 @@ export class Typeahead extends Component {
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}
-              menuIsOpen={this.state.menuIsOpen}
-              menuPlacement={this.state.menuPlacement}
+              menuIsOpen={!isMobile ? this.state.menuIsOpen : undefined}
+              menuPlacement={!isMobile ? this.state.menuPlacement : undefined}
               menuPortalTarget={document.body}
               menuShouldBlockScroll
               name={name}
@@ -551,8 +552,8 @@ export class Typeahead extends Component {
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}
-              menuIsOpen={this.state.menuIsOpen}
-              menuPlacement={this.state.menuPlacement}
+              menuIsOpen={!isMobile ? this.state.menuIsOpen : undefined}
+              menuPlacement={!isMobile ? this.state.menuPlacement : undefined}
               menuPortalTarget={document.body}
               menuShouldBlockScroll
               name={name}
