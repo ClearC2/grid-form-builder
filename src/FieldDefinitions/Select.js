@@ -64,8 +64,10 @@ export class Select extends Component {
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
-    handleAnywhereClick(config, e)
-    this.setInputFieldPosition(this.input)
+    if (!config.disabled) {
+      handleAnywhereClick(config, e)
+      this.setInputFieldPosition(this.input)
+    }
   }
 
   onMouseOut = () => this.setState({menuPlacement: 'top', menuIsOpen: false})

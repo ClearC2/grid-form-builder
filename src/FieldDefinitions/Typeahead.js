@@ -98,8 +98,10 @@ export class Typeahead extends Component {
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
-    handleAnywhereClick(config, e)
-    this.setInputFieldPosition(this.inputContainer) // position gets set when menu opens
+    if (!config.disabled) {
+      handleAnywhereClick(config, e)
+      this.setInputFieldPosition(this.inputContainer) // position gets set when menu opens
+    }
   }
 
   onMouseOut = () => this.setState({menuPlacement: 'top', menuIsOpen: false})
