@@ -1,3 +1,10 @@
+## [1.28.4](https://github.com/ClearC2/grid-form-builder/compare/v1.28.3...v1.28.4) (2019-07-29)
+
+
+### Bug Fixes
+
+* **react-select:** disable fields being selectable ([#81](https://github.com/ClearC2/grid-form-builder/issues/81)) ([9879235](https://github.com/ClearC2/grid-form-builder/commit/9879235))
+
 ## [1.28.3](https://github.com/ClearC2/grid-form-builder/compare/v1.28.2...v1.28.3) (2019-07-26)
 
 
