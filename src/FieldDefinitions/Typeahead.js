@@ -345,7 +345,8 @@ export class Typeahead extends Component {
     handleLinkClick(link)
   }
 
-  setInputFieldPosition = () => {
+  setInputFieldPosition = e => {
+    this.setState({inputValue: e.getElementsByTagName('input')[1].value})
     if (this.state.fieldPosition !== this.inputContainer.getBoundingClientRect().top) {
       this.setState({fieldPosition: this.inputContainer.getBoundingClientRect().top})
     } else {
@@ -381,6 +382,7 @@ export class Typeahead extends Component {
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
+    let blankValue = {value: '', label: ''}
     let value = formValues.get(name, null)
     value = (value && typeof value.toJS === 'function') ? value.toJS() : value
     value = this.convertValueStringToValueArrayIfNeeded(value)
@@ -566,7 +568,7 @@ export class Typeahead extends Component {
               ref={r => { this.input = r }}
               styles={multi ? multiSelectStyles : selectStyles}
               tabIndex={tabIndex}
-              value={value}
+              value={!this.state.inputValue && this.state.menuIsOpen ? blankValue : value}
               inputValue={this.state.inputValue}
               onInputChange={this.onInputChange}
             />}
