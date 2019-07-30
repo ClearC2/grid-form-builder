@@ -1,3 +1,10 @@
+## [1.28.5](https://github.com/ClearC2/grid-form-builder/compare/v1.28.4...v1.28.5) (2019-07-30)
+
+
+### Bug Fixes
+
+* **typeahead:** prevent clearing value when click input field ([#82](https://github.com/ClearC2/grid-form-builder/issues/82)) ([3ec7a69](https://github.com/ClearC2/grid-form-builder/commit/3ec7a69))
+
 ## [1.28.4](https://github.com/ClearC2/grid-form-builder/compare/v1.28.3...v1.28.4) (2019-07-29)
 
 
