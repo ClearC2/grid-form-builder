@@ -1,3 +1,10 @@
+## [1.28.6](https://github.com/ClearC2/grid-form-builder/compare/v1.28.5...v1.28.6) (2019-07-31)
+
+
+### Bug Fixes
+
+* **typeahead:** cursor ([#83](https://github.com/ClearC2/grid-form-builder/issues/83)) ([39088cf](https://github.com/ClearC2/grid-form-builder/commit/39088cf))
+
 ## [1.28.5](https://github.com/ClearC2/grid-form-builder/compare/v1.28.4...v1.28.5) (2019-07-30)
 
 
