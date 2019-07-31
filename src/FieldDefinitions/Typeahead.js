@@ -48,7 +48,7 @@ export class Typeahead extends Component {
   state = {
     currentOptions: {},
     fieldPosition: 0,
-    inputValue: '', // used to keep previous input in typeahead if supressInputReset is true
+    inputValue: undefined, // used to keep previous input in typeahead if supressInputReset is true
     menuIsOpen: false,
     menuPlacement: 'bottom',
     shouldRemount: false
@@ -169,8 +169,10 @@ export class Typeahead extends Component {
         handleOnChange({target})
         return
       case 'clear': {
-        this.emptyFields(fields, handleOnChange)
-        handleOnChange({target: {name, value: ''}})
+        if (!newValue && (this.state.inputValue === undefined || this.state.inputValue.length)) {
+          this.emptyFields(fields, handleOnChange)
+          handleOnChange({target: {name, value: ''}})
+        }
         return
       }
     }
@@ -571,6 +573,7 @@ export class Typeahead extends Component {
               menuShouldBlockScroll
               name={name}
               onChange={this.handleChange}
+              onFocus={this.handleOnFocus}
               onInputChange={this.onInputChange}
               onKeyDown={onKeyDown}
               onMouseDown={this.onMouseDown}
