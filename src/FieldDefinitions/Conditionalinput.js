@@ -349,7 +349,7 @@ export default class Conditionalinput extends Component {
         }
       })
     }
-    if (fieldCount < this.nFieldsWithValues() + 1) {
+    if (fieldCount < this.nFieldsWithValues() + 1 && maxFieldCount > 0) {
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {x: 1, y: 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
@@ -364,7 +364,7 @@ export default class Conditionalinput extends Component {
       })
       fieldCount++
     }
-    if (MULTI_FIELD_INPUTS.has(this.inputType())) {
+    if (MULTI_FIELD_INPUTS.has(this.inputType()) && maxFieldCount > 0) {
       while (fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < this.nFieldsWithValues() + 1)) {
         let label = this.state.conditions[this.condition()]
         if (typeof label === 'object') {
