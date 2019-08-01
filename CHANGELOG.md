@@ -1,3 +1,10 @@
+## [1.28.8](https://github.com/ClearC2/grid-form-builder/compare/v1.28.7...v1.28.8) (2019-08-01)
+
+
+### Bug Fixes
+
+* **condInput:** styling, fix error on multiselect in example ([1fd4d95](https://github.com/ClearC2/grid-form-builder/commit/1fd4d95))
+
 ## [1.28.7](https://github.com/ClearC2/grid-form-builder/compare/v1.28.6...v1.28.7) (2019-08-01)
 
 
