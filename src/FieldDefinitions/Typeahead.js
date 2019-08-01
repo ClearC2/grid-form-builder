@@ -5,6 +5,9 @@ import PropTypes from 'prop-types'
 import GFBConfig from '../config'
 import {DropTarget} from 'react-dnd'
 import {reactSelectStyles} from '../react-select-style'
+import {isMobile} from '../utils'
+
+const viewPortHeight = document.documentElement.clientHeight
 
 class Placeholder extends Component {
   static propTypes = {
@@ -43,12 +46,15 @@ export class Typeahead extends Component {
   }
 
   state = {
-    shouldRemount: false,
     currentOptions: {},
-    inputValue: '' // used to keep previous input in typeahead if supressInputReset is true
+    fieldPosition: 0,
+    inputValue: undefined, // used to keep previous input in typeahead if supressInputReset is true
+    menuIsOpen: false,
+    menuPlacement: 'bottom',
+    shouldRemount: false
   }
 
-  componentDidUpdate = p => {
+  componentDidUpdate = (p, s) => {
     const {didDrop, isOver, formValues, config = {}, handleOnChange = () => null} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
       // if it was just previously over and dropped (this is to make this event only trigger once)
@@ -81,6 +87,10 @@ export class Typeahead extends Component {
         })
       }
     }
+
+    if (s.fieldPosition !== this.state.fieldPosition) {
+      this.setMenuOpenPosition()
+    }
   }
 
   handleAnywhereClick = e => {
@@ -88,7 +98,21 @@ export class Typeahead extends Component {
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
-    handleAnywhereClick(config, e)
+    if (!config.disabled) {
+      handleAnywhereClick(config, e)
+      this.setInputFieldPosition(this.inputContainer) // position gets set when menu opens
+    }
+  }
+
+  onMouseOut = () => {
+    let value = this.props.formValues.get(this.props.config.name, '') || ''
+    value = typeof value.toJS === 'function' ? value.toJS() : value
+    value = typeof value === 'object' ? value.value || value.label || '' : value
+    this.setState({
+      menuPlacement: 'top',
+      menuIsOpen: false,
+      inputValue: value
+    })
   }
 
   handleCascadeKeywordClick = e => {
@@ -145,8 +169,10 @@ export class Typeahead extends Component {
         handleOnChange({target})
         return
       case 'clear': {
-        this.emptyFields(fields, handleOnChange)
-        handleOnChange({target: {name, value: ''}})
+        if (!newValue && (this.state.inputValue === undefined || this.state.inputValue.length)) {
+          this.emptyFields(fields, handleOnChange)
+          handleOnChange({target: {name, value: ''}})
+        }
         return
       }
     }
@@ -209,6 +235,7 @@ export class Typeahead extends Component {
     } else {
       this.handleSingleValueChange(newValue)
     }
+    this.setState({menuIsOpen: false}) // closes menu when new option gets selected
   }
 
   handleSingleValueChange = newValue => {
@@ -287,10 +314,9 @@ export class Typeahead extends Component {
     let value = formValues.get(name, '') || ''
     value = typeof value.toJS === 'function' ? value.toJS() : value
     value = typeof value === 'object' ? value.value || value.label || '' : value
-    if (this.input && persist) {
-      this.input.select.setState({
-        inputValue: value
-      })
+    if (persist) {
+      // this is done to place cursor at the end of the input field
+      this.setState({inputValue: ''}, () => this.setState({inputValue: value}))
     }
   }
 
@@ -329,6 +355,19 @@ export class Typeahead extends Component {
     handleLinkClick(link)
   }
 
+  setInputFieldPosition = () => {
+    if (this.state.fieldPosition !== this.inputContainer.getBoundingClientRect().top) {
+      this.setState({fieldPosition: this.inputContainer.getBoundingClientRect().top})
+    } else {
+      this.setMenuOpenPosition()
+    }
+  }
+
+  setMenuOpenPosition = () => {
+    const menuPlacement = this.state.fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
+    this.setState({menuPlacement}, () => this.setState({menuIsOpen: true}))
+  }
+
   render = () => {
     const {
       inline,
@@ -343,6 +382,7 @@ export class Typeahead extends Component {
       taMaxHeight = '90px',
       LinkIcon
     } = this.props
+    const {inputValue, menuIsOpen, menuPlacement} = this.state
     const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, menuStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
@@ -352,6 +392,7 @@ export class Typeahead extends Component {
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
+    let blankValue = {value: '', label: ''}
     let value = formValues.get(name, null)
     value = (value && typeof value.toJS === 'function') ? value.toJS() : value
     value = this.convertValueStringToValueArrayIfNeeded(value)
@@ -423,7 +464,6 @@ export class Typeahead extends Component {
       menu: (base) => ({
         ...base,
         borderRadius: '1px',
-        height: '30px',
         margin: 0,
         ...menuStyle
       })
@@ -462,7 +502,12 @@ export class Typeahead extends Component {
     } else {
       return (
         connectDropTarget(
-          <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
+          <div
+            style={styles.container}
+            onMouseUp={this.handleAnywhereClick}
+            onBlur={this.onMouseOut}
+            ref={r => { this.inputContainer = r }}
+          >
             <div style={styles.labelContainer}>
               {required && (
                 <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>)}
@@ -485,53 +530,58 @@ export class Typeahead extends Component {
               )}
             </div>
             {allowcreate && <AsyncCreatable
+              autoFocus={this.props.config.autofocus}
               blurInputOnSelect={!multi}
               cacheOptions
               className={className}
               createOptionPosition='first'
               formatCreateLabel={val => `Click or Tab to Create "${val}"`}
+              inputValue={inputValue}
               isClearable
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}
+              menuIsOpen={!isMobile ? menuIsOpen : undefined}
+              menuPlacement={!isMobile ? menuPlacement : undefined}
               menuPortalTarget={document.body}
               menuShouldBlockScroll
               name={name}
               onChange={this.handleChange}
               onFocus={this.handleOnFocus}
+              onInputChange={this.onInputChange}
               onKeyDown={onKeyDown}
               onMouseDown={this.onMouseDown}
               placeholder={placeholder}
               ref={r => { this.input = r }}
               styles={multi ? multiSelectStyles : selectStyles}
               tabIndex={tabIndex}
-              value={value}
-              inputValue={this.state.inputValue}
-              onInputChange={this.onInputChange}
-              autoFocus={this.props.config.autofocus}
+              value={!inputValue && menuIsOpen ? blankValue : value}
             />}
             {!allowcreate && <Async
-              blurInputOnSelect={!multi}
               autoFocus={this.props.config.autofocus}
+              blurInputOnSelect={!multi}
               cacheOptions
               className={className}
+              inputValue={inputValue}
               isClearable
               isDisabled={disabled}
               isMulti={multi}
               loadOptions={this.loadOptions}
+              menuIsOpen={!isMobile ? menuIsOpen : undefined}
+              menuPlacement={!isMobile ? menuPlacement : undefined}
               menuPortalTarget={document.body}
               menuShouldBlockScroll
               name={name}
               onChange={this.handleChange}
+              onFocus={this.handleOnFocus}
+              onInputChange={this.onInputChange}
               onKeyDown={onKeyDown}
               onMouseDown={this.onMouseDown}
               placeholder={placeholder}
               ref={r => { this.input = r }}
               styles={multi ? multiSelectStyles : selectStyles}
               tabIndex={tabIndex}
-              value={value}
-              inputValue={this.state.inputValue}
-              onInputChange={this.onInputChange}
+              value={!inputValue && menuIsOpen ? blankValue : value}
             />}
           </div>
         )

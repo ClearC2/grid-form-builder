@@ -1,6 +1,6 @@
 {
   "name": "grid-form-builder",
-  "version": "1.25.1",
+  "version": "1.28.6",
   "description": "Form Builder built on top of React Grid Layout",
   "repository": {
     "type": "git",
@@ -112,6 +112,7 @@
     "react-redux": "^4.0.0 || ^5.0.0"
   },
   "dependencies": {
+    "@hot-loader/react-dom": "^16.8.6",
     "cleave.js": "^1.1.1",
     "hoist-non-react-statics": "^3.3.0",
     "jquery": "^3.3.1",

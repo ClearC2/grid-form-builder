@@ -1,9 +1,12 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
+import PropTypes from 'prop-types'
 import ReactSelect from 'react-select'
 import {DropTarget} from 'react-dnd'
 import {reactSelectStyles} from '../react-select-style'
-import PropTypes from 'prop-types'
+import {isMobile} from '../utils'
+
+const viewPortHeight = document.documentElement.clientHeight
 
 export class Select extends Component {
   static propTypes = {
@@ -29,10 +32,13 @@ export class Select extends Component {
   }
 
   state = {
-    fieldValues: []
+    fieldPosition: 0,
+    fieldValues: [],
+    menuIsOpen: false,
+    menuPlacement: 'bottom'
   }
 
-  componentDidUpdate = p => {
+  componentDidUpdate = (p, s) => {
     const {didDrop, isOver} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
       // if it was just previously over and dropped (this is to make this event only trigger once)
@@ -47,6 +53,10 @@ export class Select extends Component {
         })
       }
     }
+
+    if (s.fieldPosition !== this.state.fieldPosition) {
+      this.setMenuOpenPosition()
+    }
   }
 
   handleAnywhereClick = e => {
@@ -54,8 +64,13 @@ export class Select extends Component {
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
-    handleAnywhereClick(config, e)
+    if (!config.disabled) {
+      handleAnywhereClick(config, e)
+      this.setInputFieldPosition(this.input)
+    }
   }
+
+  onMouseOut = () => this.setState({menuPlacement: 'top', menuIsOpen: false})
 
   handleCascadeKeywordClick = e => {
     const {handleCascadeKeywordClick = () => null, formValues = Map()} = this.props
@@ -71,6 +86,7 @@ export class Select extends Component {
     const {config = {}, handleOnChange = this.handleOnChange} = this.props
     const {name = null} = config
     const value = e === null ? e = '' : e.value
+    this.setState({menuIsOpen: false})
     handleOnChange({
       target: {
         name,
@@ -94,6 +110,19 @@ export class Select extends Component {
     const {config = {}, handleLinkClick} = this.props
     const {link} = config
     handleLinkClick(link)
+  }
+
+  setInputFieldPosition = () => {
+    if (this.state.fieldPosition !== this.input.getBoundingClientRect().top) {
+      this.setState({fieldPosition: this.input.getBoundingClientRect().top})
+    } else {
+      this.setMenuOpenPosition()
+    }
+  }
+
+  setMenuOpenPosition = () => {
+    const menuPlacement = this.state.fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
+    this.setState({menuPlacement}, () => this.setState({menuIsOpen: true}))
   }
 
   render = () => {
@@ -186,7 +215,12 @@ export class Select extends Component {
     }
     return (
       connectDropTarget(
-        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
+        <div
+          style={styles.container}
+          ref={r => { this.input = r }}
+          onMouseUp={this.handleAnywhereClick}
+          onBlur={this.onMouseOut}
+        >
           <div style={styles.labelContainer}>
             {required && (
               <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>
@@ -214,14 +248,18 @@ export class Select extends Component {
             className={className}
             isClearable={clearable}
             isDisabled={disabled}
+            menuIsOpen={!isMobile ? this.state.menuIsOpen : undefined}
+            menuPlacement={!isMobile ? this.state.menuPlacement : undefined}
+            menuShouldBlockScroll
+            menuPortalTarget={document.body}
             name={name}
             onChange={this.onChange}
             onKeyDown={onKeyDown}
             options={options}
             placeholder={placeholder}
             styles={inputStyles}
-            value={value}
             tabIndex={tabIndex}
+            value={value}
           />
         </div>
       )

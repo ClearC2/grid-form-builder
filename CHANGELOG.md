@@ -1,3 +1,73 @@
+## [1.28.6](https://github.com/ClearC2/grid-form-builder/compare/v1.28.5...v1.28.6) (2019-07-31)
+
+
+### Bug Fixes
+
+* **typeahead:** cursor ([#83](https://github.com/ClearC2/grid-form-builder/issues/83)) ([39088cf](https://github.com/ClearC2/grid-form-builder/commit/39088cf))
+
+## [1.28.5](https://github.com/ClearC2/grid-form-builder/compare/v1.28.4...v1.28.5) (2019-07-30)
+
+
+### Bug Fixes
+
+* **typeahead:** prevent clearing value when click input field ([#82](https://github.com/ClearC2/grid-form-builder/issues/82)) ([3ec7a69](https://github.com/ClearC2/grid-form-builder/commit/3ec7a69))
+
+## [1.28.4](https://github.com/ClearC2/grid-form-builder/compare/v1.28.3...v1.28.4) (2019-07-29)
+
+
+### Bug Fixes
+
+* **react-select:** disable fields being selectable ([#81](https://github.com/ClearC2/grid-form-builder/issues/81)) ([9879235](https://github.com/ClearC2/grid-form-builder/commit/9879235))
+
+## [1.28.3](https://github.com/ClearC2/grid-form-builder/compare/v1.28.2...v1.28.3) (2019-07-26)
+
+
+### Bug Fixes
+
+* **selectMenu:** close on select ([#80](https://github.com/ClearC2/grid-form-builder/issues/80)) ([6523f01](https://github.com/ClearC2/grid-form-builder/commit/6523f01))
+
+## [1.28.2](https://github.com/ClearC2/grid-form-builder/compare/v1.28.1...v1.28.2) (2019-07-25)
+
+
+### Bug Fixes
+
+* **react-select:** menu fix ([#79](https://github.com/ClearC2/grid-form-builder/issues/79)) ([9c8a3ce](https://github.com/ClearC2/grid-form-builder/commit/9c8a3ce))
+
+## [1.28.1](https://github.com/ClearC2/grid-form-builder/compare/v1.28.0...v1.28.1) (2019-07-22)
+
+
+### Bug Fixes
+
+* trigger release ([80bbcec](https://github.com/ClearC2/grid-form-builder/commit/80bbcec))
+
+# [1.27.0](https://github.com/ClearC2/grid-form-builder/compare/v1.26.1...v1.27.0) (2019-07-22)
+
+
+### Features
+
+* **richtext:** quill will no longer send a change even up for its default behavior of trying to provide a paragraph tag with a line break in it ([9f504c1](https://github.com/ClearC2/grid-form-builder/commit/9f504c1))
+
+## [1.26.1](https://github.com/ClearC2/grid-form-builder/compare/v1.26.0...v1.26.1) (2019-07-22)
+
+
+### Bug Fixes
+
+* **quill:** changed rich text area to be a controlled input rather than setting the initial value as the default value, which would sometimes cause the element to have a blank value if a race condition failed where there was no data for the field until after the component mounted ([c94bbda](https://github.com/ClearC2/grid-form-builder/commit/c94bbda))
+
+# [1.26.0](https://github.com/ClearC2/grid-form-builder/compare/v1.25.2...v1.26.0) (2019-07-17)
+
+
+### Features
+
+* **select:** make select component overflow ([#75](https://github.com/ClearC2/grid-form-builder/issues/75)) ([2da4e43](https://github.com/ClearC2/grid-form-builder/commit/2da4e43))
+
+## [1.25.2](https://github.com/ClearC2/grid-form-builder/compare/v1.25.1...v1.25.2) (2019-07-03)
+
+
+### Bug Fixes
+
+* **defs:** only accept valid aggrid column types ([21ed7d8](https://github.com/ClearC2/grid-form-builder/commit/21ed7d8))
+
 ## [1.25.1](https://github.com/ClearC2/grid-form-builder/compare/v1.25.0...v1.25.1) (2019-07-03)
 
 

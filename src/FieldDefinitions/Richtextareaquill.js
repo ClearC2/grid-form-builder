@@ -89,12 +89,14 @@ class Richtextareaquill extends React.Component {
     const {name = null} = config
     const value = html
 
-    handleOnChange({
-      target: {
-        name,
-        value
-      }
-    })
+    if (value !== '<p><br></p>') {
+      handleOnChange({
+        target: {
+          name,
+          value
+        }
+      })
+    }
   }
 
   insertImage (props) {
@@ -161,7 +163,6 @@ class Richtextareaquill extends React.Component {
         ...iconStyle
       }
     }
-
     return (
       this.props.connectDropTarget(
         <div style={styles.container}>
@@ -175,7 +176,7 @@ class Richtextareaquill extends React.Component {
             ref={el => {
               this.reactQuillRef = el
             }}
-            defaultValue={value}
+            value={value}
             onChange={this.handleChange}
             placeholder={this.props.placeholder}
             modules={this.modules}
