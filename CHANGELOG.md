@@ -1,3 +1,10 @@
+## [1.28.7](https://github.com/ClearC2/grid-form-builder/compare/v1.28.6...v1.28.7) (2019-08-01)
+
+
+### Bug Fixes
+
+* **conditionalInput:** dont show input field if condition doesnt need one ([58cf3d8](https://github.com/ClearC2/grid-form-builder/commit/58cf3d8))
+
 ## [1.28.6](https://github.com/ClearC2/grid-form-builder/compare/v1.28.5...v1.28.6) (2019-07-31)
 
 
