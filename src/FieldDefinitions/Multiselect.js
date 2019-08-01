@@ -64,7 +64,7 @@ export class Multiselect extends Component {
             }
           }
         } else {
-          if (typeof value.toJS === 'function') value = value.toJS()
+          if (value && typeof value.toJS === 'function') value = value.toJS()
           return value
         }
       })

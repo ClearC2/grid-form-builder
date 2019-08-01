@@ -64,6 +64,10 @@ export default class ConditionalTable extends Component {
         } else {
           value = [value]
         }
+      } else if (typeof value === 'object') {
+        if (typeof value[0] !== 'string') {
+          value = value[0]
+        }
       }
       let i = value.length
       let cond = this.getConditionValue(key) || 'contains'
@@ -361,7 +365,7 @@ export default class ConditionalTable extends Component {
                 })
                 .map((key) => {
                   if (this.props.formValues[key]) {
-                    return this.buildTableRow(key, this.props.formValues[key])
+                    return this.buildTableRow(key, this.props.formValues[key]) || ''
                   } else {
                     return null
                   }

@@ -268,7 +268,7 @@ export default class Conditionalinput extends Component {
 
   calculateModalHeight = () => {
     const titleAndConditionHeight = 145
-    const singleFieldHight = this.calculateFieldHeight(this.inputType()) * 32
+    const singleFieldHight = this.calculateFieldHeight(this.inputType()) * 30
     let nFields = SINGLE_FIELD_INPUTS.has(this.inputType()) ? 1 : this.nFieldsWithValues() + 1
     nFields = Math.min(nFields, this.maxFieldCount())
     const footerHeight = 50
@@ -582,7 +582,7 @@ export default class Conditionalinput extends Component {
         <Dialog
           ref={`conditionalInput-${name}-dialog`}
           size={{
-            width: '40%',
+            width: '800px',
             height: this.calculateModalHeight()
           }}
           default={{
@@ -600,16 +600,48 @@ export default class Conditionalinput extends Component {
           enableResizing
           disableDragging
         >
-          <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
-            <span>&times;</span>
-          </button>
-          <div style={{width: '90%', height: '70%', marginTop: '30px'}} >
-            <FormBuilder inline formName={`conditionalInput-${name}`} formSchema={this.formSchema()} formValues={this.state.modalFormValues} conditionalFieldValues handleOnChange={this.handleOnChange} draggable={false} />
-          </div>
-          <div>
-            <button type='button' className='btn-primary pull-right' style={{paddingRight: '10px', paddingTop: '5px', marginRight: '30px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
-              Ok
+          <div style={{width: '100%'}}>
+            <button type='button' className='close' style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}} onClick={() => this.handleToggleDialog(false)}>
+              <span>&times;</span>
             </button>
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <div
+                style={{
+                  width: '720px',
+                  maxHeight: '410px',
+                  marginTop: '10px',
+                  scroll: parseInt(this.calculateModalHeight()) < 500 ? false : 'auto',
+                  overflowY: parseInt(this.calculateModalHeight()) < 500 ? 'visible' : 'auto'
+                }}
+              >
+                <FormBuilder
+                  inline
+                  formName={`conditionalInput-${name}`}
+                  formSchema={this.formSchema()}
+                  formValues={this.state.modalFormValues}
+                  conditionalFieldValues
+                  handleOnChange={this.handleOnChange}
+                  draggable={false}
+                />
+              </div>
+
+            </div>
+            <div
+              style={{
+                marginTop: '10px',
+                marginRight: '25px',
+                display: 'flex',
+                flexDirection: 'row-reverse'
+              }}
+            >
+              <button
+                type='button'
+                className='btn-primary pull-right'
+                onClick={() => this.handleToggleDialog(false)}
+              >
+                Ok
+              </button>
+            </div>
           </div>
         </Dialog>}
       </div>
