@@ -334,7 +334,20 @@ export default class ConditionalTable extends Component {
   }
 
   render () {
-    // useless comment
+    const tbody = Object.keys(this.props.formValues)
+      .sort((a, b) => {
+        if (this.getLabel(a) === undefined || this.getLabel(b) === undefined) {
+          return 0
+        }
+        return this.getLabel(a).localeCompare(this.getLabel(b))
+      })
+      .map((key) => {
+        if (this.props.formValues[key]) {
+          return this.buildTableRow(key, this.props.formValues[key])
+        } else {
+          return null
+        }
+      })
     return (
       <div className='table-responsive' style={{width: '100%', maxHeight: '620px'}}>
         <div style={{width: '100%', maxHeight: '550px', overflowY: 'auto'}}>
@@ -355,22 +368,9 @@ export default class ConditionalTable extends Component {
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {Object.keys(this.props.formValues)
-                .sort((a, b) => {
-                  if (this.getLabel(a) === undefined || this.getLabel(b) === undefined) {
-                    return 0
-                  }
-                  return this.getLabel(a).localeCompare(this.getLabel(b))
-                })
-                .map((key) => {
-                  if (this.props.formValues[key]) {
-                    return this.buildTableRow(key, this.props.formValues[key]) || ''
-                  } else {
-                    return null
-                  }
-                })}
-            </tbody>
+            {tbody.length && <tbody>
+              {tbody}
+            </tbody>}
             <tfoot>
               <tr>
                 <td>

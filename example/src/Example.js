@@ -839,7 +839,8 @@ export default class Example extends Component {
                 formSchema={formSchema.form}
                 handleFormValueChange={this.handleOnChange}
                 formValues={this.state.formValues}
-                onNextClick={() => {
+                onNextClick={(e) => {
+                  console.log(this.state.formValues, e, 'form val loggggggggg')
                 }}
                 enableNextButton
               />
