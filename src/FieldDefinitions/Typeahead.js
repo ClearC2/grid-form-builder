@@ -149,7 +149,7 @@ export class Typeahead extends Component {
 
   handleChange = (newValue, {action}) => {
     const {handleOnChange, config = {}} = this.props
-    const {name = null, typeahead = {}, stringify} = config
+    const {name = null, typeahead = {}, stringify, multi} = config
     let {delimiter, delimit} = config
     if (typeof delimit === 'string') delimit = [delimit]
     if (delimiter && typeof delimiter !== 'string') delimiter = '¤'
@@ -165,7 +165,7 @@ export class Typeahead extends Component {
         handleOnChange({target})
         return
       case 'clear': {
-        if (!newValue && (!this.state.inputValue || this.state.inputValue.length)) {
+        if ((!newValue && (!this.state.inputValue || this.state.inputValue.length)) || multi) {
           this.emptyFields(fields, handleOnChange)
           handleOnChange({target: {name, value: ''}})
         }
@@ -530,7 +530,7 @@ export class Typeahead extends Component {
             >
               {allowcreate && <AsyncCreatable
                 autoFocus={this.props.config.autofocus}
-                blurInputOnSelect={!multi}
+                blurInputOnSelect
                 cacheOptions
                 className={className}
                 createOptionPosition='first'
@@ -558,7 +558,7 @@ export class Typeahead extends Component {
               />}
               {!allowcreate && <Async
                 autoFocus={this.props.config.autofocus}
-                blurInputOnSelect={!multi}
+                blurInputOnSelect
                 cacheOptions
                 className={className}
                 inputValue={inputValue}
