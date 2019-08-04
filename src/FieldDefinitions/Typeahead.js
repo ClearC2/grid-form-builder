@@ -375,7 +375,7 @@ export class Typeahead extends Component {
       cascadingKeyword,
       CascadeIcon,
       tabIndex,
-      taMaxHeight = '90px',
+      taMaxHeight = '29px',
       LinkIcon
     } = this.props
     const {inputValue, menuIsOpen, menuPlacement} = this.state
@@ -554,7 +554,7 @@ export class Typeahead extends Component {
                 ref={r => { this.input = r }}
                 styles={multi ? multiSelectStyles : selectStyles}
                 tabIndex={tabIndex}
-                value={!inputValue && menuIsOpen ? blankValue : value}
+                value={(!inputValue && menuIsOpen && !multi) ? blankValue : value}
               />}
               {!allowcreate && <Async
                 autoFocus={this.props.config.autofocus}
@@ -580,7 +580,7 @@ export class Typeahead extends Component {
                 ref={r => { this.input = r }}
                 styles={multi ? multiSelectStyles : selectStyles}
                 tabIndex={tabIndex}
-                value={!inputValue && menuIsOpen ? blankValue : value}
+                value={(!inputValue && menuIsOpen && !multi) ? blankValue : value}
               />}
             </div>
           </div>
