@@ -105,13 +105,9 @@ export class Typeahead extends Component {
   }
 
   onMouseOut = () => {
-    let value = this.props.formValues.get(this.props.config.name, '') || ''
-    value = typeof value.toJS === 'function' ? value.toJS() : value
-    value = typeof value === 'object' ? value.value || value.label || '' : value
     this.setState({
       menuPlacement: 'top',
-      menuIsOpen: false,
-      inputValue: value
+      menuIsOpen: false
     })
   }
 
@@ -153,7 +149,7 @@ export class Typeahead extends Component {
 
   handleChange = (newValue, {action}) => {
     const {handleOnChange, config = {}} = this.props
-    const {name = null, typeahead = {}, stringify} = config
+    const {name = null, typeahead = {}, stringify, multi} = config
     let {delimiter, delimit} = config
     if (typeof delimit === 'string') delimit = [delimit]
     if (delimiter && typeof delimiter !== 'string') delimiter = '¤'
@@ -169,7 +165,7 @@ export class Typeahead extends Component {
         handleOnChange({target})
         return
       case 'clear': {
-        if (!newValue && (this.state.inputValue === undefined || this.state.inputValue.length)) {
+        if ((!newValue && (!this.state.inputValue || this.state.inputValue.length)) || multi) {
           this.emptyFields(fields, handleOnChange)
           handleOnChange({target: {name, value: ''}})
         }
@@ -379,7 +375,7 @@ export class Typeahead extends Component {
       cascadingKeyword,
       CascadeIcon,
       tabIndex,
-      taMaxHeight = '90px',
+      taMaxHeight = '29px',
       LinkIcon
     } = this.props
     const {inputValue, menuIsOpen, menuPlacement} = this.state
@@ -506,7 +502,6 @@ export class Typeahead extends Component {
             style={styles.container}
             onMouseUp={this.handleAnywhereClick}
             onBlur={this.onMouseOut}
-            ref={r => { this.inputContainer = r }}
           >
             <div style={styles.labelContainer}>
               {required && (
@@ -529,60 +524,65 @@ export class Typeahead extends Component {
                 <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
               )}
             </div>
-            {allowcreate && <AsyncCreatable
-              autoFocus={this.props.config.autofocus}
-              blurInputOnSelect={!multi}
-              cacheOptions
-              className={className}
-              createOptionPosition='first'
-              formatCreateLabel={val => `Click or Tab to Create "${val}"`}
-              inputValue={inputValue}
-              isClearable
-              isDisabled={disabled}
-              isMulti={multi}
-              loadOptions={this.loadOptions}
-              menuIsOpen={!isMobile ? menuIsOpen : undefined}
-              menuPlacement={!isMobile ? menuPlacement : undefined}
-              menuPortalTarget={document.body}
-              menuShouldBlockScroll
-              name={name}
-              onChange={this.handleChange}
-              onFocus={this.handleOnFocus}
-              onInputChange={this.onInputChange}
-              onKeyDown={onKeyDown}
-              onMouseDown={this.onMouseDown}
-              placeholder={placeholder}
-              ref={r => { this.input = r }}
-              styles={multi ? multiSelectStyles : selectStyles}
-              tabIndex={tabIndex}
-              value={!inputValue && menuIsOpen ? blankValue : value}
-            />}
-            {!allowcreate && <Async
-              autoFocus={this.props.config.autofocus}
-              blurInputOnSelect={!multi}
-              cacheOptions
-              className={className}
-              inputValue={inputValue}
-              isClearable
-              isDisabled={disabled}
-              isMulti={multi}
-              loadOptions={this.loadOptions}
-              menuIsOpen={!isMobile ? menuIsOpen : undefined}
-              menuPlacement={!isMobile ? menuPlacement : undefined}
-              menuPortalTarget={document.body}
-              menuShouldBlockScroll
-              name={name}
-              onChange={this.handleChange}
-              onFocus={this.handleOnFocus}
-              onInputChange={this.onInputChange}
-              onKeyDown={onKeyDown}
-              onMouseDown={this.onMouseDown}
-              placeholder={placeholder}
-              ref={r => { this.input = r }}
-              styles={multi ? multiSelectStyles : selectStyles}
-              tabIndex={tabIndex}
-              value={!inputValue && menuIsOpen ? blankValue : value}
-            />}
+            <div
+              onMouseUp={this.handleInputClick}
+              ref={r => { this.inputContainer = r }}
+            >
+              {allowcreate && <AsyncCreatable
+                autoFocus={this.props.config.autofocus}
+                blurInputOnSelect
+                cacheOptions
+                className={className}
+                createOptionPosition='first'
+                formatCreateLabel={val => `Click or Tab to Create "${val}"`}
+                inputValue={inputValue}
+                isClearable
+                isDisabled={disabled}
+                isMulti={multi}
+                loadOptions={this.loadOptions}
+                menuIsOpen={!isMobile ? menuIsOpen : undefined}
+                menuPlacement={!isMobile ? menuPlacement : undefined}
+                menuPortalTarget={document.body}
+                menuShouldBlockScroll
+                name={name}
+                onChange={this.handleChange}
+                onFocus={this.handleOnFocus}
+                onInputChange={this.onInputChange}
+                onKeyDown={onKeyDown}
+                onMouseDown={this.onMouseDown}
+                placeholder={placeholder}
+                ref={r => { this.input = r }}
+                styles={multi ? multiSelectStyles : selectStyles}
+                tabIndex={tabIndex}
+                value={(!inputValue && menuIsOpen && !multi) ? blankValue : value}
+              />}
+              {!allowcreate && <Async
+                autoFocus={this.props.config.autofocus}
+                blurInputOnSelect
+                cacheOptions
+                className={className}
+                inputValue={inputValue}
+                isClearable
+                isDisabled={disabled}
+                isMulti={multi}
+                loadOptions={this.loadOptions}
+                menuIsOpen={!isMobile ? menuIsOpen : undefined}
+                menuPlacement={!isMobile ? menuPlacement : undefined}
+                menuPortalTarget={document.body}
+                menuShouldBlockScroll
+                name={name}
+                onChange={this.handleChange}
+                onFocus={this.handleOnFocus}
+                onInputChange={this.onInputChange}
+                onKeyDown={onKeyDown}
+                onMouseDown={this.onMouseDown}
+                placeholder={placeholder}
+                ref={r => { this.input = r }}
+                styles={multi ? multiSelectStyles : selectStyles}
+                tabIndex={tabIndex}
+                value={(!inputValue && menuIsOpen && !multi) ? blankValue : value}
+              />}
+            </div>
           </div>
         )
       )
