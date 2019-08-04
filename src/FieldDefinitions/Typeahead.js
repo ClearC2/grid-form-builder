@@ -506,7 +506,6 @@ export class Typeahead extends Component {
             style={styles.container}
             onMouseUp={this.handleAnywhereClick}
             onBlur={this.onMouseOut}
-            ref={r => { this.inputContainer = r }}
           >
             <div style={styles.labelContainer}>
               {required && (
@@ -529,60 +528,65 @@ export class Typeahead extends Component {
                 <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
               )}
             </div>
-            {allowcreate && <AsyncCreatable
-              autoFocus={this.props.config.autofocus}
-              blurInputOnSelect={!multi}
-              cacheOptions
-              className={className}
-              createOptionPosition='first'
-              formatCreateLabel={val => `Click or Tab to Create "${val}"`}
-              inputValue={inputValue}
-              isClearable
-              isDisabled={disabled}
-              isMulti={multi}
-              loadOptions={this.loadOptions}
-              menuIsOpen={!isMobile ? menuIsOpen : undefined}
-              menuPlacement={!isMobile ? menuPlacement : undefined}
-              menuPortalTarget={document.body}
-              menuShouldBlockScroll
-              name={name}
-              onChange={this.handleChange}
-              onFocus={this.handleOnFocus}
-              onInputChange={this.onInputChange}
-              onKeyDown={onKeyDown}
-              onMouseDown={this.onMouseDown}
-              placeholder={placeholder}
-              ref={r => { this.input = r }}
-              styles={multi ? multiSelectStyles : selectStyles}
-              tabIndex={tabIndex}
-              value={!inputValue && menuIsOpen ? blankValue : value}
-            />}
-            {!allowcreate && <Async
-              autoFocus={this.props.config.autofocus}
-              blurInputOnSelect={!multi}
-              cacheOptions
-              className={className}
-              inputValue={inputValue}
-              isClearable
-              isDisabled={disabled}
-              isMulti={multi}
-              loadOptions={this.loadOptions}
-              menuIsOpen={!isMobile ? menuIsOpen : undefined}
-              menuPlacement={!isMobile ? menuPlacement : undefined}
-              menuPortalTarget={document.body}
-              menuShouldBlockScroll
-              name={name}
-              onChange={this.handleChange}
-              onFocus={this.handleOnFocus}
-              onInputChange={this.onInputChange}
-              onKeyDown={onKeyDown}
-              onMouseDown={this.onMouseDown}
-              placeholder={placeholder}
-              ref={r => { this.input = r }}
-              styles={multi ? multiSelectStyles : selectStyles}
-              tabIndex={tabIndex}
-              value={!inputValue && menuIsOpen ? blankValue : value}
-            />}
+            <div
+              onMouseUp={this.handleInputClick}
+              ref={r => { this.inputContainer = r }}
+            >
+              {allowcreate && <AsyncCreatable
+                autoFocus={this.props.config.autofocus}
+                blurInputOnSelect={!multi}
+                cacheOptions
+                className={className}
+                createOptionPosition='first'
+                formatCreateLabel={val => `Click or Tab to Create "${val}"`}
+                inputValue={inputValue}
+                isClearable
+                isDisabled={disabled}
+                isMulti={multi}
+                loadOptions={this.loadOptions}
+                menuIsOpen={!isMobile ? menuIsOpen : undefined}
+                menuPlacement={!isMobile ? menuPlacement : undefined}
+                menuPortalTarget={document.body}
+                menuShouldBlockScroll
+                name={name}
+                onChange={this.handleChange}
+                onFocus={this.handleOnFocus}
+                onInputChange={this.onInputChange}
+                onKeyDown={onKeyDown}
+                onMouseDown={this.onMouseDown}
+                placeholder={placeholder}
+                ref={r => { this.input = r }}
+                styles={multi ? multiSelectStyles : selectStyles}
+                tabIndex={tabIndex}
+                value={!inputValue && menuIsOpen ? blankValue : value}
+              />}
+              {!allowcreate && <Async
+                autoFocus={this.props.config.autofocus}
+                blurInputOnSelect={!multi}
+                cacheOptions
+                className={className}
+                inputValue={inputValue}
+                isClearable
+                isDisabled={disabled}
+                isMulti={multi}
+                loadOptions={this.loadOptions}
+                menuIsOpen={!isMobile ? menuIsOpen : undefined}
+                menuPlacement={!isMobile ? menuPlacement : undefined}
+                menuPortalTarget={document.body}
+                menuShouldBlockScroll
+                name={name}
+                onChange={this.handleChange}
+                onFocus={this.handleOnFocus}
+                onInputChange={this.onInputChange}
+                onKeyDown={onKeyDown}
+                onMouseDown={this.onMouseDown}
+                placeholder={placeholder}
+                ref={r => { this.input = r }}
+                styles={multi ? multiSelectStyles : selectStyles}
+                tabIndex={tabIndex}
+                value={!inputValue && menuIsOpen ? blankValue : value}
+              />}
+            </div>
           </div>
         )
       )
