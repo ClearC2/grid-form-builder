@@ -105,13 +105,9 @@ export class Typeahead extends Component {
   }
 
   onMouseOut = () => {
-    let value = this.props.formValues.get(this.props.config.name, '') || ''
-    value = typeof value.toJS === 'function' ? value.toJS() : value
-    value = typeof value === 'object' ? value.value || value.label || '' : value
     this.setState({
       menuPlacement: 'top',
-      menuIsOpen: false,
-      inputValue: value
+      menuIsOpen: false
     })
   }
 
@@ -169,7 +165,7 @@ export class Typeahead extends Component {
         handleOnChange({target})
         return
       case 'clear': {
-        if (!newValue && (this.state.inputValue === undefined || this.state.inputValue.length)) {
+        if (!newValue && (!this.state.inputValue || this.state.inputValue.length)) {
           this.emptyFields(fields, handleOnChange)
           handleOnChange({target: {name, value: ''}})
         }
