@@ -1,3 +1,10 @@
+## [1.28.11](https://github.com/ClearC2/grid-form-builder/compare/v1.28.10...v1.28.11) (2019-08-05)
+
+
+### Bug Fixes
+
+* **typeahead:** icon click opening menu ([0ed24a0](https://github.com/ClearC2/grid-form-builder/commit/0ed24a0))
+
 ## [1.28.10](https://github.com/ClearC2/grid-form-builder/compare/v1.28.9...v1.28.10) (2019-08-05)
 
 
