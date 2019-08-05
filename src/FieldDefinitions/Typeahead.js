@@ -100,7 +100,6 @@ export class Typeahead extends Component {
     config = {currentValue, ...config}
     if (!config.disabled) {
       handleAnywhereClick(config, e)
-      this.setInputFieldPosition(this.inputContainer) // position gets set when menu opens
     }
   }
 
@@ -343,6 +342,12 @@ export class Typeahead extends Component {
       }
     }
     return value
+  }
+
+  handleInputClick = () => {
+    if (!this.props.config.disabled) {
+      this.setInputFieldPosition(this.inputContainer) // position gets set when menu opens
+    }
   }
 
   handleLinkClick = () => {
