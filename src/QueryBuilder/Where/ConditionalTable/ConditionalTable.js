@@ -368,13 +368,13 @@ export default class ConditionalTable extends Component {
                 </th>
               </tr>
             </thead>
-            {tbody.length && <tbody>
+            {tbody.length ? <tbody>
               {tbody}
-            </tbody>}
+            </tbody> : null}
             <tfoot>
               <tr>
                 <td>
-                  {(this.props.enableResetButton || this.props.enableNextButton) && <div
+                  {(this.props.enableResetButton || this.props.enableNextButton) ? <div
                     style={{
                       marginRight: '10px',
                       marginBottom: '10px',
@@ -400,7 +400,7 @@ export default class ConditionalTable extends Component {
                     >
                       Next
                     </button>}
-                  </div>}
+                  </div> : null}
                 </td>
               </tr>
             </tfoot>

@@ -806,18 +806,6 @@ export default class Example extends Component {
       // will mode: TEST_SEARCH constant at top is true
       return (
         <div>
-          <div>
-            <ReportBuilder
-              title='Build Result Display'
-              columnPickerTitle='Choose Report Columns:'
-              availableColumns={this.state.columns}
-              selectedColumns={this.state.selectedColumns}
-              onColumnChange={this.onColumnChange}
-              onColDefChange={this.onColDefChange}
-              // suppressAggregationPicker
-              columnPickerHeight={400}
-            />
-          </div>
           <div style={{display: 'flex'}}>
             <div style={{width: '66%'}}>
               <FormBuilder
