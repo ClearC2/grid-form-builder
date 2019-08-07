@@ -1,3 +1,24 @@
+## [1.28.11](https://github.com/ClearC2/grid-form-builder/compare/v1.28.10...v1.28.11) (2019-08-05)
+
+
+### Bug Fixes
+
+* **typeahead:** icon click opening menu ([0ed24a0](https://github.com/ClearC2/grid-form-builder/commit/0ed24a0))
+
+## [1.28.10](https://github.com/ClearC2/grid-form-builder/compare/v1.28.9...v1.28.10) (2019-08-05)
+
+
+### Bug Fixes
+
+* trigger release ([38fa802](https://github.com/ClearC2/grid-form-builder/commit/38fa802))
+
+## [1.28.9](https://github.com/ClearC2/grid-form-builder/compare/v1.28.8...v1.28.9) (2019-08-01)
+
+
+### Bug Fixes
+
+* **conditionals:** white space in dom validation ([147b0ee](https://github.com/ClearC2/grid-form-builder/commit/147b0ee))
+
 ## [1.28.8](https://github.com/ClearC2/grid-form-builder/compare/v1.28.7...v1.28.8) (2019-08-01)
 
 
