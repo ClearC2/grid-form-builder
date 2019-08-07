@@ -1,3 +1,10 @@
+## [1.28.12](https://github.com/ClearC2/grid-form-builder/compare/v1.28.11...v1.28.12) (2019-08-07)
+
+
+### Bug Fixes
+
+* **conditionalTable:** when formVals were empty, was throwing a warning about text nodes ([3665429](https://github.com/ClearC2/grid-form-builder/commit/3665429))
+
 ## [1.28.11](https://github.com/ClearC2/grid-form-builder/compare/v1.28.10...v1.28.11) (2019-08-05)
 
 
