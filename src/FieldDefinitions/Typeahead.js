@@ -48,7 +48,7 @@ export class Typeahead extends Component {
   state = {
     currentOptions: {},
     fieldPosition: 0,
-    inputValue: undefined, // used to keep previous input in typeahead if supressInputReset is true
+    inputValue: '', // used to keep previous input in typeahead if supressInputReset is true
     menuIsOpen: false,
     menuPlacement: 'bottom',
     shouldRemount: false
@@ -410,6 +410,7 @@ export class Typeahead extends Component {
     disabled = disabled || readonly
     if (fieldvalue !== null && String(formValues.get(fieldvalue, '')).length === 0) disabled = true
     const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
+    const isZipCode = (label === 'papostalcode' || label === 'Zip Code') && inputValue.length <= 2
 
     const styles = {
       container: {
@@ -570,12 +571,13 @@ export class Typeahead extends Component {
                 isClearable
                 isDisabled={disabled}
                 isMulti={multi}
-                loadOptions={this.loadOptions}
+                loadOptions={!isZipCode ? this.loadOptions : undefined}
                 menuIsOpen={!isMobile ? menuIsOpen : undefined}
                 menuPlacement={!isMobile ? menuPlacement : undefined}
                 menuPortalTarget={document.body}
                 menuShouldBlockScroll
                 name={name}
+                noOptionsMessage={() => isZipCode ? '3 Digits Required' : undefined}
                 onChange={this.handleChange}
                 onFocus={this.handleOnFocus}
                 onInputChange={this.onInputChange}
