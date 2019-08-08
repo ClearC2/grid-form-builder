@@ -1,3 +1,10 @@
+## [1.29.1](https://github.com/ClearC2/grid-form-builder/compare/v1.29.0...v1.29.1) (2019-08-08)
+
+
+### Bug Fixes
+
+* **react-select:** tabbing opens focused  menu ([#86](https://github.com/ClearC2/grid-form-builder/issues/86)) ([87c2a1f](https://github.com/ClearC2/grid-form-builder/commit/87c2a1f))
+
 # [1.29.0](https://github.com/ClearC2/grid-form-builder/compare/v1.28.12...v1.29.0) (2019-08-08)
 
 
