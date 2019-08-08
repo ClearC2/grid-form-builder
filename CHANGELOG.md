@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/ClearC2/grid-form-builder/compare/v1.28.12...v1.29.0) (2019-08-08)
+
+
+### Features
+
+* **typeahead:** add char limit for zipcode fields ([af6aee6](https://github.com/ClearC2/grid-form-builder/commit/af6aee6))
+
 ## [1.28.12](https://github.com/ClearC2/grid-form-builder/compare/v1.28.11...v1.28.12) (2019-08-07)
 
 
