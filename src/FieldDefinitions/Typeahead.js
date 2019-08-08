@@ -313,6 +313,11 @@ export class Typeahead extends Component {
       // this is done to place cursor at the end of the input field
       this.setState({inputValue: ''}, () => this.setState({inputValue: value}))
     }
+    this.handleInputClick()
+  }
+
+  handleInputBlur = () => {
+    this.setState({menuIsOpen: false})
   }
 
   convertValueStringToValueArrayIfNeeded = value => {
@@ -531,7 +536,6 @@ export class Typeahead extends Component {
               )}
             </div>
             <div
-              onMouseUp={this.handleInputClick}
               ref={r => { this.inputContainer = r }}
             >
               {allowcreate && <AsyncCreatable
@@ -551,6 +555,7 @@ export class Typeahead extends Component {
                 menuPortalTarget={document.body}
                 menuShouldBlockScroll
                 name={name}
+                onBlur={this.handleInputBlur}
                 onChange={this.handleChange}
                 onFocus={this.handleOnFocus}
                 onInputChange={this.onInputChange}
@@ -578,6 +583,7 @@ export class Typeahead extends Component {
                 menuShouldBlockScroll
                 name={name}
                 noOptionsMessage={() => isZipCode ? '3 Digits Required' : undefined}
+                onBlur={this.handleInputBlur}
                 onChange={this.handleChange}
                 onFocus={this.handleOnFocus}
                 onInputChange={this.onInputChange}

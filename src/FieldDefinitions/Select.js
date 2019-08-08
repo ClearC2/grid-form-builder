@@ -64,10 +64,7 @@ export class Select extends Component {
     let {config = {}} = this.props
     const currentValue = formValues.get(config.name, '')
     config = {currentValue, ...config}
-    if (!config.disabled) {
-      handleAnywhereClick(config, e)
-      this.setInputFieldPosition(this.input)
-    }
+    handleAnywhereClick(config, e)
   }
 
   onMouseOut = () => this.setState({menuPlacement: 'top', menuIsOpen: false})
@@ -110,6 +107,16 @@ export class Select extends Component {
     const {config = {}, handleLinkClick} = this.props
     const {link} = config
     handleLinkClick(link)
+  }
+
+  handleOnFocus = () => {
+    if (!this.props.config.disabled) {
+      this.setInputFieldPosition()
+    }
+  }
+
+  handleOnBlur = () => {
+    this.setState({menuIsOpen: false})
   }
 
   setInputFieldPosition = () => {
@@ -250,10 +257,12 @@ export class Select extends Component {
             isDisabled={disabled}
             menuIsOpen={!isMobile ? this.state.menuIsOpen : undefined}
             menuPlacement={!isMobile ? this.state.menuPlacement : undefined}
-            menuShouldBlockScroll
             menuPortalTarget={document.body}
+            menuShouldBlockScroll
             name={name}
+            onBlur={this.handleOnBlur}
             onChange={this.onChange}
+            onFocus={this.handleOnFocus}
             onKeyDown={onKeyDown}
             options={options}
             placeholder={placeholder}
