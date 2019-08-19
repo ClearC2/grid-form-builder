@@ -44,7 +44,9 @@ class DateWrapper extends Component {
   }
 
   isInputVisible = () => {
-    this.setState({visible: !!document.getElementById(this.props.id)})
+    if (!this.state.visible && !!document.getElementById(this.props.id)) {
+      this.setState({visible: !!document.getElementById(this.props.id)})
+    }
   }
 
   render () {
