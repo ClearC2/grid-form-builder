@@ -89,7 +89,7 @@ class DatetimeContainer extends Component {
 
   onClick = e => {
     this.setState({value: ' '})
-    this.props.handleDateChange(moment(e._d), this.props.name)
+    this.props.handleDateChange(moment(e._d))
   }
 
   changeDisplay = (displayInput = true) => {

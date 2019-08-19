@@ -89,7 +89,7 @@ class RenderDateRangePicker extends Component {
       minYear: 2000,
       maxYear: 2030,
       timePicker: true,
-      timePickerSeconds: true,
+      timePickerSeconds: this.props.seconds,
       alwaysShowCalendars: true,
       autoUpdateInput: false,
       startDate: this.props.value || moment(),
@@ -97,7 +97,10 @@ class RenderDateRangePicker extends Component {
       locale: {
         format: this.props.dateFormat
       }
-    }, (start, end, label) => {
+    }, (time) => {
+      if (moment(time).isValid()) {
+        obj.onClick(time)
+      }
       obj.closeMenu(id)
     })
 

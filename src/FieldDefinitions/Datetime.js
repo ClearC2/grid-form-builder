@@ -34,7 +34,18 @@ export class DateTime extends Component {
   }
 
   handleValueUpdated = (value, format) => {
+    const {handleOnChange, config = {}} = this.props
+    const {name = null} = config
     value = (format && moment(value).isValid()) ? moment(value).format('M/D/YYYY hh:mm a') : value
+
+    if (moment(value).isValid()) {
+      handleOnChange({
+        target: {
+          name,
+          value
+        }
+      })
+    }
     this.setState(() => ({value, focus: format}))
   }
 
@@ -90,7 +101,7 @@ export class DateTime extends Component {
     if (typeof val === 'string') {
       this.setState(() => ({focus: false}))
     }
-    this.handleValueUpdated(val)
+    this.handleValueUpdated(val, true)
   }
 
   onMouseDown = e => {
@@ -104,19 +115,12 @@ export class DateTime extends Component {
       clearTimeout(this.debounceBlur)
       this.debounceBlur = setTimeout(() => {
         let {value} = this.state
-        const {handleOnChange, config = {}, formValues = Map()} = this.props
+        const {config = {}, formValues = Map()} = this.props
         const {name = null} = config
         if (typeof value.format === 'function') {
           value = value.format('M/D/YYYY hh:mm a')
         }
-        if (moment(value).isValid()) {
-          handleOnChange({
-            target: {
-              name,
-              value
-            }
-          })
-        } else {
+        if (!moment(value).isValid()) {
           const value = formValues.get(name, '')
           this.handleValueUpdated(value, true)
         }
