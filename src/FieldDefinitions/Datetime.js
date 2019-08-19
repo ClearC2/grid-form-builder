@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import DateTime from 'react-datetime'
+import Datetime from './Datetime/Datetime'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 
-export class Datetime extends Component {
+export class DateTime extends Component {
   static propTypes = {
     formValues: PropTypes.object,
     config: PropTypes.object,
@@ -87,7 +87,6 @@ export class Datetime extends Component {
   }
 
   handleChange = val => {
-    if (this.state.focus) this.input.focus()
     if (typeof val === 'string') {
       this.setState(() => ({focus: false}))
     }
@@ -98,15 +97,8 @@ export class Datetime extends Component {
     if (this.props.draggable) e.stopPropagation()
   }
 
-  onViewModeChange = () => {
-    this.input.focus()
-  }
-
-  onNavigateBack = () => this.input.focus()
-
-  onNavigateForward = () => this.input.focus()
-
   debounceBlur = null
+
   handleOnBlur = () => {
     if (!this.state.focus) {
       clearTimeout(this.debounceBlur)
@@ -148,7 +140,6 @@ export class Datetime extends Component {
       connectDropTarget,
       cascadingKeyword,
       CascadeIcon,
-      tabIndex,
       LinkIcon
     } = this.props
     const {name = null, required = false, onKeyDown = () => null, link} = config
@@ -235,27 +226,21 @@ export class Datetime extends Component {
               <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </div>
-          <DateTime
+          <Datetime
             className={className}
             closeOnSelect
             dateFormat='M/D/YYYY'
-            onChange={this.handleChange}
-            onMouseDown={this.onMouseDown}
-            onNavigateBack={this.onNavigateBack}
-            onNavigateForward={this.onNavigateForward}
-            onViewModeChange={this.onViewModeChange}
-            value={this.state.value}
-            inputProps={{
-              disabled: disabled,
-              placeholder: placeholder,
-              className: inputClass,
-              style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style},
-              tabIndex,
-              ref: ref => { this.input = ref },
-              onBlurCapture: this.handleOnBlur
-            }}
-            onKeyDown={onKeyDown}
+            disabled={disabled}
+            inputClassName={inputClass}
             onBlur={this.handleOnBlur}
+            onBlurCapture={this.handleOnBlur}
+            onChange={this.handleChange}
+            onKeyDown={onKeyDown}
+            onMouseDown={this.onMouseDown}
+            placeholder={placeholder}
+            ref={ref => { this.input = ref }}
+            style={{backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style}}
+            value={this.state.value}
           />
         </div>
       )
@@ -280,4 +265,4 @@ const boxTarget = {
   }
 }
 
-export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Datetime)
+export default DropTarget('FormBuilderDraggable', boxTarget, collect)(DateTime)
