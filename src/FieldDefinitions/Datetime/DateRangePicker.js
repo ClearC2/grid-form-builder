@@ -40,6 +40,10 @@ class RenderDateRangePicker extends Component {
     ])
   }
 
+  static defaultProps = {
+    timeFormat: true
+  }
+
   state = {
     direction: setDirection(this.props)
   }
