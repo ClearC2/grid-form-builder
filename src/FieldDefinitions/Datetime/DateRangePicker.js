@@ -50,6 +50,7 @@ class RenderDateRangePicker extends Component {
 
   componentDidMount () {
     this.DateRangePicker()
+    $(`#${this.props.id}`).click()
     this.setState({mount: true})
   }
 
