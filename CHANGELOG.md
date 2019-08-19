@@ -1,3 +1,10 @@
+## [1.30.2](https://github.com/ClearC2/grid-form-builder/compare/v1.30.1...v1.30.2) (2019-08-19)
+
+
+### Bug Fixes
+
+* **datetime:** fix datetime field to display time ([#93](https://github.com/ClearC2/grid-form-builder/issues/93)) ([888ad96](https://github.com/ClearC2/grid-form-builder/commit/888ad96))
+
 ## [1.30.1](https://github.com/ClearC2/grid-form-builder/compare/v1.30.0...v1.30.1) (2019-08-19)
 
 
