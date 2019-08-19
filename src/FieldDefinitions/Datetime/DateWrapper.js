@@ -9,7 +9,8 @@ class DateWrapper extends Component {
     value: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.string
-    ])
+    ]),
+    visible: PropTypes.bool
   }
 
   state = {
@@ -19,21 +20,16 @@ class DateWrapper extends Component {
 
   componentDidMount () {
     this.setState({mount: true})
-    this.isInputVisible()
   }
 
   shouldComponentUpdate (nextProps, nextState) {
     const old = this.props.value
     const next = nextProps.value
     let reload = (!this.state.mount || (nextProps.value && !this.props.value))
-    reload = reload || (!this.state.visible && nextState.visible)
+    reload = reload || (!this.props.visible && nextProps.visible)
 
     if (!reload && old && next && old._d && next._d) {
       return !!old.diff(next)
-    }
-
-    if (!this.state.visible) {
-      this.isInputVisible()
     }
 
     return reload
@@ -43,16 +39,10 @@ class DateWrapper extends Component {
     this.setState({mount: false})
   }
 
-  isInputVisible = () => {
-    if (!this.state.visible && !!document.getElementById(this.props.id)) {
-      this.setState({visible: !!document.getElementById(this.props.id)})
-    }
-  }
-
   render () {
     return (
       <div>
-        {this.state.visible &&
+        {this.props.visible &&
         <RenderDateRangePicker
           {...this.props}
         />

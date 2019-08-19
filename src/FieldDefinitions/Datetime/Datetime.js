@@ -13,6 +13,7 @@ class DatetimeContainer extends Component {
     disabled: PropTypes.bool,
     displayInput: PropTypes.bool,
     inputClassName: PropTypes.string,
+    inputStyle: PropTypes.object,
     name: PropTypes.string,
     required: PropTypes.bool,
     type: PropTypes.string,
@@ -47,7 +48,8 @@ class DatetimeContainer extends Component {
     calendarHeight: this.props.calendarHeight,
     displayInput: this.props.displayInput,
     id: '',
-    value: ' '
+    value: ' ',
+    visible: false
   }
 
   componentDidMount () {
@@ -81,6 +83,10 @@ class DatetimeContainer extends Component {
     this.setState({value: e.target.value})
   }
 
+  setVisibility = () => {
+    this.setState({visible: true})
+  }
+
   onClick = e => {
     this.setState({value: ' '})
     this.props.handleDateChange(moment(e._d), this.props.name)
@@ -93,6 +99,7 @@ class DatetimeContainer extends Component {
   render () {
     const {
       dateFormat,
+      inputStyle,
       ...props
     } = this.props
 
@@ -115,6 +122,7 @@ class DatetimeContainer extends Component {
           onChange={this.handleDateChange}
           onClick={this.onClick}
           openMenu={this.openMenu}
+          visible={this.state.visible}
           {...props}
         />
         <input
@@ -124,8 +132,9 @@ class DatetimeContainer extends Component {
           disabled={this.props.disabled}
           name={this.props.name}
           onChange={this.handleDateChange}
+          onClick={() => this.setVisibility()}
           required={this.props.required}
-          style={{fontSize: 12}}
+          style={{fontSize: 12, ...inputStyle}}
           type={this.props.type}
           value={value}
           onMouseDown={this.props.onMouseDown}

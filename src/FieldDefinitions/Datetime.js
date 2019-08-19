@@ -229,17 +229,17 @@ export class DateTime extends Component {
           <Datetime
             className={className}
             closeOnSelect
-            dateFormat='M/D/YYYY'
+            dateFormat='M/D/YYYY hh:mm a'
             disabled={disabled}
             inputClassName={inputClass}
             onBlur={this.handleOnBlur}
             onBlurCapture={this.handleOnBlur}
-            onChange={this.handleChange}
+            handleDateChange={this.handleChange}
             onKeyDown={onKeyDown}
             onMouseDown={this.onMouseDown}
             placeholder={placeholder}
             ref={ref => { this.input = ref }}
-            style={{backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style}}
+            inputStyle={{backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style}}
             value={this.state.value}
           />
         </div>
