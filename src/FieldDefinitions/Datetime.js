@@ -30,7 +30,8 @@ export class Datetime extends Component {
 
   state = {
     focus: true,
-    value: ''
+    value: '',
+    test: ''
   }
 
   handleValueUpdated = (value, format) => {
@@ -107,6 +108,7 @@ export class Datetime extends Component {
   onNavigateForward = () => this.input.focus()
 
   debounceBlur = null
+
   handleOnBlur = () => {
     if (!this.state.focus) {
       clearTimeout(this.debounceBlur)
