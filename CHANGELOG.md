@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/ClearC2/grid-form-builder/compare/v1.29.1...v1.30.0) (2019-08-19)
+
+
+### Features
+
+* **date:** use new package for input field calendars ([#87](https://github.com/ClearC2/grid-form-builder/issues/87)) ([ff1a86c](https://github.com/ClearC2/grid-form-builder/commit/ff1a86c))
+
 ## [1.29.1](https://github.com/ClearC2/grid-form-builder/compare/v1.29.0...v1.29.1) (2019-08-08)
 
 
