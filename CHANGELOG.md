@@ -1,3 +1,10 @@
+## [1.30.1](https://github.com/ClearC2/grid-form-builder/compare/v1.30.0...v1.30.1) (2019-08-19)
+
+
+### Bug Fixes
+
+* **datetime:** make datetime go through new calendar package ([#92](https://github.com/ClearC2/grid-form-builder/issues/92)) ([6a91809](https://github.com/ClearC2/grid-form-builder/commit/6a91809))
+
 # [1.30.0](https://github.com/ClearC2/grid-form-builder/compare/v1.29.1...v1.30.0) (2019-08-19)
 
 
