@@ -1,3 +1,10 @@
+## [1.30.4](https://github.com/ClearC2/grid-form-builder/compare/v1.30.3...v1.30.4) (2019-08-20)
+
+
+### Bug Fixes
+
+* **typeahead:** display values ([cd1bf1d](https://github.com/ClearC2/grid-form-builder/commit/cd1bf1d))
+
 ## [1.30.3](https://github.com/ClearC2/grid-form-builder/compare/v1.30.2...v1.30.3) (2019-08-20)
 
 
