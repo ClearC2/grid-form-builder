@@ -1,3 +1,10 @@
+## [1.30.3](https://github.com/ClearC2/grid-form-builder/compare/v1.30.2...v1.30.3) (2019-08-20)
+
+
+### Bug Fixes
+
+* **datetime:** save date correctly to form values ([#94](https://github.com/ClearC2/grid-form-builder/issues/94)) ([43da0a0](https://github.com/ClearC2/grid-form-builder/commit/43da0a0))
+
 ## [1.30.2](https://github.com/ClearC2/grid-form-builder/compare/v1.30.1...v1.30.2) (2019-08-19)
 
 
