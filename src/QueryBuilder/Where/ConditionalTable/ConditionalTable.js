@@ -65,8 +65,10 @@ export default class ConditionalTable extends Component {
           value = [value]
         }
       } else if (typeof value === 'object') {
-        if (typeof value[0] !== 'string') {
-          value = value[0]
+        if (typeof value[0] === 'string' && value[0].split('¤').length > 1) {
+          value = value[0].split('¤')
+        } else {
+          value = value.map(v => v.label || v)
         }
       }
       let i = value.length
