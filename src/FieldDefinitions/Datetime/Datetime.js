@@ -134,7 +134,7 @@ class DatetimeContainer extends Component {
           onChange={this.handleDateChange}
           onClick={() => this.setVisibility()}
           required={this.props.required}
-          style={{fontSize: 12, ...inputStyle}}
+          style={{paddingLeft: 5, ...inputStyle}}
           type={this.props.type}
           value={value}
           onMouseDown={this.props.onMouseDown}
