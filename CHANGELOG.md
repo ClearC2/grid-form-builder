@@ -1,3 +1,10 @@
+## [1.30.5](https://github.com/ClearC2/grid-form-builder/compare/v1.30.4...v1.30.5) (2019-08-21)
+
+
+### Bug Fixes
+
+* **datetime:** add styles for daterangepicker ([#95](https://github.com/ClearC2/grid-form-builder/issues/95)) ([9eb34b9](https://github.com/ClearC2/grid-form-builder/commit/9eb34b9))
+
 ## [1.30.4](https://github.com/ClearC2/grid-form-builder/compare/v1.30.3...v1.30.4) (2019-08-20)
 
 
