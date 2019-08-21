@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 import $ from 'jquery'
 import moment from 'moment'
+import '../../../styles/daterangepicker.css'
 import daterangepicker from 'daterangepicker'
 
 function setDirection (props) {
