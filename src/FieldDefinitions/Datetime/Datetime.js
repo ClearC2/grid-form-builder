@@ -70,6 +70,7 @@ class DatetimeContainer extends Component {
     document.getElementById(id).focus()
     document.getElementById(id).addEventListener('input', e => e.stopPropagation(), false)
     document.getElementById(id).addEventListener('change', e => e.stopPropagation(), false)
+    document.addEventListener('scroll', this.handleScrollEvent)
   }
 
   closeMenu = id => {
@@ -77,6 +78,12 @@ class DatetimeContainer extends Component {
       document.getElementById(id).removeEventListener('input', e => e.stopPropagation(), false)
       document.getElementById(id).removeEventListener('change', e => e.stopPropagation(), false)
     }
+    document.removeEventListener('scroll', this.handleScrollEvent)
+  }
+
+  handleScrollEvent = () => {
+    this.state.visible && this.setState({visible: false})
+    this.closeMenu()
   }
 
   handleDateChange = e => {
