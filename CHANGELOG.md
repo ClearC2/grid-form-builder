@@ -1,3 +1,11 @@
+## [1.31.1](https://github.com/ClearC2/grid-form-builder/compare/v1.31.0...v1.31.1) (2019-08-22)
+
+
+### Bug Fixes
+
+* **date:** close datepicker after clicking on a date ([#98](https://github.com/ClearC2/grid-form-builder/issues/98)) ([ccfba5b](https://github.com/ClearC2/grid-form-builder/commit/ccfba5b))
+* **datetime:** close calendar on scroll ([#96](https://github.com/ClearC2/grid-form-builder/issues/96)) ([cf44092](https://github.com/ClearC2/grid-form-builder/commit/cf44092))
+
 # [1.31.0](https://github.com/ClearC2/grid-form-builder/compare/v1.30.5...v1.31.0) (2019-08-22)
 
 
