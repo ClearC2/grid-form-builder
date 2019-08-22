@@ -1,3 +1,10 @@
+# [1.31.0](https://github.com/ClearC2/grid-form-builder/compare/v1.30.5...v1.31.0) (2019-08-22)
+
+
+### Features
+
+* **add-rte-style:** add dynamic rte styling ([4ec6b1f](https://github.com/ClearC2/grid-form-builder/commit/4ec6b1f))
+
 ## [1.30.5](https://github.com/ClearC2/grid-form-builder/compare/v1.30.4...v1.30.5) (2019-08-21)
 
 
