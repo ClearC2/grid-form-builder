@@ -288,7 +288,7 @@ div.grid-form-builder-parent .react-grid-item:focus-within, div.grid-form-builde
 
 .ql-container {
   min-height: 10em;
-  max-height: 15em;
+  max-height: 100%;
   overflow: scroll;
 }
 

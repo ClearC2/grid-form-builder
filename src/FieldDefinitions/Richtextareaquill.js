@@ -113,11 +113,12 @@ class Richtextareaquill extends React.Component {
   render () {
     const {config = {}, Icon = null, inline, formValues = Map()} = this.props
     const {name = null, required = false} = config
-    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, rteStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
+    rteStyle = typeof rteStyle === 'string' ? JSON.parse(rteStyle) : rteStyle
 
     if (!name) return null
     const {label = name} = config
@@ -176,6 +177,7 @@ class Richtextareaquill extends React.Component {
             ref={el => {
               this.reactQuillRef = el
             }}
+            style={rteStyle}
             value={value}
             onChange={this.handleChange}
             placeholder={this.props.placeholder}
