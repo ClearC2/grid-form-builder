@@ -89,7 +89,7 @@ class RenderDateRangePicker extends Component {
       showDropdowns: true,
       minYear: 2000,
       maxYear: 2030,
-      timePicker: true,
+      timePicker: this.props.timeFormat,
       timePickerSeconds: this.props.seconds,
       alwaysShowCalendars: true,
       autoUpdateInput: false,
@@ -107,11 +107,6 @@ class RenderDateRangePicker extends Component {
 
     $('#' + id).on('show.daterangepicker', (ev, picker) => {
       this.setState({direction: setDirection(this.props)})
-      if (!this.props.timeFormat) {
-        let element = document.getElementById(`datepicker-${this.props.id}`)
-        element = element.getElementsByClassName('calendar-time')[0]
-        !!element && element.setAttribute('class', `daterangepicker hide-time`)
-      }
       obj.openMenu(id)
     })
 
