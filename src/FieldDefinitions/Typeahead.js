@@ -137,6 +137,7 @@ export class Typeahead extends Component {
   }
 
   onInputChange = (val, e, e2) => {
+    this.openMenu()
     if (this.props.config.supressInputReset) {
       if (e.action === 'input-change') {
         this.setState({inputValue: val})
@@ -371,8 +372,10 @@ export class Typeahead extends Component {
 
   setMenuOpenPosition = () => {
     const menuPlacement = this.state.fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
-    this.setState({menuPlacement}, () => this.setState({menuIsOpen: true}))
+    this.setState({menuPlacement}, this.openMenu())
   }
+
+  openMenu = () => this.setState({menuIsOpen: true})
 
   render = () => {
     const {
@@ -537,6 +540,7 @@ export class Typeahead extends Component {
             </div>
             <div
               ref={r => { this.inputContainer = r }}
+              onMouseDown={this.handleOnFocus}
             >
               {allowcreate && <AsyncCreatable
                 autoFocus={this.props.config.autofocus}
