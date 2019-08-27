@@ -129,8 +129,16 @@ export class Select extends Component {
 
   setMenuOpenPosition = () => {
     const menuPlacement = this.state.fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
-    this.setState({menuPlacement}, () => this.setState({menuIsOpen: true}))
+    this.setState({menuPlacement}, this.openMenu)
   }
+
+  onKeyDown = () => {
+    const {onKeyDown = () => null} = this.props.config
+    this.openMenu()
+    onKeyDown()
+  }
+
+  openMenu = () => this.setState({menuIsOpen: true})
 
   render = () => {
     const {
@@ -145,7 +153,7 @@ export class Select extends Component {
       tabIndex,
       LinkIcon
     } = this.props
-    const {name = null, required = false, onKeyDown = () => null, link} = config
+    const {name = null, required = false, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, keyword = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -250,26 +258,28 @@ export class Select extends Component {
               <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </div>
-          <ReactSelect
-            autoFocus={this.props.config.autofocus}
-            className={className}
-            isClearable={clearable}
-            isDisabled={disabled}
-            menuIsOpen={!isMobile ? this.state.menuIsOpen : undefined}
-            menuPlacement={!isMobile ? this.state.menuPlacement : undefined}
-            menuPortalTarget={document.body}
-            menuShouldBlockScroll
-            name={name}
-            onBlur={this.handleOnBlur}
-            onChange={this.onChange}
-            onFocus={this.handleOnFocus}
-            onKeyDown={onKeyDown}
-            options={options}
-            placeholder={placeholder}
-            styles={inputStyles}
-            tabIndex={tabIndex}
-            value={value}
-          />
+          <div onMouseUp={this.openMenu}>
+            <ReactSelect
+              autoFocus={this.props.config.autofocus}
+              className={className}
+              isClearable={clearable}
+              isDisabled={disabled}
+              menuIsOpen={!isMobile ? this.state.menuIsOpen : undefined}
+              menuPlacement={!isMobile ? this.state.menuPlacement : undefined}
+              menuPortalTarget={document.body}
+              menuShouldBlockScroll
+              name={name}
+              onBlur={this.handleOnBlur}
+              onChange={this.onChange}
+              onFocus={this.handleOnFocus}
+              onKeyDown={this.onKeyDown}
+              options={options}
+              placeholder={placeholder}
+              styles={inputStyles}
+              tabIndex={tabIndex}
+              value={value}
+            />
+          </div>
         </div>
       )
     )
