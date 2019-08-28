@@ -1,3 +1,10 @@
+## [1.31.3](https://github.com/ClearC2/grid-form-builder/compare/v1.31.2...v1.31.3) (2019-08-28)
+
+
+### Bug Fixes
+
+* **datetime:** allow custom styles to be passed to input ([#99](https://github.com/ClearC2/grid-form-builder/issues/99)) ([4d916e8](https://github.com/ClearC2/grid-form-builder/commit/4d916e8))
+
 ## [1.31.2](https://github.com/ClearC2/grid-form-builder/compare/v1.31.1...v1.31.2) (2019-08-27)
 
 
