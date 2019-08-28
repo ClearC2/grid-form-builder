@@ -8,11 +8,24 @@ import PropTypes from 'prop-types'
   radio buttons are converted to multicheckboxes
   checkboxes are converted to multicheckboxes
  */
-
+/*
+* SINGLE_FIELD_INPUTS
+* These inputs will have one input field. They can have more than one value, but it is in one field
+*/
 const SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselect', 'typeahead'])
+/*
+* MULTI_FIELD_INPUTS
+* These inputs can have more than one input field, with one value per field
+*/
 const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'email', 'datetime', 'currency', 'time'])
 const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
-
+/*
+* TYPEAHEAD_CONDITIONS
+* If a field is a typeahead on the original formSchema, it will only remain a typeahead input if the condition
+* is one of the following. Otherwise it will be converted to an input. Typeaheads can have other conditions, but the
+* the input type may change
+*/
+const TYPEAHEAD_CONDITIONS = Set(['is equal to', 'is not equal to', 'is one of', 'is not one of'])
 export const TEXT_INPUTS = ['textarea', 'checkbox', 'radio']
 // export const LIST_INPUTS = []
 export const CONDITIONS = {
@@ -229,13 +242,24 @@ export default class Conditionalinput extends Component {
   }
   parentFieldName = () => this.props.config.name
   parentLabel = () => this.props.config.label || this.props.config.name
-  inputType = () => (this.props.config.inputType || this.props.config.inputtype || 'input').toLowerCase()
+  inputType = () => {
+    let inputType = (this.props.config.inputType || this.props.config.inputtype || 'input').toLowerCase()
+    const cond = this.condition()
+    if (!TYPEAHEAD_CONDITIONS.has(cond) && inputType === 'typeahead') {
+      inputType = 'input'
+    }
+    return inputType
+  }
   condition = () => {
     let oldValue = this.props.formValues.get(this.parentFieldName())
     if (oldValue && oldValue instanceof Map) {
       return this.props.formValues.get(this.parentFieldName(), Map()).get('condition', '')
     } else {
-      return this.state.modalFormValues.get('condition', '')
+      if (this.state) {
+        return this.state.modalFormValues.get('condition', '')
+      } else {
+        return 'contains'
+      }
     }
   }
   getEventFieldIndex = (e) => {
@@ -397,7 +421,16 @@ export default class Conditionalinput extends Component {
   }
 
   handleConditionChange = (e) => {
+    const currentCondition = this.condition()
     this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
+    let trueType = (this.props.config.inputType || this.props.config.inputtype || 'input').toLowerCase()
+    if (trueType === 'typeahead') {
+      if (TYPEAHEAD_CONDITIONS.has(currentCondition) && !TYPEAHEAD_CONDITIONS.has(e.target.value)) {
+        setTimeout(() => { this.handleOnChange({target: {name: `${this.parentFieldName()}-0`, value: ''}}) }, 0)
+      } else if (!TYPEAHEAD_CONDITIONS.has(currentCondition) && TYPEAHEAD_CONDITIONS.has(e.target.value)) {
+        setTimeout(() => { this.handleOnChange({target: {name: `${this.parentFieldName()}-0`, value: List()}}) }, 0)
+      }
+    }
     let oldValue = this.props.formValues.get(this.parentFieldName())
     if (oldValue && oldValue instanceof Map) {
       let newFieldValue = this.props.formValues.get(this.parentFieldName(), Map()).set(e.target.name, e.target.value)
@@ -461,7 +494,6 @@ export default class Conditionalinput extends Component {
       if (this.parentFieldName() !== e.target.name.split('-')[0]) {
         return // escape if its an extraneous typeahead field)
       }
-      this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
       if (e.target.value !== undefined || e.target.value !== null) {
         let oldValue
         if (typeof e.target.value === 'string') {
@@ -471,6 +503,8 @@ export default class Conditionalinput extends Component {
         }
 
         this.props.handleOnChange({target: {name: this.parentFieldName(), value: oldValue}})
+        this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
+      } else {
         this.setState({modalFormValues: this.state.modalFormValues.set(e.target.name, e.target.value)})
       }
     } else if (e.target.value instanceof List) {
