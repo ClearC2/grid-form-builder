@@ -50,6 +50,7 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
   if (!Array.isArray(fields)) fields = [fields]
   let formValues = currentFormValues
   if (typeof formValues === 'undefined') {
+    // eslint-disable-next-line
     console.error('You did something wrong, grid form builder is trying to update values but there are no values.')
     return Map()
   }
@@ -93,17 +94,29 @@ export function initCustomFormComponents (defs = {}) {
 
 export default class FormBuilder extends Component {
   static propTypes = {
+    conditionalFieldValues: PropTypes.bool,
+    conditionalSearch: PropTypes.bool,
+    draggable: PropTypes.bool,
     formName: PropTypes.string.isRequired,
     formSchema: PropTypes.object,
     formValues: PropTypes.object,
-    prepops: PropTypes.object,
+    handleCascade: PropTypes.func,
+    handleLinkClick: PropTypes.func,
     handleOnChange: PropTypes.func,
-    draggable: PropTypes.bool,
-    inline: PropTypes.bool,
+    handleOnDrop: PropTypes.func,
+    handleRTEImageClick: PropTypes.func,
     handleSubmit: PropTypes.func,
-    conditionalSearch: PropTypes.bool,
-    conditionalFieldValues: PropTypes.bool,
-    noStore: PropTypes.bool
+    inline: PropTypes.bool,
+    interactive: PropTypes.bool,
+    marginX: PropTypes.number,
+    marginY: PropTypes.number,
+    noStore: PropTypes.bool,
+    onClick: PropTypes.func,
+    prepops: PropTypes.object,
+    readonly: PropTypes.bool,
+    rowHeight: PropTypes.number,
+    style: PropTypes.object,
+    validate: PropTypes.bool
   }
 
   static defaultProps = {
@@ -158,6 +171,7 @@ export default class FormBuilder extends Component {
   }
 
   onSubmit = () => {
+    // eslint-disable-next-line
     let {formSchema = Map(), formValues = Map(), handleSubmit = () => { console.warn('onSubmit was called but no handleSubmit function was provided.') }} = this.props
     formValues = (typeof formValues.isMap === 'function') ? formValues : Map(formValues)
     formSchema = (typeof formSchema.toJS === 'function') ? formSchema.toJS() : formSchema
@@ -203,7 +217,9 @@ export default class FormBuilder extends Component {
       }
     })
     if (reasons.length > 0) {
-      this.setState({requiredWarning: true})
+      this.setState({requiredWarning: true}, () => {
+        this.grid.scrollIntoView()
+      })
     }
     return reasons
   }
@@ -371,8 +387,22 @@ export default class FormBuilder extends Component {
     let P = {}
     if (this.props.noStore) P.store = {subscribe: () => {}, getState: () => Map(), dispatch: () => {}}
     return (
-      <div id={this.state.id} className='grid-form-builder-parent' style={{height: '100%', minWidth: inline ? 700 : 440, ...style}}>
-        <WidgetGrid {...P} compName={formName} verticalCompact={false} margin={[marginX, marginY]} rowHeight={rowHeight || (inline ? 27 : 45)}>
+      <div
+        id={this.state.id}
+        className='grid-form-builder-parent'
+        ref={r => { this.grid = r }}
+        style={{
+          height: '100%',
+          minWidth: inline ? 700 : 440,
+          ...style
+        }}>
+        <WidgetGrid
+          {...P}
+          compName={formName}
+          verticalCompact={false}
+          margin={[marginX, marginY]}
+          rowHeight={rowHeight || (inline ? 27 : 45)}
+        >
           {normalFields}
         </WidgetGrid>
       </div>
