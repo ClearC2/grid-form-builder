@@ -1,3 +1,10 @@
+# [1.32.0](https://github.com/ClearC2/grid-form-builder/compare/v1.31.3...v1.32.0) (2019-08-28)
+
+
+### Features
+
+* **condInput:** typeaheads switch between input and typeahead based on condition ([c3c9062](https://github.com/ClearC2/grid-form-builder/commit/c3c9062))
+
 ## [1.31.3](https://github.com/ClearC2/grid-form-builder/compare/v1.31.2...v1.31.3) (2019-08-28)
 
 
