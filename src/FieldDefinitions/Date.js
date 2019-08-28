@@ -10,25 +10,25 @@ moment.suppressDeprecationWarnings = true
 
 export class Date extends Component {
   static propTypes = {
-    formValues: PropTypes.object,
+    CascadeIcon: PropTypes.func,
+    cascadingKeyword: PropTypes.string,
     config: PropTypes.object,
+    connectDropTarget: PropTypes.func,
     didDrop: PropTypes.bool,
-    isOver: PropTypes.bool,
+    draggable: PropTypes.bool,
     droppedItem: PropTypes.object,
-    handleDragDropOnInput: PropTypes.func,
+    formValues: PropTypes.object,
     handleAnywhereClick: PropTypes.func,
     handleCascadeKeywordClick: PropTypes.func,
+    handleDragDropOnInput: PropTypes.func,
+    handleLinkClick: PropTypes.func,
     handleOnChange: PropTypes.func,
-    draggable: PropTypes.bool,
-    inline: PropTypes.bool,
     Icon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    requiredWarning: PropTypes.bool,
-    connectDropTarget: PropTypes.func,
-    cascadingKeyword: PropTypes.string,
-    CascadeIcon: PropTypes.func,
-    tabIndex: PropTypes.number,
+    inline: PropTypes.bool,
+    isOver: PropTypes.bool,
     LinkIcon: PropTypes.func,
-    handleLinkClick: PropTypes.func
+    requiredWarning: PropTypes.bool,
+    tabIndex: PropTypes.number
   }
 
   state = {
@@ -85,7 +85,7 @@ export class Date extends Component {
     if (e &&
       e.target &&
       (e.target.className === 'rdtSwitch' ||
-      e.target.className === 'dow') &&
+        e.target.className === 'dow') &&
       !!this.input) {
       setTimeout(() => { this.input.focus() }, 0)
     }
@@ -150,10 +150,9 @@ export class Date extends Component {
       LinkIcon
     } = this.props
     const {name = null, required = false, onKeyDown = () => null, link} = config
-    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    let {labelStyle = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
-    style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
@@ -245,7 +244,7 @@ export class Date extends Component {
             onKeyDown={onKeyDown}
             onMouseDown={this.onMouseDown}
             placeholder={placeholder}
-            inputStyles={style}
+            inputStyles={config.style}
             ref={ref => { this.input = ref }}
             timeFormat={false}
             value={this.state.value}

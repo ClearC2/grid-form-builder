@@ -13,7 +13,7 @@ class DatetimeContainer extends Component {
     disabled: PropTypes.bool,
     displayInput: PropTypes.bool,
     inputClassName: PropTypes.string,
-    inputStyle: PropTypes.object,
+    inputStyles: PropTypes.object,
     name: PropTypes.string,
     required: PropTypes.bool,
     type: PropTypes.string,
@@ -38,7 +38,7 @@ class DatetimeContainer extends Component {
     disabled: false,
     displayInput: true,
     down: false,
-    modal: false,
+    inputStyles: {},
     required: false,
     type: 'text',
     up: false
@@ -106,7 +106,7 @@ class DatetimeContainer extends Component {
   render () {
     const {
       dateFormat,
-      inputStyle,
+      inputStyles,
       ...props
     } = this.props
 
@@ -119,7 +119,7 @@ class DatetimeContainer extends Component {
     }
 
     return (
-      <div>
+      <div className={this.props.className}>
         <DateWrapper
           autoComplete='off'
           changeDisplay={this.changeDisplay}
@@ -135,13 +135,13 @@ class DatetimeContainer extends Component {
         <input
           id={id}
           autoComplete='off'
-          className={`${this.props.className} ${this.props.inputClassName}`}
+          className={`${this.props.inputClassName}`}
           disabled={this.props.disabled}
           name={this.props.name}
           onChange={this.handleDateChange}
           onClick={() => this.setVisibility()}
           required={this.props.required}
-          style={{paddingLeft: 5, ...inputStyle}}
+          style={{paddingLeft: 5, ...inputStyles}}
           type={this.props.type}
           value={value}
           onMouseDown={this.props.onMouseDown}
