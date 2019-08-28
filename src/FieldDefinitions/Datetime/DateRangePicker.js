@@ -34,6 +34,7 @@ class RenderDateRangePicker extends Component {
     id: PropTypes.string,
     changeDisplay: PropTypes.func,
     dateFormat: PropTypes.string,
+    seconds: PropTypes.bool,
     timeFormat: PropTypes.bool,
     value: PropTypes.oneOfType([
       PropTypes.object,
@@ -70,8 +71,7 @@ class RenderDateRangePicker extends Component {
     if (old && next && old._d && next._d) {
       return !!old.diff(next)
     }
-
-    return (this.state.direction !== nextState.direction || (!this.props.value && nextProps.value))
+    return (this.state.direction !== nextState.direction || (this.props.value !== nextProps.value))
   }
 
   componentWillUnmount () {
@@ -99,7 +99,7 @@ class RenderDateRangePicker extends Component {
         format: this.props.dateFormat
       }
     }, (time) => {
-      if (moment(time).isValid()) {
+      if (moment(time).isValid() && time._i.length > 1) {
         obj.onClick(time)
       }
       obj.closeMenu(id)
