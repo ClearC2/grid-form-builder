@@ -25,7 +25,7 @@ class DateWrapper extends Component {
   shouldComponentUpdate (nextProps, nextState) {
     const old = this.props.value
     const next = nextProps.value
-    let reload = (!this.state.mount || (nextProps.value && !this.props.value))
+    let reload = (!this.state.mount || (nextProps.value !== this.props.value))
     reload = reload || (this.props.visible !== nextProps.visible)
 
     if (!reload && old && next && old._d && next._d) {
