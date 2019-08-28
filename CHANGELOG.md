@@ -1,3 +1,15 @@
+# [1.33.0](https://github.com/ClearC2/grid-form-builder/compare/v1.32.0...v1.33.0) (2019-08-28)
+
+
+### Bug Fixes
+
+* **datetime:** allow date to be erased from field ([#101](https://github.com/ClearC2/grid-form-builder/issues/101)) ([4e92035](https://github.com/ClearC2/grid-form-builder/commit/4e92035))
+
+
+### Features
+
+* **validation:** on validation scroll form to top ([#102](https://github.com/ClearC2/grid-form-builder/issues/102)) ([ce16329](https://github.com/ClearC2/grid-form-builder/commit/ce16329))
+
 # [1.32.0](https://github.com/ClearC2/grid-form-builder/compare/v1.31.3...v1.32.0) (2019-08-28)
 
 
