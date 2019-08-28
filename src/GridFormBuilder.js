@@ -217,7 +217,9 @@ export default class FormBuilder extends Component {
       }
     })
     if (reasons.length > 0) {
-      this.setState({requiredWarning: true})
+      this.setState({requiredWarning: true}, () => {
+        this.grid.scrollIntoView()
+      })
     }
     return reasons
   }
@@ -388,6 +390,7 @@ export default class FormBuilder extends Component {
       <div
         id={this.state.id}
         className='grid-form-builder-parent'
+        ref={r => { this.grid = r }}
         style={{
           height: '100%',
           minWidth: inline ? 700 : 440,
