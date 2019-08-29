@@ -7,25 +7,25 @@ import PropTypes from 'prop-types'
 
 export class Date extends Component {
   static propTypes = {
-    formValues: PropTypes.object,
+    CascadeIcon: PropTypes.func,
+    cascadingKeyword: PropTypes.string,
     config: PropTypes.object,
+    connectDropTarget: PropTypes.func,
     didDrop: PropTypes.bool,
-    isOver: PropTypes.bool,
+    draggable: PropTypes.bool,
     droppedItem: PropTypes.object,
-    handleDragDropOnInput: PropTypes.func,
+    formValues: PropTypes.object,
     handleAnywhereClick: PropTypes.func,
     handleCascadeKeywordClick: PropTypes.func,
+    handleDragDropOnInput: PropTypes.func,
+    handleLinkClick: PropTypes.func,
     handleOnChange: PropTypes.func,
-    draggable: PropTypes.bool,
-    inline: PropTypes.bool,
     Icon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    requiredWarning: PropTypes.bool,
-    connectDropTarget: PropTypes.func,
-    cascadingKeyword: PropTypes.string,
-    CascadeIcon: PropTypes.func,
-    tabIndex: PropTypes.number,
+    inline: PropTypes.bool,
+    isOver: PropTypes.bool,
     LinkIcon: PropTypes.func,
-    handleLinkClick: PropTypes.func
+    requiredWarning: PropTypes.bool,
+    tabIndex: PropTypes.number
   }
 
   componentDidUpdate = p => {
@@ -64,8 +64,8 @@ export class Date extends Component {
   handleOnChange = val => {
     this.input.focus()
     const {handleOnChange = () => {}} = this.props
-    const name = this.props.config.name
-    const value = typeof val === 'object' ? val.format('hh:mm a') : val
+    const {name, timeFormat = 'hh:mm a'} = this.props.config
+    const value = typeof val === 'object' ? val.format(timeFormat) : val
     const e = {target: {name, value}}
     handleOnChange(e)
   }
@@ -93,7 +93,7 @@ export class Date extends Component {
       tabIndex,
       LinkIcon
     } = this.props
-    const {name = null, required = false, onKeyDown = () => null, link} = config
+    const {name = null, required = false, onKeyDown = () => null, link, timeFormat = 'hh:mm a'} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -151,7 +151,7 @@ export class Date extends Component {
     className = !warn ? className : className + ' warn-required'
     const inputClass = warn ? 'warn-required' : ''
     placeholder = warn ? '* This Field Is Required' : placeholder
-    const formattedValue = value => moment(value, 'hh:mm a')
+    const formattedValue = value => moment(value, timeFormat)
 
     return (
       connectDropTarget(
@@ -185,7 +185,7 @@ export class Date extends Component {
             onChange={this.handleOnChange}
             onKeyDown={onKeyDown}
             onMouseDown={this.onMouseDown}
-            timeFormat={'hh:mm a'}
+            timeFormat={timeFormat}
             value={formattedValue(formValues.get(name, ''))}
             inputProps={{
               className: inputClass,

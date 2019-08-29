@@ -38,8 +38,8 @@ export class Date extends Component {
 
   handleValueUpdated = (value, format) => {
     const {handleOnChange, config = {}} = this.props
-    const {name = null} = config
-    value = (format && moment(value).isValid()) ? moment(value).format('M/D/YYYY') : value
+    const {name = null, dateFormat = 'M/D/YYYY'} = config
+    value = (format && moment(value).isValid()) ? moment(value).format(dateFormat) : value
 
     if (moment(value).isValid()) {
       handleOnChange({
@@ -119,9 +119,9 @@ export class Date extends Component {
       this.debounceBlur = setTimeout(() => {
         let {value} = this.state
         const {config = {}, formValues = Map()} = this.props
-        const {name = null} = config
+        const {name = null, dateFormat = 'M/D/YYYY'} = config
         if (typeof value.format === 'function') {
-          value = value.format('M/D/YYYY')
+          value = value.format(dateFormat)
         }
         if (!moment(value).isValid()) {
           const value = formValues.get(name, '')
@@ -149,7 +149,7 @@ export class Date extends Component {
       CascadeIcon,
       LinkIcon
     } = this.props
-    const {name = null, required = false, onKeyDown = () => null, link} = config
+    const {name = null, required = false, onKeyDown = () => null, link, dateFormat = 'M/D/YYYY'} = config
     let {labelStyle = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -235,7 +235,7 @@ export class Date extends Component {
           <Datetime
             className={className}
             closeOnSelect
-            dateFormat='M/D/YYYY'
+            dateFormat={dateFormat}
             disabled={disabled}
             handleDateChange={this.handleChange}
             inputClassName={inputClass}
