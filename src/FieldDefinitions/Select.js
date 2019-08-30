@@ -110,9 +110,7 @@ export class Select extends Component {
   }
 
   handleOnFocus = () => {
-    if (!this.props.config.disabled) {
-      this.setInputFieldPosition()
-    }
+    this.setInputFieldPosition()
   }
 
   handleOnBlur = () => {
@@ -138,7 +136,15 @@ export class Select extends Component {
     onKeyDown()
   }
 
-  openMenu = () => this.setState({menuIsOpen: true})
+  openMenu = () => {
+    const {disabled, readonly} = this.props.config
+    let fieldIsDisabled = false
+    if (typeof disabled === 'boolean') fieldIsDisabled = disabled
+    if (typeof readonly === 'boolean') fieldIsDisabled = readonly
+    if (!fieldIsDisabled) {
+      this.setState({menuIsOpen: true})
+    }
+  }
 
   render = () => {
     const {
