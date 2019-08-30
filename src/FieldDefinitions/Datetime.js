@@ -7,25 +7,25 @@ import PropTypes from 'prop-types'
 
 export class DateTime extends Component {
   static propTypes = {
-    formValues: PropTypes.object,
+    CascadeIcon: PropTypes.func,
+    cascadingKeyword: PropTypes.string,
     config: PropTypes.object,
+    connectDropTarget: PropTypes.func,
     didDrop: PropTypes.bool,
-    isOver: PropTypes.bool,
+    draggable: PropTypes.bool,
     droppedItem: PropTypes.object,
-    handleDragDropOnInput: PropTypes.func,
+    formValues: PropTypes.object,
     handleAnywhereClick: PropTypes.func,
     handleCascadeKeywordClick: PropTypes.func,
+    handleDragDropOnInput: PropTypes.func,
+    handleLinkClick: PropTypes.func,
     handleOnChange: PropTypes.func,
-    draggable: PropTypes.bool,
-    inline: PropTypes.bool,
     Icon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
-    requiredWarning: PropTypes.bool,
-    connectDropTarget: PropTypes.func,
-    cascadingKeyword: PropTypes.string,
-    CascadeIcon: PropTypes.func,
-    tabIndex: PropTypes.number,
+    inline: PropTypes.bool,
+    isOver: PropTypes.bool,
     LinkIcon: PropTypes.func,
-    handleLinkClick: PropTypes.func
+    requiredWarning: PropTypes.bool,
+    tabIndex: PropTypes.number
   }
 
   state = {
@@ -35,8 +35,8 @@ export class DateTime extends Component {
 
   handleValueUpdated = (value, format) => {
     const {handleOnChange, config = {}} = this.props
-    const {name = null} = config
-    value = (format && moment(value).isValid()) ? moment(value).format('M/D/YYYY hh:mm a') : value
+    const {name = null, dateFormat = 'M/D/YYYY hh:mm a'} = config
+    value = (format && moment(value).isValid()) ? moment(value).format(dateFormat) : value
 
     if (moment(value).isValid()) {
       handleOnChange({
@@ -116,9 +116,9 @@ export class DateTime extends Component {
       this.debounceBlur = setTimeout(() => {
         let {value} = this.state
         const {config = {}, formValues = Map()} = this.props
-        const {name = null} = config
+        const {name = null, dateFormat = 'M/D/YYYY hh:mm a'} = config
         if (typeof value.format === 'function') {
-          value = value.format('M/D/YYYY hh:mm a')
+          value = value.format(dateFormat)
         }
         if (!moment(value).isValid()) {
           const value = formValues.get(name, '')
@@ -146,7 +146,7 @@ export class DateTime extends Component {
       CascadeIcon,
       LinkIcon
     } = this.props
-    const {name = null, required = false, onKeyDown = () => null, link} = config
+    const {name = null, required = false, onKeyDown = () => null, link, dateFormat = 'M/D/YYYY hh:mm a'} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
@@ -233,7 +233,7 @@ export class DateTime extends Component {
           <Datetime
             className={className}
             closeOnSelect
-            dateFormat='M/D/YYYY hh:mm a'
+            dateFormat={dateFormat}
             disabled={disabled}
             inputClassName={inputClass}
             onBlur={this.handleOnBlur}
