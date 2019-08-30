@@ -1,3 +1,10 @@
+## [1.33.2](https://github.com/ClearC2/grid-form-builder/compare/v1.33.1...v1.33.2) (2019-08-30)
+
+
+### Bug Fixes
+
+* **menus:** opening when disabled ([#105](https://github.com/ClearC2/grid-form-builder/issues/105)) ([42371b3](https://github.com/ClearC2/grid-form-builder/commit/42371b3))
+
 ## [1.33.1](https://github.com/ClearC2/grid-form-builder/compare/v1.33.0...v1.33.1) (2019-08-30)
 
 
