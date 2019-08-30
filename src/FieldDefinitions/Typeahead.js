@@ -375,7 +375,15 @@ export class Typeahead extends Component {
     this.setState({menuPlacement}, this.openMenu())
   }
 
-  openMenu = () => this.setState({menuIsOpen: true})
+  openMenu = () => {
+    const {disabled, readonly} = this.props.config
+    let fieldIsDisabled = false
+    if (typeof disabled === 'boolean') fieldIsDisabled = disabled
+    if (typeof readonly === 'boolean') fieldIsDisabled = readonly
+    if (!fieldIsDisabled) {
+      this.setState({menuIsOpen: true})
+    }
+  }
 
   render = () => {
     const {
