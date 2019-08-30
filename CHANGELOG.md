@@ -1,3 +1,10 @@
+## [1.33.1](https://github.com/ClearC2/grid-form-builder/compare/v1.33.0...v1.33.1) (2019-08-30)
+
+
+### Bug Fixes
+
+* **date/time:** allow custom date and time formats to be sent in config ([#103](https://github.com/ClearC2/grid-form-builder/issues/103)) ([54383b5](https://github.com/ClearC2/grid-form-builder/commit/54383b5))
+
 # [1.33.0](https://github.com/ClearC2/grid-form-builder/compare/v1.32.0...v1.33.0) (2019-08-28)
 
 
