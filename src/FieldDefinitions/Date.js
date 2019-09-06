@@ -36,12 +36,12 @@ export class Date extends Component {
     value: ''
   }
 
-  handleValueUpdated = (value, format) => {
+  handleValueUpdated = (value, format, send = false) => {
     const {handleOnChange, config = {}} = this.props
     const {name = null, dateFormat = 'M/D/YYYY'} = config
     value = (format && moment(value).isValid()) ? moment(value).format(dateFormat) : value
 
-    if (moment(value).isValid()) {
+    if (moment(value).isValid() && send) {
       handleOnChange({
         target: {
           name,
@@ -104,7 +104,7 @@ export class Date extends Component {
     if (typeof val === 'string') {
       this.setState(() => ({focus: false}))
     }
-    this.handleValueUpdated(val, true)
+    this.handleValueUpdated(val, true, true)
   }
 
   onMouseDown = e => {
