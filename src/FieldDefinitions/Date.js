@@ -27,8 +27,13 @@ export class Date extends Component {
     inline: PropTypes.bool,
     isOver: PropTypes.bool,
     LinkIcon: PropTypes.func,
+    nullDate: PropTypes.string,
     requiredWarning: PropTypes.bool,
     tabIndex: PropTypes.number
+  }
+
+  static defaultProps = {
+    nullDate: '1/1/1900'
   }
 
   state = {
@@ -36,10 +41,25 @@ export class Date extends Component {
     value: ''
   }
 
+  static getDerivedStateFromProps (props, state) {
+    const incomingDate = moment(props.formValues.get(props.config.name) || '')
+    const dateIsValid = moment(props.nullDate).diff(incomingDate) < 0
+
+    if (dateIsValid) {
+      return {
+        ...state,
+        value: moment(incomingDate)
+      }
+    }
+
+    return null
+  }
+
   handleValueUpdated = (value, format, send = false) => {
     const {handleOnChange, config = {}} = this.props
     const {name = null, dateFormat = 'M/D/YYYY'} = config
     value = (format && moment(value).isValid()) ? moment(value).format(dateFormat) : value
+    const dateIsValid = moment(this.props.nullDate).diff(value) < 0
 
     if (moment(value).isValid() && send) {
       handleOnChange({
@@ -49,7 +69,9 @@ export class Date extends Component {
         }
       })
     }
-    this.setState(() => ({value, focus: format}))
+    if (dateIsValid) {
+      this.setState(() => ({value, focus: format}))
+    }
   }
 
   componentDidMount = () => {
