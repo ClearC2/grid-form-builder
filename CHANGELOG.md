@@ -1,3 +1,10 @@
+# [1.34.0](https://github.com/ClearC2/grid-form-builder/compare/v1.33.4...v1.34.0) (2019-09-16)
+
+
+### Features
+
+* **radio:** optionsContainer is now a valid style that can be passed to the radio component ([1271adc](https://github.com/ClearC2/grid-form-builder/commit/1271adc))
+
 ## [1.33.4](https://github.com/ClearC2/grid-form-builder/compare/v1.33.3...v1.33.4) (2019-09-12)
 
 
