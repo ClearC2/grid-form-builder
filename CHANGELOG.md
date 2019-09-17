@@ -1,3 +1,10 @@
+# [1.35.0](https://github.com/ClearC2/grid-form-builder/compare/v1.34.0...v1.35.0) (2019-09-17)
+
+
+### Features
+
+* **reporting:** allow meta values like "this month" or last (x) days ([ae0a0c4](https://github.com/ClearC2/grid-form-builder/commit/ae0a0c4))
+
 # [1.34.0](https://github.com/ClearC2/grid-form-builder/compare/v1.33.4...v1.34.0) (2019-09-16)
 
 
