@@ -1,3 +1,10 @@
+## [1.35.1](https://github.com/ClearC2/grid-form-builder/compare/v1.35.0...v1.35.1) (2019-09-17)
+
+
+### Bug Fixes
+
+* **date:** add disable color ([#109](https://github.com/ClearC2/grid-form-builder/issues/109)) ([b7a7807](https://github.com/ClearC2/grid-form-builder/commit/b7a7807))
+
 # [1.35.0](https://github.com/ClearC2/grid-form-builder/compare/v1.34.0...v1.35.0) (2019-09-17)
 
 
