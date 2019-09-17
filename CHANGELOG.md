@@ -1,3 +1,10 @@
+## [1.35.2](https://github.com/ClearC2/grid-form-builder/compare/v1.35.1...v1.35.2) (2019-09-17)
+
+
+### Bug Fixes
+
+* **typeahead:** duplicate label showing ([#110](https://github.com/ClearC2/grid-form-builder/issues/110)) ([3273639](https://github.com/ClearC2/grid-form-builder/commit/3273639))
+
 ## [1.35.1](https://github.com/ClearC2/grid-form-builder/compare/v1.35.0...v1.35.1) (2019-09-17)
 
 
