@@ -17,8 +17,11 @@ const SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselect', '
 * MULTI_FIELD_INPUTS
 * These inputs can have more than one input field, with one value per field
 */
-const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'email', 'datetime', 'currency', 'time'])
+const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'email', 'currency', 'time'])
 const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
+
+const ALL_BUT_DATES = Set(['input', 'phone', 'email', 'currency', 'time', 'multicheckbox', 'multiselect', 'listselect', 'typeahead', 'textarea', 'checkbox', 'radio'])
+const DATES = Set(['date', 'datetime'])
 /*
 * TYPEAHEAD_CONDITIONS
 * If a field is a typeahead on the original formSchema, it will only remain a typeahead input if the condition
@@ -26,13 +29,14 @@ const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'
 * the input type may change
 */
 const TYPEAHEAD_CONDITIONS = Set(['is equal to', 'is not equal to', 'is one of', 'is not one of'])
+const NUMERICAL_CONDITIONS = Set(['Last (x) days', 'Last (x) months', 'Next (x) days', 'Next (x) months'])
 export const TEXT_INPUTS = ['textarea', 'checkbox', 'radio']
 // export const LIST_INPUTS = []
 export const CONDITIONS = {
   'contains': {
     maxFields: 999,
     minFields: 1,
-    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT, ...DATES]
   },
   'is equal to': {
     maxFields: 1,
@@ -63,13 +67,13 @@ export const CONDITIONS = {
   'is not between': {
     maxFields: 2,
     minFields: 2,
-    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT],
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT, ...DATES],
     joinString: `      and`
   },
   'does not contain': {
     maxFields: 999,
     minFields: 1,
-    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT]
+    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT, ...DATES]
   },
   'is not equal to': {
     maxFields: 1,
@@ -90,6 +94,41 @@ export const CONDITIONS = {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: []
+  },
+  'Today': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'This month': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'Year to Date': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'Last (x) days': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'Last (x) months': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'Next (x) days': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'Next (x) months': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ALL_BUT_DATES]
   },
   '': {
     maxFields: 999,
@@ -125,6 +164,7 @@ export default class Conditionalinput extends Component {
       })
       conds = newConds
     }
+
     this.state = {
       modalFormValues: Map({
         condition: this.getConditionFromFormValues() || this.inputTypeOptionsList(this.inputType())[0],
@@ -383,7 +423,7 @@ export default class Conditionalinput extends Component {
           readonly: false,
           name: `${this.parentFieldName()}-0`,
           label: `${this.parentLabel()}`,
-          type: this.inputType()
+          type: DATES.has(this.inputType()) && NUMERICAL_CONDITIONS.has(this.props.formValues.getIn([this.parentFieldName(), 'condition'], '')) ? 'number' : this.inputType()
         }
       })
       fieldCount++
@@ -405,7 +445,7 @@ export default class Conditionalinput extends Component {
             readonly: false,
             name: `${this.parentFieldName()}-${fieldCount}`,
             label: label,
-            type: this.inputType()
+            type: DATES.has(this.inputType()) && NUMERICAL_CONDITIONS.has(this.props.formValues.getIn([this.parentFieldName(), 'condition'], '')) ? 'number' : this.inputType()
           }
         }
         if (this.props.config.typeahead) {
@@ -438,6 +478,14 @@ export default class Conditionalinput extends Component {
       if (newFieldValue.get('values', List()).size >= maxFieldValues) {
         newFieldValue = newFieldValue.set('values', newFieldValue.get('values', List()).slice(0, maxFieldValues))
       }
+      this.props.handleOnChange({target: {name: this.parentFieldName(), value: newFieldValue}})
+    }
+    if ((!NUMERICAL_CONDITIONS.has(this.props.formValues.getIn([this.parentFieldName(), 'condition'], '')) &&
+      NUMERICAL_CONDITIONS.has(e.target.value)) ||
+      (NUMERICAL_CONDITIONS.has(this.props.formValues.getIn([this.parentFieldName(), 'condition'], '')) &&
+        !NUMERICAL_CONDITIONS.has(e.target.value))) {
+      let newFieldValue = this.props.formValues.get(this.parentFieldName(), Map()).set(e.target.name, e.target.value)
+      newFieldValue = newFieldValue.set('values', List())
       this.props.handleOnChange({target: {name: this.parentFieldName(), value: newFieldValue}})
     }
   }
