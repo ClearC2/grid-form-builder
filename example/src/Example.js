@@ -3,7 +3,7 @@ import {Map, List} from 'immutable'
 import {FormBuilder, ConditionalTable, ReportBuilder} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 
-const TEST_SEARCH = true // for conditional search forms
+const TEST_SEARCH = false // for conditional search forms
 
 export default class Example extends Component {
   state = {
