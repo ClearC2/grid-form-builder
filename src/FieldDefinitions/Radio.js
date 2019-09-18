@@ -80,11 +80,12 @@ export class Radio extends Component {
       LinkIcon
     } = this.props
     const {name = null, required = false, onKeyDown = () => null, link} = config
-    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, optionsContainer = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
+    optionsContainer = typeof optionsContainer === 'string' ? JSON.parse(optionsContainer) : optionsContainer
     if (!name) return null
     const {label = name, keyword = {}, boxed} = config
     const {options = []} = keyword
@@ -131,7 +132,8 @@ export class Radio extends Component {
         flexDirection: 'column',
         flex: 1,
         marginLeft: inline ? 0 : 10,
-        marginTop: inline ? 10 : 5
+        marginTop: inline ? 10 : 5,
+        ...optionsContainer
       },
       input: {
         display: 'flex',

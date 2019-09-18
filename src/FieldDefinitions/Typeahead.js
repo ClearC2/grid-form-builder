@@ -306,11 +306,11 @@ export class Typeahead extends Component {
 
   handleOnFocus = () => {
     const {config = {}, formValues = Map()} = this.props
-    const {persist = true, name = null} = config
+    const {multi = false, persist = true, name = null} = config
     let value = formValues.get(name, '') || ''
     value = typeof value.toJS === 'function' ? value.toJS() : value
     value = typeof value === 'object' ? value.value || value.label || '' : value
-    if (persist) {
+    if (persist && !multi) {
       // this is done to place cursor at the end of the input field
       this.setState({inputValue: ''}, () => this.setState({inputValue: value}))
     }

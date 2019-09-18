@@ -219,6 +219,11 @@ div.grid-form-builder-parent .date-wrapper-grid-input > input {
   color: black;
 }
 
+
+div.grid-form-builder-parent .date-wrapper-grid-input > input:disabled {
+  background-color: #eee;
+}
+
 div.grid-form-builder-parent .date-wrapper-grid-input.warn-required > input {
   border: 1px solid #ec1c24;
 }

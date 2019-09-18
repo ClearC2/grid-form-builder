@@ -1,3 +1,45 @@
+## [1.35.4](https://github.com/ClearC2/grid-form-builder/compare/v1.35.3...v1.35.4) (2019-09-18)
+
+
+### Bug Fixes
+
+* **query:** comparator case ([c134dc7](https://github.com/ClearC2/grid-form-builder/commit/c134dc7))
+
+## [1.35.3](https://github.com/ClearC2/grid-form-builder/compare/v1.35.2...v1.35.3) (2019-09-18)
+
+
+### Bug Fixes
+
+* **query:** comparator case ([d10211d](https://github.com/ClearC2/grid-form-builder/commit/d10211d))
+
+## [1.35.2](https://github.com/ClearC2/grid-form-builder/compare/v1.35.1...v1.35.2) (2019-09-17)
+
+
+### Bug Fixes
+
+* **typeahead:** duplicate label showing ([#110](https://github.com/ClearC2/grid-form-builder/issues/110)) ([3273639](https://github.com/ClearC2/grid-form-builder/commit/3273639))
+
+## [1.35.1](https://github.com/ClearC2/grid-form-builder/compare/v1.35.0...v1.35.1) (2019-09-17)
+
+
+### Bug Fixes
+
+* **date:** add disable color ([#109](https://github.com/ClearC2/grid-form-builder/issues/109)) ([b7a7807](https://github.com/ClearC2/grid-form-builder/commit/b7a7807))
+
+# [1.35.0](https://github.com/ClearC2/grid-form-builder/compare/v1.34.0...v1.35.0) (2019-09-17)
+
+
+### Features
+
+* **reporting:** allow meta values like "this month" or last (x) days ([ae0a0c4](https://github.com/ClearC2/grid-form-builder/commit/ae0a0c4))
+
+# [1.34.0](https://github.com/ClearC2/grid-form-builder/compare/v1.33.4...v1.34.0) (2019-09-16)
+
+
+### Features
+
+* **radio:** optionsContainer is now a valid style that can be passed to the radio component ([1271adc](https://github.com/ClearC2/grid-form-builder/commit/1271adc))
+
 ## [1.33.4](https://github.com/ClearC2/grid-form-builder/compare/v1.33.3...v1.33.4) (2019-09-12)
 
 
