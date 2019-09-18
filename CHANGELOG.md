@@ -1,3 +1,10 @@
+## [1.35.4](https://github.com/ClearC2/grid-form-builder/compare/v1.35.3...v1.35.4) (2019-09-18)
+
+
+### Bug Fixes
+
+* **query:** comparator case ([c134dc7](https://github.com/ClearC2/grid-form-builder/commit/c134dc7))
+
 ## [1.35.3](https://github.com/ClearC2/grid-form-builder/compare/v1.35.2...v1.35.3) (2019-09-18)
 
 
