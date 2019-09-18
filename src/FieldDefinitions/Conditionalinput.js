@@ -29,7 +29,7 @@ const DATES = Set(['date', 'datetime'])
 * the input type may change
 */
 const TYPEAHEAD_CONDITIONS = Set(['is equal to', 'is not equal to', 'is one of', 'is not one of'])
-const NUMERICAL_CONDITIONS = Set(['Last (x) days', 'Last (x) months', 'Next (x) days', 'Next (x) months'])
+const NUMERICAL_CONDITIONS = Set(['last (x) days', 'last (x) months', 'next (x) days', 'next (x) months'])
 export const TEXT_INPUTS = ['textarea', 'checkbox', 'radio']
 // export const LIST_INPUTS = []
 export const CONDITIONS = {
