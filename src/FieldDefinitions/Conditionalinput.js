@@ -95,37 +95,37 @@ export const CONDITIONS = {
     minFields: 0,
     invalidInputTypes: []
   },
-  'Today': {
+  'today': {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
-  'This month': {
+  'this month': {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
-  'Year to Date': {
+  'year to date': {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
-  'Last (x) days': {
+  'last (x) days': {
     maxFields: 1,
     minFields: 1,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
-  'Last (x) months': {
+  'last (x) months': {
     maxFields: 1,
     minFields: 1,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
-  'Next (x) days': {
+  'next (x) days': {
     maxFields: 1,
     minFields: 1,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
-  'Next (x) months': {
+  'next (x) months': {
     maxFields: 1,
     minFields: 1,
     invalidInputTypes: [...ALL_BUT_DATES]
