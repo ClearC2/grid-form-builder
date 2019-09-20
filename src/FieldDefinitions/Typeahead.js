@@ -13,7 +13,9 @@ class Placeholder extends Component {
   static propTypes = {
     handleMount: PropTypes.func.isRequired
   }
+
   componentDidMount = () => this.props.handleMount()
+
   render = () => null
 }
 export class Typeahead extends Component {
@@ -41,6 +43,7 @@ export class Typeahead extends Component {
     LinkIcon: PropTypes.func,
     handleLinkClick: PropTypes.func
   }
+
   static defaultProps = {
     minChars: 1
   }
@@ -52,6 +55,14 @@ export class Typeahead extends Component {
     menuIsOpen: false,
     menuPlacement: 'bottom',
     shouldRemount: false
+  }
+
+  componentDidMount () {
+    const {formValues, config = {}} = this.props
+
+    if (formValues.get(config.name) && !this.state.inputValue) {
+      this.setState({inputValue: formValues.get(config.name)})
+    }
   }
 
   componentDidUpdate = (p, s) => {
@@ -69,11 +80,12 @@ export class Typeahead extends Component {
         })
       }
     }
+
     const {name = null, typeahead = {}} = config
     const {fieldvalue = null, fields = []} = typeahead
     if (fieldvalue !== null) {
       if (formValues.get(fieldvalue, '') !== p.formValues.get(fieldvalue, '')) {
-        let resetValues = {
+        const resetValues = {
           [name]: ''
         }
         fields.map(field => { resetValues[field] = '' })
@@ -86,6 +98,10 @@ export class Typeahead extends Component {
           })
         })
       }
+    }
+
+    if (formValues.get(config.name) !== p.formValues.get(config.name)) {
+      this.setState({inputValue: formValues.get(config.name)})
     }
 
     if (s.fieldPosition !== this.state.fieldPosition) {
@@ -136,14 +152,13 @@ export class Typeahead extends Component {
     })
   }
 
-  onInputChange = (val, e, e2) => {
+  onInputChange = (val, e) => {
     this.openMenu()
-    if (this.props.config.supressInputReset) {
-      if (e.action === 'input-change') {
-        this.setState({inputValue: val})
-      }
-    } else {
+
+    if (e.action === 'input-change') {
       this.setState({inputValue: val})
+    } else if (e.action === 'menu-close') {
+      this.setState({inputValue: this.props.formValues.get(this.props.config.name)})
     }
   }
 
@@ -154,7 +169,8 @@ export class Typeahead extends Component {
     if (typeof delimit === 'string') delimit = [delimit]
     if (delimiter && typeof delimiter !== 'string') delimiter = '¤'
     const {fields = []} = typeahead
-    let target = {
+
+    const target = {
       name: name,
       value: (action === 'create-option' && !config.multi) ? newValue.value : newValue
     }
@@ -239,8 +255,8 @@ export class Typeahead extends Component {
     Object.keys(newValue).forEach(field => {
       let value = newValue[field]
       if (field === 'duplication') value = newValue.value
-      let id = null
-      let e = {
+      const id = null
+      const e = {
         target: {
           name: field,
           value,
@@ -254,8 +270,10 @@ export class Typeahead extends Component {
   }
 
   populateFilterBody = (filter = {}) => {
+    // eslint-disable-next-line
     if (filter.hasOwnProperty('name')) {
       this.populateConditionObject(filter)
+      // eslint-disable-next-line
     } else if (filter.hasOwnProperty('conditions') && Array.isArray(filter.conditions)) {
       filter.conditions.map(condition => this.populateFilterBody(condition))
     }
@@ -264,6 +282,7 @@ export class Typeahead extends Component {
 
   populateConditionObject = (condition = {name: null, comparator: null, values: []}) => {
     const {formValues = Map()} = this.props
+    // eslint-disable-next-line
     if (!condition.hasOwnProperty('values')) condition.values = []
     const value = formValues.get(condition.name, '')
     condition.values.push(value)
@@ -310,6 +329,7 @@ export class Typeahead extends Component {
     let value = formValues.get(name, '') || ''
     value = typeof value.toJS === 'function' ? value.toJS() : value
     value = typeof value === 'object' ? value.value || value.label || '' : value
+
     if (persist && !multi) {
       // this is done to place cursor at the end of the input field
       this.setState({inputValue: ''}, () => this.setState({inputValue: value}))
@@ -409,7 +429,7 @@ export class Typeahead extends Component {
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
     const {label = name} = config
-    let blankValue = {value: '', label: ''}
+    const blankValue = {value: '', label: ''}
     let value = formValues.get(name, null)
     value = (value && typeof value.toJS === 'function') ? value.toJS() : value
     value = this.convertValueStringToValueArrayIfNeeded(value)
@@ -484,6 +504,10 @@ export class Typeahead extends Component {
         borderRadius: '1px',
         margin: 0,
         ...menuStyle
+      }),
+      input: (base) => ({
+        ...base,
+        opacity: 3
       })
     }
 
@@ -515,6 +539,7 @@ export class Typeahead extends Component {
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
     placeholder = warn ? '* This Field Is Required' : placeholder
+
     if (this.state.shouldRemount) {
       return <Placeholder handleMount={this.setShouldRemount} />
     } else {
@@ -557,7 +582,7 @@ export class Typeahead extends Component {
                 className={className}
                 createOptionPosition='first'
                 formatCreateLabel={val => `Click or Tab to Create "${val}"`}
-                inputValue={inputValue}
+                inputValue={inputValue || 'it'}
                 isClearable
                 isDisabled={disabled}
                 isMulti={multi}
