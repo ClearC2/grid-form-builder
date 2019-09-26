@@ -4,7 +4,7 @@ import $ from 'jquery'
 import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
 import Checkbox from './FieldDefinitions/Checkbox'
-import ColorPicker from './FieldDefinitions/ColorPicker'
+import Colorpicker from './FieldDefinitions/ColorPicker'
 import Conditionalinput from './FieldDefinitions/Conditionalinput'
 import Currency from './FieldDefinitions/Currency'
 import Date from './FieldDefinitions/Date'
@@ -64,7 +64,7 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
 
 let FormComponents = {
   Checkbox,
-  ColorPicker,
+  Colorpicker,
   Conditionalinput,
   Currency,
   Date,
@@ -328,6 +328,7 @@ export default class FormBuilder extends Component {
       cascadeIcon = this.uppercaseFirstLetter(cascadeIcon)
       if (type === 'Textarea' && dimensions.h < 2) dimensions.h = 2
       const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
+
       icon = IconLibrary[icon] ? IconLibrary[icon] : null
       cascadeIcon = IconLibrary[cascadeIcon] ? IconLibrary[cascadeIcon] : null
       linkIcon = IconLibrary[linkIcon] ? IconLibrary[linkIcon] : null
