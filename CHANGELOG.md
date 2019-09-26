@@ -1,3 +1,10 @@
+## [1.36.1](https://github.com/ClearC2/grid-form-builder/compare/v1.36.0...v1.36.1) (2019-09-26)
+
+
+### Bug Fixes
+
+* **grid-builder:** fix loading in color picker ([4edf876](https://github.com/ClearC2/grid-form-builder/commit/4edf876))
+
 # [1.36.0](https://github.com/ClearC2/grid-form-builder/compare/v1.35.4...v1.36.0) (2019-09-26)
 
 
