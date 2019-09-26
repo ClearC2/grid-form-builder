@@ -1,3 +1,10 @@
+# [1.36.0](https://github.com/ClearC2/grid-form-builder/compare/v1.35.4...v1.36.0) (2019-09-26)
+
+
+### Features
+
+* **color-picker:** add color picker field component ([438afef](https://github.com/ClearC2/grid-form-builder/commit/438afef))
+
 ## [1.35.4](https://github.com/ClearC2/grid-form-builder/compare/v1.35.3...v1.35.4) (2019-09-18)
 
 
