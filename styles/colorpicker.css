@@ -1,0 +1,34 @@
+.color-picker-apply-button {
+    background: white;
+    width: 50px;
+    height: 32px;
+    padding: 4px 7px 7px;
+    border: 1px solid;
+    float: right;
+}
+
+.color-picker-apply-button:hover {
+    background: dodgerblue;
+    color: white;
+}
+
+.color-picker-toggle-button {
+    background: white;
+    border: 1px solid #000;
+}
+
+.color-picker-toggle-button:hover {
+    background: dodgerblue;
+    color: white;
+}
+
+.button-center {
+    margin: auto;
+    width: fit-content;
+}
+
+.color-picker-block {
+    width: 13px;
+    height: 13px;
+    margin: auto auto auto 7px;
+}

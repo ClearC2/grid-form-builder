@@ -3,30 +3,31 @@ import PropTypes from 'prop-types'
 import $ from 'jquery'
 import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
-import Input from './FieldDefinitions/Input'
-import Number from './FieldDefinitions/Number'
-import Email from './FieldDefinitions/Email'
-import Currency from './FieldDefinitions/Currency'
-import Textarea from './FieldDefinitions/Textarea'
-import Richtextareaquill from './FieldDefinitions/Richtextareaquill'
-import Datetime from './FieldDefinitions/Datetime'
-import Date from './FieldDefinitions/Date'
-import Time from './FieldDefinitions/Time'
-import Select from './FieldDefinitions/Select'
-import ImportSelect from './FieldDefinitions/ImportSelect'
-import Radio from './FieldDefinitions/Radio'
 import Checkbox from './FieldDefinitions/Checkbox'
-import Multicheckbox from './FieldDefinitions/Multicheckbox'
-import Header from './FieldDefinitions/Header'
-import Typeahead from './FieldDefinitions/Typeahead'
-import Listselect from './FieldDefinitions/Listselect'
+import ColorPicker from './FieldDefinitions/ColorPicker'
 import Conditionalinput from './FieldDefinitions/Conditionalinput'
-import Multiselect from './FieldDefinitions/Multiselect'
-import Phone from './FieldDefinitions/Phone'
+import Currency from './FieldDefinitions/Currency'
+import Date from './FieldDefinitions/Date'
+import Datetime from './FieldDefinitions/Datetime'
+import Email from './FieldDefinitions/Email'
+import Header from './FieldDefinitions/Header'
 import Icon from './FieldDefinitions/Icon'
+import ImportSelect from './FieldDefinitions/ImportSelect'
+import Input from './FieldDefinitions/Input'
+import Listselect from './FieldDefinitions/Listselect'
 import Metadata from './FieldDefinitions/Metadata'
-import Total from './FieldDefinitions/Total'
+import Multicheckbox from './FieldDefinitions/Multicheckbox'
+import Multiselect from './FieldDefinitions/Multiselect'
+import Number from './FieldDefinitions/Number'
 import Percentage from './FieldDefinitions/Percentage'
+import Phone from './FieldDefinitions/Phone'
+import Radio from './FieldDefinitions/Radio'
+import Richtextareaquill from './FieldDefinitions/Richtextareaquill'
+import Select from './FieldDefinitions/Select'
+import Textarea from './FieldDefinitions/Textarea'
+import Time from './FieldDefinitions/Time'
+import Total from './FieldDefinitions/Total'
+import Typeahead from './FieldDefinitions/Typeahead'
 import {emailValidator} from './utils'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
 
@@ -62,30 +63,31 @@ export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
 // v fields that cannot be transformed into conditional inputs v
 
 let FormComponents = {
-  Input,
-  Email,
-  Currency,
-  Textarea,
-  Richtextareaquill,
-  Datetime,
-  Time,
-  Date,
-  Select,
-  Radio,
   Checkbox,
-  Multicheckbox,
-  Metadata,
-  Header,
-  Typeahead,
-  Listselect,
+  ColorPicker,
   Conditionalinput,
-  Multiselect,
-  Phone,
+  Currency,
+  Date,
+  Datetime,
+  Email,
+  Header,
   Icon,
-  Number,
   ImportSelect,
+  Input,
+  Listselect,
+  Metadata,
+  Multicheckbox,
+  Multiselect,
+  Number,
+  Percentage,
+  Phone,
+  Radio,
+  Richtextareaquill,
+  Select,
+  Textarea,
+  Time,
   Total,
-  Percentage
+  Typeahead
 }
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
