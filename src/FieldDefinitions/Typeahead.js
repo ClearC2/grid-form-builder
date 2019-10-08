@@ -275,7 +275,9 @@ export class Typeahead extends Component {
     const {name = null, typeahead = {}} = config
     let {key = null, duplication = false, fieldvalue = null} = typeahead
     let {filter = {}} = typeahead
-
+    if (typeof filter === 'function') {
+      filter = filter()
+    }
     if (!key && !fieldvalue) {
       // eslint-disable-next-line
       console.error(`The JSON schema representation for ${name} does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}`)
