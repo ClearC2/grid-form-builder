@@ -1,3 +1,10 @@
+# [1.37.0](https://github.com/ClearC2/grid-form-builder/compare/v1.36.1...v1.37.0) (2019-10-08)
+
+
+### Features
+
+* **typeaheadFilter:** allow filter to be callback funtion if it is, typeahead calls it and expects a regular filter object back. otherwise exactly the same ([0c5abdb](https://github.com/ClearC2/grid-form-builder/commit/0c5abdb))
+
 ## [1.36.1](https://github.com/ClearC2/grid-form-builder/compare/v1.36.0...v1.36.1) (2019-09-26)
 
 
