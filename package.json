@@ -1,6 +1,6 @@
 {
   "name": "grid-form-builder",
-  "version": "1.35.4",
+  "version": "1.36.1",
   "description": "Form Builder built on top of React Grid Layout",
   "repository": {
     "type": "git",
@@ -120,6 +120,7 @@
     "moment": "^2.20.1",
     "prop-types": "^15.0.0",
     "react-datetime": "^2.11.1",
+    "react-color": "^2.17.3",
     "react-dnd": "^2.5.4",
     "react-dnd-html5-backend": "^2.5.4",
     "react-grid-layout": "^0.15.2",
