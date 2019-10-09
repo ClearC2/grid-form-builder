@@ -23,7 +23,7 @@ class ColorPicker extends Component {
     handleCascadeKeywordClick: PropTypes.func,
     draggable: PropTypes.bool,
     minChars: PropTypes.number,
-    formValues: PropTypes.instanceOf(Map),
+    formValues: PropTypes.object,
     Icon: PropTypes.any,
     requiredWarning: PropTypes.bool,
     inline: PropTypes.bool,
@@ -35,7 +35,7 @@ class ColorPicker extends Component {
 
   state = {
     picker: '',
-    color: '#FFFFFF',
+    color: '',
     id: ''
   }
 
@@ -50,10 +50,10 @@ class ColorPicker extends Component {
   }
 
   componentDidUpdate (p, s) {
-    const {didDrop, isOver} = this.props
+    let {didDrop, isOver, formValues = Map(), config = {}} = this.props
     if (didDrop && !p.didDrop && !isOver && p.isOver) {
       // if it was just previously over and dropped (this is to make this event only trigger once)
-      let {droppedItem, handleDragDropOnInput, config = {}, formValues = Map()} = this.props
+      let {droppedItem, handleDragDropOnInput} = this.props
       droppedItem = droppedItem === null ? null : droppedItem.widget
       const currentValue = formValues.get(config.name, '')
       config = {currentValue, ...config}
@@ -69,6 +69,11 @@ class ColorPicker extends Component {
       window.addEventListener('mousedown', this.clickListener)
     } else if (!!s.picker && !this.state.picker) {
       window.removeEventListener('mousedown', this.clickListener)
+    }
+
+    if (!formValues.equals(p.formValues)) {
+      const color = formValues.get(config.name) ? formValues.get(config.name) : ''
+      this.setState(() => ({color}))
     }
   }
 
@@ -129,11 +134,26 @@ class ColorPicker extends Component {
 
     this.input.focus()
 
-    if (typeof color === 'string') {
-      color = color.toUpperCase()
-    } else {
-      color = color.toString().toUpperCase()
+    if (color.hex) {
+      color = color.hex
     }
+
+    handleOnChange({
+      target: {
+        name: config.name,
+        value: color.toUpperCase()
+      }
+    })
+
+    this.setState(() => ({color}))
+  }
+
+  onApply = () => {
+    this.input.blur()
+    this.toggleActive()
+
+    const {config = {}, handleOnChange} = this.props
+    const {color} = this.state
 
     handleOnChange({
       target: {
@@ -141,34 +161,82 @@ class ColorPicker extends Component {
         value: color
       }
     })
-
-    this.setState({color})
-  }
-
-  onApply = () => {
-    this.input.blur()
-    this.toggleActive()
   }
 
   render () {
     const {
       connectDropTarget,
-      config
+      config,
+      inline,
+      cascadingKeyword,
+      CascadeIcon
     } = this.props
 
     const {styles = {}, required, Icon, label, classNames = {}} = config
     const {compactProps = {}, sketchProps = {}} = config
 
+    const style = {
+      container: {
+        display: 'flex',
+        flex: 1,
+        flexDirection: inline ? 'row' : 'column',
+        background: 'transparent',
+        ...styles.container
+      },
+      labelContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: inline ? 150 : '100%',
+        minWidth: inline ? 150 : '100%',
+        height: 15,
+        marginTop: inline ? 4 : 0,
+        background: 'transparent',
+        ...styles.labelContainer
+      },
+      label: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        lineHeight: inline ? '23px' : '15px',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        fontSize: inline ? '10pt' : '8pt',
+        background: 'transparent',
+        marginRight: 5,
+        color: !!cascadingKeyword && !CascadeIcon ? 'blue' : '#383e4b',
+        ...styles.label
+      },
+      icon: {
+        marginRight: 5,
+        width: 15,
+        height: 15,
+        marginTop: inline ? 3 : -1,
+        ...styles.icon
+      },
+      inputContainer: {
+        width: 'calc(100% + 15px)',
+        marginLeft: 0,
+        ...styles.inputContainer
+      },
+      input: {
+        width: 'calc(100% - 21px)',
+        ...styles.input
+      },
+      block: {
+        border: '1px solid',
+        ...styles.block
+      }
+    }
+
     return (
       connectDropTarget(
-        <div className={classNames.container} style={styles.container} onMouseUp={this.handleAnywhereClick}>
-          <div className={classNames.labelContainer} style={styles.labelContainer}>
+        <div className={classNames.container} style={style.container} onMouseUp={this.handleAnywhereClick}>
+          <div className={classNames.labelContainer} style={style.labelContainer}>
             {required && (
               <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>
             )}
-            {Icon && <Icon style={styles.icon} />}
+            {Icon && <Icon style={style.icon} />}
             <strong
-              style={styles.label}
+              style={style.label}
               className={`cursor-hand ${classNames.label}`}
             >
               {label}
@@ -176,7 +244,7 @@ class ColorPicker extends Component {
           </div>
           <div
             className={`row ${classNames.inputContainer}`}
-            style={{width: 'max-content', ...styles.inputContainer}}
+            style={{...style.inputContainer}}
             id={this.state.id}
           >
             <input
@@ -186,7 +254,7 @@ class ColorPicker extends Component {
               onChange={e => this.onColorChange(e.target.value)}
               spellCheck={false}
               className={classNames.input}
-              style={styles.input}
+              style={style.input}
             />
             <div
               className={`color-picker-block ${classNames.block}`}
@@ -195,7 +263,7 @@ class ColorPicker extends Component {
                 this.input.focus()
               }}
               style={{
-                ...styles.block,
+                ...style.block,
                 background: this.state.color
               }}
             />
@@ -217,14 +285,14 @@ class ColorPicker extends Component {
               }
               { ['compact'].includes(this.state.picker) &&
               <CompactPicker
-                onChange={e => this.onColorChange(e.hex)}
+                onChange={e => this.onColorChange(e)}
                 color={this.state.color}
                 {...compactProps}
               />
               }
               { ['sketch'].includes(this.state.picker) &&
               <SketchPicker
-                onChange={e => this.onColorChange(e.hex)}
+                onChange={e => this.onColorChange(e)}
                 color={this.state.color}
                 {...sketchProps}
               />
