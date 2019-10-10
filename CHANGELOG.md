@@ -1,3 +1,15 @@
+# [1.38.0](https://github.com/ClearC2/grid-form-builder/compare/v1.37.0...v1.38.0) (2019-10-10)
+
+
+### Bug Fixes
+
+* **conditional-table:** pass props to table, add list toggle ([31401ed](https://github.com/ClearC2/grid-form-builder/commit/31401ed))
+
+
+### Features
+
+* **react-select:** add createable prop to config ([482578a](https://github.com/ClearC2/grid-form-builder/commit/482578a))
+
 # [1.37.0](https://github.com/ClearC2/grid-form-builder/compare/v1.36.1...v1.37.0) (2019-10-08)
 
 
