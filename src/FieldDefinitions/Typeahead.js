@@ -582,7 +582,7 @@ export class Typeahead extends Component {
                 className={className}
                 createOptionPosition='first'
                 formatCreateLabel={val => `Click or Tab to Create "${val}"`}
-                inputValue={inputValue || 'it'}
+                inputValue={inputValue}
                 isClearable
                 isDisabled={disabled}
                 isMulti={multi}
