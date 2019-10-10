@@ -3,6 +3,7 @@ import {Map, List, Set} from 'immutable'
 import PropTypes from 'prop-types'
 import Toggle from './Toggle'
 import {CONDITIONS} from '../../../index'
+
 const X_ICON_CLASS = 'icon-close pull-right pointer'
 
 export default class ConditionalTable extends Component {
@@ -21,7 +22,8 @@ export default class ConditionalTable extends Component {
     enableDelete: PropTypes.bool,
     onQueryChange: PropTypes.func,
     getDefaultCondition: PropTypes.func,
-    getFieldSchema: PropTypes.func
+    getFieldSchema: PropTypes.func,
+    enableListToggle: PropTypes.bool
   }
 
   constructor (props) {
@@ -35,7 +37,8 @@ export default class ConditionalTable extends Component {
     this.state = {
       conditionType: 'and',
       noValueConditions: Set(noValueConditions),
-      showEditReportFieldsModal: false
+      showEditReportFieldsModal: false,
+      listOpen: true
     }
   }
 
@@ -43,7 +46,8 @@ export default class ConditionalTable extends Component {
     formValues: {},
     enableToggle: true,
     enableDelete: true,
-    toggleValue: 'and'
+    toggleValue: 'and',
+    enableListToggle: false
   }
 
   componentWillReceiveProps (props) {
@@ -350,6 +354,8 @@ export default class ConditionalTable extends Component {
           return null
         }
       })
+    const {listOpen} = this.state
+
     return (
       <div className='table-responsive' style={{width: '100%', maxHeight: '620px'}}>
         <div style={{width: '100%', maxHeight: '550px', overflowY: 'auto'}}>
@@ -370,9 +376,21 @@ export default class ConditionalTable extends Component {
                 </th>
               </tr>
             </thead>
-            {tbody.length ? <tbody>
+            {tbody.length && listOpen ? <tbody>
               {tbody}
             </tbody> : null}
+            {this.props.enableListToggle && <div
+              style={{
+                width: '100%',
+                textAlign: 'center',
+                transform: `scale(1, ${listOpen ? '' : '-'}1)`,
+                userSelect: 'none'
+              }}
+              className='cursor-hand'
+              onClick={() => this.setState(() => ({listOpen: !listOpen}))}
+            >
+              ^
+            </div>}
             <tfoot>
               <tr>
                 <td>

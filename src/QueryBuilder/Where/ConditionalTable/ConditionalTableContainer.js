@@ -88,7 +88,9 @@ class _ConditionalTableContainer extends Component {
     onQueryChange: PropTypes.func,
     title: PropTypes.string,
     enableToggle: PropTypes.bool,
-    enableDelete: PropTypes.bool
+    enableDelete: PropTypes.bool,
+    onToggleChange: PropTypes.func,
+    enableListToggle: PropTypes.bool
   }
 
   static defaultProps = {
@@ -151,6 +153,9 @@ class _ConditionalTableContainer extends Component {
         getFieldSchema={this.getFieldSchema}
         enableDelete={this.props.enableDelete}
         enableToggle={this.props.enableToggle}
+        onToggleChange={this.props.onToggleChange}
+        enableListToggle={this.props.enableListToggle}
+        {...this.props}
       />
     )
   }
