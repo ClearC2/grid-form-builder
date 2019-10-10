@@ -1,3 +1,8 @@
+/* issue with react-select https://github.com/JedWatson/react-select/issues/3068 */
+input[id^='react-select-'] {
+  opacity: 1 !important;
+}
+
 div.grid-form-builder-parent .warn-required::placeholder {
   color: red;
   opacity: 1;
