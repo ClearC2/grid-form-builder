@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {List, fromJS, Map} from 'immutable'
-import ReactSelect from 'react-select'
+import ReactSelect, {Creatable} from 'react-select'
 import {DropTarget} from 'react-dnd'
 import {reactSelectStyles} from '../react-select-style'
 import PropTypes from 'prop-types'
@@ -158,7 +158,7 @@ export class Multiselect extends Component {
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
-    const {label = name} = config
+    const {label = name, creatable = false} = config
     const warn = requiredWarning && this.state.fieldValues.length === 0 && required
     let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
@@ -230,6 +230,7 @@ export class Multiselect extends Component {
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
     placeholder = warn ? '* This Field Is Required' : placeholder
+    const Component = creatable ? Creatable : ReactSelect
     return (
       connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
@@ -264,7 +265,7 @@ export class Multiselect extends Component {
               <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </div>
-          <ReactSelect
+          <Component
             autoFocus={this.props.config.autofocus}
             className={className}
             isDisabled={disabled}
@@ -276,7 +277,7 @@ export class Multiselect extends Component {
             placeholder={placeholder}
             styles={{...reactSelectStyles(), ...inputStyles}}
             tabIndex={tabIndex}
-            value={this.state.fieldValues}
+            defaultValue={this.state.fieldValues}
           />
         </div>
       )

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
 import PropTypes from 'prop-types'
-import ReactSelect from 'react-select'
+import ReactSelect, {Creatable} from 'react-select'
 import {DropTarget} from 'react-dnd'
 import {reactSelectStyles} from '../react-select-style'
 import {isMobile} from '../utils'
@@ -166,7 +166,7 @@ export class Select extends Component {
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     if (!name) return null
-    const {label = name} = config
+    const {label = name, creatable = false} = config
     const warn = requiredWarning && this.state.fieldValues.length === 0 && required
     let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
@@ -234,6 +234,7 @@ export class Select extends Component {
     if (config.clearable === false) {
       clearable = false
     }
+    const Component = creatable ? Creatable : ReactSelect
     return (
       connectDropTarget(
         <div
@@ -265,7 +266,7 @@ export class Select extends Component {
             )}
           </div>
           <div onMouseUp={this.openMenu}>
-            <ReactSelect
+            <Component
               autoFocus={this.props.config.autofocus}
               className={className}
               isClearable={clearable}
@@ -283,7 +284,7 @@ export class Select extends Component {
               placeholder={placeholder}
               styles={inputStyles}
               tabIndex={tabIndex}
-              value={value}
+              defaultValue={value}
             />
           </div>
         </div>
