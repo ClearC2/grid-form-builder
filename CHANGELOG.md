@@ -1,3 +1,11 @@
+## [1.38.1](https://github.com/ClearC2/grid-form-builder/compare/v1.38.0...v1.38.1) (2019-10-10)
+
+
+### Bug Fixes
+
+* **typeahead:** allow users to select inside typeahead ([650e2d1](https://github.com/ClearC2/grid-form-builder/commit/650e2d1))
+* **typeahead:** remove old code ([3ecb7de](https://github.com/ClearC2/grid-form-builder/commit/3ecb7de))
+
 # [1.38.0](https://github.com/ClearC2/grid-form-builder/compare/v1.37.0...v1.38.0) (2019-10-10)
 
 
