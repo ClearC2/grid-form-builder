@@ -1,3 +1,10 @@
+## [1.38.2](https://github.com/ClearC2/grid-form-builder/compare/v1.38.1...v1.38.2) (2019-10-11)
+
+
+### Bug Fixes
+
+* **typeahead:** account for values no in form values ([8d066b8](https://github.com/ClearC2/grid-form-builder/commit/8d066b8))
+
 ## [1.38.1](https://github.com/ClearC2/grid-form-builder/compare/v1.38.0...v1.38.1) (2019-10-10)
 
 
