@@ -158,7 +158,9 @@ export class Typeahead extends Component {
     if (e.action === 'input-change') {
       this.setState({inputValue: val})
     } else if (e.action === 'menu-close') {
-      this.setState({inputValue: this.props.formValues.get(this.props.config.name)})
+      if (this.props.formValues.get(this.props.config.name)) {
+        this.setState({inputValue: this.props.formValues.get(this.props.config.name)})
+      }
     }
   }
 
