@@ -244,7 +244,10 @@ export class Typeahead extends Component {
         })
         target.value = value
       }
-
+      // this prevent input characters from showing in multi fields when selection options
+      if (multi) {
+        this.setState({inputValue: ''})
+      }
       handleOnChange({target})
     } else {
       this.handleSingleValueChange(newValue)
