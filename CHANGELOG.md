@@ -1,3 +1,10 @@
+## [1.38.4](https://github.com/ClearC2/grid-form-builder/compare/v1.38.3...v1.38.4) (2019-10-15)
+
+
+### Bug Fixes
+
+* **typeahead:** remove input char in multi selections ([438d79d](https://github.com/ClearC2/grid-form-builder/commit/438d79d))
+
 ## [1.38.3](https://github.com/ClearC2/grid-form-builder/compare/v1.38.2...v1.38.3) (2019-10-15)
 
 
