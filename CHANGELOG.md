@@ -1,3 +1,10 @@
+## [1.38.3](https://github.com/ClearC2/grid-form-builder/compare/v1.38.2...v1.38.3) (2019-10-15)
+
+
+### Bug Fixes
+
+* **typeahead:** prevent duplicate in multi fields ([0cc1e19](https://github.com/ClearC2/grid-form-builder/commit/0cc1e19))
+
 ## [1.38.2](https://github.com/ClearC2/grid-form-builder/compare/v1.38.1...v1.38.2) (2019-10-11)
 
 
