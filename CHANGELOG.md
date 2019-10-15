@@ -1,3 +1,10 @@
+## [1.38.5](https://github.com/ClearC2/grid-form-builder/compare/v1.38.4...v1.38.5) (2019-10-15)
+
+
+### Bug Fixes
+
+* **typeahead:** on save show duplicate values ([2916c76](https://github.com/ClearC2/grid-form-builder/commit/2916c76))
+
 ## [1.38.4](https://github.com/ClearC2/grid-form-builder/compare/v1.38.3...v1.38.4) (2019-10-15)
 
 
