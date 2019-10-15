@@ -100,7 +100,7 @@ export class Typeahead extends Component {
       }
     }
 
-    if (formValues.get(config.name) !== p.formValues.get(config.name)) {
+    if ((formValues.get(config.name) !== p.formValues.get(config.name)) && !config.multi) {
       this.setState({inputValue: formValues.get(config.name)})
     }
 
@@ -153,11 +153,11 @@ export class Typeahead extends Component {
   }
 
   onInputChange = (val, e) => {
+    const {multi} = this.props.config
     this.openMenu()
-
     if (e.action === 'input-change') {
       this.setState({inputValue: val})
-    } else if (e.action === 'menu-close') {
+    } else if (e.action === 'menu-close' && !multi) {
       if (this.props.formValues.get(this.props.config.name)) {
         this.setState({inputValue: this.props.formValues.get(this.props.config.name)})
       }
