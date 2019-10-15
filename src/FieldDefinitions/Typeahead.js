@@ -60,7 +60,7 @@ export class Typeahead extends Component {
   componentDidMount () {
     const {formValues, config = {}} = this.props
 
-    if (formValues.get(config.name) && !this.state.inputValue) {
+    if (formValues.get(config.name) && !this.state.inputValue && !config.multi) {
       this.setState({inputValue: formValues.get(config.name)})
     }
   }
