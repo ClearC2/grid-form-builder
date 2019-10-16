@@ -1,3 +1,10 @@
+# [1.39.0](https://github.com/ClearC2/grid-form-builder/compare/v1.38.6...v1.39.0) (2019-10-16)
+
+
+### Features
+
+* **select:** makes select a controlled input ([1375391](https://github.com/ClearC2/grid-form-builder/commit/1375391))
+
 ## [1.38.6](https://github.com/ClearC2/grid-form-builder/compare/v1.38.5...v1.38.6) (2019-10-16)
 
 
