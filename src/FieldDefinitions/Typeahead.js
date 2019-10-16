@@ -412,6 +412,15 @@ export class Typeahead extends Component {
     }
   }
 
+  onKeyDown = e => {
+    const {allowcreate = false, onKeyDown = () => null} = this.props.config
+    // This fixes the issue where users type and tab too quickly on create fields and the value does not register in the system
+    if (e.keyCode === 9 && allowcreate && this.state.inputValue) {
+      this.handleChange({value: this.state.inputValue}, {action: 'create-option'})
+    }
+    onKeyDown()
+  }
+
   render = () => {
     const {
       inline,
@@ -603,7 +612,7 @@ export class Typeahead extends Component {
                 onChange={this.handleChange}
                 onFocus={this.handleOnFocus}
                 onInputChange={this.onInputChange}
-                onKeyDown={onKeyDown}
+                onKeyDown={this.onKeyDown}
                 onMouseDown={this.onMouseDown}
                 placeholder={placeholder}
                 ref={r => { this.input = r }}
