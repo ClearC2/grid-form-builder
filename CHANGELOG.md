@@ -1,3 +1,10 @@
+## [1.38.6](https://github.com/ClearC2/grid-form-builder/compare/v1.38.5...v1.38.6) (2019-10-16)
+
+
+### Bug Fixes
+
+* **typeahead:** tabbing too quickly ([6aaa84f](https://github.com/ClearC2/grid-form-builder/commit/6aaa84f))
+
 ## [1.38.5](https://github.com/ClearC2/grid-form-builder/compare/v1.38.4...v1.38.5) (2019-10-15)
 
 
