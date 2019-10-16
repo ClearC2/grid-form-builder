@@ -278,6 +278,7 @@ export class Multiselect extends Component {
             styles={{...reactSelectStyles(), ...inputStyles}}
             tabIndex={tabIndex}
             defaultValue={this.state.fieldValues}
+            value={this.state.fieldValues}
           />
         </div>
       )
