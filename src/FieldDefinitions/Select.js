@@ -235,6 +235,7 @@ export class Select extends Component {
       clearable = false
     }
     const Component = creatable ? Creatable : ReactSelect
+
     return (
       connectDropTarget(
         <div
@@ -285,6 +286,7 @@ export class Select extends Component {
               styles={inputStyles}
               tabIndex={tabIndex}
               defaultValue={value}
+              value={value}
             />
           </div>
         </div>
