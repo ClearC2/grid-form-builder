@@ -155,7 +155,10 @@ export default class ConditionalTable extends Component {
         }
       }
       if (newValue.size > 0 || this.state.noValueConditions.has(value.condition)) {
-        let cond = formValues[key].condition || 'contains'
+        let cond = 'contains'
+        if (formValues[key] && formValues[key].condition) {
+          cond = formValues[key].condition
+        }
         if (newValue.size > CONDITIONS[cond].maxFields) {
           newValue = newValue.slice(0, CONDITIONS[cond].maxFields)
         }
@@ -260,7 +263,13 @@ export default class ConditionalTable extends Component {
     }
   }
 
-  getConditionValue = (key) => this.props.formValues[key].condition
+  getConditionValue = (key) => {
+    if (this.props.formValues[key] && this.props.formValues[key].condition) {
+      return this.props.formValues[key].condition
+    } else {
+      return 'contains'
+    }
+  }
   getFieldType = (fieldName) => {
     let type = ''
     this.props.formSchema.jsonschema.layout.forEach((field) => {
