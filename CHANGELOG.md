@@ -1,3 +1,10 @@
+## [1.40.1](https://github.com/ClearC2/grid-form-builder/compare/v1.40.0...v1.40.1) (2019-10-17)
+
+
+### Bug Fixes
+
+* **condTable:** undefined condition at times for conditionalTable ([16c1791](https://github.com/ClearC2/grid-form-builder/commit/16c1791))
+
 # [1.40.0](https://github.com/ClearC2/grid-form-builder/compare/v1.39.0...v1.40.0) (2019-10-16)
 
 
