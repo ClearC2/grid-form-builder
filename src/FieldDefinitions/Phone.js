@@ -25,7 +25,8 @@ export class Phone extends Component {
     CascadeIcon: PropTypes.func,
     tabIndex: PropTypes.number,
     LinkIcon: PropTypes.func,
-    handleLinkClick: PropTypes.func
+    handleLinkClick: PropTypes.func,
+    autoComplete: PropTypes.string
   }
 
   componentDidUpdate = p => {
@@ -87,7 +88,8 @@ export class Phone extends Component {
       cascadingKeyword,
       CascadeIcon,
       tabIndex,
-      LinkIcon
+      LinkIcon,
+      autoComplete
     } = this.props
     const {name = null, required = false, delimiter = ' ', onKeyDown = () => null, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
@@ -186,6 +188,7 @@ export class Phone extends Component {
           </div>
           <Cleave
             placeholder={placeholder}
+            autoComplete={autoComplete}
             options={{phone: true, phoneRegionCode: 'US', delimiter}}
             onMouseDown={this.onMouseDown}
             onChange={this.handleChange}

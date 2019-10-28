@@ -24,7 +24,8 @@ class Email extends Component {
     CascadeIcon: PropTypes.func,
     tabIndex: PropTypes.number,
     LinkIcon: PropTypes.func,
-    handleLinkClick: PropTypes.func
+    handleLinkClick: PropTypes.func,
+    autoComplete: PropTypes.string
   }
 
   state = {
@@ -108,7 +109,8 @@ class Email extends Component {
       cascadingKeyword,
       CascadeIcon,
       tabIndex,
-      LinkIcon
+      LinkIcon,
+      autoComplete
     } = this.props
     const {name = null, required = false, onKeyDown = () => null, link} = config
     if (!name) {
@@ -218,6 +220,7 @@ class Email extends Component {
           </div>
           <input
             autoFocus={this.props.config.autofocus}
+            autoComplete={autoComplete}
             className={className}
             placeholder={placeholder}
             onMouseDown={this.onMouseDown}
