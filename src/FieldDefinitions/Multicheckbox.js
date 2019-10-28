@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, List} from 'immutable'
+import {Map, List, fromJS} from 'immutable'
 import {DropTarget} from 'react-dnd'
 import PropTypes from 'prop-types'
 
@@ -31,16 +31,37 @@ export class Multicheckbox extends Component {
 
   constructor (props) {
     super(props)
-    const {field, formValues = Map(), opts = {}} = props
+    const {formValues = Map(), config = {}} = props
+    const field = config.name
     const value = formValues.get(field, List())
-    const {options = List()} = opts
+    let options = []
+    if (config.keyword && config.keyword.options) {
+      options = config.keyword.options
+    }
     let currentVals = List()
-    options.map(option => {
-      if (value.indexOf(option) > -1) currentVals = currentVals.push(option)
+    options.forEach(option => {
+      if (value.indexOf(option.value) > -1) currentVals = currentVals.push(option.value)
     })
     this.state = {
       value: currentVals
     }
+  }
+
+  validateFormValuesAgainstAvailableOptions = () => {
+    const {formValues = Map(), config = {}} = this.props
+    const field = config.name
+    const value = formValues.get(field, List())
+    let options = []
+    if (config.keyword && config.keyword.options) {
+      options = config.keyword.options
+    }
+    let currentVals = List()
+    options.forEach(option => {
+      if (value.indexOf(option.value) > -1) currentVals = currentVals.push(option.value)
+    })
+    this.setState(() => ({
+      value: currentVals
+    }))
   }
 
   handleOnChange = changingVal => {
@@ -59,6 +80,14 @@ export class Multicheckbox extends Component {
     const {value} = this.state
     if (value.size !== s.value.size) {
       handleOnChange({target: {name: name, value}})
+    }
+    const newPropValue = fromJS(this.props.formValues.get(name, []))
+    const oldPropValue = fromJS(p.formValues.get(name, []))
+    if (
+      !oldPropValue.equals(newPropValue) &&
+      !newPropValue.equals(s.value)
+    ) {
+      this.validateFormValuesAgainstAvailableOptions()
     }
 
     const {didDrop, isOver} = this.props
