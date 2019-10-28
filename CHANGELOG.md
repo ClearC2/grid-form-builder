@@ -1,3 +1,10 @@
+# [1.41.0](https://github.com/ClearC2/grid-form-builder/compare/v1.40.2...v1.41.0) (2019-10-28)
+
+
+### Features
+
+* **add-autocomplete:** add autocomplete to email and phone types ([9d1eb8d](https://github.com/ClearC2/grid-form-builder/commit/9d1eb8d))
+
 ## [1.40.2](https://github.com/ClearC2/grid-form-builder/compare/v1.40.1...v1.40.2) (2019-10-28)
 
 
