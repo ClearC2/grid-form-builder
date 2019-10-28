@@ -1,3 +1,17 @@
+## [1.40.1](https://github.com/ClearC2/grid-form-builder/compare/v1.40.0...v1.40.1) (2019-10-17)
+
+
+### Bug Fixes
+
+* **condTable:** undefined condition at times for conditionalTable ([16c1791](https://github.com/ClearC2/grid-form-builder/commit/16c1791))
+
+# [1.40.0](https://github.com/ClearC2/grid-form-builder/compare/v1.39.0...v1.40.0) (2019-10-16)
+
+
+### Features
+
+* **multiselect:** multi select is now a controlled input ([733d87e](https://github.com/ClearC2/grid-form-builder/commit/733d87e))
+
 # [1.39.0](https://github.com/ClearC2/grid-form-builder/compare/v1.38.6...v1.39.0) (2019-10-16)
 
 
