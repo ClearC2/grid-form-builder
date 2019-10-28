@@ -1,3 +1,10 @@
+## [1.40.2](https://github.com/ClearC2/grid-form-builder/compare/v1.40.1...v1.40.2) (2019-10-28)
+
+
+### Bug Fixes
+
+* **multicheckbox:** multicheckbox should now properly update the current values if the initial data changes ([520d299](https://github.com/ClearC2/grid-form-builder/commit/520d299))
+
 ## [1.40.1](https://github.com/ClearC2/grid-form-builder/compare/v1.40.0...v1.40.1) (2019-10-17)
 
 
