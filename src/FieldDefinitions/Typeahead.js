@@ -630,6 +630,7 @@ export class Typeahead extends Component {
                 isDisabled={disabled}
                 isMulti={multi}
                 loadOptions={!isZipCode ? this.loadOptions : undefined}
+                classNamePrefix={'typeahead'}
                 menuIsOpen={!isMobile ? menuIsOpen : undefined}
                 menuPlacement={!isMobile ? menuPlacement : undefined}
                 menuPortalTarget={document.body}

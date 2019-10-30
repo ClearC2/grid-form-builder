@@ -306,3 +306,7 @@ div.grid-form-builder-parent .react-grid-item:focus-within, div.grid-form-builde
 :-moz-ui-invalid {
   box-shadow: none;
 }
+
+.typeahead__input > input {
+  width: 100% !important;
+}
