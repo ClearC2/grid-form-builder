@@ -1,3 +1,10 @@
+## [1.41.1](https://github.com/ClearC2/grid-form-builder/compare/v1.41.0...v1.41.1) (2019-10-30)
+
+
+### Bug Fixes
+
+* **typeahead:** being hidden in ag-grid ([687d8e8](https://github.com/ClearC2/grid-form-builder/commit/687d8e8))
+
 # [1.41.0](https://github.com/ClearC2/grid-form-builder/compare/v1.40.2...v1.41.0) (2019-10-28)
 
 
