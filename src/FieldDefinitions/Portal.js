@@ -31,7 +31,7 @@ class Portal extends Component {
     const {portalTarget} = this.props
     const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
-    this.element.style.cssText = 'position: absolute;z-index: 9000'
+    this.element.style.cssText = 'position: absolute;z-index: 10000'
     this.element.id = id
 
     portal = document.getElementsByTagName(portalTarget)[0]
@@ -65,8 +65,15 @@ class Portal extends Component {
       offset['marginLeft'] = target.x
       offset['marginTop'] = target.top + target.height
 
+      if (style.portalLeft) {
+        offset.marginLeft += style.portalLeft
+      }
+
+      if (style.portalTop) {
+        offset.marginTop += style.portalTop
+      }
       // eslint-disable-next-line
-      const cssText = `position: absolute;z-index: 9000;margin-left:${offset.marginLeft}px;margin-top:${offset.marginTop}px`
+      const cssText = `position: absolute;z-index: 10000;margin-left:${offset.marginLeft}px;margin-top:${offset.marginTop}px`
 
       this.element.setAttribute('style', cssText)
     }
