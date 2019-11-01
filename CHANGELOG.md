@@ -1,3 +1,10 @@
+## [1.41.2](https://github.com/ClearC2/grid-form-builder/compare/v1.41.1...v1.41.2) (2019-11-01)
+
+
+### Bug Fixes
+
+* **portal:** export the portal, add props to portal container ([cd67831](https://github.com/ClearC2/grid-form-builder/commit/cd67831))
+
 ## [1.41.1](https://github.com/ClearC2/grid-form-builder/compare/v1.41.0...v1.41.1) (2019-10-30)
 
 
