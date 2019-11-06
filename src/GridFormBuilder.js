@@ -30,21 +30,7 @@ import Total from './FieldDefinitions/Total'
 import Typeahead from './FieldDefinitions/Typeahead'
 import {emailValidator} from './utils'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
-
-let IconLibrary = {}
-export function initComponentIconLibrary (defs = {}) {
-  if (typeof defs !== 'object') {
-    IconLibrary = {}
-    return
-  }
-  let formattedKeys = {}
-  Object.keys(defs).map(name => {
-    const component = defs[name]
-    name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
-    formattedKeys[name] = component
-  })
-  IconLibrary = formattedKeys
-}
+import {IconLibrary} from './Icons'
 
 export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
   let fields = fieldsToUpdate
@@ -148,6 +134,7 @@ export default class FormBuilder extends Component {
   }
 
   attachBuffer = null
+
   attachInputFocusListeners = () => {
     clearTimeout(this.attachBuffer)
     this.attachBuffer = null
@@ -199,7 +186,7 @@ export default class FormBuilder extends Component {
     jsonschema = jsonschema || form || {}
     let {layout = []} = jsonschema
     layout = (typeof layout.toJS === 'function') ? layout.toJS() : layout
-    let reasons = []
+    const reasons = []
     layout.map(field => {
       const {config = {}} = field
       const {required = false, name, label = name, type} = config
@@ -282,10 +269,10 @@ export default class FormBuilder extends Component {
     const normalFields = []
     let {form, jsonschema} = formSchema
     jsonschema = jsonschema || form || {}
-    let {layout = []} = jsonschema
+    const {layout = []} = jsonschema
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
     let specifiedTabs = Set()
-    layout.map(field => {
+    layout.forEach(field => {
       const {config = {}} = field
       if (config.tabindex) specifiedTabs = specifiedTabs.add(config.tabindex)
     })
@@ -387,7 +374,7 @@ export default class FormBuilder extends Component {
         )
       }
     })
-    let P = {}
+    const P = {}
     if (this.props.noStore) P.store = {subscribe: () => {}, getState: () => Map(), dispatch: () => {}}
     return (
       <div
