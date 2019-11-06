@@ -32,22 +32,6 @@ import {emailValidator} from './utils'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
 import {IconLibrary} from './Icons'
 
-export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
-  let fields = fieldsToUpdate
-  if (!Array.isArray(fields)) fields = [fields]
-  let formValues = currentFormValues
-  if (typeof formValues === 'undefined') {
-    // eslint-disable-next-line
-    console.error('You did something wrong, grid form builder is trying to update values but there are no values.')
-    return Map()
-  }
-  fields.map(field => {
-    formValues = formValues.set(field.target.name, field.target.value)
-  })
-  return formValues
-}
-// v fields that cannot be transformed into conditional inputs v
-
 let FormComponents = {
   Checkbox,
   Colorpicker,
