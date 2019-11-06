@@ -24,10 +24,11 @@ export {default as Percentage} from './FieldDefinitions/Percentage'
 export {default as Total} from './FieldDefinitions/Total'
 export {default as Portal} from './FieldDefinitions/Portal'
 // Components from the proud package formerly known as query-builder the magnificent
-export {default as FormBuilder, initCustomFormComponents} from './GridFormBuilder'
+export {default as FormBuilder} from './GridFormBuilder'
 export {default as ConditionalTable, convertQueryToFormValues} from './QueryBuilder/Where/ConditionalTable/ConditionalTableContainer'
 export {ReportBuilder, buildAvailableColumnsFromFieldDefs, buildDefaultColumnsFromQuery} from './QueryBuilder/ReportBuilder/ReportBuilder'
 export {initComponentIconLibrary} from './Icons'
+export {initCustomFormComponents} from './FieldDefinitions'
 
 const updateFormValues = () => console.error('updateFormValues is depricated and has been removed. You must handle your own form values.') //eslint-disable-line
 

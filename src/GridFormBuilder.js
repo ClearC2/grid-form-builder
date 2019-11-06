@@ -3,66 +3,10 @@ import PropTypes from 'prop-types'
 import $ from 'jquery'
 import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
-import Checkbox from './FieldDefinitions/Checkbox'
-import Colorpicker from './FieldDefinitions/ColorPicker'
-import Conditionalinput from './FieldDefinitions/Conditionalinput'
-import Currency from './FieldDefinitions/Currency'
-import Date from './FieldDefinitions/Date'
-import Datetime from './FieldDefinitions/Datetime'
-import Email from './FieldDefinitions/Email'
-import Header from './FieldDefinitions/Header'
-import Icon from './FieldDefinitions/Icon'
-import ImportSelect from './FieldDefinitions/ImportSelect'
-import Input from './FieldDefinitions/Input'
-import Listselect from './FieldDefinitions/Listselect'
-import Metadata from './FieldDefinitions/Metadata'
-import Multicheckbox from './FieldDefinitions/Multicheckbox'
-import Multiselect from './FieldDefinitions/Multiselect'
-import Number from './FieldDefinitions/Number'
-import Percentage from './FieldDefinitions/Percentage'
-import Phone from './FieldDefinitions/Phone'
-import Radio from './FieldDefinitions/Radio'
-import Richtextareaquill from './FieldDefinitions/Richtextareaquill'
-import Select from './FieldDefinitions/Select'
-import Textarea from './FieldDefinitions/Textarea'
-import Time from './FieldDefinitions/Time'
-import Total from './FieldDefinitions/Total'
-import Typeahead from './FieldDefinitions/Typeahead'
 import {emailValidator} from './utils'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
 import {IconLibrary} from './Icons'
-
-let FormComponents = {
-  Checkbox,
-  Colorpicker,
-  Conditionalinput,
-  Currency,
-  Date,
-  Datetime,
-  Email,
-  Header,
-  Icon,
-  ImportSelect,
-  Input,
-  Listselect,
-  Metadata,
-  Multicheckbox,
-  Multiselect,
-  Number,
-  Percentage,
-  Phone,
-  Radio,
-  Richtextareaquill,
-  Select,
-  Textarea,
-  Time,
-  Total,
-  Typeahead
-}
-export function initCustomFormComponents (defs = {}) {
-  defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
-  FormComponents = {...FormComponents, ...defs}
-}
+import {FormComponents} from './FieldDefinitions'
 
 export default class FormBuilder extends Component {
   static propTypes = {
