@@ -1,16 +1,16 @@
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import {cloneElement, useContext} from 'react'
+import {FormValueContext} from './FormBuilder'
 
-export default class InputContainer extends Component {
-  static propTypes = {
-    config: PropTypes.object,
-    input: PropTypes.func
+const InputContainer = props => {
+  const {children, config, ...rest} = props
+  const {draggable, readonly} = props
+  const [formValues] = useContext(FormValueContext)
+  if (draggable || readonly || +formValues.get('cfd_userisreadonly', '0') === 1) {
+    config.readonly = true
   }
-
-  render () {
-    const {config, input: Input} = this.props
-    return (
-      <Input config={config} />
-    )
-  }
+  return (
+    cloneElement(children, {...rest, config, formValues})
+  )
 }
+
+export default InputContainer

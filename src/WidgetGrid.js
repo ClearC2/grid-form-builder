@@ -1,18 +1,18 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
+import {connect} from 'react-redux' //eslint-disable-line
 import {Map, fromJS} from 'immutable'
 import sizeMe from 'react-sizeme'
 import {Responsive} from 'react-grid-layout'
 import CustomGridWidthProvider from './CustomGridWidthProvider'
 
-import {setComponentLayouts} from './redux'
+import {setComponentLayouts} from './redux' //eslint-disable-line
 
 const GridLayout = CustomGridWidthProvider(Responsive)
 const SizeMeHOC = sizeMe({monitorHeight: true})
 const SizedWidgetWrapper = SizeMeHOC(WidgetWrapper)
 
-export class Grid extends Component {
+class Grid extends Component { //eslint-disable-line
   static propTypes = {
     setComponentLayouts: PropTypes.func.isRequired,
     handleRemoveWidgetClick: PropTypes.func,
@@ -39,7 +39,7 @@ export class Grid extends Component {
   handleLayoutChange = (currentLayout, allLayouts) => {
     if (!this.props.saveLayout) return
 
-    const {appState, compName, dashboard = false, location = {pathname: '/'}} = this.props
+    const {appState, compName, dashboard = false, location = {pathname: '/'}} = this.props //eslint-disable-line
     let keyPath = [compName]
     const pathDashboard = location.pathname.split('/')[1] ? location.pathname.split('/')[1] : 'landingPage'
     if (dashboard) {
@@ -64,7 +64,7 @@ export class Grid extends Component {
   handleRemoveWidgetClick = id => {
     const bp = this.determineBreakpoint() || 'xxl'
     const layout = this.props.layouts[bp] || []
-    const {compName, location = {pathname: '/'}, dashboard = false} = this.props
+    const {compName, location = {pathname: '/'}, dashboard = false} = this.props //eslint-disable-line
 
     let newLayouts = {
       ...this.props.layouts,
@@ -113,7 +113,7 @@ export class Grid extends Component {
   cols = {xxl: 12, xl: 12, lg: 12, md: 12, sm: 12, xs: 12, xxs: 12}
 
   componentDidMount = () => {
-    const {compName, location = {pathname: '/'}, dashboard = false} = this.props
+    const {compName, location = {pathname: '/'}, dashboard = false} = this.props //eslint-disable-line
     let name = compName
     if (dashboard) {
       const pathDashboard = location.pathname.split('/')[1] ? location.pathname.split('/')[1] : 'landingPage'
@@ -155,7 +155,7 @@ export class Grid extends Component {
       }
 
       if (!dataGrid) {
-        const {compName, appState, location = {pathname: '/'}, dashboard = false} = this.props
+        const {compName, appState, location = {pathname: '/'}, dashboard = false} = this.props //eslint-disable-line
         let name = [compName]
         if (dashboard) {
           const pathDashboard = location.pathname.split('/')[1] ? location.pathname.split('/')[1] : 'landingPage'
@@ -209,7 +209,7 @@ export class Grid extends Component {
         }
       })
     } else {
-      const {compName, appState, location = {pathname: '/'}, dashboard = false} = this.props
+      const {compName, appState, location = {pathname: '/'}, dashboard = false} = this.props //eslint-disable-line
       let name = [compName]
       if (dashboard) {
         const pathDashboard = location.pathname.split('/')[1] ? location.pathname.split('/')[1] : 'landingPage'
@@ -220,11 +220,11 @@ export class Grid extends Component {
       if (layouts.undef) layouts = {[breakpoint]: layout}
     }
 
-    const {verticalCompact = true, margin = [10, 10], ...rest} = this.props
+    const {verticalCompact = true, margin = [10, 10], ...rest} = this.props //eslint-disable-line
 
     let rowHeight = 25
-    if (this.props.rowHeight) {
-      rowHeight = this.props.rowHeight
+    if (this.props.rowHeight) { //eslint-disable-line
+      rowHeight = this.props.rowHeight //eslint-disable-line
     } else {
       switch (breakpoint) {
         case 'xxs': rowHeight = 10; break
@@ -289,10 +289,10 @@ function WidgetWrapper ({size, child, widgetKey, handleRemoveWidgetClick}) {
   )
 }
 
-const props = state => {
+const props = state => { // eslint-disable-line
   return {
     appState: state.getIn(['form-layouts', 'layouts'], Map())
   }
 }
 
-export default connect(props, {setComponentLayouts}, null, {withRef: true})(Grid)
+// export default connect(props, {setComponentLayouts}, null, {withRef: true})(Grid)

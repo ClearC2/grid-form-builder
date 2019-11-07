@@ -34,7 +34,7 @@ export class Typeahead extends Component {
     handleCascadeKeywordClick: PropTypes.func,
     draggable: PropTypes.bool,
     minChars: PropTypes.number,
-    formValues: PropTypes.instanceOf(Map),
+    formValues: PropTypes.object,
     Icon: PropTypes.any,
     requiredWarning: PropTypes.bool,
     inline: PropTypes.bool,

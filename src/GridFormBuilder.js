@@ -8,7 +8,7 @@ import {convertFieldToSearch} from './QueryBuilder/Utils'
 import {IconLibrary} from './Icons'
 import {FormComponents} from './FieldDefinitions'
 
-export default class FormBuilder extends Component {
+class FormBuilder extends Component { //eslint-disable-line
   static propTypes = {
     conditionalFieldValues: PropTypes.bool,
     conditionalSearch: PropTypes.bool,

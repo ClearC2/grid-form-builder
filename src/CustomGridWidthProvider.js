@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 
-const WidthProvider = ComposedComponent => class extends React.Component {
+const WidthProvider = ComposedComponent => class extends React.Component { // eslint-disable-line
   static defaultProps = {
     measureBeforeMount: false
   }
@@ -62,4 +62,4 @@ const WidthProvider = ComposedComponent => class extends React.Component {
   }
 }
 
-export default WidthProvider
+// export default WidthProvider

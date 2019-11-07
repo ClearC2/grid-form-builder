@@ -1,4 +1,4 @@
-import React, {PureComponent, useState, useEffect, useCallback, useRef} from 'react'
+import React, {Component, useState, useEffect, useCallback, useRef, createContext} from 'react'
 import PropTypes from 'prop-types'
 import RGL from 'react-grid-layout'
 import {emailValidator, searchForLayoutArray, updateLayoutArray, uppercaseFirstLetter} from './utils'
@@ -8,8 +8,11 @@ import sizeMe from 'react-sizeme'
 import {List, fromJS, Map, Set} from 'immutable'
 import $ from 'jquery'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
+import InputContainer from './InputContainer'
 
 let inputEventListenerDebouncer = null
+
+export const FormValueContext = createContext([Map(), () => {}])
 
 const debug = false
 
@@ -48,6 +51,7 @@ const FormBuilder = (props) => {
   const [myOffset] = useState(FormBuilder.count)
   const [id] = useState(`gfb-${Math.floor(Math.random() * 10000) + 1}`) // creates a unique id for this grid for the screen scraper
   const ReactGridLayout = useRef(null)
+  const [formValueState, updateFormValueState] = useState(formValues ? formValues.toJS ? formValues : fromJS(formValues) : Map()) // eslint-disable-line
 
   const handleAnywhereClick = useCallback((config, e) => {
     debugLog('handleAnywhereClick')
@@ -69,7 +73,7 @@ const FormBuilder = (props) => {
     onRTEImageClick()
   }, [onRTEImageClick])
 
-  const handleLinkClick = useCallback((link) => {
+  const handleLinkClick = (link) => { // not memoing, it is using current values and I don't want to redraw everything every render just so this link works - JRA 11/07/2019
     debugLog('handleLinkClick')
     const values = formValues.toJS ? formValues : fromJS(formValues)
     const {type = '', id = null} = link
@@ -78,7 +82,12 @@ const FormBuilder = (props) => {
       type,
       id: value
     })
-  }, [onLinkClick, formValues])
+  }
+
+  useEffect(() => {
+    const values = formValues ? formValues.toJS ? formValues : fromJS(formValues) : Map()
+    updateFormValueState(values)
+  }, [formValues])
 
   useEffect(() => {
     debugLog('updateRequiredWarning')
@@ -117,14 +126,14 @@ const FormBuilder = (props) => {
       inputs.off('focus')
       inputs.off('blur')
     }
-  }, [])
+    // this is expensive, only do this on mount
+  }, []) // eslint-disable-line
 
   useEffect(() => { // this is insane, surely this can be cleaned up, just leaving it in for now for speed of delivery - JRA 11/07/2019
-    debugLog('crazy bad one')
+    debugLog('rebuilding all grid elements (expensive)')
     const schema = searchForLayoutArray(formSchema)
     const layout = []
     const elements = []
-    const values = formValues.toJS ? formValues : fromJS(formValues)
     let specifiedTabs = Set() // this is for building up unique tab indicies
     schema.forEach(field => {
       const {config = {}} = field
@@ -152,7 +161,6 @@ const FormBuilder = (props) => {
         console.warn(field, 'was skipped because it did not contain a valid input type.') // eslint-disable-line
       }
       if (typeof dimensions === 'object' && !!Component) {
-        if (draggable || readonly || +values.get('cfd_userisreadonly', '0') === 1) config.readonly = true
         dimensions.i = i + ''
         let {icon = '', cascade = {}, tabindex: tabIndex, autoComplete = 'off', link = {}} = config
         let {keyword = null, icon: cascadeIcon = ''} = cascade
@@ -175,8 +183,7 @@ const FormBuilder = (props) => {
         }
         elements.push(
           <div key={i + ''}>
-            <Component
-              formValues={values}
+            <InputContainer
               formSchema={formSchema}
               config={config}
               handleOnChange={handleOnChange}
@@ -195,24 +202,25 @@ const FormBuilder = (props) => {
               cascadingKeyword={keyword}
               CascadeIcon={cascadeIcon}
               interactive={interactive}
+              readonly={readonly}
               draggable={draggable}
               tabIndex={+tabIndex}
-            />
+            >
+              <Component />
+            </InputContainer>
           </div>
         )
         layout.push(dimensions)
       }
     })
     updateGrid({layout: fromJS(layout), elements})
-  }, [
+  }, [ // eslint-disable-line
     conditionalFieldValues,
     conditionalSearch,
     formSchema,
-    formValues,
     handleAnywhereClick,
     handleCascadeKeywordClick,
     handleDragDropOnInput,
-    handleLinkClick,
     handleRTEImageClick,
     requiredWarning,
     rowHeight,
@@ -275,6 +283,8 @@ const FormBuilder = (props) => {
       console.warn('A new item was dropped into the current layout but no onItemLayoutUpdate callback was provided to update the schema.') // eslint-disable-line
     }
   }, [formSchema, handleOnDimensionChange])
+
+  debugLog('render')
 
   return (
     <div
@@ -352,7 +362,7 @@ FormBuilder.count = 1
 
 const SizeMeHOC = sizeMe()(FormBuilder)
 
-export default class FormValidator extends PureComponent {
+export default class FormValidator extends Component {
   // this class provides the necessary class methods that were previously being used in ref's to make this backwards compatible
   static propTypes = {
     formSchema: PropTypes.object,
@@ -380,7 +390,12 @@ export default class FormValidator extends PureComponent {
   }
 
   state = {
-    requiredWarning: false
+    requiredWarning: false,
+    formValues: this.props.formValues
+      ? this.props.formValues.toJS
+        ? this.props.formValues
+        : fromJS(this.props.formValues)
+      : Map()
   }
 
   onSubmit = () => {
@@ -435,9 +450,27 @@ export default class FormValidator extends PureComponent {
     this.grid = ref
   }
 
+  updateFormValues = formValues => this.setState(() => ({
+    formValues: formValues.toJS ? formValues : fromJS(formValues)
+  }))
+
+  shouldComponentUpdate (p, s) {
+    if (p.formValues !== this.props.formValues) {
+      this.updateFormValues(p.formValues) // this kills the extra render from values updating, the context updating will render - JRA 11/07/2019
+      return false
+    }
+    let update = Object.keys(this.props).some(prop => (this.props[prop] !== p[prop]))
+    if (!update) update = Object.keys(this.state).some(state => (this.state[state] !== s[state]))
+    return update
+  }
+
   render () {
+    const {requiredWarning, formValues} = this.state
+    const {formValues: values, ...rest} = this.props
     return (
-      <SizeMeHOC {...this.state} {...this.props} setContainerRef={this.setContainerRef} />
+      <FormValueContext.Provider value={[formValues, this.updateFormValues]}>
+        <SizeMeHOC {...rest} requiredWarning={requiredWarning} setContainerRef={this.setContainerRef} />
+      </FormValueContext.Provider>
     )
   }
 }
