@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect, useCallback} from 'react'
+import React, {Component, useState, useEffect, useCallback, useRef} from 'react'
 import PropTypes from 'prop-types'
 import RGL from 'react-grid-layout'
 import {emailValidator, searchForLayoutArray, updateLayoutArray, uppercaseFirstLetter} from './utils'
@@ -41,6 +41,7 @@ const FormBuilder = (props) => {
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
   const [myOffset] = useState(FormBuilder.count)
   const [id] = useState(`gfb-${Math.floor(Math.random() * 10000) + 1}`) // creates a unique id for this grid for the screen scraper
+  const ReactGridLayout = useRef(null)
 
   const handleAnywhereClick = useCallback((config, e) => {
     onClick(config, e)
@@ -212,7 +213,7 @@ const FormBuilder = (props) => {
       const schema = searchForLayoutArray(formSchema)
       newLayout.forEach(item => {
         const dimensions = {...item}
-        const index = dimensions.i
+        const index = +dimensions.i
         delete dimensions.i
         schema[index].dimensions = dimensions
       })
@@ -226,13 +227,24 @@ const FormBuilder = (props) => {
     }
   }, [grid, updateGrid, handleOnDimensionChange, formSchema])
 
-  const onDrop = useCallback(dimensions => {
+  const onDrop = useCallback((dimensions) => {
     if (typeof handleOnDimensionChange === 'function') {
-      const schema = searchForLayoutArray(formSchema)
       const config = { // eventually this will need to be a prop so we can init a new field with more than just these hard coded defaults - JRA 11/06/2019
         name: 'new-input',
         label: 'New Field',
         type: 'input'
+      }
+      const schema = searchForLayoutArray(formSchema)
+      if (ReactGridLayout.current) { // dropping a new item most likely caused collisions, so lets ref up the layout and update everything that got moved if we can - JRA 11/07/2019
+        const newLayout = ReactGridLayout.current.state.layout
+        newLayout.forEach(item => {
+          if (+item.i >= 0) {
+            const dimensions = {...item}
+            const index = +dimensions.i
+            delete dimensions.i
+            schema[index].dimensions = dimensions
+          }
+        })
       }
       const newItem = {
         dimensions,
@@ -253,6 +265,7 @@ const FormBuilder = (props) => {
       ref={setContainerRef}
     >
       <RGL
+        ref={ReactGridLayout}
         autoSize
         width={size.width}
         cols={columns}
