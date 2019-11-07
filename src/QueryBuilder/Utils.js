@@ -7,8 +7,8 @@ export const convertFormSchemaToSearch = (formSchema = {}) => {
     formSchema.jsonschema.layout = formSchema.jsonschema.layout.map(f => {
       if (f.config.type === 'metadata') {
         if (f.config.conditionalConfig) {
-          let conditionalConfig = Object.assign({}, f.config.conditionalConfig)
-          let metaConfig = Object.assign({}, f.config)
+          const conditionalConfig = Object.assign({}, f.config.conditionalConfig)
+          const metaConfig = Object.assign({}, f.config)
           delete metaConfig.conditionalConfig
           f.config = conditionalConfig
           f.config.metaConfig = metaConfig
@@ -42,8 +42,8 @@ export const convertFieldToSearch = (field = {}, forCondTable = false) => {
       }
       if (field.config.type === 'metadata') {
         if (field.config.conditionalConfig) {
-          let conditionalConfig = Object.assign({}, field.config.conditionalConfig)
-          let metaConfig = Object.assign({}, field.config)
+          const conditionalConfig = Object.assign({}, field.config.conditionalConfig)
+          const metaConfig = Object.assign({}, field.config)
           delete metaConfig.conditionalConfig
           field.config = conditionalConfig
           field.config.metaConfig = metaConfig

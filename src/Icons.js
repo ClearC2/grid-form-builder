@@ -1,3 +1,5 @@
+import {uppercaseFirstLetter} from './utils'
+
 let IconLibrary = {}
 
 export function initComponentIconLibrary (defs = {}) {
@@ -12,6 +14,13 @@ export function initComponentIconLibrary (defs = {}) {
     formattedKeys[name] = component
   })
   IconLibrary = formattedKeys
+}
+
+export const mapIcon = icon => {
+  if (typeof icon !== 'string') return null
+  icon = uppercaseFirstLetter(icon)
+  icon = IconLibrary[icon] || null
+  return icon
 }
 
 export {IconLibrary}

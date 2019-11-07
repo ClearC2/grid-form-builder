@@ -1,3 +1,5 @@
+import {fromJS} from 'immutable'
+
 export const timeStamp = () => {
   let ms = new Date().getTime()
   ms = String(ms).slice(-7)
@@ -59,4 +61,59 @@ export const emailValidator = email => {
   }
 
   return true
+}
+
+export const uppercaseFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+
+export const searchForLayoutArray = schema => {
+  if (schema.toJS) schema = schema.toJS()
+  if (schema.form) schema = schema.form
+  if (schema.jsonschema) schema = schema.jsonschema
+  if (schema.layout) schema = schema.layout
+  if (schema.toJS) schema = schema.toJS()
+  if (!Array.isArray(schema)) {
+    schema = []
+  }
+  return schema
+}
+
+export const updateLayoutArray = (schema, newArray) => {
+  // this is just a sanity check to ensure the schema passed down is passed back up in the same shape - JRA 11/06/2019
+  let immutable = false
+  if (schema.toJS) {
+    immutable = true
+    schema = schema.toJS()
+  }
+  if (Array.isArray(schema)) {
+    schema = newArray
+  } else if (schema.form && Array.isArray(schema.form)) {
+    schema.form = newArray
+  } else if (schema.form && schema.form.jsonschema && Array.isArray(schema.form.jsonschema)) {
+    schema.form.jsonschema = newArray
+  } else if (
+    schema.form &&
+    schema.form.jsonschema &&
+    schema.form.jsonschema.layout &&
+    Array.isArray(schema.form.jsonschema.layout)
+  ) {
+    schema.form.jsonschema.layout = newArray
+  } else if (schema.jsonschema && Array.isArray(schema.jsonschema)) {
+    schema.jsonschema = newArray
+  } else if (
+    schema.jsonschema &&
+    schema.jsonschema.layout &&
+    Array.isArray(schema.jsonschema.layout)
+  ) {
+    schema.jsonschema.layout = newArray
+  } else if (schema.layout && Array.isArray(schema.layout)) {
+    schema.layout = newArray
+  }
+  if (immutable) {
+    schema = fromJS(schema)
+  } else {
+    // if the schema is plain js, we want to make a completely new schema
+    // that way this value can be set directly and it will diff all the way through react
+    schema = JSON.parse(JSON.stringify(schema))
+  }
+  return schema
 }

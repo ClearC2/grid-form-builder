@@ -23,6 +23,7 @@ import Textarea from './Textarea'
 import Time from './Time'
 import Total from './Total'
 import Typeahead from './Typeahead'
+import {uppercaseFirstLetter} from '../utils'
 
 let FormComponents = {
   Checkbox,
@@ -55,6 +56,13 @@ let FormComponents = {
 export function initCustomFormComponents (defs = {}) {
   defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
   FormComponents = {...FormComponents, ...defs}
+}
+
+export const mapInputType = (type) => {
+  if (typeof type !== 'string') return null
+  type = uppercaseFirstLetter(type)
+  type = FormComponents[type] || null
+  return type
 }
 
 export {FormComponents}
