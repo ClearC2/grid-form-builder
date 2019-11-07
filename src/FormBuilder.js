@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect, useCallback, useRef} from 'react'
+import React, {PureComponent, useState, useEffect, useCallback, useRef} from 'react'
 import PropTypes from 'prop-types'
 import RGL from 'react-grid-layout'
 import {emailValidator, searchForLayoutArray, updateLayoutArray, uppercaseFirstLetter} from './utils'
@@ -10,6 +10,12 @@ import $ from 'jquery'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
 
 let inputEventListenerDebouncer = null
+
+const debug = false
+
+const debugLog = (...args) => {
+  if (debug) console.log(...args) //eslint-disable-line
+}
 
 const FormBuilder = (props) => {
   const {
@@ -44,22 +50,27 @@ const FormBuilder = (props) => {
   const ReactGridLayout = useRef(null)
 
   const handleAnywhereClick = useCallback((config, e) => {
+    debugLog('handleAnywhereClick')
     onClick(config, e)
   }, [onClick])
 
   const handleDragDropOnInput = useCallback(({source, target}) => {
+    debugLog('handleDragDropOnInput')
     handleOnDrop({source, target})
   }, [handleOnDrop])
 
   const handleCascadeKeywordClick = useCallback((e) => {
+    debugLog('handleCascadeKeywordClick')
     handleCascade(e)
   }, [handleCascade])
 
   const handleRTEImageClick = useCallback(() => {
+    debugLog('handleRTEImageClick')
     onRTEImageClick()
   }, [onRTEImageClick])
 
   const handleLinkClick = useCallback((link) => {
+    debugLog('handleLinkClick')
     const values = formValues.toJS ? formValues : fromJS(formValues)
     const {type = '', id = null} = link
     const value = values.get(id, null)
@@ -70,19 +81,23 @@ const FormBuilder = (props) => {
   }, [onLinkClick, formValues])
 
   useEffect(() => {
+    debugLog('updateRequiredWarning')
     updateRequiredWarning(validate)
   }, [validate])
 
   useEffect(() => {
+    debugLog('updateRequiredWarning 2')
     updateRequiredWarning(requiredFlag)
   }, [requiredFlag])
 
   useEffect(() => {
+    debugLog('FormBuilder.count')
     // this count is used to set myOffset, which serves as a starting point for tab indexing
     FormBuilder.count++
   }, [])
 
   useEffect(() => {
+    debugLog('inputEventListenerDebouncer')
     // this is used to attach css classes for browsers that do not support :focus-within
     // this is not best practice, you should always try to avoid screen scraping the dom in react
     clearTimeout(inputEventListenerDebouncer)
@@ -102,9 +117,10 @@ const FormBuilder = (props) => {
       inputs.off('focus')
       inputs.off('blur')
     }
-  }, [grid, id])
+  }, [])
 
   useEffect(() => { // this is insane, surely this can be cleaned up, just leaving it in for now for speed of delivery - JRA 11/07/2019
+    debugLog('crazy bad one')
     const schema = searchForLayoutArray(formSchema)
     const layout = []
     const elements = []
@@ -160,7 +176,7 @@ const FormBuilder = (props) => {
         elements.push(
           <div key={i + ''}>
             <Component
-              formValues={formValues}
+              formValues={values}
               formSchema={formSchema}
               config={config}
               handleOnChange={handleOnChange}
@@ -209,6 +225,7 @@ const FormBuilder = (props) => {
   ])
 
   const onItemLayoutUpdate = useCallback((newLayout) => {
+    debugLog('onItemLayoutUpdate')
     if (typeof handleOnDimensionChange === 'function') {
       const schema = searchForLayoutArray(formSchema)
       newLayout.forEach(item => {
@@ -228,6 +245,7 @@ const FormBuilder = (props) => {
   }, [grid, updateGrid, handleOnDimensionChange, formSchema])
 
   const onDrop = useCallback((dimensions) => {
+    debugLog('onDrop')
     if (typeof handleOnDimensionChange === 'function') {
       const config = { // eventually this will need to be a prop so we can init a new field with more than just these hard coded defaults - JRA 11/06/2019
         name: 'new-input',
@@ -332,9 +350,9 @@ FormBuilder.defaultProps = {
 
 FormBuilder.count = 1
 
-const SizeMeHOC = sizeMe({monitorHeight: true})(FormBuilder)
+const SizeMeHOC = sizeMe()(FormBuilder)
 
-export default class FormValidator extends Component {
+export default class FormValidator extends PureComponent {
   // this class provides the necessary class methods that were previously being used in ref's to make this backwards compatible
   static propTypes = {
     formSchema: PropTypes.object,

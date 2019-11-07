@@ -20,7 +20,7 @@ export default class Example extends Component {
       parentid: '00112233445566778899AABBCCEEFFFF'
     }),
     inline: false,
-    draggable: true,
+    draggable: false,
     resizeable: false,
     colDefs: [],
     selectedColumns: [],
