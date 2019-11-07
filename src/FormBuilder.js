@@ -34,7 +34,8 @@ const FormBuilder = (props) => {
     handleOnChange,
     interactive,
     draggable,
-    readonly
+    readonly,
+    droppable
   } = props
   const [grid, updateGrid] = useState({layout: List(), elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
@@ -117,7 +118,8 @@ const FormBuilder = (props) => {
       if (conditionalSearch) {
         field = convertFieldToSearch(field)
       }
-      const {config, dimensions} = field
+      const {dimensions} = field
+      const config = {...field.config} || {} // prevent mutation of the original config
       if (config.type && config.type.toLowerCase() === 'richtextarea') {
         // ck editor was removed. if any form schemas still use Richtextarea, they should use Richtextareaquill now.
         config.type = 'Richtextareaquill'
@@ -129,8 +131,11 @@ const FormBuilder = (props) => {
         type = 'ImportSelect'
       }
       const Component = mapInputType(type)
+      if (!Component) {
+        console.warn(field, 'was skipped because it did not contain a valid input type.') // eslint-disable-line
+      }
       if (typeof dimensions === 'object' && !!Component) {
-        if (readonly || +values.get('cfd_userisreadonly', '0') === 1) config.readonly = true
+        if (draggable || readonly || +values.get('cfd_userisreadonly', '0') === 1) config.readonly = true
         dimensions.i = i + ''
         let {icon = '', cascade = {}, tabindex: tabIndex, autoComplete = 'off', link = {}} = config
         let {keyword = null, icon: cascadeIcon = ''} = cascade
@@ -202,13 +207,15 @@ const FormBuilder = (props) => {
     myOffset
   ])
 
-  const onItemLayoutUpdate = useCallback((newLayout, itemStart, itemEnd) => {
+  const onItemLayoutUpdate = useCallback((newLayout) => {
     if (typeof handleOnDimensionChange === 'function') {
       const schema = searchForLayoutArray(formSchema)
-      const item = {...itemEnd}
-      const i = item.i
-      delete item.i
-      schema[i].dimensions = item
+      newLayout.forEach(item => {
+        const dimensions = {...item}
+        const index = dimensions.i
+        delete dimensions.i
+        schema[index].dimensions = dimensions
+      })
       const newFormSchema = updateLayoutArray(formSchema, schema)
       handleOnDimensionChange(newFormSchema)
     } else {
@@ -254,8 +261,10 @@ const FormBuilder = (props) => {
         onDragStop={onItemLayoutUpdate}
         onResizeStop={onItemLayoutUpdate}
         droppingItem={{...dropItemDimensions, i: '-1'}}
-        isDroppable
+        isDroppable={droppable}
         onDrop={onDrop}
+        isDraggable={draggable}
+        isResizable={draggable}
       >
         {grid.elements}
       </RGL>
@@ -285,7 +294,8 @@ FormBuilder.propTypes = {
   inline: PropTypes.bool,
   interactive: PropTypes.bool,
   draggable: PropTypes.bool,
-  readonly: PropTypes.bool
+  readonly: PropTypes.bool,
+  droppable: PropTypes.bool
 }
 
 FormBuilder.defaultProps = {
@@ -303,7 +313,8 @@ FormBuilder.defaultProps = {
   handleOnDrop: () => null,
   handleCascade: () => null,
   handleRTEImageClick: () => null,
-  handleLinkClick: () => null
+  handleLinkClick: () => null,
+  draggable: false
 }
 
 FormBuilder.count = 1
@@ -329,7 +340,8 @@ export default class FormValidator extends Component {
     inline: PropTypes.bool,
     interactive: PropTypes.bool,
     draggable: PropTypes.bool,
-    readonly: PropTypes.bool
+    readonly: PropTypes.bool,
+    droppable: PropTypes.bool
   }
 
   static defaultProps = {

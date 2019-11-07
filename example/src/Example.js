@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, List} from 'immutable'
+import {Map, List, fromJS} from 'immutable'
 import {ConditionalTable} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import FormBuilder from '../../src/FormBuilder'
@@ -20,12 +20,14 @@ export default class Example extends Component {
       parentid: '00112233445566778899AABBCCEEFFFF'
     }),
     inline: false,
-    draggable: false,
+    draggable: true,
     resizeable: false,
     colDefs: [],
     selectedColumns: [],
     availableColumns: [],
-    formSchema: {},
+    formSchema: {
+      form: {}
+    },
     columns: [ // for column picker.
       {label: 'Account Manager', value: 'cfd_accountmanager', type: 'string', format: 'string'},
       {label: 'Account Manager Email', value: 'ups_am_email', type: 'string', format: 'string'},
@@ -112,6 +114,10 @@ export default class Example extends Component {
     }, 250)
   }
 
+  handleOnDimensionChange = schema => {
+    this.setState(() => ({formSchema: {form: fromJS(schema)}}))
+  }
+
   render = () => {
     const {formSchema, isInvalidWarning} = this.state
     if (TEST_SEARCH) {
@@ -128,11 +134,11 @@ export default class Example extends Component {
                 inline={this.state.inline}
                 conditionalSearch={TEST_SEARCH}
                 handleOnDrop={this.handleOnDrop}
+                draggable={false}
               />
             </div>
             <div style={{width: '33%', marginTop: '150px'}}>
               <ConditionalTable
-                formName={formSchema.form.name}
                 title={'Conditional Table Title'}
                 searchFunction={(req) => { console.log(req, 'Search function not implemented yet') }} // eslint-disable-line
                 formSchema={formSchema.form}
@@ -142,6 +148,7 @@ export default class Example extends Component {
                   console.log(this.state.formValues, e, 'form val loggggggggg') // eslint-disable-line
                 }}
                 enableNextButton
+                draggable={false}
               />
             </div>
           </div>
@@ -181,6 +188,8 @@ export default class Example extends Component {
             draggable={this.state.draggable}
             validate={isInvalidWarning}
             handleLinkClick={this.handleLinkClick}
+            handleOnDimensionChange={this.handleOnDimensionChange}
+            droppable
           />
         </div>
       )

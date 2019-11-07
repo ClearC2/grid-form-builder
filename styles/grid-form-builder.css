@@ -8,6 +8,10 @@ div.grid-form-builder-parent {
   /*width: 100%;*/
 }
 
+div.grid-form-builder-parent span.react-resizable-handle {
+  right: -4px;
+}
+
 div.grid-form-builder-parent .warn-required::placeholder {
   color: red;
   opacity: 1;
