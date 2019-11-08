@@ -198,7 +198,7 @@
         "config": {
           "name": "c_registerddate",
           "label": "Registered",
-          "type": "input",
+          "type": "conditionalInput",
           "inputType": "input"
         }
       }, {

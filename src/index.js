@@ -2,7 +2,7 @@
 export {default as reducer} from './redux'
 export {default as FormDroppable} from './FormDroppable'
 export {initFormBuilderAjax} from './config'
-export {CONDITIONS, TEXT_INPUTS} from './FieldDefinitions/Conditionalinput'
+export {default as Conditionalinput, CONDITIONS, TEXT_INPUTS} from './FieldDefinitions/Conditionalinput'
 export {default as Typeahead} from './FieldDefinitions/Typeahead'
 export {default as Checkbox} from './FieldDefinitions/Checkbox'
 export {default as Currency} from './FieldDefinitions/Currency'

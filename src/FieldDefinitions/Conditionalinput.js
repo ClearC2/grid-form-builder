@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Map, Set, List, fromJS} from 'immutable'
 import {Dialog} from 'c2-dialog'
-import FormBuilder from '../FormBuilder'
+import {FormBuilder} from '../index'
 import PropTypes from 'prop-types'
 /*
   Select Fields are converted to multiselects
