@@ -2,7 +2,7 @@
 export {default as reducer} from './redux'
 export {default as FormDroppable} from './FormDroppable'
 export {initFormBuilderAjax} from './config'
-export {CONDITIONS, TEXT_INPUTS} from './FieldDefinitions/Conditionalinput'
+export {default as Conditionalinput, CONDITIONS, TEXT_INPUTS} from './FieldDefinitions/Conditionalinput'
 export {default as Typeahead} from './FieldDefinitions/Typeahead'
 export {default as Checkbox} from './FieldDefinitions/Checkbox'
 export {default as Currency} from './FieldDefinitions/Currency'
@@ -24,6 +24,12 @@ export {default as Percentage} from './FieldDefinitions/Percentage'
 export {default as Total} from './FieldDefinitions/Total'
 export {default as Portal} from './FieldDefinitions/Portal'
 // Components from the proud package formerly known as query-builder the magnificent
-export {default as FormBuilder, updateFormValues, initCustomFormComponents, initComponentIconLibrary} from './GridFormBuilder'
+export {default as FormBuilder} from './FormBuilder'
 export {default as ConditionalTable, convertQueryToFormValues} from './QueryBuilder/Where/ConditionalTable/ConditionalTableContainer'
 export {ReportBuilder, buildAvailableColumnsFromFieldDefs, buildDefaultColumnsFromQuery} from './QueryBuilder/ReportBuilder/ReportBuilder'
+export {initComponentIconLibrary} from './Icons'
+export {initCustomFormComponents} from './FieldDefinitions'
+
+const updateFormValues = () => console.error('updateFormValues is depricated and has been removed. You must handle your own form values.') //eslint-disable-line
+
+export {updateFormValues}

@@ -3,98 +3,12 @@ import PropTypes from 'prop-types'
 import $ from 'jquery'
 import WidgetGrid from './WidgetGrid'
 import {Map, Set} from 'immutable'
-import Checkbox from './FieldDefinitions/Checkbox'
-import Colorpicker from './FieldDefinitions/ColorPicker'
-import Conditionalinput from './FieldDefinitions/Conditionalinput'
-import Currency from './FieldDefinitions/Currency'
-import Date from './FieldDefinitions/Date'
-import Datetime from './FieldDefinitions/Datetime'
-import Email from './FieldDefinitions/Email'
-import Header from './FieldDefinitions/Header'
-import Icon from './FieldDefinitions/Icon'
-import ImportSelect from './FieldDefinitions/ImportSelect'
-import Input from './FieldDefinitions/Input'
-import Listselect from './FieldDefinitions/Listselect'
-import Metadata from './FieldDefinitions/Metadata'
-import Multicheckbox from './FieldDefinitions/Multicheckbox'
-import Multiselect from './FieldDefinitions/Multiselect'
-import Number from './FieldDefinitions/Number'
-import Percentage from './FieldDefinitions/Percentage'
-import Phone from './FieldDefinitions/Phone'
-import Radio from './FieldDefinitions/Radio'
-import Richtextareaquill from './FieldDefinitions/Richtextareaquill'
-import Select from './FieldDefinitions/Select'
-import Textarea from './FieldDefinitions/Textarea'
-import Time from './FieldDefinitions/Time'
-import Total from './FieldDefinitions/Total'
-import Typeahead from './FieldDefinitions/Typeahead'
 import {emailValidator} from './utils'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
+import {IconLibrary} from './Icons'
+import {FormComponents} from './FieldDefinitions'
 
-let IconLibrary = {}
-export function initComponentIconLibrary (defs = {}) {
-  if (typeof defs !== 'object') {
-    IconLibrary = {}
-    return
-  }
-  let formattedKeys = {}
-  Object.keys(defs).map(name => {
-    const component = defs[name]
-    name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase()
-    formattedKeys[name] = component
-  })
-  IconLibrary = formattedKeys
-}
-
-export const updateFormValues = (fieldsToUpdate, currentFormValues) => {
-  let fields = fieldsToUpdate
-  if (!Array.isArray(fields)) fields = [fields]
-  let formValues = currentFormValues
-  if (typeof formValues === 'undefined') {
-    // eslint-disable-next-line
-    console.error('You did something wrong, grid form builder is trying to update values but there are no values.')
-    return Map()
-  }
-  fields.map(field => {
-    formValues = formValues.set(field.target.name, field.target.value)
-  })
-  return formValues
-}
-// v fields that cannot be transformed into conditional inputs v
-
-let FormComponents = {
-  Checkbox,
-  Colorpicker,
-  Conditionalinput,
-  Currency,
-  Date,
-  Datetime,
-  Email,
-  Header,
-  Icon,
-  ImportSelect,
-  Input,
-  Listselect,
-  Metadata,
-  Multicheckbox,
-  Multiselect,
-  Number,
-  Percentage,
-  Phone,
-  Radio,
-  Richtextareaquill,
-  Select,
-  Textarea,
-  Time,
-  Total,
-  Typeahead
-}
-export function initCustomFormComponents (defs = {}) {
-  defs = typeof defs.toJS === 'function' ? defs.toJS() : defs
-  FormComponents = {...FormComponents, ...defs}
-}
-
-export default class FormBuilder extends Component {
+class FormBuilder extends Component { //eslint-disable-line
   static propTypes = {
     conditionalFieldValues: PropTypes.bool,
     conditionalSearch: PropTypes.bool,
@@ -148,6 +62,7 @@ export default class FormBuilder extends Component {
   }
 
   attachBuffer = null
+
   attachInputFocusListeners = () => {
     clearTimeout(this.attachBuffer)
     this.attachBuffer = null
@@ -199,7 +114,7 @@ export default class FormBuilder extends Component {
     jsonschema = jsonschema || form || {}
     let {layout = []} = jsonschema
     layout = (typeof layout.toJS === 'function') ? layout.toJS() : layout
-    let reasons = []
+    const reasons = []
     layout.map(field => {
       const {config = {}} = field
       const {required = false, name, label = name, type} = config
@@ -282,10 +197,10 @@ export default class FormBuilder extends Component {
     const normalFields = []
     let {form, jsonschema} = formSchema
     jsonschema = jsonschema || form || {}
-    let {layout = []} = jsonschema
+    const {layout = []} = jsonschema
     // breaking this into two separate arrays so react-datetime plugin elements are drawn last. This fixes a problem where the calendar renders underneath (regardless of z-index) previously rendered inputs - JRA 09/12/2017
     let specifiedTabs = Set()
-    layout.map(field => {
+    layout.forEach(field => {
       const {config = {}} = field
       if (config.tabindex) specifiedTabs = specifiedTabs.add(config.tabindex)
     })
@@ -387,7 +302,7 @@ export default class FormBuilder extends Component {
         )
       }
     })
-    let P = {}
+    const P = {}
     if (this.props.noStore) P.store = {subscribe: () => {}, getState: () => Map(), dispatch: () => {}}
     return (
       <div

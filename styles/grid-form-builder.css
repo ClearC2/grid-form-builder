@@ -3,6 +3,15 @@ input[id^='react-select-'] {
   opacity: 1 !important;
 }
 
+div.grid-form-builder-parent {
+  /*height: 100%;*/
+  /*width: 100%;*/
+}
+
+div.grid-form-builder-parent span.react-resizable-handle {
+  right: -4px;
+}
+
 div.grid-form-builder-parent .warn-required::placeholder {
   color: red;
   opacity: 1;

@@ -1,4 +1,4 @@
-import {initComponentIconLibrary} from '../../src/GridFormBuilder'
+import {initComponentIconLibrary} from '../../src/Icons'
 import User from 'react-icons/lib/fa/user'
 import Building from 'react-icons/lib/fa/building'
 import Ticket from 'react-icons/lib/fa/ticket'
