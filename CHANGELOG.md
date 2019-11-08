@@ -1,3 +1,13 @@
+# [2.0.0](https://github.com/ClearC2/grid-form-builder/compare/v1.41.2...v2.0.0) (2019-11-08)
+
+
+* Refactor Base Form Component To Use Hooks without Redux (#125) ([04de4af](https://github.com/ClearC2/grid-form-builder/commit/04de4af)), closes [#125](https://github.com/ClearC2/grid-form-builder/issues/125)
+
+
+### BREAKING CHANGES
+
+* Base component no longer uses redux and has been switched to use hooks. React ^16.8 is now a peer dependency to make this work
+
 ## [1.41.2](https://github.com/ClearC2/grid-form-builder/compare/v1.41.1...v1.41.2) (2019-11-01)
 
 
