@@ -144,7 +144,7 @@ const FormBuilder = (props) => {
       if (conditionalSearch) {
         field = convertFieldToSearch(field)
       }
-      const {dimensions} = field
+      const {dimensions = {x: 0, y: i, w: 12, h: 1}} = field
       const config = {...field.config} || {} // prevent mutation of the original config
       if (config.type && config.type.toLowerCase() === 'richtextarea') {
         // ck editor was removed. if any form schemas still use Richtextarea, they should use Richtextareaquill now.

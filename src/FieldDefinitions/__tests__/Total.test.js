@@ -1,7 +1,7 @@
 import React from 'react'
 import {Map} from 'immutable'
 import {fireEvent, waitForElement} from 'react-testing-library'
-import GridFormBuilder from '../../GridFormBuilder'
+import GridFormBuilder from '../../FormBuilder'
 
 function getForm (totalFieldProps = {}) {
   return {

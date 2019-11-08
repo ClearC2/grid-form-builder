@@ -1,7 +1,7 @@
 import React from 'react'
 import {Map} from 'immutable'
 import {fireEvent, waitForElement} from 'react-testing-library'
-import GridFormBuilder from '../../GridFormBuilder'
+import GridFormBuilder from '../../FormBuilder'
 
 const form = {
   'name': 'Input Test',
@@ -25,7 +25,6 @@ describe('Input', function () {
     const Test = () => {
       return (
         <GridFormBuilder
-          formName={form.name}
           formSchema={form}
           formValues={Map({firstName: 'John'})}
         />
