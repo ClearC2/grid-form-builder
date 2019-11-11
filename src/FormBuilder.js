@@ -45,7 +45,8 @@ const FormBuilder = (props) => {
     interactive,
     draggable,
     readonly,
-    droppable
+    droppable,
+    activeItem
   } = props
   const [grid, updateGrid] = useState({layout: List(), elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
@@ -176,8 +177,11 @@ const FormBuilder = (props) => {
         } else {
           tabIndex = myOffset + '' + tabIndex
         }
+        const className = (
+          typeof activeItem === 'string' || typeof activeItem === 'number'
+        ) && +activeItem === i ? 'drag-item-active' : ''
         elements.push(
-          <div key={i + ''}>
+          <div key={i + ''} className={className}>
             <InputContainer
               formSchema={formSchema}
               config={config}
@@ -200,6 +204,7 @@ const FormBuilder = (props) => {
               readonly={readonly}
               draggable={draggable}
               tabIndex={+tabIndex}
+              index={i}
             >
               <Component />
             </InputContainer>
@@ -224,7 +229,8 @@ const FormBuilder = (props) => {
     interactive,
     draggable,
     readonly,
-    myOffset
+    myOffset,
+    activeItem
   ])
 
   const onItemLayoutUpdate = useCallback((newLayout) => {
@@ -328,7 +334,8 @@ FormBuilder.propTypes = {
   interactive: PropTypes.bool,
   draggable: PropTypes.bool,
   readonly: PropTypes.bool,
-  droppable: PropTypes.bool
+  droppable: PropTypes.bool,
+  activeItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
 
 FormBuilder.defaultProps = {
@@ -380,7 +387,8 @@ export default class FormValidator extends Component {
     interactive: PropTypes.bool,
     draggable: PropTypes.bool,
     readonly: PropTypes.bool,
-    droppable: PropTypes.bool
+    droppable: PropTypes.bool,
+    activeItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
   }
 
   static defaultProps = {

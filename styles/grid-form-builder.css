@@ -3,9 +3,14 @@ input[id^='react-select-'] {
   opacity: 1 !important;
 }
 
-div.grid-form-builder-parent {
-  /*height: 100%;*/
-  /*width: 100%;*/
+div.grid-form-builder-parent .react-grid-item.react-draggable:hover, .react-grid-item.react-draggable.drag-item-active {
+  border: 2px solid #36a9e1;
+  margin: -2px;
+}
+
+div.grid-form-builder-parent .react-grid-item.react-draggable:hover > span.react-resizable-handle, .react-grid-item.react-draggable.drag-item-active > span.react-resizable-handle {
+  right: -6px;
+  bottom: -6px;
 }
 
 div.grid-form-builder-parent span.react-resizable-handle {

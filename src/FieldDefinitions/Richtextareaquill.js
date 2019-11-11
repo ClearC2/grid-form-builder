@@ -110,6 +110,14 @@ class Richtextareaquill extends React.Component {
     this.quillRef.setSelection(cursorPosition + 1)
   }
 
+  handleAnywhereClick = e => {
+    const {handleAnywhereClick = () => null, formValues = Map()} = this.props
+    let {config = {}} = this.props
+    const currentValue = formValues.get(config.name, '')
+    config = {currentValue, ...config}
+    handleAnywhereClick(config, e)
+  }
+
   render () {
     const {config = {}, Icon = null, inline, formValues = Map()} = this.props
     const {name = null, required = false} = config
@@ -166,7 +174,7 @@ class Richtextareaquill extends React.Component {
     }
     return (
       this.props.connectDropTarget(
-        <div style={styles.container}>
+        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <div style={styles.labelContainer}>
             {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
             {Icon && <Icon style={styles.icon} />}

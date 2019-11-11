@@ -23,6 +23,7 @@ export default class Example extends Component {
     draggable: false,
     droppable: false,
     resizeable: false,
+    activeItem: null,
     colDefs: [],
     selectedColumns: [],
     availableColumns: [],
@@ -70,6 +71,8 @@ export default class Example extends Component {
     ]
   }
 
+  setActiveItem = activeItem => this.setState(() => ({activeItem}))
+
   //  colpicker functions:
   onColumnChange = (colList) => {
     this.setState({selectedColumns: colList})
@@ -93,8 +96,8 @@ export default class Example extends Component {
     })
   }
 
-  handleOnClick = e => {
-    // console.log(e)
+  handleOnClick = (config) => {
+    this.setActiveItem(config.index)
   }
 
   onSubmit = () => {
@@ -122,7 +125,7 @@ export default class Example extends Component {
   }
 
   render = () => {
-    const {formSchema, isInvalidWarning, droppable} = this.state
+    const {formSchema, isInvalidWarning, droppable, activeItem} = this.state
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is true
       return (
@@ -199,6 +202,7 @@ export default class Example extends Component {
             handleLinkClick={this.handleLinkClick}
             handleOnDimensionChange={this.handleOnDimensionChange}
             droppable={droppable}
+            activeItem={activeItem}
           />
         </div>
       )
