@@ -1,3 +1,17 @@
+## [2.1.1](https://github.com/ClearC2/grid-form-builder/compare/v2.1.0...v2.1.1) (2019-11-11)
+
+
+### Bug Fixes
+
+* **conditionalTable:** undefined error ([07d6fff](https://github.com/ClearC2/grid-form-builder/commit/07d6fff))
+
+# [2.1.0](https://github.com/ClearC2/grid-form-builder/compare/v2.0.0...v2.1.0) (2019-11-11)
+
+
+### Features
+
+* **drop:** dropItemDimensions and dropItemConfig are now valid props to provide to specify the initial config of a dropped item ([2b30735](https://github.com/ClearC2/grid-form-builder/commit/2b30735))
+
 # [2.0.0](https://github.com/ClearC2/grid-form-builder/compare/v1.41.2...v2.0.0) (2019-11-08)
 
 
