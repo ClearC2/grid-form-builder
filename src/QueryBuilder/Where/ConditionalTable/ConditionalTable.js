@@ -133,8 +133,7 @@ export default class ConditionalTable extends Component {
           }
         }
       } else if (typeof value === 'object' && value.condition === undefined) {
-        console.log(value, 'value logggg')
-        newValue = List(value || [])
+        newValue = List(value)
       } else {
         if (typeof value.values[0] === 'object') {
           // for typeaheads
