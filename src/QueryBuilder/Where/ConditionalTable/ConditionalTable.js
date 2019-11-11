@@ -133,7 +133,11 @@ export default class ConditionalTable extends Component {
           }
         }
       } else if (typeof value === 'object' && value.condition === undefined) {
-        newValue = List(value)
+        if (value instanceof Map()) {
+          newValue = value.toList()
+        } else {
+          newValue = List(value || [])
+        }
       } else {
         if (typeof value.values[0] === 'object') {
           // for typeaheads
