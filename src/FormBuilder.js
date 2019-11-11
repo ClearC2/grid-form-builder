@@ -29,6 +29,7 @@ const FormBuilder = (props) => {
     size,
     handleOnDimensionChange,
     dropItemDimensions,
+    dropItemConfig,
     validate,
     requiredFlag,
     setContainerRef,
@@ -246,7 +247,7 @@ const FormBuilder = (props) => {
       handleOnDimensionChange(newFormSchema)
     } else {
       // this is a hack to break react's internal batching - clear the dashboard and reset it - JRA 11/06/2019
-      console.warn('A change was detected to the layout but no onItemLayoutUpdate callback was provided to update the schema.') // eslint-disable-line
+      console.warn('A change was detected to the layout but no handleOnDimensionChange callback was provided to update the schema.') // eslint-disable-line
       updateGrid({layout: List(), elements: []})
       setTimeout(() => updateGrid({layout: fromJS(grid.layout), elements: grid.elements}))
     }
@@ -255,11 +256,7 @@ const FormBuilder = (props) => {
   const onDrop = useCallback((dimensions) => {
     debugLog('onDrop')
     if (typeof handleOnDimensionChange === 'function') {
-      const config = { // eventually this will need to be a prop so we can init a new field with more than just these hard coded defaults - JRA 11/06/2019
-        name: 'new-input',
-        label: 'New Field',
-        type: 'input'
-      }
+      const config = {...dropItemConfig}
       const schema = searchForLayoutArray(formSchema)
       if (ReactGridLayout.current) { // dropping a new item most likely caused collisions, so lets ref up the layout and update everything that got moved if we can - JRA 11/07/2019
         const newLayout = ReactGridLayout.current.state.layout
@@ -280,9 +277,9 @@ const FormBuilder = (props) => {
       const newFormSchema = updateLayoutArray(formSchema, schema)
       handleOnDimensionChange(newFormSchema)
     } else {
-      console.warn('A new item was dropped into the current layout but no onItemLayoutUpdate callback was provided to update the schema.') // eslint-disable-line
+      console.warn('A new item was dropped into the current layout but no handleOnDimensionChange callback was provided to update the schema.') // eslint-disable-line
     }
-  }, [formSchema, handleOnDimensionChange])
+  }, [formSchema, dropItemConfig, handleOnDimensionChange])
 
   debugLog('render')
 
@@ -322,6 +319,7 @@ FormBuilder.propTypes = {
   size: PropTypes.object,
   handleOnDimensionChange: PropTypes.func,
   dropItemDimensions: PropTypes.object,
+  dropItemConfig: PropTypes.object,
   validate: PropTypes.bool,
   requiredFlag: PropTypes.bool,
   setContainerRef: PropTypes.func,
@@ -345,6 +343,11 @@ FormBuilder.defaultProps = {
   dropItemDimensions: {
     h: 1,
     w: 6
+  },
+  dropItemConfig: {
+    name: 'new-input',
+    label: 'New Field',
+    type: 'input'
   },
   handleSubmit: () => {
     console.warn('onSubmit was called but no handleSubmit function was provided.') // eslint-disable-line
@@ -375,6 +378,7 @@ export default class FormValidator extends Component {
     handleRTEImageClick: PropTypes.func,
     handleOnDimensionChange: PropTypes.func,
     dropItemDimensions: PropTypes.object,
+    dropItemConfig: PropTypes.object,
     validate: PropTypes.bool,
     requiredFlag: PropTypes.bool,
     handleLinkClick: PropTypes.func,

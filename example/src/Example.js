@@ -21,6 +21,7 @@ export default class Example extends Component {
     }),
     inline: false,
     draggable: false,
+    droppable: false,
     resizeable: false,
     colDefs: [],
     selectedColumns: [],
@@ -83,6 +84,8 @@ export default class Example extends Component {
 
   toggleDraggable = () => this.setState({draggable: !this.state.draggable})
 
+  toggleDroppable = () => this.setState({droppable: !this.state.droppable})
+
   handleOnChange = e => {
     const input = e.target
     this.setState(s => {
@@ -119,7 +122,7 @@ export default class Example extends Component {
   }
 
   render = () => {
-    const {formSchema, isInvalidWarning} = this.state
+    const {formSchema, isInvalidWarning, droppable} = this.state
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is true
       return (
@@ -174,7 +177,13 @@ export default class Example extends Component {
             <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
             <button onClick={this.onSubmit} style={{marginLeft: 10}}>Submit</button>
             <button onClick={this.toggleValidation} style={{marginLeft: 10}}>Toggle Validation State</button>
-            <DragUnit someProp='test' />
+            <button
+              onClick={this.toggleDroppable}
+              style={{marginLeft: 10}}
+            >
+              {this.state.droppable ? 'Make Not Droppable' : 'Make Droppable'}
+            </button>
+            <DragUnit someProp='test' droppable={this.state.droppable} />
           </div>
           <FormBuilder
             ref={ref => { this.exampleForm = ref }}
@@ -189,7 +198,7 @@ export default class Example extends Component {
             validate={isInvalidWarning}
             handleLinkClick={this.handleLinkClick}
             handleOnDimensionChange={this.handleOnDimensionChange}
-            droppable
+            droppable={droppable}
           />
         </div>
       )

@@ -10374,22 +10374,22 @@ react-draggable@3.1.1:
     classnames "^2.2.5"
     prop-types "^15.6.0"
 
-"react-draggable@^2.2.6 || ^3.0.3", react-draggable@^3.0.3:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-3.2.1.tgz#45d09a9a227988dc85674b23ab3c75b6e820dae5"
+react-draggable@^4.0.0, react-draggable@^4.0.3:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-4.1.0.tgz#e1c5b774001e32f0bff397254e1e9d5448ac92a4"
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.6.0"
 
-react-grid-layout@^0.15.2:
-  version "0.15.3"
-  resolved "https://registry.yarnpkg.com/react-grid-layout/-/react-grid-layout-0.15.3.tgz#e36b90a7d051191cbdc02b5feabfdb980368a961"
+react-grid-layout@^0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/react-grid-layout/-/react-grid-layout-0.17.1.tgz#0b75c72e5b7d7085f0f0054e160b31298971c5e2"
   dependencies:
     classnames "2.x"
     lodash.isequal "^4.0.0"
-    prop-types "15.x"
-    react-draggable "^3.0.3"
-    react-resizable "^1.7.5"
+    prop-types "^15.0.0"
+    react-draggable "^4.0.0"
+    react-resizable "^1.9.0"
 
 react-hot-loader@^4.3.11:
   version "4.8.2"
@@ -10475,12 +10475,12 @@ react-redux@^5.0.6:
     react-is "^16.6.0"
     react-lifecycles-compat "^3.0.0"
 
-react-resizable@^1.7.5:
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/react-resizable/-/react-resizable-1.7.5.tgz#83eb75bb3684da6989bbbf4f826e1470f0af902e"
+react-resizable@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/react-resizable/-/react-resizable-1.9.0.tgz#7426f06852180e6844bbbc32ead67760d2904a65"
   dependencies:
     prop-types "15.x"
-    react-draggable "^2.2.6 || ^3.0.3"
+    react-draggable "^4.0.3"
 
 react-rnd@^9.0.0:
   version "9.1.2"
