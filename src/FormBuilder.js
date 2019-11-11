@@ -52,7 +52,6 @@ const FormBuilder = (props) => {
   const [myOffset] = useState(FormBuilder.count)
   const [id] = useState(`gfb-${Math.floor(Math.random() * 10000) + 1}`) // creates a unique id for this grid for the screen scraper
   const ReactGridLayout = useRef(null)
-  const [formValueState, updateFormValueState] = useState(formValues ? formValues.toJS ? formValues : fromJS(formValues) : Map()) // eslint-disable-line
 
   const handleAnywhereClick = useCallback((config, e) => {
     debugLog('handleAnywhereClick')
@@ -84,11 +83,6 @@ const FormBuilder = (props) => {
       id: value
     })
   }
-
-  useEffect(() => {
-    const values = formValues ? formValues.toJS ? formValues : fromJS(formValues) : Map()
-    updateFormValueState(values)
-  }, [formValues])
 
   useEffect(() => {
     debugLog('updateRequiredWarning')
