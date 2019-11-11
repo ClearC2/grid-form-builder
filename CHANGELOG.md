@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/ClearC2/grid-form-builder/compare/v2.1.1...v2.2.0) (2019-11-11)
+
+
+### Features
+
+* **designer:** added support to include the index of an item to indicate which element is active ([c43b385](https://github.com/ClearC2/grid-form-builder/commit/c43b385))
+
 ## [2.1.1](https://github.com/ClearC2/grid-form-builder/compare/v2.1.0...v2.1.1) (2019-11-11)
 
 
