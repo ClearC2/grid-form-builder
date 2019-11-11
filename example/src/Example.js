@@ -88,7 +88,6 @@ export default class Example extends Component {
 
   handleOnChange = e => {
     const input = e.target
-    console.log(input.name, input.value)
     this.setState(s => {
       return {formValues: s.formValues.set(input.name, input.value)}
     })
