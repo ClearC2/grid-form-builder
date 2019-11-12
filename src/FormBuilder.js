@@ -46,7 +46,10 @@ const FormBuilder = (props) => {
     draggable,
     readonly,
     droppable,
-    activeItem
+    activeItem,
+    rglAutoSize = true,
+    rglStyle,
+    verticalCompact = false
   } = props
   const [grid, updateGrid] = useState({layout: List(), elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
@@ -291,7 +294,8 @@ const FormBuilder = (props) => {
     >
       <RGL
         ref={ReactGridLayout}
-        autoSize
+        autoSize={rglAutoSize}
+        style={rglStyle}
         width={size.width}
         cols={columns}
         rowHeight={rowHeight || (inline ? 27 : 45)}
@@ -303,6 +307,7 @@ const FormBuilder = (props) => {
         onDrop={onDrop}
         isDraggable={draggable}
         isResizable={draggable}
+        verticalCompact={verticalCompact}
       >
         {grid.elements}
       </RGL>
@@ -335,7 +340,10 @@ FormBuilder.propTypes = {
   draggable: PropTypes.bool,
   readonly: PropTypes.bool,
   droppable: PropTypes.bool,
-  activeItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  activeItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  rglAutoSize: PropTypes.bool,
+  rglStyle: PropTypes.object,
+  verticalCompact: PropTypes.bool
 }
 
 FormBuilder.defaultProps = {
