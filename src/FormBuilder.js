@@ -49,10 +49,14 @@ const FormBuilder = (props) => {
     activeItem,
     rglAutoSize = true,
     rglStyle,
-    verticalCompact = false
+    verticalCompact = false,
+    compactType
   } = props
   const [grid, updateGrid] = useState({layout: List(), elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
+  const [compact, updateCompact] = useState(
+    verticalCompact ? 'vertical' : typeof compactType === 'undefined' ? null : compactType
+  )
   const [myOffset] = useState(FormBuilder.count)
   const [id] = useState(`gfb-${Math.floor(Math.random() * 10000) + 1}`) // creates a unique id for this grid for the screen scraper
   const ReactGridLayout = useRef(null)
@@ -87,6 +91,11 @@ const FormBuilder = (props) => {
       id: value
     })
   }
+
+  useEffect(() => {
+    debugLog('updateCompact')
+    updateCompact(verticalCompact ? 'vertical' : typeof compactType === 'undefined' ? null : compactType)
+  }, [verticalCompact, compactType])
 
   useEffect(() => {
     debugLog('updateRequiredWarning')
@@ -307,7 +316,7 @@ const FormBuilder = (props) => {
         onDrop={onDrop}
         isDraggable={draggable}
         isResizable={draggable}
-        verticalCompact={verticalCompact}
+        compactType={compact}
       >
         {grid.elements}
       </RGL>
@@ -343,7 +352,8 @@ FormBuilder.propTypes = {
   activeItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   rglAutoSize: PropTypes.bool,
   rglStyle: PropTypes.object,
-  verticalCompact: PropTypes.bool
+  verticalCompact: PropTypes.bool,
+  compactType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 }
 
 FormBuilder.defaultProps = {
@@ -396,7 +406,11 @@ export default class FormValidator extends Component {
     draggable: PropTypes.bool,
     readonly: PropTypes.bool,
     droppable: PropTypes.bool,
-    activeItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    activeItem: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    rglAutoSize: PropTypes.bool,
+    rglStyle: PropTypes.object,
+    verticalCompact: PropTypes.bool,
+    compactType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
   }
 
   static defaultProps = {
