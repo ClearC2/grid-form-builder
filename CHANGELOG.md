@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/ClearC2/grid-form-builder/compare/v2.2.0...v2.3.0) (2019-11-12)
+
+
+### Features
+
+* **vertical-compact:** add vertical compact and dynamic styling to react grid layout ([#126](https://github.com/ClearC2/grid-form-builder/issues/126)) ([cf4c166](https://github.com/ClearC2/grid-form-builder/commit/cf4c166))
+
 # [2.2.0](https://github.com/ClearC2/grid-form-builder/compare/v2.1.1...v2.2.0) (2019-11-11)
 
 
