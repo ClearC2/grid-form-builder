@@ -3,9 +3,38 @@ input[id^='react-select-'] {
   opacity: 1 !important;
 }
 
+div.grid-form-builder-parent .active-gfb-item-action-menu {
+  position: absolute;
+  right: 0;
+  top: -37px;
+  height: 35px;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.grid-form-builder-parent .active-gfb-item-action-menu > .item-action-button {
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+  background-color: #36a9e1;
+  margin-left: 1px;
+  margin-right: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+div.grid-form-builder-parent .active-gfb-item-action-menu > .item-action-button.action-button-remove:hover {
+  background-color: red;
+}
+
 div.grid-form-builder-parent .react-grid-item.react-draggable:hover, .react-grid-item.react-draggable.drag-item-active {
   border: 2px solid #36a9e1;
   margin: -2px;
+  z-index: 3;
 }
 
 div.grid-form-builder-parent .react-grid-item.react-draggable:hover > span.react-resizable-handle, .react-grid-item.react-draggable.drag-item-active > span.react-resizable-handle {

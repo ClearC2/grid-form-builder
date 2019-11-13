@@ -9,6 +9,7 @@ import {List, fromJS, Map, Set} from 'immutable'
 import $ from 'jquery'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
 import InputContainer from './InputContainer'
+import Trash from 'react-icons/lib/fa/trash'
 
 let inputEventListenerDebouncer = null
 
@@ -189,11 +190,21 @@ const FormBuilder = (props) => {
         } else {
           tabIndex = myOffset + '' + tabIndex
         }
-        const className = (
-          typeof activeItem === 'string' || typeof activeItem === 'number'
-        ) && +activeItem === i ? 'drag-item-active' : ''
+        const isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i
+        const className = isActive ? 'drag-item-active' : ''
+        const removeSelf = e => {
+          onClick({index: null}, e)
+          removeItem(i)
+        }
         elements.push(
           <div key={i + ''} className={className}>
+            {draggable && isActive && (
+              <div className='active-gfb-item-action-menu' onClick={removeSelf}>
+                <div className='item-action-button action-button-remove'>
+                  <Trash height={20} width={20} color='white' />
+                </div>
+              </div>
+            )}
             <InputContainer
               formSchema={formSchema}
               config={config}
@@ -217,6 +228,8 @@ const FormBuilder = (props) => {
               draggable={draggable}
               tabIndex={+tabIndex}
               index={i}
+              isActive={isActive}
+              removeSelf={removeSelf}
             >
               <Component />
             </InputContainer>
@@ -244,6 +257,21 @@ const FormBuilder = (props) => {
     myOffset,
     activeItem
   ])
+
+  const removeItem = useCallback(i => {
+    if (typeof handleOnDimensionChange === 'function') {
+      const schema = searchForLayoutArray(formSchema)
+      schema.splice(i, 1)
+      const newFormSchema = updateLayoutArray(formSchema, schema)
+      updateGrid({layout: List(), elements: []}) // clearing these out first so nothing funky happens with the indexes - JRA 11/13/2019
+      handleOnDimensionChange(newFormSchema)
+    } else {
+      // this is a hack to break react's internal batching - clear the dashboard and reset it - JRA 11/06/2019
+      console.warn('A grid item attempted to remove itself but no handleOnDimensionChange callback was provided to update the schema.') // eslint-disable-line
+      updateGrid({layout: List(), elements: []})
+      setTimeout(() => updateGrid({layout: fromJS(grid.layout), elements: grid.elements}))
+    }
+  }, [formSchema, updateGrid, handleOnDimensionChange, grid])
 
   const onItemLayoutUpdate = useCallback((newLayout) => {
     debugLog('onItemLayoutUpdate')
