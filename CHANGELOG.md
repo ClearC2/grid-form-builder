@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/ClearC2/grid-form-builder/compare/v2.4.0...v2.5.0) (2019-11-13)
+
+
+### Features
+
+* **grid:** adds remove self trash icon to each grid item ([db4143d](https://github.com/ClearC2/grid-form-builder/commit/db4143d))
+
 # [2.4.0](https://github.com/ClearC2/grid-form-builder/compare/v2.3.0...v2.4.0) (2019-11-12)
 
 
