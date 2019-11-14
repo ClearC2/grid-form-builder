@@ -1,3 +1,10 @@
+## [2.5.1](https://github.com/ClearC2/grid-form-builder/compare/v2.5.0...v2.5.1) (2019-11-14)
+
+
+### Bug Fixes
+
+* **links:** moved link click to wrapper component so it has access to the current form values without needing to add rerenders to the child component ([6cd77ec](https://github.com/ClearC2/grid-form-builder/commit/6cd77ec))
+
 # [2.5.0](https://github.com/ClearC2/grid-form-builder/compare/v2.4.0...v2.5.0) (2019-11-13)
 
 
