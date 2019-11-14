@@ -26,7 +26,6 @@ const FormBuilder = (props) => {
     rowHeight,
     columns,
     formSchema,
-    formValues,
     size,
     handleOnDimensionChange,
     dropItemDimensions,
@@ -38,7 +37,7 @@ const FormBuilder = (props) => {
     handleOnDrop,
     handleCascade,
     handleRTEImageClick: onRTEImageClick,
-    handleLinkClick: onLinkClick,
+    handleLinkClick,
     conditionalFieldValues,
     conditionalSearch,
     inline,
@@ -81,17 +80,6 @@ const FormBuilder = (props) => {
     debugLog('handleRTEImageClick')
     onRTEImageClick()
   }, [onRTEImageClick])
-
-  const handleLinkClick = (link) => { // not memoing, it is using current values and I don't want to redraw everything every render just so this link works - JRA 11/07/2019
-    debugLog('handleLinkClick')
-    const values = formValues.toJS ? formValues : fromJS(formValues)
-    const {type = '', id = null} = link
-    const value = values.get(id, null)
-    onLinkClick({
-      type,
-      id: value
-    })
-  }
 
   useEffect(() => {
     debugLog('updateCompact')
@@ -255,7 +243,8 @@ const FormBuilder = (props) => {
     draggable,
     readonly,
     myOffset,
-    activeItem
+    activeItem,
+    handleLinkClick
   ])
 
   const removeItem = useCallback(i => {
@@ -510,6 +499,18 @@ export default class FormValidator extends Component {
     formValues: formValues.toJS ? formValues : fromJS(formValues)
   }))
 
+  handleLinkClick = link => {
+    const {formValues} = this.state
+    const {handleLinkClick} = this.props
+    const values = formValues.toJS ? formValues : fromJS(formValues)
+    const {type = '', id = null} = link
+    const value = values.get(id, null)
+    handleLinkClick({
+      type,
+      id: value
+    })
+  }
+
   shouldComponentUpdate (p, s) {
     if (p.formValues !== this.props.formValues) {
       this.updateFormValues(p.formValues) // this kills the extra render from values updating, the context updating will render - JRA 11/07/2019
@@ -525,7 +526,12 @@ export default class FormValidator extends Component {
     const {formValues: values, ...rest} = this.props
     return (
       <FormValueContext.Provider value={[formValues, this.updateFormValues]}>
-        <SizeMeHOC {...rest} requiredWarning={requiredWarning} setContainerRef={this.setContainerRef} />
+        <SizeMeHOC
+          {...rest}
+          requiredWarning={requiredWarning}
+          setContainerRef={this.setContainerRef}
+          handleLinkClick={this.handleLinkClick}
+        />
       </FormValueContext.Provider>
     )
   }
