@@ -1,3 +1,10 @@
+## [2.5.2](https://github.com/ClearC2/grid-form-builder/compare/v2.5.1...v2.5.2) (2019-11-15)
+
+
+### Bug Fixes
+
+* **listselect:** adds container height so the items do not overflow out of the bounds of the grid ([f9d31fc](https://github.com/ClearC2/grid-form-builder/commit/f9d31fc))
+
 ## [2.5.1](https://github.com/ClearC2/grid-form-builder/compare/v2.5.0...v2.5.1) (2019-11-14)
 
 
