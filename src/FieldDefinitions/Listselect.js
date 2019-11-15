@@ -159,6 +159,7 @@ export class Listselect extends Component {
         flexDirection: inline ? 'row' : 'column',
         background: 'transparent',
         minWidth: 177,
+        height: '100%',
         ...containerStyle
       },
       labelContainer: {
