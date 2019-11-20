@@ -161,4 +161,4 @@ class _ConditionalTableContainer extends Component {
   }
 }
 
-export default connect(null, null, null, {withRef: true})(_ConditionalTableContainer)
+export default connect(null, null, null, {withRef: true, forwardRef: true})(_ConditionalTableContainer)
