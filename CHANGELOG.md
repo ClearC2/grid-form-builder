@@ -1,3 +1,10 @@
+## [2.5.5](https://github.com/ClearC2/grid-form-builder/compare/v2.5.4...v2.5.5) (2019-11-20)
+
+
+### Bug Fixes
+
+* **redux:** adds forwardRef to allow redux to be upgraded to 6+ ([9e32caf](https://github.com/ClearC2/grid-form-builder/commit/9e32caf))
+
 ## [2.5.4](https://github.com/ClearC2/grid-form-builder/compare/v2.5.3...v2.5.4) (2019-11-20)
 
 
