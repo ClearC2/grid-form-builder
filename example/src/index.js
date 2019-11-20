@@ -8,7 +8,7 @@ import {initFormBuilderAjax} from '../../src/config'
 import ajax from './ajax'
 
 import HTML5Backend from 'react-dnd-html5-backend'
-import {DragDropContext} from 'react-dnd'
+import {DndProvider} from 'react-dnd'
 
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
@@ -30,8 +30,10 @@ const render = (props = {}) => {
   )
 }
 
-const HTML5BackendProvider = DragDropContext(HTML5Backend)(Example)
-// documentation of react dnd, context can only be applied once
-// (it seems hot reloading counts as multiple), and should be done top level - JRA 1/23/2018
+const HTML5BackendProvider = (props) => (
+  <DndProvider backend={HTML5Backend}>
+    <Example {...props} />
+  </DndProvider>
+)
 
 render()

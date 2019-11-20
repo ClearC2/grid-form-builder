@@ -7,7 +7,7 @@ import {combineReducers} from 'redux-immutable'
 import {reducer as formLayoutReducer} from './src/index'
 import {render} from 'react-testing-library'
 import {Provider} from 'react-redux'
-import {DragDropContext} from 'react-dnd'
+import {DndProvider} from 'react-dnd'
 import TestBackend from 'react-dnd-test-backend'
 
 const reducer = combineReducers({
@@ -20,16 +20,17 @@ global.createStore = (initialState = {}) => createStore(
 )
 
 global.render = (sut, {store} = {}) => { // sut = subject under test
-  const contextHOC = DragDropContext(TestBackend)
-  const Test = contextHOC(class extends React.Component {
+  const Test = class extends React.Component {
     render () {
       return sut
     }
-  })
+  }
   const result = render((
-    <Provider store={store || global.createStore()}>
-      <Test />
-    </Provider>
+    <DndProvider backend={TestBackend}>
+      <Provider store={store || global.createStore()}>
+        <Test />
+      </Provider>
+    </DndProvider>
   ))
   return {
     ...result,
