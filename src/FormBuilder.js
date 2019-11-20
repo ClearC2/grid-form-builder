@@ -485,7 +485,7 @@ export default class FormValidator extends Component {
     })
     if (reasons.length > 0) {
       this.setState({requiredWarning: true}, () => {
-        this.grid.scrollIntoView()
+        this.grid && this.grid.scrollIntoView()
       })
     }
     return reasons
