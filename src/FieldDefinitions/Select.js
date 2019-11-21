@@ -235,7 +235,7 @@ export class Select extends Component {
     if (config.clearable === false) {
       clearable = false
     }
-    const Component = creatable ? Creatable : ReactSelect
+    const Select = creatable ? Creatable : ReactSelect
 
     return (
       connectDropTarget(
@@ -268,7 +268,7 @@ export class Select extends Component {
             )}
           </div>
           <div onMouseUp={this.openMenu}>
-            <Component
+            <Select
               autoFocus={this.props.config.autofocus}
               className={className}
               isClearable={clearable}

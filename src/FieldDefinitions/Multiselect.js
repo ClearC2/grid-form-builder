@@ -231,7 +231,7 @@ export class Multiselect extends Component {
     let className = inline ? `select-grid-input select-grid-input-inline` : `select-grid-input`
     className = !warn ? className : className + ' warn-required'
     placeholder = warn ? '* This Field Is Required' : placeholder
-    const Component = creatable ? Creatable : ReactSelect
+    const Multiselect = creatable ? Creatable : ReactSelect
     return (
       connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
@@ -266,7 +266,7 @@ export class Multiselect extends Component {
               <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
             )}
           </div>
-          <Component
+          <Multiselect
             autoFocus={this.props.config.autofocus}
             className={className}
             isDisabled={disabled}

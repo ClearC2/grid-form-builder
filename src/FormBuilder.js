@@ -153,11 +153,11 @@ const FormBuilder = (props) => {
       if (interactive && type === 'select') {
         type = 'ImportSelect'
       }
-      const Component = mapInputType(type)
-      if (!Component) {
+      const Input = mapInputType(type)
+      if (!Input) {
         console.warn(field, 'was skipped because it did not contain a valid input type.') // eslint-disable-line
       }
-      if (typeof dimensions === 'object' && !!Component) {
+      if (typeof dimensions === 'object' && !!Input) {
         dimensions.i = i + ''
         let {icon = '', cascade = {}, tabindex: tabIndex, autoComplete = 'off', link = {}} = config
         let {keyword = null, icon: cascadeIcon = ''} = cascade
@@ -219,7 +219,7 @@ const FormBuilder = (props) => {
               isActive={isActive}
               removeSelf={removeSelf}
             >
-              <Component />
+              <Input />
             </InputContainer>
           </div>
         )

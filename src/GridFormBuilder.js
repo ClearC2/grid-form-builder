@@ -242,14 +242,14 @@ class FormBuilder extends Component { //eslint-disable-line
       icon = this.uppercaseFirstLetter(icon)
       cascadeIcon = this.uppercaseFirstLetter(cascadeIcon)
       if (type === 'Textarea' && dimensions.h < 2) dimensions.h = 2
-      const Component = FormComponents[type] ? FormComponents[type] : FormComponents.Input
+      const Input = FormComponents[type] ? FormComponents[type] : FormComponents.Input
 
       icon = IconLibrary[icon] ? IconLibrary[icon] : null
       cascadeIcon = IconLibrary[cascadeIcon] ? IconLibrary[cascadeIcon] : null
       linkIcon = IconLibrary[linkIcon] ? IconLibrary[linkIcon] : null
       if (Type === 'Customcomponent') {
         normalFields.push(
-          <Component
+          <Input
             handleLinkClick={this.handleLinkClick}
             LinkIcon={linkIcon}
             autoComplete={autoComplete}
@@ -275,7 +275,7 @@ class FormBuilder extends Component { //eslint-disable-line
         )
       } else {
         normalFields.push(
-          <Component
+          <Input
             handleLinkClick={this.handleLinkClick}
             LinkIcon={linkIcon}
             autoComplete={autoComplete}

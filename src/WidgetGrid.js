@@ -180,7 +180,7 @@ class Grid extends Component { //eslint-disable-line
 
       if (dataGrid) {
         // if component is explicitly passed a size prop, we don't want to overwrite it
-        const Component = child.props.size ? WidgetWrapper : SizedWidgetWrapper
+        const GridComponent = child.props.size ? WidgetWrapper : SizedWidgetWrapper
 
         layout.push(dataGrid)
         children.push(
@@ -188,7 +188,7 @@ class Grid extends Component { //eslint-disable-line
             key={key}
             style={{background: 'transparent', overflow: 'visible', height: '100%'}}
           >
-            <Component
+            <GridComponent
               key={key}
               widgetKey={key}
               handleRemoveWidgetClick={this.handleRemoveWidgetClick}
