@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/ClearC2/grid-form-builder/compare/v2.5.5...v2.6.0) (2019-11-21)
+
+
+### Features
+
+* **react-dnd:** upgrades react dnd to 9.4.0 ([3b89eb6](https://github.com/ClearC2/grid-form-builder/commit/3b89eb6))
+
 ## [2.5.5](https://github.com/ClearC2/grid-form-builder/compare/v2.5.4...v2.5.5) (2019-11-20)
 
 
