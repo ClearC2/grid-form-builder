@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {List, fromJS, Map} from 'immutable'
-import ReactSelect, {Creatable} from 'react-select'
+import ReactSelect from 'react-select'
+import Creatable from 'react-select/creatable'
 import {DropTarget} from 'react-dnd'
 import {reactSelectStyles} from '../react-select-style'
 import PropTypes from 'prop-types'

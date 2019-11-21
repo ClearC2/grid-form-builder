@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
-import {AsyncCreatable, Async} from 'react-select'
+import Async from 'react-select/async'
+import AsyncCreatable from 'react-select/async-creatable'
 import PropTypes from 'prop-types'
 import GFBConfig from '../config'
 import {DropTarget} from 'react-dnd'

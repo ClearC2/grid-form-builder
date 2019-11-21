@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
-import {Creatable} from 'react-select'
+import Creatable from 'react-select/creatable'
 import {DropTarget} from 'react-dnd'
 import PropTypes from 'prop-types'
 
