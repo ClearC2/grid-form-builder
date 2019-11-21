@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
-import Cleave from 'cleave.js/react'
+// import Cleave from 'cleave.js/react'
+import Cleave from '../Cleave' // switch this back to cleave.js package as soon they remove the depricated lifecycles - JRA 11/21/2019
 import 'cleave.js/dist/addons/cleave-phone.us'
 import {DropTarget} from 'react-dnd'
 import PropTypes from 'prop-types'

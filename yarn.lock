@@ -3008,9 +3008,9 @@ clean-webpack-plugin@^0.1.19:
   dependencies:
     rimraf "^2.6.1"
 
-cleave.js@^1.1.1:
-  version "1.4.10"
-  resolved "https://registry.yarnpkg.com/cleave.js/-/cleave.js-1.4.10.tgz#40505827f07c148be6822522504901fca278a445"
+cleave.js@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/cleave.js/-/cleave.js-1.5.3.tgz#1ef36e1375dea289bffeefe8ebb1e3ef2ee23240"
 
 cli-boxes@^1.0.0:
   version "1.0.0"
