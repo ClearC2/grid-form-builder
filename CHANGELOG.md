@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/ClearC2/grid-form-builder/compare/v2.6.0...v2.7.0) (2019-11-21)
+
+
+### Features
+
+* **react-select:** upgrades react select to ^3 that no longer uses depricated lifecycle methods ([c47d8aa](https://github.com/ClearC2/grid-form-builder/commit/c47d8aa))
+
 # [2.6.0](https://github.com/ClearC2/grid-form-builder/compare/v2.5.5...v2.6.0) (2019-11-21)
 
 
