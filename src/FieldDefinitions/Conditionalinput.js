@@ -237,7 +237,7 @@ export default class Conditionalinput extends Component {
     this.setState({showDialog: newState})
   }
 
-  componentWillReceiveProps (props) {
+  UNSAFE_componentWillReceiveProps (props) {
     if (props.formValues.get(this.parentFieldName()) !== this.props.formValues.get(this.parentFieldName())) {
       let conditionalFieldValues = Map()
       let i = 0
