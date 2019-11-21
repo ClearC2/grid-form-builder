@@ -1,3 +1,18 @@
+# [2.9.0](https://github.com/ClearC2/grid-form-builder/compare/v2.8.0...v2.9.0) (2019-11-21)
+
+
+### Bug Fixes
+
+* **conditional:** marks will receive props as unsafe to supress warnings, will need to be refactored at some point ([b1d53c4](https://github.com/ClearC2/grid-form-builder/commit/b1d53c4))
+* **conditional:** marks will receive props as unsafe to supress warnings, will need to be refactored at some point ([74b2028](https://github.com/ClearC2/grid-form-builder/commit/74b2028))
+* **quill:** fixes eslint and formatting of quill ([09ab2e5](https://github.com/ClearC2/grid-form-builder/commit/09ab2e5))
+
+
+### Features
+
+* **phone:** added an internal version of the cleave react wrapper as a stop gap until cleave updates their own react wrapper that is internal to their package ([2703fe9](https://github.com/ClearC2/grid-form-builder/commit/2703fe9))
+* **react:** upgrades react so we can start removing depricated lifecycles ([7980d4f](https://github.com/ClearC2/grid-form-builder/commit/7980d4f))
+
 # [2.8.0](https://github.com/ClearC2/grid-form-builder/compare/v2.7.0...v2.8.0) (2019-11-21)
 
 
