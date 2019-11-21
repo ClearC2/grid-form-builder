@@ -1,3 +1,10 @@
+# [2.8.0](https://github.com/ClearC2/grid-form-builder/compare/v2.7.0...v2.8.0) (2019-11-21)
+
+
+### Features
+
+* **react-sizeme:** upgrades react-sizeme to version without deprication warnings ([bafda81](https://github.com/ClearC2/grid-form-builder/commit/bafda81))
+
 # [2.7.0](https://github.com/ClearC2/grid-form-builder/compare/v2.6.0...v2.7.0) (2019-11-21)
 
 
