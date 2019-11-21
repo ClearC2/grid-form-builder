@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/ClearC2/grid-form-builder/compare/v2.9.0...v2.10.0) (2019-11-21)
+
+
+### Features
+
+* **phone:** updates cleave wrapper to update state in snapshot rather than didupdate to prevent an infite loop if the field starts with a value ([037f46f](https://github.com/ClearC2/grid-form-builder/commit/037f46f))
+
 # [2.9.0](https://github.com/ClearC2/grid-form-builder/compare/v2.8.0...v2.9.0) (2019-11-21)
 
 
