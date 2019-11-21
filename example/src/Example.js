@@ -17,7 +17,8 @@ export default class Example extends Component {
       meta_created_date: 'swiggity swoogity here comes the moogity',
       listselecttest: List(['Customer Service', 'Executive Meeting']),
       multiselecttest: ['Contract SigningTestValue'],
-      parentid: '00112233445566778899AABBCCEEFFFF'
+      parentid: '00112233445566778899AABBCCEEFFFF',
+      phonetest: '5554443333'
     }),
     inline: false,
     draggable: false,

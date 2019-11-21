@@ -50,6 +50,20 @@ export default class Cleave extends Component {
     }
   }
 
+  getSnapshotBeforeUpdate (prevProps, prevState) {
+    let state = {}
+    let newValue = this.props.value
+    if (newValue !== undefined) {
+      newValue = newValue.toString()
+
+      if (newValue !== this.properties.result) {
+        this.properties.initValue = newValue
+        state = this.onInput(newValue, true, true)
+      }
+    }
+    return state
+  }
+
   componentDidMount () {
     this.init()
   }
@@ -58,24 +72,14 @@ export default class Cleave extends Component {
     const pps = this.properties
 
     Util.setSelection(this.element, this.state.cursorPosition, pps.document)
-    const phoneRegionCode = (this.props.options || {}).phoneRegionCode
-    let newValue = this.props.value
     this.updateRegisteredEvents(this.props)
-    if (newValue !== undefined) {
-      newValue = newValue.toString()
 
-      if (newValue !== this.properties.result) {
-        this.properties.initValue = newValue
-        this.onInput(newValue, true)
-      }
-    }
-
-    // update phone region code
-    if (phoneRegionCode && phoneRegionCode !== this.properties.phoneRegionCode) {
-      this.properties.phoneRegionCode = phoneRegionCode
-      this.initPhoneFormatter()
-      this.onInput(this.properties.result)
-    }
+    // update phone region code - // not supporting changing region after mount for now, this will almost certainly blow up in an in - JRA 11/21/2019
+    // if (phoneRegionCode && phoneRegionCode !== this.properties.phoneRegionCode) {
+    //   this.properties.phoneRegionCode = phoneRegionCode
+    //   this.initPhoneFormatter()
+    //   this.onInput(this.properties.result)
+    // }
   }
 
   updateRegisteredEvents = props => {
@@ -304,7 +308,7 @@ export default class Cleave extends Component {
     this.registeredEvents.onChange(event)
   }
 
-  onInput = (value, fromProps) => {
+  onInput = (value, fromProps, bypassSetState) => {
     let pps = this.properties
 
     // case 1: delete one more character "4"
@@ -323,9 +327,7 @@ export default class Cleave extends Component {
       } else {
         pps.result = pps.phoneFormatter.format(value)
       }
-      this.updateValueState()
-
-      return
+      return this.updateValueState(bypassSetState)
     }
 
     // numeral formatter
@@ -337,9 +339,7 @@ export default class Cleave extends Component {
       } else {
         pps.result = pps.numeralFormatter.format(value)
       }
-      this.updateValueState()
-
-      return
+      return this.updateValueState(bypassSetState)
     }
 
     // date
@@ -375,9 +375,7 @@ export default class Cleave extends Component {
       // no blocks specified, no need to do formatting
       if (pps.blocksLength === 0) {
         pps.result = value
-        this.updateValueState()
-
-        return
+        return this.updateValueState(bypassSetState)
       }
     }
 
@@ -396,7 +394,7 @@ export default class Cleave extends Component {
       pps.delimiter, pps.delimiters, pps.delimiterLazyShow
     )
 
-    this.updateValueState()
+    return this.updateValueState(bypassSetState)
   }
 
   updateCreditCardPropsByValue = (value) => {
@@ -422,32 +420,39 @@ export default class Cleave extends Component {
     }
   }
 
-  updateValueState = () => {
-    let owner = this
-    let pps = owner.properties
+  updateValueState = (bypassSetState) => {
+    let pps = this.properties
 
-    if (!owner.element) {
-      owner.setState({value: pps.result})
+    if (!this.element) {
+      if (bypassSetState) {
+        return {value: pps.result}
+      } else {
+        this.setState({value: pps.result})
+      }
       return
     }
 
-    var endPos = owner.element.selectionEnd
-    var oldValue = owner.element.value
+    var endPos = this.element.selectionEnd
+    var oldValue = this.element.value
     var newValue = pps.result
 
-    owner.lastInputValue = newValue
+    this.lastInputValue = newValue
 
     endPos = Util.getNextCursorPosition(endPos, oldValue, newValue, pps.delimiter, pps.delimiters)
 
-    if (owner.isAndroid) {
-      window.setTimeout(function () {
-        owner.setState({value: newValue, cursorPosition: endPos})
+    if (this.isAndroid) {
+      window.setTimeout(() => {
+        !bypassSetState && this.setState({value: newValue, cursorPosition: endPos})
       }, 1)
 
       return
     }
 
-    owner.setState({value: newValue, cursorPosition: endPos})
+    if (bypassSetState) {
+      return {value: newValue, cursorPosition: endPos}
+    } else {
+      this.setState({value: newValue, cursorPosition: endPos})
+    }
   }
 
   render () {
