@@ -50,7 +50,7 @@ export default class ConditionalTable extends Component {
     enableListToggle: false
   }
 
-  componentWillReceiveProps (props) {
+  UNSAFE_componentWillReceiveProps (props) {
     if (this.props.formValues !== props.formValues) {
       if (this.props.onQueryChange) {
         this.props.onQueryChange(this.buildRequest(props.formValues))

@@ -24,7 +24,7 @@ export class ReportBuilder extends Component {
     }
   }
 
-  componentWillReceiveProps (props) {
+  UNSAFE_componentWillReceiveProps (props) {
     if (JSON.stringify(this.props.selectedColumns) !== JSON.stringify(props.selectedColumns)) {
       if (this.props.onColDefChange) {
         this.props.onColDefChange(this.buildColumnDefs(props.selectedColumns))
