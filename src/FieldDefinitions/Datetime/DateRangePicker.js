@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import $ from 'jquery'
 import moment from 'moment'
 import '../../../styles/daterangepicker.css'
-import daterangepicker from 'daterangepicker'
+import daterangepicker from 'daterangepicker' // sets up global variable for this file
 
 function setDirection (props) {
   const {auto, down, id, modal, up} = props

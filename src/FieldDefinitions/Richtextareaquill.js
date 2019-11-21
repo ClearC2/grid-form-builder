@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 import ReactQuill from 'react-quill'
@@ -28,7 +29,33 @@ const CustomToolbar = ({ID}) => (
   </div>
 )
 
+CustomToolbar.propTypes = {
+  ID: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+}
+
 class Richtextareaquill extends React.Component {
+  static propTypes = {
+    formValues: PropTypes.object,
+    config: PropTypes.object,
+    didDrop: PropTypes.bool,
+    isOver: PropTypes.bool,
+    droppedItem: PropTypes.object,
+    handleDragDropOnInput: PropTypes.func,
+    handleAnywhereClick: PropTypes.func,
+    handleCascadeKeywordClick: PropTypes.func,
+    handleOnChange: PropTypes.func,
+    draggable: PropTypes.bool,
+    inline: PropTypes.bool,
+    Icon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
+    requiredWarning: PropTypes.bool,
+    connectDropTarget: PropTypes.func,
+    cascadingKeyword: PropTypes.string,
+    CascadeIcon: PropTypes.func,
+    tabIndex: PropTypes.number,
+    LinkIcon: PropTypes.func,
+    handleLinkClick: PropTypes.func,
+    placeholder: PropTypes.string
+  }
   constructor (props) {
     super(props)
     this.quillRef = null
@@ -121,17 +148,14 @@ class Richtextareaquill extends React.Component {
   render () {
     const {config = {}, Icon = null, inline, formValues = Map()} = this.props
     const {name = null, required = false} = config
-    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, rteStyle = {}} = config
+    let {labelStyle = {}, containerStyle = {}, iconStyle = {}, rteStyle = {}} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
-    style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
     rteStyle = typeof rteStyle === 'string' ? JSON.parse(rteStyle) : rteStyle
 
     if (!name) return null
     const {label = name} = config
-    let {readonly = false, disabled = false} = config
-    disabled = disabled || readonly
     const value = formValues.get(name, '<p>&nbsp;</p>')
     const styles = {
       container: {
@@ -176,7 +200,9 @@ class Richtextareaquill extends React.Component {
       this.props.connectDropTarget(
         <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
           <div style={styles.labelContainer}>
-            {required && <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>}
+            {required && (
+              <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>
+            )}
             {Icon && <Icon style={styles.icon} />}
             <strong style={styles.label} >{label}</strong>
           </div>
