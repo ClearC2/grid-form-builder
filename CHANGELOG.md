@@ -1,3 +1,15 @@
+# [2.11.0](https://github.com/ClearC2/grid-form-builder/compare/v2.10.0...v2.11.0) (2019-11-22)
+
+
+### Bug Fixes
+
+* **time-component:** remove unnecessary code ([ac366ff](https://github.com/ClearC2/grid-form-builder/commit/ac366ff))
+
+
+### Features
+
+* **time:** remove react-datetime, add time component ([37a17d9](https://github.com/ClearC2/grid-form-builder/commit/37a17d9))
+
 # [2.10.0](https://github.com/ClearC2/grid-form-builder/compare/v2.9.0...v2.10.0) (2019-11-21)
 
 
