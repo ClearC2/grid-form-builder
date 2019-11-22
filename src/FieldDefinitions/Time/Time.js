@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-// import DateTime from 'react-datetime'
 import {DateTime} from './TimeBuilder'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
@@ -185,7 +184,7 @@ export class Date extends Component {
             onKeyDown={onKeyDown}
             onMouseDown={this.onMouseDown}
             timeFormat={timeFormat}
-            value={formattedValue('11:09 pm' || formValues.get(name, ''))}
+            value={formattedValue(formValues.get(name, ''))}
             inputProps={{
               className: inputClass,
               disabled: disabled,
