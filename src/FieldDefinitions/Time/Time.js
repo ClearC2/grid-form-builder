@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import DateTime from 'react-datetime'
+import {DateTime} from './TimeBuilder'
 import {Map} from 'immutable'
 import {DropTarget} from 'react-dnd'
 import moment from 'moment'
@@ -180,8 +180,6 @@ export class Date extends Component {
           </div>
           <DateTime
             className={className}
-            closeOnSelect
-            dateFormat={false}
             onChange={this.handleOnChange}
             onKeyDown={onKeyDown}
             onMouseDown={this.onMouseDown}
@@ -191,7 +189,7 @@ export class Date extends Component {
               className: inputClass,
               disabled: disabled,
               placeholder: placeholder,
-              ref: ref => { this.input = ref },
+              setRef: ref => { this.input = ref },
               style: {backgroundColor: disabled ? '#eeeeee' : 'transparent', ...style},
               tabIndex
             }}
