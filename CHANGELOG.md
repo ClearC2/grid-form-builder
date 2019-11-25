@@ -1,3 +1,10 @@
+## [2.11.1](https://github.com/ClearC2/grid-form-builder/compare/v2.11.0...v2.11.1) (2019-11-25)
+
+
+### Bug Fixes
+
+* **time-builder:** add check for value, remove focus on load ([8f3afa6](https://github.com/ClearC2/grid-form-builder/commit/8f3afa6))
+
 # [2.11.0](https://github.com/ClearC2/grid-form-builder/compare/v2.10.0...v2.11.0) (2019-11-22)
 
 
