@@ -62,7 +62,6 @@ export class Date extends Component {
   }
 
   handleOnChange = val => {
-    this.input.focus()
     const {handleOnChange = () => {}} = this.props
     const {name, timeFormat = 'hh:mm a'} = this.props.config
     const value = typeof val === 'object' ? val.format(timeFormat) : val

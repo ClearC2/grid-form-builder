@@ -130,24 +130,39 @@ function Input (props) {
 
   const OnInputChange = useCallback((e) => {
     setTyping(true)
-    setDisplay(e.target.value)
     const value = e.target.value
-    let [newHour = 12, newMinute = 0, newZone = 'am'] = value.split(/[: ]/g)
 
-    if (isNaN(newHour) || !newHour || +newHour > 23 || +newHour < 0) {
-      newHour = 12
-    }
-    if (isNaN(newMinute) || !newMinute || +newMinute > 59 || +newMinute < 0) {
-      newMinute = 0
-    }
-    if (!newZone || newZone.length > 2) {
-      newZone = 'am'
-    }
+    if (value) {
+      setDisplay(value)
+      let [newHour = 12, newMinute = 0, newZone = 'am'] = value.split(/[: ]/g)
 
-    setInput(e.target.value)
-    setValues([newHour, newMinute, newZone])
-    onChange(e.target.value)
+      if (isNaN(newHour) || !newHour || +newHour > 23 || +newHour < 0) {
+        newHour = 12
+      }
+      if (isNaN(newMinute) || !newMinute || +newMinute > 59 || +newMinute < 0) {
+        newMinute = 0
+      }
+      if (!newZone || newZone.length > 2) {
+        newZone = 'am'
+      }
+
+      onChange(value)
+      setInput(value)
+      setValues([newHour, newMinute, newZone])
+    } else {
+      onChange('')
+      setInput('')
+      setValues([12, 0, 'am'])
+    }
   }, [onChange, setDisplay, setValues, setTyping])
+
+  const showDisplay = useCallback((inputValue, display) => {
+    if (typing) {
+      return inputValue
+    } else {
+      return display
+    }
+  }, [typing])
 
   useEffect(() => {
     if (setRef) {
@@ -163,14 +178,6 @@ function Input (props) {
       window.addEventListener(listener.type, listener.func)
     }
   }, [open, listener.type, listener.func])
-
-  const showDisplay = useCallback((inputValue, display) => {
-    if (typing) {
-      return inputValue
-    } else {
-      return display
-    }
-  }, [typing])
 
   return (
     <input
@@ -199,6 +206,7 @@ function TimePopout (props) {
   const [hour, setHour] = useState(12)
   const [minute, setMinute] = useState(0)
   const [zone, setZone] = useState('am')
+  const [isInit, setInit] = useState(true)
   const {timeFormat, id} = useContext(Time)
   const {setDisplay, open, value, typedValues, onChange} = props
 
@@ -216,18 +224,27 @@ function TimePopout (props) {
   useEffect(() => {
     let [newHour, newMinute, newZone] = typedValues
 
-    if (newHour && newMinute && newZone) {
-      newZone = newZone.includes('a') ? 'am' : 'pm'
+    if (newHour !== undefined) {
       setHour(+newHour)
+    }
+    if (newMinute !== undefined) {
       setMinute(+newMinute)
+    }
+    if (newZone !== undefined) {
+      newZone = newZone.includes('a') ? 'am' : 'pm'
       setZone(newZone)
     }
   }, [typedValues])
 
   useEffect(() => {
-    onChange(moment(`${hour}:${minute} ${zone}`, timeFormat).format(timeFormat))
-    setDisplay(moment(`${hour}:${minute} ${zone}`, timeFormat).format(timeFormat))
-  }, [hour, minute, zone, timeFormat, setDisplay])
+    if (!isInit) {
+      const display = moment(`${hour}:${minute} ${zone}`, timeFormat).format(timeFormat)
+      onChange(display)
+      setDisplay(display)
+    } else {
+      setInit(false)
+    }
+  }, [hour, minute, zone, timeFormat, setDisplay, onChange, isInit])
 
   return (
     <Fragment>
@@ -330,7 +347,7 @@ function Minutes (props) {
 
   const callBack = useCallback((env) => {
     if (env === 'up') {
-      if (display + 1 > range) {
+      if (display + 1 >= range) {
         setDisplay(1)
       } else {
         setDisplay(display + 1)
