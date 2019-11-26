@@ -1,3 +1,10 @@
+## [2.11.2](https://github.com/ClearC2/grid-form-builder/compare/v2.11.1...v2.11.2) (2019-11-26)
+
+
+### Bug Fixes
+
+* **time-builder:** remove focus on different inputs after time change ([14082a8](https://github.com/ClearC2/grid-form-builder/commit/14082a8))
+
 ## [2.11.1](https://github.com/ClearC2/grid-form-builder/compare/v2.11.0...v2.11.1) (2019-11-25)
 
 
