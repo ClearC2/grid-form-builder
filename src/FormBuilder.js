@@ -10,6 +10,8 @@ import $ from 'jquery'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
 import InputContainer from './InputContainer'
 import Trash from 'react-icons/lib/fa/trash'
+// import {DndProvider} from 'react-dnd'
+// import HTML5backend from 'react-dnd-test-backend'
 
 let inputEventListenerDebouncer = null
 
@@ -312,7 +314,14 @@ const FormBuilder = (props) => {
 
   debugLog('render')
 
+  /**
+   * Uncomment DndProvider when linking grid-form-builder locally,
+   * enables access through yarn link
+   *
+   * TM 11/26/2019
+   */
   return (
+    /* <DndProvider backend={HTML5backend}> */
     <div
       id={id}
       className='grid-form-builder-parent'
@@ -338,6 +347,7 @@ const FormBuilder = (props) => {
         {grid.elements}
       </RGL>
     </div>
+    /* </DndProvider> */
   )
 }
 
