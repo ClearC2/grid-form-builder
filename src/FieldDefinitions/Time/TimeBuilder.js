@@ -1,9 +1,7 @@
-import React, {useState, useEffect, useCallback, createContext, useContext, Fragment, createRef} from 'react'
+import React, {useState, useEffect, useCallback, createContext, useContext, createRef} from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-
-const Time = createContext({timeFormat: 'hh:mm a', id: '', typing: false, setTyping: () => {}})
-const inputRef = createRef()
+import Portal from '../Portal'
 
 DateTime.propTypes = {
   inputProps: PropTypes.object,
@@ -15,6 +13,8 @@ DateTime.propTypes = {
     PropTypes.instanceOf(moment)
   ])
 }
+
+const Time = createContext({timeFormat: 'hh:mm a', typing: false, setTyping: () => {}})
 
 export function DateTime (props) {
   const [inputId, setId] = useState('')
@@ -38,7 +38,7 @@ export function DateTime (props) {
   }, [])
 
   return (
-    <Time.Provider value={{timeFormat, id: inputId, typing, setTyping}}>
+    <Time.Provider value={{timeFormat, typing, setTyping}}>
       <div className={className}>
         <Input
           {...inputProps}
@@ -48,6 +48,7 @@ export function DateTime (props) {
           setOpen={setOpen}
           setValues={setValues}
           open={open}
+          id={inputId}
         />
         <TimePopout
           {...timeProps}
@@ -57,6 +58,7 @@ export function DateTime (props) {
           onChange={onChange}
           open={open}
           value={value}
+          id={inputId}
         />
       </div>
     </Time.Provider>
@@ -77,7 +79,6 @@ function OnOutsideClick (e, id, onBlur, ref, setOpen) {
   })
 
   if (!found) {
-    window.removeEventListener('click', (e) => OnOutsideClick(e, id, onBlur, inputRef.current, setOpen))
     setOpen(false)
     ref.blur()
     if (onBlur) {
@@ -95,7 +96,8 @@ Input.propTypes = {
   setRef: PropTypes.func,
   onChange: PropTypes.func,
   setDisplay: PropTypes.func,
-  setValues: PropTypes.func
+  setValues: PropTypes.func,
+  id: PropTypes.string
 }
 
 function Input (props) {
@@ -109,11 +111,13 @@ function Input (props) {
     onChange,
     setDisplay,
     setValues,
+    id,
     ...rest
   } = props
-  const {id, typing, setTyping} = useContext(Time)
+  const {typing, setTyping} = useContext(Time)
   const [listener, setListener] = useState({})
   const [inputValue, setInput] = useState(display)
+  const [inputRef] = useState(createRef())
 
   const OnInputClick = useCallback((e) => {
     setListener({
@@ -126,7 +130,7 @@ function Input (props) {
     }
 
     setOpen(true)
-  }, [onClick, setOpen, id, onBlur])
+  }, [onClick, setOpen, id, onBlur, inputRef])
 
   const OnInputChange = useCallback((e) => {
     setTyping(true)
@@ -168,7 +172,7 @@ function Input (props) {
     if (setRef) {
       setRef(inputRef.current)
     }
-  }, [setRef])
+  }, [setRef, inputRef])
 
   useEffect(() => {
     if (!open) {
@@ -199,7 +203,8 @@ TimePopout.propTypes = {
     PropTypes.instanceOf(moment)
   ]),
   typedValues: PropTypes.array,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  id: PropTypes.string
 }
 
 function TimePopout (props) {
@@ -207,8 +212,8 @@ function TimePopout (props) {
   const [minute, setMinute] = useState(0)
   const [zone, setZone] = useState('am')
   const [isInit, setInit] = useState(true)
-  const {timeFormat, id} = useContext(Time)
-  const {setDisplay, open, value, typedValues, onChange} = props
+  const {timeFormat} = useContext(Time)
+  const {setDisplay, open, value, typedValues, onChange, id} = props
 
   useEffect(() => {
     if (value._d && value.isValid()) {
@@ -247,8 +252,8 @@ function TimePopout (props) {
   }, [hour, minute, zone, timeFormat, setDisplay, onChange, isInit])
 
   return (
-    <Fragment>
-      <div className='row' id={`timePicker-${id}`}>
+    <Portal id={id}>
+      <div className='row ml-0' id={`timePicker-${id}`}>
         <div className='rdtPicker rdtTime' style={{display: open ? 'inline-flex' : 'none', alignItems: 'center'}}>
           <div className='rdtCounters' style={{margin: 'auto'}}>
             <Hour display={hour} setDisplay={setHour} />
@@ -258,7 +263,7 @@ function TimePopout (props) {
           </div>
         </div>
       </div>
-    </Fragment>
+    </Portal>
   )
 }
 
