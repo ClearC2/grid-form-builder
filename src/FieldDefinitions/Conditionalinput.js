@@ -156,6 +156,7 @@ export default class Conditionalinput extends Component {
     }
     if (this.props.config.excludeConditions) {
       let excludes = Set(this.props.config.excludeConditions)
+
       let newConds = {}
       Object.keys(conds).forEach((key) => {
         if (!excludes.has(key)) {
@@ -307,13 +308,29 @@ export default class Conditionalinput extends Component {
     return name[name.length - 1]
   }
 
-  convertListToOptions = (list) => list.map(opt => { return {value: opt, label: opt} })
+  convertListToOptions = (list) => {
+    let inputType = this.props.config.inputType
+    if (inputType === 'number' || inputType === 'currency' || inputType === 'decimal') {
+      list = list.filter(l => {
+        return (l !== 'is blank' &&
+          l !== 'is not blank' &&
+          l !== 'contains' &&
+          l !== 'does not contain'
+        )
+      })
+    }
+    return list.map(opt => {
+      return {value: opt, label: opt}
+    })
+  }
   inputTypeOptionsList = (type) => {
     if (this.state) {
       const {conditions} = this.state
       let options = []
+
       Object.keys(conditions).forEach((key) => {
-        if (!Set(conditions[key].invalidInputTypes).has(type)) {
+        let excludes = Set(conditions[key].invalidInputTypes)
+        if (!excludes.has(type)) {
           options.push(key)
         }
       })
