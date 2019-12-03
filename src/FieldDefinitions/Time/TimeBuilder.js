@@ -67,8 +67,9 @@ export function DateTime (props) {
 
 function OnOutsideClick (e, id, onBlur, ref, setOpen) {
   let found = false
+  const onClickPath = e.path || e.composedPath()
 
-  e.path.forEach(path => {
+  onClickPath.forEach(path => {
     if (path.id === id) {
       found = true
       ref.focus()
