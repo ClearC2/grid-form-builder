@@ -1,3 +1,10 @@
+## [2.11.3](https://github.com/ClearC2/grid-form-builder/compare/v2.11.2...v2.11.3) (2019-12-03)
+
+
+### Bug Fixes
+
+* **conditionallInput:** number fields only show numeric comparators now ([29e8eb2](https://github.com/ClearC2/grid-form-builder/commit/29e8eb2))
+
 ## [2.11.2](https://github.com/ClearC2/grid-form-builder/compare/v2.11.1...v2.11.2) (2019-11-26)
 
 
