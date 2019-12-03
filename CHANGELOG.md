@@ -1,3 +1,10 @@
+## [2.11.4](https://github.com/ClearC2/grid-form-builder/compare/v2.11.3...v2.11.4) (2019-12-03)
+
+
+### Bug Fixes
+
+* **time:** not closing on firefox ([02910e9](https://github.com/ClearC2/grid-form-builder/commit/02910e9))
+
 ## [2.11.3](https://github.com/ClearC2/grid-form-builder/compare/v2.11.2...v2.11.3) (2019-12-03)
 
 
