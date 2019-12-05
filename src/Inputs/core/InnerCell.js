@@ -21,6 +21,15 @@ const InnerCell = props => {
     droppedItem = null
   } = props
 
+  const {config} = field
+  const [formValues] = useContext(FormValueContext)
+
+  if (draggable || readonly || +formValues.get('cfd_userisreadonly', '0') === 1) {
+    config.readonly = true
+  }
+
+  const Type = mapInputType(config.type, interactive)
+
   useEffect(() => {
     if (didDrop && !previousDrop.current.didDrop && !isOver && previousDrop.current.isOver) {
       // clone these objects before we send them up, we don't want them mutating them and causing unexpected behavior down here - JRA 12/05/2019
@@ -40,19 +49,10 @@ const InnerCell = props => {
     }
   }, [didDrop, isOver])
 
-  const {config} = field
-  const [formValues] = useContext(FormValueContext)
-
-  if (draggable || readonly || +formValues.get('cfd_userisreadonly', '0') === 1) {
-    config.readonly = true
-  }
-
   const onGridElementClick = useCallback((config, e) => {
     config.index = index
     handleAnywhereClick(config, e)
   }, [handleAnywhereClick, index])
-
-  const Type = mapInputType(config.type, interactive)
 
   return connectDropTarget(
     <div className='gfb-inner-cell' onClick={onGridElementClick}>
