@@ -178,8 +178,7 @@ export default class Example extends Component {
             >
               {this.state.draggable ? 'Make Static' : 'Make Draggable'}
             </button>
-            <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
-            <button onClick={this.onSubmit} style={{marginLeft: 10}}>Submit</button>
+            <button onClick={this.onSubmit}>Submit</button>
             <button onClick={this.toggleValidation} style={{marginLeft: 10}}>Toggle Validation State</button>
             <button
               onClick={this.toggleDroppable}

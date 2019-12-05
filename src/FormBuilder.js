@@ -1,14 +1,12 @@
 import React, {Component, useState, useEffect, useCallback, useRef, createContext} from 'react'
 import PropTypes from 'prop-types'
 import RGL from 'react-grid-layout'
-import {emailValidator, searchForLayoutArray, updateLayoutArray, uppercaseFirstLetter} from './utils'
-import {mapInputType} from './FieldDefinitions'
-import {mapIcon} from './Icons'
+import {emailValidator, searchForLayoutArray, updateLayoutArray} from './utils'
 import sizeMe from 'react-sizeme'
 import {List, fromJS, Map, Set} from 'immutable'
 import $ from 'jquery'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
-import InputContainer from './InputContainer'
+import InnerCell from './Inputs'
 import Trash from 'react-icons/lib/fa/trash'
 // import {DndProvider} from 'react-dnd'
 // import HTML5backend from 'react-dnd-test-backend'
@@ -128,12 +126,12 @@ const FormBuilder = (props) => {
     // this is expensive, only do this on mount
   }, []) // eslint-disable-line
 
-  useEffect(() => { // this is insane, surely this can be cleaned up, just leaving it in for now for speed of delivery - JRA 11/07/2019
+  useEffect(() => {
     debugLog('rebuilding all grid elements (expensive)')
     const schema = searchForLayoutArray(formSchema)
     const layout = []
     const elements = []
-    let specifiedTabs = Set() // this is for building up unique tab indicies
+    let specifiedTabs = Set() // this is for building up unique tab indices
     schema.forEach(field => {
       const {config = {}} = field
       if (config.tabindex) specifiedTabs = specifiedTabs.add(config.tabindex)
@@ -145,40 +143,21 @@ const FormBuilder = (props) => {
       }
       const {dimensions = {x: 0, y: i, w: 12, h: 1}} = field
       const config = {...field.config} || {} // prevent mutation of the original config
-      if (config.type && config.type.toLowerCase() === 'richtextarea') {
-        // ck editor was removed. if any form schemas still use Richtextarea, they should use Richtextareaquill now.
-        config.type = 'Richtextareaquill'
-      }
-      let {type = 'input'} = config
-      type = uppercaseFirstLetter(type)
-      if (type === 'Textarea' && dimensions.h < 2) dimensions.h = 2
-      if (interactive && type === 'select') {
-        type = 'ImportSelect'
-      }
-      const Input = mapInputType(type)
-      if (!Input) {
-        console.warn(field, 'was skipped because it did not contain a valid input type.') // eslint-disable-line
-      }
-      if (typeof dimensions === 'object' && !!Input) {
+      if (typeof dimensions === 'object') {
         dimensions.i = i + ''
-        let {icon = '', cascade = {}, tabindex: tabIndex, autoComplete = 'off', link = {}} = config
-        let {keyword = null, icon: cascadeIcon = ''} = cascade
-        let {icon: linkIcon = ''} = link
-        linkIcon = mapIcon(linkIcon)
-        icon = mapIcon(icon)
-        cascadeIcon = mapIcon(cascadeIcon)
-        if (!tabIndex) {
+        let {tabindex} = config
+        if (!tabindex) {
           // if a tab index wasn't specified, lets start assigning tab indicies based on what is available
           // at this point we are just going to find the next available index and assign it to this input
           // myOffset is not meant to be added, it is appended to the front to make this form 1 order of magnitude higher than the last form that was rendered
           while (specifiedTabs.has(tabNumber)) {
             tabNumber++
           }
-          tabIndex = myOffset + '' + tabNumber
+          tabindex = myOffset + '' + tabNumber
           specifiedTabs = specifiedTabs.add(tabNumber)
           tabNumber++
         } else {
-          tabIndex = myOffset + '' + tabIndex
+          tabindex = myOffset + '' + tabindex
         }
         const isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i
         const className = isActive ? 'drag-item-active' : ''
@@ -195,9 +174,8 @@ const FormBuilder = (props) => {
                 </div>
               </div>
             )}
-            <InputContainer
-              formSchema={formSchema}
-              config={config}
+            <InnerCell
+              field={field}
               handleOnChange={handleOnChange}
               requiredWarning={requiredWarning}
               handleLinkClick={handleLinkClick}
@@ -206,23 +184,15 @@ const FormBuilder = (props) => {
               handleDragDropOnInput={handleDragDropOnInput}
               handleRTEImageClick={handleRTEImageClick}
               rowHeight={rowHeight}
-              inline={inline}
               conditionalSearch={conditionalSearch || conditionalFieldValues}
-              LinkIcon={linkIcon}
-              autoComplete={autoComplete}
-              Icon={icon}
-              cascadingKeyword={keyword}
-              CascadeIcon={cascadeIcon}
               interactive={interactive}
               readonly={readonly}
               draggable={draggable}
-              tabIndex={+tabIndex}
+              tabIndex={+tabindex}
               index={i}
               isActive={isActive}
               removeSelf={removeSelf}
-            >
-              <Input />
-            </InputContainer>
+            />
           </div>
         )
         layout.push(dimensions)
@@ -239,7 +209,6 @@ const FormBuilder = (props) => {
     handleRTEImageClick,
     requiredWarning,
     rowHeight,
-    inline,
     handleOnChange,
     interactive,
     draggable,
@@ -404,7 +373,8 @@ FormBuilder.defaultProps = {
   handleCascade: () => null,
   handleRTEImageClick: () => null,
   handleLinkClick: () => null,
-  draggable: false
+  draggable: false,
+  interactive: true
 }
 
 FormBuilder.count = 1
