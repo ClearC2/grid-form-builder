@@ -1,5 +1,5 @@
+import {Map} from 'immutable'
 /* eslint-disable max-len */
-export {default as reducer} from './redux'
 export {default as FormDroppable} from './FormDroppable'
 export {initFormBuilderAjax} from './config'
 export {default as Conditionalinput, CONDITIONS, TEXT_INPUTS} from './FieldDefinitions/Conditionalinput'
@@ -23,13 +23,22 @@ export {default as Time} from './FieldDefinitions/Time/Time'
 export {default as Percentage} from './FieldDefinitions/Percentage'
 export {default as Total} from './FieldDefinitions/Total'
 export {default as Portal} from './FieldDefinitions/Portal'
-// Components from the proud package formerly known as query-builder the magnificent
 export {default as FormBuilder} from './FormBuilder'
 export {default as ConditionalTable, convertQueryToFormValues} from './QueryBuilder/Where/ConditionalTable/ConditionalTableContainer'
 export {ReportBuilder, buildAvailableColumnsFromFieldDefs, buildDefaultColumnsFromQuery} from './QueryBuilder/ReportBuilder/ReportBuilder'
 export {initComponentIconLibrary} from './Icons'
 export {initCustomFormComponents} from './FieldDefinitions'
 
+// declaring depricated methods below to give implementors time to refactor base code - JRA 12/05/2019
 const updateFormValues = () => console.error('updateFormValues is depricated and has been removed. You must handle your own form values.') //eslint-disable-line
 
-export {updateFormValues}
+const reducer = (state = Map()) => {
+  console.warn('grid-form-builder no longer uses redux. Remove the grid-form-builder reducer from your combine reducers.') //eslint-disable-line
+  return state
+}
+reducer.key = 'form-layouts'
+
+export {
+  updateFormValues,
+  reducer
+}
