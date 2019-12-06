@@ -49,10 +49,16 @@ const InnerCell = props => {
     }
   }, [didDrop, isOver])
 
-  const onGridElementClick = useCallback((config, e) => {
+  const onGridElementClick = useCallback((e) => {
+    const config = typeof field === 'object' && typeof field.config === 'object' ? {...field.config} : {}
     config.index = index
+    if (draggable) {
+      // if the user clicks into a field that is draggable, the input loses focus
+      // do we want to figure out a way to refocus the field here so they can edit the value even though the whole cell is draggable? - JRA 12/06/2019
+      // e.stopPropagation()
+    }
     handleAnywhereClick(config, e)
-  }, [handleAnywhereClick, index])
+  }, [handleAnywhereClick, index, field, draggable])
 
   return connectDropTarget(
     <div className='gfb-inner-cell' onClick={onGridElementClick}>

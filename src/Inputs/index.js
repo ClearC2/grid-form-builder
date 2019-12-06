@@ -24,7 +24,12 @@ export const mapInputType = (type = 'input', interactive) => {
   if (!interactive && type === 'Select') {
     type = 'ImportSelect'
   }
-  type = FormComponents[type] || FormComponents.Input
+  if (FormComponents[type]) {
+    type = FormComponents[type]
+  } else {
+    // console.warn(type, 'is not a valid field type. This is a noop and the field type will fall back to a normal input.') //eslint-disable-line
+    type = FormComponents.Input
+  }
   return type
 }
 
