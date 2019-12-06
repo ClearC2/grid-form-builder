@@ -20,7 +20,8 @@ const InnerCell = props => {
     handleDragDropOnInput,
     droppedItem = null,
     handleLinkClick,
-    handleCascadeKeywordClick
+    handleCascadeKeywordClick,
+    handleOnChange
   } = props
 
   const {config} = field
@@ -64,6 +65,14 @@ const InnerCell = props => {
     handleAnywhereClick(config, e)
   }, [handleAnywhereClick, index, field, draggable])
 
+  const onChange = useCallback(e => {
+    if (typeof e !== 'object') e = {}
+    if (typeof e.target !== 'object') e.target = {}
+    if (!e.target.name) e.target.name = config.name
+    if (!e.target.value) e.target.value = ''
+    handleOnChange(e)
+  }, [handleOnChange, config.name])
+
   return connectDropTarget(
     <div className='gfb-inner-cell' onClick={onGridElementClick}>
       <LabelContainer
@@ -72,7 +81,12 @@ const InnerCell = props => {
         handleCascadeKeywordClick={handleCascadeKeywordClick}
         value={value}
       />
-      <InputContainer config={config}>
+      <InputContainer
+        config={config}
+        value={value}
+        values={formValues}
+        onChange={onChange}
+      >
         <Type />
       </InputContainer>
     </div>
@@ -106,5 +120,6 @@ InnerCell.propTypes = {
   draggable: PropTypes.bool,
   readonly: PropTypes.bool,
   didDrop: PropTypes.bool,
-  handleDragDropOnInput: PropTypes.func
+  handleDragDropOnInput: PropTypes.func,
+  handleOnChange: PropTypes.func
 }
