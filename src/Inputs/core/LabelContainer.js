@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {mapIcon} from '../../Icons'
 
 const LabelContainer = props => {
-  const {config, handleLinkClick} = props
+  const {config, handleLinkClick, handleCascadeKeywordClick, value} = props
   let {
     icon: Icon = '',
     cascade = {},
@@ -20,12 +20,16 @@ const LabelContainer = props => {
     handleLinkClick(config.link)
   }, [handleLinkClick, config.link])
 
+  const onCascadeKeywordClick = useCallback(e => {
+    handleCascadeKeywordClick({currentValue: value, ...config})
+  }, [handleCascadeKeywordClick, value, config])
+
   return (
     <div className='gfb-label-container'>
       {Icon && <Icon />}
       {label}
       {LinkIcon && <LinkIcon onClick={onLinkClick} />}
-      {CascadeIcon && <CascadeIcon />}
+      {CascadeIcon && <CascadeIcon onClick={onCascadeKeywordClick} />}
     </div>
   )
 }
@@ -34,5 +38,7 @@ export default LabelContainer
 
 LabelContainer.propTypes = {
   config: PropTypes.object,
-  handleLinkClick: PropTypes.func
+  handleLinkClick: PropTypes.func,
+  handleCascadeKeywordClick: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.array, PropTypes.object])
 }

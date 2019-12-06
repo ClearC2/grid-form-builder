@@ -19,7 +19,8 @@ const InnerCell = props => {
     connectDropTarget,
     handleDragDropOnInput,
     droppedItem = null,
-    handleLinkClick
+    handleLinkClick,
+    handleCascadeKeywordClick
   } = props
 
   const {config} = field
@@ -30,6 +31,8 @@ const InnerCell = props => {
   }
 
   const Type = mapInputType(config.type, interactive)
+
+  const value = formValues.get(config.name, '')
 
   useEffect(() => {
     if (didDrop && !previousDrop.current.didDrop && !isOver && previousDrop.current.isOver) {
@@ -66,6 +69,8 @@ const InnerCell = props => {
       <LabelContainer
         config={config}
         handleLinkClick={handleLinkClick}
+        handleCascadeKeywordClick={handleCascadeKeywordClick}
+        value={value}
       />
       <InputContainer config={config}>
         <Type />
