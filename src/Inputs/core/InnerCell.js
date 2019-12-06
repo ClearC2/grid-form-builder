@@ -18,7 +18,8 @@ const InnerCell = props => {
     isOver,
     connectDropTarget,
     handleDragDropOnInput,
-    droppedItem = null
+    droppedItem = null,
+    handleLinkClick
   } = props
 
   const {config} = field
@@ -62,7 +63,10 @@ const InnerCell = props => {
 
   return connectDropTarget(
     <div className='gfb-inner-cell' onClick={onGridElementClick}>
-      <LabelContainer config={config} />
+      <LabelContainer
+        config={config}
+        handleLinkClick={handleLinkClick}
+      />
       <InputContainer config={config}>
         <Type />
       </InputContainer>
