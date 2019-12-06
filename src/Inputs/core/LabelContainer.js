@@ -20,16 +20,31 @@ const LabelContainer = props => {
     handleLinkClick(config.link)
   }, [handleLinkClick, config.link])
 
-  const onCascadeKeywordClick = useCallback(e => {
+  const onCascadeKeywordClick = useCallback(() => {
     handleCascadeKeywordClick({currentValue: value, ...config})
   }, [handleCascadeKeywordClick, value, config])
+
+  const onLabelTextClick = useCallback(() => {
+    if (LinkIcon) onLinkClick()
+    if (CascadeIcon) onCascadeKeywordClick()
+  }, [
+    LinkIcon,
+    onLinkClick,
+    CascadeIcon,
+    onCascadeKeywordClick
+  ])
 
   return (
     <div className='gfb-label-container'>
       {Icon && <Icon />}
-      {label}
-      {LinkIcon && <LinkIcon onClick={onLinkClick} />}
-      {CascadeIcon && <CascadeIcon onClick={onCascadeKeywordClick} />}
+      <strong
+        onClick={onLabelTextClick}
+        className={LinkIcon || CascadeIcon ? 'cursor-hand' : ''}
+      >
+        {label}
+      </strong>
+      {LinkIcon && <LinkIcon className='cursor-hand' onClick={onLinkClick} />}
+      {CascadeIcon && <CascadeIcon className='cursor-hand' onClick={onCascadeKeywordClick} />}
     </div>
   )
 }
