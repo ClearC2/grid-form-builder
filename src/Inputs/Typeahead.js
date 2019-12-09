@@ -47,7 +47,6 @@ const Typeahead = props => {
   const [menuPlacement, updateMenuPlacement] = useState('bottom')
   const [fieldPosition, updateFieldPosition] = useState(0)
 
-  const typeaheadRef = useRef(null)
   const inputContainer = useRef(null)
 
   useEffect(() => {
@@ -354,7 +353,6 @@ const Typeahead = props => {
   return (
     <div ref={inputContainer} onMouseDown={handleOnFocus}>
       <Typeahead
-        ref={typeaheadRef}
         tabIndex={tabIndex}
         autofocus={autofocus}
         blurInputOnSelect
