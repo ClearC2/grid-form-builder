@@ -3,11 +3,20 @@ import PropTypes from 'prop-types'
 import {Map} from 'immutable'
 
 const InputContainer = props => {
-  const {children, config, values, value, onChange} = props
+  const {children, config, values, value, onChange, requiredWarning, tabIndex, draggable} = props
   const {name, ...other} = config
   return (
     <div className='gfb-input-container'>
-      {cloneElement(children, {...other, name, values, value, onChange})}
+      {cloneElement(children, {
+        ...other,
+        requiredWarning,
+        tabIndex,
+        draggable,
+        name,
+        values,
+        value,
+        onChange
+      })}
     </div>
   )
 }
@@ -19,5 +28,8 @@ InputContainer.propTypes = {
   config: PropTypes.object,
   values: PropTypes.instanceOf(Map),
   value: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string, PropTypes.number]),
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  requiredWarning: PropTypes.bool,
+  tabIndex: PropTypes.number,
+  draggable: PropTypes.bool
 }

@@ -21,7 +21,9 @@ const InnerCell = props => {
     droppedItem = null,
     handleLinkClick,
     handleCascadeKeywordClick,
-    handleOnChange
+    handleOnChange,
+    requiredWarning,
+    tabIndex
   } = props
 
   const {config} = field
@@ -86,6 +88,9 @@ const InnerCell = props => {
         value={value}
         values={formValues}
         onChange={onChange}
+        requiredWarning={requiredWarning}
+        tabIndex={tabIndex}
+        draggable={draggable}
       >
         <Type />
       </InputContainer>
@@ -121,5 +126,7 @@ InnerCell.propTypes = {
   readonly: PropTypes.bool,
   didDrop: PropTypes.bool,
   handleDragDropOnInput: PropTypes.func,
-  handleOnChange: PropTypes.func
+  handleOnChange: PropTypes.func,
+  requiredWarning: PropTypes.bool,
+  tabIndex: PropTypes.number
 }

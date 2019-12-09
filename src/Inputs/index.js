@@ -3,11 +3,13 @@ import {uppercaseFirstLetter} from '../utils'
 import Input from './Input'
 import Select from './Select'
 import Textarea from './Textarea'
+import Typeahead from './Typeahead'
 
 let FormComponents = {
   Input,
   Select,
-  Textarea
+  Textarea,
+  Typeahead
 }
 
 export function initCustomFormComponents (defs = {}) {

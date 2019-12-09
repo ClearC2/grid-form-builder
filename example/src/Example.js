@@ -125,6 +125,85 @@ export default class Example extends Component {
     this.setState(() => ({formSchema: {form: fromJS(schema)}}))
   }
 
+  schema = {
+    "form": {
+      "name": "Company 1",
+      "description": "Show company data on the screen.",
+      "jsonschema": {
+        "layout": [{
+          "type": "field",
+          "dimensions": {
+            "w": 12,
+            "h": 1,
+            "x": 0,
+            "y": 0
+          },
+          "config": {
+            "allowcreate": true,
+            "supressInputReset": true,
+            "typeahead": {
+              "key": "c2_company",
+              "duplication": true,
+              "fields": ["inputtest", "textareatest", "meta_universalid"],
+              "fieldId": "value",
+              "filter": {
+                "type": "and",
+                "conditions": [{
+                  "type": "or",
+                  "conditions": [{
+                    "type": "and",
+                    "conditions": [{
+                      "name": "inputtest",
+                      "comparator": "is equal to",
+                      "values": []
+                    }, {
+                      "name": "inputtest",
+                      "comparator": "is equal to",
+                      "values": []
+                    }]
+                  }, {
+                    "type": "and",
+                    "conditions": [{
+                      "name": "inputtest",
+                      "comparator": "contains",
+                      "values": []
+                    }, {
+                      "name": "inputtest",
+                      "comparator": "is not equal to",
+                      "values": []
+                    }]
+                  }]
+                }, {
+                  "name": "inputtest",
+                  "comparator": "is equal to",
+                  "values": [1]
+                }]
+              }
+            },
+            "name": "companyname",
+            "cascade": {
+              "keyword": "C2_PEOPLE_SOMETHING",
+              "icon": "tree"
+            },
+            "label": "Normal Typeahead",
+            "type": "typeahead",
+            "link": {
+              "id": "parentid",
+              "type": "c2company",
+              "icon": "externallink"
+            },
+            "required": true
+          }
+        }]
+      },
+      "id": "FDC58F0F0B2099E61BE23AB6110572E1",
+      "lastUpdateDate": "2018-02-05 08:04:14",
+      "lastUpdateBy": "kevin bull",
+      "createdDate": "2018-02-05 08:04:14",
+      "createdBy": "kevin bull"
+    }
+  }
+
   render = () => {
     const {formSchema, isInvalidWarning, droppable, activeItem} = this.state
     if (TEST_SEARCH) {
@@ -190,7 +269,7 @@ export default class Example extends Component {
           </div>
           <FormBuilder
             ref={ref => { this.exampleForm = ref }}
-            formSchema={formSchema.form}
+            formSchema={this.schema.form}
             formValues={this.state.formValues}
             handleOnChange={this.handleOnChange}
             onClick={this.handleOnClick}
