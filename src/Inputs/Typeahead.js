@@ -25,11 +25,15 @@ const Typeahead = props => {
     tabIndex,
     onKeyDown = () => null, // sometimes provided in the config object
     draggable,
-    persist,
+    persist = true,
     typeahead = {},
     minChars = 1,
-    stringify,
-    delimiter = '¤'
+    stringify
+  } = props
+
+  let {
+    delimit,
+    delimiter
   } = props
 
   const [input, changeInput] = useState({Typeahead: allowcreate ? AsyncCreatable : Async})
@@ -95,6 +99,8 @@ const Typeahead = props => {
     if ((typeof parsedValue === 'string' || typeof parsedValue === 'number') && parsedValue.length > 0) {
       parsedValue = {value: parsedValue, label: parsedValue}
     }
+    if (parsedValue === '') parsedValue = {label: '', value: ''}
+    updateInputValue('')
     updateSelectValue(parsedValue)
   }, [value, convertValueStringToValueArrayIfNeeded])
 
@@ -146,11 +152,7 @@ const Typeahead = props => {
     }
 
     return Promise.resolve({options: []})
-  }, [typeahead, populateFilterBody, name, values, minChars])
-
-  const handleChange = useCallback((newValue, {action}) => {
-
-  }, [])
+  }, [typeahead, populateFilterBody, name, values, minChars, isZipCode])
 
   const formatCreateLabel = useCallback(value => {
     return `Click or Tab to Create "${value}"`
@@ -161,14 +163,6 @@ const Typeahead = props => {
       return '3 Digits Required'
     }
   }, [isZipCode])
-
-  const handleOnKeyDown = useCallback(e => {
-    // This fixes the issue where users type and tab too quickly on create fields and the value does not register in the system
-    if (e.keyCode === 9 && allowcreate && inputValue) {
-      handleChange({value: inputValue}, {action: 'create-option'})
-    }
-    onKeyDown()
-  }, [onKeyDown, handleChange, allowcreate, inputValue])
 
   const handleOnMouseDown = useCallback(e => {
     if (draggable) e.stopPropagation()
@@ -208,9 +202,8 @@ const Typeahead = props => {
     let simpleValue = typeof value.toJS === 'function' ? value.toJS() : value
     simpleValue = typeof simpleValue === 'object' ? simpleValue.value || simpleValue.label || '' : simpleValue
     if (persist && !multi) {
-      // this is done to place cursor at the end of the input field
-      updateInputValue('')
-      setTimeout(() => updateInputValue(simpleValue), 5)
+      // this sets the input value equal to the current value so the user can keep editing it instead of creating a new value, MP HATES the default react-select behavior - JRA 12/09/2019
+      updateInputValue(simpleValue)
     }
     handleInputClick()
   }, [value, persist, multi, updateInputValue, handleInputClick])
@@ -221,14 +214,142 @@ const Typeahead = props => {
       updateInputValue(val)
     } else if (e.action === 'menu-close' && !multi) {
       if (value) {
-        updateInputValue(value)
+        updateInputValue('')
       }
     }
   }, [menuIsOpen, openMenu, updateInputValue, multi, value])
 
-  const {Typeahead} = input
+  const emptyFields = useCallback((fields, changeHandler) => {
+    fields.forEach(field => {
+      const e = {
+        target: {
+          name: field,
+          value: ''
+        }
+      }
+      changeHandler(e)
+    })
+  }, [])
 
-  console.log(props)
+  const handleSingleValueChange = useCallback(newValue => {
+    Object.keys(newValue).forEach(field => {
+      let newVal = newValue[field]
+      if (field === 'duplication') newVal = newValue.value
+      const id = null
+      const e = {
+        target: {
+          name: field,
+          value: newVal,
+          id
+        }
+      }
+      if (
+        values.get(field) !== newVal &&
+        field !== 'className' &&
+        field !== 'value' &&
+        field !== 'label'
+      ) {
+        onChange(e)
+      }
+    })
+  }, [values, onChange])
+
+  const handleChange = useCallback((newValue, {action}) => {
+    let _delimit = delimit
+    if (typeof _delimit === 'string') _delimit = [_delimit]
+    const {fields = []} = typeahead
+
+    const target = {
+      name: name,
+      value: (action === 'create-option' && !multi) ? newValue.value : newValue
+    }
+
+    switch (action) {
+      case 'select-option': {
+        updateInputValue('')
+        break
+      }
+      case 'create-option':
+        emptyFields(fields, onChange)
+        onChange({target})
+        return
+      case 'clear': {
+        emptyFields(fields, onChange)
+        onChange({target: {name, value: ''}})
+        return
+      }
+    }
+
+    let value = ''
+    if (Array.isArray(newValue)) {
+      // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
+      // so I'll give it back to the developer raw and let them figure it out -- JRA 7/5/2018
+      if (stringify) {
+        if (delimiter) {
+          if (_delimit && Array.isArray(_delimit)) {
+            // if we were provided field(s) to delimit by, build up a special string with just those values
+            target.value.forEach(option => {
+              _delimit.forEach(field => {
+                if (value.indexOf(option[field]) === -1) {
+                  value = value + option[field] + delimiter
+                }
+              })
+            })
+            value = value.slice(0, -1)
+            target.value = value
+          } else {
+            // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
+            target.value.forEach(option => {
+              value = value + JSON.stringify(option) + delimiter
+            })
+            value = value.slice(0, -1)
+            target.value = value
+          }
+        } else if (_delimit && !delimiter) {
+          // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
+          value = []
+          target.value.forEach(option => {
+            _delimit.forEach(field => {
+              if (value.indexOf(option[field]) === -1) {
+                value.push(option[field])
+              }
+            })
+          })
+          value = JSON.stringify(value)
+          target.value = value
+        } else {
+          // if all we want to do is stringify the value, send it back up unmodified but stringified
+          target.value = JSON.stringify(target.value)
+        }
+      } else if (_delimit && !delimiter) {
+        // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as an array
+        value = []
+        target.value.forEach(option => {
+          _delimit.forEach(field => {
+            if (value.indexOf(option[field]) === -1) {
+              value.push(option[field])
+            }
+          })
+        })
+        target.value = value
+      }
+      onChange({target})
+    } else {
+      handleSingleValueChange(newValue)
+    }
+    updateIsMenuOpen(false) // closes menu when new option gets selected
+    updateInputValue('')
+  }, [delimit, delimiter, emptyFields, handleSingleValueChange, multi, name, onChange, stringify, typeahead])
+
+  const handleOnKeyDown = useCallback(e => {
+    // This fixes the issue where users type and tab too quickly on create fields and the value does not register in the system
+    if (e.keyCode === 9 && allowcreate && inputValue) {
+      handleChange({value: inputValue}, {action: 'create-option'})
+    }
+    onKeyDown()
+  }, [onKeyDown, handleChange, allowcreate, inputValue])
+
+  const {Typeahead} = input
 
   return (
     <div ref={inputContainer} onMouseDown={handleOnFocus}>
@@ -257,6 +378,8 @@ const Typeahead = props => {
         onBlur={handleInputBlur}
         onInputChange={handleOnInputChange}
         loadOptions={loadOptions}
+        onChange={handleChange}
+        value={selectValue}
       />
     </div>
   )
@@ -285,5 +408,6 @@ Typeahead.propTypes = {
   minChars: PropTypes.number,
   values: PropTypes.object,
   stringify: PropTypes.bool,
-  delimiter: PropTypes.string
+  delimiter: PropTypes.string,
+  delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
 }
