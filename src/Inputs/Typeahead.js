@@ -336,9 +336,20 @@ const Typeahead = props => {
     } else {
       handleSingleValueChange(newValue)
     }
-    updateIsMenuOpen(false) // closes menu when new option gets selected
+    menuIsOpen && updateIsMenuOpen(false) // closes menu when new option gets selected
     updateInputValue('')
-  }, [delimit, delimiter, emptyFields, handleSingleValueChange, multi, name, onChange, stringify, typeahead])
+  }, [
+    delimit,
+    delimiter,
+    emptyFields,
+    handleSingleValueChange,
+    multi,
+    name,
+    onChange,
+    stringify,
+    typeahead,
+    menuIsOpen
+  ])
 
   const handleOnKeyDown = useCallback(e => {
     // This fixes the issue where users type and tab too quickly on create fields and the value does not register in the system

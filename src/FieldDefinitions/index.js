@@ -22,7 +22,6 @@ import Select from './Select'
 import Textarea from './Textarea'
 import Time from './Time/Time'
 import Total from './Total'
-import Typeahead from './Typeahead'
 import {uppercaseFirstLetter} from '../utils'
 
 let FormComponents = {
@@ -49,8 +48,7 @@ let FormComponents = {
   Select,
   Textarea,
   Time,
-  Total,
-  Typeahead
+  Total
 }
 
 export function initCustomFormComponents (defs = {}) {
