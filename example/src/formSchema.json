@@ -7,7 +7,7 @@
         "type": "field",
         "dimensions": {
           "w": 6,
-          "h": 5,
+          "h": 1,
           "x": 0,
           "y": 0,
           "moved": false,
@@ -24,12 +24,13 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
         "dimensions": {
-          "w": 3,
+          "w": 6,
           "h": 1,
           "x": 6,
           "y": 1,
@@ -51,12 +52,13 @@
             "style": {
               "color": "red"
             }
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
         "dimensions": {
-          "w": 3,
+          "w": 6,
           "h": 1,
           "x": 6,
           "y": 2,
@@ -66,12 +68,13 @@
         "config": {
           "name": "price",
           "label": "Price (Currency Input)",
-          "type": "currency"
+          "type": "currency",
+          "readonly": true
         }
       }, {
         "type": "field",
         "dimensions": {
-          "w": 3,
+          "w": 6,
           "h": 1,
           "x": 6,
           "y": 4,
@@ -81,27 +84,29 @@
         "config": {
           "name": "quantity",
           "label": "Quantity",
-          "type": "number"
+          "type": "number",
+          "readonly": true
         }
       }, {
         "type": "field",
         "dimensions": {
-          "w": 2,
+          "w": 6,
           "h": 1,
-          "x": 10,
-          "y": 2,
+          "x": 6,
+          "y": 6,
           "moved": false,
           "static": false
         },
         "config": {
           "name": "discount",
           "label": "Discount",
-          "type": "currency"
+          "type": "currency",
+          "readonly": true
         }
       }, {
         "type": "field",
         "dimensions": {
-          "w": 2,
+          "w": 6,
           "h": 1,
           "x": 6,
           "y": 3,
@@ -112,15 +117,16 @@
           "name": "cfd_total",
           "label": "Total Currency Input",
           "type": "total",
-          "formula": "(quantity x price) - (quantity x discount)"
+          "formula": "(quantity x price) - (quantity x discount)",
+          "readonly": true
         }
       }, {
         "type": "field",
         "dimensions": {
-          "w": 3,
+          "w": 6,
           "h": 1,
-          "x": 9,
-          "y": 1,
+          "x": 6,
+          "y": 5,
           "moved": false,
           "static": false
         },
@@ -131,7 +137,8 @@
           "typeahead": {
             "fieldvalue": "unique-test-input",
             "fields": ["inputtest"]
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -139,7 +146,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 6,
+          "y": 10,
           "moved": false,
           "static": false
         },
@@ -151,55 +158,8 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
-        }
-      }, {
-        "type": "field",
-        "dimensions": {
-          "w": 6,
-          "h": 5,
-          "x": 0,
-          "y": 10,
-          "moved": false,
-          "static": false
-        },
-        "config": {
-          "name": "rich-text-input-1",
-          "label": "Rich Text Input",
-          "type": "richtextareaquill",
-          "rteImageUrl": "http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/RadioInformation1_IOPMobile.png"
-        }
-      }, {
-        "type": "field",
-        "dimensions": {
-          "w": 6,
-          "h": 5,
-          "x": 0,
-          "y": 17,
-          "moved": false,
-          "static": false
-        },
-        "config": {
-          "name": "rich-text-input-2",
-          "label": "Rich Text Input",
-          "type": "richtextareaquill",
-          "rteImageUrl": "http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/Screen Shot 2018-09-11 at 12.51.44 PM (1).png"
-        }
-      }, {
-        "type": "field",
-        "dimensions": {
-          "w": 6,
-          "h": 1,
-          "x": 0,
-          "y": 5,
-          "moved": false,
-          "static": false
-        },
-        "config": {
-          "name": "c_registerddate",
-          "label": "Registered",
-          "type": "conditionalInput",
-          "inputType": "input"
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -207,7 +167,58 @@
           "w": 6,
           "h": 3,
           "x": 0,
-          "y": 6,
+          "y": 4,
+          "moved": false,
+          "static": false
+        },
+        "config": {
+          "name": "rich-text-input-1",
+          "label": "Rich Text Input",
+          "type": "richtextareaquill",
+          "rteImageUrl": "http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/RadioInformation1_IOPMobile.png",
+          "readonly": true
+        }
+      }, {
+        "type": "field",
+        "dimensions": {
+          "w": 6,
+          "h": 1,
+          "x": 0,
+          "y": 8,
+          "moved": false,
+          "static": false
+        },
+        "config": {
+          "name": "rich-text-input-2",
+          "label": "Rich Text Input",
+          "type": "richtextareaquill",
+          "rteImageUrl": "http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/Screen Shot 2018-09-11 at 12.51.44 PM (1).png",
+          "readonly": true
+        }
+      }, {
+        "type": "field",
+        "dimensions": {
+          "w": 6,
+          "h": 1,
+          "x": 0,
+          "y": 1,
+          "moved": false,
+          "static": false
+        },
+        "config": {
+          "name": "c_registerddate",
+          "label": "Registered",
+          "type": "conditionalInput",
+          "inputType": "input",
+          "readonly": true
+        }
+      }, {
+        "type": "field",
+        "dimensions": {
+          "w": 6,
+          "h": 1,
+          "x": 0,
+          "y": 2,
           "moved": false,
           "static": false
         },
@@ -259,7 +270,8 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -267,7 +279,7 @@
           "w": 6,
           "h": 1,
           "x": 0,
-          "y": 9,
+          "y": 3,
           "moved": false,
           "static": false
         },
@@ -276,7 +288,8 @@
           "label": "Is Awesome",
           "type": "checkbox",
           "onValue": "cha",
-          "offValue": "nah bro"
+          "offValue": "nah bro",
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -284,7 +297,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 5,
+          "y": 9,
           "moved": false,
           "static": false
         },
@@ -295,7 +308,8 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -303,7 +317,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 11,
+          "y": 15,
           "moved": false,
           "static": false
         },
@@ -314,7 +328,8 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -322,7 +337,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 12,
+          "y": 17,
           "moved": false,
           "static": false
         },
@@ -333,15 +348,16 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
         "dimensions": {
           "w": 6,
-          "h": 5,
+          "h": 3,
           "x": 0,
-          "y": 22,
+          "y": 10,
           "moved": false,
           "static": false
         },
@@ -378,7 +394,8 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -386,7 +403,7 @@
           "w": 6,
           "h": 3,
           "x": 0,
-          "y": 28,
+          "y": 17,
           "moved": false,
           "static": false
         },
@@ -417,15 +434,16 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
         "dimensions": {
           "w": 6,
-          "h": 2,
+          "h": 1,
           "x": 0,
-          "y": 15,
+          "y": 7,
           "moved": false,
           "static": false
         },
@@ -450,7 +468,8 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -458,7 +477,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 7,
+          "y": 11,
           "moved": false,
           "static": false
         },
@@ -516,7 +535,8 @@
             "type": "c2company",
             "icon": "externallink"
           },
-          "required": true
+          "required": true,
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -524,7 +544,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 8,
+          "y": 12,
           "moved": false,
           "static": false
         },
@@ -542,15 +562,16 @@
           "multi": true,
           "type": "typeahead",
           "delimit": ["label"],
-          "required": true
+          "required": true,
+          "readonly": true
         }
       }, {
         "type": "field",
         "dimensions": {
           "w": 6,
           "h": 4,
-          "x": 6,
-          "y": 16,
+          "x": 0,
+          "y": 13,
           "moved": false,
           "static": false
         },
@@ -577,7 +598,8 @@
               "label": "Initial Meeting",
               "value": "Initial Meeting"
             }]
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -585,7 +607,7 @@
           "w": 6,
           "h": 2,
           "x": 6,
-          "y": 25,
+          "y": 30,
           "moved": false,
           "static": false
         },
@@ -597,7 +619,8 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -605,7 +628,7 @@
           "w": 6,
           "h": 3,
           "x": 6,
-          "y": 20,
+          "y": 25,
           "moved": false,
           "static": false
         },
@@ -618,10 +641,10 @@
       }, {
         "type": "header",
         "dimensions": {
-          "w": 3,
+          "w": 6,
           "h": 1,
-          "x": 9,
-          "y": 4,
+          "x": 6,
+          "y": 8,
           "moved": false,
           "static": false
         },
@@ -635,15 +658,16 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "header",
         "dimensions": {
-          "w": 3,
+          "w": 6,
           "h": 1,
-          "x": 9,
-          "y": 3,
+          "x": 6,
+          "y": 7,
           "moved": false,
           "static": false
         },
@@ -660,7 +684,8 @@
               "key": "c3_sec_performer",
               "fields": ["performer", "performerid", "role", "cfd_performer"]
             }
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -668,7 +693,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 9,
+          "y": 13,
           "moved": false,
           "static": false
         },
@@ -705,7 +730,8 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          }
+          },
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -719,35 +745,8 @@
         },
         "config": {
           "name": "inputtest",
-          "label": "Input"
-        }
-      }, {
-        "type": "field",
-        "dimensions": {
-          "w": 6,
-          "h": 1,
-          "x": 6,
-          "y": 10,
-          "moved": false,
-          "static": false
-        },
-        "config": {
-          "name": "inputtest",
-          "label": "Input"
-        }
-      }, {
-        "type": "field",
-        "dimensions": {
-          "w": 6,
-          "h": 1,
-          "x": 6,
-          "y": 13,
-          "moved": false,
-          "static": false
-        },
-        "config": {
-          "name": "inputtest",
-          "label": "Input"
+          "label": "Input",
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -761,7 +760,8 @@
         },
         "config": {
           "name": "inputtest",
-          "label": "Input"
+          "label": "Input",
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -769,13 +769,29 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 15,
+          "y": 18,
           "moved": false,
           "static": false
         },
         "config": {
           "name": "inputtest",
-          "label": "Input"
+          "label": "Input",
+          "readonly": true
+        }
+      }, {
+        "type": "field",
+        "dimensions": {
+          "w": 6,
+          "h": 1,
+          "x": 6,
+          "y": 19,
+          "moved": false,
+          "static": false
+        },
+        "config": {
+          "name": "inputtest",
+          "label": "Input",
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -783,61 +799,29 @@
           "w": 6,
           "h": 1,
           "x": 0,
-          "y": 27,
+          "y": 20,
           "moved": false,
           "static": false
         },
         "config": {
           "name": "inputtest",
-          "label": "Input"
+          "label": "Input",
+          "readonly": true
         }
       }, {
         "type": "field",
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 6,
-          "y": 23,
+          "x": 0,
+          "y": 9,
           "moved": false,
           "static": false
         },
         "config": {
           "name": "inputtest",
-          "label": "Input"
-        }
-      }, {
-        "type": "field",
-        "dimensions": {
-          "w": 6,
-          "h": 1,
-          "x": 6,
-          "y": 24,
-          "moved": false,
-          "static": false
-        },
-        "config": {
-          "name": "inputtest",
-          "label": "Input"
-        }
-      }, {
-        "type": "field",
-        "dimensions": {
-          "w": 6,
-          "h": 1,
-          "x": 6,
-          "y": 27,
-          "moved": false,
-          "static": false
-        },
-        "config": {
-          "type": "number",
-          "name": "number",
-          "label": "Number Input",
-          "required": true,
-          "validation": {
-            "lowerBound": 0,
-            "upperBound": 100
-          }
+          "label": "Input",
+          "readonly": true
         }
       }, {
         "type": "field",
@@ -850,10 +834,62 @@
           "static": false
         },
         "config": {
+          "name": "inputtest",
+          "label": "Input",
+          "readonly": true
+        }
+      }, {
+        "type": "field",
+        "dimensions": {
+          "w": 6,
+          "h": 1,
+          "x": 6,
+          "y": 29,
+          "moved": false,
+          "static": false
+        },
+        "config": {
+          "name": "inputtest",
+          "label": "Input",
+          "readonly": true
+        }
+      }, {
+        "type": "field",
+        "dimensions": {
+          "w": 6,
+          "h": 1,
+          "x": 6,
+          "y": 32,
+          "moved": false,
+          "static": false
+        },
+        "config": {
+          "type": "number",
+          "name": "number",
+          "label": "Number Input",
+          "required": true,
+          "validation": {
+            "lowerBound": 0,
+            "upperBound": 100
+          },
+          "readonly": true
+        }
+      }, {
+        "type": "field",
+        "dimensions": {
+          "w": 6,
+          "h": 1,
+          "x": 6,
+          "y": 16,
+          "moved": false,
+          "static": false
+        },
+        "config": {
           "type": "email",
           "name": "email",
           "label": "Email Input",
-          "required": true
+          "required": true,
+          "readonly": true
         }
       }]
     },

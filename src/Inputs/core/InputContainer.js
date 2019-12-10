@@ -6,7 +6,7 @@ const InputContainer = props => {
   const {children, config, values, value, onChange, requiredWarning, tabIndex, draggable} = props
   const {name, ...other} = config
   return (
-    <div className='gfb-input-container'>
+    <div className='gfb-inner-cell-input'>
       {cloneElement(children, {
         ...other,
         requiredWarning,

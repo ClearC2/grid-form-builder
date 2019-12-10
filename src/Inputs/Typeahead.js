@@ -351,8 +351,10 @@ const Typeahead = props => {
   const {Typeahead} = input
 
   return (
-    <div ref={inputContainer} onMouseDown={handleOnFocus}>
+    <div className='gfb-input-outer' ref={inputContainer} onMouseDown={handleOnFocus}>
       <Typeahead
+        className='gfb-input-inner'
+        classNamePrefix='gfb-input'
         tabIndex={tabIndex}
         autofocus={autofocus}
         blurInputOnSelect

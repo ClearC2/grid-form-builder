@@ -35,7 +35,7 @@ const LabelContainer = props => {
   ])
 
   return (
-    <div className='gfb-label-container'>
+    <div className='gfb-inner-cell-label'>
       {Icon && <Icon />}
       <strong
         onClick={onLabelTextClick}
