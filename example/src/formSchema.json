@@ -24,8 +24,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -52,8 +51,7 @@
             "style": {
               "color": "red"
             }
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -68,8 +66,7 @@
         "config": {
           "name": "price",
           "label": "Price (Currency Input)",
-          "type": "currency",
-          "readonly": true
+          "type": "currency"
         }
       }, {
         "type": "field",
@@ -84,8 +81,7 @@
         "config": {
           "name": "quantity",
           "label": "Quantity",
-          "type": "number",
-          "readonly": true
+          "type": "number"
         }
       }, {
         "type": "field",
@@ -100,8 +96,7 @@
         "config": {
           "name": "discount",
           "label": "Discount",
-          "type": "currency",
-          "readonly": true
+          "type": "currency"
         }
       }, {
         "type": "field",
@@ -117,8 +112,7 @@
           "name": "cfd_total",
           "label": "Total Currency Input",
           "type": "total",
-          "formula": "(quantity x price) - (quantity x discount)",
-          "readonly": true
+          "formula": "(quantity x price) - (quantity x discount)"
         }
       }, {
         "type": "field",
@@ -137,8 +131,7 @@
           "typeahead": {
             "fieldvalue": "unique-test-input",
             "fields": ["inputtest"]
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -158,8 +151,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -175,8 +167,7 @@
           "name": "rich-text-input-1",
           "label": "Rich Text Input",
           "type": "richtextareaquill",
-          "rteImageUrl": "http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/RadioInformation1_IOPMobile.png",
-          "readonly": true
+          "rteImageUrl": "http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/RadioInformation1_IOPMobile.png"
         }
       }, {
         "type": "field",
@@ -192,8 +183,7 @@
           "name": "rich-text-input-2",
           "label": "Rich Text Input",
           "type": "richtextareaquill",
-          "rteImageUrl": "http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/Screen Shot 2018-09-11 at 12.51.44 PM (1).png",
-          "readonly": true
+          "rteImageUrl": "http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/Screen Shot 2018-09-11 at 12.51.44 PM (1).png"
         }
       }, {
         "type": "field",
@@ -209,8 +199,7 @@
           "name": "c_registerddate",
           "label": "Registered",
           "type": "conditionalInput",
-          "inputType": "input",
-          "readonly": true
+          "inputType": "input"
         }
       }, {
         "type": "field",
@@ -270,8 +259,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -288,8 +276,7 @@
           "label": "Is Awesome",
           "type": "checkbox",
           "onValue": "cha",
-          "offValue": "nah bro",
-          "readonly": true
+          "offValue": "nah bro"
         }
       }, {
         "type": "field",
@@ -308,8 +295,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -328,8 +314,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -348,8 +333,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -394,8 +378,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -434,8 +417,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -468,8 +450,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -535,8 +516,7 @@
             "type": "c2company",
             "icon": "externallink"
           },
-          "required": true,
-          "readonly": true
+          "required": true
         }
       }, {
         "type": "field",
@@ -562,8 +542,7 @@
           "multi": true,
           "type": "typeahead",
           "delimit": ["label"],
-          "required": true,
-          "readonly": true
+          "required": true
         }
       }, {
         "type": "field",
@@ -598,8 +577,7 @@
               "label": "Initial Meeting",
               "value": "Initial Meeting"
             }]
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -619,8 +597,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -635,7 +612,6 @@
         "config": {
           "name": "textareatest",
           "label": "Textarea",
-          "readonly": true,
           "type": "textarea"
         }
       }, {
@@ -658,8 +634,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "header",
@@ -684,8 +659,7 @@
               "key": "c3_sec_performer",
               "fields": ["performer", "performerid", "role", "cfd_performer"]
             }
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -730,8 +704,7 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -745,8 +718,7 @@
         },
         "config": {
           "name": "inputtest",
-          "label": "Input",
-          "readonly": true
+          "label": "Input"
         }
       }, {
         "type": "field",
@@ -760,8 +732,7 @@
         },
         "config": {
           "name": "inputtest",
-          "label": "Input",
-          "readonly": true
+          "label": "Input"
         }
       }, {
         "type": "field",
@@ -775,8 +746,7 @@
         },
         "config": {
           "name": "inputtest",
-          "label": "Input",
-          "readonly": true
+          "label": "Input"
         }
       }, {
         "type": "field",
@@ -790,8 +760,7 @@
         },
         "config": {
           "name": "inputtest",
-          "label": "Input",
-          "readonly": true
+          "label": "Input"
         }
       }, {
         "type": "field",
@@ -805,8 +774,7 @@
         },
         "config": {
           "name": "inputtest",
-          "label": "Input",
-          "readonly": true
+          "label": "Input"
         }
       }, {
         "type": "field",
@@ -820,8 +788,7 @@
         },
         "config": {
           "name": "inputtest",
-          "label": "Input",
-          "readonly": true
+          "label": "Input"
         }
       }, {
         "type": "field",
@@ -835,8 +802,7 @@
         },
         "config": {
           "name": "inputtest",
-          "label": "Input",
-          "readonly": true
+          "label": "Input"
         }
       }, {
         "type": "field",
@@ -850,8 +816,7 @@
         },
         "config": {
           "name": "inputtest",
-          "label": "Input",
-          "readonly": true
+          "label": "Input"
         }
       }, {
         "type": "field",
@@ -871,8 +836,7 @@
           "validation": {
             "lowerBound": 0,
             "upperBound": 100
-          },
-          "readonly": true
+          }
         }
       }, {
         "type": "field",
@@ -888,8 +852,7 @@
           "type": "email",
           "name": "email",
           "label": "Email Input",
-          "required": true,
-          "readonly": true
+          "required": true
         }
       }]
     },
