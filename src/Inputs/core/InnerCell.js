@@ -29,7 +29,9 @@ const InnerCell = props => {
   const {config} = field
   const [formValues] = useContext(FormValueContext)
 
-  if (draggable || readonly || +formValues.get('cfd_userisreadonly', '0') === 1) {
+  // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
+  // we will come up with a way to do this without modifying the schema - JRA 12/10/2019
+  if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) {
     config.readonly = true
   }
 
