@@ -5,7 +5,7 @@ import DragUnit from './TestDraggableUnit'
 import FormBuilder from '../../src/FormBuilder'
 import schema from './formSchema'
 
-const TEST_SEARCH = true // for conditional search forms
+const TEST_SEARCH = false // for conditional search forms
 
 export default class Example extends Component {
   state = {

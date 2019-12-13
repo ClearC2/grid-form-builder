@@ -321,7 +321,7 @@ const FormBuilder = (props) => {
    * TM 11/26/2019
    */
   return (
-    /* <DndProvider backend={HTML5backend}> */
+    // <DndProvider backend={HTML5backend}>
     <div
       id={id}
       className='grid-form-builder-parent'
@@ -495,7 +495,7 @@ export default class FormValidator extends Component {
     })
     if (reasons.length > 0) {
       this.setState({requiredWarning: true}, () => {
-        this.grid && this.grid.scrollIntoView()
+        // this.grid && this.grid.scrollIntoView() // this breaks c2 cards for some very strange reason. The header bar of dialogs overflows outside of the dialog container for no apparent reason - JRA 12/13/2019
       })
     }
     return reasons
