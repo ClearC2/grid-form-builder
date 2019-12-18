@@ -45,3 +45,69 @@ div.grid-form-builder-parent .react-grid-item.react-draggable:hover > span.react
 div.grid-form-builder-parent span.react-resizable-handle {
   right: -4px;
 }
+
+div.gfb-inner-cell {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+div.gfb-inner-cell-label {
+  height: 20px;
+  display: flex;
+}
+
+div.gfb-inner-cell-input {
+  flex: 1;
+  display: flex;
+}
+
+div.gfb-input-outer {
+  display: flex;
+  flex: 1;
+}
+
+div.gfb-input-inner {
+  display: flex;
+  flex: 1;
+}
+
+div.gfb-input__control {
+  display: flex;
+  flex: 1;
+  border: 1px solid #b3b3b3;
+  border-radius: 0;
+  min-height: 0;
+}
+
+div.gfb-input__value-container {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex: 1;
+}
+
+div.gfb-input__value-container > div[class^=css-] {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex: 1;
+}
+
+div.gfb-input__input {
+  display: flex !important;
+  flex: 1;
+}
+
+input.gfb-input__single-value, div.gfb-input__value-container > div > div.gfb-input__input > input {
+  border: none;
+  display: flex;
+  flex: 1;
+}
+
+div.gfb-input__indicators > div.gfb-input__indicator,  span.gfb-input__indicator-separator {
+  margin: 0;
+  padding: 0;
+}
