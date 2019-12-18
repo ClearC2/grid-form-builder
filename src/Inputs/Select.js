@@ -53,10 +53,9 @@ const Select = props => {
     const position = inputContainer.current.getBoundingClientRect().top
     if (fieldPosition !== position) {
       updateFieldPosition(position)
-      setMenuOpenPosition()
     }
-    openMenu()
-  }, [openMenu, setMenuOpenPosition, fieldPosition])
+    setTimeout(openMenu) // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
+  }, [openMenu, fieldPosition])
 
   const handleInputClick = useCallback(() => {
     if (!disabled && !readonly) {
@@ -67,6 +66,10 @@ const Select = props => {
   const handleOnFocus = useCallback(() => {
     handleInputClick()
   }, [handleInputClick])
+
+  useEffect(() => {
+    setMenuOpenPosition()
+  }, [fieldPosition, setMenuOpenPosition])
 
   useEffect(() => {
     changeInput({Select: allowcreate ? Creatable : ReactSelect})
