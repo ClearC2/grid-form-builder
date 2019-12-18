@@ -214,6 +214,7 @@ const Typeahead = props => {
   const handleOnInputChange = useCallback((val, e) => {
     if (e.action === 'input-change') {
       !menuIsOpen && openMenu()
+      updateInputValue(val)
     } else if (e.action === 'menu-close' && !multi) {
       if (value) {
         updateInputValue('')
