@@ -125,6 +125,12 @@ const Select = props => {
         value={selectValue}
         defaultValue={selectValue}
         onChange={handleChange}
+        styles={{
+          menuPortal: base => {
+            const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12
+            return ({...base, top})
+          }
+        }}
       />
     </div>
   )

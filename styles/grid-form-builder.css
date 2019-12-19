@@ -59,24 +59,15 @@ div.gfb-inner-cell-label {
   display: flex;
 }
 
-div.gfb-inner-cell-input {
+div.gfb-inner-cell-input, div.gfb-input-outer, div.gfb-input-inner, div.gfb-input__control,
+div.gfb-input__control:hover, div.gfb-input__value-container, div.gfb-input__value-container > div[class^=css-],
+div.gfb-input__input, input.gfb-input__single-value, div.gfb-input__single-value, div.gfb-input__value-container > div > div.gfb-input__input > input
+{
   flex: 1;
-  display: flex;
-}
-
-div.gfb-input-outer {
-  display: flex;
-  flex: 1;
-}
-
-div.gfb-input-inner {
-  display: flex;
-  flex: 1;
+  display: flex !important;
 }
 
 div.gfb-input__control, div.gfb-input__control:hover {
-  display: flex;
-  flex: 1;
   border: 1px solid #b3b3b3;
   border-radius: 0;
   min-height: 0;
@@ -87,8 +78,6 @@ div.gfb-input__control, div.gfb-input__control:hover {
 div.gfb-input__value-container {
   padding: 0;
   margin: 0;
-  display: flex;
-  flex: 1;
   align-items: stretch;
   overflow: visible;
 }
@@ -96,22 +85,16 @@ div.gfb-input__value-container {
 div.gfb-input__value-container > div[class^=css-] {
   padding: 0;
   margin: 0;
-  display: flex;
-  flex: 1;
   align-items: stretch;
 }
 
 div.gfb-input__input {
-  display: flex !important;
-  flex: 1;
   margin: 0;
   padding: 0;
 }
 
 input.gfb-input__single-value, div.gfb-input__single-value, div.gfb-input__value-container > div > div.gfb-input__input > input {
   border: none;
-  display: flex;
-  flex: 1;
   margin: 0;
   padding-left: 2px !important;
 }
@@ -119,6 +102,11 @@ input.gfb-input__single-value, div.gfb-input__single-value, div.gfb-input__value
 div.grid-form-builder-parent input:focus {
   outline: 1px solid #37a9e1 !important;
   outline-offset: 0;
+}
+
+div > div.gfb-input__indicators > div.gfb-input__indicator {
+  padding-left: 3px;
+  padding-right: 3px;
 }
 
 div.gfb-input__indicators > div.gfb-input__indicator,  span.gfb-input__indicator-separator {
