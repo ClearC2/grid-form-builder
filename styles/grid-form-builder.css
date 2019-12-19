@@ -93,13 +93,21 @@ div.gfb-input__input {
   padding: 0;
 }
 
-input.gfb-input__single-value, div.gfb-input__single-value, div.gfb-input__value-container > div > div.gfb-input__input > input {
+input.gfb-input__single-value,
+textarea.gfb-input__single-value,
+div.gfb-input__single-value,
+div.gfb-input__value-container > div > div.gfb-input__input > input,
+div.gfb-input__value-container > div > div.gfb-input__input > textarea
+{
+  display: flex;
+  flex: 1;
   border: none;
   margin: 0;
   padding-left: 2px !important;
+  resize: none;
 }
 
-div.grid-form-builder-parent input:focus {
+div.grid-form-builder-parent input:focus, div.grid-form-builder-parent textarea:focus {
   outline: 1px solid #37a9e1 !important;
   outline-offset: 0;
 }
