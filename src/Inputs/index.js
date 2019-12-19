@@ -4,12 +4,14 @@ import Input from './Input'
 import Select from './Select'
 import Textarea from './Textarea'
 import Typeahead from './Typeahead'
+import Multiselect from './Multiselect'
 
 let FormComponents = {
   Input,
   Select,
   Textarea,
-  Typeahead
+  Typeahead,
+  Multiselect
 }
 
 export function initCustomFormComponents (defs = {}) {

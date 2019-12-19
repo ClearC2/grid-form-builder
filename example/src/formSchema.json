@@ -220,16 +220,16 @@
             "category": "TASKS",
             "options": [{
               "label": "Contract Signing",
-              "value": "Contract SigningTestValue"
+              "value": "Contract Signing"
             }, {
               "label": "Customer Service",
-              "value": "Customer Service123123123"
+              "value": "Customer Service"
             }, {
               "label": "Demonstration",
-              "value": "Demonstration123123123"
+              "value": "Demonstration"
             }, {
               "label": "Executive Meeting",
-              "value": "Executive Meeting123123123"
+              "value": "Executive Meeting"
             }, {
               "label": "Initial Meeting",
               "value": "Initial Meeting"
