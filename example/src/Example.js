@@ -119,6 +119,9 @@ export default class Example extends Component {
     setTimeout(() => { // simulate getting schema from api
       this.setState(() => ({formSchema: schema}))
     }, 250)
+    // setTimeout(() => {
+    //   debugger
+    // }, 2000)
   }
 
   handleOnDimensionChange = schema => {
