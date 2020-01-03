@@ -215,7 +215,7 @@ class FormBuilder extends Component { //eslint-disable-line
       }
       const {config = {}, dimensions = {x: 0, y: i, h: 1, w: 6}, type: Type = 'field'} = field
       // AutoComplete OFF does not turn off autocomplete browser feature, you need to pass anything other than 'off' to turn off autocomplete because latest browsers stopped supporting 'off'
-      let {type = 'input', icon = '', cascade = {}, tabindex: tabIndex, autoComplete = 'off', link = {}} = config
+      let {type = 'input', icon = '', cascade = {}, tabindex: tabIndex, autoComplete = 'ac_off', link = {}} = config
       if (!tabIndex) {
         while (specifiedTabs.has(tabNumber)) {
           tabNumber++
