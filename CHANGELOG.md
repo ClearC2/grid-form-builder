@@ -1,3 +1,10 @@
+# [2.12.0](https://github.com/ClearC2/grid-form-builder/compare/v2.11.5...v2.12.0) (2020-01-03)
+
+
+### Features
+
+* **validation:** forms get forced into validation warn mode if the validation method is ever ran ([e802450](https://github.com/ClearC2/grid-form-builder/commit/e802450))
+
 ## [2.11.5](https://github.com/ClearC2/grid-form-builder/compare/v2.11.4...v2.11.5) (2019-12-13)
 
 
