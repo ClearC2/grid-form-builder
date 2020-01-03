@@ -1,3 +1,10 @@
+# [2.13.0](https://github.com/ClearC2/grid-form-builder/compare/v2.12.0...v2.13.0) (2020-01-03)
+
+
+### Features
+
+* **autocomplete-default-off:** make autocomplete by default off on all inputs ([#132](https://github.com/ClearC2/grid-form-builder/issues/132)) ([4369dd9](https://github.com/ClearC2/grid-form-builder/commit/4369dd9))
+
 # [2.12.0](https://github.com/ClearC2/grid-form-builder/compare/v2.11.5...v2.12.0) (2020-01-03)
 
 
