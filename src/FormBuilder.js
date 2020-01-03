@@ -445,6 +445,7 @@ export default class FormValidator extends Component {
   }
 
   state = {
+    validate: false,
     requiredWarning: false,
     formValues: this.props.formValues
       ? this.props.formValues.toJS
@@ -494,7 +495,7 @@ export default class FormValidator extends Component {
       }
     })
     if (reasons.length > 0) {
-      this.setState({requiredWarning: true}, () => {
+      this.setState({requiredWarning: true, validate: true}, () => {
         // this.grid && this.grid.scrollIntoView() // this breaks c2 cards for some very strange reason. The header bar of dialogs overflows outside of the dialog container for no apparent reason - JRA 12/13/2019
       })
     }
@@ -532,12 +533,13 @@ export default class FormValidator extends Component {
   }
 
   render () {
-    const {requiredWarning, formValues} = this.state
+    const {requiredWarning, formValues, validate} = this.state
     const {formValues: values, ...rest} = this.props
     return (
       <FormValueContext.Provider value={[formValues, this.updateFormValues]}>
         <SizeMeHOC
           {...rest}
+          validate={this.props.validate || validate}
           requiredWarning={requiredWarning}
           setContainerRef={this.setContainerRef}
           handleLinkClick={this.handleLinkClick}
