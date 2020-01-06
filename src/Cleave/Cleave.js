@@ -21,7 +21,8 @@ export default class Cleave extends Component {
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
     onInit: PropTypes.func,
-    htmlRef: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object])
+    htmlRef: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+    disabled: PropTypes.bool
   }
 
   constructor (props) {
@@ -58,7 +59,7 @@ export default class Cleave extends Component {
 
       if (newValue !== this.properties.result) {
         this.properties.initValue = newValue
-        state = this.onInput(newValue, true, true)
+        state = this.onInput(newValue, true, true) || null
       }
     }
     return state
@@ -310,6 +311,7 @@ export default class Cleave extends Component {
 
   onInput = (value, fromProps, bypassSetState) => {
     let pps = this.properties
+    const {disabled} = this.props
 
     // case 1: delete one more character "4"
     // 1234*| -> hit backspace -> 123|
@@ -324,10 +326,12 @@ export default class Cleave extends Component {
     if (pps.phone) {
       if (pps.prefix && (!pps.noImmediatePrefix || value.length)) {
         pps.result = pps.prefix + pps.phoneFormatter.format(value).slice(pps.prefix.length)
+      } else if (disabled) {
+        pps.result = value
       } else {
         pps.result = pps.phoneFormatter.format(value)
       }
-      return this.updateValueState(bypassSetState)
+      return this.updateValueState(bypassSetState && !disabled)
     }
 
     // numeral formatter
