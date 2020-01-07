@@ -326,12 +326,13 @@ export default class Cleave extends Component {
     if (pps.phone) {
       if (pps.prefix && (!pps.noImmediatePrefix || value.length)) {
         pps.result = pps.prefix + pps.phoneFormatter.format(value).slice(pps.prefix.length)
-      } else if (disabled) {
+      } else if (disabled && !pps.phoneFormatter.format(value)) {
         pps.result = value
+        return this.updateValueState(false)
       } else {
         pps.result = pps.phoneFormatter.format(value)
       }
-      return this.updateValueState(bypassSetState && !disabled)
+      return this.updateValueState(bypassSetState)
     }
 
     // numeral formatter
