@@ -6,6 +6,7 @@ import Textarea from './Textarea'
 import Typeahead from './Typeahead'
 import Multiselect from './Multiselect'
 import Listselect from './Listselect'
+import Checkbox from './Checkbox'
 
 let FormComponents = {
   Input,
@@ -13,7 +14,8 @@ let FormComponents = {
   Textarea,
   Typeahead,
   Multiselect,
-  Listselect
+  Listselect,
+  Checkbox
 }
 
 export function initCustomFormComponents (defs = {}) {

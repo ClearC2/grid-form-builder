@@ -77,8 +77,16 @@ const InnerCell = props => {
     handleOnChange(e)
   }, [handleOnChange, config.name])
 
+  let className = 'gfb-inner-cell'
+  if (typeof config.type === 'string') {
+    const type = config.type.toLowerCase()
+    if (type === 'checkbox') {
+      className = className + ' gfb-inline-cell'
+    }
+  }
+
   return connectDropTarget(
-    <div className='gfb-inner-cell' onClick={onGridElementClick}>
+    <div className={className} onClick={onGridElementClick}>
       <LabelContainer
         config={config}
         handleLinkClick={handleLinkClick}
