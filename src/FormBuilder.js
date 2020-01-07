@@ -30,8 +30,6 @@ const FormBuilder = (props) => {
     formSchema,
     size,
     handleOnDimensionChange,
-    dropItemDimensions,
-    dropItemConfig,
     validate,
     requiredFlag,
     setContainerRef,
@@ -45,9 +43,7 @@ const FormBuilder = (props) => {
     inline,
     handleOnChange,
     interactive,
-    draggable,
     readonly,
-    droppable,
     activeItem,
     rglAutoSize = true,
     rglStyle,
@@ -188,7 +184,7 @@ const FormBuilder = (props) => {
         }
         elements.push(
           <div key={i + ''} className={className}>
-            {draggable && isActive && (
+            {isActive && (
               <div className='active-gfb-item-action-menu' onClick={removeSelf}>
                 <div className='item-action-button action-button-remove'>
                   <Trash height={20} width={20} color='white' />
@@ -203,7 +199,7 @@ const FormBuilder = (props) => {
               handleLinkClick={handleLinkClick}
               handleAnywhereClick={handleAnywhereClick}
               handleCascadeKeywordClick={handleCascadeKeywordClick}
-              handleDragDropOnInput={handleDragDropOnInput}
+              // handleDragDropOnInput={handleDragDropOnInput}
               handleRTEImageClick={handleRTEImageClick}
               rowHeight={rowHeight}
               inline={inline}
@@ -215,7 +211,7 @@ const FormBuilder = (props) => {
               CascadeIcon={cascadeIcon}
               interactive={interactive}
               readonly={readonly}
-              draggable={draggable}
+              // draggable={draggable}
               tabIndex={+tabIndex}
               index={i}
               isActive={isActive}
@@ -242,7 +238,6 @@ const FormBuilder = (props) => {
     inline,
     handleOnChange,
     interactive,
-    draggable,
     readonly,
     myOffset,
     activeItem,
@@ -284,33 +279,33 @@ const FormBuilder = (props) => {
     }
   }, [grid, updateGrid, handleOnDimensionChange, formSchema])
 
-  const onDrop = useCallback((dimensions) => {
-    debugLog('onDrop')
-    if (typeof handleOnDimensionChange === 'function') {
-      const config = {...dropItemConfig}
-      const schema = searchForLayoutArray(formSchema)
-      if (ReactGridLayout.current) { // dropping a new item most likely caused collisions, so lets ref up the layout and update everything that got moved if we can - JRA 11/07/2019
-        const newLayout = ReactGridLayout.current.state.layout
-        newLayout.forEach(item => {
-          if (+item.i >= 0) {
-            const dimensions = {...item}
-            const index = +dimensions.i
-            delete dimensions.i
-            schema[index].dimensions = dimensions
-          }
-        })
-      }
-      const newItem = {
-        dimensions,
-        config
-      }
-      schema.push(newItem)
-      const newFormSchema = updateLayoutArray(formSchema, schema)
-      handleOnDimensionChange(newFormSchema)
-    } else {
-      console.warn('A new item was dropped into the current layout but no handleOnDimensionChange callback was provided to update the schema.') // eslint-disable-line
-    }
-  }, [formSchema, dropItemConfig, handleOnDimensionChange])
+  // const onDrop = useCallback((dimensions) => {
+  //   debugLog('onDrop')
+  //   if (typeof handleOnDimensionChange === 'function') {
+  //     const config = {...dropItemConfig}
+  //     const schema = searchForLayoutArray(formSchema)
+  //     if (ReactGridLayout.current) { // dropping a new item most likely caused collisions, so lets ref up the layout and update everything that got moved if we can - JRA 11/07/2019
+  //       const newLayout = ReactGridLayout.current.state.layout
+  //       newLayout.forEach(item => {
+  //         if (+item.i >= 0) {
+  //           const dimensions = {...item}
+  //           const index = +dimensions.i
+  //           delete dimensions.i
+  //           schema[index].dimensions = dimensions
+  //         }
+  //       })
+  //     }
+  //     const newItem = {
+  //       dimensions,
+  //       config
+  //     }
+  //     schema.push(newItem)
+  //     const newFormSchema = updateLayoutArray(formSchema, schema)
+  //     handleOnDimensionChange(newFormSchema)
+  //   } else {
+  //     console.warn('A new item was dropped into the current layout but no handleOnDimensionChange callback was provided to update the schema.') // eslint-disable-line
+  //   }
+  // }, [formSchema, dropItemConfig, handleOnDimensionChange])
 
   debugLog('render')
 
@@ -335,13 +330,13 @@ const FormBuilder = (props) => {
         cols={columns}
         rowHeight={rowHeight || (inline ? 27 : 45)}
         layout={grid.layout.toJS()}
-        onDragStop={onItemLayoutUpdate}
-        onResizeStop={onItemLayoutUpdate}
-        droppingItem={{...dropItemDimensions, i: '-1'}}
-        isDroppable={droppable}
-        onDrop={onDrop}
-        isDraggable={draggable}
-        isResizable={draggable}
+        // onDragStop={onItemLayoutUpdate}
+        // onResizeStop={onItemLayoutUpdate}
+        // droppingItem={{...dropItemDimensions, i: '-1'}}
+        // isDroppable={droppable}
+        // onDrop={onDrop}
+        // isDraggable={draggable}
+        // isResizable={draggable}
         compactType={compact}
       >
         {grid.elements}

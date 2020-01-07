@@ -8,7 +8,6 @@ import {initFormBuilderAjax} from '../../src/config'
 import ajax from './ajax'
 
 import HTML5Backend from 'react-dnd-html5-backend'
-import {DndProvider} from 'react-dnd'
 
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
@@ -24,16 +23,10 @@ initFormBuilderAjax(config => { config.ajax = ajax })
 const render = (props = {}) => {
   ReactDOM.render(
     <Provider store={store}>
-      <HTML5BackendProvider {...props} />
+      <Example {...props} />
     </Provider>,
     document.getElementById('app')
   )
 }
-
-const HTML5BackendProvider = (props) => (
-  <DndProvider backend={HTML5Backend}>
-    <Example {...props} />
-  </DndProvider>
-)
 
 render()

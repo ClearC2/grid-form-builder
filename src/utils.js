@@ -6,7 +6,7 @@ export const timeStamp = () => {
   return +ms
 }
 
-export const isMobile = !!('ontouchstart' in document.documentElement && navigator.userAgent.match(/Mobi/))
+// export const isMobile = !!('ontouchstart' in document.documentElement && navigator.userAgent.match(/Mobi/))
 
 export const emailValidator = email => {
   // If email is null, undefined, empty array or string

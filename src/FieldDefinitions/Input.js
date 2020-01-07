@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Map} from 'immutable'
-import {DropTarget} from 'react-dnd'
+// import {DropTarget} from 'react-dnd'
 import PropTypes from 'prop-types'
 
 class Input extends Component {
@@ -29,20 +29,20 @@ class Input extends Component {
   }
 
   componentDidUpdate = p => {
-    const {didDrop, isOver} = this.props
-    if (didDrop && !p.didDrop && !isOver && p.isOver) {
-      // if it was just previously over and dropped (this is to make this event only trigger once)
-      let {droppedItem, handleDragDropOnInput, config = {}, formValues = Map()} = this.props
-      droppedItem = droppedItem === null ? null : droppedItem.widget
-      const currentValue = formValues.get(config.name, '')
-      config = {currentValue, ...config}
-      if (droppedItem && !p.droppedItem) {
-        handleDragDropOnInput({
-          source: droppedItem,
-          target: config
-        })
-      }
-    }
+    // const {didDrop, isOver} = this.props
+    // if (didDrop && !p.didDrop && !isOver && p.isOver) {
+    //   // if it was just previously over and dropped (this is to make this event only trigger once)
+    //   let {droppedItem, handleDragDropOnInput, config = {}, formValues = Map()} = this.props
+    //   droppedItem = droppedItem === null ? null : droppedItem.widget
+    //   const currentValue = formValues.get(config.name, '')
+    //   config = {currentValue, ...config}
+    //   if (droppedItem && !p.droppedItem) {
+    //     handleDragDropOnInput({
+    //       source: droppedItem,
+    //       target: config
+    //     })
+    //   }
+    // }
   }
 
   handleAnywhereClick = e => {
@@ -205,21 +205,21 @@ class Input extends Component {
   }
 }
 
-function collect (connect, monitor) {
-  return {
-    connectDropTarget: connect.dropTarget(),
-    droppedItem: monitor.getDropResult(),
-    didDrop: monitor.didDrop(),
-    isOver: monitor.isOver()
-  }
-}
+// function collect (connect, monitor) {
+//   return {
+//     connectDropTarget: connect.dropTarget(),
+//     droppedItem: monitor.getDropResult(),
+//     didDrop: monitor.didDrop(),
+//     isOver: monitor.isOver()
+//   }
+// }
 
-const boxTarget = {
-  drop (props, monitor) {
-    return {
-      widget: monitor.getItem()
-    }
-  }
-}
+// const boxTarget = {
+//   drop (props, monitor) {
+//     return {
+//       widget: monitor.getItem()
+//     }
+//   }
+// }
 
-export default DropTarget('FormBuilderDraggable', boxTarget, collect)(Input)
+export default Input
