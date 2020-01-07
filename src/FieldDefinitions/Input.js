@@ -79,7 +79,6 @@ class Input extends Component {
       config = {},
       Icon = null,
       requiredWarning,
-      connectDropTarget,
       cascadingKeyword,
       CascadeIcon,
       tabIndex,
@@ -159,48 +158,46 @@ class Input extends Component {
     }
 
     return (
-      connectDropTarget(
-        <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
-          <div style={styles.labelContainer}>
-            {required && (
-              <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>
-            )}
-            {Icon && <Icon style={styles.icon} />}
-            <strong
-              style={styles.label}
-              onClick={
-                !!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick
-                  : link ? this.handleLinkClick : null
-              }
-              className={(!!cascadingKeyword && !CascadeIcon) || link ? 'cursor-hand' : ''}
-            >
-              {label}
-            </strong>
-            {!!cascadingKeyword && !!CascadeIcon && (
-              <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
-            )}
-            {!!link && !!LinkIcon && (
-              <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
-            )}
-          </div>
-          <input
-            autoFocus={this.props.config.autofocus}
-            autoComplete={autoComplete}
-            className={className}
-            placeholder={placeholder}
-            onMouseDown={this.onMouseDown}
-            onChange={handleOnChange}
-            style={styles.input}
-            type={inputType || 'text'}
-            name={name}
-            value={value}
-            disabled={disabled}
-            onKeyDown={onKeyDown}
-            tabIndex={tabIndex}
-            data-testid={`${name}-input`}
-          />
+      <div style={styles.container} onMouseUp={this.handleAnywhereClick}>
+        <div style={styles.labelContainer}>
+          {required && (
+            <div style={{color: '#ec1c24', fontWeight: 'bold', fontSize: '15pt', lineHeight: '10pt'}}>*</div>
+          )}
+          {Icon && <Icon style={styles.icon} />}
+          <strong
+            style={styles.label}
+            onClick={
+              !!cascadingKeyword && !CascadeIcon ? this.handleCascadeKeywordClick
+                : link ? this.handleLinkClick : null
+            }
+            className={(!!cascadingKeyword && !CascadeIcon) || link ? 'cursor-hand' : ''}
+          >
+            {label}
+          </strong>
+          {!!cascadingKeyword && !!CascadeIcon && (
+            <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
+          )}
+          {!!link && !!LinkIcon && (
+            <LinkIcon onClick={this.handleLinkClick} className='cursor-hand' style={styles.linkIconStyle} />
+          )}
         </div>
-      )
+        <input
+          autoFocus={this.props.config.autofocus}
+          autoComplete={autoComplete}
+          className={className}
+          placeholder={placeholder}
+          onMouseDown={this.onMouseDown}
+          onChange={handleOnChange}
+          style={styles.input}
+          type={inputType || 'text'}
+          name={name}
+          value={value}
+          disabled={disabled}
+          onKeyDown={onKeyDown}
+          tabIndex={tabIndex}
+          data-testid={`${name}-input`}
+        />
+      </div>
     )
   }
 }
