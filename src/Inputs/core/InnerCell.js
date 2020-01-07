@@ -81,7 +81,7 @@ const InnerCell = props => {
   if (typeof config.type === 'string') {
     const type = config.type.toLowerCase()
     if (type === 'checkbox') {
-      className = className + ' gfb-inline-cell'
+      className = className + ' gfb-inline-cell gfb-checkbox'
     }
   }
 
