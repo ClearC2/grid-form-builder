@@ -64,7 +64,7 @@ div.gfb-inner-cell-input {
   display: flex;
 }
 
-div.gfb-disabled-input {
+.gfb-disabled-input {
   background-color: #f2f2f2 !important;
 }
 
