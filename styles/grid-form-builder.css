@@ -64,6 +64,10 @@ div.gfb-inner-cell-input {
   display: flex;
 }
 
+div.gfb-disabled-input {
+  background-color: #f2f2f2 !important;
+}
+
 div.gfb-inner-cell-input, div.gfb-input-outer, div.gfb-input-inner, div.gfb-input__control,
 div.gfb-input__control:hover, div.gfb-input__value-container, div.gfb-input__value-container > div[class^=css-],
 div.gfb-input__input, input.gfb-input__single-value, div.gfb-input__single-value, div.gfb-input__value-container > div > div.gfb-input__input > input
@@ -72,12 +76,29 @@ div.gfb-input__input, input.gfb-input__single-value, div.gfb-input__single-value
   display: flex !important;
 }
 
+div.gfb-input-inner {
+  flex-direction: column;
+}
+
 div.gfb-input__control, div.gfb-input__control:hover {
   border: 1px solid #b3b3b3;
   border-radius: 0;
   min-height: 0;
   box-shadow: none;
   align-items: stretch;
+}
+
+div.gfb-input-control-bottom {
+  display: flex;
+  justify-content: flex-end;
+}
+
+div.gfb-input-control-bottom > .gfb-action-link {
+  margin-right: 5px;
+  font-size: 8pt;
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
 }
 
 div.gfb-input__value-container {
