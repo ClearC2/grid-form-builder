@@ -181,6 +181,7 @@ div.gfb-multi-input-input {
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
+  align-items: center;
 }
 
 div.gfb-multi-input-input.gfb-multi-input-selected {
