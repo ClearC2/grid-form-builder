@@ -21,6 +21,7 @@
           "iconStyle": {
             "color": "#FF00FF"
           },
+          "placeholder": "Test Placeholder",
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
