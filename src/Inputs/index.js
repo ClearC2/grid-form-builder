@@ -5,13 +5,15 @@ import Select from './Select'
 import Textarea from './Textarea'
 import Typeahead from './Typeahead'
 import Multiselect from './Multiselect'
+import Listselect from './Listselect'
 
 let FormComponents = {
   Input,
   Select,
   Textarea,
   Typeahead,
-  Multiselect
+  Multiselect,
+  Listselect
 }
 
 export function initCustomFormComponents (defs = {}) {

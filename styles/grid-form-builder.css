@@ -59,6 +59,11 @@ div.gfb-inner-cell-label {
   display: flex;
 }
 
+div.gfb-inner-cell-input {
+  height: calc(100% - 20px);
+  display: flex;
+}
+
 div.gfb-inner-cell-input, div.gfb-input-outer, div.gfb-input-inner, div.gfb-input__control,
 div.gfb-input__control:hover, div.gfb-input__value-container, div.gfb-input__value-container > div[class^=css-],
 div.gfb-input__input, input.gfb-input__single-value, div.gfb-input__single-value, div.gfb-input__value-container > div > div.gfb-input__input > input
@@ -135,4 +140,28 @@ div > div.gfb-input__indicators > div.gfb-input__indicator {
 div.gfb-input__indicators > div.gfb-input__indicator,  span.gfb-input__indicator-separator {
   margin: 0;
   padding: 0;
+}
+
+div.gfb-value-multi-input-container {
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100% + 1px);
+}
+
+div.gfb-multi-input-input {
+  border-bottom: 1px solid #b3b3b3;
+  padding-left: 5px !important;
+  height: 24px;
+  flex: none;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+div.gfb-multi-input-input.gfb-multi-input-selected {
+  background-color: #a1c3fa;
 }
