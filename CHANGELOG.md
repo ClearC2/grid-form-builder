@@ -1,3 +1,10 @@
+## [2.11.5](https://github.com/ClearC2/grid-form-builder/compare/v2.11.4...v2.11.5) (2019-12-13)
+
+
+### Bug Fixes
+
+* **validation:** removes the grid scroll functionality because it was breaking c2cards. it would for whatever reason force the title bar to overflow outside of the dialog container to a place you could not close the card anymore ([2233a0f](https://github.com/ClearC2/grid-form-builder/commit/2233a0f))
+
 ## [2.11.4](https://github.com/ClearC2/grid-form-builder/compare/v2.11.3...v2.11.4) (2019-12-03)
 
 
