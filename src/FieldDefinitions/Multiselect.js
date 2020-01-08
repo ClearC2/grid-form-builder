@@ -113,7 +113,7 @@ export class Multiselect extends Component {
   }
 
   onChange = (e) => {
-    if (e.length === 0) {
+    if (!e || e.length === 0) {
       this.props.handleOnChange({target: {name: this.props.config.name, value: ''}})
     } else {
       if (this.props.conditionalSearch) {
