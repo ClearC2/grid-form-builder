@@ -11,7 +11,6 @@ import Metadata from './Metadata'
 import Number from './Number'
 import Percentage from './Percentage'
 import Phone from './Phone'
-import Radio from './Radio'
 import Richtextareaquill from './Richtextareaquill'
 import Time from './Time/Time'
 import Total from './Total'
@@ -31,7 +30,6 @@ let FormComponents = {
   Number,
   Percentage,
   Phone,
-  Radio,
   Richtextareaquill,
   Time,
   Total

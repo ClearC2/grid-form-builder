@@ -8,6 +8,7 @@ import Multiselect from './Multiselect'
 import Listselect from './Listselect'
 import Checkbox from './Checkbox'
 import Multicheckbox from './Multicheckbox'
+import Radio from './Radio'
 
 let FormComponents = {
   Input,
@@ -17,7 +18,8 @@ let FormComponents = {
   Multiselect,
   Listselect,
   Checkbox,
-  Multicheckbox
+  Multicheckbox,
+  Radio
 }
 
 export function initCustomFormComponents (defs = {}) {
