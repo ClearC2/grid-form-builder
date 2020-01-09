@@ -71,17 +71,26 @@ div.gfb-inner-cell.gfb-inline-cell > .gfb-inner-cell-label {
 
 div.gfb-input__control.gfb-boxless-input, div.gfb-input__control.gfb-boxless-input:hover {
   border: 0;
+  margin-top: 1px;
 }
 
 div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container {
-  align-items: center;
+  flex-direction: column;
 }
 
 div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container > .gfb-input__input,
-div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container > .gfb-input__input:focus
+div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container > .gfb-input__input:focus,
+div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container > .gfb-input__input > .gfb-input__input,
+div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container > .gfb-input__input:focus > .gfb-input__input:focus
 {
   outline: 0 !important;
-  height: 20px;
+}
+
+input[class^="gfb-input"][type="checkbox"], input[class^="gfb-input"][type="radio"] {
+  height: 16px;
+  width: 16px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 div.gfb-inner-cell-label {
@@ -168,7 +177,8 @@ input.gfb-input__single-value,
 textarea.gfb-input__single-value,
 div.gfb-input__single-value,
 div.gfb-input__value-container > div > div.gfb-input__input > input,
-div.gfb-input__value-container > div > div.gfb-input__input > textarea
+div.gfb-input__value-container > div > div.gfb-input__input > textarea,
+label.gfb-multi-input-label-wrapper
 {
   display: flex;
   flex: 1;
@@ -216,4 +226,15 @@ div.gfb-multi-input-input {
 
 div.gfb-multi-input-input.gfb-multi-input-selected {
   background-color: #a1c3fa;
+}
+
+.gfb-multi-input-label-wrapper {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+}
+
+.gfb-multi-input-label-wrapper > input[type="checkbox"], .gfb-multi-input-label-wrapper > input[type="radio"] {
+  flex: none;
 }

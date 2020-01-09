@@ -7,6 +7,7 @@ import Typeahead from './Typeahead'
 import Multiselect from './Multiselect'
 import Listselect from './Listselect'
 import Checkbox from './Checkbox'
+import Multicheckbox from './Multicheckbox'
 
 let FormComponents = {
   Input,
@@ -15,7 +16,8 @@ let FormComponents = {
   Typeahead,
   Multiselect,
   Listselect,
-  Checkbox
+  Checkbox,
+  Multicheckbox
 }
 
 export function initCustomFormComponents (defs = {}) {
