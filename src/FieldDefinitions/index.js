@@ -8,7 +8,6 @@ import Header from './Header'
 import Icon from './Icon'
 import ImportSelect from './ImportSelect'
 import Metadata from './Metadata'
-import Multicheckbox from './Multicheckbox'
 import Number from './Number'
 import Percentage from './Percentage'
 import Phone from './Phone'
@@ -29,7 +28,6 @@ let FormComponents = {
   Icon,
   ImportSelect,
   Metadata,
-  Multicheckbox,
   Number,
   Percentage,
   Phone,
