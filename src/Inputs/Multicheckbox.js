@@ -31,9 +31,9 @@ const Multicheckbox = props => {
     }
   }, [name, onChange, value, disabled, readonly])
 
-  let valueContainerClassName = 'gfb-input__value-container'
-  if (!inline) {
-    valueContainerClassName = valueContainerClassName + '  gfb-value-multi-input-container'
+  let valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container'
+  if (inline) {
+    valueContainerClassName = valueContainerClassName + ' gfb-inline-values-container'
   }
   return (
     <div className='gfb-input-outer'>

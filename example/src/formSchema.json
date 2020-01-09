@@ -396,6 +396,7 @@
           "label": "Multi-Checkbox",
           "type": "multicheckbox",
           "required": true,
+          "inline": true,
           "keyword": {
             "category": "TASKS",
             "options": [{
@@ -434,8 +435,8 @@
           "name": "Detail/Summary",
           "label": "Detail/Summary",
           "type": "radio",
-          "boxed": true,
           "required": true,
+          "inline": true,
           "keyword": {
             "options": [{
               "label": "Detail Only",

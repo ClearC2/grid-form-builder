@@ -210,6 +210,10 @@ div.gfb-value-multi-input-container {
   height: calc(100% + 1px);
 }
 
+div.gfb-input__control > div.gfb-value-multi-input-container.gfb-inline-values-container {
+  flex-direction: row;
+}
+
 div.gfb-multi-input-input {
   border-bottom: 1px solid #b3b3b3;
   padding-left: 5px !important;
