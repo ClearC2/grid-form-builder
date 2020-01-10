@@ -1,3 +1,10 @@
+## [2.14.1](https://github.com/ClearC2/grid-form-builder/compare/v2.14.0...v2.14.1) (2020-01-10)
+
+
+### Bug Fixes
+
+* **condTable:** typo ([ae05330](https://github.com/ClearC2/grid-form-builder/commit/ae05330))
+
 # [2.14.0](https://github.com/ClearC2/grid-form-builder/compare/v2.13.2...v2.14.0) (2020-01-10)
 
 
