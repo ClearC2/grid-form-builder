@@ -1,8 +1,6 @@
 import Colorpicker from './ColorPicker'
 import Conditionalinput from './Conditionalinput'
 import Currency from './Currency'
-import Date from './Date'
-import Datetime from './Datetime'
 import Email from './Email'
 import Header from './Header'
 import Icon from './Icon'
@@ -20,8 +18,6 @@ let FormComponents = {
   Colorpicker,
   Conditionalinput,
   Currency,
-  Date,
-  Datetime,
   Email,
   Header,
   Icon,

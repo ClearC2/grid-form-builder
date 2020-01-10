@@ -57,6 +57,7 @@ const DateInput = props => {
               tabIndex={tabIndex}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
+              autoComplete='off'
             />
             {showPicker && (
               <DatePicker
