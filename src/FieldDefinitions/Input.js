@@ -87,8 +87,8 @@ class Input extends Component {
       autoComplete,
       LinkIcon
     } = this.props
-    const {name = null, required = false, onKeyDown = () => null, inputType, link} = config
-    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
+    const {name = null, required = false, onKeyDown = () => null, link, type} = config
+    let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, inputType} = config
     containerStyle = typeof containerStyle === 'string' ? JSON.parse(containerStyle) : containerStyle
     labelStyle = typeof labelStyle === 'string' ? JSON.parse(labelStyle) : labelStyle
     style = typeof style === 'string' ? JSON.parse(style) : style
@@ -100,6 +100,9 @@ class Input extends Component {
     let {readonly = false, disabled = false, placeholder = ''} = config
     disabled = disabled || readonly
     const linkIconStyle = (link && typeof link.style === 'object') ? link.style : {}
+    if (typeof type === 'string' && type.toLowerCase() === 'time') {
+      inputType = 'time'
+    }
 
     placeholder = warn ? '* This Field Is Required' : placeholder
     const className = warn ? 'warn-required' : ''
