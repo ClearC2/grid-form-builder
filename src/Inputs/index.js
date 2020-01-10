@@ -9,6 +9,7 @@ import Listselect from './Listselect'
 import Checkbox from './Checkbox'
 import Multicheckbox from './Multicheckbox'
 import Radio from './Radio'
+import {Datetime, Date} from './Date'
 
 let FormComponents = {
   Input,
@@ -19,7 +20,9 @@ let FormComponents = {
   Listselect,
   Checkbox,
   Multicheckbox,
-  Radio
+  Radio,
+  Datetime,
+  Date
 }
 
 export function initCustomFormComponents (defs = {}) {
