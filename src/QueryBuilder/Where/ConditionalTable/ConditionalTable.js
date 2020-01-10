@@ -414,7 +414,7 @@ export default class ConditionalTable extends Component {
                       width: '100%'
                     }}
                   >
-                    {...extraFooters}
+                    {extraFooters}
                     {this.props.enableResetButton && <button
                       className={this.props.primaryButtonClass || 'btn btn-primary pull-right'}
                       style={{marginRight: '10px', marginBottom: '10px'}}
