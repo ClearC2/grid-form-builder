@@ -1,3 +1,10 @@
+# [2.15.0](https://github.com/ClearC2/grid-form-builder/compare/v2.14.1...v2.15.0) (2020-01-10)
+
+
+### Features
+
+* **time:** if input type is time and it is on mobile, make input type input with type of time ([c7b8ac8](https://github.com/ClearC2/grid-form-builder/commit/c7b8ac8))
+
 ## [2.14.1](https://github.com/ClearC2/grid-form-builder/compare/v2.14.0...v2.14.1) (2020-01-10)
 
 
