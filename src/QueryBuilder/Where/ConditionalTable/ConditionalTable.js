@@ -11,6 +11,7 @@ export default class ConditionalTable extends Component {
     formValues: PropTypes.object.isRequired,
     onNextClick: PropTypes.func.isRequired,
     formSchema: PropTypes.object,
+    extraFooters: PropTypes.object,
     handleOnChange: PropTypes.func,
     title: PropTypes.string,
     primaryButtonClass: PropTypes.string,
@@ -364,7 +365,7 @@ export default class ConditionalTable extends Component {
         }
       })
     const {listOpen} = this.state
-
+    const extraFooters = this.props.extraFooters ? this.props.extraFooters : []
     return (
       <div className='table-responsive' style={{width: '100%', maxHeight: '620px'}}>
         <div style={{width: '100%', maxHeight: '550px', overflowY: 'auto'}}>
@@ -413,6 +414,7 @@ export default class ConditionalTable extends Component {
                       width: '100%'
                     }}
                   >
+                    {...extraFooters}
                     {this.props.enableResetButton && <button
                       className={this.props.primaryButtonClass || 'btn btn-primary pull-right'}
                       style={{marginRight: '10px', marginBottom: '10px'}}
