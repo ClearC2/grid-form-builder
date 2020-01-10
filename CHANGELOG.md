@@ -1,3 +1,10 @@
+# [2.14.0](https://github.com/ClearC2/grid-form-builder/compare/v2.13.2...v2.14.0) (2020-01-10)
+
+
+### Features
+
+* **condTable:** allow extra footers to be passed in ([5f70279](https://github.com/ClearC2/grid-form-builder/commit/5f70279))
+
 ## [2.13.2](https://github.com/ClearC2/grid-form-builder/compare/v2.13.1...v2.13.2) (2020-01-08)
 
 
