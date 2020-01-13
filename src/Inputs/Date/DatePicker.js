@@ -56,6 +56,11 @@ const DatePicker = props => {
               if ($calendar) {
                 $calendar.hide()
                 $portal.addClass('calendar-hidden')
+                const direction = determinePickerOpenDirection()
+                if (direction === 'up') {
+                  const top = +$portal.css('top').replace('px', '') || 0
+                  $portal.css('top', top + 277)
+                }
               }
             }
           }

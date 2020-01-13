@@ -415,7 +415,7 @@
 }
 
 .daterangepicker.drop-up.calendar-hidden {
-    transform: translateY(277px);
+    /*transform: translateY(277px);*/
 }
 
 .daterangepicker.calendar-hidden > .drp-calendar > .calendar-time {
