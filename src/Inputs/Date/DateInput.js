@@ -25,10 +25,19 @@ const DateInput = props => {
   const [inputValue, changeInputValue] = useState('')
   const elementId = useRef(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
   const [showPicker, changeShowPicker] = useState(false)
+  const [inputFormat, setInputFormat] = useState()
 
   useEffect(() => {
     changeInputValue(value)
   }, [value])
+
+  useEffect(() => {
+    let inputFormat
+    if (type === 'time' || (!showCalendar && timePicker)) inputFormat = format || timeFormat
+    else if (type === 'date') inputFormat = format || dateFormat
+    else inputFormat = format || dateTimeFormat
+    setInputFormat(inputFormat)
+  }, [dateFormat, dateTimeFormat, format, showCalendar, timeFormat, timePicker, type])
 
   const handleOnInputChange = useCallback(e => {
     const {value: newValue} = e.target
@@ -42,11 +51,8 @@ const DateInput = props => {
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled) className = className + ' gfb-disabled-input'
+
   let startDate
-  let inputFormat
-  if (type === 'time' || (!showCalendar && timePicker)) inputFormat = format || timeFormat
-  else if (type === 'date') inputFormat = format || dateFormat
-  else inputFormat = format || dateTimeFormat
   if (inputValue) {
     const date = moment(inputValue, inputFormat)
     if (date.isValid()) startDate = date
@@ -73,7 +79,6 @@ const DateInput = props => {
               <DatePicker
                 elementId={elementId.current}
                 handleOnChange={onChange}
-                dateFormat={dateFormat}
                 changeShowPicker={changeShowPicker}
                 name={name}
                 timePicker={timePicker}
