@@ -10,6 +10,7 @@ import Checkbox from './Checkbox'
 import Multicheckbox from './Multicheckbox'
 import Radio from './Radio'
 import {Date, Datetime, Time} from './Date'
+import ColorInput from './Colorpicker'
 
 let FormComponents = {
   Input,
@@ -23,7 +24,8 @@ let FormComponents = {
   Radio,
   Datetime,
   Date,
-  Time
+  Time,
+  Colorpicker: ColorInput
 }
 
 export function initCustomFormComponents (defs = {}) {

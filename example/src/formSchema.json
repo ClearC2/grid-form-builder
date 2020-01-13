@@ -719,8 +719,9 @@
           "static": false
         },
         "config": {
-          "name": "inputtest",
-          "label": "Input"
+          "name": "colorpickertest",
+          "label": "Color Picker",
+          "type": "colorpicker"
         }
       }, {
         "type": "field",
