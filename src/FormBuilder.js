@@ -50,7 +50,10 @@ const FormBuilder = (props) => {
     rglAutoSize = true,
     rglStyle,
     verticalCompact = false,
-    compactType
+    compactType,
+    dateFormat,
+    dateTimeFormat,
+    timeFormat
   } = props
   const [grid, updateGrid] = useState({layout: List(), elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
@@ -192,6 +195,9 @@ const FormBuilder = (props) => {
               index={i}
               isActive={isActive}
               removeSelf={removeSelf}
+              dateFormat={dateFormat}
+              dateTimeFormat={dateTimeFormat}
+              timeFormat={timeFormat}
             />
           </div>
         )
@@ -349,7 +355,10 @@ FormBuilder.propTypes = {
   rglAutoSize: PropTypes.bool,
   rglStyle: PropTypes.object,
   verticalCompact: PropTypes.bool,
-  compactType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
+  compactType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  dateFormat: PropTypes.string,
+  dateTimeFormat: PropTypes.string,
+  timeFormat: PropTypes.string
 }
 
 FormBuilder.defaultProps = {
@@ -374,7 +383,10 @@ FormBuilder.defaultProps = {
   handleRTEImageClick: () => null,
   handleLinkClick: () => null,
   draggable: false,
-  interactive: true
+  interactive: true,
+  dateFormat: 'M/D/YYYY',
+  dateTimeFormat: 'M/D/YYYY h:mm a',
+  timeFormat: 'h:mm a'
 }
 
 FormBuilder.count = 1
@@ -407,7 +419,10 @@ export default class FormValidator extends Component {
     rglAutoSize: PropTypes.bool,
     rglStyle: PropTypes.object,
     verticalCompact: PropTypes.bool,
-    compactType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
+    compactType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+    dateFormat: PropTypes.string,
+    dateTimeFormat: PropTypes.string,
+    timeFormat: PropTypes.string
   }
 
   static defaultProps = {

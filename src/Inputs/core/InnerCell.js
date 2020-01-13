@@ -23,7 +23,10 @@ const InnerCell = props => {
     handleCascadeKeywordClick,
     handleOnChange,
     requiredWarning,
-    tabIndex
+    tabIndex,
+    dateFormat,
+    dateTimeFormat,
+    timeFormat
   } = props
 
   const {config} = field
@@ -101,6 +104,9 @@ const InnerCell = props => {
         requiredWarning={requiredWarning}
         tabIndex={tabIndex}
         draggable={draggable}
+        dateFormat={dateFormat}
+        dateTimeFormat={dateTimeFormat}
+        timeFormat={timeFormat}
       >
         <Type />
       </InputContainer>
@@ -138,5 +144,8 @@ InnerCell.propTypes = {
   handleDragDropOnInput: PropTypes.func,
   handleOnChange: PropTypes.func,
   requiredWarning: PropTypes.bool,
-  tabIndex: PropTypes.number
+  tabIndex: PropTypes.number,
+  dateFormat: PropTypes.string,
+  dateTimeFormat: PropTypes.string,
+  timeFormat: PropTypes.string
 }

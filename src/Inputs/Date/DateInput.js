@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from './DatePicker'
+import moment from 'moment'
 
 const DateInput = props => {
   const {
@@ -12,10 +13,15 @@ const DateInput = props => {
     autofocus,
     placeholder,
     tabIndex,
-    dateFormat = 'M/D/YYYY hh:mm a',
+    dateFormat,
+    dateTimeFormat,
+    timeFormat,
     timePicker = false,
-    showCalendar = true
+    showCalendar = true,
+    format
   } = props
+  let {type = 'date'} = props
+  type = type.toLowerCase()
   const [inputValue, changeInputValue] = useState('')
   const elementId = useRef(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
   const [showPicker, changeShowPicker] = useState(false)
@@ -36,6 +42,15 @@ const DateInput = props => {
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled) className = className + ' gfb-disabled-input'
+  let startDate
+  let inputFormat
+  if (type === 'time' || (!showCalendar && timePicker)) inputFormat = format || timeFormat
+  else if (type === 'date') inputFormat = format || dateFormat
+  else inputFormat = format || dateTimeFormat
+  if (inputValue) {
+    const date = moment(inputValue, inputFormat)
+    if (date.isValid()) startDate = date
+  }
   return (
     <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
@@ -63,6 +78,8 @@ const DateInput = props => {
                 name={name}
                 timePicker={timePicker}
                 showCalendar={showCalendar}
+                startDate={startDate}
+                format={inputFormat}
               />
             )}
           </div>
@@ -85,6 +102,10 @@ DateInput.propTypes = {
   placeholder: PropTypes.string,
   tabIndex: PropTypes.number,
   dateFormat: PropTypes.string,
+  dateTimeFormat: PropTypes.string,
+  timeFormat: PropTypes.string,
   timePicker: PropTypes.bool,
-  showCalendar: PropTypes.bool
+  showCalendar: PropTypes.bool,
+  type: PropTypes.string,
+  format: PropTypes.string
 }

@@ -3,7 +3,19 @@ import PropTypes from 'prop-types'
 import {Map} from 'immutable'
 
 const InputContainer = props => {
-  const {children, config, values, value, onChange, requiredWarning, tabIndex, draggable} = props
+  const {
+    children,
+    config,
+    values,
+    value,
+    onChange,
+    requiredWarning,
+    tabIndex,
+    draggable,
+    dateFormat,
+    dateTimeFormat,
+    timeFormat
+  } = props
   const {name, ...other} = config
   return (
     <div className='gfb-inner-cell-input'>
@@ -15,7 +27,10 @@ const InputContainer = props => {
         name,
         values,
         value,
-        onChange
+        onChange,
+        dateFormat,
+        dateTimeFormat,
+        timeFormat
       })}
     </div>
   )
@@ -31,5 +46,8 @@ InputContainer.propTypes = {
   onChange: PropTypes.func,
   requiredWarning: PropTypes.bool,
   tabIndex: PropTypes.number,
-  draggable: PropTypes.bool
+  draggable: PropTypes.bool,
+  dateFormat: PropTypes.string,
+  dateTimeFormat: PropTypes.string,
+  timeFormat: PropTypes.string
 }

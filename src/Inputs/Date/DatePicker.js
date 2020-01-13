@@ -3,9 +3,19 @@ import PropTypes from 'prop-types'
 import 'daterangepicker'
 import '../../../styles/daterangepicker.css'
 import $ from 'jquery'
+import moment from 'moment'
 
 const DatePicker = props => {
-  const {elementId, handleOnChange, dateFormat, changeShowPicker, name, timePicker, showCalendar} = props
+  const {
+    elementId,
+    handleOnChange,
+    changeShowPicker,
+    name,
+    timePicker,
+    showCalendar,
+    startDate,
+    format
+  } = props
 
   const determinePickerOpenDirection = useMemo(() => {
     const $input = $(`#${elementId}`)[0]
@@ -32,14 +42,15 @@ const DatePicker = props => {
           showDropdowns: true,
           autoUpdateInput: false,
           timePicker,
-          drops: determinePickerOpenDirection()
+          drops: determinePickerOpenDirection(),
+          startDate
         },
         date => {
           if (date && date.isValid && date.isValid()) {
             handleOnChange({
               target: {
                 name,
-                value: date.format(dateFormat)
+                value: date.format(format)
               }
             })
           }
@@ -80,7 +91,7 @@ const DatePicker = props => {
     determinePickerOpenDirection,
     handleOnChange,
     name,
-    dateFormat,
+    format,
     changeShowPicker,
     showCalendar
   ])
@@ -102,9 +113,10 @@ export default DatePicker
 
 DatePicker.propTypes = {
   elementId: PropTypes.string,
-  dateFormat: PropTypes.string,
   handleOnChange: PropTypes.func,
   changeShowPicker: PropTypes.func,
   name: PropTypes.string,
-  timePicker: PropTypes.bool
+  timePicker: PropTypes.bool,
+  startDate: PropTypes.instanceOf(moment),
+  format: PropTypes.string
 }
