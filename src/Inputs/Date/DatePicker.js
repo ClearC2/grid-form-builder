@@ -5,7 +5,7 @@ import '../../../styles/daterangepicker.css'
 import $ from 'jquery'
 
 const DatePicker = props => {
-  const {elementId, handleOnChange, dateFormat, changeShowPicker, name, timePicker} = props
+  const {elementId, handleOnChange, dateFormat, changeShowPicker, name, timePicker, showCalendar} = props
 
   const determinePickerOpenDirection = useMemo(() => {
     const $input = $(`#${elementId}`)[0]
@@ -23,37 +23,72 @@ const DatePicker = props => {
   }, [elementId])
 
   const initializePicker = useMemo(() => {
-    const $input = $(`#${elementId}`)
-    return () => $input.daterangepicker(
-      {
-        singleDatePicker: true,
-        showDropdowns: true,
-        autoUpdateInput: false,
-        timePicker,
-        drops: determinePickerOpenDirection()
-      },
-      date => {
-        if (date && date.isValid && date.isValid()) {
-          handleOnChange({
-            target: {
-              name,
-              value: date.format(dateFormat)
-            }
-          })
-        }
-        $input.on(
-          'hide.daterangepicker',
-          () => {
-            changeShowPicker(false)
+    return () => {
+      const $input = $(`#${elementId}`)
+
+      $input.daterangepicker(
+        {
+          singleDatePicker: true,
+          showDropdowns: true,
+          autoUpdateInput: false,
+          timePicker,
+          drops: determinePickerOpenDirection()
+        },
+        date => {
+          if (date && date.isValid && date.isValid()) {
+            handleOnChange({
+              target: {
+                name,
+                value: date.format(dateFormat)
+              }
+            })
           }
-        )
-      }
-    )
-  }, [elementId, timePicker, determinePickerOpenDirection, handleOnChange, name, dateFormat, changeShowPicker])
+        }
+      )
+
+      $input.on(
+        'show.daterangepicker',
+        () => {
+          if (!showCalendar) {
+            const $portal = $('.daterangepicker')
+            if ($portal) {
+              const $calendar = $portal.find('.calendar-table')
+              if ($calendar) {
+                $calendar.hide()
+                $portal.addClass('calendar-hidden')
+              }
+            }
+          }
+        }
+      )
+
+      $input.on(
+        'hide.daterangepicker',
+        () => {
+          changeShowPicker(false)
+        }
+      )
+    }
+  }, [
+    elementId,
+    timePicker,
+    determinePickerOpenDirection,
+    handleOnChange,
+    name,
+    dateFormat,
+    changeShowPicker,
+    showCalendar
+  ])
 
   useEffect(() => {
     initializePicker()
-  }, [initializePicker])
+    return () => {
+      const $portal = $('.daterangepicker')
+      if ($portal) $portal.remove()
+      const $input = $(`#${elementId}`)
+      if ($input) $input.off()
+    }
+  }, [elementId, initializePicker])
 
   return null
 }

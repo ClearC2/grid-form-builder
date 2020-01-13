@@ -13,7 +13,8 @@ const DateInput = props => {
     placeholder,
     tabIndex,
     dateFormat = 'M/D/YYYY hh:mm a',
-    timePicker = false
+    timePicker = false,
+    showCalendar = true
   } = props
   const [inputValue, changeInputValue] = useState('')
   const elementId = useRef(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
@@ -33,13 +34,8 @@ const DateInput = props => {
     changeShowPicker(true)
   }, [changeShowPicker])
 
-  const handleOnBlur = useCallback(() => {
-    changeShowPicker(false)
-  }, [changeShowPicker])
-
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled) className = className + ' gfb-disabled-input'
-
   return (
     <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
@@ -56,7 +52,6 @@ const DateInput = props => {
               placeholder={placeholder}
               tabIndex={tabIndex}
               onFocus={handleOnFocus}
-              onBlur={handleOnBlur}
               autoComplete='off'
             />
             {showPicker && (
@@ -67,6 +62,7 @@ const DateInput = props => {
                 changeShowPicker={changeShowPicker}
                 name={name}
                 timePicker={timePicker}
+                showCalendar={showCalendar}
               />
             )}
           </div>
@@ -89,5 +85,6 @@ DateInput.propTypes = {
   placeholder: PropTypes.string,
   tabIndex: PropTypes.number,
   dateFormat: PropTypes.string,
-  timePicker: PropTypes.bool
+  timePicker: PropTypes.bool,
+  showCalendar: PropTypes.bool
 }
