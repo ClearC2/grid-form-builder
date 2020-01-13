@@ -10,7 +10,6 @@ import Number from './Number'
 import Percentage from './Percentage'
 import Phone from './Phone'
 import Richtextareaquill from './Richtextareaquill'
-import Time from './Time/Time'
 import Total from './Total'
 import {uppercaseFirstLetter} from '../utils'
 
@@ -27,7 +26,6 @@ let FormComponents = {
   Percentage,
   Phone,
   Richtextareaquill,
-  Time,
   Total
 }
 
