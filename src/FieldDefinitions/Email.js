@@ -210,7 +210,7 @@ class Email extends Component {
             >
               {label}
             </strong>
-            <span style={styles.placeholder}>{this.generateValidationError(value)}</span>
+            <span style={styles.placeholder}>{!readonly && this.generateValidationError(value)}</span>
             {!!cascadingKeyword && !!CascadeIcon && (
               <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />
             )}

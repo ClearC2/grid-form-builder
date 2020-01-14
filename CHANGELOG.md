@@ -1,3 +1,52 @@
+# [2.15.0](https://github.com/ClearC2/grid-form-builder/compare/v2.14.1...v2.15.0) (2020-01-10)
+
+
+### Features
+
+* **time:** if input type is time and it is on mobile, make input type input with type of time ([c7b8ac8](https://github.com/ClearC2/grid-form-builder/commit/c7b8ac8))
+
+## [2.14.1](https://github.com/ClearC2/grid-form-builder/compare/v2.14.0...v2.14.1) (2020-01-10)
+
+
+### Bug Fixes
+
+* **condTable:** typo ([ae05330](https://github.com/ClearC2/grid-form-builder/commit/ae05330))
+
+# [2.14.0](https://github.com/ClearC2/grid-form-builder/compare/v2.13.2...v2.14.0) (2020-01-10)
+
+
+### Features
+
+* **condTable:** allow extra footers to be passed in ([5f70279](https://github.com/ClearC2/grid-form-builder/commit/5f70279))
+
+## [2.13.2](https://github.com/ClearC2/grid-form-builder/compare/v2.13.1...v2.13.2) (2020-01-08)
+
+
+### Bug Fixes
+
+* **multi-select:** pass empty value back when all values removed ([06a0536](https://github.com/ClearC2/grid-form-builder/commit/06a0536))
+
+## [2.13.1](https://github.com/ClearC2/grid-form-builder/compare/v2.13.0...v2.13.1) (2020-01-07)
+
+
+### Bug Fixes
+
+* **phone:** format phone number in disabled inputs ([#134](https://github.com/ClearC2/grid-form-builder/issues/134)) ([45eea62](https://github.com/ClearC2/grid-form-builder/commit/45eea62))
+
+# [2.13.0](https://github.com/ClearC2/grid-form-builder/compare/v2.12.0...v2.13.0) (2020-01-03)
+
+
+### Features
+
+* **autocomplete-default-off:** make autocomplete by default off on all inputs ([#132](https://github.com/ClearC2/grid-form-builder/issues/132)) ([4369dd9](https://github.com/ClearC2/grid-form-builder/commit/4369dd9))
+
+# [2.12.0](https://github.com/ClearC2/grid-form-builder/compare/v2.11.5...v2.12.0) (2020-01-03)
+
+
+### Features
+
+* **validation:** forms get forced into validation warn mode if the validation method is ever ran ([e802450](https://github.com/ClearC2/grid-form-builder/commit/e802450))
+
 ## [2.11.5](https://github.com/ClearC2/grid-form-builder/compare/v2.11.4...v2.11.5) (2019-12-13)
 
 

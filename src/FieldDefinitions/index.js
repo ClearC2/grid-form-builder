@@ -11,7 +11,7 @@ import Percentage from './Percentage'
 import Phone from './Phone'
 import Richtextareaquill from './Richtextareaquill'
 import Total from './Total'
-import {uppercaseFirstLetter} from '../utils'
+import {uppercaseFirstLetter, isMobile} from '../utils'
 
 let FormComponents = {
   Colorpicker,
@@ -37,6 +37,9 @@ export function initCustomFormComponents (defs = {}) {
 export const mapInputType = (type) => {
   if (typeof type !== 'string') return null
   type = uppercaseFirstLetter(type)
+  if (isMobile && type === 'Time') {
+    type = 'Input'
+  }
   type = FormComponents[type] || null
   return type
 }

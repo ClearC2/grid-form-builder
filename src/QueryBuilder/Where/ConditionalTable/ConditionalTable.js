@@ -11,6 +11,7 @@ export default class ConditionalTable extends Component {
     formValues: PropTypes.object.isRequired,
     onNextClick: PropTypes.func.isRequired,
     formSchema: PropTypes.object,
+    extraFooters: PropTypes.object,
     handleOnChange: PropTypes.func,
     title: PropTypes.string,
     primaryButtonClass: PropTypes.string,
@@ -50,7 +51,7 @@ export default class ConditionalTable extends Component {
     enableListToggle: false
   }
 
-  UNSAFE_componentWillReceiveProps (props) {
+  UNSAFE_componentWillReceiveProps (props) { // eslint-disable-line
     if (this.props.formValues !== props.formValues) {
       if (this.props.onQueryChange) {
         this.props.onQueryChange(this.buildRequest(props.formValues))
@@ -364,7 +365,7 @@ export default class ConditionalTable extends Component {
         }
       })
     const {listOpen} = this.state
-
+    const extraFooters = this.props.extraFooters ? this.props.extraFooters : []
     return (
       <div className='table-responsive' style={{width: '100%', maxHeight: '620px'}}>
         <div style={{width: '100%', maxHeight: '550px', overflowY: 'auto'}}>
@@ -429,6 +430,7 @@ export default class ConditionalTable extends Component {
                     >
                       Next
                     </button>}
+                    {extraFooters}
                   </div> : null}
                 </td>
               </tr>
