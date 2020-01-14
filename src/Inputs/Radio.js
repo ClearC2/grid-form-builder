@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react'
 import PropTypes from 'prop-types'
 
-const Multicheckbox = props => {
+const Radio = props => {
   const {name, onChange, readonly, disabled, autofocus, keyword, inline, value} = props
   const {options = []} = keyword
 
@@ -57,9 +57,9 @@ const Multicheckbox = props => {
   )
 }
 
-export default Multicheckbox
+export default Radio
 
-Multicheckbox.propTypes = {
+Radio.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
