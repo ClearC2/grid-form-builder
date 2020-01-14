@@ -1,4 +1,4 @@
-import React, {useCallback, useRef} from 'react'
+import React, {useCallback, useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
 import ReactQuill from 'react-quill'
 import Toolbar from './Toolbar'
@@ -14,7 +14,8 @@ const Richtextarea = props => {
     autofocus,
     placeholder,
     tabIndex,
-    handleRTEImageClick
+    handleRTEImageClick,
+    rteImageUrl
   } = props
   const elementId = useRef(
     'gfb-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
@@ -64,6 +65,15 @@ const Richtextarea = props => {
     }
   }, [onChange, name])
 
+  useEffect(() => {
+    if (rteImageUrl && QuillRef.current) { // we may have to add a more liberal check if this causes multiple images to be added - JRA 01/14/2020
+      const input = QuillRef.current.getEditor()
+      const cursor = input.getSelection(true) ? input.getSelection(true).index : 0
+      input.insertEmbed(cursor, 'image', rteImageUrl)
+      input.setSelection(cursor + 1)
+    }
+  }, [rteImageUrl])
+
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled) className = className + ' gfb-disabled-input'
   return (
@@ -107,5 +117,6 @@ Richtextarea.propTypes = {
   autofocus: PropTypes.bool,
   placeholder: PropTypes.string,
   tabIndex: PropTypes.number,
-  handleRTEImageClick: PropTypes.func
+  handleRTEImageClick: PropTypes.func,
+  rteImageUrl: PropTypes.string
 }

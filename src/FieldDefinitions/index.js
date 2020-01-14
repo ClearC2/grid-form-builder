@@ -8,7 +8,6 @@ import Metadata from './Metadata'
 import Number from './Number'
 import Percentage from './Percentage'
 import Phone from './Phone'
-import Richtextareaquill from './Richtextareaquill'
 import Total from './Total'
 import {uppercaseFirstLetter, isMobile} from '../utils'
 
@@ -23,7 +22,6 @@ let FormComponents = {
   Number,
   Percentage,
   Phone,
-  Richtextareaquill,
   Total
 }
 
