@@ -125,7 +125,6 @@ export default class Example extends Component {
   }
 
   handleOnDimensionChange = schema => {
-    console.log(schema)
     this.setState(() => ({formSchema: {form: fromJS(schema)}}))
   }
 

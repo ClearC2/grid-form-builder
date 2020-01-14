@@ -167,8 +167,7 @@
         "config": {
           "name": "rich-text-input-1",
           "label": "Rich Text Input",
-          "type": "richtextareaquill",
-          "rteImageUrl": "http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/RadioInformation1_IOPMobile.png"
+          "type": "richtextareaquill"
         }
       }, {
         "type": "field",
@@ -183,8 +182,7 @@
         "config": {
           "name": "rich-text-input-2",
           "label": "Rich Text Input",
-          "type": "richtextareaquill",
-          "rteImageUrl": "http://demo.clearc2.com/c2attachments/c2crm/publiccollateral/BDRoutingTemplate-C2/Screen Shot 2018-09-11 at 12.51.44 PM (1).png"
+          "type": "richtextareaquill"
         }
       }, {
         "type": "field",
