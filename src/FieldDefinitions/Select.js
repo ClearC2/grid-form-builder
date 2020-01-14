@@ -29,7 +29,8 @@ export class Select extends Component {
     CascadeIcon: PropTypes.func,
     tabIndex: PropTypes.number,
     LinkIcon: PropTypes.func,
-    handleLinkClick: PropTypes.func
+    handleLinkClick: PropTypes.func,
+    interactive: PropTypes.bool
   }
 
   state = {
@@ -94,13 +95,16 @@ export class Select extends Component {
   }
 
   getValue = (value, options) => {
-    if (value) {
+    const {interactive} = this.props
+    if (value && interactive) {
       const keyMap = options.reduce((acc, cv) => {
         acc[cv.value] = cv.label
         return acc
       }, {})
 
       return {label: keyMap[value], value}
+    } else if (value && !interactive) {
+      return {label: value, value}
     }
   }
 
@@ -158,7 +162,8 @@ export class Select extends Component {
       cascadingKeyword,
       CascadeIcon,
       tabIndex,
-      LinkIcon
+      LinkIcon,
+      interactive
     } = this.props
     const {name = null, required = false, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}, keyword = {}} = config
@@ -226,6 +231,10 @@ export class Select extends Component {
         minHeight: '25px',
         minWidth: '200px',
         ...style
+      }),
+      singleValue: (base) => ({
+        ...base,
+        color: !interactive ? 'green' : 'inherit'
       })
     }
 
