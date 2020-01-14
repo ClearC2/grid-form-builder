@@ -282,17 +282,6 @@ export default class ConditionalTable extends Component {
     return type
   }
 
-  getFieldType = (fieldName) => {
-    let type = ''
-    this.props.formSchema.jsonschema.layout.forEach((field) => {
-      if (field.config.name === fieldName) {
-        type = field.config.type
-        return true
-      }
-    })
-    return type
-  }
-
   buildTableRow = (key, value) => {
     if (value && this.state.noValueConditions.has(value.condition)) {
       return (

@@ -349,7 +349,7 @@ export default class Conditionalinput extends Component {
 
   calculateModalHeight = () => {
     const titleAndConditionHeight = 145
-    const singleFieldHight = this.calculateFieldHeight(this.inputType()) * 30
+    const singleFieldHight = this.calculateFieldHeight(this.inputType()) * 35
     let nFields = SINGLE_FIELD_INPUTS.has(this.inputType()) ? 1 : this.nFieldsWithValues() + 1
     nFields = Math.min(nFields, this.maxFieldCount())
     const footerHeight = 50
@@ -440,6 +440,7 @@ export default class Conditionalinput extends Component {
           readonly: false,
           name: `${this.parentFieldName()}-0`,
           label: `${this.parentLabel()}`,
+          interactive: true,
           type: DATES.has(this.inputType()) && NUMERICAL_CONDITIONS.has(this.props.formValues.getIn([this.parentFieldName(), 'condition'], '')) ? 'number' : this.inputType()
         }
       })
@@ -457,6 +458,7 @@ export default class Conditionalinput extends Component {
         let newField = {
           type: 'field',
           dimensions: {x: 1, y: fieldCount + 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
+          interactive: true,
           config: {
             ...this.props.config,
             readonly: false,
@@ -720,6 +722,7 @@ export default class Conditionalinput extends Component {
                   conditionalFieldValues
                   handleOnChange={this.handleOnChange}
                   draggable={false}
+                  interactive
                 />
               </div>
 
