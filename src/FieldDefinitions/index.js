@@ -1,4 +1,3 @@
-import Colorpicker from './ColorPicker'
 import Conditionalinput from './Conditionalinput'
 import Currency from './Currency'
 import Email from './Email'
@@ -14,7 +13,6 @@ import Total from './Total'
 import {uppercaseFirstLetter, isMobile} from '../utils'
 
 let FormComponents = {
-  Colorpicker,
   Conditionalinput,
   Currency,
   Email,

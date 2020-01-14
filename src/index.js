@@ -6,6 +6,7 @@ export {default as Conditionalinput, CONDITIONS, TEXT_INPUTS} from './FieldDefin
 export {default as Typeahead} from './Inputs/Typeahead'
 export {default as Checkbox} from './Inputs/Checkbox'
 export {default as Currency} from './FieldDefinitions/Currency'
+export {default as Colorpicker} from './Inputs/Colorpicker'
 export {default as Date} from './Inputs/Date/Date'
 export {default as Datetime} from './Inputs/Date/Datetime'
 export {default as Email} from './FieldDefinitions/Email'
