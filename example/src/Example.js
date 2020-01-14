@@ -194,7 +194,7 @@ export default class Example extends Component {
           </div>
           <FormBuilder
             ref={ref => { this.exampleForm = ref }}
-            formSchema={schema.form}
+            formSchema={this.state.formSchema.form}
             formValues={this.state.formValues}
             handleOnChange={this.handleOnChange}
             onClick={this.handleOnClick}
