@@ -7,9 +7,9 @@
         "type": "field",
         "dimensions": {
           "w": 6,
-          "h": 1,
-          "x": 0,
-          "y": 0,
+          "h": 4,
+          "x": 6,
+          "y": 20,
           "moved": false,
           "static": false
         },
@@ -60,7 +60,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 2,
+          "y": 3,
           "moved": false,
           "static": false
         },
@@ -75,7 +75,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 4,
+          "y": 5,
           "moved": false,
           "static": false
         },
@@ -89,7 +89,7 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 6,
+          "x": 0,
           "y": 6,
           "moved": false,
           "static": false
@@ -105,7 +105,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 3,
+          "y": 4,
           "moved": false,
           "static": false
         },
@@ -120,7 +120,7 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 6,
+          "x": 0,
           "y": 5,
           "moved": false,
           "static": false
@@ -140,7 +140,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 10,
+          "y": 16,
           "moved": false,
           "static": false
         },
@@ -158,9 +158,9 @@
         "type": "field",
         "dimensions": {
           "w": 6,
-          "h": 3,
+          "h": 5,
           "x": 0,
-          "y": 4,
+          "y": 18,
           "moved": false,
           "static": false
         },
@@ -174,9 +174,9 @@
         "type": "field",
         "dimensions": {
           "w": 6,
-          "h": 1,
+          "h": 11,
           "x": 0,
-          "y": 8,
+          "y": 23,
           "moved": false,
           "static": false
         },
@@ -192,7 +192,7 @@
           "w": 6,
           "h": 1,
           "x": 0,
-          "y": 1,
+          "y": 3,
           "moved": false,
           "static": false
         },
@@ -207,7 +207,7 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 0,
+          "x": 6,
           "y": 2,
           "moved": false,
           "static": false
@@ -268,7 +268,7 @@
           "w": 6,
           "h": 1,
           "x": 0,
-          "y": 3,
+          "y": 7,
           "moved": false,
           "static": false
         },
@@ -284,8 +284,8 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 6,
-          "y": 9,
+          "x": 0,
+          "y": 8,
           "moved": false,
           "static": false
         },
@@ -304,7 +304,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 15,
+          "y": 18,
           "moved": false,
           "static": false
         },
@@ -322,8 +322,8 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 6,
-          "y": 17,
+          "x": 0,
+          "y": 14,
           "moved": false,
           "static": false
         },
@@ -341,8 +341,8 @@
         "dimensions": {
           "w": 6,
           "h": 3,
-          "x": 0,
-          "y": 10,
+          "x": 6,
+          "y": 7,
           "moved": false,
           "static": false
         },
@@ -387,7 +387,7 @@
           "w": 6,
           "h": 3,
           "x": 0,
-          "y": 17,
+          "y": 9,
           "moved": false,
           "static": false
         },
@@ -426,8 +426,8 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 0,
-          "y": 7,
+          "x": 6,
+          "y": 15,
           "moved": false,
           "static": false
         },
@@ -460,7 +460,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 11,
+          "y": 17,
           "moved": false,
           "static": false
         },
@@ -525,8 +525,8 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 6,
-          "y": 12,
+          "x": 0,
+          "y": 15,
           "moved": false,
           "static": false
         },
@@ -551,8 +551,8 @@
         "dimensions": {
           "w": 6,
           "h": 4,
-          "x": 0,
-          "y": 13,
+          "x": 6,
+          "y": 11,
           "moved": false,
           "static": false
         },
@@ -586,8 +586,8 @@
         "dimensions": {
           "w": 6,
           "h": 2,
-          "x": 6,
-          "y": 30,
+          "x": 0,
+          "y": 12,
           "moved": false,
           "static": false
         },
@@ -606,8 +606,8 @@
         "dimensions": {
           "w": 6,
           "h": 3,
-          "x": 6,
-          "y": 25,
+          "x": 0,
+          "y": 0,
           "moved": false,
           "static": false
         },
@@ -621,8 +621,8 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 6,
-          "y": 8,
+          "x": 0,
+          "y": 4,
           "moved": false,
           "static": false
         },
@@ -644,7 +644,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 7,
+          "y": 6,
           "moved": false,
           "static": false
         },
@@ -668,8 +668,8 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 6,
-          "y": 13,
+          "x": 0,
+          "y": 17,
           "moved": false,
           "static": false
         },
@@ -729,7 +729,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 14,
+          "y": 27,
           "moved": false,
           "static": false
         },
@@ -743,7 +743,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 18,
+          "y": 25,
           "moved": false,
           "static": false
         },
@@ -770,8 +770,8 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 0,
-          "y": 20,
+          "x": 6,
+          "y": 26,
           "moved": false,
           "static": false
         },
@@ -784,8 +784,8 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 0,
-          "y": 9,
+          "x": 6,
+          "y": 24,
           "moved": false,
           "static": false
         },
@@ -826,8 +826,8 @@
         "dimensions": {
           "w": 6,
           "h": 1,
-          "x": 6,
-          "y": 32,
+          "x": 0,
+          "y": 16,
           "moved": false,
           "static": false
         },
@@ -847,7 +847,7 @@
           "w": 6,
           "h": 1,
           "x": 6,
-          "y": 16,
+          "y": 10,
           "moved": false,
           "static": false
         },
