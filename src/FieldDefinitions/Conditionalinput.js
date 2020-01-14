@@ -32,6 +32,7 @@ const TYPEAHEAD_CONDITIONS = Set(['is equal to', 'is not equal to', 'is one of',
 const NUMERICAL_CONDITIONS = Set(['last (x) days', 'last (x) months', 'next (x) days', 'next (x) months'])
 export const TEXT_INPUTS = ['textarea', 'checkbox', 'radio']
 // export const LIST_INPUTS = []
+
 export const CONDITIONS = {
   'contains': {
     maxFields: 999,
@@ -349,7 +350,7 @@ export default class Conditionalinput extends Component {
 
   calculateModalHeight = () => {
     const titleAndConditionHeight = 145
-    const singleFieldHight = this.calculateFieldHeight(this.inputType()) * 30
+    const singleFieldHight = this.calculateFieldHeight(this.inputType()) * 35
     let nFields = SINGLE_FIELD_INPUTS.has(this.inputType()) ? 1 : this.nFieldsWithValues() + 1
     nFields = Math.min(nFields, this.maxFieldCount())
     const footerHeight = 50
@@ -425,6 +426,7 @@ export default class Conditionalinput extends Component {
         config: {
           name: this.parentFieldName(),
           type: 'header',
+          link: undefined,
           style: {lineHeight: '12px', fontSize: '12px'},
           label: `(${maxFieldCount} value${maxFieldCount === 1 ? '' : 's'} allowed)`
         }
@@ -436,10 +438,12 @@ export default class Conditionalinput extends Component {
         dimensions: {x: 1, y: 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
         config: {
           ...this.props.config,
+          link: undefined,
           autofocus: true,
           readonly: false,
           name: `${this.parentFieldName()}-0`,
           label: `${this.parentLabel()}`,
+          interactive: true,
           type: DATES.has(this.inputType()) && NUMERICAL_CONDITIONS.has(this.props.formValues.getIn([this.parentFieldName(), 'condition'], '')) ? 'number' : this.inputType()
         }
       })
@@ -457,8 +461,10 @@ export default class Conditionalinput extends Component {
         let newField = {
           type: 'field',
           dimensions: {x: 1, y: fieldCount + 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
+          interactive: true,
           config: {
             ...this.props.config,
+            link: undefined,
             readonly: false,
             name: `${this.parentFieldName()}-${fieldCount}`,
             label: label,
@@ -720,9 +726,9 @@ export default class Conditionalinput extends Component {
                   conditionalFieldValues
                   handleOnChange={this.handleOnChange}
                   draggable={false}
+                  interactive
                 />
               </div>
-
             </div>
             <div
               style={{
