@@ -26,7 +26,8 @@ const InnerCell = props => {
     tabIndex,
     dateFormat,
     dateTimeFormat,
-    timeFormat
+    timeFormat,
+    handleRTEImageClick
   } = props
 
   const {config} = field
@@ -107,6 +108,7 @@ const InnerCell = props => {
         dateFormat={dateFormat}
         dateTimeFormat={dateTimeFormat}
         timeFormat={timeFormat}
+        handleRTEImageClick={handleRTEImageClick}
       >
         <Type />
       </InputContainer>
@@ -147,5 +149,6 @@ InnerCell.propTypes = {
   tabIndex: PropTypes.number,
   dateFormat: PropTypes.string,
   dateTimeFormat: PropTypes.string,
-  timeFormat: PropTypes.string
+  timeFormat: PropTypes.string,
+  handleRTEImageClick: PropTypes.func
 }

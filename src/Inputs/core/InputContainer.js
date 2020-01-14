@@ -14,7 +14,8 @@ const InputContainer = props => {
     draggable,
     dateFormat,
     dateTimeFormat,
-    timeFormat
+    timeFormat,
+    handleRTEImageClick
   } = props
   const {name, ...other} = config
   return (
@@ -30,7 +31,8 @@ const InputContainer = props => {
         onChange,
         dateFormat,
         dateTimeFormat,
-        timeFormat
+        timeFormat,
+        handleRTEImageClick
       })}
     </div>
   )
@@ -49,5 +51,6 @@ InputContainer.propTypes = {
   draggable: PropTypes.bool,
   dateFormat: PropTypes.string,
   dateTimeFormat: PropTypes.string,
-  timeFormat: PropTypes.string
+  timeFormat: PropTypes.string,
+  handleRTEImageClick: PropTypes.func
 }
