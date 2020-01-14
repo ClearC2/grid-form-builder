@@ -1,3 +1,10 @@
+# [2.16.0](https://github.com/ClearC2/grid-form-builder/compare/v2.15.2...v2.16.0) (2020-01-14)
+
+
+### Features
+
+* **trigger:** a release ([38868a1](https://github.com/ClearC2/grid-form-builder/commit/38868a1))
+
 ## [2.15.2](https://github.com/ClearC2/grid-form-builder/compare/v2.15.1...v2.15.2) (2020-01-14)
 
 
