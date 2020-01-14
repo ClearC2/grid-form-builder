@@ -42,7 +42,8 @@ export class Typeahead extends Component {
     tabIndex: PropTypes.number,
     taMaxHeight: PropTypes.string,
     LinkIcon: PropTypes.func,
-    handleLinkClick: PropTypes.func
+    handleLinkClick: PropTypes.func,
+    interactive: PropTypes.bool
   }
 
   static defaultProps = {
@@ -434,7 +435,8 @@ export class Typeahead extends Component {
       CascadeIcon,
       tabIndex,
       taMaxHeight = '29px',
-      LinkIcon
+      LinkIcon,
+      interactive
     } = this.props
     const {inputValue, menuIsOpen, menuPlacement} = this.state
     const {name = null, required = false, multi = false, onKeyDown = () => null, allowcreate = false, link} = config
@@ -524,7 +526,8 @@ export class Typeahead extends Component {
       }),
       input: (base) => ({
         ...base,
-        opacity: 3
+        opacity: 3,
+        color: !interactive ? 'green' : 'inherit'
       })
     }
 

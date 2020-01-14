@@ -23,7 +23,8 @@ export class Textarea extends Component {
     CascadeIcon: PropTypes.func,
     tabIndex: PropTypes.number,
     LinkIcon: PropTypes.func,
-    handleLinkClick: PropTypes.func
+    handleLinkClick: PropTypes.func,
+    interactive: PropTypes.bool
   }
 
   componentDidUpdate = p => {
@@ -81,7 +82,8 @@ export class Textarea extends Component {
       cascadingKeyword,
       CascadeIcon,
       tabIndex,
-      LinkIcon
+      LinkIcon,
+      interactive
     } = this.props
     const {name = null, rows = 4, required = false, onKeyDown = () => null, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
@@ -143,6 +145,7 @@ export class Textarea extends Component {
         borderRight: warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         minWidth: 90,
         marginTop: inline ? 25 : 0,
+        color: !interactive ? 'green' : 'inherit',
         ...style
       },
       icon: {

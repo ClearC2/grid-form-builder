@@ -27,7 +27,8 @@ export class Phone extends Component {
     tabIndex: PropTypes.number,
     LinkIcon: PropTypes.func,
     handleLinkClick: PropTypes.func,
-    autoComplete: PropTypes.string
+    autoComplete: PropTypes.string,
+    interactive: PropTypes.bool
   }
 
   componentDidUpdate = p => {
@@ -90,7 +91,8 @@ export class Phone extends Component {
       CascadeIcon,
       tabIndex,
       LinkIcon,
-      autoComplete
+      autoComplete,
+      interactive
     } = this.props
     const {name = null, required = false, delimiter = ' ', onKeyDown = () => null, link} = config
     let {labelStyle = {}, style = {}, containerStyle = {}, iconStyle = {}} = config
@@ -150,6 +152,7 @@ export class Phone extends Component {
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         minWidth: 90,
         height: inline ? 'auto' : 25,
+        color: !interactive ? 'green' : 'inherit',
         ...style
       },
       icon: {

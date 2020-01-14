@@ -25,7 +25,8 @@ class Email extends Component {
     tabIndex: PropTypes.number,
     LinkIcon: PropTypes.func,
     handleLinkClick: PropTypes.func,
-    autoComplete: PropTypes.string
+    autoComplete: PropTypes.string,
+    interactive: PropTypes.bool
   }
 
   state = {
@@ -110,7 +111,8 @@ class Email extends Component {
       CascadeIcon,
       tabIndex,
       LinkIcon,
-      autoComplete
+      autoComplete,
+      interactive
     } = this.props
     const {name = null, required = false, onKeyDown = () => null, link} = config
     if (!name) {
@@ -172,6 +174,7 @@ class Email extends Component {
         borderRight: inline ? 0 : warn ? '1px solid #ec1c24' : '1px solid #a0a0a0',
         minWidth: 90,
         height: inline ? 'auto' : 25,
+        color: !interactive ? 'green' : 'inherit',
         ...style
       },
       icon: {
