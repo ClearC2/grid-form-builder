@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
 import ReactQuill from 'react-quill'
+import {usePrevious} from '../../utils'
 import Toolbar from './Toolbar'
 import './richtext.css'
 import 'react-quill/dist/quill.snow.css'
@@ -67,14 +68,16 @@ const Richtextarea = props => {
     }
   }, [onChange, name])
 
+  const previousRTEImageUrl = usePrevious(rteImageUrl)
+
   useEffect(() => {
-    if (rteImageUrl && QuillRef.current) { // we may have to add a more liberal check if this causes multiple images to be added - JRA 01/14/2020
+    if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && QuillRef.current) {
       const input = QuillRef.current.getEditor()
       const cursor = input.getSelection(true) ? input.getSelection(true).index : 0
       input.insertEmbed(cursor, 'image', rteImageUrl)
       input.setSelection(cursor + 1)
     }
-  }, [rteImageUrl])
+  }, [rteImageUrl, previousRTEImageUrl, name])
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled) className = className + ' gfb-disabled-input'

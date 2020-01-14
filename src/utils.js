@@ -1,4 +1,5 @@
 import {fromJS} from 'immutable'
+import {useRef, useEffect} from 'react'
 
 export const timeStamp = () => {
   let ms = new Date().getTime()
@@ -116,4 +117,10 @@ export const updateLayoutArray = (schema, newArray) => {
     schema = JSON.parse(JSON.stringify(schema))
   }
   return schema
+}
+
+export const usePrevious = value => {
+  const ref = useRef()
+  useEffect(() => { ref.current = value })
+  return ref.current
 }
