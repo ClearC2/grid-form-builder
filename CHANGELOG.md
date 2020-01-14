@@ -1,3 +1,10 @@
+## [2.15.2](https://github.com/ClearC2/grid-form-builder/compare/v2.15.1...v2.15.2) (2020-01-14)
+
+
+### Bug Fixes
+
+* **searchMode:** remove links from formschema in search mode ([8206d9e](https://github.com/ClearC2/grid-form-builder/commit/8206d9e))
+
 ## [2.15.1](https://github.com/ClearC2/grid-form-builder/compare/v2.15.0...v2.15.1) (2020-01-14)
 
 
