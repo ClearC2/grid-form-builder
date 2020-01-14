@@ -425,7 +425,7 @@ export default class Conditionalinput extends Component {
         config: {
           name: this.parentFieldName(),
           type: 'header',
-          link: null,
+          link: undefined,
           style: {lineHeight: '12px', fontSize: '12px'},
           label: `(${maxFieldCount} value${maxFieldCount === 1 ? '' : 's'} allowed)`
         }
@@ -437,7 +437,7 @@ export default class Conditionalinput extends Component {
         dimensions: {x: 1, y: 3, h: this.calculateFieldHeight(this.inputType()), w: 8},
         config: {
           ...this.props.config,
-          link: null,
+          link: undefined,
           autofocus: true,
           readonly: false,
           name: `${this.parentFieldName()}-0`,
@@ -463,7 +463,7 @@ export default class Conditionalinput extends Component {
           interactive: true,
           config: {
             ...this.props.config,
-            link: null,
+            link: undefined,
             readonly: false,
             name: `${this.parentFieldName()}-${fieldCount}`,
             label: label,
