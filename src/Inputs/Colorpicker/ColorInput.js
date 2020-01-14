@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import ColorPicker from './ColorPicker'
 
 const ColorInput = props => {
-  const {name, value, readonly, disabled, autofocus, placeholder, tabIndex} = props
+  const {name, value, readonly, disabled, autofocus, placeholder, tabIndex, onChange} = props
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled) className = className + ' gfb-disabled-input'
   const [showPicker, setShowPicker] = useState(false)
-  const [inputValue, changeInputValue] = useState('')
   const inputId = useRef(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
   const portalRef = useRef()
 
@@ -26,19 +25,21 @@ const ColorInput = props => {
   }, [])
 
   useEffect(() => {
-    changeInputValue(value)
-  }, [value])
-
-  useEffect(() => {
     if (showPicker) window.addEventListener('mousedown', windowClickListener)
     else window.removeEventListener('mousedown', windowClickListener)
   }, [showPicker, windowClickListener])
 
   const handleOnInputChange = useCallback(e => {
-    const {value: newValue} = e.target
-    changeInputValue(newValue)
+    let {value: newValue} = e.target
+    if (typeof newValue === 'string') newValue = newValue.toUpperCase()
+    onChange({
+      target: {
+        name,
+        value: newValue
+      }
+    })
     if (!showPicker) setShowPicker(true)
-  }, [changeInputValue, showPicker, setShowPicker])
+  }, [showPicker, setShowPicker, name, onChange])
 
   const handleOnFocus = useCallback(() => {
     setShowPicker(true)
@@ -53,7 +54,7 @@ const ColorInput = props => {
               id={inputId.current}
               className={className}
               name={name}
-              value={inputValue}
+              value={value}
               onChange={handleOnInputChange}
               disabled={readonly || disabled}
               autoFocus={autofocus}
@@ -65,6 +66,9 @@ const ColorInput = props => {
               <ColorPicker
                 ref={portalRef}
                 inputId={inputId.current}
+                value={value}
+                onChange={handleOnInputChange}
+                name={name}
               />
             )}
           </div>
