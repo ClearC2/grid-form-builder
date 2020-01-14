@@ -42,8 +42,10 @@ const ColorInput = props => {
   }, [showPicker, setShowPicker, name, onChange])
 
   const handleOnFocus = useCallback(() => {
-    setShowPicker(true)
-  }, [setShowPicker])
+    if (!readonly && !disabled) {
+      setShowPicker(true)
+    }
+  }, [setShowPicker, readonly, disabled])
 
   return (
     <div className='gfb-input-outer'>

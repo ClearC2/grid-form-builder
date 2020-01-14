@@ -10,7 +10,8 @@ import Checkbox from './Checkbox'
 import Multicheckbox from './Multicheckbox'
 import Radio from './Radio'
 import {Date, Datetime, Time} from './Date'
-import ColorInput from './Colorpicker'
+import Colorpicker from './Colorpicker'
+import Richtextarea from './Richtextarea'
 
 let FormComponents = {
   Input,
@@ -25,7 +26,8 @@ let FormComponents = {
   Datetime,
   Date,
   Time,
-  Colorpicker: ColorInput
+  Colorpicker,
+  Richtextarea
 }
 
 export function initCustomFormComponents (defs = {}) {
@@ -36,8 +38,8 @@ export function initCustomFormComponents (defs = {}) {
 export const mapInputType = (type = 'input', interactive) => {
   if (typeof type !== 'string') type = 'input'
   type = uppercaseFirstLetter(type)
-  if (type === 'Richtextarea') {
-    type = 'Richtextareaquill'
+  if (type.indexOf('Richtext') > -1) {
+    type = 'Richtextarea'
   }
   if (!interactive && type === 'Select') {
     type = 'ImportSelect'
