@@ -200,7 +200,9 @@ div > div.gfb-input__indicators > div.gfb-input__indicator {
 
 div > div.gfb-input__indicators > div.gfb-color-input-indicator {
   width: 20px;
-  height: 20px;
+  height: calc(100% - 4px);
+  margin: 2px;
+  cursor: pointer;
 }
 
 div.gfb-input__indicators > div.gfb-input__indicator,  span.gfb-input__indicator-separator {
