@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import ReactQuill from 'react-quill'
 import Toolbar from './Toolbar'
 import './richtext.css'
+import 'react-quill/dist/quill.snow.css'
+import 'react-quill/dist/quill.core.css'
 
 const Richtextarea = props => {
   const {
