@@ -1,34 +1,19 @@
-.color-picker-apply-button {
-    background: white;
-    width: 50px;
-    height: 32px;
-    padding: 4px 7px 7px;
-    border: 1px solid;
-    float: right;
+div.compact-picker > div.flexbox-fix {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.color-picker-apply-button:hover {
-    background: dodgerblue;
-    color: white;
+div.compact-picker > div.flexbox-fix > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.color-picker-toggle-button {
-    background: white;
-    border: 1px solid #000;
+div.compact-picker > div.flexbox-fix > div > span {
+    top: 0 !important;
 }
 
-.color-picker-toggle-button:hover {
-    background: dodgerblue;
-    color: white;
-}
-
-.button-center {
-    margin: auto;
-    width: fit-content;
-}
-
-.color-picker-block {
-    width: 13px;
-    height: 13px;
-    margin: auto auto auto 7px;
+div.compact-picker > div.flexbox-fix > div:first-child {
+    top: 3px !important;
 }

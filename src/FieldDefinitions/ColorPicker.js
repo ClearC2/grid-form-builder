@@ -82,19 +82,7 @@ class ColorPicker extends Component {
   }
 
   clickListener = e => {
-    let outsideClick = true
-    e.path.forEach(path => {
-      if (path.id === this.state.id) {
-        outsideClick = false
-      } else if (path.id === this.portal.state.id) {
-        outsideClick = false
-      }
-    })
 
-    if (outsideClick) {
-      this.toggleActive()
-      this.input.blur()
-    }
   }
 
   handleAnywhereClick = e => {

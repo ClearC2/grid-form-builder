@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react'
+import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import ColorPicker from './ColorPicker'
 
@@ -8,11 +8,31 @@ const ColorInput = props => {
   if (readonly || disabled) className = className + ' gfb-disabled-input'
   const [showPicker, setShowPicker] = useState(false)
   const [inputValue, changeInputValue] = useState('')
-  const elementId = useRef(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
+  const inputId = useRef(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
+  const portalRef = useRef()
+
+  const windowClickListener = useMemo(() => {
+    return e => {
+      const insideClick = e.path.some(path => {
+        return (
+          path.id === inputId.current ||
+          path.id === portalRef.current.state.id
+        )
+      })
+      if (!insideClick) {
+        setShowPicker(false)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     changeInputValue(value)
   }, [value])
+
+  useEffect(() => {
+    if (showPicker) window.addEventListener('mousedown', windowClickListener)
+    else window.removeEventListener('mousedown', windowClickListener)
+  }, [showPicker, windowClickListener])
 
   const handleOnInputChange = useCallback(e => {
     const {value: newValue} = e.target
@@ -30,7 +50,7 @@ const ColorInput = props => {
         <div className='gfb-input__control'>
           <div className='gfb-input__value-container'>
             <input
-              id={elementId.current}
+              id={inputId.current}
               className={className}
               name={name}
               value={inputValue}
@@ -43,7 +63,8 @@ const ColorInput = props => {
             />
             {showPicker && (
               <ColorPicker
-                elementId={elementId.current}
+                ref={portalRef}
+                inputId={inputId.current}
               />
             )}
           </div>

@@ -4,7 +4,7 @@ import {createPortal} from 'react-dom'
 
 let portal
 
-class Portal extends Component {
+class PortalTarget extends Component {
   static propTypes = {
     children: PropTypes.any,
     className: PropTypes.string,
@@ -18,6 +18,9 @@ class Portal extends Component {
 
   static defaultProps = {
     id: 'portal',
+    /*
+    * Renders directly off body tag, unless specified otherwise
+    */
     portalTarget: 'body'
   }
 
@@ -36,35 +39,43 @@ class Portal extends Component {
 
     portal = document.getElementsByTagName(portalTarget)[0]
     if (portal) {
-      portal.appendChild(this.element)
+      portal.prepend(this.element)
     }
 
     this.setState({id})
   }
 
-  componentDidUpdate (prevProps, prevState, snapshot) {
+  componentDidUpdate (prevProps) {
     if (this.props.portalTarget && !prevProps.portalTarget) {
       portal = document.getElementsByTagName(this.props.portalTarget)[0]
-      portal.appendChild(this.element)
+      portal.prepend(this.element)
     }
   }
 
   componentWillUnmount () {
+    /*
+    * Cleanup on DOM exit
+    */
     portal.removeChild(this.element)
   }
 
   setStyles = () => {
     const {style = {}} = this.props
 
-    // setting position to place portal
-    let offset = {}
+    const offset = {}
     let target = document.getElementById(this.props.id)
+    /*
+    * Finds target from DOM, sets portal under the target
+    */
     if (this.props.id && target) {
       target = target.getBoundingClientRect()
 
       offset['marginLeft'] = target.x
-      offset['marginTop'] = target.top + target.height
+      offset['marginTop'] = target.top + target.height + window.pageYOffset - 19
 
+      /*
+      * Allows minor adjustments at portal drop location, allows for minor changes on margin styling
+      */
       if (style.portalLeft) {
         offset.marginLeft += style.portalLeft
       }
@@ -77,7 +88,6 @@ class Portal extends Component {
 
       this.element.setAttribute('style', cssText)
     }
-
     return {
       ...style
     }
@@ -91,4 +101,4 @@ class Portal extends Component {
   }
 }
 
-export default Portal
+export default PortalTarget

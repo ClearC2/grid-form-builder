@@ -1,19 +1,23 @@
-import React from 'react'
+import React, {forwardRef} from 'react'
 import PropTypes from 'prop-types'
-// import Portal from '../../Portal'
-// import {SketchPicker, CompactPicker} from 'react-color'
+import Portal from '../../Portal'
+import {SketchPicker, CompactPicker} from 'react-color' // eslint-disable-line
 import '../../../styles/colorpicker.css'
 
-const ColorPicker = props => {
+const ColorPicker = forwardRef((props, ref) => {
+  const {inputId} = props
   return (
-    <div>
-      Picker
-    </div>
+    <Portal id={inputId} ref={ref}>
+      <div>
+        <CompactPicker />
+      </div>
+    </Portal>
   )
-}
+})
 
 export default ColorPicker
 
 ColorPicker.propTypes = {
-  value: PropTypes.string
+  inputId: PropTypes.string,
+  pickerId: PropTypes.string
 }
