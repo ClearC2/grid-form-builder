@@ -50,7 +50,7 @@ const Multicheckbox = props => {
               )
             })}
           </div>
-          <div className='gfb-input-indicators' />
+          <div className='gfb-input__indicators' />
         </div>
       </div>
     </div>

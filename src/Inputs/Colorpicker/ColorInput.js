@@ -72,7 +72,9 @@ const ColorInput = props => {
               />
             )}
           </div>
-          <div className='gfb-input-indicators' />
+          <div className='gfb-input__indicators'>
+            <div className='gfb-color-input-indicator' style={{backgroundColor: value}} />
+          </div>
         </div>
       </div>
     </div>

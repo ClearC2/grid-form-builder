@@ -76,7 +76,7 @@ const Listselect = props => {
               )
             })}
           </div>
-          <div className='gfb-input-indicators' />
+          <div className='gfb-input__indicators' />
         </div>
         <div className='gfb-input-control-bottom'>
           <span className='gfb-action-link' onClick={handleSelectAll}>
