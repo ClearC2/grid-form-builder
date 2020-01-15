@@ -7,7 +7,6 @@ import ImportSelect from './ImportSelect'
 import Metadata from './Metadata'
 import Number from './Number'
 import Percentage from './Percentage'
-import Phone from './Phone'
 import Total from './Total'
 import {uppercaseFirstLetter, isMobile} from '../utils'
 
@@ -21,7 +20,6 @@ let FormComponents = {
   Metadata,
   Number,
   Percentage,
-  Phone,
   Total
 }
 
