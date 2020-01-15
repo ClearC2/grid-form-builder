@@ -37,7 +37,7 @@ const Email = props => {
   }
 
   return (
-    <div className='gfb-input-outer something-custom'>
+    <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
         <div className={controlClass}>
           <div className='gfb-input__value-container'>
