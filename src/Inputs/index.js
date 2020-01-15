@@ -15,6 +15,7 @@ import Richtextarea from './Richtextarea'
 import Phone from './Phone'
 import Currency from './Currency'
 import Number from './Number'
+import Percentage from './Percentage'
 
 let FormComponents = {
   Input,
@@ -33,7 +34,8 @@ let FormComponents = {
   Richtextarea,
   Phone,
   Currency,
-  Number
+  Number,
+  Percentage
 }
 
 export function initCustomFormComponents (defs = {}) {

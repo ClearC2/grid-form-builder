@@ -110,10 +110,9 @@
           "static": false
         },
         "config": {
-          "name": "cfd_total",
-          "label": "Total Currency Input",
-          "type": "total",
-          "formula": "(quantity x price) - (quantity x discount)"
+          "name": "cfd_percent",
+          "label": "Percent Input",
+          "type": "Percentage"
         }
       }, {
         "type": "field",
