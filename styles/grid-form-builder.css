@@ -197,6 +197,8 @@ div.grid-form-builder-parent input:focus, div.grid-form-builder-parent textarea:
   outline-offset: 0;
 }
 
+
+
 div > div.gfb-input__indicators > div.gfb-input__indicator {
   padding-left: 3px;
   padding-right: 3px;
@@ -207,6 +209,16 @@ div > div.gfb-input__indicators > div.gfb-color-input-indicator {
   height: calc(100% - 4px);
   margin: 2px;
   cursor: pointer;
+}
+
+div > div.gfb-input__indicators > div.gfb-input__indicator.gfb-validation-error-indicator {
+  width: 20px;
+  height: calc(100% - 4px);
+  margin: 2px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 div.gfb-input__indicators > div.gfb-input__indicator,  span.gfb-input__indicator-separator {
