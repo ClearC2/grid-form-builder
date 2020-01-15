@@ -5,7 +5,7 @@ export {initFormBuilderAjax} from './config'
 export {default as Conditionalinput, CONDITIONS, TEXT_INPUTS} from './FieldDefinitions/Conditionalinput'
 export {default as Typeahead} from './Inputs/Typeahead'
 export {default as Checkbox} from './Inputs/Checkbox'
-export {default as Currency} from './FieldDefinitions/Currency'
+export {default as Currency} from './Inputs/Currency'
 export {default as Colorpicker} from './Inputs/Colorpicker'
 export {default as Date} from './Inputs/Date/Date'
 export {default as Datetime} from './Inputs/Date/Datetime'
@@ -28,7 +28,7 @@ export {default as FormBuilder} from './FormBuilder'
 export {default as ConditionalTable, convertQueryToFormValues} from './QueryBuilder/Where/ConditionalTable/ConditionalTableContainer'
 export {ReportBuilder, buildAvailableColumnsFromFieldDefs, buildDefaultColumnsFromQuery} from './QueryBuilder/ReportBuilder/ReportBuilder'
 export {initComponentIconLibrary} from './Icons'
-export {initCustomFormComponents} from './FieldDefinitions'
+export {initCustomFormComponents} from './Inputs'
 
 // declaring depricated methods below to give implementors time to refactor base code - JRA 12/05/2019
 const updateFormValues = () => console.error('updateFormValues is depricated and has been removed. You must handle your own form values.') //eslint-disable-line
