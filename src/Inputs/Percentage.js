@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react'
 import PropTypes from 'prop-types'
 
-const Input = props => {
+const Percentage = props => {
   const {
     name,
     value,
@@ -66,9 +66,9 @@ const Input = props => {
   )
 }
 
-export default Input
+export default Percentage
 
-Input.propTypes = {
+Percentage.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
