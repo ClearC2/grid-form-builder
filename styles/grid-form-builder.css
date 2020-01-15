@@ -127,6 +127,10 @@ div.gfb-input__control, div.gfb-input__control:hover {
   align-items: stretch;
 }
 
+div.gfb-input__control.gfb-validation-error {
+  border: 1px solid red;
+}
+
 div.gfb-input-control-bottom {
   display: flex;
   justify-content: flex-end;
