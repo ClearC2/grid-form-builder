@@ -13,6 +13,7 @@ import {Date, Datetime, Time} from './Date'
 import Colorpicker from './Colorpicker'
 import Richtextarea from './Richtextarea'
 import Phone from './Phone'
+import Currency from './Currency'
 
 let FormComponents = {
   Input,
@@ -29,7 +30,8 @@ let FormComponents = {
   Time,
   Colorpicker,
   Richtextarea,
-  Phone
+  Phone,
+  Currency
 }
 
 export function initCustomFormComponents (defs = {}) {

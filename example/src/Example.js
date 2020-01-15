@@ -18,7 +18,8 @@ export default class Example extends Component {
       listselecttest: List(['Customer Service', 'Executive Meeting']),
       multiselecttest: ['Contract Signing', 'Customer Service', 'Not A Value'],
       parentid: '00112233445566778899AABBCCEEFFFF',
-      phonetest: '5554443333'
+      phonetest: '5554443333',
+      price: '25.25'
     }),
     inline: false,
     draggable: false,
