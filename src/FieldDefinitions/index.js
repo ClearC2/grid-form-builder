@@ -14,7 +14,6 @@ let FormComponents = {
   Icon,
   ImportSelect,
   Metadata,
-  Number,
   Percentage,
   Total
 }
