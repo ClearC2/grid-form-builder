@@ -53,7 +53,8 @@ const FormBuilder = (props) => {
     compactType,
     dateFormat,
     dateTimeFormat,
-    timeFormat
+    timeFormat,
+    autoComplete
   } = props
   const [grid, updateGrid] = useState({layout: List(), elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
@@ -198,6 +199,7 @@ const FormBuilder = (props) => {
               dateFormat={dateFormat}
               dateTimeFormat={dateTimeFormat}
               timeFormat={timeFormat}
+              autoComplete={autoComplete}
             />
           </div>
         )
@@ -221,7 +223,8 @@ const FormBuilder = (props) => {
     readonly,
     myOffset,
     activeItem,
-    handleLinkClick
+    handleLinkClick,
+    autoComplete
   ])
 
   const removeItem = useCallback(i => {
@@ -358,7 +361,8 @@ FormBuilder.propTypes = {
   compactType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   dateFormat: PropTypes.string,
   dateTimeFormat: PropTypes.string,
-  timeFormat: PropTypes.string
+  timeFormat: PropTypes.string,
+  autoComplete: PropTypes.string
 }
 
 FormBuilder.defaultProps = {
@@ -386,7 +390,8 @@ FormBuilder.defaultProps = {
   interactive: true,
   dateFormat: 'M/D/YYYY',
   dateTimeFormat: 'M/D/YYYY h:mm a',
-  timeFormat: 'h:mm a'
+  timeFormat: 'h:mm a',
+  autoComplete: 'off'
 }
 
 FormBuilder.count = 1
@@ -422,7 +427,8 @@ export default class FormValidator extends Component {
     compactType: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     dateFormat: PropTypes.string,
     dateTimeFormat: PropTypes.string,
-    timeFormat: PropTypes.string
+    timeFormat: PropTypes.string,
+    autoComplete: PropTypes.string
   }
 
   static defaultProps = {

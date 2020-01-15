@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 
 const Multicheckbox = props => {
-  const {name, onChange, readonly, disabled, autofocus, keyword, inline} = props
+  const {name, onChange, readonly, disabled, autofocus, keyword, inline, autoComplete} = props
   const {options = []} = keyword
   const [value, updateValue] = useState([])
 
@@ -56,6 +56,7 @@ const Multicheckbox = props => {
                     disabled={readonly || disabled}
                     autoFocus={autofocus}
                     type='checkbox'
+                    autoComplete={autoComplete}
                   />
                   {option.label ? option.label : option.value}
                 </label>
@@ -79,5 +80,6 @@ Multicheckbox.propTypes = {
   readonly: PropTypes.bool,
   autofocus: PropTypes.bool,
   keyword: PropTypes.object,
-  inline: PropTypes.bool
+  inline: PropTypes.bool,
+  autoComplete: PropTypes.string
 }

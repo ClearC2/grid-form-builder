@@ -18,7 +18,8 @@ const Richtextarea = props => {
     placeholder,
     tabIndex,
     handleRTEImageClick,
-    rteImageUrl
+    rteImageUrl,
+    autoComplete
   } = props
   const elementId = useRef(
     'gfb-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
@@ -102,6 +103,7 @@ const Richtextarea = props => {
               tabIndex={tabIndex}
               scrollingContainer='scrolling-container'
               theme='snow'
+              autoComplete={autoComplete}
             />
           </div>
           <div className='gfb-input__indicators' />
@@ -123,5 +125,6 @@ Richtextarea.propTypes = {
   placeholder: PropTypes.string,
   tabIndex: PropTypes.number,
   handleRTEImageClick: PropTypes.func,
-  rteImageUrl: PropTypes.string
+  rteImageUrl: PropTypes.string,
+  autoComplete: PropTypes.string
 }

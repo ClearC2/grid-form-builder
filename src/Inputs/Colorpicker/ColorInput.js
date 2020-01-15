@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ColorPicker from './ColorPicker'
 
 const ColorInput = props => {
-  const {name, value, readonly, disabled, autofocus, placeholder, tabIndex, onChange} = props
+  const {name, value, readonly, disabled, autofocus, placeholder, tabIndex, onChange, autoComplete} = props
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled) className = className + ' gfb-disabled-input'
   const [showPicker, setShowPicker] = useState(false)
@@ -63,6 +63,7 @@ const ColorInput = props => {
               placeholder={placeholder}
               tabIndex={tabIndex}
               onFocus={handleOnFocus}
+              autoComplete={autoComplete}
             />
             {showPicker && (
               <ColorPicker
@@ -97,5 +98,6 @@ ColorInput.propTypes = {
   readonly: PropTypes.bool,
   autofocus: PropTypes.bool,
   placeholder: PropTypes.string,
-  tabIndex: PropTypes.number
+  tabIndex: PropTypes.number,
+  autoComplete: PropTypes.string
 }

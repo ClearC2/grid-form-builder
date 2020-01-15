@@ -27,7 +27,8 @@ const InnerCell = props => {
     dateFormat,
     dateTimeFormat,
     timeFormat,
-    handleRTEImageClick
+    handleRTEImageClick,
+    autoComplete
   } = props
 
   const {config} = field
@@ -109,6 +110,7 @@ const InnerCell = props => {
         dateTimeFormat={dateTimeFormat}
         timeFormat={timeFormat}
         handleRTEImageClick={handleRTEImageClick}
+        autoComplete={autoComplete}
       >
         <Type />
       </InputContainer>
@@ -150,5 +152,6 @@ InnerCell.propTypes = {
   dateFormat: PropTypes.string,
   dateTimeFormat: PropTypes.string,
   timeFormat: PropTypes.string,
-  handleRTEImageClick: PropTypes.func
+  handleRTEImageClick: PropTypes.func,
+  autoComplete: PropTypes.string
 }

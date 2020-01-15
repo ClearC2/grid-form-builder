@@ -28,7 +28,8 @@ const Typeahead = props => {
     persist = true,
     typeahead = {},
     minChars = 1,
-    stringify
+    stringify,
+    autoComplete
   } = props
 
   let {
@@ -395,6 +396,7 @@ const Typeahead = props => {
         loadOptions={loadOptions}
         onChange={handleChange}
         value={selectValue}
+        autoComplete={autoComplete}
         styles={{
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12
@@ -430,5 +432,6 @@ Typeahead.propTypes = {
   values: PropTypes.object,
   stringify: PropTypes.bool,
   delimiter: PropTypes.string,
-  delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
+  delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  autoComplete: PropTypes.string
 }

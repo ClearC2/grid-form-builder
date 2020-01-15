@@ -20,7 +20,8 @@ const Multiselect = props => {
     requiredWarning,
     required,
     onKeyDown = () => null, // sometimes provided in the config object
-    onChange
+    onChange,
+    autoComplete
   } = props
 
   const [input, changeInput] = useState({Select: allowcreate ? Creatable : ReactSelect})
@@ -184,6 +185,7 @@ const Multiselect = props => {
         value={selectValue}
         defaultValue={selectValue}
         onChange={handleChange}
+        autoComplete={autoComplete}
         styles={{
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12
@@ -212,5 +214,6 @@ Multiselect.propTypes = {
   required: PropTypes.bool,
   values: PropTypes.object,
   persist: PropTypes.bool,
-  onKeyDown: PropTypes.func
+  onKeyDown: PropTypes.func,
+  autoComplete: PropTypes.string
 }

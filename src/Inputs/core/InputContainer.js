@@ -15,13 +15,13 @@ const InputContainer = props => {
     dateFormat,
     dateTimeFormat,
     timeFormat,
-    handleRTEImageClick
+    handleRTEImageClick,
+    autoComplete
   } = props
   const {name, ...other} = config
   return (
     <div className='gfb-inner-cell-input'>
       {cloneElement(children, {
-        ...other,
         requiredWarning,
         tabIndex,
         draggable,
@@ -32,7 +32,9 @@ const InputContainer = props => {
         dateFormat,
         dateTimeFormat,
         timeFormat,
-        handleRTEImageClick
+        handleRTEImageClick,
+        autoComplete,
+        ...other
       })}
     </div>
   )
@@ -52,5 +54,6 @@ InputContainer.propTypes = {
   dateFormat: PropTypes.string,
   dateTimeFormat: PropTypes.string,
   timeFormat: PropTypes.string,
-  handleRTEImageClick: PropTypes.func
+  handleRTEImageClick: PropTypes.func,
+  autoComplete: PropTypes.string
 }

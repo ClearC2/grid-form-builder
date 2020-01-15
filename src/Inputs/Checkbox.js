@@ -2,7 +2,19 @@ import React, {useCallback, useRef} from 'react'
 import PropTypes from 'prop-types'
 
 const Checkbox = props => {
-  const {name, value, onChange, readonly, disabled, autofocus, placeholder, tabIndex, onValue, offValue} = props
+  const {
+    name,
+    value,
+    onChange,
+    readonly,
+    disabled,
+    autofocus,
+    placeholder,
+    tabIndex,
+    onValue,
+    offValue,
+    autoComplete
+  } = props
 
   const truthy = useRef([
     true,
@@ -118,6 +130,7 @@ const Checkbox = props => {
               placeholder={placeholder}
               tabIndex={tabIndex}
               type='checkbox'
+              autoComplete={autoComplete}
             />
           </div>
           <div className='gfb-input__indicators' />
@@ -139,5 +152,6 @@ Checkbox.propTypes = {
   placeholder: PropTypes.string,
   tabIndex: PropTypes.number,
   onValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-  offValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
+  offValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  autoComplete: PropTypes.string
 }

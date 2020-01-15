@@ -20,7 +20,8 @@ const Select = props => {
     requiredWarning,
     required,
     onKeyDown = () => null, // sometimes provided in the config object
-    onChange
+    onChange,
+    autoComplete
   } = props
 
   const {options} = keyword
@@ -125,6 +126,7 @@ const Select = props => {
         value={selectValue}
         defaultValue={selectValue}
         onChange={handleChange}
+        autoComplete={autoComplete}
         styles={{
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12
@@ -153,5 +155,6 @@ Select.propTypes = {
   required: PropTypes.bool,
   values: PropTypes.object,
   persist: PropTypes.bool,
-  onKeyDown: PropTypes.func
+  onKeyDown: PropTypes.func,
+  autoComplete: PropTypes.string
 }
