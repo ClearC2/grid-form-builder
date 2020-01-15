@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback, useRef} from 'react'
 import PropTypes from 'prop-types'
 // import Cleave from 'cleave.js/react'
 import Cleave from '../Cleave' // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
@@ -17,6 +17,22 @@ const Phone = props => {
     autoComplete,
     delimiter = ' '
   } = props
+
+  const input = useRef()
+
+  const handleOnChange = useCallback(e => {
+    let {value: newValue} = e.target
+    if (input.current) {
+      newValue = input.current.getRawValue()
+    }
+    onChange({
+      target: {
+        value: newValue,
+        name
+      }
+    })
+  }, [onChange, name])
+
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled) className = className + ' gfb-disabled-input'
   return (
@@ -25,11 +41,16 @@ const Phone = props => {
         <div className='gfb-input__control'>
           <div className='gfb-input__value-container'>
             <Cleave
-              options={{phone: true, phoneRegionCode: 'US', delimiter}}
+              ref={input}
+              options={{
+                phone: true,
+                phoneRegionCode: 'US',
+                delimiter
+              }}
               className={className}
               name={name}
               value={value}
-              onChange={onChange}
+              onChange={handleOnChange}
               disabled={readonly || disabled}
               autoFocus={autofocus}
               placeholder={placeholder}
