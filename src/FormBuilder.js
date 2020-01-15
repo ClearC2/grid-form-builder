@@ -7,7 +7,7 @@ import {List, fromJS, Map, Set} from 'immutable'
 import $ from 'jquery'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
 import InnerCell from './Inputs'
-import Trash from 'react-icons/lib/fa/trash'
+import {FaTrash as Trash} from 'react-icons/fa'
 // import {DndProvider} from 'react-dnd'
 // import HTML5backend from 'react-dnd-test-backend'
 

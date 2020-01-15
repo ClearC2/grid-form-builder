@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Image from 'react-icons/lib/fa/image'
+import {FaImage as Image} from 'react-icons/fa'
 
 const Toolbar = ({id}) => (
   <div id={id} style={{backgroundColor: '#fafafa'}}>
