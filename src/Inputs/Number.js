@@ -101,5 +101,6 @@ Number.propTypes = {
   maximum: PropTypes.number,
   minimum: PropTypes.number,
   decimals: PropTypes.number,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  requiredWarning: PropTypes.bool
 }

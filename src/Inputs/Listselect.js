@@ -109,5 +109,6 @@ Listselect.propTypes = {
   keyword: PropTypes.object,
   disabled: PropTypes.bool,
   readonly: PropTypes.bool,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  requiredWarning: PropTypes.bool
 }

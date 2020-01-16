@@ -19,7 +19,7 @@ const InputContainer = props => {
     autoComplete,
     interactive
   } = props
-  const {name, ...other} = config
+  const {name, required, ...other} = config
   return (
     <div className='gfb-inner-cell-input'>
       {cloneElement(children, {
@@ -36,6 +36,7 @@ const InputContainer = props => {
         handleRTEImageClick,
         autoComplete,
         interactive,
+        required,
         ...other
       })}
     </div>

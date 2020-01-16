@@ -118,5 +118,6 @@ DateInput.propTypes = {
   type: PropTypes.string,
   format: PropTypes.string,
   autoComplete: PropTypes.string,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  requiredWarning: PropTypes.bool
 }

@@ -157,5 +157,6 @@ Checkbox.propTypes = {
   onValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   offValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   autoComplete: PropTypes.string,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  requiredWarning: PropTypes.bool
 }

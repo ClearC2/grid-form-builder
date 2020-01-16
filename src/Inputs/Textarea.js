@@ -55,5 +55,6 @@ Textarea.propTypes = {
   placeholder: PropTypes.string,
   tabIndex: PropTypes.number,
   autoComplete: PropTypes.string,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  requiredWarning: PropTypes.bool
 }

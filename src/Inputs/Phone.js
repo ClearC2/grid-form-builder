@@ -81,5 +81,6 @@ Phone.propTypes = {
   tabIndex: PropTypes.number,
   autoComplete: PropTypes.string,
   delimiter: PropTypes.string,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  requiredWarning: PropTypes.bool
 }

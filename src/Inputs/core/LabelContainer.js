@@ -10,6 +10,7 @@ const LabelContainer = props => {
     link = {},
     type = ''
   } = config
+  const {required} = config
   type = type.toLowerCase()
   let {icon: CascadeIcon = ''} = cascade
   let {icon: LinkIcon = ''} = link
@@ -52,6 +53,7 @@ const LabelContainer = props => {
       {Icon && (
         <Icon size={size} />
       )}
+      {required && <strong className='gfb-validation-indicator'>*</strong>}
       {label && type !== 'header' && (
         <strong
           onClick={onLabelTextClick}

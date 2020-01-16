@@ -14,6 +14,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "testerinput",
           "label": "Input",
           "type": "richtextareaquill",
@@ -38,6 +39,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "unique-test-input",
           "label": "Test Input",
           "type": "input",
@@ -65,6 +67,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "price",
           "label": "Price (Currency Input)",
           "type": "currency"
@@ -80,6 +83,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "quantity",
           "label": "Quantity",
           "type": "number"
@@ -95,6 +99,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "discount",
           "label": "Discount",
           "type": "currency"
@@ -110,6 +115,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "cfd_percent",
           "label": "Percent Input",
           "type": "Percentage"
@@ -125,6 +131,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "meta_universalid",
           "label": "Field Typeahead",
           "type": "typeahead",
@@ -144,6 +151,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "phonetest",
           "label": "Phone",
           "type": "phone",
@@ -164,6 +172,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "rich-text-input-1",
           "label": "Rich Text Input",
           "type": "richtextareaquill"
@@ -179,6 +188,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "rich-text-input-2",
           "label": "Rich Text Input",
           "type": "richtextareaquill"
@@ -194,6 +204,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "c_registerddate",
           "label": "Registered",
           "type": "conditionalInput",
@@ -270,6 +281,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "is_user_awesome",
           "label": "Is Awesome",
           "type": "checkbox",
@@ -287,6 +299,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "datetest",
           "label": "Date",
           "type": "date",
@@ -306,6 +319,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "datetimetest",
           "label": "Date Time",
           "type": "datetime",
@@ -325,6 +339,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "time",
           "label": "Time",
           "type": "time",
@@ -617,7 +632,8 @@
         "config": {
           "name": "textareatest",
           "label": "Textarea",
-          "type": "textarea"
+          "type": "textarea",
+          "required": true
         }
       }, {
         "type": "header",
@@ -629,7 +645,8 @@
         },
         "config": {
           "label": "Example Header",
-          "type": "header"
+          "type": "header",
+          "required": true
         }
       }, {
         "type": "header",
@@ -642,6 +659,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "meta_created_date",
           "label": "Last Did Something By:",
           "type": "metadata",
@@ -712,6 +730,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "colorpickertest",
           "label": "Color Picker",
           "type": "colorpicker",
@@ -728,6 +747,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "type": "icon",
           "icon": "cogs"
         }
@@ -742,6 +762,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "inputtest",
           "label": "Input"
         }
@@ -756,6 +777,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "inputtest",
           "label": "Input"
         }
@@ -770,6 +792,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "inputtest",
           "label": "Input"
         }
@@ -784,6 +807,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "inputtest",
           "label": "Input"
         }
@@ -798,6 +822,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "inputtest",
           "label": "Input"
         }
@@ -812,6 +837,7 @@
           "static": false
         },
         "config": {
+          "required": true,
           "name": "inputtest",
           "label": "Input"
         }

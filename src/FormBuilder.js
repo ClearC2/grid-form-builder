@@ -91,14 +91,14 @@ const FormBuilder = (props) => {
   }, [verticalCompact, compactType])
 
   useEffect(() => {
-    debugLog('updateRequiredWarning')
-    updateRequiredWarning(validate)
-  }, [validate])
-
-  useEffect(() => {
     debugLog('updateRequiredWarning 2')
     updateRequiredWarning(requiredFlag)
   }, [requiredFlag])
+
+  useEffect(() => {
+    debugLog('updateRequiredWarning')
+    updateRequiredWarning(validate)
+  }, [validate])
 
   useEffect(() => {
     debugLog('FormBuilder.count')

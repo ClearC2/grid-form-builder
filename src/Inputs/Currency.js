@@ -86,5 +86,6 @@ Currency.propTypes = {
   delimiter: PropTypes.string,
   prefix: PropTypes.string,
   numeralDecimalMark: PropTypes.string,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  requiredWarning: PropTypes.bool
 }

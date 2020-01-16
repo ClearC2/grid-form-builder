@@ -131,5 +131,6 @@ Richtextarea.propTypes = {
   handleRTEImageClick: PropTypes.func,
   rteImageUrl: PropTypes.string,
   autoComplete: PropTypes.string,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  requiredWarning: PropTypes.bool
 }

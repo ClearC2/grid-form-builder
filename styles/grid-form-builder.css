@@ -256,6 +256,11 @@ div > div.gfb-input__indicators > div.gfb-color-input-indicator {
   cursor: pointer;
 }
 
+.gfb-validation-indicator {
+  color: red;
+  margin-right: 0 !important;
+}
+
 div > div.gfb-input__indicators > div.gfb-input__indicator.gfb-validation-error-indicator {
   width: 20px;
   height: calc(100% - 4px);
