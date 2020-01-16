@@ -353,3 +353,7 @@ div.grid-form-builder-parent .react-grid-item:focus-within, div.grid-form-builde
 .typeahead__input > input {
   width: 100% !important;
 }
+
+.gfb-has-tooltip {
+  z-index: 9001;
+}
