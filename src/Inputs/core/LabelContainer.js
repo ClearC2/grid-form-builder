@@ -51,7 +51,7 @@ const LabelContainer = props => {
       {label && type !== 'header' && (
         <strong
           onClick={onLabelTextClick}
-          className={LinkIcon || CascadeIcon ? 'cursor-hand' : ''}
+          className={LinkIcon || CascadeIcon ? 'cursor-hand gfb-field-label' : 'gfb-field-label'}
         >
           {label}
         </strong>

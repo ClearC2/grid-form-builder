@@ -3,6 +3,10 @@ input[id^='react-select-'] {
   opacity: 1 !important;
 }
 
+div.grid-form-builder-parent .cursor-hand {
+  cursor: pointer;
+}
+
 div.grid-form-builder-parent .active-gfb-item-action-menu {
   position: absolute;
   right: 0;
@@ -115,6 +119,18 @@ input[class^="gfb-input"][type="checkbox"], input[class^="gfb-input"][type="radi
 div.gfb-inner-cell-label {
   height: 20px;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+div.gfb-inner-cell-label > .gfb-field-label {
+  font-size: 8pt;
+  margin-left: 1px;
+  margin-bottom: -1px;
+}
+
+div.gfb-inner-cell-label > * {
+  margin-right: 5px;
 }
 
 div.gfb-inner-cell-label.gfb-full-cell-label > h3 {

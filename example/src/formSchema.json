@@ -590,12 +590,18 @@
         },
         "config": {
           "name": "textareatest",
-          "label": "Textarea",
+          "label": "Textarea With Stuff",
           "required": true,
           "type": "textarea",
+          "icon": "cogs",
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
+          },
+          "link": {
+            "type": "c2company",
+            "id": "parentid",
+            "icon": "externallink"
           }
         }
       }, {
