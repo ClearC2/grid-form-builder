@@ -98,6 +98,10 @@ div.gfb-inner-cell-label {
   display: flex;
 }
 
+div.gfb-inner-cell-label.gfb-full-cell-label, div.gfb-inner-cell-label.gfb-full-cell-label > svg {
+  height: 100%;
+}
+
 div.gfb-inner-cell-input {
   height: calc(100% - 20px);
   display: flex;

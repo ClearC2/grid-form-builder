@@ -718,7 +718,8 @@
         "config": {
           "name": "colorpickertest",
           "label": "Color Picker",
-          "type": "colorpicker"
+          "type": "colorpicker",
+          "icon": "paint"
         }
       }, {
         "type": "field",
@@ -731,8 +732,8 @@
           "static": false
         },
         "config": {
-          "name": "inputtest",
-          "label": "Input"
+          "type": "icon",
+          "icon": "cogs"
         }
       }, {
         "type": "field",

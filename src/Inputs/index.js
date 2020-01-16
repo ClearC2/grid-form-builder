@@ -17,6 +17,7 @@ import Currency from './Currency'
 import Number from './Number'
 import Percentage from './Percentage'
 import Email from './Email'
+import Icon from './Icon'
 
 let FormComponents = {
   Input,
@@ -37,7 +38,8 @@ let FormComponents = {
   Currency,
   Number,
   Percentage,
-  Email
+  Email,
+  Icon
 }
 
 export function initCustomFormComponents (defs = {}) {

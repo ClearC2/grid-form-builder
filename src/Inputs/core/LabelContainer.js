@@ -7,8 +7,10 @@ const LabelContainer = props => {
   let {
     icon: Icon = '',
     cascade = {},
-    link = {}
+    link = {},
+    type = ''
   } = config
+  type = type.toLowerCase()
   let {icon: CascadeIcon = ''} = cascade
   let {icon: LinkIcon = ''} = link
   Icon = mapIcon(Icon)
@@ -34,17 +36,32 @@ const LabelContainer = props => {
     onCascadeKeywordClick
   ])
 
+  let className = 'gfb-inner-cell-label'
+  if (type === 'icon') {
+    className = className + ' gfb-full-cell-label'
+  }
+
+  const size = className.indexOf('full-cell-label') > -1 ? 40 : 15
+
   return (
-    <div className='gfb-inner-cell-label'>
-      {Icon && <Icon />}
-      <strong
-        onClick={onLabelTextClick}
-        className={LinkIcon || CascadeIcon ? 'cursor-hand' : ''}
-      >
-        {label}
-      </strong>
-      {LinkIcon && <LinkIcon className='cursor-hand' onClick={onLinkClick} />}
-      {CascadeIcon && <CascadeIcon className='cursor-hand' onClick={onCascadeKeywordClick} />}
+    <div className={className}>
+      {Icon && (
+        <Icon size={size} />
+      )}
+      {label && (
+        <strong
+          onClick={onLabelTextClick}
+          className={LinkIcon || CascadeIcon ? 'cursor-hand' : ''}
+        >
+          {label}
+        </strong>
+      )}
+      {LinkIcon && (
+        <LinkIcon className='cursor-hand' onClick={onLinkClick} />
+      )}
+      {CascadeIcon && (
+        <CascadeIcon className='cursor-hand' onClick={onCascadeKeywordClick} />
+      )}
     </div>
   )
 }
@@ -55,5 +72,6 @@ LabelContainer.propTypes = {
   config: PropTypes.object,
   handleLinkClick: PropTypes.func,
   handleCascadeKeywordClick: PropTypes.func,
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.array, PropTypes.object])
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.array, PropTypes.object]),
+  type: PropTypes.string
 }
