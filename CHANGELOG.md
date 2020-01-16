@@ -1,3 +1,10 @@
+# [2.17.0](https://github.com/ClearC2/grid-form-builder/compare/v2.16.0...v2.17.0) (2020-01-16)
+
+
+### Features
+
+* **icon:** adds tooltip to icon type ([d1075c7](https://github.com/ClearC2/grid-form-builder/commit/d1075c7))
+
 # [2.16.0](https://github.com/ClearC2/grid-form-builder/compare/v2.15.2...v2.16.0) (2020-01-14)
 
 
