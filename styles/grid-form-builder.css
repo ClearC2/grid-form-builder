@@ -210,8 +210,8 @@ div.gfb-input__input {
 div.grid-form-builder-parent div.gfb-input__value-container > div.gfb-input__multi-value {
   margin-right: 2px;
   margin-left: 2px;
-  height: 20px;
-  margin-top: 1px;
+  height: 19px;
+  margin-top: 2px;
   flex: 0 1 auto;
   justify-content: space-between;
   width: auto;
