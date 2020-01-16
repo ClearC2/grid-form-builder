@@ -101,7 +101,7 @@ export class Icon extends Component {
           )}
           {tooltip && (
             <Tooltip id='icon-tooltip' style={{zIndex: Number.MAX_SAFE_INTEGER}}>
-              <span>{tooltip}</span>
+              <div dangerouslySetInnerHTML={{__html: tooltip}} />
             </Tooltip>
           )}
           {!!cascadingKeyword && !!CascadeIcon && (
