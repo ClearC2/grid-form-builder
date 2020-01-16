@@ -1,49 +1,49 @@
 import Core from './core'
 import {uppercaseFirstLetter} from '../utils'
+import Checkbox from './Checkbox'
+import Colorpicker from './Colorpicker'
+import Currency from './Currency'
+import {Date, Datetime, Time} from './Date'
+import Email from './Email'
+import Header from './Header'
+import Icon from './Icon'
 import Input from './Input'
+import Listselect from './Listselect'
+import Metadata from './Metadata'
+import Multicheckbox from './Multicheckbox'
+import Multiselect from './Multiselect'
+import Number from './Number'
+import Percentage from './Percentage'
+import Phone from './Phone'
+import Radio from './Radio'
+import Richtextarea from './Richtextarea'
 import Select from './Select'
 import Textarea from './Textarea'
 import Typeahead from './Typeahead'
-import Multiselect from './Multiselect'
-import Listselect from './Listselect'
-import Checkbox from './Checkbox'
-import Multicheckbox from './Multicheckbox'
-import Radio from './Radio'
-import {Date, Datetime, Time} from './Date'
-import Colorpicker from './Colorpicker'
-import Richtextarea from './Richtextarea'
-import Phone from './Phone'
-import Currency from './Currency'
-import Number from './Number'
-import Percentage from './Percentage'
-import Email from './Email'
-import Icon from './Icon'
-import Metadata from './Metadata'
-import Header from './Header'
 
 let FormComponents = {
-  Input,
-  Select,
-  Textarea,
-  Typeahead,
-  Multiselect,
-  Listselect,
   Checkbox,
-  Multicheckbox,
-  Radio,
-  Datetime,
-  Date,
-  Time,
   Colorpicker,
-  Richtextarea,
-  Phone,
   Currency,
+  Date,
+  Datetime,
+  Email,
+  Header,
+  Icon,
+  Input,
+  Listselect,
+  Metadata,
+  Multicheckbox,
+  Multiselect,
   Number,
   Percentage,
-  Email,
-  Icon,
-  Metadata,
-  Header
+  Phone,
+  Radio,
+  Richtextarea,
+  Select,
+  Textarea,
+  Time,
+  Typeahead
 }
 
 export function initCustomFormComponents (defs = {}) {
