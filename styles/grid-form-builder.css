@@ -55,9 +55,18 @@ div.gfb-inner-cell {
 }
 
 div.gfb-inner-cell.gfb-inline-cell {
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+}
+
+div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox {
+  flex-direction: row-reverse;
   justify-content: flex-end;
+}
+
+div.gfb-inner-cell.gfb-inline-cell > .gfb-inner-cell-input {
+  flex: none;
 }
 
 div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox > .gfb-inner-cell-input {
@@ -65,8 +74,18 @@ div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox > .gfb-inner-cell-input {
   flex: none;
 }
 
-div.gfb-inner-cell.gfb-inline-cell > .gfb-inner-cell-label {
+div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox > .gfb-inner-cell-label {
   margin-left: 10px;
+}
+
+div.gfb-inline-cell:not(.gfb-checkbox) > .gfb-inner-cell-label, div.gfb-inline-cell:not(.gfb-checkbox) > .gfb-inner-cell-input {
+  height: 100%;
+}
+
+div.gfb-inline-cell:not(.gfb-checkbox) strong {
+  font-size: 9pt;
+  color: #a0a0a0;
+  margin-bottom: 5px;
 }
 
 div.gfb-input__control.gfb-boxless-input, div.gfb-input__control.gfb-boxless-input:hover {

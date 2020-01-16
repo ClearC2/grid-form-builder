@@ -88,6 +88,9 @@ const InnerCell = props => {
     if (type === 'checkbox') {
       className = className + ' gfb-inline-cell gfb-checkbox'
     }
+    if (type === 'metadata') {
+      className = className + ' gfb-inline-cell'
+    }
   }
 
   return connectDropTarget(
