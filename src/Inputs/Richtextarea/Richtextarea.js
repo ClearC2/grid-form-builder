@@ -19,8 +19,10 @@ const Richtextarea = props => {
     tabIndex,
     handleRTEImageClick,
     rteImageUrl,
-    autoComplete
+    autoComplete,
+    interactive = true
   } = props
+
   const elementId = useRef(
     'gfb-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
   )
@@ -126,5 +128,6 @@ Richtextarea.propTypes = {
   tabIndex: PropTypes.number,
   handleRTEImageClick: PropTypes.func,
   rteImageUrl: PropTypes.string,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

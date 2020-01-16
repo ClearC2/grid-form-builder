@@ -29,7 +29,8 @@ const Typeahead = props => {
     typeahead = {},
     minChars = 1,
     stringify,
-    autoComplete
+    autoComplete,
+    interactive = true
   } = props
 
   let {
@@ -433,5 +434,6 @@ Typeahead.propTypes = {
   stringify: PropTypes.bool,
   delimiter: PropTypes.string,
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

@@ -19,7 +19,8 @@ const Number = props => {
     numeralDecimalMark = '.',
     maximum = 9007199254740991,
     minimum = -9007199254740991,
-    decimals = 0
+    decimals = 0,
+    interactive = true
   } = props
 
   const input = useRef()
@@ -97,5 +98,6 @@ Number.propTypes = {
   numeralDecimalMark: PropTypes.string,
   maximum: PropTypes.number,
   minimum: PropTypes.number,
-  decimals: PropTypes.number
+  decimals: PropTypes.number,
+  interactive: PropTypes.bool
 }

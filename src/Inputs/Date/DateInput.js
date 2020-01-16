@@ -19,8 +19,10 @@ const DateInput = props => {
     timePicker = false,
     showCalendar = true,
     format,
-    autoComplete
+    autoComplete,
+    interactive = true
   } = props
+
   let {type = 'date'} = props
   type = type.toLowerCase()
   const [inputValue, changeInputValue] = useState('')
@@ -114,5 +116,6 @@ DateInput.propTypes = {
   showCalendar: PropTypes.bool,
   type: PropTypes.string,
   format: PropTypes.string,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

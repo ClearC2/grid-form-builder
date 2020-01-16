@@ -2,7 +2,15 @@ import React, {useState, useCallback, useEffect} from 'react'
 import PropTypes from 'prop-types'
 
 const Listselect = props => {
-  const {name, onChange, keyword, disabled, readonly} = props
+  const {
+    name,
+    onChange,
+    keyword,
+    disabled,
+    readonly,
+    interactive = true
+  } = props
+
   const {options = []} = keyword
   const [value, updateValue] = useState([])
 
@@ -99,5 +107,6 @@ Listselect.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
   keyword: PropTypes.object,
   disabled: PropTypes.bool,
-  readonly: PropTypes.bool
+  readonly: PropTypes.bool,
+  interactive: PropTypes.bool
 }

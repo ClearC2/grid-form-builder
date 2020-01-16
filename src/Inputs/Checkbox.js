@@ -13,7 +13,8 @@ const Checkbox = props => {
     tabIndex,
     onValue,
     offValue,
-    autoComplete
+    autoComplete,
+    interactive = true
   } = props
 
   const truthy = useRef([
@@ -153,5 +154,6 @@ Checkbox.propTypes = {
   tabIndex: PropTypes.number,
   onValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
   offValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

@@ -14,7 +14,8 @@ const Email = props => {
     autofocus,
     placeholder,
     tabIndex,
-    autoComplete
+    autoComplete,
+    interactive = true
   } = props
 
   const [isFocused, setIsFocused] = useState(false)
@@ -82,5 +83,6 @@ Email.propTypes = {
   autofocus: PropTypes.bool,
   placeholder: PropTypes.string,
   tabIndex: PropTypes.number,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

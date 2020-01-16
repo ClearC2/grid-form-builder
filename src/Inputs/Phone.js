@@ -15,7 +15,8 @@ const Phone = props => {
     placeholder,
     tabIndex,
     autoComplete,
-    delimiter = ' '
+    delimiter = ' ',
+    interactive = true
   } = props
 
   const input = useRef()
@@ -35,6 +36,7 @@ const Phone = props => {
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled) className = className + ' gfb-disabled-input'
+
   return (
     <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
@@ -77,5 +79,6 @@ Phone.propTypes = {
   placeholder: PropTypes.string,
   tabIndex: PropTypes.number,
   autoComplete: PropTypes.string,
-  delimiter: PropTypes.string
+  delimiter: PropTypes.string,
+  interactive: PropTypes.bool
 }

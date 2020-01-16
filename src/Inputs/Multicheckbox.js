@@ -2,7 +2,18 @@ import React, {useCallback, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 
 const Multicheckbox = props => {
-  const {name, onChange, readonly, disabled, autofocus, keyword, inline, autoComplete} = props
+  const {
+    name,
+    onChange,
+    readonly,
+    disabled,
+    autofocus,
+    keyword,
+    inline,
+    autoComplete,
+    interactive = true
+  } = props
+
   const {options = []} = keyword
   const [value, updateValue] = useState([])
 
@@ -81,5 +92,6 @@ Multicheckbox.propTypes = {
   autofocus: PropTypes.bool,
   keyword: PropTypes.object,
   inline: PropTypes.bool,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

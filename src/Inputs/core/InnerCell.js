@@ -40,7 +40,7 @@ const InnerCell = props => {
     config.readonly = true
   }
 
-  const Type = mapInputType(config.type, interactive)
+  const Type = mapInputType(config.type)
 
   const value = formValues.get(config.name, '')
 
@@ -111,6 +111,7 @@ const InnerCell = props => {
         timeFormat={timeFormat}
         handleRTEImageClick={handleRTEImageClick}
         autoComplete={autoComplete}
+        interactive={interactive}
       >
         <Type />
       </InputContainer>

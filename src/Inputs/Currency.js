@@ -16,7 +16,8 @@ const Currency = props => {
     autoComplete,
     delimiter = ',',
     prefix = '$',
-    numeralDecimalMark = '.'
+    numeralDecimalMark = '.',
+    interactive = true
   } = props
 
   const input = useRef()
@@ -82,5 +83,6 @@ Currency.propTypes = {
   autoComplete: PropTypes.string,
   delimiter: PropTypes.string,
   prefix: PropTypes.string,
-  numeralDecimalMark: PropTypes.string
+  numeralDecimalMark: PropTypes.string,
+  interactive: PropTypes.bool
 }

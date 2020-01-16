@@ -16,7 +16,8 @@ const InputContainer = props => {
     dateTimeFormat,
     timeFormat,
     handleRTEImageClick,
-    autoComplete
+    autoComplete,
+    interactive
   } = props
   const {name, ...other} = config
   return (
@@ -34,6 +35,7 @@ const InputContainer = props => {
         timeFormat,
         handleRTEImageClick,
         autoComplete,
+        interactive,
         ...other
       })}
     </div>
@@ -55,5 +57,6 @@ InputContainer.propTypes = {
   dateTimeFormat: PropTypes.string,
   timeFormat: PropTypes.string,
   handleRTEImageClick: PropTypes.func,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

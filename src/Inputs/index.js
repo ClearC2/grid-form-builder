@@ -45,14 +45,11 @@ export function initCustomFormComponents (defs = {}) {
   FormComponents = {...FormComponents, ...defs}
 }
 
-export const mapInputType = (type = 'input', interactive) => {
+export const mapInputType = (type = 'input') => {
   if (typeof type !== 'string') type = 'input'
   type = uppercaseFirstLetter(type)
   if (type.indexOf('Richtext') > -1) {
     type = 'Richtextarea'
-  }
-  if (!interactive && type === 'Select') {
-    type = 'ImportSelect'
   }
   if (FormComponents[type]) {
     type = FormComponents[type]

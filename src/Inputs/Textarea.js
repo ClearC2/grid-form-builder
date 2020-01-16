@@ -2,9 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Textarea = props => {
-  const {name, value, onChange, readonly, disabled, autofocus, placeholder, tabIndex, autoComplete} = props
+  const {
+    name,
+    value,
+    onChange,
+    readonly,
+    disabled,
+    autofocus,
+    placeholder,
+    tabIndex,
+    autoComplete,
+    interactive = true
+  } = props
+
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled) className = className + ' gfb-disabled-input'
+
   return (
     <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
@@ -40,5 +53,6 @@ Textarea.propTypes = {
   autofocus: PropTypes.bool,
   placeholder: PropTypes.string,
   tabIndex: PropTypes.number,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

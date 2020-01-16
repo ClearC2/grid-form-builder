@@ -2,7 +2,19 @@ import React, {useCallback} from 'react'
 import PropTypes from 'prop-types'
 
 const Radio = props => {
-  const {name, onChange, readonly, disabled, autofocus, keyword, inline, value, autoComplete} = props
+  const {
+    name,
+    onChange,
+    readonly,
+    disabled,
+    autofocus,
+    keyword,
+    inline,
+    value,
+    autoComplete,
+    interactive = true
+  } = props
+
   const {options = []} = keyword
 
   const handleOnChange = useCallback(e => {
@@ -69,5 +81,6 @@ Radio.propTypes = {
   autofocus: PropTypes.bool,
   keyword: PropTypes.object,
   inline: PropTypes.bool,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

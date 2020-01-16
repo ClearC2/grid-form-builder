@@ -21,7 +21,8 @@ const Select = props => {
     required,
     onKeyDown = () => null, // sometimes provided in the config object
     onChange,
-    autoComplete
+    autoComplete,
+    interactive = true
   } = props
 
   const {options} = keyword
@@ -156,5 +157,6 @@ Select.propTypes = {
   values: PropTypes.object,
   persist: PropTypes.bool,
   onKeyDown: PropTypes.func,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

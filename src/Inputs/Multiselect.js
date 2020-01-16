@@ -21,7 +21,8 @@ const Multiselect = props => {
     required,
     onKeyDown = () => null, // sometimes provided in the config object
     onChange,
-    autoComplete
+    autoComplete,
+    interactive = true
   } = props
 
   const [input, changeInput] = useState({Select: allowcreate ? Creatable : ReactSelect})
@@ -215,5 +216,6 @@ Multiselect.propTypes = {
   values: PropTypes.object,
   persist: PropTypes.bool,
   onKeyDown: PropTypes.func,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }

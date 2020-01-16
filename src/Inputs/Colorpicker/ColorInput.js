@@ -3,9 +3,19 @@ import PropTypes from 'prop-types'
 import ColorPicker from './ColorPicker'
 
 const ColorInput = props => {
-  const {name, value, readonly, disabled, autofocus, placeholder, tabIndex, onChange, autoComplete} = props
-  let className = 'gfb-input__single-value gfb-input__input'
-  if (readonly || disabled) className = className + ' gfb-disabled-input'
+  const {
+    name,
+    value,
+    readonly,
+    disabled,
+    autofocus,
+    placeholder,
+    tabIndex,
+    onChange,
+    autoComplete,
+    interactive = true
+  } = props
+
   const [showPicker, setShowPicker] = useState(false)
   const inputId = useRef(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
   const portalRef = useRef()
@@ -46,6 +56,9 @@ const ColorInput = props => {
       setShowPicker(true)
     }
   }, [setShowPicker, readonly, disabled])
+
+  let className = 'gfb-input__single-value gfb-input__input'
+  if (readonly || disabled) className = className + ' gfb-disabled-input'
 
   return (
     <div className='gfb-input-outer'>
@@ -99,5 +112,6 @@ ColorInput.propTypes = {
   autofocus: PropTypes.bool,
   placeholder: PropTypes.string,
   tabIndex: PropTypes.number,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  interactive: PropTypes.bool
 }
