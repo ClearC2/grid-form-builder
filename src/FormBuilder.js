@@ -164,7 +164,8 @@ const FormBuilder = (props) => {
           tabindex = myOffset + '' + tabindex
         }
         const isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i
-        const className = isActive ? 'drag-item-active' : ''
+        let className = isActive ? 'drag-item-active' : ''
+        if (config.tooltip) className = className + ' gfb-has-tooltip'
         const removeSelf = e => {
           onClick({index: null}, e)
           removeItem(i)

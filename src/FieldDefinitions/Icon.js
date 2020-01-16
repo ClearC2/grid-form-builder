@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {DropTarget} from 'react-dnd'
 import {Map} from 'immutable'
 import PropTypes from 'prop-types'
+import Tooltip from 'react-tooltip'
 
 export class Icon extends Component {
   static propTypes = {
@@ -66,7 +67,7 @@ export class Icon extends Component {
 
   render = () => {
     const {config = {}, Icon = null, connectDropTarget, cascadingKeyword, CascadeIcon, LinkIcon} = this.props
-    const {onClick = () => null, link} = config
+    const {onClick = () => null, link, tooltip} = config
     let {style = {}, iconStyle = {}} = config
     style = typeof style === 'string' ? JSON.parse(style) : style
     iconStyle = typeof iconStyle === 'string' ? JSON.parse(iconStyle) : iconStyle
@@ -94,7 +95,14 @@ export class Icon extends Component {
                   : link ? this.handleLinkClick : null
               }
               className={(!!cascadingKeyword && !CascadeIcon) || link ? 'cursor-hand' : ''}
+              data-tip
+              data-for='icon-tooltip'
             />
+          )}
+          {tooltip && (
+            <Tooltip id='icon-tooltip' style={{zIndex: Number.MAX_SAFE_INTEGER}}>
+              <span>{tooltip}</span>
+            </Tooltip>
           )}
           {!!cascadingKeyword && !!CascadeIcon && (
             <CascadeIcon onClick={this.handleCascadeKeywordClick} className='cursor-hand' />

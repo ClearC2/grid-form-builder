@@ -265,3 +265,7 @@ div.gfb-multi-input-input.gfb-multi-input-selected {
 .gfb-multi-input-label-wrapper > input[type="checkbox"], .gfb-multi-input-label-wrapper > input[type="radio"] {
   flex: none;
 }
+
+.gfb-has-tooltip {
+  z-index: 9001;
+}
