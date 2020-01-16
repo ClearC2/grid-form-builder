@@ -37,21 +37,9 @@
           "static": false
         },
         "config": {
-          "name": "unique-test-input",
-          "label": "Test Input",
-          "type": "input",
-          "labelStyle": {
-            "color": "blue",
-            "textDecoration": "underline"
-          },
-          "link": {
-            "type": "c2company",
-            "id": "parentid",
-            "icon": "externallink",
-            "style": {
-              "color": "red"
-            }
-          }
+          "type": "icon",
+          "icon": "cogs",
+          "tooltip": "<div><b>Sky rockets in flight... </b><span>afternoon delight</span></div>"
         }
       }, {
         "type": "field",
