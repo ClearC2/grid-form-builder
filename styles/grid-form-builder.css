@@ -116,7 +116,7 @@ input[class^="gfb-input"][type="checkbox"], input[class^="gfb-input"][type="radi
   margin-right: 5px;
 }
 
-div.gfb-inner-cell-label {
+div.gfb-inner-cell-label:not(.gfb-small) {
   height: 20px;
   display: flex;
   flex-direction: row;

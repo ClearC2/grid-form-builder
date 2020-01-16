@@ -41,6 +41,10 @@ const LabelContainer = props => {
     className = className + ' gfb-full-cell-label'
   }
 
+  if (type === 'metadata') {
+    className = className + ' gfb-small'
+  }
+
   const size = className.indexOf('full-cell-label') > -1 ? 40 : 15
 
   return (
