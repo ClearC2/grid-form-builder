@@ -19,6 +19,7 @@ import Percentage from './Percentage'
 import Email from './Email'
 import Icon from './Icon'
 import Metadata from './Metadata'
+import Header from './Header'
 
 let FormComponents = {
   Input,
@@ -41,7 +42,8 @@ let FormComponents = {
   Percentage,
   Email,
   Icon,
-  Metadata
+  Metadata,
+  Header
 }
 
 export function initCustomFormComponents (defs = {}) {

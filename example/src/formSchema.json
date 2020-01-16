@@ -619,21 +619,11 @@
           "w": 6,
           "h": 1,
           "x": 0,
-          "y": 4,
-          "moved": false,
-          "static": false
+          "y": 4
         },
         "config": {
-          "name": "headertest",
           "label": "Example Header",
-          "type": "header",
-          "style": {
-            "color": "grey"
-          },
-          "cascade": {
-            "keyword": "C2_PEOPLE_SOMETHING",
-            "icon": "tree"
-          }
+          "type": "header"
         }
       }, {
         "type": "header",

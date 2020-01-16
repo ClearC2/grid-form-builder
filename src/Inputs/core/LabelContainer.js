@@ -37,7 +37,7 @@ const LabelContainer = props => {
   ])
 
   let className = 'gfb-inner-cell-label'
-  if (type === 'icon') {
+  if (type === 'icon' || type === 'header') {
     className = className + ' gfb-full-cell-label'
   }
 
@@ -48,13 +48,21 @@ const LabelContainer = props => {
       {Icon && (
         <Icon size={size} />
       )}
-      {label && (
+      {label && type !== 'header' && (
         <strong
           onClick={onLabelTextClick}
           className={LinkIcon || CascadeIcon ? 'cursor-hand' : ''}
         >
           {label}
         </strong>
+      )}
+      {label && type === 'header' && (
+        <h3
+          onClick={onLabelTextClick}
+          className={LinkIcon || CascadeIcon ? 'cursor-hand' : ''}
+        >
+          {label}
+        </h3>
       )}
       {LinkIcon && (
         <LinkIcon className='cursor-hand' onClick={onLinkClick} />
