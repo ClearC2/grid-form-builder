@@ -1,3 +1,11 @@
+# [2.18.0](https://github.com/ClearC2/grid-form-builder/compare/v2.17.0...v2.18.0) (2020-01-16)
+
+
+### Features
+
+* **formSchema:** revert form schema change ([98f43c2](https://github.com/ClearC2/grid-form-builder/commit/98f43c2))
+* **icon:** tooltip now dangerously sets inner html rather than setting a string value in a span ([6559601](https://github.com/ClearC2/grid-form-builder/commit/6559601))
+
 # [2.17.0](https://github.com/ClearC2/grid-form-builder/compare/v2.16.0...v2.17.0) (2020-01-16)
 
 
