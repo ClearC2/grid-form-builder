@@ -53,7 +53,8 @@ const DateInput = props => {
   }, [changeShowPicker])
 
   let className = 'gfb-input__single-value gfb-input__input'
-  if (readonly || disabled) className = className + ' gfb-disabled-input'
+  if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
+  if (!interactive) className = className + ' gfb-non-interactive-input'
 
   let startDate
   if (inputValue) {
@@ -71,7 +72,7 @@ const DateInput = props => {
               name={name}
               value={inputValue}
               onChange={handleOnInputChange}
-              disabled={readonly || disabled}
+              disabled={readonly || disabled || !interactive}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}

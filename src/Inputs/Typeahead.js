@@ -194,10 +194,10 @@ const Typeahead = props => {
   }, [setMenuOpenPosition, fieldPosition])
 
   const handleInputClick = useCallback(() => {
-    if (!disabled && !readonly) {
+    if (!disabled && !readonly && interactive) {
       setInputFieldPosition()
     }
-  }, [disabled, readonly, setInputFieldPosition])
+  }, [disabled, interactive, readonly, setInputFieldPosition])
 
   const handleOnFocus = useCallback(() => {
     let simpleValue = typeof value.toJS === 'function' ? value.toJS() : value
@@ -367,10 +367,13 @@ const Typeahead = props => {
 
   const {Typeahead} = input
 
+  let className = 'gfb-input-inner'
+  if (!interactive) className = className + ' gfb-non-interactive-input'
+
   return (
     <div className='gfb-input-outer' ref={inputContainer} onMouseDown={handleOnFocus}>
       <Typeahead
-        className='gfb-input-inner'
+        className={className}
         classNamePrefix='gfb-input'
         tabIndex={tabIndex}
         autofocus={autofocus}
@@ -380,7 +383,7 @@ const Typeahead = props => {
         createOptionPosition='first'
         formatCreateLabel={formatCreateLabel}
         multi={multi}
-        isDisabled={disabled || readonly}
+        isDisabled={disabled || readonly || !interactive}
         menuPortalTarget={document.body}
         menuShouldBlockScroll
         name={name}
@@ -399,6 +402,21 @@ const Typeahead = props => {
         value={selectValue}
         autoComplete={autoComplete}
         styles={{
+          multiValue: base => {
+            if (!interactive) {
+              base.color = 'green'
+              base.backgroundColor = '#a6eca67a'
+            } else {
+              base.backgroundColor = '#8bb7ff91'
+            }
+            return ({...base})
+          },
+          singleValue: base => {
+            if (!interactive) {
+              base.color = 'green'
+            }
+            return ({...base})
+          },
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12
             return ({...base, top})

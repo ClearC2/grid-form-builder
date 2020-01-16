@@ -25,7 +25,7 @@ const Multicheckbox = props => {
   }, [props.value, props.value.length])
 
   const handleOnChange = useCallback(e => {
-    if (!disabled && !readonly) {
+    if (!disabled && !readonly && interactive) {
       const {value: clickedValue} = e.target
       let newvalue = [...value]
       if (newvalue.indexOf(clickedValue) > -1) {
@@ -40,7 +40,7 @@ const Multicheckbox = props => {
         }
       })
     }
-  }, [name, onChange, value, disabled, readonly])
+  }, [disabled, readonly, interactive, value, onChange, name])
 
   let valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container'
   if (inline) {
@@ -55,7 +55,8 @@ const Multicheckbox = props => {
               const checked = value.indexOf(option.value) > -1 || value.indexOf(option.value + '') > -1 // the option value may be a number but the field have the value as a string
               let className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input'
               if (checked) className = className + ' gfb-multi-input-selected'
-              if (disabled || readonly) className = className + ' gfb-disabled-input'
+              if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input'
+              if (!interactive) className = className + ' gfb-non-interactive-input'
               return (
                 <label key={i} className={'gfb-multi-input-label-wrapper ' + className}>
                   <input
@@ -64,7 +65,7 @@ const Multicheckbox = props => {
                     value={option.value}
                     checked={checked}
                     onChange={handleOnChange}
-                    disabled={readonly || disabled}
+                    disabled={readonly || disabled || !interactive}
                     autoFocus={autofocus}
                     type='checkbox'
                     autoComplete={autoComplete}

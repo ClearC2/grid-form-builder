@@ -25,7 +25,7 @@ const Multiselect = props => {
     interactive = true
   } = props
 
-  const [input, changeInput] = useState({Select: allowcreate ? Creatable : ReactSelect})
+  const [input, changeInput] = useState({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
   const [menuIsOpen, updateIsMenuOpen] = useState(false)
   const [menuPlacement, updateMenuPlacement] = useState('bottom')
@@ -59,10 +59,10 @@ const Multiselect = props => {
   }, [openMenu, fieldPosition])
 
   const handleInputClick = useCallback(() => {
-    if (!disabled && !readonly) {
+    if (!disabled && !readonly && interactive) {
       setInputFieldPosition()
     }
-  }, [disabled, readonly, setInputFieldPosition])
+  }, [disabled, interactive, readonly, setInputFieldPosition])
 
   const handleOnFocus = useCallback(() => {
     handleInputClick()
@@ -101,8 +101,8 @@ const Multiselect = props => {
   }, [fieldPosition, setMenuOpenPosition])
 
   useEffect(() => {
-    changeInput({Select: allowcreate ? Creatable : ReactSelect})
-  }, [allowcreate, changeInput])
+    changeInput({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
+  }, [allowcreate, changeInput, interactive])
 
   useEffect(() => {
     updateIsRequiredFlag(required && requiredWarning && !value.length)
@@ -163,15 +163,19 @@ const Multiselect = props => {
   }, [onChange, name, menuIsOpen])
 
   const {Select} = input
+
+  let className = 'gfb-input-inner'
+  if (!interactive) className = className + ' gfb-non-interactive-input'
+
   return (
     <div className='gfb-input-outer' ref={inputContainer} onMouseDown={handleOnFocus}>
       <Select
-        className='gfb-input-inner'
+        className={className}
         classNamePrefix='gfb-input'
         tabIndex={tabIndex}
         autofocus={autofocus}
         isClearable
-        isDisabled={disabled || readonly}
+        isDisabled={disabled || readonly || !interactive}
         menuPortalTarget={document.body}
         menuShouldBlockScroll
         isMulti
@@ -188,6 +192,15 @@ const Multiselect = props => {
         onChange={handleChange}
         autoComplete={autoComplete}
         styles={{
+          multiValue: base => {
+            if (!interactive) {
+              base.color = 'green'
+              base.backgroundColor = '#a6eca67a'
+            } else {
+              base.backgroundColor = '#8bb7ff91'
+            }
+            return ({...base})
+          },
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12
             return ({...base, top})

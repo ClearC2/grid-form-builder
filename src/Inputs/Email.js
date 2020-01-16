@@ -29,7 +29,8 @@ const Email = props => {
   }, [])
 
   let className = 'gfb-input__single-value gfb-input__input'
-  if (readonly || disabled) className = className + ' gfb-disabled-input'
+  if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
+  if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control'
   let validationError = false
   if (value && !emailValidator(value) && !isFocused) {
@@ -47,7 +48,7 @@ const Email = props => {
               name={name}
               value={value}
               onChange={onChange}
-              disabled={readonly || disabled}
+              disabled={readonly || disabled || !interactive}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}

@@ -27,7 +27,7 @@ const Select = props => {
 
   const {options} = keyword
 
-  const [input, changeInput] = useState({Select: allowcreate ? Creatable : ReactSelect})
+  const [input, changeInput] = useState({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
   const [menuIsOpen, updateIsMenuOpen] = useState(false)
   const [menuPlacement, updateMenuPlacement] = useState('bottom')
@@ -60,10 +60,10 @@ const Select = props => {
   }, [openMenu, fieldPosition])
 
   const handleInputClick = useCallback(() => {
-    if (!disabled && !readonly) {
+    if (!disabled && !readonly && interactive) {
       setInputFieldPosition()
     }
-  }, [disabled, readonly, setInputFieldPosition])
+  }, [disabled, interactive, readonly, setInputFieldPosition])
 
   const handleOnFocus = useCallback(() => {
     handleInputClick()
@@ -74,8 +74,8 @@ const Select = props => {
   }, [fieldPosition, setMenuOpenPosition])
 
   useEffect(() => {
-    changeInput({Select: allowcreate ? Creatable : ReactSelect})
-  }, [allowcreate, changeInput])
+    changeInput({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
+  }, [interactive, allowcreate, changeInput])
 
   useEffect(() => {
     updateIsRequiredFlag(required && requiredWarning && !value.length)
@@ -86,7 +86,7 @@ const Select = props => {
       acc[cv.value] = cv.label
       return acc
     }, {})
-    updateSelectValue({label: keyMap[value], value})
+    updateSelectValue({label: keyMap[value] || value, value})
   }, [value, updateSelectValue, options])
 
   const handleOnKeyDown = useCallback(() => {
@@ -105,10 +105,14 @@ const Select = props => {
   }, [onChange, name, menuIsOpen])
 
   const {Select} = input
+
+  let className = 'gfb-input-inner'
+  if (!interactive) className = className + ' gfb-non-interactive-input'
+
   return (
     <div className='gfb-input-outer' ref={inputContainer} onMouseDown={handleOnFocus}>
       <Select
-        className='gfb-input-inner'
+        className={className}
         classNamePrefix='gfb-input'
         tabIndex={tabIndex}
         autofocus={autofocus}
@@ -129,6 +133,12 @@ const Select = props => {
         onChange={handleChange}
         autoComplete={autoComplete}
         styles={{
+          singleValue: base => {
+            if (!interactive) {
+              base.color = 'green'
+            }
+            return ({...base})
+          },
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12
             return ({...base, top})

@@ -255,6 +255,10 @@ div.gfb-multi-input-input.gfb-multi-input-selected {
   background-color: #a1c3fa;
 }
 
+div.gfb-multi-input-input.gfb-multi-input-selected.gfb-non-interactive-input {
+  background-color: #a6eca67a !important;
+}
+
 .gfb-multi-input-label-wrapper {
   flex-direction: row;
   display: flex;
@@ -264,6 +268,10 @@ div.gfb-multi-input-input.gfb-multi-input-selected {
 
 .gfb-multi-input-label-wrapper > input[type="checkbox"], .gfb-multi-input-label-wrapper > input[type="radio"] {
   flex: none;
+}
+
+.gfb-non-interactive-input {
+  color: green;
 }
 
 .gfb-has-tooltip {

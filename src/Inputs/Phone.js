@@ -35,7 +35,8 @@ const Phone = props => {
   }, [onChange, name])
 
   let className = 'gfb-input__single-value gfb-input__input'
-  if (readonly || disabled) className = className + ' gfb-disabled-input'
+  if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
+  if (!interactive) className = className + ' gfb-non-interactive-input'
 
   return (
     <div className='gfb-input-outer'>
@@ -53,7 +54,7 @@ const Phone = props => {
               name={name}
               value={value}
               onChange={handleOnChange}
-              disabled={readonly || disabled}
+              disabled={readonly || disabled || !interactive}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}

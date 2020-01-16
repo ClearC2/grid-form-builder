@@ -22,7 +22,7 @@ const Listselect = props => {
   }, [props.value, props.value.length])
 
   const handleOnChange = useCallback(e => {
-    if (!disabled && !readonly) {
+    if (!disabled && !readonly && interactive) {
       const {innerHTML: clickedValue} = e.target
       let newvalue = [...value]
       if (newvalue.indexOf(clickedValue) > -1) {
@@ -37,10 +37,10 @@ const Listselect = props => {
         }
       })
     }
-  }, [name, onChange, value, disabled, readonly])
+  }, [disabled, readonly, interactive, value, onChange, name])
 
   const handleSelectAll = useCallback(() => {
-    if (!readonly && !disabled) {
+    if (!readonly && !disabled && interactive) {
       const allvalues = options.map(option => option.value)
       onChange({
         target: {
@@ -49,10 +49,10 @@ const Listselect = props => {
         }
       })
     }
-  }, [options, onChange, name, readonly, disabled])
+  }, [readonly, disabled, interactive, options, onChange, name])
 
   const handleDeselectAll = useCallback(() => {
-    if (!readonly && !disabled) {
+    if (!readonly && !disabled && interactive) {
       onChange({
         target: {
           name,
@@ -60,7 +60,7 @@ const Listselect = props => {
         }
       })
     }
-  }, [name, onChange, readonly, disabled])
+  }, [readonly, disabled, interactive, onChange, name])
 
   return (
     <div className='gfb-input-outer'>
@@ -72,7 +72,8 @@ const Listselect = props => {
               const selected = value.indexOf(option.value) > -1
               let className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input'
               if (selected) className = className + ' gfb-multi-input-selected'
-              if (disabled || readonly) className = className + ' gfb-disabled-input'
+              if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input'
+              if (!interactive) className = className + ' gfb-non-interactive-input'
               return (
                 <div
                   key={i}

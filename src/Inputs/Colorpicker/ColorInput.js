@@ -52,13 +52,14 @@ const ColorInput = props => {
   }, [showPicker, setShowPicker, name, onChange])
 
   const handleOnFocus = useCallback(() => {
-    if (!readonly && !disabled) {
+    if (!readonly && !disabled && interactive) {
       setShowPicker(true)
     }
-  }, [setShowPicker, readonly, disabled])
+  }, [readonly, disabled, interactive])
 
   let className = 'gfb-input__single-value gfb-input__input'
-  if (readonly || disabled) className = className + ' gfb-disabled-input'
+  if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
+  if (!interactive) className = className + ' gfb-non-interactive-input'
 
   return (
     <div className='gfb-input-outer'>
@@ -71,7 +72,7 @@ const ColorInput = props => {
               name={name}
               value={value}
               onChange={handleOnInputChange}
-              disabled={readonly || disabled}
+              disabled={readonly || disabled || !interactive}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}
