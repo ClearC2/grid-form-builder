@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, {useCallback, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 // import Cleave from 'cleave.js/react'
 import Cleave from '../Cleave' // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
