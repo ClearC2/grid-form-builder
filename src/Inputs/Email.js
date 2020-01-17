@@ -1,8 +1,7 @@
 import React, {useCallback, useState} from 'react'
 import PropTypes from 'prop-types'
 import {emailValidator} from '../utils'
-import {FaExclamationTriangle} from 'react-icons/fa'
-import Tooltip from 'react-tooltip'
+import ValidationErrorIcon from '../ValidationErrorIcon'
 
 const Email = props => {
   const {
@@ -15,7 +14,8 @@ const Email = props => {
     placeholder,
     tabIndex,
     autoComplete,
-    interactive = true
+    interactive = true,
+    requiredWarning
   } = props
 
   const [isFocused, setIsFocused] = useState(false)
@@ -36,6 +36,10 @@ const Email = props => {
   if (value && !emailValidator(value) && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'Invalid Email Format'
+  }
+  if (requiredWarning && (value + '').length === 0 && !isFocused) {
+    controlClass = controlClass + ' gfb-validation-error'
+    validationError = 'This field is required'
   }
 
   return (
@@ -58,14 +62,7 @@ const Email = props => {
             />
           </div>
           <div className='gfb-input__indicators'>
-            {validationError && (
-              <div className='gfb-input__indicator gfb-validation-error-indicator'>
-                <FaExclamationTriangle data-tip data-for='validation-icon' color='red' />
-                <Tooltip id='validation-icon' type='error' multiline={false}>
-                  <span>{validationError}</span>
-                </Tooltip>
-              </div>
-            )}
+            {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
       </div>
