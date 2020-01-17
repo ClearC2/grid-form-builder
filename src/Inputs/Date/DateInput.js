@@ -2,10 +2,8 @@ import React, {useCallback, useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from './DatePicker'
 import moment from 'moment'
-import Portal from '../../Portal'
-import Tooltip from 'react-tooltip'
 import {randomId} from '../../utils'
-import {FaExclamationTriangle} from 'react-icons/fa'
+import ValidationErrorIcon from '../../ValidationErrorIcon'
 
 const DateInput = props => {
   const {
@@ -32,7 +30,6 @@ const DateInput = props => {
   type = type.toLowerCase()
   const [inputValue, changeInputValue] = useState('')
   const elementId = useRef(randomId())
-  const validationId = useRef(randomId())
   const [showPicker, changeShowPicker] = useState(false)
   const [inputFormat, setInputFormat] = useState()
   const [isFocused, setIsFocused] = useState(false)
@@ -112,16 +109,7 @@ const DateInput = props => {
             )}
           </div>
           <div className='gfb-input__indicators'>
-            {validationError && (
-              <div className='gfb-input__indicator gfb-validation-error-indicator'>
-                <FaExclamationTriangle id={validationId.current} data-tip data-for={validationId.current} color='red' />
-                <Portal id={validationId.current}>
-                  <Tooltip id={validationId.current} type='error'>
-                    <span>{validationError}</span>
-                  </Tooltip>
-                </Portal>
-              </div>
-            )}
+            {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
       </div>

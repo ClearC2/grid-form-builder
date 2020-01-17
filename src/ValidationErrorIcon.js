@@ -23,7 +23,6 @@ const ValidationErrorIcon = props => {
 }
 
 ValidationErrorIcon.propTypes = {
-  id: PropTypes.string,
   message: PropTypes.string
 }
 
