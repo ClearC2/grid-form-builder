@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react'
 import PropTypes from 'prop-types'
+import ValidationErrorIcon from '../ValidationErrorIcon'
 
 const Radio = props => {
   const {
@@ -12,7 +13,8 @@ const Radio = props => {
     inline,
     value,
     autoComplete,
-    interactive = true
+    interactive = true,
+    requiredWarning
   } = props
 
   const {options = []} = keyword
@@ -34,10 +36,16 @@ const Radio = props => {
   if (inline) {
     valueContainerClassName = valueContainerClassName + ' gfb-inline-values-container'
   }
+  let controlClass = 'gfb-input__control gfb-boxless-input'
+  let validationError
+  if (requiredWarning && value.length === 0) {
+    controlClass = controlClass + ' gfb-validation-error'
+    validationError = 'This field is required'
+  }
   return (
     <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
-        <div className='gfb-input__control gfb-boxless-input'>
+        <div className={controlClass}>
           <div className={valueContainerClassName}>
             {options.map((option, i) => {
               const checked = value && (option.value + '').toLowerCase() === (value + '').toLowerCase() // the option value may be a number but the field have the value as a string
@@ -64,7 +72,9 @@ const Radio = props => {
               )
             })}
           </div>
-          <div className='gfb-input__indicators' />
+          <div className='gfb-input__indicators'>
+            {validationError && <ValidationErrorIcon message={validationError} />}
+          </div>
         </div>
       </div>
     </div>
