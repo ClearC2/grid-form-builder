@@ -2,6 +2,10 @@ import React, {useCallback, useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from './DatePicker'
 import moment from 'moment'
+import Portal from '../../Portal'
+import Tooltip from 'react-tooltip'
+import {randomId} from '../../utils'
+import {FaExclamationTriangle} from 'react-icons/fa'
 
 const DateInput = props => {
   const {
@@ -20,15 +24,18 @@ const DateInput = props => {
     showCalendar = true,
     format,
     autoComplete,
-    interactive = true
+    interactive = true,
+    requiredWarning
   } = props
 
   let {type = 'date'} = props
   type = type.toLowerCase()
   const [inputValue, changeInputValue] = useState('')
-  const elementId = useRef(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
+  const elementId = useRef(randomId())
+  const validationId = useRef(randomId())
   const [showPicker, changeShowPicker] = useState(false)
   const [inputFormat, setInputFormat] = useState()
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
     changeInputValue(value)
@@ -50,11 +57,22 @@ const DateInput = props => {
 
   const handleOnFocus = useCallback(() => {
     changeShowPicker(true)
+    setIsFocused(true)
   }, [changeShowPicker])
+
+  const handleOnBlur = useCallback(() => {
+    setIsFocused(false)
+  }, [])
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
+  let controlClass = 'gfb-input__control'
+  let validationError
+  if (requiredWarning && (value + '').length === 0 && !isFocused) {
+    controlClass = controlClass + ' gfb-validation-error'
+    validationError = 'This field is required'
+  }
 
   let startDate
   if (inputValue) {
@@ -64,7 +82,7 @@ const DateInput = props => {
   return (
     <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
-        <div className='gfb-input__control'>
+        <div className={controlClass}>
           <div className='gfb-input__value-container'>
             <input
               id={elementId.current}
@@ -77,6 +95,7 @@ const DateInput = props => {
               placeholder={placeholder}
               tabIndex={tabIndex}
               onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
               autoComplete={autoComplete}
             />
             {showPicker && (
@@ -92,7 +111,18 @@ const DateInput = props => {
               />
             )}
           </div>
-          <div className='gfb-input__indicators' />
+          <div className='gfb-input__indicators'>
+            {validationError && (
+              <div className='gfb-input__indicator gfb-validation-error-indicator'>
+                <FaExclamationTriangle id={validationId.current} data-tip data-for={validationId.current} color='red' />
+                <Portal id={validationId.current}>
+                  <Tooltip id={validationId.current} type='error'>
+                    <span>{validationError}</span>
+                  </Tooltip>
+                </Portal>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
