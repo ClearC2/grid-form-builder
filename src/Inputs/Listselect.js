@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useEffect} from 'react'
 import PropTypes from 'prop-types'
+import ValidationErrorIcon from '../ValidationErrorIcon'
 
 const Listselect = props => {
   const {
@@ -8,7 +9,8 @@ const Listselect = props => {
     keyword,
     disabled,
     readonly,
-    interactive = true
+    interactive = true,
+    requiredWarning
   } = props
 
   const {options = []} = keyword
@@ -62,10 +64,17 @@ const Listselect = props => {
     }
   }, [readonly, disabled, interactive, onChange, name])
 
+  let controlClass = 'gfb-input__control'
+  let validationError
+  if (requiredWarning && value.length === 0) {
+    controlClass = controlClass + ' gfb-validation-error'
+    validationError = 'This field is required'
+  }
+
   return (
     <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
-        <div className='gfb-input__control'>
+        <div className={controlClass}>
           <div className='gfb-input__value-container gfb-value-multi-input-container'>
             {options.map((option, i) => {
               const display = option.label ? option.label : option.value
@@ -85,7 +94,10 @@ const Listselect = props => {
               )
             })}
           </div>
-          <div className='gfb-input__indicators' />
+          <div className='gfb-input__indicators'>
+            {validationError && <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
+            {validationError && <ValidationErrorIcon message={validationError} />}
+          </div>
         </div>
         <div className='gfb-input-control-bottom'>
           <span className='gfb-action-link' onClick={handleSelectAll}>
