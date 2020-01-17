@@ -82,6 +82,11 @@ div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox > .gfb-inner-cell-label {
   margin-left: 10px;
 }
 
+div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox.gfb-checkbox-label-with-validation > .gfb-inner-cell-label {
+  margin-left: 40px;
+}
+
+
 div.gfb-inline-cell:not(.gfb-checkbox) > .gfb-inner-cell-label, div.gfb-inline-cell:not(.gfb-checkbox) > .gfb-inner-cell-input {
   height: 100%;
 }

@@ -1,5 +1,6 @@
 import React, {useCallback, useRef} from 'react'
 import PropTypes from 'prop-types'
+import ValidationErrorIcon from '../ValidationErrorIcon'
 
 const Checkbox = props => {
   const {
@@ -14,7 +15,8 @@ const Checkbox = props => {
     onValue,
     offValue,
     autoComplete,
-    interactive = true
+    interactive = true,
+    requiredWarning
   } = props
 
   const truthy = useRef([
@@ -116,11 +118,17 @@ const Checkbox = props => {
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
+  let controlClass = 'gfb-input__control gfb-boxless-input'
+  let validationError
+  if (requiredWarning && (value + '').length === 0) {
+    controlClass = controlClass + ' gfb-validation-error'
+    validationError = 'This field is required'
+  }
 
   return (
     <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
-        <div className='gfb-input__control gfb-boxless-input'>
+        <div className={controlClass}>
           <div className='gfb-input__value-container'>
             <input
               className={className}
@@ -136,7 +144,9 @@ const Checkbox = props => {
               autoComplete={autoComplete}
             />
           </div>
-          <div className='gfb-input__indicators' />
+          <div className='gfb-input__indicators'>
+            {validationError && <ValidationErrorIcon message={validationError} />}
+          </div>
         </div>
       </div>
     </div>
