@@ -130,11 +130,6 @@
             "fields": ["inputtest"]
           },
           "style": {
-            "value": {
-              "color": "pink",
-              "fontWeight": "bold",
-              "fontSize": "14pt"
-            },
             "label": {
               "fontSize": "3pt",
               "fontWeight": "normal"
@@ -171,6 +166,11 @@
             },
             "indicators": {
               "border": "1px solid orange"
+            },
+            "value": {
+              "color": "pink",
+              "fontWeight": "bold",
+              "fontSize": "14pt"
             },
             "options": {
               "backgroundColor": "#FF00FF",

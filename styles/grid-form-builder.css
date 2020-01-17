@@ -41,6 +41,11 @@ div.grid-form-builder-parent .react-grid-item.react-draggable:hover, .react-grid
   z-index: 3;
 }
 
+div.grid-form-builder-parent .react-grid-item.react-draggable:hover > span.react-resizable-handle, .react-grid-item > span.react-resizable-handle {
+  right: -6px;
+  bottom: -5px;
+}
+
 div.grid-form-builder-parent .react-grid-item.react-draggable:hover > span.react-resizable-handle, .react-grid-item.react-draggable.drag-item-active > span.react-resizable-handle {
   right: -6px;
   bottom: -6px;
