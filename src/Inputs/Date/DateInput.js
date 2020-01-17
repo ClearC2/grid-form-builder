@@ -23,8 +23,18 @@ const DateInput = props => {
     format,
     autoComplete,
     interactive = true,
-    requiredWarning
+    requiredWarning,
+    style
   } = props
+
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {}
+  } = style
 
   let {type = 'date'} = props
   type = type.toLowerCase()
@@ -77,10 +87,10 @@ const DateInput = props => {
     if (date.isValid()) startDate = date
   }
   return (
-    <div className='gfb-input-outer'>
-      <div className='gfb-input-inner'>
-        <div className={controlClass}>
-          <div className='gfb-input__value-container'>
+    <div className='gfb-input-outer' style={inputOuter}>
+      <div className='gfb-input-inner' style={inputInner}>
+        <div className={controlClass} style={inputControl}>
+          <div className='gfb-input__value-container' style={valueContainer}>
             <input
               id={elementId.current}
               className={className}
@@ -94,6 +104,7 @@ const DateInput = props => {
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               autoComplete={autoComplete}
+              style={valueStyle}
             />
             {showPicker && (
               <DatePicker
@@ -108,7 +119,7 @@ const DateInput = props => {
               />
             )}
           </div>
-          <div className='gfb-input__indicators'>
+          <div className='gfb-input__indicators' style={indicators}>
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

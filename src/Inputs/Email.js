@@ -15,8 +15,18 @@ const Email = props => {
     tabIndex,
     autoComplete,
     interactive = true,
-    requiredWarning
+    requiredWarning,
+    style
   } = props
+
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {}
+  } = style
 
   const [isFocused, setIsFocused] = useState(false)
 
@@ -43,10 +53,10 @@ const Email = props => {
   }
 
   return (
-    <div className='gfb-input-outer'>
-      <div className='gfb-input-inner'>
-        <div className={controlClass}>
-          <div className='gfb-input__value-container'>
+    <div className='gfb-input-outer' style={inputOuter}>
+      <div className='gfb-input-inner' style={inputInner}>
+        <div className={controlClass} style={inputControl}>
+          <div className='gfb-input__value-container' style={valueContainer}>
             <input
               className={className}
               name={name}
@@ -59,9 +69,10 @@ const Email = props => {
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               autoComplete={autoComplete === 'off' ? 'ac-off' : autoComplete}
+              style={valueStyle}
             />
           </div>
-          <div className='gfb-input__indicators'>
+          <div className='gfb-input__indicators' style={indicators}>
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

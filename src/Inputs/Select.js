@@ -23,8 +23,19 @@ const Select = props => {
     onKeyDown = () => null, // sometimes provided in the config object
     onChange,
     autoComplete,
-    interactive = true
+    interactive = true,
+    style
   } = props
+
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {},
+    options: optionsStyle = {}
+  } = style
 
   const {options} = keyword
 
@@ -124,7 +135,7 @@ const Select = props => {
   }
 
   return (
-    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus}>
+    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
       <Select
         className={className}
         classNamePrefix='gfb-input'
@@ -148,11 +159,26 @@ const Select = props => {
         autoComplete={autoComplete}
         components={components}
         styles={{
+          container: base => {
+            return ({...base, ...inputInner})
+          },
+          control: base => {
+            return ({...base, ...inputControl})
+          },
+          valueContainer: base => {
+            return ({...base, ...valueContainer})
+          },
+          indicatorsContainer: base => {
+            return ({...base, ...indicators})
+          },
+          option: base => {
+            return ({...base, ...optionsStyle})
+          },
           singleValue: base => {
             if (!interactive) {
               base.color = 'green'
             }
-            return ({...base})
+            return ({...base, ...valueStyle})
           },
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12

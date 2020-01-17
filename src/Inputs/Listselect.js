@@ -10,8 +10,19 @@ const Listselect = props => {
     disabled,
     readonly,
     interactive = true,
-    requiredWarning
+    requiredWarning,
+    style
   } = props
+
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {},
+    options: optionsStyle = {}
+  } = style
 
   const {options = []} = keyword
   const [value, updateValue] = useState([])
@@ -72,10 +83,10 @@ const Listselect = props => {
   }
 
   return (
-    <div className='gfb-input-outer'>
-      <div className='gfb-input-inner'>
-        <div className={controlClass}>
-          <div className='gfb-input__value-container gfb-value-multi-input-container'>
+    <div className='gfb-input-outer' style={inputOuter}>
+      <div className='gfb-input-inner' style={inputInner}>
+        <div className={controlClass} style={inputControl}>
+          <div className='gfb-input__value-container gfb-value-multi-input-container' style={valueContainer}>
             {options.map((option, i) => {
               const display = option.label ? option.label : option.value
               const selected = value.indexOf(option.value) > -1
@@ -88,13 +99,14 @@ const Listselect = props => {
                   key={i}
                   className={className}
                   onClick={handleOnChange}
+                  style={{...valueStyle, ...optionsStyle}}
                 >
                   {display}
                 </div>
               )
             })}
           </div>
-          <div className='gfb-input__indicators'>
+          <div className='gfb-input__indicators' style={indicators}>
             {validationError && <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>

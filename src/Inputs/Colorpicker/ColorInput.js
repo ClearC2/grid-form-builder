@@ -16,8 +16,18 @@ const ColorInput = props => {
     onChange,
     autoComplete,
     interactive = true,
-    requiredWarning
+    requiredWarning,
+    style
   } = props
+
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {}
+  } = style
 
   const [showPicker, setShowPicker] = useState(false)
   const inputId = useRef(randomId())
@@ -77,10 +87,10 @@ const ColorInput = props => {
   }
 
   return (
-    <div className='gfb-input-outer'>
-      <div className='gfb-input-inner'>
-        <div className={controlClass}>
-          <div className='gfb-input__value-container'>
+    <div className='gfb-input-outer' style={inputOuter}>
+      <div className='gfb-input-inner' style={inputInner}>
+        <div className={controlClass} style={inputControl}>
+          <div className='gfb-input__value-container' style={valueContainer}>
             <input
               id={inputId.current}
               className={className}
@@ -94,6 +104,7 @@ const ColorInput = props => {
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               autoComplete={autoComplete}
+              style={valueStyle}
             />
             {showPicker && (
               <ColorPicker
@@ -105,7 +116,7 @@ const ColorInput = props => {
               />
             )}
           </div>
-          <div className='gfb-input__indicators'>
+          <div className='gfb-input__indicators' style={indicators}>
             <div
               className='gfb-color-input-indicator'
               style={{backgroundColor: value}}

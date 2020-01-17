@@ -31,8 +31,19 @@ const Typeahead = props => {
     minChars = 1,
     stringify,
     autoComplete,
-    interactive = true
+    interactive = true,
+    style
   } = props
+
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {},
+    options: optionsStyle = {}
+  } = style
 
   let {
     delimit,
@@ -385,7 +396,7 @@ const Typeahead = props => {
   }
 
   return (
-    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus}>
+    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
       <Typeahead
         className={className}
         classNamePrefix='gfb-input'
@@ -417,6 +428,21 @@ const Typeahead = props => {
         autoComplete={autoComplete}
         components={components}
         styles={{
+          container: base => {
+            return ({...base, ...inputInner})
+          },
+          control: base => {
+            return ({...base, ...inputControl})
+          },
+          valueContainer: base => {
+            return ({...base, ...valueContainer})
+          },
+          indicatorsContainer: base => {
+            return ({...base, ...indicators})
+          },
+          option: base => {
+            return ({...base, ...optionsStyle})
+          },
           multiValue: base => {
             if (!interactive) {
               base.color = 'green'
@@ -424,13 +450,13 @@ const Typeahead = props => {
             } else {
               base.backgroundColor = '#8bb7ff91'
             }
-            return ({...base})
+            return ({...base, ...valueStyle})
           },
           singleValue: base => {
             if (!interactive) {
               base.color = 'green'
             }
-            return ({...base})
+            return ({...base, ...valueStyle})
           },
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12

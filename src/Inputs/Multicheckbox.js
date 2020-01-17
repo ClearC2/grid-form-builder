@@ -13,8 +13,19 @@ const Multicheckbox = props => {
     inline,
     autoComplete,
     interactive = true,
-    requiredWarning
+    requiredWarning,
+    style
   } = props
+
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {},
+    options: optionsStyle = {}
+  } = style
 
   const {options = []} = keyword
   const [value, updateValue] = useState([])
@@ -56,10 +67,10 @@ const Multicheckbox = props => {
   }
 
   return (
-    <div className='gfb-input-outer'>
-      <div className='gfb-input-inner'>
-        <div className={controlClass}>
-          <div className={valueContainerClassName}>
+    <div className='gfb-input-outer' style={inputOuter}>
+      <div className='gfb-input-inner' style={inputInner}>
+        <div className={controlClass} style={inputControl}>
+          <div className={valueContainerClassName} style={valueContainer}>
             {options.map((option, i) => {
               const checked = value.indexOf(option.value) > -1 || value.indexOf(option.value + '') > -1 // the option value may be a number but the field have the value as a string
               let className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input'
@@ -67,7 +78,7 @@ const Multicheckbox = props => {
               if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input'
               if (!interactive) className = className + ' gfb-non-interactive-input'
               return (
-                <label key={i} className={'gfb-multi-input-label-wrapper ' + className}>
+                <label key={i} className={'gfb-multi-input-label-wrapper ' + className} style={optionsStyle}>
                   <input
                     className={className}
                     name={name}
@@ -78,13 +89,14 @@ const Multicheckbox = props => {
                     autoFocus={autofocus}
                     type='checkbox'
                     autoComplete={autoComplete}
+                    style={valueStyle}
                   />
                   {option.label ? option.label : option.value}
                 </label>
               )
             })}
           </div>
-          <div className='gfb-input__indicators'>
+          <div className='gfb-input__indicators' style={indicators}>
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

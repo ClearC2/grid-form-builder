@@ -23,8 +23,19 @@ const Multiselect = props => {
     onKeyDown = () => null, // sometimes provided in the config object
     onChange,
     autoComplete,
-    interactive = true
+    interactive = true,
+    style
   } = props
+
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {},
+    options: optionsStyle = {}
+  } = style
 
   const [input, changeInput] = useState({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
@@ -181,7 +192,7 @@ const Multiselect = props => {
   }
 
   return (
-    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus}>
+    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
       <Select
         className={className}
         classNamePrefix='gfb-input'
@@ -206,6 +217,21 @@ const Multiselect = props => {
         autoComplete={autoComplete}
         components={components}
         styles={{
+          container: base => {
+            return ({...base, ...inputInner})
+          },
+          control: base => {
+            return ({...base, ...inputControl})
+          },
+          valueContainer: base => {
+            return ({...base, ...valueContainer})
+          },
+          indicatorsContainer: base => {
+            return ({...base, ...indicators})
+          },
+          option: base => {
+            return ({...base, ...optionsStyle})
+          },
           multiValue: base => {
             if (!interactive) {
               base.color = 'green'
@@ -213,7 +239,7 @@ const Multiselect = props => {
             } else {
               base.backgroundColor = '#8bb7ff91'
             }
-            return ({...base})
+            return ({...base, ...valueStyle})
           },
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12
