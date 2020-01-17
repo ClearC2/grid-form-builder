@@ -106,13 +106,13 @@ const ColorInput = props => {
             )}
           </div>
           <div className='gfb-input__indicators'>
-            {validationError && <ValidationErrorIcon message={validationError} />}
-            {validationError && <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
             <div
               className='gfb-color-input-indicator'
               style={{backgroundColor: value}}
               onClick={handleOnFocus}
             />
+            {validationError && <ValidationErrorIcon message={validationError} />}
+            {validationError && <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
           </div>
         </div>
       </div>

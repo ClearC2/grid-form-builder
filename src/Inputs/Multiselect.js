@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ReactSelect from 'react-select'
 import Creatable from 'react-select/creatable'
 import {isMobile} from '../utils'
+import ValidationErrorIcon from '../ValidationErrorIcon'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -32,6 +33,7 @@ const Multiselect = props => {
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [selectValue, updateSelectValue] = useState([])
   const [options, updateSelectOptions] = useState([])
+  const [isFocused, setIsFocused] = useState(false)
 
   const inputContainer = useRef(null)
 
@@ -48,6 +50,7 @@ const Multiselect = props => {
 
   const handleInputBlur = useCallback(() => {
     menuIsOpen && updateIsMenuOpen(false)
+    setIsFocused(false)
   }, [menuIsOpen, updateIsMenuOpen])
 
   const setInputFieldPosition = useCallback(() => {
@@ -66,6 +69,7 @@ const Multiselect = props => {
 
   const handleOnFocus = useCallback(() => {
     handleInputClick()
+    setIsFocused(true)
   }, [handleInputClick])
 
   useEffect(() => {
@@ -167,8 +171,17 @@ const Multiselect = props => {
   let className = 'gfb-input-inner'
   if (!interactive) className = className + ' gfb-non-interactive-input'
 
+  let outerClass = 'gfb-input-outer'
+  const components = {}
+  if (isRequiredFlag && value.length === 0 && !isFocused) {
+    outerClass = outerClass + ' gfb-validation-error'
+    components.DropdownIndicator = () => {
+      return <ValidationErrorIcon message='This field is required' />
+    }
+  }
+
   return (
-    <div className='gfb-input-outer' ref={inputContainer} onMouseDown={handleOnFocus}>
+    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus}>
       <Select
         className={className}
         classNamePrefix='gfb-input'
@@ -181,7 +194,7 @@ const Multiselect = props => {
         isMulti
         name={name}
         options={options}
-        placeholder={isRequiredFlag ? '* This Field Is Required' : placeholder}
+        placeholder={placeholder}
         onFocus={handleOnFocus}
         onKeyDown={handleOnKeyDown}
         onBlur={handleInputBlur}
@@ -191,6 +204,7 @@ const Multiselect = props => {
         defaultValue={selectValue}
         onChange={handleChange}
         autoComplete={autoComplete}
+        components={components}
         styles={{
           multiValue: base => {
             if (!interactive) {

@@ -177,7 +177,9 @@ div.gfb-input__control, div.gfb-input__control:hover {
   align-items: stretch;
 }
 
-div.gfb-input__control.gfb-validation-error {
+div.gfb-input__control.gfb-validation-error,
+div.gfb-input-outer.gfb-validation-error > div.gfb-input-inner > div.gfb-input__control
+{
   border: 1px solid red;
 }
 
