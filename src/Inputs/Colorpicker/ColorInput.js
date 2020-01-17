@@ -1,10 +1,8 @@
 import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import ColorPicker from './ColorPicker'
-import Tooltip from 'react-tooltip'
-import {FaExclamationTriangle} from 'react-icons/fa'
-import Portal from '../../Portal'
 import {randomId} from '../../utils'
+import ValidationErrorIcon from '../../ValidationErrorIcon'
 
 const ColorInput = props => {
   const {
@@ -23,7 +21,6 @@ const ColorInput = props => {
 
   const [showPicker, setShowPicker] = useState(false)
   const inputId = useRef(randomId())
-  const validationId = useRef(randomId())
   const portalRef = useRef()
   const [isFocused, setIsFocused] = useState(false)
 
@@ -109,16 +106,7 @@ const ColorInput = props => {
             )}
           </div>
           <div className='gfb-input__indicators'>
-            {validationError && (
-              <div className='gfb-input__indicator gfb-validation-error-indicator'>
-                <FaExclamationTriangle id={validationId.current} data-tip data-for={validationId.current} color='red' />
-                <Portal id={validationId.current}>
-                  <Tooltip id={validationId.current} type='error'>
-                    <span>{validationError}</span>
-                  </Tooltip>
-                </Portal>
-              </div>
-            )}
+            {validationError && <ValidationErrorIcon message={validationError} />}
             {validationError && <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
             <div
               className='gfb-color-input-indicator'
