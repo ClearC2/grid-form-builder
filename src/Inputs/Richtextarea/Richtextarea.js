@@ -1,8 +1,9 @@
-import React, {useCallback, useEffect, useRef} from 'react'
+import React, {useCallback, useEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 import ReactQuill from 'react-quill'
-import {usePrevious} from '../../utils'
+import {randomId, usePrevious} from '../../utils'
 import Toolbar from './Toolbar'
+import ValidationErrorIcon from '../../ValidationErrorIcon'
 import './richtext.css'
 import 'react-quill/dist/quill.snow.css'
 import 'react-quill/dist/quill.core.css'
@@ -20,12 +21,12 @@ const Richtextarea = props => {
     handleRTEImageClick,
     rteImageUrl,
     autoComplete,
-    interactive = true
+    interactive = true,
+    requiredWarning
   } = props
 
-  const elementId = useRef(
-    'gfb-' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-  )
+  const [isFocused, setIsFocused] = useState(false)
+  const elementId = useRef('gfb-' + randomId())
   const QuillRef = useRef()
   const formats = useRef([
     'header',
@@ -82,9 +83,23 @@ const Richtextarea = props => {
     }
   }, [rteImageUrl, previousRTEImageUrl, name])
 
+  const handleOnFocus = useCallback(() => {
+    setIsFocused(true)
+  }, [])
+
+  const handleOnBlur = useCallback(() => {
+    setIsFocused(false)
+  }, [])
+
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
+  let controlClass = 'gfb-input__control'
+  let validationError
+  if (requiredWarning && (value + '').length === 0 && !isFocused) {
+    controlClass = controlClass + ' gfb-validation-error'
+    validationError = 'This field is required'
+  }
 
   return (
     <div className='gfb-input-outer'>
@@ -92,7 +107,7 @@ const Richtextarea = props => {
         <div className='gfb-input-control-top'>
           <Toolbar id={elementId.current} />
         </div>
-        <div className='gfb-input__control'>
+        <div className={controlClass}>
           <div className='gfb-input__value-container'>
             <ReactQuill
               onChange={handleOnChange}
@@ -108,9 +123,13 @@ const Richtextarea = props => {
               scrollingContainer='scrolling-container'
               theme='snow'
               autoComplete={autoComplete}
+              onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
             />
           </div>
-          <div className='gfb-input__indicators' />
+          <div className='gfb-input__indicators'>
+            {validationError && <ValidationErrorIcon message={validationError} />}
+          </div>
         </div>
       </div>
     </div>
