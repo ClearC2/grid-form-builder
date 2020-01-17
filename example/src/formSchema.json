@@ -23,6 +23,50 @@
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
+          },
+          "style": {
+            "value": {
+              "color": "pink",
+              "fontWeight": "bold",
+              "fontSize": "14pt"
+            },
+            "label": {
+              "fontSize": "15pt",
+              "fontWeight": "normal"
+            },
+            "icon": {
+              "color": "red"
+            },
+            "link": {
+              "color": "blue"
+            },
+            "cascade": {
+              "color": "green"
+            },
+            "innerCell": {
+              "border": "1px solid black"
+            },
+            "cellLabel": {
+              "border": "1px solid blue"
+            },
+            "cellInput": {
+              "border": "1px solid green"
+            },
+            "inputOuter": {
+              "border": "1px solid grey"
+            },
+            "inputInner": {
+              "border": "1px solid brown"
+            },
+            "inputControl": {
+              "border": "1px solid purple"
+            },
+            "valueContainer": {
+              "border": "1px solid yellow"
+            },
+            "indicators": {
+              "border": "1px solid orange"
+            }
           }
         }
       }, {
@@ -663,50 +707,6 @@
             "id": "parentid",
             "icon": "externallink",
             "tooltip": "This tooltip attaches to the link icon."
-          },
-          "style": {
-            "value": {
-              "color": "pink",
-              "fontWeight": "bold",
-              "fontSize": "14pt"
-            },
-            "label": {
-              "fontSize": "15pt",
-              "fontWeight": "normal"
-            },
-            "icon": {
-              "color": "red"
-            },
-            "link": {
-              "color": "blue"
-            },
-            "cascade": {
-              "color": "green"
-            },
-            "innerCell": {
-              "border": "1px solid black"
-            },
-            "cellLabel": {
-              "border": "1px solid blue"
-            },
-            "cellInput": {
-              "border": "1px solid green"
-            },
-            "inputOuter": {
-              "border": "1px solid grey"
-            },
-            "inputInner": {
-              "border": "1px solid brown"
-            },
-            "inputControl": {
-              "border": "1px solid purple"
-            },
-            "valueContainer": {
-              "border": "1px solid yellow"
-            },
-            "indicators": {
-              "border": "1px solid orange"
-            }
           }
         }
       }, {
