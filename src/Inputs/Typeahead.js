@@ -4,6 +4,7 @@ import Async from 'react-select/async'
 import AsyncCreatable from 'react-select/async-creatable'
 import {isMobile} from '../utils'
 import GFBConfig from '../config'
+import ValidationErrorIcon from '../ValidationErrorIcon'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -48,6 +49,7 @@ const Typeahead = props => {
   const [menuIsOpen, updateIsMenuOpen] = useState(false)
   const [menuPlacement, updateMenuPlacement] = useState('bottom')
   const [fieldPosition, updateFieldPosition] = useState(0)
+  const [isFocused, setIsFocused] = useState(false)
 
   const inputContainer = useRef(null)
 
@@ -171,6 +173,7 @@ const Typeahead = props => {
 
   const handleInputBlur = useCallback(() => {
     menuIsOpen && updateIsMenuOpen(false)
+    setIsFocused(false)
   }, [menuIsOpen, updateIsMenuOpen])
 
   const openMenu = useCallback(() => {
@@ -200,6 +203,7 @@ const Typeahead = props => {
   }, [disabled, interactive, readonly, setInputFieldPosition])
 
   const handleOnFocus = useCallback(() => {
+    setIsFocused(true)
     let simpleValue = typeof value.toJS === 'function' ? value.toJS() : value
     simpleValue = typeof simpleValue === 'object' ? simpleValue.value || simpleValue.label || '' : simpleValue
     if (persist && !multi) {
@@ -370,8 +374,18 @@ const Typeahead = props => {
   let className = 'gfb-input-inner'
   if (!interactive) className = className + ' gfb-non-interactive-input'
 
+  let outerClass = 'gfb-input-outer'
+  const components = {}
+
+  if (isRequiredFlag && (value + '').length === 0 && !isFocused) {
+    outerClass = outerClass + ' gfb-validation-error'
+    components.DropdownIndicator = () => {
+      return <ValidationErrorIcon message='This field is required' />
+    }
+  }
+
   return (
-    <div className='gfb-input-outer' ref={inputContainer} onMouseDown={handleOnFocus}>
+    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus}>
       <Typeahead
         className={className}
         classNamePrefix='gfb-input'
@@ -388,7 +402,7 @@ const Typeahead = props => {
         menuShouldBlockScroll
         name={name}
         noOptionsMessage={noOptionsMessage}
-        placeholder={isRequiredFlag ? '* This Field Is Required' : placeholder}
+        placeholder={placeholder}
         inputValue={inputValue}
         menuIsOpen={!isMobile ? menuIsOpen : undefined}
         menuPlacement={!isMobile ? menuPlacement : undefined}
@@ -401,6 +415,7 @@ const Typeahead = props => {
         onChange={handleChange}
         value={selectValue}
         autoComplete={autoComplete}
+        components={components}
         styles={{
           multiValue: base => {
             if (!interactive) {
