@@ -1,6 +1,10 @@
 import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import ColorPicker from './ColorPicker'
+import Tooltip from 'react-tooltip'
+import {FaExclamationTriangle} from 'react-icons/fa'
+import Portal from '../../Portal'
+import {randomId} from '../../utils'
 
 const ColorInput = props => {
   const {
@@ -13,12 +17,15 @@ const ColorInput = props => {
     tabIndex,
     onChange,
     autoComplete,
-    interactive = true
+    interactive = true,
+    requiredWarning
   } = props
 
   const [showPicker, setShowPicker] = useState(false)
-  const inputId = useRef(Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
+  const inputId = useRef(randomId())
+  const validationId = useRef(randomId())
   const portalRef = useRef()
+  const [isFocused, setIsFocused] = useState(false)
 
   const windowClickListener = useMemo(() => {
     return e => {
@@ -54,17 +61,28 @@ const ColorInput = props => {
   const handleOnFocus = useCallback(() => {
     if (!readonly && !disabled && interactive) {
       setShowPicker(true)
+      setIsFocused(true)
     }
   }, [readonly, disabled, interactive])
+
+  const handleOnBlur = useCallback(() => {
+    setIsFocused(false)
+  }, [])
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
+  let controlClass = 'gfb-input__control'
+  let validationError
+  if (requiredWarning && (value + '').length === 0 && !isFocused) {
+    controlClass = controlClass + ' gfb-validation-error'
+    validationError = 'This field is required'
+  }
 
   return (
     <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
-        <div className='gfb-input__control'>
+        <div className={controlClass}>
           <div className='gfb-input__value-container'>
             <input
               id={inputId.current}
@@ -77,6 +95,7 @@ const ColorInput = props => {
               placeholder={placeholder}
               tabIndex={tabIndex}
               onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
               autoComplete={autoComplete}
             />
             {showPicker && (
@@ -90,6 +109,17 @@ const ColorInput = props => {
             )}
           </div>
           <div className='gfb-input__indicators'>
+            {validationError && (
+              <div className='gfb-input__indicator gfb-validation-error-indicator'>
+                <FaExclamationTriangle id={validationId.current} data-tip data-for={validationId.current} color='red' />
+                <Portal id={validationId.current}>
+                  <Tooltip id={validationId.current} type='error'>
+                    <span>{validationError}</span>
+                  </Tooltip>
+                </Portal>
+              </div>
+            )}
+            {validationError && <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
             <div
               className='gfb-color-input-indicator'
               style={{backgroundColor: value}}

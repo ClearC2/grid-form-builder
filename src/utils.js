@@ -7,6 +7,10 @@ export const timeStamp = () => {
   return +ms
 }
 
+export const randomId = () => {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+}
+
 export const isMobile = !!('ontouchstart' in document.documentElement && navigator.userAgent.match(/Mobi/))
 
 export const emailValidator = email => {

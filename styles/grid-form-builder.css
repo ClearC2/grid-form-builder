@@ -242,7 +242,9 @@ div.grid-form-builder-parent input:focus, div.grid-form-builder-parent textarea:
   outline-offset: 0;
 }
 
-
+div.gfb-input__indicators {
+  display: flex;
+}
 
 div > div.gfb-input__indicators > div.gfb-input__indicator {
   padding-left: 3px;
