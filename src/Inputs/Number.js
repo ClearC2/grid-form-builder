@@ -1,7 +1,9 @@
-import React, {useCallback, useRef} from 'react'
+import React, {useCallback, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 // import Cleave from 'cleave.js/react'
-import Cleave from '../Cleave'// switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
+import Cleave from '../Cleave'
+import ValidationErrorIcon from '../ValidationErrorIcon'
+// switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
 
 const Number = props => {
   const {
@@ -20,10 +22,21 @@ const Number = props => {
     maximum = 9007199254740991,
     minimum = -9007199254740991,
     decimals = 0,
-    interactive = true
+    interactive = true,
+    requiredWarning
   } = props
 
   const input = useRef()
+
+  const [isFocused, setIsFocused] = useState(false)
+
+  const handleOnFocus = useCallback(() => {
+    setIsFocused(true)
+  }, [])
+
+  const handleOnBlur = useCallback(() => {
+    setIsFocused(false)
+  }, [])
 
   const handleOnChange = useCallback(e => {
     let {value: newValue} = e.target
@@ -50,11 +63,17 @@ const Number = props => {
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
+  let controlClass = 'gfb-input__control'
+  let validationError
+  if (requiredWarning && (value + '').length === 0 && !isFocused) {
+    controlClass = controlClass + ' gfb-validation-error'
+    validationError = 'This field is required'
+  }
 
   return (
     <div className='gfb-input-outer'>
       <div className='gfb-input-inner'>
-        <div className='gfb-input__control'>
+        <div className={controlClass}>
           <div className='gfb-input__value-container'>
             <Cleave
               ref={input}
@@ -74,9 +93,13 @@ const Number = props => {
               placeholder={placeholder}
               tabIndex={tabIndex}
               autoComplete={autoComplete}
+              onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
             />
           </div>
-          <div className='gfb-input__indicators' />
+          <div className='gfb-input__indicators'>
+            {validationError && <ValidationErrorIcon message={validationError} />}
+          </div>
         </div>
       </div>
     </div>
