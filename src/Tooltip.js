@@ -9,7 +9,7 @@ const PortalTooltip = props => {
     (message && id) ? (
       <Portal>
         <Tooltip id={id}>
-          <span>{message}</span>
+          <div dangerouslySetInnerHTML={{__html: message}} />
         </Tooltip>
       </Portal>
     ) : null
