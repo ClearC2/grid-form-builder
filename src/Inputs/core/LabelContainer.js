@@ -10,7 +10,7 @@ const LabelContainer = props => {
     link = {},
     type = ''
   } = config
-  const {required} = config
+  const {required, style = {}} = config
   type = type.toLowerCase()
   let {icon: CascadeIcon = ''} = cascade
   let {icon: LinkIcon = ''} = link
@@ -48,16 +48,25 @@ const LabelContainer = props => {
 
   const size = className.indexOf('full-cell-label') > -1 ? 40 : 15
 
+  const {
+    label: labelStyle = {},
+    icon: iconStyle = {},
+    link: linkStyle = {},
+    cascade: cascadeStyle = {},
+    cellLabel: cellStyle = {}
+  } = style
+
   return (
-    <div className={className}>
+    <div className={className} style={cellStyle}>
       {Icon && (
-        <Icon size={size} />
+        <Icon size={size} style={iconStyle} />
       )}
       {required && <strong className='gfb-validation-indicator'>*</strong>}
       {label && type !== 'header' && (
         <strong
           onClick={onLabelTextClick}
           className={LinkIcon || CascadeIcon ? 'cursor-hand gfb-field-label' : 'gfb-field-label'}
+          style={labelStyle}
         >
           {label}
         </strong>
@@ -66,15 +75,16 @@ const LabelContainer = props => {
         <h3
           onClick={onLabelTextClick}
           className={LinkIcon || CascadeIcon ? 'cursor-hand' : ''}
+          style={labelStyle}
         >
           {label}
         </h3>
       )}
       {LinkIcon && (
-        <LinkIcon className='cursor-hand' onClick={onLinkClick} />
+        <LinkIcon className='cursor-hand' onClick={onLinkClick} style={linkStyle} />
       )}
       {CascadeIcon && (
-        <CascadeIcon className='cursor-hand' onClick={onCascadeKeywordClick} />
+        <CascadeIcon className='cursor-hand' onClick={onCascadeKeywordClick} style={cascadeStyle} />
       )}
     </div>
   )

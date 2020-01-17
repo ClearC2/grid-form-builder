@@ -96,8 +96,11 @@ const InnerCell = props => {
     }
   }
 
+  const {style = {}} = config
+  const {innerCell = {}} = style
+
   return connectDropTarget(
-    <div className={className} onClick={onGridElementClick}>
+    <div style={innerCell} className={className} onClick={onGridElementClick}>
       <LabelContainer
         config={config}
         handleLinkClick={handleLinkClick}

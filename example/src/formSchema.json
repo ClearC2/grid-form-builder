@@ -19,9 +19,6 @@
           "label": "Input",
           "type": "richtextareaquill",
           "icon": "facebook",
-          "iconStyle": {
-            "color": "#FF00FF"
-          },
           "placeholder": "Test Placeholder",
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
@@ -43,17 +40,10 @@
           "name": "unique-test-input",
           "label": "Test Input",
           "type": "input",
-          "labelStyle": {
-            "color": "blue",
-            "textDecoration": "underline"
-          },
           "link": {
             "type": "c2company",
             "id": "parentid",
-            "icon": "externallink",
-            "style": {
-              "color": "red"
-            }
+            "icon": "externallink"
           }
         }
       }, {
@@ -617,6 +607,50 @@
             "type": "c2company",
             "id": "parentid",
             "icon": "externallink"
+          },
+          "style": {
+            "value": {
+              "color": "pink",
+              "fontWeight": "bold",
+              "fontSize": "14pt"
+            },
+            "label": {
+              "fontSize": "3pt",
+              "fontWeight": "normal"
+            },
+            "icon": {
+              "color": "red"
+            },
+            "link": {
+              "color": "blue"
+            },
+            "cascade": {
+              "color": "green"
+            },
+            "innerCell": {
+              "border": "1px solid black"
+            },
+            "cellLabel": {
+              "border": "1px solid blue"
+            },
+            "cellInput": {
+              "border": "1px solid green"
+            },
+            "inputOuter": {
+              "border": "1px solid grey"
+            },
+            "inputInner": {
+              "border": "1px solid brown"
+            },
+            "inputControl": {
+              "border": "1px solid purple"
+            },
+            "valueContainer": {
+              "border": "1px solid yellow"
+            },
+            "indicators": {
+              "border": "1px solid orange"
+            }
           }
         }
       }, {

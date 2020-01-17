@@ -19,9 +19,10 @@ const InputContainer = props => {
     autoComplete,
     interactive
   } = props
-  const {name, required, ...other} = config
+  const {name, required, style = {}, ...other} = config
+  const {innerCell = {}} = style
   return (
-    <div className='gfb-inner-cell-input'>
+    <div className='gfb-inner-cell-input' style={innerCell}>
       {cloneElement(children, {
         requiredWarning,
         tabIndex,
@@ -37,6 +38,7 @@ const InputContainer = props => {
         autoComplete,
         interactive,
         required,
+        style,
         ...other
       })}
     </div>
