@@ -1,6 +1,8 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {mapIcon} from '../../Icons'
+import PortalTooltip from '../../Tooltip'
+import {randomId} from '../../utils'
 
 const LabelContainer = props => {
   const {config, handleLinkClick, handleCascadeKeywordClick, value} = props
@@ -10,14 +12,19 @@ const LabelContainer = props => {
     link = {},
     type = ''
   } = config
-  const {required, style = {}} = config
+  const {required, style = {}, tooltips = {}} = config
   type = type.toLowerCase()
-  let {icon: CascadeIcon = ''} = cascade
-  let {icon: LinkIcon = ''} = link
+  let {icon: CascadeIcon = '', tooltip: cascadeTooltip} = cascade
+  let {icon: LinkIcon = '', tooltip: linkTooltip} = link
+  const {icon: iconTooltip, label: labelTooltip} = tooltips
   Icon = mapIcon(Icon)
   LinkIcon = mapIcon(LinkIcon)
   CascadeIcon = mapIcon(CascadeIcon)
   const {name, label = name} = config
+  const iconId = useRef(randomId())
+  const linkId = useRef(randomId())
+  const cascadeId = useRef(randomId())
+  const labelId = useRef(randomId())
 
   const onLinkClick = useCallback(() => {
     handleLinkClick(config.link)
@@ -58,8 +65,17 @@ const LabelContainer = props => {
 
   return (
     <div className={className} style={cellStyle}>
+      <PortalTooltip id={iconId.current} message={iconTooltip} />
+      <PortalTooltip id={linkId.current} message={linkTooltip} />
+      <PortalTooltip id={cascadeId.current} message={cascadeTooltip} />
+      <PortalTooltip id={labelId.current} message={labelTooltip} />
       {Icon && (
-        <Icon size={size} style={iconStyle} />
+        <Icon
+          size={size}
+          style={iconStyle}
+          data-tip
+          data-for={iconId.current}
+        />
       )}
       {required && <strong className='gfb-validation-indicator'>*</strong>}
       {label && type !== 'header' && (
@@ -67,6 +83,8 @@ const LabelContainer = props => {
           onClick={onLabelTextClick}
           className={LinkIcon || CascadeIcon ? 'cursor-hand gfb-field-label' : 'gfb-field-label'}
           style={labelStyle}
+          data-tip
+          data-for={labelId.current}
         >
           {label}
         </strong>
@@ -76,15 +94,29 @@ const LabelContainer = props => {
           onClick={onLabelTextClick}
           className={LinkIcon || CascadeIcon ? 'cursor-hand' : ''}
           style={labelStyle}
+          data-tip
+          data-for={labelId.current}
         >
           {label}
         </h3>
       )}
       {LinkIcon && (
-        <LinkIcon className='cursor-hand' onClick={onLinkClick} style={linkStyle} />
+        <LinkIcon
+          className='cursor-hand'
+          onClick={onLinkClick}
+          style={linkStyle}
+          data-tip
+          data-for={linkId.current}
+        />
       )}
       {CascadeIcon && (
-        <CascadeIcon className='cursor-hand' onClick={onCascadeKeywordClick} style={cascadeStyle} />
+        <CascadeIcon
+          className='cursor-hand'
+          onClick={onCascadeKeywordClick}
+          style={cascadeStyle}
+          data-tip
+          data-for={cascadeId.current}
+        />
       )}
     </div>
   )

@@ -5,6 +5,8 @@ import InputContainer from './InputContainer'
 import LabelContainer from './LabelContainer'
 import {mapInputType} from '../index'
 import {DropTarget} from 'react-dnd'
+import PortalTooltip from '../../Tooltip'
+import {randomId} from '../../utils'
 
 const InnerCell = props => {
   const {
@@ -33,6 +35,7 @@ const InnerCell = props => {
 
   const {config} = field
   const [formValues] = useContext(FormValueContext)
+  const cellId = useRef(randomId())
 
   // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
   // we will come up with a way to do this without modifying the schema - JRA 12/10/2019
@@ -96,11 +99,19 @@ const InnerCell = props => {
     }
   }
 
-  const {style = {}} = config
+  const {style = {}, tooltips = {}} = config
   const {innerCell = {}} = style
+  const {cell: cellTooltip} = tooltips
 
   return connectDropTarget(
-    <div style={innerCell} className={className} onClick={onGridElementClick}>
+    <div
+      style={innerCell}
+      className={className}
+      onClick={onGridElementClick}
+      data-tip
+      data-for={cellId.current}
+    >
+      <PortalTooltip id={cellId.current} message={cellTooltip} />
       <LabelContainer
         config={config}
         handleLinkClick={handleLinkClick}

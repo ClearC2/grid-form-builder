@@ -1,6 +1,8 @@
-import React, {cloneElement} from 'react'
+import React, {cloneElement, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {Map} from 'immutable'
+import PortalTooltip from '../../Tooltip'
+import {randomId} from '../../utils'
 
 const InputContainer = props => {
   const {
@@ -19,10 +21,13 @@ const InputContainer = props => {
     autoComplete,
     interactive
   } = props
-  const {name, required, style = {}, ...other} = config
+  const {name, required, style = {}, tooltips = {}, ...other} = config
+  const {input: inputTooltip} = tooltips
   const {innerCell = {}} = style
+  const inputId = useRef(randomId())
   return (
-    <div className='gfb-inner-cell-input' style={innerCell}>
+    <div className='gfb-inner-cell-input' style={innerCell} data-tip data-for={inputId.current}>
+      <PortalTooltip id={inputId.current} message={inputTooltip} />
       {cloneElement(children, {
         requiredWarning,
         tabIndex,

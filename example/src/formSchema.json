@@ -647,14 +647,22 @@
           "required": true,
           "type": "textarea",
           "icon": "cogs",
+          "tooltips":  {
+            "icon": "This tooltip attaches to the left icon.",
+            "input": "This tooltip attaches to the input container.",
+            "cell": "Entire Cell?",
+            "label": "This tooltip attaches to the label text."
+          },
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
-            "icon": "tree"
+            "icon": "tree",
+            "tooltip": "This tooltip attaches to the cascade icon."
           },
           "link": {
             "type": "c2company",
             "id": "parentid",
-            "icon": "externallink"
+            "icon": "externallink",
+            "tooltip": "This tooltip attaches to the link icon."
           },
           "style": {
             "value": {
@@ -663,7 +671,7 @@
               "fontSize": "14pt"
             },
             "label": {
-              "fontSize": "3pt",
+              "fontSize": "15pt",
               "fontWeight": "normal"
             },
             "icon": {
