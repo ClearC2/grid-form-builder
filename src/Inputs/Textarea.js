@@ -34,7 +34,7 @@ const Textarea = props => {
   let validationError
   if (requiredWarning && (value + '').length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
-    validationError = 'This field is required'
+    validationError = 'This Field is Required'
   }
 
   return (

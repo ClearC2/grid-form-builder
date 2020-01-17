@@ -68,7 +68,7 @@ const Listselect = props => {
   let validationError
   if (requiredWarning && value.length === 0) {
     controlClass = controlClass + ' gfb-validation-error'
-    validationError = 'This field is required'
+    validationError = 'This Field is Required'
   }
 
   return (
