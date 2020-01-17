@@ -197,15 +197,13 @@ export default class Example extends Component {
             ref={ref => { this.exampleForm = ref }}
             formSchema={this.state.formSchema.form}
             formValues={this.state.formValues}
-            // formValues={Map()}
             handleOnChange={this.handleOnChange}
             onClick={this.handleOnClick}
             inline={this.state.inline}
             conditionalSearch={TEST_SEARCH}
             handleOnDrop={this.handleOnDrop}
             draggable={this.state.draggable}
-            // validate={isInvalidWarning}
-            validate
+            validate={isInvalidWarning}
             handleLinkClick={this.handleLinkClick}
             handleOnDimensionChange={this.handleOnDimensionChange}
             droppable={droppable}
