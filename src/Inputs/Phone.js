@@ -103,5 +103,6 @@ Phone.propTypes = {
   autoComplete: PropTypes.string,
   delimiter: PropTypes.string,
   interactive: PropTypes.bool,
-  requiredWarning: PropTypes.bool
+  requiredWarning: PropTypes.bool,
+  style: PropTypes.object
 }

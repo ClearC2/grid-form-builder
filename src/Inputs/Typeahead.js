@@ -468,5 +468,6 @@ Typeahead.propTypes = {
   delimiter: PropTypes.string,
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   autoComplete: PropTypes.string,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  style: PropTypes.object
 }

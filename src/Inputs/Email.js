@@ -83,5 +83,6 @@ Email.propTypes = {
   tabIndex: PropTypes.number,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  requiredWarning: PropTypes.bool
+  requiredWarning: PropTypes.bool,
+  style: PropTypes.object
 }

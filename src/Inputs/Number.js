@@ -125,5 +125,6 @@ Number.propTypes = {
   minimum: PropTypes.number,
   decimals: PropTypes.number,
   interactive: PropTypes.bool,
-  requiredWarning: PropTypes.bool
+  requiredWarning: PropTypes.bool,
+  style: PropTypes.object
 }

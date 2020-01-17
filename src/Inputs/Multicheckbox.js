@@ -106,5 +106,6 @@ Multicheckbox.propTypes = {
   inline: PropTypes.bool,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  requiredWarning: PropTypes.bool
+  requiredWarning: PropTypes.bool,
+  style: PropTypes.object
 }

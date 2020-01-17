@@ -108,5 +108,6 @@ Currency.propTypes = {
   prefix: PropTypes.string,
   numeralDecimalMark: PropTypes.string,
   interactive: PropTypes.bool,
-  requiredWarning: PropTypes.bool
+  requiredWarning: PropTypes.bool,
+  style: PropTypes.object
 }

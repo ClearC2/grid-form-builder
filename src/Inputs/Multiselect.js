@@ -244,5 +244,6 @@ Multiselect.propTypes = {
   persist: PropTypes.bool,
   onKeyDown: PropTypes.func,
   autoComplete: PropTypes.string,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  style: PropTypes.object
 }
