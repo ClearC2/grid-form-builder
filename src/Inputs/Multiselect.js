@@ -242,8 +242,9 @@ const Multiselect = props => {
             return ({...base, ...valueStyle})
           },
           menuPortal: base => {
-            const top = menuPlacement === 'bottom' ? base.top - 28 : base.top - 12
-            return ({...base, top})
+            const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
+            const zIndex = Number.MAX_SAFE_INTEGER
+            return ({...base, top, zIndex})
           }
         }}
       />

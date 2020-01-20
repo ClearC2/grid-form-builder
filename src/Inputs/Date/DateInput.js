@@ -45,8 +45,12 @@ const DateInput = props => {
   const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
-    changeInputValue(value)
-  }, [value])
+    let val = value
+    if (val._isAMomentObject) {
+      val = val.format(inputFormat)
+    }
+    changeInputValue(val)
+  }, [inputFormat, value])
 
   useEffect(() => {
     let inputFormat
