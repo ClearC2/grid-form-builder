@@ -141,10 +141,6 @@ import {
   GiEarthAmerica as Earth
 } from 'react-icons/gi'
 
-import {
-  AiOutlineDrag as OutlineDrag
-} from 'react-icons/ai'
-
 export {
   Car,
   Merge,
@@ -231,7 +227,6 @@ export {
   Nav,
   Newspaper,
   NormalScreen,
-  OutlineDrag,
   Paint,
   Paperclip,
   PaperPlane,
