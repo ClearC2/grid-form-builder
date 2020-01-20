@@ -5,7 +5,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon'
 const Percentage = props => {
   const {
     name,
-    value,
+    value = '',
     onChange,
     readonly,
     disabled,
@@ -15,7 +15,7 @@ const Percentage = props => {
     autoComplete,
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

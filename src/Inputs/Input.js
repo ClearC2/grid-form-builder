@@ -5,7 +5,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon'
 const Input = props => {
   const {
     name,
-    value,
+    value = '',
     onChange,
     readonly,
     disabled,
@@ -15,7 +15,7 @@ const Input = props => {
     autoComplete,
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

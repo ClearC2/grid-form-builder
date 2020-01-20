@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 const Metadata = props => {
   const {
     value = '',
-    style
+    style = {}
   } = props
 
   const {

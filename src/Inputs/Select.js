@@ -10,13 +10,13 @@ const viewPortHeight = document.documentElement.clientHeight
 const Select = props => {
   const {
     allowcreate,
-    value,
+    value = '',
     tabIndex,
     autofocus,
     disabled,
     readonly,
     name,
-    keyword,
+    keyword = {},
     placeholder,
     requiredWarning,
     required,
@@ -24,7 +24,7 @@ const Select = props => {
     onChange,
     autoComplete,
     interactive = true,
-    style
+    style = {}
   } = props
 
   const {
@@ -37,7 +37,7 @@ const Select = props => {
     options: optionsStyle = {}
   } = style
 
-  const {options} = keyword
+  const {options = []} = keyword
 
   const [input, changeInput] = useState({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)

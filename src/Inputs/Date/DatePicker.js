@@ -1,7 +1,7 @@
 import {useMemo, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import 'daterangepicker'
-import './daterangepicker.css'
+import '../../../styles/daterangepicker.css'
 import $ from 'jquery'
 import moment from 'moment'
 

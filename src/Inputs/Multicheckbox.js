@@ -9,12 +9,12 @@ const Multicheckbox = props => {
     readonly,
     disabled,
     autofocus,
-    keyword,
+    keyword = {},
     inline,
     autoComplete,
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

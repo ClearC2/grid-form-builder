@@ -5,7 +5,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon'
 const Textarea = props => {
   const {
     name,
-    value,
+    value = '',
     onChange,
     readonly,
     disabled,
@@ -15,7 +15,7 @@ const Textarea = props => {
     autoComplete,
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

@@ -6,7 +6,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon'
 const Email = props => {
   const {
     name,
-    value,
+    value = '',
     onChange,
     readonly,
     disabled,
@@ -16,7 +16,7 @@ const Email = props => {
     autoComplete,
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

@@ -9,13 +9,13 @@ const Radio = props => {
     readonly,
     disabled,
     autofocus,
-    keyword,
+    keyword = {},
     inline,
-    value,
+    value = '',
     autoComplete,
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

@@ -7,7 +7,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon'
 const Currency = props => {
   const {
     name,
-    value,
+    value = '',
     onChange,
     readonly,
     disabled,
@@ -20,7 +20,7 @@ const Currency = props => {
     numeralDecimalMark = '.',
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

@@ -12,7 +12,7 @@ const Typeahead = props => {
   const {
     name,
     label,
-    value,
+    value = '',
     values,
     onChange,
     allowcreate,
@@ -32,7 +32,7 @@ const Typeahead = props => {
     stringify,
     autoComplete,
     interactive = true,
-    style
+    style = {}
   } = props
 
   const {

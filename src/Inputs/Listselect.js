@@ -6,12 +6,12 @@ const Listselect = props => {
   const {
     name,
     onChange,
-    keyword,
+    keyword = {},
     disabled,
     readonly,
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

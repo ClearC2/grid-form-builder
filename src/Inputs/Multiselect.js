@@ -10,13 +10,13 @@ const viewPortHeight = document.documentElement.clientHeight
 const Multiselect = props => {
   const {
     allowcreate,
-    value,
+    value = '',
     tabIndex,
     autofocus,
     disabled,
     readonly,
     name,
-    keyword,
+    keyword = {},
     placeholder,
     requiredWarning,
     required,
@@ -24,7 +24,7 @@ const Multiselect = props => {
     onChange,
     autoComplete,
     interactive = true,
-    style
+    style = {}
   } = props
 
   const {

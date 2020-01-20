@@ -8,7 +8,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon'
 const Phone = props => {
   const {
     name,
-    value,
+    value = '',
     onChange,
     readonly,
     disabled,
@@ -19,7 +19,7 @@ const Phone = props => {
     delimiter = ' ',
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

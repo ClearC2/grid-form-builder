@@ -8,7 +8,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon'
 const Number = props => {
   const {
     name,
-    value,
+    value = '',
     onChange,
     readonly,
     disabled,
@@ -24,7 +24,7 @@ const Number = props => {
     decimals = 0,
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

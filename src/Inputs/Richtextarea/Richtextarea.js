@@ -4,7 +4,7 @@ import ReactQuill from 'react-quill'
 import {randomId, usePrevious} from '../../utils'
 import Toolbar from './Toolbar'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
-import './richtext.css'
+import '../../../styles/richtext.css'
 import 'react-quill/dist/quill.snow.css'
 import 'react-quill/dist/quill.core.css'
 
@@ -23,7 +23,7 @@ const Richtextarea = props => {
     autoComplete,
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {

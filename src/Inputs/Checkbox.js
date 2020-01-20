@@ -5,7 +5,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon'
 const Checkbox = props => {
   const {
     name,
-    value,
+    value = '',
     onChange,
     readonly,
     disabled,
@@ -17,7 +17,7 @@ const Checkbox = props => {
     autoComplete,
     interactive = true,
     requiredWarning,
-    style
+    style = {}
   } = props
 
   const {
