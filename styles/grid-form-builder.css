@@ -280,6 +280,7 @@ div > div.gfb-input__indicators > div.gfb-input__indicator.gfb-validation-error-
   width: 20px;
   height: calc(100% - 4px);
   margin: 2px;
+  margin-top: 0;
   cursor: pointer;
   display: flex;
   justify-content: center;
