@@ -51,20 +51,6 @@ export default class Cleave extends Component {
     }
   }
 
-  getSnapshotBeforeUpdate (prevProps, prevState) {
-    let state = {}
-    let newValue = this.props.value
-    if (newValue !== undefined) {
-      newValue = newValue.toString()
-
-      if (newValue !== this.properties.result) {
-        this.properties.initValue = newValue
-        state = this.onInput(newValue, true, true) || null
-      }
-    }
-    return state
-  }
-
   componentDidMount () {
     this.init()
   }
@@ -74,6 +60,15 @@ export default class Cleave extends Component {
 
     Util.setSelection(this.element, this.state.cursorPosition, pps.document)
     this.updateRegisteredEvents(this.props)
+
+    let newValue = this.props.value
+    if (newValue !== undefined) {
+      newValue = newValue.toString()
+      if (newValue !== this.properties.initValue) {
+        this.properties.initValue = newValue
+        this.onInput(newValue, true)
+      }
+    }
 
     // update phone region code - // not supporting changing region after mount for now, this will almost certainly blow up in an in - JRA 11/21/2019
     // if (phoneRegionCode && phoneRegionCode !== this.properties.phoneRegionCode) {
