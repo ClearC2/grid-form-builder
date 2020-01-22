@@ -20,6 +20,7 @@ import Richtextarea from './Richtextarea'
 import Select from './Select'
 import Textarea from './Textarea'
 import Typeahead from './Typeahead'
+import Conditionalinput from './ConditionalInput'
 
 let FormComponents = {
   Checkbox,
@@ -43,7 +44,8 @@ let FormComponents = {
   Select,
   Textarea,
   Time,
-  Typeahead
+  Typeahead,
+  Conditionalinput
 }
 
 export function initCustomFormComponents (defs = {}) {

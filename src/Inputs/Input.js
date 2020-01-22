@@ -46,7 +46,6 @@ const Input = props => {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
-
   return (
     <div className='gfb-input-outer' style={inputOuter}>
       <div className='gfb-input-inner' style={inputInner}>
