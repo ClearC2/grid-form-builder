@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {Dialog} from 'c2-dialog'
-import {FormBuilder} from '../../index'
+import {FormBuilder} from '../index'
 import {Map, List, fromJS, Set} from 'immutable'
 import {CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, DATES, SINGLE_FIELD_INPUTS} from './utils'// eslint-disable-line
 const STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime'])
