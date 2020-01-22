@@ -6,10 +6,31 @@ import {Map, List, fromJS, Set} from 'immutable'
 import {CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, DATES, SINGLE_FIELD_INPUTS} from './SearchUtils'// eslint-disable-line
 const STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime'])
 const ConditionalDialog = props => {
-  function inputTypeOptionsList () {
-    return Object.keys(CONDITIONS).map(c => ({label: c, value: c}))
+  function convertListToOptions (list) {
+    let inputType = props.inputType.toLowerCase()
+    if (inputType === 'number' || inputType === 'currency' || inputType === 'decimal') {
+      list = list.filter(l => {
+        return (l !== 'is blank' &&
+          l !== 'is not blank' &&
+          l !== 'contains' &&
+          l !== 'does not contain'
+        )
+      })
+    }
+    return list.map(opt => {
+      return {value: opt, label: opt}
+    })
   }
-
+  function inputTypeOptionsList () {
+    let options = [] // Object.keys(CONDITIONS).map(c => ({label: c, value: c}))
+    Object.keys(CONDITIONS).forEach((key) => {
+      let excludes = Set(CONDITIONS[key].invalidInputTypes)
+      if (!excludes.has(props.inputType.toLowerCase())) {
+        options.push(key)
+      }
+    })
+    return convertListToOptions(options)
+  }
   const [modalValues, setModalValues] = useState(Map({condition: 'contains'}))
   useEffect(() => {
     // const v = props.values[props.name]
