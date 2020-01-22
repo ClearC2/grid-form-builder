@@ -5,7 +5,7 @@ import DragUnit from './TestDraggableUnit'
 import FormBuilder from '../../src/FormBuilder'
 import schema from './formSchema'
 
-const TEST_SEARCH = false // for conditional search forms
+const TEST_SEARCH = true // for conditional search forms
 
 export default class Example extends Component {
   state = {
@@ -134,6 +134,7 @@ export default class Example extends Component {
     // console.log(this.state.formValues)
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is true
+      console.log(formSchema.form, 'formschema logggggggggg gfb')
       return (
         <div>
           <div style={{display: 'flex'}}>
