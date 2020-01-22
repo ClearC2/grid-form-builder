@@ -5,7 +5,7 @@ import DragUnit from './TestDraggableUnit'
 import FormBuilder from '../../src/FormBuilder'
 import schema from './formSchema'
 
-const TEST_SEARCH = true // for conditional search forms
+const TEST_SEARCH = false // for conditional search forms
 
 export default class Example extends Component {
   state = {
@@ -150,18 +150,18 @@ export default class Example extends Component {
               />
             </div>
             <div style={{width: '33%', marginTop: '150px'}}>
-              <ConditionalTable
+              {Object.keys(this.state.formSchema.form).length > 0 && <ConditionalTable
                 title={'Conditional Table Title'}
-                searchFunction={(req) => { console.log(req, 'Search function not implemented yet') }} // eslint-disable-line
-                formSchema={formSchema.form}
+                searchFunction={(req) => { console.log(req, 'Search function not available in test mode') }} // eslint-disable-line
+                formSchema={this.state.formSchema.form}
                 handleFormValueChange={this.handleOnChange}
-                formValues={this.state.formValues}
+                formValues={this.state.formValues.toJS()}
                 onNextClick={(e) => {
                   console.log(this.state.formValues, e, 'form val loggggggggg') // eslint-disable-line
                 }}
                 enableNextButton
                 draggable={false}
-              />
+              />}
             </div>
           </div>
         </div>)
