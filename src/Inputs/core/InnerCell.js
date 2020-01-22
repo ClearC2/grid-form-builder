@@ -102,7 +102,6 @@ const InnerCell = props => {
   const {style = {}, tooltips = {}} = config
   const {innerCell = {}} = style
   const {cell: cellTooltip} = tooltips
-
   return connectDropTarget(
     <div
       style={innerCell}
