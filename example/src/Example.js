@@ -151,7 +151,7 @@ export default class Example extends Component {
               />
             </div>
             <div style={{width: '33%', marginTop: '150px'}}>
-              {Object.keys(this.state.formSchema.form).length > 0 && <ConditionalTable
+              {Object.keys(this.state.formSchema.form || {}).length > 0 && <ConditionalTable
                 title={'Conditional Table Title'}
                 searchFunction={(req) => { console.log(req, 'Search function not available in test mode') }} // eslint-disable-line
                 formSchema={this.state.formSchema.form}
