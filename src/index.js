@@ -1,35 +1,46 @@
+import {Map} from 'immutable'
 /* eslint-disable max-len */
-export {default as reducer} from './redux'
 export {default as FormDroppable} from './FormDroppable'
 export {initFormBuilderAjax} from './config'
-export {default as Conditionalinput, CONDITIONS, TEXT_INPUTS} from './FieldDefinitions/Conditionalinput'
-export {default as Typeahead} from './FieldDefinitions/Typeahead'
-export {default as Checkbox} from './FieldDefinitions/Checkbox'
-export {default as Currency} from './FieldDefinitions/Currency'
-export {default as Date} from './FieldDefinitions/Date'
-export {default as Datetime} from './FieldDefinitions/Datetime'
-export {default as Email} from './FieldDefinitions/Email'
-export {default as Input} from './FieldDefinitions/Input'
-export {default as Listselect} from './FieldDefinitions/Listselect'
-export {default as Multicheckbox} from './FieldDefinitions/Multicheckbox'
-export {default as Multiselect} from './FieldDefinitions/Multiselect'
-export {default as Number} from './FieldDefinitions/Number'
-export {default as Phone} from './FieldDefinitions/Phone'
-export {default as Radio} from './FieldDefinitions/Radio'
-export {default as RichtextareaQuill} from './FieldDefinitions/Richtextareaquill'
-export {default as Select} from './FieldDefinitions/Select'
-export {default as Textarea} from './FieldDefinitions/Textarea'
-export {default as Time} from './FieldDefinitions/Time/Time'
-export {default as Percentage} from './FieldDefinitions/Percentage'
-export {default as Total} from './FieldDefinitions/Total'
-export {default as Portal} from './FieldDefinitions/Portal'
-// Components from the proud package formerly known as query-builder the magnificent
+export {default as Conditionalinput} from './Inputs/ConditionalInput'
+export {CONDITIONS, TEXT_INPUTS} from './Inputs/SearchUtils'
+export {default as GFBInput} from './GFBInput'
+export {default as Typeahead} from './Inputs/Typeahead'
+export {default as Checkbox} from './Inputs/Checkbox'
+export {default as Currency} from './Inputs/Currency'
+export {default as Colorpicker} from './Inputs/Colorpicker'
+export {default as Date} from './Inputs/Date/Date'
+export {default as Datetime} from './Inputs/Date/Datetime'
+export {default as Email} from './Inputs/Email'
+export {default as Input} from './Inputs/Input'
+export {default as Listselect} from './Inputs/Listselect'
+export {default as Multicheckbox} from './Inputs/Multicheckbox'
+export {default as Multiselect} from './Inputs/Multiselect'
+export {default as Number} from './Inputs/Number'
+export {default as Phone} from './Inputs/Phone'
+export {default as Radio} from './Inputs/Radio'
+export {default as Richtextarea} from './Inputs/Richtextarea'
+export {default as Select} from './Inputs/Select'
+export {default as Textarea} from './Inputs/Textarea'
+export {default as Time} from './Inputs/Date/Time'
+export {default as Percentage} from './Inputs/Percentage'
+export {default as Portal} from './Portal'
 export {default as FormBuilder} from './FormBuilder'
 export {default as ConditionalTable, convertQueryToFormValues} from './QueryBuilder/Where/ConditionalTable/ConditionalTableContainer'
 export {ReportBuilder, buildAvailableColumnsFromFieldDefs, buildDefaultColumnsFromQuery} from './QueryBuilder/ReportBuilder/ReportBuilder'
 export {initComponentIconLibrary} from './Icons'
-export {initCustomFormComponents} from './FieldDefinitions'
+export {initCustomFormComponents} from './Inputs'
 
+// declaring depricated methods below to give implementors time to refactor base code - JRA 12/05/2019
 const updateFormValues = () => console.error('updateFormValues is depricated and has been removed. You must handle your own form values.') //eslint-disable-line
 
-export {updateFormValues}
+const reducer = (state = Map()) => {
+  console.warn('grid-form-builder no longer uses redux. Remove the grid-form-builder reducer from your combine reducers.') //eslint-disable-line
+  return state
+}
+reducer.key = 'form-layouts'
+
+export {
+  updateFormValues,
+  reducer
+}

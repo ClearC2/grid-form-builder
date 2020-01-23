@@ -1,9 +1,14 @@
 import {fromJS} from 'immutable'
+import {useRef, useEffect} from 'react'
 
 export const timeStamp = () => {
   let ms = new Date().getTime()
   ms = String(ms).slice(-7)
   return +ms
+}
+
+export const randomId = () => {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
 export const isMobile = !!('ontouchstart' in document.documentElement && navigator.userAgent.match(/Mobi/))
@@ -116,4 +121,10 @@ export const updateLayoutArray = (schema, newArray) => {
     schema = JSON.parse(JSON.stringify(schema))
   }
   return schema
+}
+
+export const usePrevious = value => {
+  const ref = useRef()
+  useEffect(() => { ref.current = value })
+  return ref.current
 }

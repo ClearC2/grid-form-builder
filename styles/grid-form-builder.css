@@ -3,6 +3,10 @@ input[id^='react-select-'] {
   opacity: 1 !important;
 }
 
+div.grid-form-builder-parent .cursor-hand {
+  cursor: pointer;
+}
+
 div.grid-form-builder-parent .active-gfb-item-action-menu {
   position: absolute;
   right: 0;
@@ -37,6 +41,11 @@ div.grid-form-builder-parent .react-grid-item.react-draggable:hover, .react-grid
   z-index: 3;
 }
 
+div.grid-form-builder-parent .react-grid-item.react-draggable:hover > span.react-resizable-handle, .react-grid-item > span.react-resizable-handle {
+  right: -6px;
+  bottom: -5px;
+}
+
 div.grid-form-builder-parent .react-grid-item.react-draggable:hover > span.react-resizable-handle, .react-grid-item.react-draggable.drag-item-active > span.react-resizable-handle {
   right: -6px;
   bottom: -6px;
@@ -46,312 +55,295 @@ div.grid-form-builder-parent span.react-resizable-handle {
   right: -4px;
 }
 
-div.grid-form-builder-parent .warn-required::placeholder {
-  color: red;
-  opacity: 1;
-}
-
-div.grid-form-builder-parent .warn-required:-ms-input-placeholder {
-  color: red;
-}
-
-div.grid-form-builder-parent .warn-required::-ms-input-placeholder {
-  color: red;
-}
-
-div.grid-form-builder-parent div.warn-required > div > span > div.Select-placeholder {
-  color: red;
-  opacity: 1;
-}
-
-div.grid-form-builder-parent div.warn-required > div > span > div.Select-placeholder {
-  color: red;
-}
-
-div.grid-form-builder-parent div.warn-required > div > span > div.Select-placeholder {
-  color: red;
-}
-
-div.grid-form-builder-parent select.select-grid-input {
-  border: 0;
-  background-color: transparent;
-  border-bottom: 1px solid #a0a0a0;
-}
-
-div.grid-form-builder-parent div.Select {
+div.gfb-inner-cell {
+  height: 100%;
   width: 100%;
-}
-
-div.grid-form-builder-parent div.Select > div.Select-control > span > div.Select-value, div.Select > div.Select-control > div > div.Select-value {
-  display: flex;
-  align-items: center;
-  margin: 0;
-  margin-right: 5px;
-}
-
-div.grid-form-builder-parent div.Select > div.Select-control > span > div.Select-value > span, div.Select > div.Select-control > div > div.Select-value > span {
   overflow: hidden;
-  text-overflow: ellipsis;
-  height: 23px;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-}
-
-div.grid-form-builder-parent div.Select > div.Select-control > span.Select-multi-value-wrapper, div.Select > div.Select-control > div.Select-multi-value-wrapper {
-  display: flex;
-}
-
-div.grid-form-builder-parent .is-open > div.Select-control {
-  background-color: transparent;
-  border: 2px solid #a1c3fa;
-  border-radius: 2px;
-}
-
-div.grid-form-builder-parent .is-open > div.Select-control > span.Select-arrow-zone {
-  margin-right: -4px;
-}
-
-div.grid-form-builder-parent div.select-grid-input {
-  height: 25px;
-}
-
-div.grid-form-builder-parent div.select-grid-input > div.Select-menu-outer {
-  margin-left: 0;
-}
-
-div.grid-form-builder-parent div.select-grid-input.select-grid-input-inline {
-  height: 24px;
-}
-
-div.grid-form-builder-parent div.select-grid-input.select-grid-input-inline > div.Select-menu-outer {
-  margin-left: 0;
-}
-
-div.grid-form-builder-parent div.select-grid-input.select-grid-input-inline > div.Select-control {
-  border: 0;
-  border-bottom: 1px solid #a0a0a0;
-}
-
-div.grid-form-builder-parent div.Select-control > span.Select-multi-value-wrapper > div.Select-value > span.Select-value-icon {
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 22px;
-  width: 25px;
-  margin-left: -5px;
-}
-
-div.grid-form-builder-parent div.Select-control > span.Select-multi-value-wrapper > div.Select-value {
-  margin: 0;
-  margin-right: 5px;
-  display: flex;
-  align-items: center;
-  padding-left: 5px;
-}
-
-div.grid-form-builder-parent div.Select-control > div.Select-multi-value-wrapper > div.Select-value {
-  margin: 0;
-  margin-right: 5px;
-  display: flex;
-  align-items: center;
-  padding-left: 5px;
-}
-
-div.grid-form-builder-parent div.Select-control > span.Select-multi-value-wrapper {
-  display: flex;
-  height: 23px;
-}
-
-div.grid-form-builder-parent div.Select-control > div.Select-value > span {
-  color: black !important;
-}
-
-div.grid-form-builder-parent div.Select-control > div.Select-value > span > div.Select-Value {
-  padding-left: 5px !important;
-  display: flex;
-  align-items: center;
-}
-
-div.grid-form-builder-parent div.Select-control {
-  border: 1px solid #a0a0a0;
-  border-radius: 1px;
-  background-color: transparent;
-  height: 24px;
-}
-
-div.grid-form-builder-parent div.Select-menu-outer > div.Select-menu > div.Select-option {
-  overflow-x: visible;
-  white-space: nowrap;
-}
-
-div.grid-form-builder-parent div.Select-menu-outer{
-  min-width: 275px;
-}
-
-div.grid-form-builder-parent div.Select-placeholder, div.Select--single > div.Select-control div.Select-value {
-  color: #757575;
-}
-
-div.grid-form-builder-parent div.warn-required > div.Select-control {
-  border: 1px solid #ec1c24;
-}
-
-div.grid-form-builder-parent .select-grid-input.select-grid-input-inline > div.Select-control > span > div.Select-placeholder {
-  line-height: 27px;
-}
-
-div.grid-form-builder-parent .select-grid-input > div.Select-control > span > div.Select-placeholder {
-  line-height: 25px;
-}
-
-div.grid-form-builder-parent .select-grid-input.warn-required > div.Select-control.warn-required > span > div.Select-placeholder {
-  line-height: 25px;
-  border: 1px solid #ec1c24;
-}
-
-div.grid-form-builder-parent div.Select-menu-outer {
-  border: 1px solid #a0a0a0;
-  margin-left: -2px;
-  margin-top: 1px;
-}
-
-div.grid-form-builder-parent div.Select-menu-outer > div.Select-menu {
-  border: 0;
-}
-
-div.grid-form-builder-parent div.Select-menu-outer > div.Select-menu > div.is-focused {
-  background-color: #36a9e1;
-  color: #f5f5f5;
-}
-
-div.grid-form-builder-parent div.Select-menu-outer > div.Select-menu > div {
-  height: 30px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #a0a0a0;
-  color: #404d54;
-  padding-top: 4px;
-}
-
-div.grid-form-builder-parent div.Select-input > input {
-  height: 24px;
-  padding: 0;
-  width: 100% !important;
-}
-
-div.grid-form-builder-parent div.Select-input {
-  height: 24px;
-  width: 90%;
-  padding-left: 5px;
-}
-
-div.grid-form-builder-parent .date-wrapper-grid-input {
-  height: 27px;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-width: 177px;
 }
 
-div.grid-form-builder-parent .date-wrapper-grid-input > input {
-  height: 25px;
+div.gfb-inner-cell.gfb-inline-cell {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+div.gfb-inner-cell.gfb-inline-cell > .gfb-inner-cell-input {
+  flex: none;
+}
+
+div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox > .gfb-inner-cell-input {
+  width: 20px;
+  flex: none;
+}
+
+div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox > .gfb-inner-cell-label {
+  margin-left: 10px;
+}
+
+div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox.gfb-checkbox-label-with-validation > .gfb-inner-cell-label {
+  margin-left: 40px;
+}
+
+
+div.gfb-inline-cell:not(.gfb-checkbox) > .gfb-inner-cell-label, div.gfb-inline-cell:not(.gfb-checkbox) > .gfb-inner-cell-input {
+  height: 100%;
+}
+
+div.gfb-inline-cell:not(.gfb-checkbox) strong {
+  font-size: 9pt;
+  color: #a0a0a0;
+  margin-bottom: 5px;
+}
+
+div.gfb-input__control.gfb-boxless-input, div.gfb-input__control.gfb-boxless-input:hover {
+  border: 0;
+  margin-top: 1px;
+}
+
+div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container {
+  flex-direction: column;
+}
+
+div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container > .gfb-input__input,
+div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container > .gfb-input__input:focus,
+div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container > .gfb-input__input > .gfb-input__input,
+div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container > .gfb-input__input:focus > .gfb-input__input:focus
+{
+  outline: 0 !important;
+}
+
+input[class^="gfb-input"][type="checkbox"], input[class^="gfb-input"][type="radio"] {
+  height: 16px;
+  width: 16px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+div.gfb-inner-cell-label:not(.gfb-small) {
+  height: 20px;
   display: flex;
   flex-direction: row;
-  flex: 1;
-  padding-left: 5px;
-  border: 1px solid #a0a0a0;
-  background-color: transparent;
-  box-shadow: none;
-  border-radius: 1px;
-  color: black;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-
-div.grid-form-builder-parent .date-wrapper-grid-input > input:disabled {
-  background-color: #eee;
+div.gfb-inner-cell-label > .gfb-field-label {
+  font-size: 8pt;
+  margin-left: 1px;
+  margin-bottom: -1px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-div.grid-form-builder-parent .date-wrapper-grid-input.warn-required > input {
-  border: 1px solid #ec1c24;
+div.gfb-inner-cell-label > * {
+  margin-right: 5px;
 }
 
-div.grid-form-builder-parent .date-wrapper-grid-input.date-wrapper-grid-input-inline > input {
-  height: 27px;
-  border: 0;
-  border-bottom: 1px solid #a0a0a0;
-}
-
-div.grid-form-builder-parent .date-wrapper-grid-input.date-wrapper-grid-input-inline.warn-required > input {
-  border-bottom: 1px solid #ec1c24;
-}
-
-div.grid-form-builder-parent .date-wrapper-grid-input > .rdtPicker {
-  margin-top: 27px;
-}
-
-div.grid-form-builder-parent .checkbox-grid-input {
-  margin-top: 1px;
-  width: 17px;
-  height: 17px;
-  background: url(./check_radio_sheet.png) left top no-repeat;
-  cursor: pointer;
-}
-
-div.grid-form-builder-parent .checkbox-grid-input:checked {
-  background: url(./check_radio_sheet.png) -19px top no-repeat;
-}
-
-div.grid-form-builder-parent .radio-grid-input {
+div.gfb-inner-cell-label.gfb-full-cell-label > h3 {
+  margin: 0;
   display: flex;
-  margin-top: 2px;
-  width: 15px;
-  height: 15px;
-  background: url(./check_radio_sheet.png) -38px top no-repeat;
+  align-items: center;
+}
+
+div.gfb-inner-cell-label.gfb-full-cell-label, div.gfb-inner-cell-label.gfb-full-cell-label > svg {
+  height: 100%;
+}
+
+div.gfb-inner-cell-input {
+  height: calc(100% - 20px);
+  display: flex;
+}
+
+.gfb-disabled-input {
+  background-color: #f2f2f2 !important;
+}
+
+div.gfb-inner-cell-input, div.gfb-input-outer, div.gfb-input-inner, div.gfb-input__control,
+div.gfb-input__control:hover, div.gfb-input__value-container, div.gfb-input__value-container > div[class^=css-],
+div.gfb-input__input, input.gfb-input__single-value, div.gfb-input__single-value, div.gfb-input__value-container > div > div.gfb-input__input > input
+{
+  flex: 1;
+  display: flex !important;
+  overflow: hidden;
+}
+
+div.gfb-input-inner {
+  flex-direction: column;
+}
+
+div.gfb-input__control, div.gfb-input__control:hover {
+  border: 1px solid #b3b3b3;
+  border-radius: 0;
+  min-height: 0;
+  box-shadow: none;
+  align-items: stretch;
+}
+
+div.gfb-input__control.gfb-validation-error,
+div.gfb-input-outer.gfb-validation-error > div.gfb-input-inner > div.gfb-input__control
+{
+  border: 1px solid red;
+}
+
+div.gfb-input-control-bottom {
+  display: flex;
+  justify-content: flex-end;
+}
+
+div.gfb-input-control-bottom > .gfb-action-link {
+  margin-right: 5px;
+  font-size: 8pt;
+  text-decoration: underline;
+  color: blue;
   cursor: pointer;
 }
 
-div.grid-form-builder-parent .radio-grid-input:checked {
-  background: url(./check_radio_sheet.png) -57px top no-repeat;
+div.gfb-input__value-container {
+  padding: 0;
+  margin: 0;
+  align-items: stretch;
+  overflow: visible;
 }
 
-div.grid-form-builder-parent .ck.ck-editor__main {
-  height: calc(100% - 55px);
+div.gfb-input__value-container > div[class^=css-] {
+  padding: 0;
+  margin: 0;
+  align-items: stretch;
 }
 
-div.grid-form-builder-parent .ck.ck-reset.ck-editor.ck-rounded-corners {
+div.gfb-input__input {
+  margin: 0;
+  padding: 0;
+}
+
+div.grid-form-builder-parent div.gfb-input__value-container > div.gfb-input__multi-value {
+  margin-right: 2px;
+  margin-left: 2px;
+  height: 19px;
+  margin-top: 2px;
+  flex: 0 1 auto;
+  justify-content: space-between;
+  width: auto;
+  align-items: center;
+}
+
+div.gfb-input__value-container--is-multi > div > div.gfb-input__input > input {
+  outline: none !important;
+}
+
+input.gfb-input__single-value,
+textarea.gfb-input__single-value,
+div.gfb-input__single-value,
+div.gfb-input__value-container > div > div.gfb-input__input > input,
+div.gfb-input__value-container > div > div.gfb-input__input > textarea,
+label.gfb-multi-input-label-wrapper
+{
+  display: flex;
+  flex: 1;
+  border: none;
+  margin: 0;
+  padding-left: 2px !important;
+  resize: none;
   height: 100%;
 }
 
-div.grid-form-builder-parent .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-blurred.ck-editor__editable_inline {
-  height: 100%;
+div.grid-form-builder-parent input:focus, div.grid-form-builder-parent textarea:focus {
+  outline: 1px solid #37a9e1 !important;
+  outline-offset: 0;
 }
 
-div.grid-form-builder-parent .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-focused.ck-editor__editable_inline {
-  height: 100%;
+div.gfb-input__indicators {
+  display: flex;
 }
 
-div.grid-form-builder-parent .react-grid-item:focus-within, div.grid-form-builder-parent .react-grid-item:active {
-  z-index: 2;
+div > div.gfb-input__indicators > div.gfb-input__indicator {
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 2px;
 }
 
-.react-grid-item-focus-within {
-  z-index: 3 !important;
+div > div.gfb-input__indicators > div.gfb-color-input-indicator {
+  width: 20px;
+  height: calc(100% - 4px);
+  margin: 2px;
+  cursor: pointer;
 }
 
-.ql-container {
-  min-height: 10em;
-  max-height: 100%;
-  overflow: scroll;
+.gfb-validation-indicator {
+  color: red;
+  margin-right: 0 !important;
 }
 
-/* https://github.com/ClearC2/bleu/issues/1154 */
-:-moz-ui-invalid {
-  box-shadow: none;
+div > div.gfb-input__indicators > div.gfb-input__indicator.gfb-validation-error-indicator {
+  width: 20px;
+  height: calc(100% - 4px);
+  margin: 2px;
+  margin-top: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.typeahead__input > input {
-  width: 100% !important;
+div.gfb-input__indicators > div.gfb-input__indicator,  span.gfb-input__indicator-separator {
+  margin: 0;
+  padding: 0;
+}
+
+div.gfb-value-multi-input-container {
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100% + 1px);
+}
+
+div.gfb-input__control > div.gfb-value-multi-input-container.gfb-inline-values-container {
+  flex-direction: row;
+}
+
+div.gfb-multi-input-input {
+  border-bottom: 1px solid #b3b3b3;
+  padding-left: 5px !important;
+  height: 24px;
+  flex: none;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  align-items: center;
+}
+
+div.gfb-multi-input-input.gfb-multi-input-selected {
+  background-color: #a1c3fa;
+}
+
+div.gfb-multi-input-input.gfb-multi-input-selected.gfb-non-interactive-input {
+  background-color: #a6eca67a !important;
+}
+
+.gfb-multi-input-label-wrapper {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+}
+
+.gfb-multi-input-label-wrapper > input[type="checkbox"], .gfb-multi-input-label-wrapper > input[type="radio"] {
+  flex: none;
+}
+
+.gfb-non-interactive-input {
+  color: green;
 }
 
 .gfb-has-tooltip {

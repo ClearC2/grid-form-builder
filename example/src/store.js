@@ -1,11 +1,8 @@
 import {Map} from 'immutable'
-import { createStore, compose } from 'redux'
-import { combineReducers } from 'redux-immutable'
-import {reducer as formLayoutReducer} from '../../src/index'
+import {createStore, compose} from 'redux'
+import {combineReducers} from 'redux-immutable'
 
-const reducer = combineReducers({
-  [formLayoutReducer.key]: formLayoutReducer
-})
+const reducer = combineReducers({app: (s = Map()) => s})
 
 const store = createStore(
   reducer,

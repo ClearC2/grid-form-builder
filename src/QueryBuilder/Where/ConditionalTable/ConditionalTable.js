@@ -51,10 +51,10 @@ export default class ConditionalTable extends Component {
     enableListToggle: false
   }
 
-  UNSAFE_componentWillReceiveProps (props) {
+  componentDidUpdate (props) { // eslint-disable-line
     if (this.props.formValues !== props.formValues) {
       if (this.props.onQueryChange) {
-        this.props.onQueryChange(this.buildRequest(props.formValues))
+        this.props.onQueryChange(this.buildRequest(this.props.formValues))
       }
     }
   }

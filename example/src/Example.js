@@ -5,7 +5,7 @@ import DragUnit from './TestDraggableUnit'
 import FormBuilder from '../../src/FormBuilder'
 import schema from './formSchema'
 
-const TEST_SEARCH = false // for conditional search forms
+const TEST_SEARCH = true // for conditional search forms
 
 export default class Example extends Component {
   state = {
@@ -16,9 +16,10 @@ export default class Example extends Component {
       datetest: '12/12/12',
       meta_created_date: 'swiggity swoogity here comes the moogity',
       listselecttest: List(['Customer Service', 'Executive Meeting']),
-      multiselecttest: ['Contract SigningTestValue'],
+      multiselecttest: ['Contract Signing', 'Customer Service', 'Not A Value'],
       parentid: '00112233445566778899AABBCCEEFFFF',
-      phonetest: '5554443333'
+      phonetest: '5554443333',
+      price: '25.25'
     }),
     inline: false,
     draggable: false,
@@ -119,6 +120,9 @@ export default class Example extends Component {
     setTimeout(() => { // simulate getting schema from api
       this.setState(() => ({formSchema: schema}))
     }, 250)
+    // setTimeout(() => {
+    //   debugger
+    // }, 2000)
   }
 
   handleOnDimensionChange = schema => {
@@ -127,8 +131,10 @@ export default class Example extends Component {
 
   render = () => {
     const {formSchema, isInvalidWarning, droppable, activeItem} = this.state
+    // console.log(this.state.formValues)
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is true
+      console.log(formSchema.form, 'formschema logggggggggg gfb') // eslint-disable-line
       return (
         <div>
           <div style={{display: 'flex'}}>
@@ -145,18 +151,18 @@ export default class Example extends Component {
               />
             </div>
             <div style={{width: '33%', marginTop: '150px'}}>
-              <ConditionalTable
+              {Object.keys(this.state.formSchema.form || {}).length > 0 && <ConditionalTable
                 title={'Conditional Table Title'}
-                searchFunction={(req) => { console.log(req, 'Search function not implemented yet') }} // eslint-disable-line
-                formSchema={formSchema.form}
+                searchFunction={(req) => { console.log(req, 'Search function not available in test mode') }} // eslint-disable-line
+                formSchema={this.state.formSchema.form}
                 handleFormValueChange={this.handleOnChange}
-                formValues={this.state.formValues}
+                formValues={this.state.formValues.toJS()}
                 onNextClick={(e) => {
                   console.log(this.state.formValues, e, 'form val loggggggggg') // eslint-disable-line
                 }}
                 enableNextButton
                 draggable={false}
-              />
+              />}
             </div>
           </div>
         </div>)
@@ -178,8 +184,7 @@ export default class Example extends Component {
             >
               {this.state.draggable ? 'Make Static' : 'Make Draggable'}
             </button>
-            <button onClick={this.toggleInline}>{this.state.inline ? 'Toggle To Stacked' : 'Toggle to Inline'}</button>
-            <button onClick={this.onSubmit} style={{marginLeft: 10}}>Submit</button>
+            <button onClick={this.onSubmit}>Submit</button>
             <button onClick={this.toggleValidation} style={{marginLeft: 10}}>Toggle Validation State</button>
             <button
               onClick={this.toggleDroppable}
@@ -191,7 +196,7 @@ export default class Example extends Component {
           </div>
           <FormBuilder
             ref={ref => { this.exampleForm = ref }}
-            formSchema={formSchema.form}
+            formSchema={this.state.formSchema.form}
             formValues={this.state.formValues}
             handleOnChange={this.handleOnChange}
             onClick={this.handleOnClick}

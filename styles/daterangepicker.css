@@ -413,3 +413,11 @@
         clear: none !important;
     }
 }
+
+.daterangepicker.drop-up.calendar-hidden {
+    /*transform: translateY(277px);*/
+}
+
+.daterangepicker.calendar-hidden > .drp-calendar > .calendar-time {
+    padding-right: 8px;
+}
