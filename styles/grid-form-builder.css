@@ -131,12 +131,16 @@ div.gfb-inner-cell-label:not(.gfb-small) {
   display: flex;
   flex-direction: row;
   align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 div.gfb-inner-cell-label > .gfb-field-label {
   font-size: 8pt;
   margin-left: 1px;
   margin-bottom: -1px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 div.gfb-inner-cell-label > * {
