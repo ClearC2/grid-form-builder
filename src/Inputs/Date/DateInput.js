@@ -87,8 +87,17 @@ const DateInput = props => {
 
   let startDate
   if (inputValue) {
-    const date = moment(inputValue, inputFormat)
-    if (date.isValid()) startDate = date
+    let date = moment(inputValue, inputFormat)
+    if (date.isValid()) {
+      startDate = date
+    } else {
+      // this is a fallback, if we can't get the date valid by trying, see if moment can figure it out one last time by itself - JRA 01/23/2020
+      // using moment in this way is deprecated and will throw a warning
+      date = moment(inputValue)
+      if (date.isValid()) {
+        startDate = date
+      }
+    }
   }
   return (
     <div className='gfb-input-outer' style={inputOuter}>
