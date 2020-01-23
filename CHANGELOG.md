@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/ClearC2/grid-form-builder/compare/v3.0.0...v3.0.1) (2020-01-23)
+
+
+### Bug Fixes
+
+* **validation:** fields will no longer visually be flagged as requird when the validation state is on if they are indeed not required ([a4e2e3b](https://github.com/ClearC2/grid-form-builder/commit/a4e2e3b))
+
 # [3.0.0](https://github.com/ClearC2/grid-form-builder/compare/v2.18.0...v3.0.0) (2020-01-23)
 
 
