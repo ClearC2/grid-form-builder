@@ -165,7 +165,7 @@ const Typeahead = props => {
         })
     }
 
-    return Promise.resolve({options: []})
+    return Promise.resolve([])
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode])
 
   const formatCreateLabel = useCallback(value => {
