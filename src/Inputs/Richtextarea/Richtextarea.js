@@ -23,7 +23,8 @@ const Richtextarea = props => {
     autoComplete,
     interactive = true,
     requiredWarning,
-    style = {}
+    style = {},
+    required
   } = props
 
   const {
@@ -106,7 +107,7 @@ const Richtextarea = props => {
   if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control'
   let validationError
-  if (requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
@@ -163,5 +164,6 @@ Richtextarea.propTypes = {
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  required: PropTypes.bool
 }

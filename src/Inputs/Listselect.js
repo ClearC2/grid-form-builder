@@ -11,7 +11,8 @@ const Listselect = props => {
     readonly,
     interactive = true,
     requiredWarning,
-    style = {}
+    style = {},
+    required
   } = props
 
   const {
@@ -77,7 +78,7 @@ const Listselect = props => {
 
   let controlClass = 'gfb-input__control'
   let validationError
-  if (requiredWarning && value.length === 0) {
+  if (required && requiredWarning && value.length === 0) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
@@ -135,5 +136,6 @@ Listselect.propTypes = {
   readonly: PropTypes.bool,
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  required: PropTypes.bool
 }

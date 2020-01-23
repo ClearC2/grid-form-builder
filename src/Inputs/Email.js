@@ -16,7 +16,8 @@ const Email = props => {
     autoComplete,
     interactive = true,
     requiredWarning,
-    style = {}
+    style = {},
+    required
   } = props
 
   const {
@@ -47,7 +48,7 @@ const Email = props => {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'Invalid Email Format'
   }
-  if (requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
@@ -95,5 +96,6 @@ Email.propTypes = {
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  required: PropTypes.bool
 }

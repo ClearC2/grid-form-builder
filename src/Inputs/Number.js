@@ -24,7 +24,8 @@ const Number = props => {
     decimals = 0,
     interactive = true,
     requiredWarning,
-    style = {}
+    style = {},
+    required
   } = props
 
   const {
@@ -75,7 +76,7 @@ const Number = props => {
   if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control'
   let validationError
-  if (requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
@@ -137,5 +138,6 @@ Number.propTypes = {
   decimals: PropTypes.number,
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  required: PropTypes.bool
 }
