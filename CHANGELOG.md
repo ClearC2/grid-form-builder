@@ -1,3 +1,55 @@
+# [3.0.0](https://github.com/ClearC2/grid-form-builder/compare/v2.18.0...v3.0.0) (2020-01-23)
+
+
+* Refactor All Field Definitions (#137) ([4cfb050](https://github.com/ClearC2/grid-form-builder/commit/4cfb050)), closes [#137](https://github.com/ClearC2/grid-form-builder/issues/137)
+
+
+### BREAKING CHANGES
+
+* Complete refactor of input definitions
+
+* fix(icon): removed bad icon
+
+* fix(select): adds top padding to vertically center select icons
+
+* fix(validation): fixes validation warning vertical centering
+
+* fix(cleave): cleave will now properly update itself if its controlled value is changed through means other than its own change handler
+
+* feat(hookedSearchForms): rewrite conditional input with hooks
+
+* fix(condTable): in example
+
+* build for changes
+
+* fix(exports): new locations
+
+* build
+
+* change directory structure
+
+* fix(extraFiles): deleted
+
+* remove invalidCondition types from certain inputTypes
+
+* build
+
+* add search utils
+
+* delete(fieldDefs): folder. we use hooks now. deal with it.
+
+* feat(css): sets overflow hidden to many of the elements so they honor width and do not overflow when they get super tiny
+
+* feat(labels): adds label style such that they do not wrap and overflow into the field area, and horizontal overflow turns into ellipsis
+
+* fix(typeahead): the bailout for typeahead now properly returns an empty array
+
+* fix(style): input values are now 100% height so they are always vertically centered correctly
+
+* feat(date): adds a fallback to the start time formatter for moment to try to figure out the date itself without specifying an input format if we can't figure it out the proper way, this is to help normalize the value if a previously saved value is in a weird format
+
+Co-authored-by: Will Darden <4469608+wldarden@users.noreply.github.com>
+
 # [2.18.0](https://github.com/ClearC2/grid-form-builder/compare/v2.17.0...v2.18.0) (2020-01-16)
 
 
