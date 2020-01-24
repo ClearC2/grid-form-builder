@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/ClearC2/grid-form-builder/compare/v3.0.1...v3.1.0) (2020-01-24)
+
+
+### Features
+
+* **portal:** moves portal 20px down so it lines up better with everying in bleu ([baf2581](https://github.com/ClearC2/grid-form-builder/commit/baf2581))
+
 ## [3.0.1](https://github.com/ClearC2/grid-form-builder/compare/v3.0.0...v3.0.1) (2020-01-23)
 
 
