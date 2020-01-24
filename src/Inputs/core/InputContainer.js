@@ -47,10 +47,10 @@ const InputContainer = props => {
   } = props
   const {name, required, style = {}, tooltips = {}, ...other} = config
   const {input: inputTooltip} = tooltips
-  const {innerCell = {}} = style
+  const {cellInput = {}} = style
   const inputId = useRef(randomId())
   return (
-    <div className='gfb-inner-cell-input' style={innerCell} data-tip data-for={inputId.current}>
+    <div className='gfb-inner-cell-input' style={cellInput} data-tip data-for={inputId.current}>
       <PortalTooltip id={inputId.current} message={inputTooltip} />
       {cloneElement(children, {
         requiredWarning,
