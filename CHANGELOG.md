@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/ClearC2/grid-form-builder/compare/v3.1.1...v3.1.2) (2020-01-24)
+
+
+### Bug Fixes
+
+* **style:** cell input style now properly applies to the correct div ([e663196](https://github.com/ClearC2/grid-form-builder/commit/e663196))
+
 ## [3.1.1](https://github.com/ClearC2/grid-form-builder/compare/v3.1.0...v3.1.1) (2020-01-24)
 
 
