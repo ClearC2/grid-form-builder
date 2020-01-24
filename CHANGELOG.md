@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/ClearC2/grid-form-builder/compare/v3.1.0...v3.1.1) (2020-01-24)
+
+
+### Bug Fixes
+
+* **performance:** only typeaheads constantly rerender as form values change ([2d876b0](https://github.com/ClearC2/grid-form-builder/commit/2d876b0))
+
 # [3.1.0](https://github.com/ClearC2/grid-form-builder/compare/v3.0.1...v3.1.0) (2020-01-24)
 
 
