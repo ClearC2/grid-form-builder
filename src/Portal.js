@@ -71,7 +71,7 @@ class PortalTarget extends Component {
       target = target.getBoundingClientRect()
 
       offset['marginLeft'] = target.x
-      offset['marginTop'] = target.top + target.height + window.pageYOffset - 19
+      offset['marginTop'] = target.top + target.height + window.pageYOffset + 1
 
       /*
       * Allows minor adjustments at portal drop location, allows for minor changes on margin styling
