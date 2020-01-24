@@ -1,8 +1,32 @@
-import React, {cloneElement, useRef} from 'react'
+import React, {Component, cloneElement, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {Map} from 'immutable'
 import PortalTooltip from '../../Tooltip'
 import {randomId} from '../../utils'
+
+class InputPerformanceOptimizer extends Component {
+  static propTypes = {
+    config: PropTypes.object,
+    values: PropTypes.object,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string, PropTypes.number])
+  }
+
+  shouldComponentUpdate (p) {
+    const {config, values, value} = this.props
+    const type = (typeof config.type === 'string' && config.type.toLowerCase()) || 'input'
+    if (type !== 'typeahead') {
+      if (!values.equals(p.values) && value === p.value) {
+        // if this is not a typeahead and its own value hasn't changed, don't rerender due to form values changing - JRA 01/24/2020
+        return false
+      }
+    }
+    return true
+  }
+
+  render () {
+    return <InputContainer {...this.props} />
+  }
+}
 
 const InputContainer = props => {
   const {
@@ -50,7 +74,7 @@ const InputContainer = props => {
   )
 }
 
-export default InputContainer
+export default InputPerformanceOptimizer
 
 InputContainer.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.array]),

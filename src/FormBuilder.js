@@ -519,7 +519,18 @@ export default class FormValidator extends Component {
       this.updateFormValues(p.formValues) // this kills the extra render from values updating, the context updating will render - JRA 11/07/2019
       return false
     }
-    let update = Object.keys(this.props).some(prop => (this.props[prop] !== p[prop]))
+    let update = Object.keys(this.props).some(prop => {
+      if (
+        this.props[prop] &&
+        p[prop] &&
+        typeof this.props[prop].toJS === 'function' &&
+        typeof p[prop].toJS === 'function'
+      ) {
+        return (!this.props[prop].equals(p[prop]))
+      } else {
+        return (this.props[prop] !== p[prop])
+      }
+    })
     if (!update) update = Object.keys(this.state).some(state => (this.state[state] !== s[state]))
     return update
   }
