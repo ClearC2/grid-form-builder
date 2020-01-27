@@ -1,4 +1,6 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react'
+/** @jsx jsx */
+import {jsx} from '@emotion/core'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 import ReactQuill from 'react-quill'
 import {randomId, usePrevious} from '../../utils'

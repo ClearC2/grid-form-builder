@@ -1,4 +1,6 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react'
+/** @jsx jsx */
+import {jsx} from '@emotion/core'
+import {useState, useEffect, useCallback, useRef} from 'react'
 import PropTypes from 'prop-types'
 import Async from 'react-select/async'
 import AsyncCreatable from 'react-select/async-creatable'

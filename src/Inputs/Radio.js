@@ -1,4 +1,6 @@
-import React, {useCallback} from 'react'
+/** @jsx jsx */
+import {jsx} from '@emotion/core'
+import {useCallback} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 

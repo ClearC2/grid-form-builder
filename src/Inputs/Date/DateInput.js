@@ -1,4 +1,6 @@
-import React, {useCallback, useEffect, useState, useRef} from 'react'
+/** @jsx jsx */
+import {jsx} from '@emotion/core'
+import {useCallback, useEffect, useState, useRef} from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from './DatePicker'
 import moment from 'moment'

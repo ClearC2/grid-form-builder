@@ -1,4 +1,6 @@
-import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react'
+/** @jsx jsx */
+import {jsx} from '@emotion/core'
+import {useCallback, useEffect, useRef, useState, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import ColorPicker from './ColorPicker'
 import {randomId} from '../../utils'

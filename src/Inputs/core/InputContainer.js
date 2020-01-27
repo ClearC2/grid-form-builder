@@ -1,4 +1,6 @@
-import React, {Component, cloneElement, useRef} from 'react'
+/** @jsx jsx */
+import {jsx} from '@emotion/core'
+import {Component, cloneElement, useRef} from 'react'
 import PropTypes from 'prop-types'
 import {Map} from 'immutable'
 import PortalTooltip from '../../Tooltip'
