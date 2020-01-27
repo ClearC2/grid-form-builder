@@ -7,6 +7,7 @@ import AsyncCreatable from 'react-select/async-creatable'
 import {isMobile} from '../utils'
 import GFBConfig from '../config'
 import ValidationErrorIcon from '../ValidationErrorIcon'
+import useTheme from '../theme/useTheme'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -46,6 +47,17 @@ const Typeahead = props => {
     indicators = {},
     options: optionsStyle = {}
   } = style
+
+  const {theme} = useTheme()
+
+  const {
+    value: valueTheme = {},
+    inputInner: inputInnerTheme = {},
+    inputControl: inputControlTheme = {},
+    valueContainer: valueContainerTheme = {},
+    indicators: indicatorsTheme = {},
+    options: optionsTheme = {}
+  } = theme
 
   let {
     delimit,
@@ -434,19 +446,19 @@ const Typeahead = props => {
         components={components}
         styles={{
           container: base => {
-            return ({...base, ...inputInner})
+            return ({...base, ...inputInner, ...inputInnerTheme})
           },
           control: base => {
-            return ({...base, ...inputControl})
+            return ({...base, ...inputControl, ...inputControlTheme})
           },
           valueContainer: base => {
-            return ({...base, ...valueContainer})
+            return ({...base, ...valueContainer, ...valueContainerTheme})
           },
           indicatorsContainer: base => {
-            return ({...base, ...indicators})
+            return ({...base, ...indicators, ...indicatorsTheme})
           },
           option: base => {
-            return ({...base, ...optionsStyle})
+            return ({...base, ...optionsStyle, ...optionsTheme})
           },
           multiValue: base => {
             if (!interactive) {
@@ -455,13 +467,13 @@ const Typeahead = props => {
             } else {
               base.backgroundColor = '#8bb7ff91'
             }
-            return ({...base, ...valueStyle})
+            return ({...base, ...valueStyle, ...valueTheme})
           },
           singleValue: base => {
             if (!interactive) {
               base.color = 'green'
             }
-            return ({...base, ...valueStyle})
+            return ({...base, ...valueStyle, ...valueTheme})
           },
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
 import PropTypes from 'prop-types'
+import useTheme from '../theme/useTheme'
 
 const Metadata = props => {
   const {
@@ -17,14 +18,16 @@ const Metadata = props => {
     indicators = {}
   } = style
 
+  const {theme} = useTheme()
+
   return (
-    <div className='gfb-input-outer' style={inputOuter}>
-      <div className='gfb-input-inner' style={inputInner}>
-        <div className='gfb-input__control gfb-boxless-input' style={inputControl}>
-          <div className='gfb-input__value-container' style={valueContainer}>
-            <strong style={valueStyle}>{value}</strong>
+    <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
+      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
+        <div className='gfb-input__control gfb-boxless-input' style={inputControl} css={theme.inputControl}>
+          <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
+            <strong style={valueStyle} css={theme.value}>{value}</strong>
           </div>
-          <div className='gfb-input__indicators' style={indicators} />
+          <div className='gfb-input__indicators' style={indicators} css={theme.indicators} />
         </div>
       </div>
     </div>

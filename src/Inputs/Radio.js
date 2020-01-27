@@ -3,6 +3,7 @@ import {jsx} from '@emotion/core'
 import {useCallback} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
+import useTheme from '../theme/useTheme'
 
 const Radio = props => {
   const {
@@ -29,6 +30,8 @@ const Radio = props => {
     valueContainer = {},
     indicators = {}
   } = style
+
+  const {theme} = useTheme()
 
   const {options = []} = keyword
 
@@ -57,10 +60,10 @@ const Radio = props => {
   }
 
   return (
-    <div className='gfb-input-outer' style={inputOuter}>
-      <div className='gfb-input-inner' style={inputInner}>
-        <div className={controlClass} style={inputControl}>
-          <div className={valueContainerClassName} style={valueContainer}>
+    <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
+      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
+        <div className={controlClass} style={inputControl} css={theme.inputControl}>
+          <div className={valueContainerClassName} style={valueContainer} css={theme.valueContainer}>
             {options.map((option, i) => {
               const checked = value && (option.value + '').toLowerCase() === (value + '').toLowerCase() // the option value may be a number but the field have the value as a string
               let className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input'
@@ -68,7 +71,12 @@ const Radio = props => {
               if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input'
               if (!interactive) className = className + ' gfb-non-interactive-input'
               return (
-                <label key={i} className={'gfb-multi-input-label-wrapper ' + className} style={valueStyle}>
+                <label
+                  key={i}
+                  className={'gfb-multi-input-label-wrapper ' + className}
+                  style={valueStyle}
+                  css={theme.options}
+                >
                   <input
                     className={className}
                     name={name}
@@ -80,13 +88,14 @@ const Radio = props => {
                     autoFocus={autofocus}
                     type='radio'
                     autoComplete={autoComplete}
+                    css={theme.value}
                   />
                   {option.label ? option.label : option.value}
                 </label>
               )
             })}
           </div>
-          <div className='gfb-input__indicators' style={indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

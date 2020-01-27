@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Map} from 'immutable'
 import PortalTooltip from '../../Tooltip'
 import {randomId} from '../../utils'
+import useTheme from '../../theme/useTheme'
 
 class InputPerformanceOptimizer extends Component {
   static propTypes = {
@@ -51,8 +52,9 @@ const InputContainer = props => {
   const {input: inputTooltip} = tooltips
   const {cellInput = {}} = style
   const inputId = useRef(randomId())
+  const {theme} = useTheme()
   return (
-    <div className='gfb-inner-cell-input' style={cellInput} data-tip data-for={inputId.current}>
+    <div className='gfb-inner-cell-input' style={cellInput} data-tip data-for={inputId.current} css={theme.cellInput}>
       <PortalTooltip id={inputId.current} message={inputTooltip} />
       {cloneElement(children, {
         requiredWarning,

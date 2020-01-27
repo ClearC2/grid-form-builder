@@ -6,6 +6,7 @@ import ReactSelect from 'react-select'
 import Creatable from 'react-select/creatable'
 import {isMobile} from '../utils'
 import ValidationErrorIcon from '../ValidationErrorIcon'
+import useTheme from '../theme/useTheme'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -38,6 +39,17 @@ const Select = props => {
     indicators = {},
     options: optionsStyle = {}
   } = style
+
+  const {theme} = useTheme()
+
+  const {
+    value: valueTheme = {},
+    inputInner: inputInnerTheme = {},
+    inputControl: inputControlTheme = {},
+    valueContainer: valueContainerTheme = {},
+    indicators: indicatorsTheme = {},
+    options: optionsTheme = {}
+  } = theme
 
   const {options = []} = keyword
 
@@ -165,25 +177,25 @@ const Select = props => {
         components={components}
         styles={{
           container: base => {
-            return ({...base, ...inputInner})
+            return ({...base, ...inputInner, ...inputInnerTheme})
           },
           control: base => {
-            return ({...base, ...inputControl})
+            return ({...base, ...inputControl, ...inputControlTheme})
           },
           valueContainer: base => {
-            return ({...base, ...valueContainer})
+            return ({...base, ...valueContainer, ...valueContainerTheme})
           },
           indicatorsContainer: base => {
-            return ({...base, ...indicators})
+            return ({...base, ...indicators, ...indicatorsTheme})
           },
           option: base => {
-            return ({...base, ...optionsStyle})
+            return ({...base, ...optionsStyle, ...optionsTheme})
           },
           singleValue: base => {
             if (!interactive) {
               base.color = 'green'
             }
-            return ({...base, ...valueStyle})
+            return ({...base, ...valueStyle, ...valueTheme})
           },
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8

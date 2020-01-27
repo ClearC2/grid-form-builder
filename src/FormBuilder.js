@@ -8,8 +8,7 @@ import $ from 'jquery'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
 import InnerCell from './Inputs'
 import {FaTrash as Trash} from 'react-icons/fa'
-// import {DndProvider} from 'react-dnd'
-// import HTML5backend from 'react-dnd-test-backend'
+import useTheme, {ThemeProvider} from './theme/useTheme'
 
 let inputEventListenerDebouncer = null
 
@@ -64,6 +63,7 @@ const FormBuilder = (props) => {
   const [myOffset] = useState(FormBuilder.count)
   const [id] = useState(`gfb-${Math.floor(Math.random() * 10000) + 1}`) // creates a unique id for this grid for the screen scraper
   const ReactGridLayout = useRef(null)
+  const {theme} = useTheme()
 
   const handleAnywhereClick = useCallback((config, e) => {
     debugLog('handleAnywhereClick')
@@ -171,7 +171,7 @@ const FormBuilder = (props) => {
           removeItem(i)
         }
         elements.push(
-          <div key={i + ''} className={className}>
+          <div key={i + ''} className={className} css={theme.gridItem}>
             {draggable && isActive && (
               <div className='active-gfb-item-action-menu' onClick={removeSelf}>
                 <div className='item-action-button action-button-remove'>
@@ -293,14 +293,7 @@ const FormBuilder = (props) => {
 
   debugLog('render')
 
-  /**
-   * Uncomment DndProvider when linking grid-form-builder locally,
-   * enables access through yarn link
-   *
-   * TM 11/26/2019
-   */
   return (
-    // <DndProvider backend={HTML5backend}>
     <div
       id={id}
       className='grid-form-builder-parent'
@@ -326,7 +319,6 @@ const FormBuilder = (props) => {
         {grid.elements}
       </RGL>
     </div>
-    /* </DndProvider> */
   )
 }
 
@@ -539,15 +531,17 @@ export default class FormValidator extends Component {
     const {requiredWarning, formValues, validate} = this.state
     const {formValues: values, ...rest} = this.props
     return (
-      <FormValueContext.Provider value={[formValues, this.updateFormValues]}>
-        <SizeMeHOC
-          {...rest}
-          validate={this.props.validate || validate}
-          requiredWarning={requiredWarning}
-          setContainerRef={this.setContainerRef}
-          handleLinkClick={this.handleLinkClick}
-        />
-      </FormValueContext.Provider>
+      <ThemeProvider>
+        <FormValueContext.Provider value={[formValues, this.updateFormValues]}>
+          <SizeMeHOC
+            {...rest}
+            validate={this.props.validate || validate}
+            requiredWarning={requiredWarning}
+            setContainerRef={this.setContainerRef}
+            handleLinkClick={this.handleLinkClick}
+          />
+        </FormValueContext.Provider>
+      </ThemeProvider>
     )
   }
 }

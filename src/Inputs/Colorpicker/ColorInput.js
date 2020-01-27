@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import ColorPicker from './ColorPicker'
 import {randomId} from '../../utils'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
+import useTheme from '../../theme/useTheme'
 
 const ColorInput = props => {
   const {
@@ -31,6 +32,8 @@ const ColorInput = props => {
     valueContainer = {},
     indicators = {}
   } = style
+
+  const {theme} = useTheme()
 
   const [showPicker, setShowPicker] = useState(false)
   const inputId = useRef(randomId())
@@ -94,10 +97,10 @@ const ColorInput = props => {
   }
 
   return (
-    <div className={outerClass} style={inputOuter}>
-      <div className='gfb-input-inner' style={inputInner}>
-        <div className={controlClass} style={inputControl}>
-          <div className='gfb-input__value-container' style={valueContainer}>
+    <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
+      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
+        <div className={controlClass} style={inputControl} css={theme.inputControl}>
+          <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
             <input
               id={inputId.current}
               className={className}
@@ -112,6 +115,7 @@ const ColorInput = props => {
               onBlur={handleOnBlur}
               autoComplete={autoComplete}
               style={valueStyle}
+              css={theme.value}
             />
             {showPicker && (
               <ColorPicker
@@ -123,7 +127,7 @@ const ColorInput = props => {
               />
             )}
           </div>
-          <div className='gfb-input__indicators' style={indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
             <div
               className='gfb-color-input-indicator'
               style={{backgroundColor: value}}

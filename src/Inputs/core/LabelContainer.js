@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {mapIcon} from '../../Icons'
 import PortalTooltip from '../../Tooltip'
 import {randomId} from '../../utils'
+import useTheme from '../../theme/useTheme'
 
 const LabelContainer = props => {
   const {config, handleLinkClick, handleCascadeKeywordClick, value} = props
@@ -27,6 +28,7 @@ const LabelContainer = props => {
   const linkId = useRef(randomId())
   const cascadeId = useRef(randomId())
   const labelId = useRef(randomId())
+  const {theme} = useTheme()
 
   const onLinkClick = useCallback(() => {
     handleLinkClick(config.link)
@@ -66,7 +68,7 @@ const LabelContainer = props => {
   } = style
 
   return (
-    <div className={className} style={cellStyle}>
+    <div className={className} style={cellStyle} css={theme.cellLabel}>
       <PortalTooltip id={iconId.current} message={iconTooltip} />
       <PortalTooltip id={linkId.current} message={linkTooltip} />
       <PortalTooltip id={cascadeId.current} message={cascadeTooltip} />
@@ -77,6 +79,7 @@ const LabelContainer = props => {
           style={iconStyle}
           data-tip
           data-for={iconId.current}
+          css={theme.icon}
         />
       )}
       {required && <strong className='gfb-validation-indicator'>*</strong>}
@@ -87,6 +90,7 @@ const LabelContainer = props => {
           style={labelStyle}
           data-tip
           data-for={labelId.current}
+          css={theme.label}
         >
           {label}
         </strong>
@@ -98,6 +102,7 @@ const LabelContainer = props => {
           style={labelStyle}
           data-tip
           data-for={labelId.current}
+          css={theme.label}
         >
           {label}
         </h3>
@@ -109,6 +114,7 @@ const LabelContainer = props => {
           style={linkStyle}
           data-tip
           data-for={linkId.current}
+          css={theme.link}
         />
       )}
       {CascadeIcon && (
@@ -118,6 +124,7 @@ const LabelContainer = props => {
           style={cascadeStyle}
           data-tip
           data-for={cascadeId.current}
+          css={theme.cascade}
         />
       )}
     </div>

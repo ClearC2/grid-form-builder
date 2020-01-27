@@ -6,6 +6,7 @@ import ReactSelect from 'react-select'
 import Creatable from 'react-select/creatable'
 import {isMobile} from '../utils'
 import ValidationErrorIcon from '../ValidationErrorIcon'
+import useTheme from '../theme/useTheme'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -38,6 +39,17 @@ const Multiselect = props => {
     indicators = {},
     options: optionsStyle = {}
   } = style
+
+  const {theme} = useTheme()
+
+  const {
+    value: valueTheme = {},
+    inputInner: inputInnerTheme = {},
+    inputControl: inputControlTheme = {},
+    valueContainer: valueContainerTheme = {},
+    indicators: indicatorsTheme = {},
+    options: optionsTheme = {}
+  } = theme
 
   const [input, changeInput] = useState({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
@@ -197,7 +209,13 @@ const Multiselect = props => {
   }
 
   return (
-    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
+    <div
+      className={outerClass}
+      ref={inputContainer}
+      onMouseDown={handleOnFocus}
+      style={inputOuter}
+      css={theme.inputOuter}
+    >
       <Select
         className={className}
         classNamePrefix='gfb-input'
@@ -223,19 +241,19 @@ const Multiselect = props => {
         components={components}
         styles={{
           container: base => {
-            return ({...base, ...inputInner})
+            return ({...base, ...inputInner, ...inputInnerTheme})
           },
           control: base => {
-            return ({...base, ...inputControl})
+            return ({...base, ...inputControl, ...inputControlTheme})
           },
           valueContainer: base => {
-            return ({...base, ...valueContainer})
+            return ({...base, ...valueContainer, ...valueContainerTheme})
           },
           indicatorsContainer: base => {
-            return ({...base, ...indicators})
+            return ({...base, ...indicators, ...indicatorsTheme})
           },
           option: base => {
-            return ({...base, ...optionsStyle})
+            return ({...base, ...optionsStyle, ...optionsTheme})
           },
           multiValue: base => {
             if (!interactive) {
@@ -244,7 +262,7 @@ const Multiselect = props => {
             } else {
               base.backgroundColor = '#8bb7ff91'
             }
-            return ({...base, ...valueStyle})
+            return ({...base, ...valueStyle, ...valueTheme})
           },
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8

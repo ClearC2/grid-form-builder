@@ -9,6 +9,7 @@ import ValidationErrorIcon from '../../ValidationErrorIcon'
 import '../../../styles/richtext.css'
 import 'react-quill/dist/quill.snow.css'
 import 'react-quill/dist/quill.core.css'
+import useTheme from '../../theme/useTheme'
 
 const Richtextarea = props => {
   const {
@@ -37,6 +38,8 @@ const Richtextarea = props => {
     valueContainer = {},
     indicators = {}
   } = style
+
+  const {theme} = useTheme()
 
   const [isFocused, setIsFocused] = useState(false)
   const elementId = useRef('gfb-' + randomId())
@@ -119,13 +122,13 @@ const Richtextarea = props => {
   }
 
   return (
-    <div className={outerClass} style={inputOuter}>
-      <div className='gfb-input-inner' style={inputInner}>
+    <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
+      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
         <div className='gfb-input-control-top'>
           <Toolbar id={elementId.current} />
         </div>
-        <div className={controlClass} style={inputControl}>
-          <div className='gfb-input__value-container' style={valueContainer}>
+        <div className={controlClass} style={inputControl} css={theme.inputControl}>
+          <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
             <ReactQuill
               onChange={handleOnChange}
               disabled={readonly || disabled || !interactive}
@@ -143,9 +146,10 @@ const Richtextarea = props => {
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               style={valueStyle}
+              css={theme.value}
             />
           </div>
-          <div className='gfb-input__indicators' style={indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

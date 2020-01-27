@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 // import Cleave from 'cleave.js/react'
 import Cleave from '../Cleave' // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
 import ValidationErrorIcon from '../ValidationErrorIcon'
+import useTheme from '../theme/useTheme'
 
 const Currency = props => {
   const {
@@ -34,6 +35,8 @@ const Currency = props => {
     valueContainer = {},
     indicators = {}
   } = style
+
+  const {theme} = useTheme()
 
   const input = useRef()
   const [isFocused, setIsFocused] = useState(false)
@@ -75,10 +78,10 @@ const Currency = props => {
   }
 
   return (
-    <div className={outerClass} style={inputOuter}>
-      <div className='gfb-input-inner' style={inputInner}>
-        <div className={controlClass} style={inputControl}>
-          <div className='gfb-input__value-container' style={valueContainer}>
+    <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
+      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
+        <div className={controlClass} style={inputControl} css={theme.inputControl}>
+          <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
             <Cleave
               ref={input}
               options={{
@@ -99,6 +102,7 @@ const Currency = props => {
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               style={valueStyle}
+              css={theme.value}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators}>

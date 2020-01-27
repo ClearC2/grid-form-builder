@@ -3,6 +3,7 @@ import {jsx} from '@emotion/core'
 import {useCallback, useRef} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
+import useTheme from '../theme/useTheme'
 
 const Checkbox = props => {
   const {
@@ -31,6 +32,8 @@ const Checkbox = props => {
     valueContainer = {},
     indicators = {}
   } = style
+
+  const {theme} = useTheme()
 
   const truthy = useRef([
     true,
@@ -139,10 +142,10 @@ const Checkbox = props => {
   }
 
   return (
-    <div className='gfb-input-outer' style={inputOuter}>
-      <div className='gfb-input-inner' style={inputInner}>
-        <div className={controlClass} style={inputControl}>
-          <div className='gfb-input__value-container' style={valueContainer}>
+    <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
+      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
+        <div className={controlClass} style={inputControl} css={theme.inputControl}>
+          <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
             <input
               className={className}
               name={name}
@@ -156,6 +159,7 @@ const Checkbox = props => {
               type='checkbox'
               autoComplete={autoComplete}
               style={valueStyle}
+              css={theme.value}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators}>

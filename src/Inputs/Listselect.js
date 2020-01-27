@@ -3,6 +3,7 @@ import {jsx} from '@emotion/core'
 import {useState, useCallback, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
+import useTheme from '../theme/useTheme'
 
 const Listselect = props => {
   const {
@@ -26,6 +27,8 @@ const Listselect = props => {
     indicators = {},
     options: optionsStyle = {}
   } = style
+
+  const {theme} = useTheme()
 
   const {options = []} = keyword
   const [value, updateValue] = useState([])
@@ -86,10 +89,14 @@ const Listselect = props => {
   }
 
   return (
-    <div className='gfb-input-outer' style={inputOuter}>
-      <div className='gfb-input-inner' style={inputInner}>
-        <div className={controlClass} style={inputControl}>
-          <div className='gfb-input__value-container gfb-value-multi-input-container' style={valueContainer}>
+    <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
+      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
+        <div className={controlClass} style={inputControl} css={theme.inputControl}>
+          <div
+            className='gfb-input__value-container gfb-value-multi-input-container'
+            style={valueContainer}
+            css={theme.valueContainer}
+          >
             {options.map((option, i) => {
               const display = option.label ? option.label : option.value
               const selected = value.indexOf(option.value) > -1
@@ -103,13 +110,14 @@ const Listselect = props => {
                   className={className}
                   onClick={handleOnChange}
                   style={{...valueStyle, ...optionsStyle}}
+                  css={theme.value}
                 >
                   {display}
                 </div>
               )
             })}
           </div>
-          <div className='gfb-input__indicators' style={indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
             {validationError && <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>

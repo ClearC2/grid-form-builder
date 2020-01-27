@@ -6,6 +6,7 @@ import DatePicker from './DatePicker'
 import moment from 'moment'
 import {randomId} from '../../utils'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
+import useTheme from '../../theme/useTheme'
 
 const DateInput = props => {
   const {
@@ -38,6 +39,8 @@ const DateInput = props => {
     valueContainer = {},
     indicators = {}
   } = style
+
+  const {theme} = useTheme()
 
   let {type = 'date'} = props
   type = type.toLowerCase()
@@ -107,10 +110,10 @@ const DateInput = props => {
     }
   }
   return (
-    <div className={outerClass} style={inputOuter}>
-      <div className='gfb-input-inner' style={inputInner}>
-        <div className={controlClass} style={inputControl}>
-          <div className='gfb-input__value-container' style={valueContainer}>
+    <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
+      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
+        <div className={controlClass} style={inputControl} css={theme.inputControl}>
+          <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
             <input
               id={elementId.current}
               className={className}
@@ -125,6 +128,7 @@ const DateInput = props => {
               onBlur={handleOnBlur}
               autoComplete={autoComplete}
               style={valueStyle}
+              css={theme.value}
             />
             {showPicker && (
               <DatePicker
@@ -139,7 +143,7 @@ const DateInput = props => {
               />
             )}
           </div>
-          <div className='gfb-input__indicators' style={indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

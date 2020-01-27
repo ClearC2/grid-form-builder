@@ -3,6 +3,7 @@ import {jsx} from '@emotion/core'
 import {useCallback, useState} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
+import useTheme from '../theme/useTheme'
 
 const Percentage = props => {
   const {
@@ -29,6 +30,8 @@ const Percentage = props => {
     valueContainer = {},
     indicators = {}
   } = style
+
+  const {theme} = useTheme()
 
   const [isFocused, setIsFocused] = useState(false)
 
@@ -69,10 +72,10 @@ const Percentage = props => {
   }
 
   return (
-    <div className={outerClass} style={inputOuter}>
-      <div className='gfb-input-inner' style={inputInner}>
-        <div className={controlClass} style={inputControl}>
-          <div className='gfb-input__value-container' style={valueContainer}>
+    <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
+      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
+        <div className={controlClass} style={inputControl} css={theme.inputControl}>
+          <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
             <input
               className={className}
               name={name}
@@ -87,9 +90,10 @@ const Percentage = props => {
               onBlur={handleOnBlur}
               type='text'
               style={valueStyle}
+              css={theme.value}
             />
           </div>
-          <div className='gfb-input__indicators' style={indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
