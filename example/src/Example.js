@@ -209,6 +209,7 @@ export default class Example extends Component {
             handleOnDimensionChange={this.handleOnDimensionChange}
             droppable={droppable}
             activeItem={activeItem}
+            theme='executive'
           />
         </div>
       )

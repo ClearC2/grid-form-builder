@@ -421,7 +421,8 @@ export default class FormValidator extends Component {
     dateFormat: PropTypes.string,
     dateTimeFormat: PropTypes.string,
     timeFormat: PropTypes.string,
-    autoComplete: PropTypes.string
+    autoComplete: PropTypes.string,
+    theme: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
   }
 
   static defaultProps = {
@@ -529,9 +530,9 @@ export default class FormValidator extends Component {
 
   render () {
     const {requiredWarning, formValues, validate} = this.state
-    const {formValues: values, ...rest} = this.props
+    const {formValues: values, theme, ...rest} = this.props
     return (
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <FormValueContext.Provider value={[formValues, this.updateFormValues]}>
           <SizeMeHOC
             {...rest}

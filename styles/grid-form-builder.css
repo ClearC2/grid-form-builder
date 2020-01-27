@@ -256,12 +256,12 @@ label.gfb-multi-input-label-wrapper
 }
 
 div.grid-form-builder-parent input:focus, div.grid-form-builder-parent textarea:focus {
-  outline: 1px solid #37a9e1 !important;
-  outline-offset: -1px;
+  outline: transparent;
+  outline-offset: 0;
 }
 
-div.gfb-has-focus {
-  /*border: 1px solid #37a9e1;*/
+div.gfb-has-focus > div > div.gfb-input__control {
+  border: 1px solid #37a9e1;
 }
 
 div.gfb-input__indicators {
