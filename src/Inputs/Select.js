@@ -133,6 +133,9 @@ const Select = props => {
       return <ValidationErrorIcon message='This Field is Required' />
     }
   }
+  if (isFocused) {
+    outerClass = outerClass + ' gfb-has-focus'
+  }
 
   return (
     <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>

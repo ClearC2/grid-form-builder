@@ -111,9 +111,13 @@ const Richtextarea = props => {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
+  let outerClass = 'gfb-input-outer'
+  if (isFocused) {
+    outerClass = outerClass + ' gfb-has-focus'
+  }
 
   return (
-    <div className='gfb-input-outer' style={inputOuter}>
+    <div className={outerClass} style={inputOuter}>
       <div className='gfb-input-inner' style={inputInner}>
         <div className='gfb-input-control-top'>
           <Toolbar id={elementId.current} />

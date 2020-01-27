@@ -67,9 +67,13 @@ const Currency = props => {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
+  let outerClass = 'gfb-input-outer'
+  if (isFocused) {
+    outerClass = outerClass + ' gfb-has-focus'
+  }
 
   return (
-    <div className='gfb-input-outer' style={inputOuter}>
+    <div className={outerClass} style={inputOuter}>
       <div className='gfb-input-inner' style={inputInner}>
         <div className={controlClass} style={inputControl}>
           <div className='gfb-input__value-container' style={valueContainer}>
