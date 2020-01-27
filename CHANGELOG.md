@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/ClearC2/grid-form-builder/compare/v3.1.2...v3.2.0) (2020-01-27)
+
+
+### Features
+
+* **focus:** inputs with focus should now properly have a blue outline ([aa2f944](https://github.com/ClearC2/grid-form-builder/commit/aa2f944))
+
 ## [3.1.2](https://github.com/ClearC2/grid-form-builder/compare/v3.1.1...v3.1.2) (2020-01-24)
 
 
