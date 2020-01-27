@@ -70,7 +70,8 @@ export default class Example extends Component {
       {label: 'Updated By', value: 'meta_lastupdateby', type: 'string', format: 'string'},
       {label: 'Updated On', value: 'meta_lastupdatedate', type: 'datetime', format: 'datetime'},
       {label: 'Zip Code', value: 'papostalcode', type: 'string', format: 'string'}
-    ]
+    ],
+    theme: 'executive'
   }
 
   setActiveItem = activeItem => this.setState(() => ({activeItem}))
@@ -118,7 +119,27 @@ export default class Example extends Component {
 
   componentDidMount = () => {
     setTimeout(() => { // simulate getting schema from api
-      this.setState(() => ({formSchema: schema}))
+      this.setState(() => ({
+        formSchema: schema,
+        theme: {
+          gridItem: {},
+          cellLabel: {},
+          label: {},
+          icon: {},
+          link: {},
+          cascade: {},
+          cellInput: {},
+          inputOuter: {},
+          inputInner: {},
+          inputControl: {
+            borderRadius: '5px !important'
+          },
+          valueContainer: {},
+          indicators: {},
+          value: {},
+          options: {}
+        }
+      }))
     }, 250)
     // setTimeout(() => {
     //   debugger
@@ -209,7 +230,7 @@ export default class Example extends Component {
             handleOnDimensionChange={this.handleOnDimensionChange}
             droppable={droppable}
             activeItem={activeItem}
-            theme='executive'
+            theme={this.state.theme}
           />
         </div>
       )
