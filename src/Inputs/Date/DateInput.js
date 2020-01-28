@@ -78,6 +78,7 @@ const DateInput = props => {
     if (val && val._isAMomentObject) {
       val = val.format(inputFormat)
     }
+    if (!val && value) val = value
     if (!val) val = ''
     changeInputValue(val)
   }, [inputFormat, value, convertDateToMomentFormat])
