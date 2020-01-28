@@ -1,3 +1,12 @@
+# [3.6.0](https://github.com/ClearC2/grid-form-builder/compare/v3.5.0...v3.6.0) (2020-01-28)
+
+
+### Features
+
+* **date:** date will now format the incoming value so even if the server responds with a date that is not of correct format, the value will attempt to display the correct format ([925f68a](https://github.com/ClearC2/grid-form-builder/commit/925f68a))
+* **date:** the date will fall back to its raw value instead of blank if it cannot be formatted ([629be90](https://github.com/ClearC2/grid-form-builder/commit/629be90))
+* **email:** validation error will only show up when form is interactive ([2cd73f4](https://github.com/ClearC2/grid-form-builder/commit/2cd73f4))
+
 # [3.5.0](https://github.com/ClearC2/grid-form-builder/compare/v3.4.0...v3.5.0) (2020-01-28)
 
 
