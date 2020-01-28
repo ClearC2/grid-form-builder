@@ -49,7 +49,7 @@ const Email = props => {
   if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control'
   let validationError = false
-  if (value && !emailValidator(value) && !isFocused) {
+  if (value && !emailValidator(value) && !isFocused && interactive) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'Invalid Email Format'
   }
