@@ -1,3 +1,19 @@
+# [3.3.0](https://github.com/ClearC2/grid-form-builder/compare/v3.2.0...v3.3.0) (2020-01-28)
+
+
+### Bug Fixes
+
+* **tests:** removed lodash ([75fdd43](https://github.com/ClearC2/grid-form-builder/commit/75fdd43))
+
+
+### Features
+
+* **emotion:** adds emotion for inline psuedo class css support ([988e938](https://github.com/ClearC2/grid-form-builder/commit/988e938))
+* **multivalue:** multicheck and radio values are now a smaller font by default ([3865a45](https://github.com/ClearC2/grid-form-builder/commit/3865a45))
+* **theme:** adds a way to specify a theme ([e6b9f52](https://github.com/ClearC2/grid-form-builder/commit/e6b9f52))
+* **theme:** adds theme context to all input types ([f0d68f8](https://github.com/ClearC2/grid-form-builder/commit/f0d68f8))
+* **theme:** shows example of how to provide a theme ([8b41e0a](https://github.com/ClearC2/grid-form-builder/commit/8b41e0a))
+
 # [3.2.0](https://github.com/ClearC2/grid-form-builder/compare/v3.1.2...v3.2.0) (2020-01-27)
 
 
