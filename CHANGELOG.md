@@ -1,3 +1,10 @@
+# [3.5.0](https://github.com/ClearC2/grid-form-builder/compare/v3.4.0...v3.5.0) (2020-01-28)
+
+
+### Features
+
+* **style:** allows style to be passed to the outer component of grid form builder ([e32882c](https://github.com/ClearC2/grid-form-builder/commit/e32882c))
+
 # [3.4.0](https://github.com/ClearC2/grid-form-builder/compare/v3.3.0...v3.4.0) (2020-01-28)
 
 
