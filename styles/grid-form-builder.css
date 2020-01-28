@@ -235,6 +235,10 @@ div.grid-form-builder-parent div.gfb-input__value-container > div.gfb-input__mul
   align-items: center;
 }
 
+label.gfb-multi-input-label-wrapper {
+  font-size: 8pt;
+}
+
 div.gfb-input__value-container--is-multi > div > div.gfb-input__input > input {
   outline: none !important;
 }
