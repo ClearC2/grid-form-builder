@@ -2,7 +2,6 @@ import React, {createContext, useContext, useMemo, useState} from 'react'
 import PropTypes from 'prop-types'
 import defaultTheme from './default'
 import executiveTheme from './executive'
-import clone from 'lodash-es/clone'
 
 const ThemeContext = createContext({theme: {}, setTheme: () => {}, setThemeValue: () => {}})
 
@@ -30,7 +29,7 @@ const ThemeProvider = ({children, theme: themeOverride}) => {
       theme: newTheme,
       setTheme,
       setThemeValue: (key, value) => {
-        const updated = clone(theme)
+        const updated = {...theme}
         updated[key] = value
         setTheme(updated)
       }
