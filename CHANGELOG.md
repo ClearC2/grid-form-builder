@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/ClearC2/grid-form-builder/compare/v3.3.0...v3.4.0) (2020-01-28)
+
+
+### Features
+
+* **header:** changes default styling of the header field ([0cfada5](https://github.com/ClearC2/grid-form-builder/commit/0cfada5))
+
 # [3.3.0](https://github.com/ClearC2/grid-form-builder/compare/v3.2.0...v3.3.0) (2020-01-28)
 
 
