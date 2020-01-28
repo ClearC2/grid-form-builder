@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useCallback, useEffect, useState, useRef} from 'react'
+import {useCallback, useEffect, useState, useRef, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from './DatePicker'
 import moment from 'moment'
@@ -50,13 +50,37 @@ const DateInput = props => {
   const [inputFormat, setInputFormat] = useState()
   const [isFocused, setIsFocused] = useState(false)
 
+  const convertDateToMomentFormat = useMemo(() => {
+    return value => {
+      let time
+      if (value) {
+        let date = moment(value, inputFormat)
+        if (date.isValid()) {
+          time = date
+        } else {
+          // this is a fallback, if we can't get the date valid by trying, see if moment can figure it out one last time by itself - JRA 01/23/2020
+          // using moment in this way is deprecated and will throw a warning
+          date = moment(value)
+          if (date.isValid()) {
+            time = date
+          }
+        }
+      }
+      return time
+    }
+  }, [inputFormat])
+
   useEffect(() => {
     let val = value
-    if (val._isAMomentObject) {
+    if (typeof val === 'string') {
+      val = convertDateToMomentFormat(val)
+    }
+    if (val && val._isAMomentObject) {
       val = val.format(inputFormat)
     }
+    if (!val) val = ''
     changeInputValue(val)
-  }, [inputFormat, value])
+  }, [inputFormat, value, convertDateToMomentFormat])
 
   useEffect(() => {
     let inputFormat
@@ -95,20 +119,8 @@ const DateInput = props => {
     outerClass = outerClass + ' gfb-has-focus'
   }
 
-  let startDate
-  if (inputValue) {
-    let date = moment(inputValue, inputFormat)
-    if (date.isValid()) {
-      startDate = date
-    } else {
-      // this is a fallback, if we can't get the date valid by trying, see if moment can figure it out one last time by itself - JRA 01/23/2020
-      // using moment in this way is deprecated and will throw a warning
-      date = moment(inputValue)
-      if (date.isValid()) {
-        startDate = date
-      }
-    }
-  }
+  let startDate = convertDateToMomentFormat(inputValue)
+
   return (
     <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
       <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
