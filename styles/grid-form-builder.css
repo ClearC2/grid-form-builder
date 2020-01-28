@@ -357,3 +357,8 @@ div.gfb-multi-input-input.gfb-multi-input-selected.gfb-non-interactive-input {
 .gfb-has-tooltip {
   z-index: 9001;
 }
+
+div.gfb-inner-cell-label > h3 {
+  font-size: 14pt;
+  color: #A0A0A0;
+}
