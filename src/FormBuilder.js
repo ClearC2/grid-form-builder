@@ -53,7 +53,8 @@ const FormBuilder = (props) => {
     dateFormat,
     dateTimeFormat,
     timeFormat,
-    autoComplete
+    autoComplete,
+    style
   } = props
   const [grid, updateGrid] = useState({layout: List(), elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
@@ -298,6 +299,7 @@ const FormBuilder = (props) => {
       id={id}
       className='grid-form-builder-parent'
       ref={setContainerRef}
+      style={style}
     >
       <RGL
         ref={ReactGridLayout}
@@ -355,7 +357,8 @@ FormBuilder.propTypes = {
   dateFormat: PropTypes.string,
   dateTimeFormat: PropTypes.string,
   timeFormat: PropTypes.string,
-  autoComplete: PropTypes.string
+  autoComplete: PropTypes.string,
+  style: PropTypes.object
 }
 
 FormBuilder.defaultProps = {
@@ -384,7 +387,8 @@ FormBuilder.defaultProps = {
   dateFormat: 'M/D/YYYY',
   dateTimeFormat: 'M/D/YYYY h:mm a',
   timeFormat: 'h:mm a',
-  autoComplete: 'off'
+  autoComplete: 'off',
+  style: {}
 }
 
 FormBuilder.count = 1
