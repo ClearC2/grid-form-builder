@@ -78,7 +78,7 @@ const Email = props => {
               tabIndex={tabIndex}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
-              autoComplete={autoComplete === 'off' ? 'ac-off' : autoComplete}
+              autoComplete={autoComplete === 'off' ? 'ac_off' : autoComplete}
               style={valueStyle}
               css={theme.value}
             />

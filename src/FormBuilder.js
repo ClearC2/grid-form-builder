@@ -387,7 +387,7 @@ FormBuilder.defaultProps = {
   dateFormat: 'M/D/YYYY',
   dateTimeFormat: 'M/D/YYYY h:mm a',
   timeFormat: 'h:mm a',
-  autoComplete: 'off',
+  autoComplete: 'ac_off',
   style: {}
 }
 
