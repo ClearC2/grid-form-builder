@@ -1,3 +1,10 @@
+# [3.7.0](https://github.com/ClearC2/grid-form-builder/compare/v3.6.0...v3.7.0) (2020-01-30)
+
+
+### Features
+
+* **autocomplete:** changes default value of autocomplete from off to ac_off ([707029f](https://github.com/ClearC2/grid-form-builder/commit/707029f))
+
 # [3.6.0](https://github.com/ClearC2/grid-form-builder/compare/v3.5.0...v3.6.0) (2020-01-28)
 
 
