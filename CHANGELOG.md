@@ -1,3 +1,10 @@
+## [3.7.1](https://github.com/ClearC2/grid-form-builder/compare/v3.7.0...v3.7.1) (2020-02-03)
+
+
+### Bug Fixes
+
+* **lib:** compilation ([18cbe07](https://github.com/ClearC2/grid-form-builder/commit/18cbe07))
+
 # [3.7.0](https://github.com/ClearC2/grid-form-builder/compare/v3.6.0...v3.7.0) (2020-01-30)
 
 
