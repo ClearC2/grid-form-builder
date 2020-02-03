@@ -594,9 +594,9 @@
                   }]
                 }]
               }, {
-                "name": "inputtest",
+                "name": "personname",
                 "comparator": "is equal to",
-                "values": [1]
+                "values": ["Jacy", "Rickybobby", "textareatest", "meta_universalid"]
               }]
             }
           },

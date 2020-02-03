@@ -1,3 +1,10 @@
+# [3.8.0](https://github.com/ClearC2/grid-form-builder/compare/v3.7.1...v3.8.0) (2020-02-03)
+
+
+### Features
+
+* **typeahead:** typeahead condition object now allows the addition of field names in the condition value array ([7834dce](https://github.com/ClearC2/grid-form-builder/commit/7834dce))
+
 ## [3.7.1](https://github.com/ClearC2/grid-form-builder/compare/v3.7.0...v3.7.1) (2020-02-03)
 
 

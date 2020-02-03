@@ -134,8 +134,20 @@ const Typeahead = props => {
 
   const populateConditionObject = useCallback((condition = {name: null, comparator: null, values: []}) => {
     if (!condition.hasOwnProperty('values')) condition.values = []
+    const pluggedInValues = []
+    condition.values.forEach(value => {
+      const formValueForThisValueName = values.get(value, '')
+      if (formValueForThisValueName && pluggedInValues.indexOf(formValueForThisValueName) === -1) {
+        pluggedInValues.push(formValueForThisValueName)
+      } else {
+        pluggedInValues.push(value)
+      }
+    })
     const value = values.get(condition.name, '')
-    condition.values.push(value)
+    if (!pluggedInValues.length && pluggedInValues.indexOf(value) === -1) {
+      pluggedInValues.push(value)
+    }
+    condition.values = pluggedInValues
     return condition
   }, [values])
 
