@@ -1,3 +1,10 @@
+## [3.8.1](https://github.com/ClearC2/grid-form-builder/compare/v3.8.0...v3.8.1) (2020-02-03)
+
+
+### Bug Fixes
+
+* **searchForm:** improve styling and typeahead bugs in search mode ([eb41ccb](https://github.com/ClearC2/grid-form-builder/commit/eb41ccb))
+
 # [3.8.0](https://github.com/ClearC2/grid-form-builder/compare/v3.7.1...v3.8.0) (2020-02-03)
 
 
