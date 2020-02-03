@@ -6,6 +6,11 @@ import {Map, List, fromJS, Set} from 'immutable'
 import {CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, DATES, SINGLE_FIELD_INPUTS} from './SearchUtils'// eslint-disable-line
 const STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime'])
 const ConditionalDialog = props => {
+  let propValue = props.value
+  if (!propValue) {
+    propValue = Map()
+  }
+
   function convertListToOptions (list) {
     let inputType = props.inputType.toLowerCase()
     if (inputType === 'number' || inputType === 'currency' || inputType === 'decimal') {
@@ -31,20 +36,21 @@ const ConditionalDialog = props => {
     })
     return convertListToOptions(options)
   }
-  const [modalValues, setModalValues] = useState(Map({condition: 'contains'}))
+  const [modalValues, setModalValues] = useState(Map({condition: inputTypeOptionsList()[0].value}))
   useEffect(() => {
     // const v = props.values[props.name]
+
     if (props.name) {
-      let initCondition = 'contains'
+      let initCondition = inputTypeOptionsList()[0].value
       if (props.values.getIn([props.name, 'condition'])) {
-        initCondition = props.values.getIn([props.name, 'condition'])
+        initCondition = props.values.getIn([props.name, 'condition'], inputTypeOptionsList()[0].value)
       }
       let initialModalValues = {condition: initCondition}
       if (SINGLE_FIELD_INPUTS.has(props.inputType.toLowerCase())) {
-        initialModalValues[`${props.name}-0`] = props.value.get('values', List())
+        initialModalValues[`${props.name}-0`] = propValue.get('values', List())
       } else {
-        if (props.value.get('values', List()).size) {
-          props.value.get('values', List()).forEach((v, i) => {
+        if (propValue.get('values', List()).size) {
+          propValue.get('values', List()).forEach((v, i) => {
             initialModalValues[`${props.name}-${i}`] = v
           })
         } else {
@@ -81,14 +87,17 @@ const ConditionalDialog = props => {
 
   function nFieldsWithValues () {
     let ret = 0
+    if (!propValue) {
+      return 0
+    }
     if (SINGLE_FIELD_INPUTS.has(props.inputType.toLowerCase())) {
-      if (props.value.get('values', List()).size > 0) {
+      if (propValue.get('values', List()).size > 0) {
         ret = 1
       } else {
         ret = 0
       }
     } else {
-      ret = props.value.get('values', List()).size
+      ret = propValue.get('values', List()).size
     }
     return ret
   }
@@ -101,16 +110,7 @@ const ConditionalDialog = props => {
           layout: [
             {
               type: 'field',
-              dimensions: {x: 0, y: 0, h: 1, w: 12},
-              config: {
-                // name: props.name,
-                type: 'header',
-                label: `${props.label} condition:`
-              }
-            },
-            {
-              type: 'field',
-              dimensions: {x: 1, y: 1, h: 1, w: 8},
+              dimensions: {x: 1, y: 0, h: 1, w: 8},
               config: {
                 name: 'condition',
                 label: 'Condition',
@@ -138,7 +138,7 @@ const ConditionalDialog = props => {
     if (maxFieldCount < 3 && maxFieldCount > 0) {
       schema.form.jsonschema.layout.push({
         type: 'field',
-        dimensions: {x: 4, y: 2, h: 1, w: 6},
+        dimensions: {x: 4, y: 1, h: 1, w: 6},
         config: {
           // name: props.name,
           type: 'header',
@@ -157,7 +157,7 @@ const ConditionalDialog = props => {
     if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0) {
       schema.form.jsonschema.layout.push({
         type: 'field',
-        dimensions: {x: 1, y: 3, h: calculateFieldHeight(props.inputType.toLowerCase()), w: 8},
+        dimensions: {x: 1, y: 2, h: calculateFieldHeight(props.inputType.toLowerCase()), w: 8},
         config: {
           ...extraFieldProps,
           link: undefined,
@@ -166,6 +166,7 @@ const ConditionalDialog = props => {
           name: `${props.name}-0`,
           label: `${props.label}`,
           interactive: true,
+          clearable: true,
           type: DATES.has(props.inputType.toLowerCase()) && NUMERICAL_CONDITIONS.has(props.values.getIn([props.name, 'condition'], '')) ? 'number' : props.inputType.toLowerCase(),// eslint-disable-line
           handleOnChange: dialogOnChange
         }
@@ -183,7 +184,7 @@ const ConditionalDialog = props => {
         }
         let newField = {
           type: 'field',
-          dimensions: {x: 1, y: fieldCount + 3, h: calculateFieldHeight(props.inputType.toLowerCase()), w: 8},
+          dimensions: {x: 1, y: fieldCount + 2, h: calculateFieldHeight(props.inputType.toLowerCase()), w: 8},
           config: {
             ...extraFieldProps,
             link: undefined,
@@ -191,6 +192,7 @@ const ConditionalDialog = props => {
             name: `${props.name}-${fieldCount}`,
             label: label,
             interactive: true,
+            clearable: true,
             type: DATES.has(props.inputType.toLowerCase()) && NUMERICAL_CONDITIONS.has(props.values.getIn([props.name, 'condition'], '')) ? 'number' : props.inputType.toLowerCase(),// eslint-disable-line
             handleOnChange: dialogOnChange
           }
@@ -243,6 +245,18 @@ const ConditionalDialog = props => {
     }
   }
 
+  function deleteIndex (i, values) {
+    let stateChanges = modalValues
+    for (let x = parseInt(i); x < values.size - 1; x++) {
+      let next = x + 1
+      stateChanges = stateChanges.set(`${props.name}-${x}`, modalValues.get(`${props.name}-${next}`, ''))
+    }
+    stateChanges = stateChanges.delete(`${props.name}-${values.size - 1}`)
+
+    setModalValues(stateChanges)
+    return values.splice(i, 1)
+  }
+
   const dialogOnChange = (e) => {
     if (e.target.name === 'condition') {
       handleConditionChange(e)
@@ -253,17 +267,42 @@ const ConditionalDialog = props => {
     let values = newFieldValue.get('values', List())
     if (STRING_VALUES.has(props.inputType.toLowerCase())) {
       // i have a string. what index?
-      let i = e.target.name.split('-')[e.target.name.split('-').length - 1]
-      values = values.set(i, e.target.value)
+      let i = parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1])
+      if (e.target.value === '') {
+        values = deleteIndex(i, values)
+      } else {
+        values = values.set(i, e.target.value)
+      }
     } else {
-      values = values = fromJS(e.target.value)
+      if (typeof e.target.value === 'string') {
+        let i = parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1])
+        if (i > values.size - 1) {
+          values = values.concat(fromJS([e.target.value]))
+        } else {
+          if (e.target.value === '') {
+            values = deleteIndex(i, values)
+          } else {
+            values = values.set(i, e.target.value)
+          }
+
+        }
+      } else {
+        values = fromJS(e.target.value)
+      }
     }
     newFieldValue = newFieldValue.set('values', values)
     props.onChange({target: {name: props.name, value: newFieldValue}})
   }
+  const headerHeight = 64
+  const footerHeight = 64
+  const fieldHeight = 55
+  const extraBodyHeight = 80
+  const maxModalHeight = 550
+  const modalHeight = ((nFieldsWithValues() + 2) * fieldHeight) + headerHeight + footerHeight + extraBodyHeight
+  const maxBodyHeight = maxModalHeight - headerHeight - footerHeight
   return (
     <Dialog
-      size={{width: '800px', height: '450px'}}
+      size={{width: '800px', height: `${Math.min(modalHeight, maxModalHeight)}px`}}
       default={{y: ((window.innerHeight / 2) - 250 + window.scrollY), x: ((window.innerWidth / 2) - 260)}}
       center
       style={{
@@ -277,19 +316,25 @@ const ConditionalDialog = props => {
       disableDragging
     >
       <div style={{width: '100%'}}>
-        <button
-          type='button'
-          className='close'
-          style={{paddingRight: '10px', paddingTop: '5px', display: 'inline-block'}}
-          onClick={() => props.handleClose(false)}
-        >
-          <span>&times;</span>
-        </button>
+        <div style={{display: 'flex', flexDirection: 'row', padding: '10px', height: '54px'}}>
+          <div style={{width: '90%'}}>
+            <h4>{props.label} condition:</h4>
+          </div>
+          <div style={{width: '10%'}}>
+            <button
+              type='button'
+              className='close'
+              onClick={() => props.handleClose(false)}
+            >
+              <span>&times;</span>
+            </button>
+          </div>
+        </div>
         <div
           style={{
             width: '720px',
-            maxHeight: '410px',
-            marginTop: '10px',
+            maxHeight: `${maxBodyHeight}px`,
+            padding: '10px',
             scroll: 'auto',
             overflowY: 'auto'
           }}
@@ -303,14 +348,16 @@ const ConditionalDialog = props => {
             interactive
           />
         </div>
-        <button
-          type='button'
-          className='btn-primary pull-right'
-          style={{marginRight: '15px'}}
-          onClick={() => props.handleClose(false)}
-        >
-          Ok
-        </button>
+        <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px', height: '54px'}}>
+          <button
+            type='button'
+            className='btn btn-primary'
+            style={{marginRight: '15px'}}
+            onClick={() => props.handleClose(false)}
+          >
+            Ok
+          </button>
+        </div>
       </div>
     </Dialog>
   )
