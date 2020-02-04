@@ -1,3 +1,10 @@
+## [3.8.2](https://github.com/ClearC2/grid-form-builder/compare/v3.8.1...v3.8.2) (2020-02-04)
+
+
+### Performance Improvements
+
+* **webpack:** upgrade webpack ([#140](https://github.com/ClearC2/grid-form-builder/issues/140)) ([f6656e6](https://github.com/ClearC2/grid-form-builder/commit/f6656e69b564d4367a253284dda991d7b6773b20))
+
 ## [3.8.1](https://github.com/ClearC2/grid-form-builder/compare/v3.8.0...v3.8.1) (2020-02-03)
 
 
