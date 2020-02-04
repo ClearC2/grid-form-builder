@@ -66,7 +66,7 @@ const Typeahead = props => {
 
   const [input, changeInput] = useState({Typeahead: allowcreate ? AsyncCreatable : Async})
   const [inputValue, updateInputValue] = useState('')
-  const [selectValue, updateSelectValue] = useState({label: '', value: ''})
+  const [selectValue, updateSelectValue] = useState(multi ? [] : {label: '', value: ''})
   const [isZipCode, updateIsZip] = useState(
     (label === 'papostalcode' || label === 'Zip Code') && inputValue.length <= 2
   )
@@ -127,7 +127,10 @@ const Typeahead = props => {
     if ((typeof parsedValue === 'string' || typeof parsedValue === 'number') && parsedValue.length > 0) {
       parsedValue = {value: parsedValue, label: parsedValue}
     }
-    if (parsedValue === '') parsedValue = {label: '', value: ''}
+    if (parsedValue === '') {
+      if (multi) parsedValue = []
+      else parsedValue = {label: '', value: ''}
+    }
     updateInputValue('')
     updateSelectValue(parsedValue)
   }, [value, convertValueStringToValueArrayIfNeeded])
@@ -326,8 +329,8 @@ const Typeahead = props => {
       }
     }
 
-    let value = ''
     if (Array.isArray(newValue)) {
+      let value = ''
       // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
       // so I'll give it back to the developer raw and let them figure it out -- JRA 7/5/2018
       if (stringify) {
@@ -436,7 +439,7 @@ const Typeahead = props => {
         isClearable
         createOptionPosition='first'
         formatCreateLabel={formatCreateLabel}
-        multi={multi}
+        isMulti={multi}
         isDisabled={disabled || readonly || !interactive}
         menuPortalTarget={document.body}
         menuShouldBlockScroll

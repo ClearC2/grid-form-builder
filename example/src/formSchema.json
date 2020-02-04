@@ -644,6 +644,25 @@
         "type": "field",
         "dimensions": {
           "w": 6,
+          "h": 1,
+          "x": 0,
+          "y": 15,
+          "moved": false,
+          "static": false
+        },
+        "config": {
+          "typeahead": {
+            "key": "c2_company"
+          },
+          "name": "simplemultitypeahead",
+          "label": "Simple Multi Typeahead",
+          "multi": true,
+          "type": "typeahead"
+        }
+      }, {
+        "type": "field",
+        "dimensions": {
+          "w": 6,
           "h": 4,
           "x": 6,
           "y": 11,
