@@ -1,3 +1,10 @@
+## [3.8.6](https://github.com/ClearC2/grid-form-builder/compare/v3.8.5...v3.8.6) (2020-02-04)
+
+
+### Bug Fixes
+
+* remove lib dir ([#143](https://github.com/ClearC2/grid-form-builder/issues/143)) ([fd0fc43](https://github.com/ClearC2/grid-form-builder/commit/fd0fc43b65b3afa17270e1d46c08ee16f500bbf1))
+
 ## [3.8.5](https://github.com/ClearC2/grid-form-builder/compare/v3.8.4...v3.8.5) (2020-02-04)
 
 
