@@ -388,28 +388,4 @@ _defineProperty(PickList, "defaultProps", {
   rightPaneLabel: 'Selected'
 });
 
-<<<<<<< HEAD:lib/QueryBuilder/ReportBuilder/PickList.js
 export { PickList as default };
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(noop, "noop", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\ReportBuilder\\PickList.js");
-  reactHotLoader.register(Pane, "Pane", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\ReportBuilder\\PickList.js");
-  reactHotLoader.register(PickList, "PickList", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\ReportBuilder\\PickList.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-export { PickList as default };
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/QueryBuilder/ReportBuilder/PickList.js

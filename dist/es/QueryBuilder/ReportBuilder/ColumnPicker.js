@@ -55,28 +55,4 @@ _defineProperty(ColumnPicker, "propTypes", {
   columnPickerHeight: PropTypes.number
 });
 
-<<<<<<< HEAD:lib/QueryBuilder/ReportBuilder/ColumnPicker.js
-var _default = ColumnPicker;
-export default _default;
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(ColumnPicker, "ColumnPicker", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\ReportBuilder\\ColumnPicker.js");
-  reactHotLoader.register(_default, "default", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\ReportBuilder\\ColumnPicker.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
 export default ColumnPicker;
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/QueryBuilder/ReportBuilder/ColumnPicker.js

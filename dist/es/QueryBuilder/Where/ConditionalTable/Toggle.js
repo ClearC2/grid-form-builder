@@ -65,28 +65,4 @@ _defineProperty(Toggle, "propTypes", {
   inactiveLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 });
 
-<<<<<<< HEAD:lib/QueryBuilder/Where/ConditionalTable/Toggle.js
-var _default = Toggle;
-export default _default;
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(Toggle, "Toggle", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\Where\\ConditionalTable\\Toggle.js");
-  reactHotLoader.register(_default, "default", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\Where\\ConditionalTable\\Toggle.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
 export default Toggle;
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/QueryBuilder/Where/ConditionalTable/Toggle.js

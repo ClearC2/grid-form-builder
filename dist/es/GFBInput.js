@@ -159,28 +159,4 @@ GFBInput.propTypes = {
   name: PropTypes.string,
   delimiter: PropTypes.string
 };
-<<<<<<< HEAD:lib/GFBInput.js
-var _default = GFBInput;
-export default _default;
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(GFBInput, "GFBInput", "C:\\Development\\Projects\\grid-form-builder\\src\\GFBInput.js");
-  reactHotLoader.register(_default, "default", "C:\\Development\\Projects\\grid-form-builder\\src\\GFBInput.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
 export default GFBInput;
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/GFBInput.js

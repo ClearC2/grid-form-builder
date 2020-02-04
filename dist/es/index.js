@@ -45,27 +45,4 @@ var reducer = function reducer() {
 };
 
 reducer.key = 'form-layouts';
-<<<<<<< HEAD:lib/index.js
 export { updateFormValues, reducer };
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(updateFormValues, "updateFormValues", "C:\\Development\\Projects\\grid-form-builder\\src\\index.js");
-  reactHotLoader.register(reducer, "reducer", "C:\\Development\\Projects\\grid-form-builder\\src\\index.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-export { updateFormValues, reducer };
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/index.js

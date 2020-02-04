@@ -155,7 +155,7 @@ var Typeahead = function Typeahead(props) {
       inputValue = _useState4[0],
       updateInputValue = _useState4[1];
 
-  var _useState5 = (0, _react.useState)({
+  var _useState5 = (0, _react.useState)(multi ? [] : {
     label: '',
     value: ''
   }),
@@ -254,10 +254,13 @@ var Typeahead = function Typeahead(props) {
       };
     }
 
-    if (parsedValue === '') parsedValue = {
-      label: '',
-      value: ''
-    };
+    if (parsedValue === '') {
+      if (multi) parsedValue = [];else parsedValue = {
+        label: '',
+        value: ''
+      };
+    }
+
     updateInputValue('');
     updateSelectValue(parsedValue);
   }, [value, convertValueStringToValueArrayIfNeeded]);
@@ -484,11 +487,10 @@ var Typeahead = function Typeahead(props) {
         }
     }
 
-    var value = '';
-
     if ((0, _isArray.default)(newValue)) {
-      // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
+      var _value = ''; // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
       // so I'll give it back to the developer raw and let them figure it out -- JRA 7/5/2018
+
       if (stringify) {
         if (delimiter) {
           if (_delimit && (0, _isArray.default)(_delimit)) {
@@ -497,37 +499,37 @@ var Typeahead = function Typeahead(props) {
             // if we were provided field(s) to delimit by, build up a special string with just those values
             (0, _forEach.default)(_context6 = target.value).call(_context6, function (option) {
               (0, _forEach.default)(_delimit).call(_delimit, function (field) {
-                if ((0, _indexOf.default)(value).call(value, option[field]) === -1) {
-                  value = value + option[field] + delimiter;
+                if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
+                  _value = _value + option[field] + delimiter;
                 }
               });
             });
-            value = (0, _slice.default)(value).call(value, 0, -1);
-            target.value = value;
+            _value = (0, _slice.default)(_value).call(_value, 0, -1);
+            target.value = _value;
           } else {
             var _context7;
 
             // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
             (0, _forEach.default)(_context7 = target.value).call(_context7, function (option) {
-              value = value + (0, _stringify.default)(option) + delimiter;
+              _value = _value + (0, _stringify.default)(option) + delimiter;
             });
-            value = (0, _slice.default)(value).call(value, 0, -1);
-            target.value = value;
+            _value = (0, _slice.default)(_value).call(_value, 0, -1);
+            target.value = _value;
           }
         } else if (_delimit && !delimiter) {
           var _context8;
 
           // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
-          value = [];
+          _value = [];
           (0, _forEach.default)(_context8 = target.value).call(_context8, function (option) {
             (0, _forEach.default)(_delimit).call(_delimit, function (field) {
-              if ((0, _indexOf.default)(value).call(value, option[field]) === -1) {
-                value.push(option[field]);
+              if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
+                _value.push(option[field]);
               }
             });
           });
-          value = (0, _stringify.default)(value);
-          target.value = value;
+          _value = (0, _stringify.default)(_value);
+          target.value = _value;
         } else {
           // if all we want to do is stringify the value, send it back up unmodified but stringified
           target.value = (0, _stringify.default)(target.value);
@@ -536,15 +538,15 @@ var Typeahead = function Typeahead(props) {
         var _context9;
 
         // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as an array
-        value = [];
+        _value = [];
         (0, _forEach.default)(_context9 = target.value).call(_context9, function (option) {
           (0, _forEach.default)(_delimit).call(_delimit, function (field) {
-            if ((0, _indexOf.default)(value).call(value, option[field]) === -1) {
-              value.push(option[field]);
+            if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
+              _value.push(option[field]);
             }
           });
         });
-        target.value = value;
+        target.value = _value;
       }
 
       onChange({
@@ -605,7 +607,7 @@ var Typeahead = function Typeahead(props) {
     isClearable: true,
     createOptionPosition: "first",
     formatCreateLabel: formatCreateLabel,
-    multi: multi,
+    isMulti: multi,
     isDisabled: disabled || readonly || !interactive,
     menuPortalTarget: document.body,
     menuShouldBlockScroll: true,

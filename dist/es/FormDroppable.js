@@ -62,30 +62,4 @@ export default function (Child) {
 
     return FormDroppable;
   }(Component), _temp));
-<<<<<<< HEAD:lib/FormDroppable.js
-};
-
-export default _default;
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(cardSource, "cardSource", "C:\\Development\\Projects\\grid-form-builder\\src\\FormDroppable.js");
-  reactHotLoader.register(collect, "collect", "C:\\Development\\Projects\\grid-form-builder\\src\\FormDroppable.js");
-  reactHotLoader.register(_default, "default", "C:\\Development\\Projects\\grid-form-builder\\src\\FormDroppable.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
 }
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/FormDroppable.js

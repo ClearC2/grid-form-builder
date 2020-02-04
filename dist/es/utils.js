@@ -126,36 +126,4 @@ export var usePrevious = function usePrevious(value) {
     ref.current = value;
   });
   return ref.current;
-<<<<<<< HEAD:lib/utils.js
 };
-
-__signature__(usePrevious, "useRef{ref}\nuseEffect{}");
-
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(timeStamp, "timeStamp", "C:\\Development\\Projects\\grid-form-builder\\src\\utils.js");
-  reactHotLoader.register(randomId, "randomId", "C:\\Development\\Projects\\grid-form-builder\\src\\utils.js");
-  reactHotLoader.register(isMobile, "isMobile", "C:\\Development\\Projects\\grid-form-builder\\src\\utils.js");
-  reactHotLoader.register(emailValidator, "emailValidator", "C:\\Development\\Projects\\grid-form-builder\\src\\utils.js");
-  reactHotLoader.register(uppercaseFirstLetter, "uppercaseFirstLetter", "C:\\Development\\Projects\\grid-form-builder\\src\\utils.js");
-  reactHotLoader.register(searchForLayoutArray, "searchForLayoutArray", "C:\\Development\\Projects\\grid-form-builder\\src\\utils.js");
-  reactHotLoader.register(updateLayoutArray, "updateLayoutArray", "C:\\Development\\Projects\\grid-form-builder\\src\\utils.js");
-  reactHotLoader.register(usePrevious, "usePrevious", "C:\\Development\\Projects\\grid-form-builder\\src\\utils.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-};
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/utils.js

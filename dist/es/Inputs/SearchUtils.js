@@ -141,34 +141,4 @@ export var CONDITIONS = {
     minFields: 1,
     invalidInputTypes: []
   }
-<<<<<<< HEAD:lib/Inputs/SearchUtils.js
 };
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(SINGLE_FIELD_INPUTS, "SINGLE_FIELD_INPUTS", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\SearchUtils.js");
-  reactHotLoader.register(MULTI_FIELD_INPUTS, "MULTI_FIELD_INPUTS", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\SearchUtils.js");
-  reactHotLoader.register(ONLY_CATEGORICAL_INPUT, "ONLY_CATEGORICAL_INPUT", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\SearchUtils.js");
-  reactHotLoader.register(ALL_BUT_DATES, "ALL_BUT_DATES", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\SearchUtils.js");
-  reactHotLoader.register(DATES, "DATES", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\SearchUtils.js");
-  reactHotLoader.register(TYPEAHEAD_CONDITIONS, "TYPEAHEAD_CONDITIONS", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\SearchUtils.js");
-  reactHotLoader.register(NUMERICAL_CONDITIONS, "NUMERICAL_CONDITIONS", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\SearchUtils.js");
-  reactHotLoader.register(TEXT_INPUTS, "TEXT_INPUTS", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\SearchUtils.js");
-  reactHotLoader.register(CONDITIONS, "CONDITIONS", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\SearchUtils.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-};
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/Inputs/SearchUtils.js

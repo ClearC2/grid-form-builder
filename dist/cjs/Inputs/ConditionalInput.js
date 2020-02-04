@@ -30,7 +30,10 @@ var _immutable = require("immutable");
 
 var ConditionalInput = function ConditionalInput(props) {
   var _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style;
+      style = _props$style === void 0 ? {} : _props$style,
+      name = props.name,
+      value = props.value,
+      onChange = props.onChange;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -53,31 +56,36 @@ var ConditionalInput = function ConditionalInput(props) {
     setShowDialog(false);
   }, []);
   (0, _react.useEffect)(function () {
-    // const v = props.values[props.name]
-    if (props.name) {
+    if (name) {
       var defaults = (0, _immutable.Map)({
         condition: 'contains',
         values: (0, _immutable.List)()
       });
 
-      if (typeof props.value === 'string') {
-        if (props.value !== '') {
-          defaults = defaults.set('values', (0, _immutable.List)([props.value]));
+      if (typeof value === 'string') {
+        if (value !== '') {
+          defaults = defaults.set('values', (0, _immutable.List)([value]));
         } else {
           defaults = defaults.set('values', (0, _immutable.List)());
         }
-      } else if (props.value instanceof _immutable.List || (0, _isArray.default)(props.value)) {
-        defaults = defaults.set('values', (0, _immutable.fromJS)(props.value));
+      } else if (value instanceof _immutable.List || (0, _isArray.default)(value)) {
+        defaults = defaults.set('values', (0, _immutable.fromJS)(value));
       }
 
-      props.onChange({
-        target: {
-          name: props.name,
-          value: defaults
-        }
-      });
+      var oldValue = !value ? (0, _immutable.Map)() : value;
+      oldValue = oldValue.toJS ? oldValue : (0, _immutable.fromJS)(oldValue);
+      var newValue = (0, _immutable.fromJS)(defaults);
+
+      if (!oldValue.equals(newValue)) {
+        onChange({
+          target: {
+            name: name,
+            value: defaults
+          }
+        });
+      }
     }
-  }, [props, props.name]);
+  }, [name, value, onChange]);
   return _react.default.createElement("div", {
     className: "gfb-input-outer",
     style: inputOuter

@@ -711,32 +711,4 @@ _defineProperty(FormValidator, "defaultProps", {
 
 });
 
-<<<<<<< HEAD:lib/FormBuilder.js
 export { FormValidator as default };
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(inputEventListenerDebouncer, "inputEventListenerDebouncer", "C:\\Development\\Projects\\grid-form-builder\\src\\FormBuilder.js");
-  reactHotLoader.register(FormValueContext, "FormValueContext", "C:\\Development\\Projects\\grid-form-builder\\src\\FormBuilder.js");
-  reactHotLoader.register(debug, "debug", "C:\\Development\\Projects\\grid-form-builder\\src\\FormBuilder.js");
-  reactHotLoader.register(debugLog, "debugLog", "C:\\Development\\Projects\\grid-form-builder\\src\\FormBuilder.js");
-  reactHotLoader.register(FormBuilder, "FormBuilder", "C:\\Development\\Projects\\grid-form-builder\\src\\FormBuilder.js");
-  reactHotLoader.register(SizeMeHOC, "SizeMeHOC", "C:\\Development\\Projects\\grid-form-builder\\src\\FormBuilder.js");
-  reactHotLoader.register(FormValidator, "FormValidator", "C:\\Development\\Projects\\grid-form-builder\\src\\FormBuilder.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-export { FormValidator as default };
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/FormBuilder.js

@@ -510,27 +510,4 @@ _defineProperty(ConditionalTable, "defaultProps", {
   enableListToggle: false
 });
 
-<<<<<<< HEAD:lib/QueryBuilder/Where/ConditionalTable/ConditionalTable.js
 export { ConditionalTable as default };
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(X_ICON_CLASS, "X_ICON_CLASS", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\Where\\ConditionalTable\\ConditionalTable.js");
-  reactHotLoader.register(ConditionalTable, "ConditionalTable", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\Where\\ConditionalTable\\ConditionalTable.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-export { ConditionalTable as default };
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/QueryBuilder/Where/ConditionalTable/ConditionalTable.js

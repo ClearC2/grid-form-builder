@@ -640,16 +640,7 @@ var Typeahead = function Typeahead(props) {
   }));
 };
 
-<<<<<<< HEAD:lib/Inputs/Typeahead.js
-__signature__(Typeahead, "useTheme{{theme}}\nuseState{[input, changeInput]({Typeahead: allowcreate ? AsyncCreatable : Async})}\nuseState{[inputValue, updateInputValue]('')}\nuseState{[selectValue, updateSelectValue](multi ? [] : {label: '', value: ''})}\nuseState{[isZipCode, updateIsZip]((label === 'papostalcode' || label === 'Zip Code') && inputValue.length <= 2)}\nuseState{[isRequiredFlag, updateIsRequiredFlag](required && requiredWarning && !value.length)}\nuseState{[menuIsOpen, updateIsMenuOpen](false)}\nuseState{[menuPlacement, updateMenuPlacement]('bottom')}\nuseState{[fieldPosition, updateFieldPosition](0)}\nuseState{[isFocused, setIsFocused](false)}\nuseRef{inputContainer}\nuseEffect{}\nuseEffect{}\nuseEffect{}\nuseCallback{convertValueStringToValueArrayIfNeeded}\nuseEffect{}\nuseCallback{populateConditionObject}\nuseCallback{populateFilterBody}\nuseCallback{loadOptions}\nuseCallback{formatCreateLabel}\nuseCallback{noOptionsMessage}\nuseCallback{handleOnMouseDown}\nuseCallback{handleInputBlur}\nuseCallback{openMenu}\nuseCallback{setMenuOpenPosition}\nuseCallback{setInputFieldPosition}\nuseCallback{handleInputClick}\nuseCallback{handleOnFocus}\nuseEffect{}\nuseCallback{handleOnInputChange}\nuseCallback{emptyFields}\nuseCallback{handleSingleValueChange}\nuseCallback{handleChange}\nuseCallback{handleOnKeyDown}", function () {
-  return [useTheme];
-});
-
-var _default = Typeahead;
-export default _default;
-=======
 export default Typeahead;
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/Inputs/Typeahead.js
 Typeahead.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
@@ -676,28 +667,4 @@ Typeahead.propTypes = {
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   style: PropTypes.object
-<<<<<<< HEAD:lib/Inputs/Typeahead.js
 };
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(viewPortHeight, "viewPortHeight", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\Typeahead.js");
-  reactHotLoader.register(Typeahead, "Typeahead", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\Typeahead.js");
-  reactHotLoader.register(_default, "default", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\Typeahead.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-};
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/Inputs/Typeahead.js

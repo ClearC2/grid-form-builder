@@ -158,27 +158,4 @@ LabelContainer.propTypes = {
   handleCascadeKeywordClick: PropTypes.func,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.array, PropTypes.object]),
   type: PropTypes.string
-<<<<<<< HEAD:lib/Inputs/core/LabelContainer.js
 };
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(LabelContainer, "LabelContainer", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\core\\LabelContainer.js");
-  reactHotLoader.register(_default, "default", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\core\\LabelContainer.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-};
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/Inputs/core/LabelContainer.js

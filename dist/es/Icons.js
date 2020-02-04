@@ -30,28 +30,4 @@ export var mapIcon = function mapIcon(icon) {
   icon = IconLibrary[icon] || null;
   return icon;
 };
-<<<<<<< HEAD:lib/Icons.js
 export { IconLibrary };
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(IconLibrary, "IconLibrary", "C:\\Development\\Projects\\grid-form-builder\\src\\Icons.js");
-  reactHotLoader.register(initComponentIconLibrary, "initComponentIconLibrary", "C:\\Development\\Projects\\grid-form-builder\\src\\Icons.js");
-  reactHotLoader.register(mapIcon, "mapIcon", "C:\\Development\\Projects\\grid-form-builder\\src\\Icons.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-export { IconLibrary };
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/Icons.js

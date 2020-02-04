@@ -153,29 +153,4 @@ _defineProperty(PortalTarget, "defaultProps", {
   portalTarget: 'body'
 });
 
-<<<<<<< HEAD:lib/Portal.js
-var _default = PortalTarget;
-export default _default;
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(portal, "portal", "C:\\Development\\Projects\\grid-form-builder\\src\\Portal.js");
-  reactHotLoader.register(PortalTarget, "PortalTarget", "C:\\Development\\Projects\\grid-form-builder\\src\\Portal.js");
-  reactHotLoader.register(_default, "default", "C:\\Development\\Projects\\grid-form-builder\\src\\Portal.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
 export default PortalTarget;
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/Portal.js

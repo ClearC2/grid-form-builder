@@ -52,27 +52,4 @@ ColorPicker.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
   onChange: PropTypes.func,
   name: PropTypes.string
-<<<<<<< HEAD:lib/Inputs/Colorpicker/ColorPicker.js
 };
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(ColorPicker, "ColorPicker", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\Colorpicker\\ColorPicker.js");
-  reactHotLoader.register(_default, "default", "C:\\Development\\Projects\\grid-form-builder\\src\\Inputs\\Colorpicker\\ColorPicker.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-};
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/Inputs/Colorpicker/ColorPicker.js

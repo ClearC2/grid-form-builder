@@ -218,32 +218,4 @@ _defineProperty(_ConditionalTableContainer, "defaultProps", {
 
 export default connect(null, null, null, {
   forwardRef: true
-<<<<<<< HEAD:lib/QueryBuilder/Where/ConditionalTable/ConditionalTableContainer.js
 })(_ConditionalTableContainer);
-
-export default _default;
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(getDefaultCondition, "getDefaultCondition", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\Where\\ConditionalTable\\ConditionalTableContainer.js");
-  reactHotLoader.register(getFieldSchema, "getFieldSchema", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\Where\\ConditionalTable\\ConditionalTableContainer.js");
-  reactHotLoader.register(convertQueryToFormValues, "convertQueryToFormValues", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\Where\\ConditionalTable\\ConditionalTableContainer.js");
-  reactHotLoader.register(_ConditionalTableContainer, "_ConditionalTableContainer", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\Where\\ConditionalTable\\ConditionalTableContainer.js");
-  reactHotLoader.register(_default, "default", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\Where\\ConditionalTable\\ConditionalTableContainer.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-})(_ConditionalTableContainer);
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/QueryBuilder/Where/ConditionalTable/ConditionalTableContainer.js

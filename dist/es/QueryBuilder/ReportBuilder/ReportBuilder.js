@@ -295,29 +295,4 @@ export function buildDefaultColumnsFromQuery(query) {
   }
 
   return selected;
-<<<<<<< HEAD:lib/QueryBuilder/ReportBuilder/ReportBuilder.js
 }
-;
-
-(function () {
-  var reactHotLoader = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.default : undefined;
-
-  if (!reactHotLoader) {
-    return;
-  }
-
-  reactHotLoader.register(ReportBuilder, "ReportBuilder", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\ReportBuilder\\ReportBuilder.js");
-  reactHotLoader.register(FIELD_TYPE_MAP, "FIELD_TYPE_MAP", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\ReportBuilder\\ReportBuilder.js");
-  reactHotLoader.register(buildAvailableColumnsFromFieldDefs, "buildAvailableColumnsFromFieldDefs", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\ReportBuilder\\ReportBuilder.js");
-  reactHotLoader.register(buildDefaultColumnsFromQuery, "buildDefaultColumnsFromQuery", "C:\\Development\\Projects\\grid-form-builder\\src\\QueryBuilder\\ReportBuilder\\ReportBuilder.js");
-})();
-
-;
-
-(function () {
-  var leaveModule = typeof reactHotLoaderGlobal !== 'undefined' ? reactHotLoaderGlobal.leaveModule : undefined;
-  leaveModule && leaveModule(module);
-})();
-=======
-}
->>>>>>> aa68762e12dc6f3f09855b63bf3638f1d4b23f1b:dist/es/QueryBuilder/ReportBuilder/ReportBuilder.js
