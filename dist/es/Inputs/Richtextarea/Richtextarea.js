@@ -8,7 +8,7 @@ import ReactQuill from 'react-quill';
 import { randomId, usePrevious } from '../../utils';
 import Toolbar from './Toolbar';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
-import '../../../styles/richtext.css';
+import '../../styles/richtext.css';
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.core.css';
 import useTheme from '../../theme/useTheme';

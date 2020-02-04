@@ -18,7 +18,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 require("daterangepicker");
 
-require("../../../styles/daterangepicker.css");
+require("../../styles/daterangepicker.css");
 
 var _jquery = _interopRequireDefault(require("jquery"));
 

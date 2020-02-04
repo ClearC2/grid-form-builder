@@ -22,7 +22,7 @@ var _Portal = _interopRequireDefault(require("../../Portal"));
 
 var _reactColor = require("react-color");
 
-require("../../../styles/colorpicker.css");
+require("../../styles/colorpicker.css");
 
 // eslint-disable-line
 var ColorPicker = (0, _react.forwardRef)(function (props, ref) {

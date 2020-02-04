@@ -26,7 +26,7 @@ var _Toolbar = _interopRequireDefault(require("./Toolbar"));
 
 var _ValidationErrorIcon = _interopRequireDefault(require("../../ValidationErrorIcon"));
 
-require("../../../styles/richtext.css");
+require("../../styles/richtext.css");
 
 require("react-quill/dist/quill.snow.css");
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Portal from '../../Portal';
 import { SketchPicker, CompactPicker } from 'react-color'; // eslint-disable-line
 
-import '../../../styles/colorpicker.css';
+import '../../styles/colorpicker.css';
 var ColorPicker = forwardRef(function (props, ref) {
   var inputId = props.inputId,
       onChange = props.onChange,

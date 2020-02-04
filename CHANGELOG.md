@@ -1,3 +1,10 @@
+## [3.8.5](https://github.com/ClearC2/grid-form-builder/compare/v3.8.4...v3.8.5) (2020-02-04)
+
+
+### Bug Fixes
+
+* **css:** fix css import paths ([#142](https://github.com/ClearC2/grid-form-builder/issues/142)) ([6e088fb](https://github.com/ClearC2/grid-form-builder/commit/6e088fbc02f013dca7b17d5448dcf28deb04647f))
+
 ## [3.8.4](https://github.com/ClearC2/grid-form-builder/compare/v3.8.3...v3.8.4) (2020-02-04)
 
 
