@@ -1,3 +1,10 @@
+## [3.8.3](https://github.com/ClearC2/grid-form-builder/compare/v3.8.2...v3.8.3) (2020-02-04)
+
+
+### Bug Fixes
+
+* **build:** add cjs build ([#141](https://github.com/ClearC2/grid-form-builder/issues/141)) ([f8c5cbb](https://github.com/ClearC2/grid-form-builder/commit/f8c5cbbff2eaf0909bb347d6b2b2ce81653dd931))
+
 ## [3.8.2](https://github.com/ClearC2/grid-form-builder/compare/v3.8.1...v3.8.2) (2020-02-04)
 
 
