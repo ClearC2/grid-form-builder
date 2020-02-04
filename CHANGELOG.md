@@ -1,3 +1,10 @@
+## [3.8.7](https://github.com/ClearC2/grid-form-builder/compare/v3.8.6...v3.8.7) (2020-02-04)
+
+
+### Bug Fixes
+
+* **lint:** linter thinks it knows things ([45a7bc1](https://github.com/ClearC2/grid-form-builder/commit/45a7bc18e4c205fbb51a8172bf5bb523d6c502d3))
+
 ## [3.8.6](https://github.com/ClearC2/grid-form-builder/compare/v3.8.5...v3.8.6) (2020-02-04)
 
 
