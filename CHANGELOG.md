@@ -1,3 +1,11 @@
+## [3.8.4](https://github.com/ClearC2/grid-form-builder/compare/v3.8.3...v3.8.4) (2020-02-04)
+
+
+### Bug Fixes
+
+* **conditional:** prevented an infinite loop ([bec5ee8](https://github.com/ClearC2/grid-form-builder/commit/bec5ee86205ace6510dc98d8cf45f13ad1eb68f4))
+* **typeahead:** the multi property is now correctly fed to react select ([ce9d4fb](https://github.com/ClearC2/grid-form-builder/commit/ce9d4fb9016a09164d8d35eb0f87e665f0d0be36))
+
 ## [3.8.3](https://github.com/ClearC2/grid-form-builder/compare/v3.8.2...v3.8.3) (2020-02-04)
 
 
