@@ -28,7 +28,7 @@ const ConditionalInput = props => {
       }
       props.onChange({target: {name: props.name, value: defaults}})
     }
-  }, [props.name])
+  }, [props, props.name])
 
   return (
     <div className='gfb-input-outer' style={inputOuter}>
