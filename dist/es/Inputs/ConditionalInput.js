@@ -64,7 +64,7 @@ var ConditionalInput = function ConditionalInput(props) {
         });
       }
     }
-  }, [name, value, onChange]);
+  }, [name]);
   return React.createElement("div", {
     className: "gfb-input-outer",
     style: inputOuter
