@@ -1,3 +1,10 @@
+# [3.10.0](https://github.com/ClearC2/grid-form-builder/compare/v3.9.0...v3.10.0) (2020-02-05)
+
+
+### Features
+
+* **typeahead:** data call will trigger if search is only whitespace and set the results as default values ([be2ee47](https://github.com/ClearC2/grid-form-builder/commit/be2ee47607e21d8c349a414b25009394481bb306))
+
 # [3.9.0](https://github.com/ClearC2/grid-form-builder/compare/v3.8.10...v3.9.0) (2020-02-05)
 
 
