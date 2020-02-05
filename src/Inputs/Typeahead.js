@@ -35,7 +35,9 @@ const Typeahead = props => {
     stringify,
     autoComplete,
     interactive = true,
-    style = {}
+    style = {},
+    delimit,
+    delimiter
   } = props
 
   const {
@@ -58,11 +60,6 @@ const Typeahead = props => {
     indicators: indicatorsTheme = {},
     options: optionsTheme = {}
   } = theme
-
-  let {
-    delimit,
-    delimiter
-  } = props
 
   const [input, changeInput] = useState({Typeahead: allowcreate ? AsyncCreatable : Async})
   const [inputValue, updateInputValue] = useState('')
@@ -136,7 +133,7 @@ const Typeahead = props => {
   }, [value, convertValueStringToValueArrayIfNeeded])
 
   const populateConditionObject = useCallback((condition = {name: null, comparator: null, values: []}) => {
-    if (!condition.hasOwnProperty('values')) condition.values = []
+    if (!condition.hasOwnProperty('values')) condition.values = [] //eslint-disable-line
     const pluggedInValues = []
     condition.values.forEach(value => {
       const formValueForThisValueName = values.get(value, '')
@@ -406,8 +403,12 @@ const Typeahead = props => {
     if (e.keyCode === 9 && allowcreate && inputValue) {
       handleChange({value: inputValue}, {action: 'create-option'})
     }
+    if (e.keyCode === 32) { // if key is spacebar, prevent what react select is trying to do with it and just let them enter a whitespace - JRA 02/05/2020
+      e.preventDefault()
+      handleOnInputChange(inputValue + ' ', {action: 'input-change'})
+    }
     onKeyDown()
-  }, [onKeyDown, handleChange, allowcreate, inputValue])
+  }, [onKeyDown, handleChange, allowcreate, inputValue, handleOnInputChange])
 
   const {Typeahead} = input
 
