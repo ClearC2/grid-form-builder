@@ -68,7 +68,9 @@ var Typeahead = function Typeahead(props) {
       _props$interactive = props.interactive,
       interactive = _props$interactive === void 0 ? true : _props$interactive,
       _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style;
+      style = _props$style === void 0 ? {} : _props$style,
+      delimit = props.delimit,
+      delimiter = props.delimiter;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -100,8 +102,6 @@ var Typeahead = function Typeahead(props) {
       indicatorsTheme = _theme$indicators === void 0 ? {} : _theme$indicators,
       _theme$options = theme.options,
       optionsTheme = _theme$options === void 0 ? {} : _theme$options;
-  var delimit = props.delimit,
-      delimiter = props.delimiter;
 
   var _useState = useState({
     Typeahead: allowcreate ? AsyncCreatable : Async
@@ -232,7 +232,8 @@ var Typeahead = function Typeahead(props) {
       comparator: null,
       values: []
     };
-    if (!condition.hasOwnProperty('values')) condition.values = [];
+    if (!condition.hasOwnProperty('values')) condition.values = []; //eslint-disable-line
+
     var pluggedInValues = [];
 
     _forEachInstanceProperty(_context = _valuesInstanceProperty(condition)).call(_context, function (value) {
@@ -538,8 +539,16 @@ var Typeahead = function Typeahead(props) {
       });
     }
 
+    if (e.keyCode === 32) {
+      // if key is spacebar, prevent what react select is trying to do with it and just let them enter a whitespace - JRA 02/05/2020
+      e.preventDefault();
+      handleOnInputChange(inputValue + ' ', {
+        action: 'input-change'
+      });
+    }
+
     onKeyDown();
-  }, [onKeyDown, handleChange, allowcreate, inputValue]);
+  }, [onKeyDown, handleChange, allowcreate, inputValue, handleOnInputChange]);
   var Typeahead = input.Typeahead;
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';

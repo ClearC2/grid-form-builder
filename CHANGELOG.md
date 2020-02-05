@@ -1,3 +1,10 @@
+# [3.9.0](https://github.com/ClearC2/grid-form-builder/compare/v3.8.10...v3.9.0) (2020-02-05)
+
+
+### Features
+
+* **typeahead:** upgrading to react select 3 makes spacebar work like an enter key, added logic to prevent that from happening so users can enter a white space in typeaheads ([bcf6591](https://github.com/ClearC2/grid-form-builder/commit/bcf6591e70aa2c3d548ceb039cd248ecd869e33f))
+
 ## [3.8.10](https://github.com/ClearC2/grid-form-builder/compare/v3.8.9...v3.8.10) (2020-02-05)
 
 
