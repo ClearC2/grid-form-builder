@@ -12,7 +12,7 @@ const ConditionalDialog = props => {
   }
 
   function convertListToOptions (list) {
-    const inputType = props.inputType.toLowerCase()
+    let inputType = props.inputType.toLowerCase()
     if (inputType === 'number' || inputType === 'currency' || inputType === 'decimal') {
       list = list.filter(l => {
         return (l !== 'is blank' &&
@@ -27,9 +27,9 @@ const ConditionalDialog = props => {
     })
   }
   function inputTypeOptionsList () {
-    const options = [] // Object.keys(CONDITIONS).map(c => ({label: c, value: c}))
+    let options = [] // Object.keys(CONDITIONS).map(c => ({label: c, value: c}))
     Object.keys(CONDITIONS).forEach((key) => {
-      const excludes = Set(CONDITIONS[key].invalidInputTypes)
+      let excludes = Set(CONDITIONS[key].invalidInputTypes)
       if (!excludes.has(props.inputType.toLowerCase())) {
         options.push(key)
       }
@@ -45,7 +45,7 @@ const ConditionalDialog = props => {
       if (props.values.getIn([props.name, 'condition'])) {
         initCondition = props.values.getIn([props.name, 'condition'], inputTypeOptionsList()[0].value)
       }
-      const initialModalValues = {condition: initCondition}
+      let initialModalValues = {condition: initCondition}
       if (SINGLE_FIELD_INPUTS.has(props.inputType.toLowerCase())) {
         initialModalValues[`${props.name}-0`] = propValue.get('values', List())
       } else {
@@ -60,7 +60,7 @@ const ConditionalDialog = props => {
 
       setModalValues(Map(initialModalValues))
     }
-  }, [inputTypeOptionsList, propValue, props.inputType, props.name, props.values])
+  }, [props.name])
   function getMaxFieldCount () {
     if (CONDITIONS[condition()]) {
       return CONDITIONS[condition()].maxFields
@@ -102,7 +102,7 @@ const ConditionalDialog = props => {
     return ret
   }
   function getSchema () {
-    const schema = {
+    let schema = {
       form: {
         name: 'Conditional Input1',
         description: 'allow more complex inputs.',
@@ -148,7 +148,7 @@ const ConditionalDialog = props => {
         }
       })
     }
-    const extraFieldProps = {...props}
+    let extraFieldProps = {...props}
     delete extraFieldProps.onChange
     delete extraFieldProps.handleOnChange
     delete extraFieldProps.name
@@ -182,7 +182,7 @@ const ConditionalDialog = props => {
         if (!label) {
           label = `     ...or`
         }
-        const newField = {
+        let newField = {
           type: 'field',
           dimensions: {x: 1, y: fieldCount + 2, h: calculateFieldHeight(props.inputType.toLowerCase()), w: 8},
           config: {
@@ -208,7 +208,7 @@ const ConditionalDialog = props => {
   }
 
   function condition () {
-    const oldValue = props.values.get(props.name)
+    let oldValue = props.values.get(props.name)
     if (oldValue && oldValue instanceof Map) {
       return props.values.get(props.name, Map()).get('condition', '')
     } else {
@@ -218,7 +218,7 @@ const ConditionalDialog = props => {
   function handleConditionChange (e) {
     const currentCondition = condition()
     setModalValues(modalValues.set(e.target.name, e.target.value))
-    const trueType = (props.inputType || 'input').toLowerCase()
+    let trueType = (props.inputType || 'input').toLowerCase()
     if (trueType === 'typeahead') {
       if (TYPEAHEAD_CONDITIONS.has(currentCondition) && !TYPEAHEAD_CONDITIONS.has(e.target.value)) {
         setTimeout(() => { dialogOnChange({target: {name: `${props.name}-0`, value: ''}}) }, 0)
@@ -226,10 +226,10 @@ const ConditionalDialog = props => {
         setTimeout(() => { dialogOnChange({target: {name: `${props.name}-0`, value: List()}}) }, 0)
       }
     }
-    const oldValue = props.values.get(props.name)
+    let oldValue = props.values.get(props.name)
     if (oldValue && oldValue instanceof Map) {
       let newFieldValue = props.values.get(props.name, Map()).set(e.target.name, e.target.value)
-      const maxFieldValues = CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields
+      let maxFieldValues = CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields
       if (newFieldValue.get('values', List()).size >= maxFieldValues) {
         newFieldValue = newFieldValue.set('values', newFieldValue.get('values', List()).slice(0, maxFieldValues))
       }
@@ -248,7 +248,7 @@ const ConditionalDialog = props => {
   function deleteIndex (i, values) {
     let stateChanges = modalValues
     for (let x = parseInt(i); x < values.size - 1; x++) {
-      const next = x + 1
+      let next = x + 1
       stateChanges = stateChanges.set(`${props.name}-${x}`, modalValues.get(`${props.name}-${next}`, ''))
     }
     stateChanges = stateChanges.delete(`${props.name}-${values.size - 1}`)
@@ -267,7 +267,7 @@ const ConditionalDialog = props => {
     let values = newFieldValue.get('values', List())
     if (STRING_VALUES.has(props.inputType.toLowerCase())) {
       // i have a string. what index?
-      const i = parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1])
+      let i = parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1])
       if (e.target.value === '') {
         values = deleteIndex(i, values)
       } else {
@@ -275,7 +275,7 @@ const ConditionalDialog = props => {
       }
     } else {
       if (typeof e.target.value === 'string') {
-        const i = parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1])
+        let i = parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1])
         if (i > values.size - 1) {
           values = values.concat(fromJS([e.target.value]))
         } else {
