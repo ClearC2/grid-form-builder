@@ -183,6 +183,7 @@ const Typeahead = props => {
 
     if (search.length >= minSearchLength || search === ' ') {
       if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
+      if (setDefault) reactSelect.current.setState(() => ({isLoading: true}))
       return GFBConfig.ajax.post(`/typeahead/name/${key}/search${search}`, {filter})
         .then(resp => {
           const options = resp.data.data.map(value => {
@@ -193,6 +194,7 @@ const Typeahead = props => {
           })
           if (setDefault === true) setDefaultOptions(options)
           else setDefaultOptions([])
+          if (setDefault) reactSelect.current.setState(() => ({isLoading: false}))
           return options
         })
     }
