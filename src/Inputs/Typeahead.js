@@ -72,8 +72,10 @@ const Typeahead = props => {
   const [menuPlacement, updateMenuPlacement] = useState('bottom')
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [isFocused, setIsFocused] = useState(false)
+  const [defaultOptions, setDefaultOptions] = useState([])
 
   const inputContainer = useRef(null)
+  const reactSelect = useRef(null)
 
   useEffect(() => {
     changeInput({Typeahead: allowcreate ? AsyncCreatable : Async})
@@ -130,7 +132,7 @@ const Typeahead = props => {
     }
     updateInputValue('')
     updateSelectValue(parsedValue)
-  }, [value, convertValueStringToValueArrayIfNeeded])
+  }, [value, convertValueStringToValueArrayIfNeeded, multi])
 
   const populateConditionObject = useCallback((condition = {name: null, comparator: null, values: []}) => {
     if (!condition.hasOwnProperty('values')) condition.values = [] //eslint-disable-line
@@ -162,7 +164,7 @@ const Typeahead = props => {
     return filter
   }, [populateConditionObject])
 
-  const loadOptions = useCallback(search => {
+  const loadOptions = useCallback((search, setDefault = false) => {
     let {key = null, duplication = false, fieldvalue = null, filter = {}} = typeahead
     if (typeof filter === 'function') filter = filter()
     const minSearchLength = isZipCode ? 3 : minChars
@@ -170,6 +172,7 @@ const Typeahead = props => {
     if (!key && !fieldvalue) {
       // eslint-disable-next-line
       console.error(`The JSON schema representation for ${name} does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}`)
+      if (setDefault === true) setDefaultOptions([])
       return Promise.resolve({options: []})
     }
 
@@ -182,15 +185,18 @@ const Typeahead = props => {
       if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
       return GFBConfig.ajax.post(`/typeahead/name/${key}/search${search}`, {filter})
         .then(resp => {
-          return resp.data.data.map(value => {
+          const options = resp.data.data.map(value => {
             if (duplication) {
               value.duplication = duplication
             }
             return value
           })
+          if (setDefault === true) setDefaultOptions(options)
+          else setDefaultOptions([])
+          return options
         })
     }
-
+    if (setDefault === true) setDefaultOptions([])
     return Promise.resolve([])
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode])
 
@@ -258,12 +264,15 @@ const Typeahead = props => {
     if (e.action === 'input-change') {
       !menuIsOpen && openMenu()
       updateInputValue(val)
+      if (typeof val === 'string' && val.trim() === '') {
+        loadOptions(' ', true)
+      }
     } else if (e.action === 'menu-close' && !multi) {
       if (value) {
         updateInputValue('')
       }
     }
-  }, [menuIsOpen, openMenu, updateInputValue, multi, value])
+  }, [multi, menuIsOpen, openMenu, loadOptions, value])
 
   const emptyFields = useCallback((fields, changeHandler) => {
     fields.forEach(field => {
@@ -431,6 +440,7 @@ const Typeahead = props => {
   return (
     <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
       <Typeahead
+        ref={reactSelect}
         className={className}
         classNamePrefix='gfb-input'
         tabIndex={tabIndex}
@@ -460,6 +470,7 @@ const Typeahead = props => {
         value={selectValue}
         autoComplete={autoComplete}
         components={components}
+        defaultOptions={defaultOptions}
         styles={{
           container: base => {
             return ({...base, ...inputInner, ...inputInnerTheme})
