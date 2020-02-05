@@ -144,7 +144,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
 
       setModalValues((0, _immutable.Map)(initialModalValues));
     }
-  }, [inputTypeOptionsList, propValue, props.inputType, props.name, (0, _values.default)(props)]);
+  }, [props.name]);
 
   function getMaxFieldCount() {
     if (_SearchUtils.CONDITIONS[condition()]) {

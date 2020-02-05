@@ -1,3 +1,10 @@
+## [3.8.9](https://github.com/ClearC2/grid-form-builder/compare/v3.8.8...v3.8.9) (2020-02-05)
+
+
+### Bug Fixes
+
+* **linterChanges:** revert conditional Dialog to where it was ([840fe61](https://github.com/ClearC2/grid-form-builder/commit/840fe6140db3b897e606a0d8b67efcc7dae1677a))
+
 ## [3.8.8](https://github.com/ClearC2/grid-form-builder/compare/v3.8.7...v3.8.8) (2020-02-04)
 
 
