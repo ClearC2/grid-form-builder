@@ -1,3 +1,10 @@
+# [3.11.0](https://github.com/ClearC2/grid-form-builder/compare/v3.10.0...v3.11.0) (2020-02-05)
+
+
+### Features
+
+* **typeahead:** adds loading indicator toggle ([7918dd6](https://github.com/ClearC2/grid-form-builder/commit/7918dd60b257fc929246a8cc88a6205084ddca8c))
+
 # [3.10.0](https://github.com/ClearC2/grid-form-builder/compare/v3.9.0...v3.10.0) (2020-02-05)
 
 

@@ -310,6 +310,11 @@ var Typeahead = function Typeahead(props) {
       var _context3;
 
       if (typeof search === 'string' && _trimInstanceProperty(search).call(search) !== '') search = "/".concat(search);
+      if (setDefault) reactSelect.current.setState(function () {
+        return {
+          isLoading: true
+        };
+      });
       return GFBConfig.ajax.post(_concatInstanceProperty(_context3 = "/typeahead/name/".concat(key, "/search")).call(_context3, search), {
         filter: filter
       }).then(function (resp) {
@@ -324,6 +329,11 @@ var Typeahead = function Typeahead(props) {
         });
 
         if (setDefault === true) setDefaultOptions(options);else setDefaultOptions([]);
+        if (setDefault) reactSelect.current.setState(function () {
+          return {
+            isLoading: false
+          };
+        });
         return options;
       });
     }
