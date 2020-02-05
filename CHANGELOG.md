@@ -1,3 +1,15 @@
+## [3.8.8](https://github.com/ClearC2/grid-form-builder/compare/v3.8.7...v3.8.8) (2020-02-04)
+
+
+### Bug Fixes
+
+* **condInput:** trigger release ([bd2536a](https://github.com/ClearC2/grid-form-builder/commit/bd2536a3f8a98913724ea9b852c5cb11c7733af1))
+
+
+### Reverts
+
+* **condInput:** to where it was ([f67c88f](https://github.com/ClearC2/grid-form-builder/commit/f67c88f3e4460681843e3a60f17b255cf4d55b98))
+
 ## [3.8.7](https://github.com/ClearC2/grid-form-builder/compare/v3.8.6...v3.8.7) (2020-02-04)
 
 

@@ -9,10 +9,7 @@ import { Map, List, fromJS } from 'immutable';
 
 var ConditionalInput = function ConditionalInput(props) {
   var _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
-      name = props.name,
-      value = props.value,
-      onChange = props.onChange;
+      style = _props$style === void 0 ? {} : _props$style;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -35,36 +32,31 @@ var ConditionalInput = function ConditionalInput(props) {
     setShowDialog(false);
   }, []);
   useEffect(function () {
-    if (name) {
+    // const v = props.values[props.name]
+    if (props.name) {
       var defaults = Map({
         condition: 'contains',
         values: List()
       });
 
-      if (typeof value === 'string') {
-        if (value !== '') {
-          defaults = defaults.set('values', List([value]));
+      if (typeof props.value === 'string') {
+        if (props.value !== '') {
+          defaults = defaults.set('values', List([props.value]));
         } else {
           defaults = defaults.set('values', List());
         }
-      } else if (value instanceof List || _Array$isArray(value)) {
-        defaults = defaults.set('values', fromJS(value));
+      } else if (props.value instanceof List || _Array$isArray(props.value)) {
+        defaults = defaults.set('values', fromJS(props.value));
       }
 
-      var oldValue = !value ? Map() : value;
-      oldValue = oldValue.toJS ? oldValue : fromJS(oldValue);
-      var newValue = fromJS(defaults);
-
-      if (!oldValue.equals(newValue)) {
-        onChange({
-          target: {
-            name: name,
-            value: defaults
-          }
-        });
-      }
+      props.onChange({
+        target: {
+          name: props.name,
+          value: defaults
+        }
+      });
     }
-  }, [name]);
+  }, [props.name]);
   return React.createElement("div", {
     className: "gfb-input-outer",
     style: inputOuter
