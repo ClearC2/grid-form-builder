@@ -153,7 +153,13 @@ var Typeahead = function Typeahead(props) {
       isFocused = _useState18[0],
       setIsFocused = _useState18[1];
 
+  var _useState19 = useState([]),
+      _useState20 = _slicedToArray(_useState19, 2),
+      defaultOptions = _useState20[0],
+      setDefaultOptions = _useState20[1];
+
   var inputContainer = useRef(null);
+  var reactSelect = useRef(null);
   useEffect(function () {
     changeInput({
       Typeahead: allowcreate ? AsyncCreatable : Async
@@ -223,7 +229,7 @@ var Typeahead = function Typeahead(props) {
 
     updateInputValue('');
     updateSelectValue(parsedValue);
-  }, [value, convertValueStringToValueArrayIfNeeded]);
+  }, [value, convertValueStringToValueArrayIfNeeded, multi]);
   var populateConditionObject = useCallback(function () {
     var _context;
 
@@ -272,6 +278,8 @@ var Typeahead = function Typeahead(props) {
     return filter;
   }, [populateConditionObject]);
   var loadOptions = useCallback(function (search) {
+    var setDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
     var _typeahead$key = typeahead.key,
         key = _typeahead$key === void 0 ? null : _typeahead$key,
         _typeahead$duplicatio = typeahead.duplication,
@@ -287,6 +295,7 @@ var Typeahead = function Typeahead(props) {
     if (!key && !fieldvalue) {
       // eslint-disable-next-line
       console.error("The JSON schema representation for ".concat(name, " does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}"));
+      if (setDefault === true) setDefaultOptions([]);
       return _Promise.resolve({
         options: []
       });
@@ -306,16 +315,20 @@ var Typeahead = function Typeahead(props) {
       }).then(function (resp) {
         var _context4;
 
-        return _mapInstanceProperty(_context4 = resp.data.data).call(_context4, function (value) {
+        var options = _mapInstanceProperty(_context4 = resp.data.data).call(_context4, function (value) {
           if (duplication) {
             value.duplication = duplication;
           }
 
           return value;
         });
+
+        if (setDefault === true) setDefaultOptions(options);else setDefaultOptions([]);
+        return options;
       });
     }
 
+    if (setDefault === true) setDefaultOptions([]);
     return _Promise.resolve([]);
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode]);
   var formatCreateLabel = useCallback(function (value) {
@@ -375,12 +388,16 @@ var Typeahead = function Typeahead(props) {
     if (e.action === 'input-change') {
       !menuIsOpen && openMenu();
       updateInputValue(val);
+
+      if (typeof val === 'string' && _trimInstanceProperty(val).call(val) === '') {
+        loadOptions(' ', true);
+      }
     } else if (e.action === 'menu-close' && !multi) {
       if (value) {
         updateInputValue('');
       }
     }
-  }, [menuIsOpen, openMenu, updateInputValue, multi, value]);
+  }, [multi, menuIsOpen, openMenu, loadOptions, value]);
   var emptyFields = useCallback(function (fields, changeHandler) {
     _forEachInstanceProperty(fields).call(fields, function (field) {
       var e = {
@@ -575,6 +592,7 @@ var Typeahead = function Typeahead(props) {
     onMouseDown: handleOnFocus,
     style: inputOuter
   }, jsx(Typeahead, {
+    ref: reactSelect,
     className: className,
     classNamePrefix: "gfb-input",
     tabIndex: tabIndex,
@@ -604,6 +622,7 @@ var Typeahead = function Typeahead(props) {
     value: selectValue,
     autoComplete: autoComplete,
     components: components,
+    defaultOptions: defaultOptions,
     styles: {
       container: function container(base) {
         return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
