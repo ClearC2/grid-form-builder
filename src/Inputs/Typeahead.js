@@ -455,7 +455,6 @@ const Typeahead = props => {
         isMulti={multi}
         isDisabled={disabled || readonly || !interactive}
         menuPortalTarget={document.body}
-        menuShouldBlockScroll
         name={name}
         noOptionsMessage={noOptionsMessage}
         placeholder={placeholder}

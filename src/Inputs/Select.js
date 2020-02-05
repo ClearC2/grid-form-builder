@@ -161,7 +161,6 @@ const Select = props => {
         isClearable
         isDisabled={disabled || readonly}
         menuPortalTarget={document.body}
-        menuShouldBlockScroll
         name={name}
         options={options}
         placeholder={placeholder}

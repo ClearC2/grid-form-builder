@@ -224,7 +224,6 @@ const Multiselect = props => {
         isClearable
         isDisabled={disabled || readonly || !interactive}
         menuPortalTarget={document.body}
-        menuShouldBlockScroll
         isMulti
         name={name}
         options={options}
