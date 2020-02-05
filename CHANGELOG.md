@@ -1,3 +1,11 @@
+## [3.8.10](https://github.com/ClearC2/grid-form-builder/compare/v3.8.9...v3.8.10) (2020-02-05)
+
+
+### Bug Fixes
+
+* trigger ([c7a2ae4](https://github.com/ClearC2/grid-form-builder/commit/c7a2ae492867ee09bf53b18bca8d0b2f92609403))
+* **propType:** extraFooters is array not object ([49077a2](https://github.com/ClearC2/grid-form-builder/commit/49077a270a8be3fe59961aa32cbc83763d65c504))
+
 ## [3.8.9](https://github.com/ClearC2/grid-form-builder/compare/v3.8.8...v3.8.9) (2020-02-05)
 
 
