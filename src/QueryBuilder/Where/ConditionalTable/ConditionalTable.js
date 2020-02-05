@@ -11,7 +11,7 @@ export default class ConditionalTable extends Component {
     formValues: PropTypes.object.isRequired,
     onNextClick: PropTypes.func.isRequired,
     formSchema: PropTypes.object,
-    extraFooters: PropTypes.object,
+    extraFooters: PropTypes.array,
     handleOnChange: PropTypes.func,
     title: PropTypes.string,
     primaryButtonClass: PropTypes.string,
