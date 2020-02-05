@@ -294,7 +294,6 @@ var Multiselect = function Multiselect(props) {
     isClearable: true,
     isDisabled: disabled || readonly || !interactive,
     menuPortalTarget: document.body,
-    menuShouldBlockScroll: true,
     isMulti: true,
     name: name,
     options: options,

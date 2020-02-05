@@ -226,7 +226,6 @@ var Select = function Select(props) {
     isClearable: true,
     isDisabled: disabled || readonly,
     menuPortalTarget: document.body,
-    menuShouldBlockScroll: true,
     name: name,
     options: options,
     placeholder: placeholder,

@@ -646,7 +646,6 @@ var Typeahead = function Typeahead(props) {
     isMulti: multi,
     isDisabled: disabled || readonly || !interactive,
     menuPortalTarget: document.body,
-    menuShouldBlockScroll: true,
     name: name,
     noOptionsMessage: noOptionsMessage,
     placeholder: placeholder,

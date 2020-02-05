@@ -1,3 +1,10 @@
+# [3.12.0](https://github.com/ClearC2/grid-form-builder/compare/v3.11.0...v3.12.0) (2020-02-05)
+
+
+### Features
+
+* **select:** removed block scroll prop ([8ef3920](https://github.com/ClearC2/grid-form-builder/commit/8ef3920b6558cb4ee3d8502d4e0668c2444917d9))
+
 # [3.11.0](https://github.com/ClearC2/grid-form-builder/compare/v3.10.0...v3.11.0) (2020-02-05)
 
 
