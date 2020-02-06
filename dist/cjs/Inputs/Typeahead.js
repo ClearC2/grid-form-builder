@@ -403,12 +403,14 @@ var Typeahead = function Typeahead(props) {
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
   var setInputFieldPosition = (0, _react.useCallback)(function () {
-    var position = inputContainer.current.getBoundingClientRect().top;
+    if (inputContainer.current) {
+      var position = inputContainer.current.getBoundingClientRect().top;
 
-    if (fieldPosition !== position) {
-      updateFieldPosition(position);
-    } else {
-      setMenuOpenPosition();
+      if (fieldPosition !== position) {
+        updateFieldPosition(position);
+      } else {
+        setMenuOpenPosition();
+      }
     }
   }, [setMenuOpenPosition, fieldPosition]);
   var handleInputClick = (0, _react.useCallback)(function () {

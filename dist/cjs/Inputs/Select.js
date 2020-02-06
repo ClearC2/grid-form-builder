@@ -171,10 +171,12 @@ var Select = function Select(props) {
     setIsFocused(false);
   }, [menuIsOpen, updateIsMenuOpen, name]);
   var setInputFieldPosition = (0, _react.useCallback)(function () {
-    var position = inputContainer.current.getBoundingClientRect().top;
+    if (inputContainer.current) {
+      var position = inputContainer.current.getBoundingClientRect().top;
 
-    if (fieldPosition !== position) {
-      updateFieldPosition(position);
+      if (fieldPosition !== position) {
+        updateFieldPosition(position);
+      }
     }
 
     (0, _setTimeout2.default)(openMenu); // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019

@@ -143,10 +143,12 @@ var Multiselect = function Multiselect(props) {
     setIsFocused(false);
   }, [menuIsOpen, updateIsMenuOpen, name]);
   var setInputFieldPosition = useCallback(function () {
-    var position = inputContainer.current.getBoundingClientRect().top;
+    if (inputContainer.current) {
+      var position = inputContainer.current.getBoundingClientRect().top;
 
-    if (fieldPosition !== position) {
-      updateFieldPosition(position);
+      if (fieldPosition !== position) {
+        updateFieldPosition(position);
+      }
     }
 
     _setTimeout(openMenu); // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019

@@ -1,3 +1,10 @@
+# [3.13.0](https://github.com/ClearC2/grid-form-builder/compare/v3.12.3...v3.13.0) (2020-02-06)
+
+
+### Features
+
+* **select:** selects will no longer attempt to get the bounding recs if the ref has not been set ([ba50fb7](https://github.com/ClearC2/grid-form-builder/commit/ba50fb7aa669830023788e6bf387fb74071dfb3d))
+
 ## [3.12.3](https://github.com/ClearC2/grid-form-builder/compare/v3.12.2...v3.12.3) (2020-02-06)
 
 
