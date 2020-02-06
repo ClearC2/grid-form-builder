@@ -22,11 +22,11 @@ var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-core
 
 var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
 
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
-
 var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
+
+var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
@@ -173,7 +173,7 @@ var Typeahead = function Typeahead(props) {
       isRequiredFlag = _useState10[0],
       updateIsRequiredFlag = _useState10[1];
 
-  var _useState11 = (0, _react.useState)(false),
+  var _useState11 = (0, _react.useState)({}),
       _useState12 = (0, _slicedToArray2.default)(_useState11, 2),
       menuIsOpen = _useState12[0],
       updateIsMenuOpen = _useState12[1];
@@ -390,14 +390,14 @@ var Typeahead = function Typeahead(props) {
     if (draggable) e.stopPropagation();
   }, [draggable]);
   var handleInputBlur = (0, _react.useCallback)(function () {
-    menuIsOpen && updateIsMenuOpen(false);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
     setIsFocused(false);
-  }, [menuIsOpen, updateIsMenuOpen]);
+  }, [menuIsOpen, updateIsMenuOpen, name]);
   var openMenu = (0, _react.useCallback)(function () {
-    if (!readonly && !disabled && !menuIsOpen) {
-      updateIsMenuOpen(true);
+    if (!readonly && !disabled && !menuIsOpen[name]) {
+      updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, true)));
     }
-  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen]);
+  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name]);
   var setMenuOpenPosition = (0, _react.useCallback)(function () {
     var placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
     updateMenuPlacement(placement);
@@ -433,7 +433,7 @@ var Typeahead = function Typeahead(props) {
   }, [fieldPosition, setMenuOpenPosition]);
   var handleOnInputChange = (0, _react.useCallback)(function (val, e) {
     if (e.action === 'input-change') {
-      !menuIsOpen && openMenu();
+      !menuIsOpen[name] && openMenu();
       updateInputValue(val);
 
       if (typeof val === 'string' && (0, _trim.default)(val).call(val) === '') {
@@ -444,7 +444,7 @@ var Typeahead = function Typeahead(props) {
         updateInputValue('');
       }
     }
-  }, [multi, menuIsOpen, openMenu, loadOptions, value]);
+  }, [multi, menuIsOpen, name, openMenu, loadOptions, value]);
   var emptyFields = (0, _react.useCallback)(function (fields, changeHandler) {
     (0, _forEach.default)(fields).call(fields, function (field) {
       var e = {
@@ -583,7 +583,7 @@ var Typeahead = function Typeahead(props) {
       handleSingleValueChange(newValue);
     }
 
-    menuIsOpen && updateIsMenuOpen(false); // closes menu when new option gets selected
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false))); // closes menu when new option gets selected
 
     updateInputValue('');
   }, [delimit, delimiter, emptyFields, handleSingleValueChange, multi, name, onChange, stringify, typeahead, menuIsOpen]);
@@ -607,6 +607,10 @@ var Typeahead = function Typeahead(props) {
 
     onKeyDown();
   }, [onKeyDown, handleChange, allowcreate, inputValue, handleOnInputChange]);
+  var closeMenuOnScroll = (0, _react.useCallback)(function (e) {
+    var menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+    updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, menuOpenState)));
+  }, [menuIsOpen, name, updateIsMenuOpen]);
   var Typeahead = input.Typeahead;
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -636,10 +640,10 @@ var Typeahead = function Typeahead(props) {
     ref: reactSelect,
     className: className,
     classNamePrefix: "gfb-input",
+    closeMenuOnScroll: !_utils.isMobile ? closeMenuOnScroll : undefined,
     tabIndex: tabIndex,
-    autofocus: autofocus,
+    autoFocus: autofocus,
     blurInputOnSelect: true,
-    cacheOptions: true,
     isClearable: true,
     createOptionPosition: "first",
     formatCreateLabel: formatCreateLabel,
@@ -650,7 +654,7 @@ var Typeahead = function Typeahead(props) {
     noOptionsMessage: noOptionsMessage,
     placeholder: placeholder,
     inputValue: inputValue,
-    menuIsOpen: !_utils.isMobile ? menuIsOpen : undefined,
+    menuIsOpen: !_utils.isMobile ? menuIsOpen[name] : undefined,
     menuPlacement: !_utils.isMobile ? menuPlacement : undefined,
     onKeyDown: handleOnKeyDown,
     onMouseDown: handleOnMouseDown,

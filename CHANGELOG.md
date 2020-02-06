@@ -1,3 +1,17 @@
+## [3.12.2](https://github.com/ClearC2/grid-form-builder/compare/v3.12.1...v3.12.2) (2020-02-06)
+
+
+### Bug Fixes
+
+* **menu:** closing on scrolling ([#145](https://github.com/ClearC2/grid-form-builder/issues/145)) ([c27d0ba](https://github.com/ClearC2/grid-form-builder/commit/c27d0ba5dce303fc0c6b90bce5171563c8104e9d))
+
+## [3.12.1](https://github.com/ClearC2/grid-form-builder/compare/v3.12.0...v3.12.1) (2020-02-06)
+
+
+### Bug Fixes
+
+* **compile:** local build ([#144](https://github.com/ClearC2/grid-form-builder/issues/144)) ([83fc9b2](https://github.com/ClearC2/grid-form-builder/commit/83fc9b2ad5632c1202e9f75fc7756cd07b7fff34))
+
 # [3.12.0](https://github.com/ClearC2/grid-form-builder/compare/v3.11.0...v3.12.0) (2020-02-05)
 
 

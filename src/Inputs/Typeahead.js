@@ -68,7 +68,7 @@ const Typeahead = props => {
     (label === 'papostalcode' || label === 'Zip Code') && inputValue.length <= 2
   )
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
-  const [menuIsOpen, updateIsMenuOpen] = useState(false)
+  const [menuIsOpen, updateIsMenuOpen] = useState({})
   const [menuPlacement, updateMenuPlacement] = useState('bottom')
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [isFocused, setIsFocused] = useState(false)
@@ -217,15 +217,15 @@ const Typeahead = props => {
   }, [draggable])
 
   const handleInputBlur = useCallback(() => {
-    menuIsOpen && updateIsMenuOpen(false)
+    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     setIsFocused(false)
-  }, [menuIsOpen, updateIsMenuOpen])
+  }, [menuIsOpen, updateIsMenuOpen, name])
 
   const openMenu = useCallback(() => {
-    if (!readonly && !disabled && !menuIsOpen) {
-      updateIsMenuOpen(true)
+    if (!readonly && !disabled && !menuIsOpen[name]) {
+      updateIsMenuOpen({...menuIsOpen, [name]: true})
     }
-  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen])
+  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name])
 
   const setMenuOpenPosition = useCallback(() => {
     const placement = fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
@@ -264,7 +264,7 @@ const Typeahead = props => {
 
   const handleOnInputChange = useCallback((val, e) => {
     if (e.action === 'input-change') {
-      !menuIsOpen && openMenu()
+      !menuIsOpen[name] && openMenu()
       updateInputValue(val)
       if (typeof val === 'string' && val.trim() === '') {
         loadOptions(' ', true)
@@ -274,7 +274,7 @@ const Typeahead = props => {
         updateInputValue('')
       }
     }
-  }, [multi, menuIsOpen, openMenu, loadOptions, value])
+  }, [multi, menuIsOpen, name, openMenu, loadOptions, value])
 
   const emptyFields = useCallback((fields, changeHandler) => {
     fields.forEach(field => {
@@ -394,7 +394,7 @@ const Typeahead = props => {
     } else {
       handleSingleValueChange(newValue)
     }
-    menuIsOpen && updateIsMenuOpen(false) // closes menu when new option gets selected
+    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false}) // closes menu when new option gets selected
     updateInputValue('')
   }, [
     delimit,
@@ -421,6 +421,11 @@ const Typeahead = props => {
     onKeyDown()
   }, [onKeyDown, handleChange, allowcreate, inputValue, handleOnInputChange])
 
+  const closeMenuOnScroll = useCallback(e => {
+    const menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name]
+    updateIsMenuOpen({...menuIsOpen, [name]: menuOpenState})
+  }, [menuIsOpen, name, updateIsMenuOpen])
+
   const {Typeahead} = input
 
   let className = 'gfb-input-inner'
@@ -445,10 +450,10 @@ const Typeahead = props => {
         ref={reactSelect}
         className={className}
         classNamePrefix='gfb-input'
+        closeMenuOnScroll={!isMobile ? closeMenuOnScroll : undefined}
         tabIndex={tabIndex}
         autoFocus={autofocus}
         blurInputOnSelect
-        cacheOptions
         isClearable
         createOptionPosition='first'
         formatCreateLabel={formatCreateLabel}
@@ -459,7 +464,7 @@ const Typeahead = props => {
         noOptionsMessage={noOptionsMessage}
         placeholder={placeholder}
         inputValue={inputValue}
-        menuIsOpen={!isMobile ? menuIsOpen : undefined}
+        menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
         menuPlacement={!isMobile ? menuPlacement : undefined}
         onKeyDown={handleOnKeyDown}
         onMouseDown={handleOnMouseDown}
