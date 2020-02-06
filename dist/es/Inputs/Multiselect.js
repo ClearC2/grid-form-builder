@@ -6,13 +6,13 @@ import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-sta
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
-import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _Object$values from "@babel/runtime-corejs3/core-js-stable/object/values";
 import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -98,7 +98,7 @@ var Multiselect = function Multiselect(props) {
       isRequiredFlag = _useState4[0],
       updateIsRequiredFlag = _useState4[1];
 
-  var _useState5 = useState(false),
+  var _useState5 = useState({}),
       _useState6 = _slicedToArray(_useState5, 2),
       menuIsOpen = _useState6[0],
       updateIsMenuOpen = _useState6[1];
@@ -130,18 +130,18 @@ var Multiselect = function Multiselect(props) {
 
   var inputContainer = useRef(null);
   var openMenu = useCallback(function () {
-    if (!readonly && !disabled && !menuIsOpen) {
-      updateIsMenuOpen(true);
+    if (!readonly && !disabled && !menuIsOpen[name]) {
+      updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, true)));
     }
-  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen]);
+  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name]);
   var setMenuOpenPosition = useCallback(function () {
     var placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
   var handleInputBlur = useCallback(function () {
-    menuIsOpen && updateIsMenuOpen(false);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, false)));
     setIsFocused(false);
-  }, [menuIsOpen, updateIsMenuOpen]);
+  }, [menuIsOpen, updateIsMenuOpen, name]);
   var setInputFieldPosition = useCallback(function () {
     var position = inputContainer.current.getBoundingClientRect().top;
 
@@ -161,6 +161,10 @@ var Multiselect = function Multiselect(props) {
     handleInputClick();
     setIsFocused(true);
   }, [handleInputClick]);
+  var closeMenuOnScroll = useCallback(function (e) {
+    var menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+    updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, menuOpenState)));
+  }, [menuIsOpen, name, updateIsMenuOpen]);
   useEffect(function () {
     var formattedOptions = keyword.options || [];
     if (!formattedOptions) formattedOptions = [];
@@ -248,9 +252,9 @@ var Multiselect = function Multiselect(props) {
     updateSelectValue(formattedValue);
   }, [value, updateSelectValue, name]);
   var handleOnKeyDown = useCallback(function () {
-    if (!menuIsOpen) openMenu();
+    if (!menuIsOpen[name]) openMenu();
     onKeyDown();
-  }, [onKeyDown, menuIsOpen, openMenu]);
+  }, [onKeyDown, menuIsOpen, openMenu, name]);
   var handleChange = useCallback(function (e) {
     onChange({
       target: {
@@ -258,7 +262,7 @@ var Multiselect = function Multiselect(props) {
         value: e === null ? [] : e
       }
     });
-    menuIsOpen && updateIsMenuOpen(false);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, false)));
   }, [onChange, name, menuIsOpen]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
@@ -291,6 +295,7 @@ var Multiselect = function Multiselect(props) {
     classNamePrefix: "gfb-input",
     tabIndex: tabIndex,
     autofocus: autofocus,
+    closeMenuOnScroll: !isMobile ? closeMenuOnScroll : undefined,
     isClearable: true,
     isDisabled: disabled || readonly || !interactive,
     menuPortalTarget: document.body,
@@ -301,7 +306,7 @@ var Multiselect = function Multiselect(props) {
     onFocus: handleOnFocus,
     onKeyDown: handleOnKeyDown,
     onBlur: handleInputBlur,
-    menuIsOpen: !isMobile ? menuIsOpen : undefined,
+    menuIsOpen: !isMobile ? menuIsOpen[name] : undefined,
     menuPlacement: !isMobile ? menuPlacement : undefined,
     value: selectValue,
     defaultValue: selectValue,

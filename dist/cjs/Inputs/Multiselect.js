@@ -26,8 +26,6 @@ var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stabl
 
 var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
 
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
-
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/values"));
 
 var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
@@ -39,6 +37,8 @@ var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/ty
 var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
 
 var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+
+var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
@@ -132,7 +132,7 @@ var Multiselect = function Multiselect(props) {
       isRequiredFlag = _useState4[0],
       updateIsRequiredFlag = _useState4[1];
 
-  var _useState5 = (0, _react.useState)(false),
+  var _useState5 = (0, _react.useState)({}),
       _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
       menuIsOpen = _useState6[0],
       updateIsMenuOpen = _useState6[1];
@@ -164,18 +164,18 @@ var Multiselect = function Multiselect(props) {
 
   var inputContainer = (0, _react.useRef)(null);
   var openMenu = (0, _react.useCallback)(function () {
-    if (!readonly && !disabled && !menuIsOpen) {
-      updateIsMenuOpen(true);
+    if (!readonly && !disabled && !menuIsOpen[name]) {
+      updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, true)));
     }
-  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen]);
+  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name]);
   var setMenuOpenPosition = (0, _react.useCallback)(function () {
     var placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
   var handleInputBlur = (0, _react.useCallback)(function () {
-    menuIsOpen && updateIsMenuOpen(false);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
     setIsFocused(false);
-  }, [menuIsOpen, updateIsMenuOpen]);
+  }, [menuIsOpen, updateIsMenuOpen, name]);
   var setInputFieldPosition = (0, _react.useCallback)(function () {
     var position = inputContainer.current.getBoundingClientRect().top;
 
@@ -194,6 +194,10 @@ var Multiselect = function Multiselect(props) {
     handleInputClick();
     setIsFocused(true);
   }, [handleInputClick]);
+  var closeMenuOnScroll = (0, _react.useCallback)(function (e) {
+    var menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+    updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, menuOpenState)));
+  }, [menuIsOpen, name, updateIsMenuOpen]);
   (0, _react.useEffect)(function () {
     var formattedOptions = keyword.options || [];
     if (!formattedOptions) formattedOptions = [];
@@ -280,9 +284,9 @@ var Multiselect = function Multiselect(props) {
     updateSelectValue(formattedValue);
   }, [value, updateSelectValue, name]);
   var handleOnKeyDown = (0, _react.useCallback)(function () {
-    if (!menuIsOpen) openMenu();
+    if (!menuIsOpen[name]) openMenu();
     onKeyDown();
-  }, [onKeyDown, menuIsOpen, openMenu]);
+  }, [onKeyDown, menuIsOpen, openMenu, name]);
   var handleChange = (0, _react.useCallback)(function (e) {
     onChange({
       target: {
@@ -290,7 +294,7 @@ var Multiselect = function Multiselect(props) {
         value: e === null ? [] : e
       }
     });
-    menuIsOpen && updateIsMenuOpen(false);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
   }, [onChange, name, menuIsOpen]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
@@ -323,6 +327,7 @@ var Multiselect = function Multiselect(props) {
     classNamePrefix: "gfb-input",
     tabIndex: tabIndex,
     autofocus: autofocus,
+    closeMenuOnScroll: !_utils.isMobile ? closeMenuOnScroll : undefined,
     isClearable: true,
     isDisabled: disabled || readonly || !interactive,
     menuPortalTarget: document.body,
@@ -333,7 +338,7 @@ var Multiselect = function Multiselect(props) {
     onFocus: handleOnFocus,
     onKeyDown: handleOnKeyDown,
     onBlur: handleInputBlur,
-    menuIsOpen: !_utils.isMobile ? menuIsOpen : undefined,
+    menuIsOpen: !_utils.isMobile ? menuIsOpen[name] : undefined,
     menuPlacement: !_utils.isMobile ? menuPlacement : undefined,
     value: selectValue,
     defaultValue: selectValue,
