@@ -233,11 +233,13 @@ const Typeahead = props => {
   }, [fieldPosition, updateMenuPlacement])
 
   const setInputFieldPosition = useCallback(() => {
-    const position = inputContainer.current.getBoundingClientRect().top
-    if (fieldPosition !== position) {
-      updateFieldPosition(position)
-    } else {
-      setMenuOpenPosition()
+    if (inputContainer.current) {
+      const position = inputContainer.current.getBoundingClientRect().top
+      if (fieldPosition !== position) {
+        updateFieldPosition(position)
+      } else {
+        setMenuOpenPosition()
+      }
     }
   }, [setMenuOpenPosition, fieldPosition])
 

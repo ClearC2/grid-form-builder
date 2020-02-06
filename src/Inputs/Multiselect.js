@@ -79,9 +79,11 @@ const Multiselect = props => {
   }, [menuIsOpen, updateIsMenuOpen, name])
 
   const setInputFieldPosition = useCallback(() => {
-    const position = inputContainer.current.getBoundingClientRect().top
-    if (fieldPosition !== position) {
-      updateFieldPosition(position)
+    if (inputContainer.current) {
+      const position = inputContainer.current.getBoundingClientRect().top
+      if (fieldPosition !== position) {
+        updateFieldPosition(position)
+      }
     }
     setTimeout(openMenu) // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
   }, [openMenu, fieldPosition])
