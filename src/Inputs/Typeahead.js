@@ -446,7 +446,7 @@ const Typeahead = props => {
         className={className}
         classNamePrefix='gfb-input'
         tabIndex={tabIndex}
-        autofocus={autofocus}
+        autoFocus={autofocus}
         blurInputOnSelect
         cacheOptions
         isClearable

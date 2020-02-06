@@ -157,7 +157,7 @@ const Select = props => {
         className={className}
         classNamePrefix='gfb-input'
         tabIndex={tabIndex}
-        autofocus={autofocus}
+        autoFocus={autofocus}
         isClearable
         isDisabled={disabled || readonly}
         menuPortalTarget={document.body}
