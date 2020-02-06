@@ -1,3 +1,10 @@
+## [3.12.3](https://github.com/ClearC2/grid-form-builder/compare/v3.12.2...v3.12.3) (2020-02-06)
+
+
+### Bug Fixes
+
+* **autofocus:** fixed typo in passing autofocus to react select ([bcc13b4](https://github.com/ClearC2/grid-form-builder/commit/bcc13b4c65a4a4c06b2e62157d2fe8469ccb5855))
+
 ## [3.12.2](https://github.com/ClearC2/grid-form-builder/compare/v3.12.1...v3.12.2) (2020-02-06)
 
 
