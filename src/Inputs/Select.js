@@ -99,7 +99,10 @@ const Select = props => {
   }, [handleInputClick])
 
   const closeMenuOnScroll = useCallback(e => {
-    const menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name]
+    let menuOpenState = false
+    if (e && e.target && e.target.classList) {
+      menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name]
+    }
     updateIsMenuOpen({...menuIsOpen, [name]: menuOpenState})
   }, [menuIsOpen, name, updateIsMenuOpen])
 
