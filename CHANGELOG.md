@@ -1,3 +1,10 @@
+## [3.13.1](https://github.com/ClearC2/grid-form-builder/compare/v3.13.0...v3.13.1) (2020-02-07)
+
+
+### Bug Fixes
+
+* **date:** if the calendar is closed and no change event had previously been triggered, the calendar will now send back its currently selected date as a change event ([879cca4](https://github.com/ClearC2/grid-form-builder/commit/879cca47cdc349adcc877650ea2a4bb4b2fa6352))
+
 # [3.13.0](https://github.com/ClearC2/grid-form-builder/compare/v3.12.3...v3.13.0) (2020-02-06)
 
 
