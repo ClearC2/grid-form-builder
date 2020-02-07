@@ -27,7 +27,8 @@ const Select = props => {
     onChange,
     autoComplete,
     interactive = true,
-    style = {}
+    style = {},
+    isClearable
   } = props
 
   const {
@@ -166,7 +167,7 @@ const Select = props => {
         tabIndex={tabIndex}
         autoFocus={autofocus}
         closeMenuOnScroll={!isMobile ? closeMenuOnScroll : undefined}
-        isClearable
+        isClearable={!!isClearable}
         isDisabled={disabled || readonly}
         menuPortalTarget={document.body}
         name={name}
@@ -235,5 +236,6 @@ Select.propTypes = {
   onKeyDown: PropTypes.func,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  isClearable: PropTypes.bool
 }

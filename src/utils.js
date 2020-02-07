@@ -128,3 +128,139 @@ export const usePrevious = value => {
   useEffect(() => { ref.current = value })
   return ref.current
 }
+
+export const convertDelimitedValueIntoLabelValueArray = ({delimit, delimiter, value, options}) => {
+  if (!delimit) delimit = []
+  if (delimit && typeof delimit === 'string') delimit = [delimit]
+  delimit = delimit.length ? delimit : ['label', 'value']
+  let formattedOptions = options || []
+  if (!formattedOptions) formattedOptions = []
+  if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split(delimiter)
+  if (formattedOptions.toJS) formattedOptions = formattedOptions.toJS()
+
+  const duplicate = {}
+  // get rid of duplicates
+  formattedOptions = formattedOptions.filter(option => {
+    if (!option) return false
+    if (typeof option === 'string') return true
+    if (typeof option === 'object' && !option.value) option.value = option.label
+    if (option.value && !duplicate[option.value]) {
+      duplicate[option.value] = true
+      return true
+    }
+  })
+
+  // format into an array of {label, value} objects
+  formattedOptions = formattedOptions.map(option => {
+    if (typeof option === 'string') option = {label: option, value: option}
+    if (!option.value) option.value = option.label
+    return option
+  })
+
+  let formattedValue = value || []
+  if (!formattedValue) formattedValue = []
+  if (typeof formattedValue === 'string') {
+    if (delimiter) formattedValue = formattedValue.split(delimiter)
+    else {
+      try {
+        formattedValue = JSON.parse(formattedValue)
+      } catch (e) {
+        formattedValue = [formattedValue]
+      }
+    }
+  }
+
+  // attempting to build value objects based on the provided delimit fields, good luck trying to figure this part out - JRA 02/07/2020
+  let values = []
+  let tempValueObject = {}
+  formattedValue.forEach((value, i) => {
+    if (typeof value === 'object') {
+      values.push(value)
+    } else {
+      if (i % delimit.length === 0) tempValueObject = {}
+      tempValueObject[delimit[i % delimit.length]] = value
+      if ((i + 1) % delimit.length === 0) {
+        if (delimit.indexOf('label') === -1) tempValueObject.label = value
+        if (delimit.indexOf('value') === -1) tempValueObject.value = value
+        values.push(tempValueObject)
+      }
+    }
+  })
+
+  if (formattedOptions.length) { // if we were provided options we are going to try to match the values up with what options we have available
+    // a consequence of doing this is that we will lose any value that is not a valid option - JRA 02/07/2020
+    const optionEquivalents = []
+    values.forEach(value => {
+      const option = formattedOptions.find(option => {
+        if (typeof value === 'string' || typeof value === 'number') {
+          return delimit.find(field => {
+            return option[field] === value
+          })
+        } else {
+          return Object.keys(value).find(key => {
+            return option[key] === value[key]
+          })
+        }
+      })
+      if (option) optionEquivalents.push(option)
+    })
+    values = optionEquivalents
+  }
+
+  return values
+}
+
+export const convertLabelValueArrayIntoDelimitedValue = ({delimit, delimiter, stringify, value}) => {
+  if (delimit && typeof delimit === 'string') delimit = [delimit]
+  let formattedValue
+  if (stringify) {
+    formattedValue = ''
+    if (delimiter) {
+      if (delimit && Array.isArray(delimit)) {
+        // if we were provided field(s) to delimit by, build up a special string with just those values
+        value.forEach(option => {
+          delimit.forEach(field => {
+            if (formattedValue.indexOf(option[field]) === -1) {
+              formattedValue = formattedValue + option[field] + delimiter
+            }
+          })
+        })
+        formattedValue = formattedValue.slice(0, -delimiter.length)
+      } else {
+        // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
+        value.forEach(option => {
+          formattedValue = formattedValue + JSON.stringify(option) + delimiter
+        })
+        formattedValue = formattedValue.slice(0, -delimiter.length)
+      }
+    } else if (delimit && !delimiter) {
+      // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
+      const valueArr = []
+      value.forEach(option => {
+        delimit.forEach(field => {
+          if (valueArr.indexOf(option[field]) === -1) {
+            valueArr.push(option[field])
+          }
+        })
+      })
+      formattedValue = JSON.stringify(valueArr)
+    } else {
+      // if all we want to do is stringify the value, send it back up unmodified but stringified
+      formattedValue = JSON.stringify(value)
+    }
+  } else {
+    formattedValue = []
+    if (delimit) {
+      value.forEach(option => {
+        delimit.forEach(field => {
+          if (formattedValue.indexOf(option[field]) === -1) {
+            formattedValue.push(option[field])
+          }
+        })
+      })
+    } else {
+      formattedValue = value
+    }
+  }
+  return formattedValue
+}

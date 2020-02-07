@@ -4,7 +4,7 @@ import {useEffect, useRef, useState, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import ReactSelect from 'react-select'
 import Creatable from 'react-select/creatable'
-import {isMobile} from '../utils'
+import {isMobile, convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue} from '../utils'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
 
@@ -27,7 +27,11 @@ const Multiselect = props => {
     onChange,
     autoComplete,
     interactive = true,
-    style = {}
+    style = {},
+    delimit,
+    delimiter = '¤',
+    stringify,
+    isClearable
   } = props
 
   const {
@@ -107,7 +111,7 @@ const Multiselect = props => {
   useEffect(() => {
     let formattedOptions = keyword.options || []
     if (!formattedOptions) formattedOptions = []
-    if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split('¤')
+    if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split(delimiter)
     if (formattedOptions.toJS) formattedOptions = formattedOptions.toJS()
 
     const duplicate = {}
@@ -130,7 +134,7 @@ const Multiselect = props => {
     })
 
     updateSelectOptions(formattedOptions)
-  }, [keyword.options])
+  }, [delimiter, keyword.options])
 
   useEffect(() => {
     setMenuOpenPosition()
@@ -145,58 +149,23 @@ const Multiselect = props => {
   }, [updateIsRequiredFlag, required, requiredWarning, value])
 
   useEffect(() => {
-    let formattedValue = value
-    // first lets try to get this value normalized to what react-select wants, which is an array of values
-    if (!formattedValue) formattedValue = []
-    if (formattedValue.toJS) formattedValue = formattedValue.toJS()
-    if (typeof formattedValue === 'string') formattedValue = formattedValue.split('¤')
-    if (!Array.isArray(formattedValue) && typeof formattedValue === 'object') {
-      formattedValue = Object.values(formattedValue)
-    }
-    if (!Array.isArray(formattedValue)) {
-      console.warn('The field', name, 'is a multiselect but its value was not a valid multi value. Multivalues should be a delimited string or an array of values, but instead got', value) //eslint-disable-line
-      formattedValue = []
-    }
+    updateSelectValue(convertDelimitedValueIntoLabelValueArray({value, delimit, delimiter, options}))
+  }, [value, updateSelectValue, name, delimit, delimiter, stringify, options])
 
-    const duplicate = {}
-    // lets filter out any blanks they may have snuck in
-    formattedValue.filter(value => {
-      if (typeof value === 'object') value = value.value // if value is an object but does not have a value key, we are going to drop the value as well - JRA 12/19/2019
-      if (!value) return false
-      if (!duplicate[value]) {
-        duplicate[value] = true
-        return true
+  const handleChange = useCallback(val => {
+    onChange({
+      target: {
+        name,
+        value: convertLabelValueArrayIntoDelimitedValue({value: val, delimiter, delimit, stringify})
       }
     })
-
-    // now lets make sure each value in the array is a {label, value} object
-    formattedValue = formattedValue.map(value => {
-      if (typeof value === 'string') {
-        value = {label: value, value}
-      }
-      if (typeof value === 'object' && !value.label) {
-        value.label = value.value
-      }
-      return value
-    })
-
-    updateSelectValue(formattedValue)
-  }, [value, updateSelectValue, name])
+    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
+  }, [onChange, name, delimiter, delimit, stringify, menuIsOpen])
 
   const handleOnKeyDown = useCallback(() => {
     if (!menuIsOpen[name]) openMenu()
     onKeyDown()
   }, [onKeyDown, menuIsOpen, openMenu, name])
-
-  const handleChange = useCallback(e => {
-    onChange({
-      target: {
-        name,
-        value: e === null ? [] : e
-      }
-    })
-    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
-  }, [onChange, name, menuIsOpen])
 
   const {Select} = input
 
@@ -229,7 +198,7 @@ const Multiselect = props => {
         tabIndex={tabIndex}
         autoFocus={autofocus}
         closeMenuOnScroll={!isMobile ? closeMenuOnScroll : undefined}
-        isClearable
+        isClearable={isClearable}
         isDisabled={disabled || readonly || !interactive}
         menuPortalTarget={document.body}
         isMulti
@@ -302,5 +271,9 @@ Multiselect.propTypes = {
   onKeyDown: PropTypes.func,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  stringify: PropTypes.bool,
+  delimiter: PropTypes.string,
+  delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  isClearable: PropTypes.bool
 }

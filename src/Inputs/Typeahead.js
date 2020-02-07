@@ -37,7 +37,8 @@ const Typeahead = props => {
     interactive = true,
     style = {},
     delimit,
-    delimiter
+    delimiter,
+    isClearable
   } = props
 
   const {
@@ -456,7 +457,7 @@ const Typeahead = props => {
         tabIndex={tabIndex}
         autoFocus={autofocus}
         blurInputOnSelect
-        isClearable
+        isClearable={!!isClearable}
         createOptionPosition='first'
         formatCreateLabel={formatCreateLabel}
         isMulti={multi}
@@ -548,5 +549,6 @@ Typeahead.propTypes = {
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  isClearable: PropTypes.bool
 }
