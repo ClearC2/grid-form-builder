@@ -1,4 +1,4 @@
-import {useMemo, useEffect} from 'react'
+import {useMemo, useEffect, useRef} from 'react'
 import PropTypes from 'prop-types'
 import 'daterangepicker'
 import '../../styles/daterangepicker.css'
@@ -16,6 +16,10 @@ const DatePicker = props => {
     startDate,
     format
   } = props
+
+  const valueDidChange = useRef(false) // JRA 02/07/2020 - when the user selects the the selected day, the calendar closes without a change event
+  // this is undesirable as the fallback date is today's date, and if the user opens a blank date field and picks today, a change event is not fired
+  // in order to get around this issue, this component will check on the calendar hide event if a change had been made or not, and if not, send back the current startDate as a change event
 
   const determinePickerOpenDirection = useMemo(() => {
     const $input = $(`#${elementId}`)[0]
@@ -47,6 +51,7 @@ const DatePicker = props => {
         },
         date => {
           if (date && date.isValid && date.isValid()) {
+            valueDidChange.current = true
             handleOnChange({
               target: {
                 name,
@@ -80,7 +85,15 @@ const DatePicker = props => {
 
       $input.on(
         'hide.daterangepicker',
-        () => {
+        (e, calendar) => {
+          if (!valueDidChange.current) {
+            handleOnChange({
+              target: {
+                name,
+                value: calendar.startDate.format(format)
+              }
+            })
+          }
           changeShowPicker(false)
         }
       )

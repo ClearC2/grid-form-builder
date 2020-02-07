@@ -13,7 +13,6 @@ export default class Example extends Component {
     formValues: Map({
       inputtest: 'Clear C2, Inc.',
       textareatest: '1234 Main Street',
-      datetest: '2019-01-01 12:00:00',
       meta_created_date: 'swiggity swoogity here comes the moogity',
       listselecttest: List(['Customer Service', 'Executive Meeting']),
       multiselecttest: ['Contract Signing', 'Customer Service', 'Not A Value'],
