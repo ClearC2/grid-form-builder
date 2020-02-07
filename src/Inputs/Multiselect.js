@@ -31,7 +31,7 @@ const Multiselect = props => {
     delimit,
     delimiter = '¤',
     stringify,
-    isClearable
+    isClearable = true
   } = props
 
   const {
