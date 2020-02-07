@@ -88,7 +88,8 @@ var Multiselect = function Multiselect(props) {
       _props$delimiter = props.delimiter,
       delimiter = _props$delimiter === void 0 ? '¤' : _props$delimiter,
       stringify = props.stringify,
-      isClearable = props.isClearable;
+      _props$isClearable = props.isClearable,
+      isClearable = _props$isClearable === void 0 ? true : _props$isClearable;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,

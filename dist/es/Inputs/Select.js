@@ -51,7 +51,8 @@ var Select = function Select(props) {
       interactive = _props$interactive === void 0 ? true : _props$interactive,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      isClearable = props.isClearable;
+      _props$isClearable = props.isClearable,
+      isClearable = _props$isClearable === void 0 ? true : _props$isClearable;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -236,7 +237,7 @@ var Select = function Select(props) {
     tabIndex: tabIndex,
     autoFocus: autofocus,
     closeMenuOnScroll: !isMobile ? closeMenuOnScroll : undefined,
-    isClearable: !!isClearable,
+    isClearable: isClearable,
     isDisabled: disabled || readonly,
     menuPortalTarget: document.body,
     name: name,

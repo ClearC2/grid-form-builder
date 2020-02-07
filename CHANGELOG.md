@@ -1,3 +1,10 @@
+## [3.14.1](https://github.com/ClearC2/grid-form-builder/compare/v3.14.0...v3.14.1) (2020-02-07)
+
+
+### Bug Fixes
+
+* **select:** defaults isClearable to true ([06ffd4b](https://github.com/ClearC2/grid-form-builder/commit/06ffd4b1fb756825cf7c2acc206eb5954f396a1e))
+
 # [3.14.0](https://github.com/ClearC2/grid-form-builder/compare/v3.13.2...v3.14.0) (2020-02-07)
 
 

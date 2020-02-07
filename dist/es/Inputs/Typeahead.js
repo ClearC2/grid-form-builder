@@ -71,7 +71,8 @@ var Typeahead = function Typeahead(props) {
       style = _props$style === void 0 ? {} : _props$style,
       delimit = props.delimit,
       delimiter = props.delimiter,
-      isClearable = props.isClearable;
+      _props$isClearable = props.isClearable,
+      isClearable = _props$isClearable === void 0 ? true : _props$isClearable;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -621,7 +622,7 @@ var Typeahead = function Typeahead(props) {
     tabIndex: tabIndex,
     autoFocus: autofocus,
     blurInputOnSelect: true,
-    isClearable: !!isClearable,
+    isClearable: isClearable,
     createOptionPosition: "first",
     formatCreateLabel: formatCreateLabel,
     isMulti: multi,
