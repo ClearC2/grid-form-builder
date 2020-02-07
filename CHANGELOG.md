@@ -1,3 +1,10 @@
+## [3.13.2](https://github.com/ClearC2/grid-form-builder/compare/v3.13.1...v3.13.2) (2020-02-07)
+
+
+### Bug Fixes
+
+* uncaught error ([#146](https://github.com/ClearC2/grid-form-builder/issues/146)) ([3e35e3c](https://github.com/ClearC2/grid-form-builder/commit/3e35e3c349f54a0ebc4f6c9f5683f6dc3772b7ce))
+
 ## [3.13.1](https://github.com/ClearC2/grid-form-builder/compare/v3.13.0...v3.13.1) (2020-02-07)
 
 

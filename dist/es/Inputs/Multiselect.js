@@ -164,7 +164,12 @@ var Multiselect = function Multiselect(props) {
     setIsFocused(true);
   }, [handleInputClick]);
   var closeMenuOnScroll = useCallback(function (e) {
-    var menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+    var menuOpenState = false;
+
+    if (e && e.target && e.target.classList) {
+      menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+    }
+
     updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, menuOpenState)));
   }, [menuIsOpen, name, updateIsMenuOpen]);
   useEffect(function () {
