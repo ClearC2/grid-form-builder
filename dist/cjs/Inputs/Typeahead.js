@@ -610,7 +610,12 @@ var Typeahead = function Typeahead(props) {
     onKeyDown();
   }, [onKeyDown, handleChange, allowcreate, inputValue, handleOnInputChange]);
   var closeMenuOnScroll = (0, _react.useCallback)(function (e) {
-    var menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+    var menuOpenState = false;
+
+    if (e && e.target && e.target.classList) {
+      menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+    }
+
     updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, menuOpenState)));
   }, [menuIsOpen, name, updateIsMenuOpen]);
   var Typeahead = input.Typeahead;
