@@ -26,10 +26,6 @@ var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stabl
 
 var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
 
-var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/values"));
-
-var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
-
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
@@ -87,7 +83,12 @@ var Multiselect = function Multiselect(props) {
       _props$interactive = props.interactive,
       interactive = _props$interactive === void 0 ? true : _props$interactive,
       _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style;
+      style = _props$style === void 0 ? {} : _props$style,
+      delimit = props.delimit,
+      _props$delimiter = props.delimiter,
+      delimiter = _props$delimiter === void 0 ? '¤' : _props$delimiter,
+      stringify = props.stringify,
+      isClearable = props.isClearable;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -208,7 +209,7 @@ var Multiselect = function Multiselect(props) {
   (0, _react.useEffect)(function () {
     var formattedOptions = keyword.options || [];
     if (!formattedOptions) formattedOptions = [];
-    if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split('¤');
+    if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split(delimiter);
     if (formattedOptions.toJS) formattedOptions = formattedOptions.toJS();
     var duplicate = {}; // get rid of duplicates
 
@@ -232,7 +233,7 @@ var Multiselect = function Multiselect(props) {
       return option;
     });
     updateSelectOptions(formattedOptions);
-  }, [keyword.options]);
+  }, [delimiter, keyword.options]);
   (0, _react.useEffect)(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);
@@ -245,64 +246,31 @@ var Multiselect = function Multiselect(props) {
     updateIsRequiredFlag(required && requiredWarning && !value.length);
   }, [updateIsRequiredFlag, required, requiredWarning, value]);
   (0, _react.useEffect)(function () {
-    var formattedValue = value; // first lets try to get this value normalized to what react-select wants, which is an array of values
-
-    if (!formattedValue) formattedValue = [];
-    if (formattedValue.toJS) formattedValue = formattedValue.toJS();
-    if (typeof formattedValue === 'string') formattedValue = formattedValue.split('¤');
-
-    if (!(0, _isArray.default)(formattedValue) && (0, _typeof2.default)(formattedValue) === 'object') {
-      formattedValue = (0, _values.default)(formattedValue);
-    }
-
-    if (!(0, _isArray.default)(formattedValue)) {
-      console.warn('The field', name, 'is a multiselect but its value was not a valid multi value. Multivalues should be a delimited string or an array of values, but instead got', value); //eslint-disable-line
-
-      formattedValue = [];
-    }
-
-    var duplicate = {}; // lets filter out any blanks they may have snuck in
-
-    (0, _filter.default)(formattedValue).call(formattedValue, function (value) {
-      if ((0, _typeof2.default)(value) === 'object') value = value.value; // if value is an object but does not have a value key, we are going to drop the value as well - JRA 12/19/2019
-
-      if (!value) return false;
-
-      if (!duplicate[value]) {
-        duplicate[value] = true;
-        return true;
+    updateSelectValue((0, _utils.convertDelimitedValueIntoLabelValueArray)({
+      value: value,
+      delimit: delimit,
+      delimiter: delimiter,
+      options: options
+    }));
+  }, [value, updateSelectValue, name, delimit, delimiter, stringify, options]);
+  var handleChange = (0, _react.useCallback)(function (val) {
+    onChange({
+      target: {
+        name: name,
+        value: (0, _utils.convertLabelValueArrayIntoDelimitedValue)({
+          value: val,
+          delimiter: delimiter,
+          delimit: delimit,
+          stringify: stringify
+        })
       }
-    }); // now lets make sure each value in the array is a {label, value} object
-
-    formattedValue = (0, _map.default)(formattedValue).call(formattedValue, function (value) {
-      if (typeof value === 'string') {
-        value = {
-          label: value,
-          value: value
-        };
-      }
-
-      if ((0, _typeof2.default)(value) === 'object' && !value.label) {
-        value.label = value.value;
-      }
-
-      return value;
     });
-    updateSelectValue(formattedValue);
-  }, [value, updateSelectValue, name]);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
+  }, [onChange, name, delimiter, delimit, stringify, menuIsOpen]);
   var handleOnKeyDown = (0, _react.useCallback)(function () {
     if (!menuIsOpen[name]) openMenu();
     onKeyDown();
   }, [onKeyDown, menuIsOpen, openMenu, name]);
-  var handleChange = (0, _react.useCallback)(function (e) {
-    onChange({
-      target: {
-        name: name,
-        value: e === null ? [] : e
-      }
-    });
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
-  }, [onChange, name, menuIsOpen]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -335,7 +303,7 @@ var Multiselect = function Multiselect(props) {
     tabIndex: tabIndex,
     autoFocus: autofocus,
     closeMenuOnScroll: !_utils.isMobile ? closeMenuOnScroll : undefined,
-    isClearable: true,
+    isClearable: isClearable,
     isDisabled: disabled || readonly || !interactive,
     menuPortalTarget: document.body,
     isMulti: true,
@@ -410,5 +378,9 @@ Multiselect.propTypes = {
   onKeyDown: _propTypes.default.func,
   autoComplete: _propTypes.default.string,
   interactive: _propTypes.default.bool,
-  style: _propTypes.default.object
+  style: _propTypes.default.object,
+  stringify: _propTypes.default.bool,
+  delimiter: _propTypes.default.string,
+  delimit: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.array]),
+  isClearable: _propTypes.default.bool
 };

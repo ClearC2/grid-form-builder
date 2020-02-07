@@ -70,7 +70,8 @@ var Typeahead = function Typeahead(props) {
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
       delimit = props.delimit,
-      delimiter = props.delimiter;
+      delimiter = props.delimiter,
+      isClearable = props.isClearable;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -620,7 +621,7 @@ var Typeahead = function Typeahead(props) {
     tabIndex: tabIndex,
     autoFocus: autofocus,
     blurInputOnSelect: true,
-    isClearable: true,
+    isClearable: !!isClearable,
     createOptionPosition: "first",
     formatCreateLabel: formatCreateLabel,
     isMulti: multi,
@@ -714,5 +715,6 @@ Typeahead.propTypes = {
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  isClearable: PropTypes.bool
 };

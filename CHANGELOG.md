@@ -1,3 +1,16 @@
+# [3.14.0](https://github.com/ClearC2/grid-form-builder/compare/v3.13.2...v3.14.0) (2020-02-07)
+
+
+### Bug Fixes
+
+* **date:** if the calendar is closed and no change event had previously been triggered, the calendar will now send back its currently selected date as a change event ([1db1e77](https://github.com/ClearC2/grid-form-builder/commit/1db1e77aa92154cec9a0ba174cb741f12d7a59cb))
+
+
+### Features
+
+* **date:** date input can now be blanked out ([90626d2](https://github.com/ClearC2/grid-form-builder/commit/90626d2204ea5304e86a658548b588cad988f21d))
+* **multiselect:** multiselect now supports stringification of values from the schema config ([3f5ebb9](https://github.com/ClearC2/grid-form-builder/commit/3f5ebb9f45943ede87da69a0c27f329566393507))
+
 ## [3.13.2](https://github.com/ClearC2/grid-form-builder/compare/v3.13.1...v3.13.2) (2020-02-07)
 
 
