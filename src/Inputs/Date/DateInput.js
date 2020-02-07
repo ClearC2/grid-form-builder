@@ -49,6 +49,7 @@ const DateInput = props => {
   const [showPicker, changeShowPicker] = useState(false)
   const [inputFormat, setInputFormat] = useState()
   const [isFocused, setIsFocused] = useState(false)
+  const allowCalendarChangeEvent = useRef(true)
 
   const convertDateToMomentFormat = useMemo(() => {
     return value => {
@@ -93,9 +94,22 @@ const DateInput = props => {
 
   const handleOnInputChange = useCallback(e => {
     const {value: newValue} = e.target
+    if (newValue === '') {
+      // if the input was just blanked out, send up a blank value as the new value for this field - JRA 02/07/2020
+      // also suppress the calendar's change event so it does not send up what is selected when the calendar closes
+      allowCalendarChangeEvent.current = false
+      onChange({
+        target: {
+          name,
+          value: ''
+        }
+      })
+    } else {
+      allowCalendarChangeEvent.current = true
+    }
     changeInputValue(newValue)
     if (!showPicker) changeShowPicker(true)
-  }, [changeInputValue, showPicker, changeShowPicker])
+  }, [showPicker, onChange, name])
 
   const handleOnFocus = useCallback(() => {
     changeShowPicker(true)
@@ -105,6 +119,14 @@ const DateInput = props => {
   const handleOnBlur = useCallback(() => {
     setIsFocused(false)
   }, [])
+
+  const handleOnCalendarChange = useCallback(e => {
+    if (allowCalendarChangeEvent.current) {
+      onChange(e)
+    } else {
+      allowCalendarChangeEvent.current = true
+    }
+  }, [onChange])
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
@@ -120,7 +142,7 @@ const DateInput = props => {
     outerClass = outerClass + ' gfb-has-focus'
   }
 
-  let startDate = convertDateToMomentFormat(inputValue)
+  const startDate = convertDateToMomentFormat(inputValue)
 
   return (
     <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
@@ -146,7 +168,7 @@ const DateInput = props => {
             {showPicker && (
               <DatePicker
                 elementId={elementId.current}
-                handleOnChange={onChange}
+                handleOnChange={handleOnCalendarChange}
                 changeShowPicker={changeShowPicker}
                 name={name}
                 timePicker={timePicker}
