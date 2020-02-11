@@ -198,7 +198,9 @@ export const convertDelimitedValueIntoLabelValueArray = ({delimit, delimiter, va
           })
         } else {
           return Object.keys(value).find(key => {
-            return option[key] === value[key]
+            if (key.toLowerCase().indexOf('keyword') === -1) {
+              return option[key] === value[key]
+            }
           })
         }
       })

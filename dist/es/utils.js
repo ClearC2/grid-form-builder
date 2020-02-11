@@ -214,7 +214,11 @@ export var convertDelimitedValueIntoLabelValueArray = function convertDelimitedV
           var _context5;
 
           return _findInstanceProperty(_context5 = _Object$keys(value)).call(_context5, function (key) {
-            return option[key] === value[key];
+            var _context6;
+
+            if (_indexOfInstanceProperty(_context6 = key.toLowerCase()).call(_context6, 'keyword') === -1) {
+              return option[key] === value[key];
+            }
           });
         }
       });
@@ -233,6 +237,7 @@ export var convertLabelValueArrayIntoDelimitedValue = function convertLabelValue
       stringify = _ref2.stringify,
       value = _ref2.value;
   if (delimit && typeof delimit === 'string') delimit = [delimit];
+  if (value === null) value = [];
   var formattedValue;
 
   if (stringify) {
