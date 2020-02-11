@@ -115,48 +115,50 @@ var Select = function Select(props) {
       indicatorsTheme = _theme$indicators === void 0 ? {} : _theme$indicators,
       _theme$options = theme.options,
       optionsTheme = _theme$options === void 0 ? {} : _theme$options;
-  var _keyword$options = keyword.options,
-      options = _keyword$options === void 0 ? [] : _keyword$options;
 
-  var _useState = (0, _react.useState)({
+  var _useState = (0, _react.useState)(keyword.options || []),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 1),
+      options = _useState2[0];
+
+  var _useState3 = (0, _react.useState)({
     Select: !interactive ? _creatable.default : allowcreate ? _creatable.default : _reactSelect.default
   }),
-      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-      input = _useState2[0],
-      changeInput = _useState2[1];
-
-  var _useState3 = (0, _react.useState)(required && requiredWarning && !value.length),
       _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
-      isRequiredFlag = _useState4[0],
-      updateIsRequiredFlag = _useState4[1];
+      input = _useState4[0],
+      changeInput = _useState4[1];
 
-  var _useState5 = (0, _react.useState)({}),
+  var _useState5 = (0, _react.useState)(required && requiredWarning && !value.length),
       _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
-      menuIsOpen = _useState6[0],
-      updateIsMenuOpen = _useState6[1];
+      isRequiredFlag = _useState6[0],
+      updateIsRequiredFlag = _useState6[1];
 
-  var _useState7 = (0, _react.useState)('bottom'),
+  var _useState7 = (0, _react.useState)({}),
       _useState8 = (0, _slicedToArray2.default)(_useState7, 2),
-      menuPlacement = _useState8[0],
-      updateMenuPlacement = _useState8[1];
+      menuIsOpen = _useState8[0],
+      updateIsMenuOpen = _useState8[1];
 
-  var _useState9 = (0, _react.useState)(0),
+  var _useState9 = (0, _react.useState)('bottom'),
       _useState10 = (0, _slicedToArray2.default)(_useState9, 2),
-      fieldPosition = _useState10[0],
-      updateFieldPosition = _useState10[1];
+      menuPlacement = _useState10[0],
+      updateMenuPlacement = _useState10[1];
 
-  var _useState11 = (0, _react.useState)({
+  var _useState11 = (0, _react.useState)(0),
+      _useState12 = (0, _slicedToArray2.default)(_useState11, 2),
+      fieldPosition = _useState12[0],
+      updateFieldPosition = _useState12[1];
+
+  var _useState13 = (0, _react.useState)({
     label: '',
     value: ''
   }),
-      _useState12 = (0, _slicedToArray2.default)(_useState11, 2),
-      selectValue = _useState12[0],
-      updateSelectValue = _useState12[1];
-
-  var _useState13 = (0, _react.useState)(false),
       _useState14 = (0, _slicedToArray2.default)(_useState13, 2),
-      isFocused = _useState14[0],
-      setIsFocused = _useState14[1];
+      selectValue = _useState14[0],
+      updateSelectValue = _useState14[1];
+
+  var _useState15 = (0, _react.useState)(false),
+      _useState16 = (0, _slicedToArray2.default)(_useState15, 2),
+      isFocused = _useState16[0],
+      setIsFocused = _useState16[1];
 
   var inputContainer = (0, _react.useRef)(null);
   var openMenu = (0, _react.useCallback)(function () {

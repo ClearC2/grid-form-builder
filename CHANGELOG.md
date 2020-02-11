@@ -1,3 +1,12 @@
+## [3.14.2](https://github.com/ClearC2/grid-form-builder/compare/v3.14.1...v3.14.2) (2020-02-11)
+
+
+### Bug Fixes
+
+* **multiselect:** defaults null value to empty array ([c78cf65](https://github.com/ClearC2/grid-form-builder/commit/c78cf65262088dc1e4d34e7eac07fabd81238ca7))
+* **multiselect:** fixes a bug that hits a false positive when determining options because they all have the same keyword key in their option object ([4fedc03](https://github.com/ClearC2/grid-form-builder/commit/4fedc03335846a794bd3e31f0806d5900d01d4cc))
+* **select:** memoized the default select options ([b7a26ec](https://github.com/ClearC2/grid-form-builder/commit/b7a26ec9010045d187e4b4301cd77d22a31ae5ab))
+
 ## [3.14.1](https://github.com/ClearC2/grid-form-builder/compare/v3.14.0...v3.14.1) (2020-02-07)
 
 

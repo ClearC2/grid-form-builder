@@ -84,48 +84,50 @@ var Select = function Select(props) {
       indicatorsTheme = _theme$indicators === void 0 ? {} : _theme$indicators,
       _theme$options = theme.options,
       optionsTheme = _theme$options === void 0 ? {} : _theme$options;
-  var _keyword$options = keyword.options,
-      options = _keyword$options === void 0 ? [] : _keyword$options;
 
-  var _useState = useState({
+  var _useState = useState(keyword.options || []),
+      _useState2 = _slicedToArray(_useState, 1),
+      options = _useState2[0];
+
+  var _useState3 = useState({
     Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect
   }),
-      _useState2 = _slicedToArray(_useState, 2),
-      input = _useState2[0],
-      changeInput = _useState2[1];
-
-  var _useState3 = useState(required && requiredWarning && !value.length),
       _useState4 = _slicedToArray(_useState3, 2),
-      isRequiredFlag = _useState4[0],
-      updateIsRequiredFlag = _useState4[1];
+      input = _useState4[0],
+      changeInput = _useState4[1];
 
-  var _useState5 = useState({}),
+  var _useState5 = useState(required && requiredWarning && !value.length),
       _useState6 = _slicedToArray(_useState5, 2),
-      menuIsOpen = _useState6[0],
-      updateIsMenuOpen = _useState6[1];
+      isRequiredFlag = _useState6[0],
+      updateIsRequiredFlag = _useState6[1];
 
-  var _useState7 = useState('bottom'),
+  var _useState7 = useState({}),
       _useState8 = _slicedToArray(_useState7, 2),
-      menuPlacement = _useState8[0],
-      updateMenuPlacement = _useState8[1];
+      menuIsOpen = _useState8[0],
+      updateIsMenuOpen = _useState8[1];
 
-  var _useState9 = useState(0),
+  var _useState9 = useState('bottom'),
       _useState10 = _slicedToArray(_useState9, 2),
-      fieldPosition = _useState10[0],
-      updateFieldPosition = _useState10[1];
+      menuPlacement = _useState10[0],
+      updateMenuPlacement = _useState10[1];
 
-  var _useState11 = useState({
+  var _useState11 = useState(0),
+      _useState12 = _slicedToArray(_useState11, 2),
+      fieldPosition = _useState12[0],
+      updateFieldPosition = _useState12[1];
+
+  var _useState13 = useState({
     label: '',
     value: ''
   }),
-      _useState12 = _slicedToArray(_useState11, 2),
-      selectValue = _useState12[0],
-      updateSelectValue = _useState12[1];
-
-  var _useState13 = useState(false),
       _useState14 = _slicedToArray(_useState13, 2),
-      isFocused = _useState14[0],
-      setIsFocused = _useState14[1];
+      selectValue = _useState14[0],
+      updateSelectValue = _useState14[1];
+
+  var _useState15 = useState(false),
+      _useState16 = _slicedToArray(_useState15, 2),
+      isFocused = _useState16[0],
+      setIsFocused = _useState16[1];
 
   var inputContainer = useRef(null);
   var openMenu = useCallback(function () {

@@ -258,7 +258,11 @@ var convertDelimitedValueIntoLabelValueArray = function convertDelimitedValueInt
           var _context5;
 
           return (0, _find.default)(_context5 = (0, _keys.default)(value)).call(_context5, function (key) {
-            return option[key] === value[key];
+            var _context6;
+
+            if ((0, _indexOf.default)(_context6 = key.toLowerCase()).call(_context6, 'keyword') === -1) {
+              return option[key] === value[key];
+            }
           });
         }
       });
@@ -278,6 +282,7 @@ var convertLabelValueArrayIntoDelimitedValue = function convertLabelValueArrayIn
       stringify = _ref2.stringify,
       value = _ref2.value;
   if (delimit && typeof delimit === 'string') delimit = [delimit];
+  if (value === null) value = [];
   var formattedValue;
 
   if (stringify) {
