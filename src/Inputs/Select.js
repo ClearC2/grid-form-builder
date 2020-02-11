@@ -52,8 +52,7 @@ const Select = props => {
     options: optionsTheme = {}
   } = theme
 
-  const {options = []} = keyword
-
+  const [options] = useState(keyword.options || [])
   const [input, changeInput] = useState({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
   const [menuIsOpen, updateIsMenuOpen] = useState({})
