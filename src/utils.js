@@ -212,6 +212,7 @@ export const convertDelimitedValueIntoLabelValueArray = ({delimit, delimiter, va
 
 export const convertLabelValueArrayIntoDelimitedValue = ({delimit, delimiter, stringify, value}) => {
   if (delimit && typeof delimit === 'string') delimit = [delimit]
+  if (value === null) value = []
   let formattedValue
   if (stringify) {
     formattedValue = ''
