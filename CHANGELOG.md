@@ -1,3 +1,10 @@
+# [3.15.0](https://github.com/ClearC2/grid-form-builder/compare/v3.14.3...v3.15.0) (2020-02-12)
+
+
+### Features
+
+* **date:** dates of 01-01-1900 will now appear as blank ([3af29a2](https://github.com/ClearC2/grid-form-builder/commit/3af29a27cdc9915020b6117a4588a27a9cae65d4))
+
 ## [3.14.3](https://github.com/ClearC2/grid-form-builder/compare/v3.14.2...v3.14.3) (2020-02-12)
 
 
