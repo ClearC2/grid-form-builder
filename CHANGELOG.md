@@ -1,3 +1,10 @@
+## [3.14.3](https://github.com/ClearC2/grid-form-builder/compare/v3.14.2...v3.14.3) (2020-02-12)
+
+
+### Bug Fixes
+
+* **multiselect:** multiselect can now handle immutable values ([e0a6a34](https://github.com/ClearC2/grid-form-builder/commit/e0a6a344e27b225ed6ebad52d8ca80870c7c1ee2))
+
 ## [3.14.2](https://github.com/ClearC2/grid-form-builder/compare/v3.14.1...v3.14.2) (2020-02-11)
 
 

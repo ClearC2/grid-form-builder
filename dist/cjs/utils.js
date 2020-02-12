@@ -249,6 +249,7 @@ var convertDelimitedValueIntoLabelValueArray = function convertDelimitedValueInt
     // a consequence of doing this is that we will lose any value that is not a valid option - JRA 02/07/2020
     var optionEquivalents = [];
     (0, _forEach.default)(values).call(values, function (value) {
+      if (value.toJS) value = value.toJS();
       var option = (0, _find.default)(formattedOptions).call(formattedOptions, function (option) {
         if (typeof value === 'string' || typeof value === 'number') {
           return (0, _find.default)(delimit).call(delimit, function (field) {
