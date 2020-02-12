@@ -77,7 +77,11 @@ const DateInput = props => {
       val = convertDateToMomentFormat(val)
     }
     if (val && val._isAMomentObject) {
-      val = val.format(inputFormat)
+      if (val.format('MM-DD-YYYY') === '01-01-1900') { // this is the default SQL date, we can ignore this value and assume it is blank
+        val = ''
+      } else {
+        val = val.format(inputFormat)
+      }
     }
     if (!val && value) val = value
     if (!val) val = ''
