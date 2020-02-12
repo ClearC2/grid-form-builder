@@ -191,6 +191,7 @@ export const convertDelimitedValueIntoLabelValueArray = ({delimit, delimiter, va
     // a consequence of doing this is that we will lose any value that is not a valid option - JRA 02/07/2020
     const optionEquivalents = []
     values.forEach(value => {
+      if (value.toJS) value = value.toJS()
       const option = formattedOptions.find(option => {
         if (typeof value === 'string' || typeof value === 'number') {
           return delimit.find(field => {

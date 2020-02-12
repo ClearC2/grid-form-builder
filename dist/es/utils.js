@@ -205,6 +205,8 @@ export var convertDelimitedValueIntoLabelValueArray = function convertDelimitedV
     var optionEquivalents = [];
 
     _forEachInstanceProperty(values).call(values, function (value) {
+      if (value.toJS) value = value.toJS();
+
       var option = _findInstanceProperty(formattedOptions).call(formattedOptions, function (option) {
         if (typeof value === 'string' || typeof value === 'number') {
           return _findInstanceProperty(delimit).call(delimit, function (field) {
