@@ -1,3 +1,10 @@
+## [3.15.1](https://github.com/ClearC2/grid-form-builder/compare/v3.15.0...v3.15.1) (2020-02-12)
+
+
+### Bug Fixes
+
+* **indicators:** changed padding by 1px ([64d0ae9](https://github.com/ClearC2/grid-form-builder/commit/64d0ae9decf578647a3f48104b6f0b00875680bb))
+
 # [3.15.0](https://github.com/ClearC2/grid-form-builder/compare/v3.14.3...v3.15.0) (2020-02-12)
 
 
