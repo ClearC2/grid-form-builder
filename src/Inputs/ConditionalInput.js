@@ -30,12 +30,15 @@ const ConditionalInput = props => {
     }
   }, [props.name])
 
+  console.log(props.values.getIn([props.name]))
+  let cond = props.values.getIn([props.name, 'condition'], '')
+  let vals = props.values.getIn([props.name, 'values'], List())
   return (
     <div className='gfb-input-outer' style={inputOuter}>
       <div className='gfb-input-inner' style={inputInner}>
         <div className={'gfb-input__control'} style={inputControl}>
-          <div className='gfb-input__value-container' onClick={() => setShowDialog(true)} style={valueContainer}>
-            {props.values.getIn([props.name, 'values'], List()).size > 0 ? 'Values...' : ''}
+          <div className='gfb-input__value-container' onClick={() => setShowDialog(true)} style={{...valueContainer, color: '#36a9e1'}}>
+            {vals.size > 0 || cond.includes('blank') || cond === 'today' || cond === 'this month' || cond === 'year to date' ? 'Values...' : ''}
           </div>
           {showDialog && <ConditionalDialog handleClose={handleClose} {...props} />}
         </div>
