@@ -6,13 +6,11 @@ import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-sta
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
-import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _Object$values from "@babel/runtime-corejs3/core-js-stable/object/values";
-import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -25,7 +23,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactSelect from 'react-select';
 import Creatable from 'react-select/creatable';
-import { isMobile } from '../utils';
+import { isMobile, convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue } from '../utils';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 var viewPortHeight = document.documentElement.clientHeight;
@@ -53,7 +51,13 @@ var Multiselect = function Multiselect(props) {
       _props$interactive = props.interactive,
       interactive = _props$interactive === void 0 ? true : _props$interactive,
       _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style;
+      style = _props$style === void 0 ? {} : _props$style,
+      delimit = props.delimit,
+      _props$delimiter = props.delimiter,
+      delimiter = _props$delimiter === void 0 ? '¤' : _props$delimiter,
+      stringify = props.stringify,
+      _props$isClearable = props.isClearable,
+      isClearable = _props$isClearable === void 0 ? true : _props$isClearable;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -98,7 +102,7 @@ var Multiselect = function Multiselect(props) {
       isRequiredFlag = _useState4[0],
       updateIsRequiredFlag = _useState4[1];
 
-  var _useState5 = useState(false),
+  var _useState5 = useState({}),
       _useState6 = _slicedToArray(_useState5, 2),
       menuIsOpen = _useState6[0],
       updateIsMenuOpen = _useState6[1];
@@ -130,23 +134,25 @@ var Multiselect = function Multiselect(props) {
 
   var inputContainer = useRef(null);
   var openMenu = useCallback(function () {
-    if (!readonly && !disabled && !menuIsOpen) {
-      updateIsMenuOpen(true);
+    if (!readonly && !disabled && !menuIsOpen[name]) {
+      updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, true)));
     }
-  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen]);
+  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name]);
   var setMenuOpenPosition = useCallback(function () {
     var placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
   var handleInputBlur = useCallback(function () {
-    menuIsOpen && updateIsMenuOpen(false);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, false)));
     setIsFocused(false);
-  }, [menuIsOpen, updateIsMenuOpen]);
+  }, [menuIsOpen, updateIsMenuOpen, name]);
   var setInputFieldPosition = useCallback(function () {
-    var position = inputContainer.current.getBoundingClientRect().top;
+    if (inputContainer.current) {
+      var position = inputContainer.current.getBoundingClientRect().top;
 
-    if (fieldPosition !== position) {
-      updateFieldPosition(position);
+      if (fieldPosition !== position) {
+        updateFieldPosition(position);
+      }
     }
 
     _setTimeout(openMenu); // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
@@ -161,10 +167,19 @@ var Multiselect = function Multiselect(props) {
     handleInputClick();
     setIsFocused(true);
   }, [handleInputClick]);
+  var closeMenuOnScroll = useCallback(function (e) {
+    var menuOpenState = false;
+
+    if (e && e.target && e.target.classList) {
+      menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+    }
+
+    updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, menuOpenState)));
+  }, [menuIsOpen, name, updateIsMenuOpen]);
   useEffect(function () {
     var formattedOptions = keyword.options || [];
     if (!formattedOptions) formattedOptions = [];
-    if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split('¤');
+    if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split(delimiter);
     if (formattedOptions.toJS) formattedOptions = formattedOptions.toJS();
     var duplicate = {}; // get rid of duplicates
 
@@ -188,7 +203,7 @@ var Multiselect = function Multiselect(props) {
       return option;
     });
     updateSelectOptions(formattedOptions);
-  }, [keyword.options]);
+  }, [delimiter, keyword.options]);
   useEffect(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);
@@ -201,65 +216,31 @@ var Multiselect = function Multiselect(props) {
     updateIsRequiredFlag(required && requiredWarning && !value.length);
   }, [updateIsRequiredFlag, required, requiredWarning, value]);
   useEffect(function () {
-    var formattedValue = value; // first lets try to get this value normalized to what react-select wants, which is an array of values
-
-    if (!formattedValue) formattedValue = [];
-    if (formattedValue.toJS) formattedValue = formattedValue.toJS();
-    if (typeof formattedValue === 'string') formattedValue = formattedValue.split('¤');
-
-    if (!_Array$isArray(formattedValue) && _typeof(formattedValue) === 'object') {
-      formattedValue = _Object$values(formattedValue);
-    }
-
-    if (!_Array$isArray(formattedValue)) {
-      console.warn('The field', name, 'is a multiselect but its value was not a valid multi value. Multivalues should be a delimited string or an array of values, but instead got', value); //eslint-disable-line
-
-      formattedValue = [];
-    }
-
-    var duplicate = {}; // lets filter out any blanks they may have snuck in
-
-    _filterInstanceProperty(formattedValue).call(formattedValue, function (value) {
-      if (_typeof(value) === 'object') value = value.value; // if value is an object but does not have a value key, we are going to drop the value as well - JRA 12/19/2019
-
-      if (!value) return false;
-
-      if (!duplicate[value]) {
-        duplicate[value] = true;
-        return true;
-      }
-    }); // now lets make sure each value in the array is a {label, value} object
-
-
-    formattedValue = _mapInstanceProperty(formattedValue).call(formattedValue, function (value) {
-      if (typeof value === 'string') {
-        value = {
-          label: value,
-          value: value
-        };
-      }
-
-      if (_typeof(value) === 'object' && !value.label) {
-        value.label = value.value;
-      }
-
-      return value;
-    });
-    updateSelectValue(formattedValue);
-  }, [value, updateSelectValue, name]);
-  var handleOnKeyDown = useCallback(function () {
-    if (!menuIsOpen) openMenu();
-    onKeyDown();
-  }, [onKeyDown, menuIsOpen, openMenu]);
-  var handleChange = useCallback(function (e) {
+    updateSelectValue(convertDelimitedValueIntoLabelValueArray({
+      value: value,
+      delimit: delimit,
+      delimiter: delimiter,
+      options: options
+    }));
+  }, [value, updateSelectValue, name, delimit, delimiter, stringify, options]);
+  var handleChange = useCallback(function (val) {
     onChange({
       target: {
         name: name,
-        value: e === null ? [] : e
+        value: convertLabelValueArrayIntoDelimitedValue({
+          value: val,
+          delimiter: delimiter,
+          delimit: delimit,
+          stringify: stringify
+        })
       }
     });
-    menuIsOpen && updateIsMenuOpen(false);
-  }, [onChange, name, menuIsOpen]);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, false)));
+  }, [onChange, name, delimiter, delimit, stringify, menuIsOpen]);
+  var handleOnKeyDown = useCallback(function () {
+    if (!menuIsOpen[name]) openMenu();
+    onKeyDown();
+  }, [onKeyDown, menuIsOpen, openMenu, name]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -290,11 +271,11 @@ var Multiselect = function Multiselect(props) {
     className: className,
     classNamePrefix: "gfb-input",
     tabIndex: tabIndex,
-    autofocus: autofocus,
-    isClearable: true,
+    autoFocus: autofocus,
+    closeMenuOnScroll: !isMobile ? closeMenuOnScroll : undefined,
+    isClearable: isClearable,
     isDisabled: disabled || readonly || !interactive,
     menuPortalTarget: document.body,
-    menuShouldBlockScroll: true,
     isMulti: true,
     name: name,
     options: options,
@@ -302,7 +283,7 @@ var Multiselect = function Multiselect(props) {
     onFocus: handleOnFocus,
     onKeyDown: handleOnKeyDown,
     onBlur: handleInputBlur,
-    menuIsOpen: !isMobile ? menuIsOpen : undefined,
+    menuIsOpen: !isMobile ? menuIsOpen[name] : undefined,
     menuPlacement: !isMobile ? menuPlacement : undefined,
     value: selectValue,
     defaultValue: selectValue,
@@ -366,5 +347,9 @@ Multiselect.propTypes = {
   onKeyDown: PropTypes.func,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  stringify: PropTypes.bool,
+  delimiter: PropTypes.string,
+  delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  isClearable: PropTypes.bool
 };

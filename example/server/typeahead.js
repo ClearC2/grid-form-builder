@@ -1,4 +1,18 @@
 module.exports = function (app) {
+  app.post('/typeahead/name/:typeaheadkey/search/', function (req, res) {
+    return res.json({
+      'data': [
+        {
+          'meta_universalid': '011C984330351D81008633C3A966D648',
+          'companyname': 'test company 1',
+          'ups_am_name': 'Jacy Robb',
+          'label': 'test company 1::C',
+          'value': '011C984330351D81008633C3A966D648'
+        }
+      ]
+    })
+  })
+
   app.post('/typeahead/name/:typeaheadkey/search/:userinput', function (req, res) {
     return res.json({
       'data': [

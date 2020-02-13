@@ -35,7 +35,10 @@ const Typeahead = props => {
     stringify,
     autoComplete,
     interactive = true,
-    style = {}
+    style = {},
+    delimit,
+    delimiter,
+    isClearable = true
   } = props
 
   const {
@@ -59,11 +62,6 @@ const Typeahead = props => {
     options: optionsTheme = {}
   } = theme
 
-  let {
-    delimit,
-    delimiter
-  } = props
-
   const [input, changeInput] = useState({Typeahead: allowcreate ? AsyncCreatable : Async})
   const [inputValue, updateInputValue] = useState('')
   const [selectValue, updateSelectValue] = useState(multi ? [] : {label: '', value: ''})
@@ -71,12 +69,14 @@ const Typeahead = props => {
     (label === 'papostalcode' || label === 'Zip Code') && inputValue.length <= 2
   )
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
-  const [menuIsOpen, updateIsMenuOpen] = useState(false)
+  const [menuIsOpen, updateIsMenuOpen] = useState({})
   const [menuPlacement, updateMenuPlacement] = useState('bottom')
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [isFocused, setIsFocused] = useState(false)
+  const [defaultOptions, setDefaultOptions] = useState([])
 
   const inputContainer = useRef(null)
+  const reactSelect = useRef(null)
 
   useEffect(() => {
     changeInput({Typeahead: allowcreate ? AsyncCreatable : Async})
@@ -133,10 +133,10 @@ const Typeahead = props => {
     }
     updateInputValue('')
     updateSelectValue(parsedValue)
-  }, [value, convertValueStringToValueArrayIfNeeded])
+  }, [value, convertValueStringToValueArrayIfNeeded, multi])
 
   const populateConditionObject = useCallback((condition = {name: null, comparator: null, values: []}) => {
-    if (!condition.hasOwnProperty('values')) condition.values = []
+    if (!condition.hasOwnProperty('values')) condition.values = [] //eslint-disable-line
     const pluggedInValues = []
     condition.values.forEach(value => {
       const formValueForThisValueName = values.get(value, '')
@@ -165,7 +165,7 @@ const Typeahead = props => {
     return filter
   }, [populateConditionObject])
 
-  const loadOptions = useCallback(search => {
+  const loadOptions = useCallback((search, setDefault = false) => {
     let {key = null, duplication = false, fieldvalue = null, filter = {}} = typeahead
     if (typeof filter === 'function') filter = filter()
     const minSearchLength = isZipCode ? 3 : minChars
@@ -173,6 +173,7 @@ const Typeahead = props => {
     if (!key && !fieldvalue) {
       // eslint-disable-next-line
       console.error(`The JSON schema representation for ${name} does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}`)
+      if (setDefault === true) setDefaultOptions([])
       return Promise.resolve({options: []})
     }
 
@@ -183,17 +184,22 @@ const Typeahead = props => {
 
     if (search.length >= minSearchLength || search === ' ') {
       if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
+      if (setDefault) reactSelect.current.setState(() => ({isLoading: true}))
       return GFBConfig.ajax.post(`/typeahead/name/${key}/search${search}`, {filter})
         .then(resp => {
-          return resp.data.data.map(value => {
+          const options = resp.data.data.map(value => {
             if (duplication) {
               value.duplication = duplication
             }
             return value
           })
+          if (setDefault === true) setDefaultOptions(options)
+          else setDefaultOptions([])
+          if (setDefault) reactSelect.current.setState(() => ({isLoading: false}))
+          return options
         })
     }
-
+    if (setDefault === true) setDefaultOptions([])
     return Promise.resolve([])
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode])
 
@@ -212,15 +218,15 @@ const Typeahead = props => {
   }, [draggable])
 
   const handleInputBlur = useCallback(() => {
-    menuIsOpen && updateIsMenuOpen(false)
+    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     setIsFocused(false)
-  }, [menuIsOpen, updateIsMenuOpen])
+  }, [menuIsOpen, updateIsMenuOpen, name])
 
   const openMenu = useCallback(() => {
-    if (!readonly && !disabled && !menuIsOpen) {
-      updateIsMenuOpen(true)
+    if (!readonly && !disabled && !menuIsOpen[name]) {
+      updateIsMenuOpen({...menuIsOpen, [name]: true})
     }
-  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen])
+  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name])
 
   const setMenuOpenPosition = useCallback(() => {
     const placement = fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
@@ -228,11 +234,13 @@ const Typeahead = props => {
   }, [fieldPosition, updateMenuPlacement])
 
   const setInputFieldPosition = useCallback(() => {
-    const position = inputContainer.current.getBoundingClientRect().top
-    if (fieldPosition !== position) {
-      updateFieldPosition(position)
-    } else {
-      setMenuOpenPosition()
+    if (inputContainer.current) {
+      const position = inputContainer.current.getBoundingClientRect().top
+      if (fieldPosition !== position) {
+        updateFieldPosition(position)
+      } else {
+        setMenuOpenPosition()
+      }
     }
   }, [setMenuOpenPosition, fieldPosition])
 
@@ -259,14 +267,17 @@ const Typeahead = props => {
 
   const handleOnInputChange = useCallback((val, e) => {
     if (e.action === 'input-change') {
-      !menuIsOpen && openMenu()
+      !menuIsOpen[name] && openMenu()
       updateInputValue(val)
+      if (typeof val === 'string' && val.trim() === '') {
+        loadOptions(' ', true)
+      }
     } else if (e.action === 'menu-close' && !multi) {
       if (value) {
         updateInputValue('')
       }
     }
-  }, [menuIsOpen, openMenu, updateInputValue, multi, value])
+  }, [multi, menuIsOpen, name, openMenu, loadOptions, value])
 
   const emptyFields = useCallback((fields, changeHandler) => {
     fields.forEach(field => {
@@ -386,7 +397,7 @@ const Typeahead = props => {
     } else {
       handleSingleValueChange(newValue)
     }
-    menuIsOpen && updateIsMenuOpen(false) // closes menu when new option gets selected
+    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false}) // closes menu when new option gets selected
     updateInputValue('')
   }, [
     delimit,
@@ -406,8 +417,20 @@ const Typeahead = props => {
     if (e.keyCode === 9 && allowcreate && inputValue) {
       handleChange({value: inputValue}, {action: 'create-option'})
     }
+    if (e.keyCode === 32) { // if key is spacebar, prevent what react select is trying to do with it and just let them enter a whitespace - JRA 02/05/2020
+      e.preventDefault()
+      handleOnInputChange(inputValue + ' ', {action: 'input-change'})
+    }
     onKeyDown()
-  }, [onKeyDown, handleChange, allowcreate, inputValue])
+  }, [onKeyDown, handleChange, allowcreate, inputValue, handleOnInputChange])
+
+  const closeMenuOnScroll = useCallback(e => {
+    let menuOpenState = false
+    if (e && e.target && e.target.classList) {
+      menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name]
+    }
+    updateIsMenuOpen({...menuIsOpen, [name]: menuOpenState})
+  }, [menuIsOpen, name, updateIsMenuOpen])
 
   const {Typeahead} = input
 
@@ -430,24 +453,24 @@ const Typeahead = props => {
   return (
     <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
       <Typeahead
+        ref={reactSelect}
         className={className}
         classNamePrefix='gfb-input'
+        closeMenuOnScroll={!isMobile ? closeMenuOnScroll : undefined}
         tabIndex={tabIndex}
-        autofocus={autofocus}
+        autoFocus={autofocus}
         blurInputOnSelect
-        cacheOptions
-        isClearable
+        isClearable={isClearable}
         createOptionPosition='first'
         formatCreateLabel={formatCreateLabel}
         isMulti={multi}
         isDisabled={disabled || readonly || !interactive}
         menuPortalTarget={document.body}
-        menuShouldBlockScroll
         name={name}
         noOptionsMessage={noOptionsMessage}
         placeholder={placeholder}
         inputValue={inputValue}
-        menuIsOpen={!isMobile ? menuIsOpen : undefined}
+        menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
         menuPlacement={!isMobile ? menuPlacement : undefined}
         onKeyDown={handleOnKeyDown}
         onMouseDown={handleOnMouseDown}
@@ -459,6 +482,7 @@ const Typeahead = props => {
         value={selectValue}
         autoComplete={autoComplete}
         components={components}
+        defaultOptions={defaultOptions}
         styles={{
           container: base => {
             return ({...base, ...inputInner, ...inputInnerTheme})
@@ -528,5 +552,6 @@ Typeahead.propTypes = {
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  isClearable: PropTypes.bool
 }

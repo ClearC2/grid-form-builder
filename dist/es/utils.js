@@ -1,3 +1,10 @@
+import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
+import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
+import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _JSON$stringify from "@babel/runtime-corejs3/core-js-stable/json/stringify";
 import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
@@ -126,4 +133,170 @@ export var usePrevious = function usePrevious(value) {
     ref.current = value;
   });
   return ref.current;
+};
+export var convertDelimitedValueIntoLabelValueArray = function convertDelimitedValueIntoLabelValueArray(_ref) {
+  var delimit = _ref.delimit,
+      delimiter = _ref.delimiter,
+      value = _ref.value,
+      options = _ref.options;
+  if (!delimit) delimit = [];
+  if (delimit && typeof delimit === 'string') delimit = [delimit];
+  delimit = delimit.length ? delimit : ['label', 'value'];
+  var formattedOptions = options || [];
+  if (!formattedOptions) formattedOptions = [];
+  if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split(delimiter);
+  if (formattedOptions.toJS) formattedOptions = formattedOptions.toJS();
+  var duplicate = {}; // get rid of duplicates
+
+  formattedOptions = _filterInstanceProperty(formattedOptions).call(formattedOptions, function (option) {
+    if (!option) return false;
+    if (typeof option === 'string') return true;
+    if (_typeof(option) === 'object' && !option.value) option.value = option.label;
+
+    if (option.value && !duplicate[option.value]) {
+      duplicate[option.value] = true;
+      return true;
+    }
+  }); // format into an array of {label, value} objects
+
+  formattedOptions = _mapInstanceProperty(formattedOptions).call(formattedOptions, function (option) {
+    if (typeof option === 'string') option = {
+      label: option,
+      value: option
+    };
+    if (!option.value) option.value = option.label;
+    return option;
+  });
+  var formattedValue = value || [];
+  if (!formattedValue) formattedValue = [];
+
+  if (typeof formattedValue === 'string') {
+    if (delimiter) formattedValue = formattedValue.split(delimiter);else {
+      try {
+        formattedValue = JSON.parse(formattedValue);
+      } catch (e) {
+        formattedValue = [formattedValue];
+      }
+    }
+  } // attempting to build value objects based on the provided delimit fields, good luck trying to figure this part out - JRA 02/07/2020
+
+
+  var values = [];
+  var tempValueObject = {};
+
+  _forEachInstanceProperty(formattedValue).call(formattedValue, function (value, i) {
+    if (_typeof(value) === 'object') {
+      values.push(value);
+    } else {
+      if (i % delimit.length === 0) tempValueObject = {};
+      tempValueObject[delimit[i % delimit.length]] = value;
+
+      if ((i + 1) % delimit.length === 0) {
+        if (_indexOfInstanceProperty(delimit).call(delimit, 'label') === -1) tempValueObject.label = value;
+        if (_indexOfInstanceProperty(delimit).call(delimit, 'value') === -1) tempValueObject.value = value;
+        values.push(tempValueObject);
+      }
+    }
+  });
+
+  if (formattedOptions.length) {
+    // if we were provided options we are going to try to match the values up with what options we have available
+    // a consequence of doing this is that we will lose any value that is not a valid option - JRA 02/07/2020
+    var optionEquivalents = [];
+
+    _forEachInstanceProperty(values).call(values, function (value) {
+      if (value.toJS) value = value.toJS();
+
+      var option = _findInstanceProperty(formattedOptions).call(formattedOptions, function (option) {
+        if (typeof value === 'string' || typeof value === 'number') {
+          return _findInstanceProperty(delimit).call(delimit, function (field) {
+            return option[field] === value;
+          });
+        } else {
+          var _context5;
+
+          return _findInstanceProperty(_context5 = _Object$keys(value)).call(_context5, function (key) {
+            var _context6;
+
+            if (_indexOfInstanceProperty(_context6 = key.toLowerCase()).call(_context6, 'keyword') === -1) {
+              return option[key] === value[key];
+            }
+          });
+        }
+      });
+
+      if (option) optionEquivalents.push(option);
+    });
+
+    values = optionEquivalents;
+  }
+
+  return values;
+};
+export var convertLabelValueArrayIntoDelimitedValue = function convertLabelValueArrayIntoDelimitedValue(_ref2) {
+  var delimit = _ref2.delimit,
+      delimiter = _ref2.delimiter,
+      stringify = _ref2.stringify,
+      value = _ref2.value;
+  if (delimit && typeof delimit === 'string') delimit = [delimit];
+  if (value === null) value = [];
+  var formattedValue;
+
+  if (stringify) {
+    formattedValue = '';
+
+    if (delimiter) {
+      if (delimit && _Array$isArray(delimit)) {
+        // if we were provided field(s) to delimit by, build up a special string with just those values
+        _forEachInstanceProperty(value).call(value, function (option) {
+          _forEachInstanceProperty(delimit).call(delimit, function (field) {
+            if (_indexOfInstanceProperty(formattedValue).call(formattedValue, option[field]) === -1) {
+              formattedValue = formattedValue + option[field] + delimiter;
+            }
+          });
+        });
+
+        formattedValue = _sliceInstanceProperty(formattedValue).call(formattedValue, 0, -delimiter.length);
+      } else {
+        // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
+        _forEachInstanceProperty(value).call(value, function (option) {
+          formattedValue = formattedValue + _JSON$stringify(option) + delimiter;
+        });
+
+        formattedValue = _sliceInstanceProperty(formattedValue).call(formattedValue, 0, -delimiter.length);
+      }
+    } else if (delimit && !delimiter) {
+      // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
+      var valueArr = [];
+
+      _forEachInstanceProperty(value).call(value, function (option) {
+        _forEachInstanceProperty(delimit).call(delimit, function (field) {
+          if (_indexOfInstanceProperty(valueArr).call(valueArr, option[field]) === -1) {
+            valueArr.push(option[field]);
+          }
+        });
+      });
+
+      formattedValue = _JSON$stringify(valueArr);
+    } else {
+      // if all we want to do is stringify the value, send it back up unmodified but stringified
+      formattedValue = _JSON$stringify(value);
+    }
+  } else {
+    formattedValue = [];
+
+    if (delimit) {
+      _forEachInstanceProperty(value).call(value, function (option) {
+        _forEachInstanceProperty(delimit).call(delimit, function (field) {
+          if (_indexOfInstanceProperty(formattedValue).call(formattedValue, option[field]) === -1) {
+            formattedValue.push(option[field]);
+          }
+        });
+      });
+    } else {
+      formattedValue = value;
+    }
+  }
+
+  return formattedValue;
 };

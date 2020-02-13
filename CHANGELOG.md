@@ -1,3 +1,131 @@
+## [3.15.1](https://github.com/ClearC2/grid-form-builder/compare/v3.15.0...v3.15.1) (2020-02-12)
+
+
+### Bug Fixes
+
+* **indicators:** changed padding by 1px ([64d0ae9](https://github.com/ClearC2/grid-form-builder/commit/64d0ae9decf578647a3f48104b6f0b00875680bb))
+
+# [3.15.0](https://github.com/ClearC2/grid-form-builder/compare/v3.14.3...v3.15.0) (2020-02-12)
+
+
+### Features
+
+* **date:** dates of 01-01-1900 will now appear as blank ([3af29a2](https://github.com/ClearC2/grid-form-builder/commit/3af29a27cdc9915020b6117a4588a27a9cae65d4))
+
+## [3.14.3](https://github.com/ClearC2/grid-form-builder/compare/v3.14.2...v3.14.3) (2020-02-12)
+
+
+### Bug Fixes
+
+* **multiselect:** multiselect can now handle immutable values ([e0a6a34](https://github.com/ClearC2/grid-form-builder/commit/e0a6a344e27b225ed6ebad52d8ca80870c7c1ee2))
+
+## [3.14.2](https://github.com/ClearC2/grid-form-builder/compare/v3.14.1...v3.14.2) (2020-02-11)
+
+
+### Bug Fixes
+
+* **multiselect:** defaults null value to empty array ([c78cf65](https://github.com/ClearC2/grid-form-builder/commit/c78cf65262088dc1e4d34e7eac07fabd81238ca7))
+* **multiselect:** fixes a bug that hits a false positive when determining options because they all have the same keyword key in their option object ([4fedc03](https://github.com/ClearC2/grid-form-builder/commit/4fedc03335846a794bd3e31f0806d5900d01d4cc))
+* **select:** memoized the default select options ([b7a26ec](https://github.com/ClearC2/grid-form-builder/commit/b7a26ec9010045d187e4b4301cd77d22a31ae5ab))
+
+## [3.14.1](https://github.com/ClearC2/grid-form-builder/compare/v3.14.0...v3.14.1) (2020-02-07)
+
+
+### Bug Fixes
+
+* **select:** defaults isClearable to true ([06ffd4b](https://github.com/ClearC2/grid-form-builder/commit/06ffd4b1fb756825cf7c2acc206eb5954f396a1e))
+
+# [3.14.0](https://github.com/ClearC2/grid-form-builder/compare/v3.13.2...v3.14.0) (2020-02-07)
+
+
+### Bug Fixes
+
+* **date:** if the calendar is closed and no change event had previously been triggered, the calendar will now send back its currently selected date as a change event ([1db1e77](https://github.com/ClearC2/grid-form-builder/commit/1db1e77aa92154cec9a0ba174cb741f12d7a59cb))
+
+
+### Features
+
+* **date:** date input can now be blanked out ([90626d2](https://github.com/ClearC2/grid-form-builder/commit/90626d2204ea5304e86a658548b588cad988f21d))
+* **multiselect:** multiselect now supports stringification of values from the schema config ([3f5ebb9](https://github.com/ClearC2/grid-form-builder/commit/3f5ebb9f45943ede87da69a0c27f329566393507))
+
+## [3.13.2](https://github.com/ClearC2/grid-form-builder/compare/v3.13.1...v3.13.2) (2020-02-07)
+
+
+### Bug Fixes
+
+* uncaught error ([#146](https://github.com/ClearC2/grid-form-builder/issues/146)) ([3e35e3c](https://github.com/ClearC2/grid-form-builder/commit/3e35e3c349f54a0ebc4f6c9f5683f6dc3772b7ce))
+
+## [3.13.1](https://github.com/ClearC2/grid-form-builder/compare/v3.13.0...v3.13.1) (2020-02-07)
+
+
+### Bug Fixes
+
+* **date:** if the calendar is closed and no change event had previously been triggered, the calendar will now send back its currently selected date as a change event ([879cca4](https://github.com/ClearC2/grid-form-builder/commit/879cca47cdc349adcc877650ea2a4bb4b2fa6352))
+
+# [3.13.0](https://github.com/ClearC2/grid-form-builder/compare/v3.12.3...v3.13.0) (2020-02-06)
+
+
+### Features
+
+* **select:** selects will no longer attempt to get the bounding recs if the ref has not been set ([ba50fb7](https://github.com/ClearC2/grid-form-builder/commit/ba50fb7aa669830023788e6bf387fb74071dfb3d))
+
+## [3.12.3](https://github.com/ClearC2/grid-form-builder/compare/v3.12.2...v3.12.3) (2020-02-06)
+
+
+### Bug Fixes
+
+* **autofocus:** fixed typo in passing autofocus to react select ([bcc13b4](https://github.com/ClearC2/grid-form-builder/commit/bcc13b4c65a4a4c06b2e62157d2fe8469ccb5855))
+
+## [3.12.2](https://github.com/ClearC2/grid-form-builder/compare/v3.12.1...v3.12.2) (2020-02-06)
+
+
+### Bug Fixes
+
+* **menu:** closing on scrolling ([#145](https://github.com/ClearC2/grid-form-builder/issues/145)) ([c27d0ba](https://github.com/ClearC2/grid-form-builder/commit/c27d0ba5dce303fc0c6b90bce5171563c8104e9d))
+
+## [3.12.1](https://github.com/ClearC2/grid-form-builder/compare/v3.12.0...v3.12.1) (2020-02-06)
+
+
+### Bug Fixes
+
+* **compile:** local build ([#144](https://github.com/ClearC2/grid-form-builder/issues/144)) ([83fc9b2](https://github.com/ClearC2/grid-form-builder/commit/83fc9b2ad5632c1202e9f75fc7756cd07b7fff34))
+
+# [3.12.0](https://github.com/ClearC2/grid-form-builder/compare/v3.11.0...v3.12.0) (2020-02-05)
+
+
+### Features
+
+* **select:** removed block scroll prop ([8ef3920](https://github.com/ClearC2/grid-form-builder/commit/8ef3920b6558cb4ee3d8502d4e0668c2444917d9))
+
+# [3.11.0](https://github.com/ClearC2/grid-form-builder/compare/v3.10.0...v3.11.0) (2020-02-05)
+
+
+### Features
+
+* **typeahead:** adds loading indicator toggle ([7918dd6](https://github.com/ClearC2/grid-form-builder/commit/7918dd60b257fc929246a8cc88a6205084ddca8c))
+
+# [3.10.0](https://github.com/ClearC2/grid-form-builder/compare/v3.9.0...v3.10.0) (2020-02-05)
+
+
+### Features
+
+* **typeahead:** data call will trigger if search is only whitespace and set the results as default values ([be2ee47](https://github.com/ClearC2/grid-form-builder/commit/be2ee47607e21d8c349a414b25009394481bb306))
+
+# [3.9.0](https://github.com/ClearC2/grid-form-builder/compare/v3.8.10...v3.9.0) (2020-02-05)
+
+
+### Features
+
+* **typeahead:** upgrading to react select 3 makes spacebar work like an enter key, added logic to prevent that from happening so users can enter a white space in typeaheads ([bcf6591](https://github.com/ClearC2/grid-form-builder/commit/bcf6591e70aa2c3d548ceb039cd248ecd869e33f))
+
+## [3.8.10](https://github.com/ClearC2/grid-form-builder/compare/v3.8.9...v3.8.10) (2020-02-05)
+
+
+### Bug Fixes
+
+* trigger ([c7a2ae4](https://github.com/ClearC2/grid-form-builder/commit/c7a2ae492867ee09bf53b18bca8d0b2f92609403))
+* **propType:** extraFooters is array not object ([49077a2](https://github.com/ClearC2/grid-form-builder/commit/49077a270a8be3fe59961aa32cbc83763d65c504))
+
 ## [3.8.9](https://github.com/ClearC2/grid-form-builder/compare/v3.8.8...v3.8.9) (2020-02-05)
 
 

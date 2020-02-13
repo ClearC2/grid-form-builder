@@ -303,48 +303,43 @@
           "static": false
         },
         "config": {
+          "stringify": true,
+          "delimiter": "¤",
+          "delimit": ["value"],
           "name": "multiselecttest",
           "label": "Multiselect",
-          "required": true,
           "type": "multiselect",
           "keyword": {
             "category": "TASKS",
             "options": [{
               "label": "Contract Signing",
-              "value": "Contract Signing"
+              "value": "contractsigning",
+              "keyword": "TASKS"
             }, {
               "label": "Customer Service",
-              "value": "Customer Service"
+              "value": "customerservice",
+              "keyword": "TASKS"
             }, {
               "label": "Demonstration",
-              "value": "Demonstration"
+              "value": "demonstration",
+              "keyword": "TASKS"
             }, {
               "label": "Executive Meeting",
-              "value": "Executive Meeting"
+              "value": "executivemeeting",
+              "keyword": "TASKS"
             }, {
               "label": "Initial Meeting",
-              "value": "Initial Meeting"
-            }, {
-              "label": "Contract Signing",
-              "value": "Contract Signing"
-            }, {
-              "label": "Customer Service",
-              "value": "Customer Service"
-            }, {
-              "label": "Demonstration",
-              "value": "Demonstration"
-            }, {
-              "label": "Executive Meeting",
-              "value": "Executive Meeting"
-            }, {
-              "label": "Initial Meeting",
-              "value": "Initial Meeting"
-            }, {
+              "value": "initialmeeting",
+              "keyword": "TASKS"
+            },
+            {
               "label": "Kick Off Meeting",
-              "value": "Kick Off Meeting"
+              "value": "kickoffmeeting",
+              "keyword": "TASKS"
             }, {
               "label": "Internet Hub",
-              "value": "Internet Hub"
+              "value": "internethub",
+              "keyword": "TASKS"
             }]
           },
           "cascade": {

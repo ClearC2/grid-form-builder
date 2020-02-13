@@ -77,6 +77,7 @@ var DateInput = function DateInput(props) {
       isFocused = _useState8[0],
       setIsFocused = _useState8[1];
 
+  var allowCalendarChangeEvent = useRef(true);
   var convertDateToMomentFormat = useMemo(function () {
     return function (value) {
       var time;
@@ -108,7 +109,12 @@ var DateInput = function DateInput(props) {
     }
 
     if (val && val._isAMomentObject) {
-      val = val.format(inputFormat);
+      if (val.format('MM-DD-YYYY') === '01-01-1900') {
+        // this is the default SQL date, we can ignore this value and assume it is blank
+        val = '';
+      } else {
+        val = val.format(inputFormat);
+      }
     }
 
     if (!val && value) val = value;
@@ -122,9 +128,24 @@ var DateInput = function DateInput(props) {
   }, [dateFormat, dateTimeFormat, format, showCalendar, timeFormat, timePicker, type]);
   var handleOnInputChange = useCallback(function (e) {
     var newValue = e.target.value;
+
+    if (newValue === '') {
+      // if the input was just blanked out, send up a blank value as the new value for this field - JRA 02/07/2020
+      // also suppress the calendar's change event so it does not send up what is selected when the calendar closes
+      allowCalendarChangeEvent.current = false;
+      onChange({
+        target: {
+          name: name,
+          value: ''
+        }
+      });
+    } else {
+      allowCalendarChangeEvent.current = true;
+    }
+
     changeInputValue(newValue);
     if (!showPicker) changeShowPicker(true);
-  }, [changeInputValue, showPicker, changeShowPicker]);
+  }, [showPicker, onChange, name]);
   var handleOnFocus = useCallback(function () {
     changeShowPicker(true);
     setIsFocused(true);
@@ -132,6 +153,13 @@ var DateInput = function DateInput(props) {
   var handleOnBlur = useCallback(function () {
     setIsFocused(false);
   }, []);
+  var handleOnCalendarChange = useCallback(function (e) {
+    if (allowCalendarChangeEvent.current) {
+      onChange(e);
+    } else {
+      allowCalendarChangeEvent.current = true;
+    }
+  }, [onChange]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -183,7 +211,7 @@ var DateInput = function DateInput(props) {
     css: theme.value
   }), showPicker && jsx(DatePicker, {
     elementId: elementId.current,
-    handleOnChange: onChange,
+    handleOnChange: handleOnCalendarChange,
     changeShowPicker: changeShowPicker,
     name: name,
     timePicker: timePicker,

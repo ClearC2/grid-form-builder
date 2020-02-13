@@ -22,11 +22,11 @@ var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-core
 
 var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
 
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
-
 var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
+
+var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
@@ -108,7 +108,11 @@ var Typeahead = function Typeahead(props) {
       _props$interactive = props.interactive,
       interactive = _props$interactive === void 0 ? true : _props$interactive,
       _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style;
+      style = _props$style === void 0 ? {} : _props$style,
+      delimit = props.delimit,
+      delimiter = props.delimiter,
+      _props$isClearable = props.isClearable,
+      isClearable = _props$isClearable === void 0 ? true : _props$isClearable;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -140,8 +144,6 @@ var Typeahead = function Typeahead(props) {
       indicatorsTheme = _theme$indicators === void 0 ? {} : _theme$indicators,
       _theme$options = theme.options,
       optionsTheme = _theme$options === void 0 ? {} : _theme$options;
-  var delimit = props.delimit,
-      delimiter = props.delimiter;
 
   var _useState = (0, _react.useState)({
     Typeahead: allowcreate ? _asyncCreatable.default : _async.default
@@ -173,7 +175,7 @@ var Typeahead = function Typeahead(props) {
       isRequiredFlag = _useState10[0],
       updateIsRequiredFlag = _useState10[1];
 
-  var _useState11 = (0, _react.useState)(false),
+  var _useState11 = (0, _react.useState)({}),
       _useState12 = (0, _slicedToArray2.default)(_useState11, 2),
       menuIsOpen = _useState12[0],
       updateIsMenuOpen = _useState12[1];
@@ -193,7 +195,13 @@ var Typeahead = function Typeahead(props) {
       isFocused = _useState18[0],
       setIsFocused = _useState18[1];
 
+  var _useState19 = (0, _react.useState)([]),
+      _useState20 = (0, _slicedToArray2.default)(_useState19, 2),
+      defaultOptions = _useState20[0],
+      setDefaultOptions = _useState20[1];
+
   var inputContainer = (0, _react.useRef)(null);
+  var reactSelect = (0, _react.useRef)(null);
   (0, _react.useEffect)(function () {
     changeInput({
       Typeahead: allowcreate ? _asyncCreatable.default : _async.default
@@ -263,7 +271,7 @@ var Typeahead = function Typeahead(props) {
 
     updateInputValue('');
     updateSelectValue(parsedValue);
-  }, [value, convertValueStringToValueArrayIfNeeded]);
+  }, [value, convertValueStringToValueArrayIfNeeded, multi]);
   var populateConditionObject = (0, _react.useCallback)(function () {
     var _context;
 
@@ -272,7 +280,8 @@ var Typeahead = function Typeahead(props) {
       comparator: null,
       values: []
     };
-    if (!condition.hasOwnProperty('values')) condition.values = [];
+    if (!condition.hasOwnProperty('values')) condition.values = []; //eslint-disable-line
+
     var pluggedInValues = [];
     (0, _forEach.default)(_context = (0, _values.default)(condition)).call(_context, function (value) {
       var formValueForThisValueName = values.get(value, '');
@@ -309,6 +318,8 @@ var Typeahead = function Typeahead(props) {
     return filter;
   }, [populateConditionObject]);
   var loadOptions = (0, _react.useCallback)(function (search) {
+    var setDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
     var _typeahead$key = typeahead.key,
         key = _typeahead$key === void 0 ? null : _typeahead$key,
         _typeahead$duplicatio = typeahead.duplication,
@@ -324,6 +335,7 @@ var Typeahead = function Typeahead(props) {
     if (!key && !fieldvalue) {
       // eslint-disable-next-line
       console.error("The JSON schema representation for ".concat(name, " does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}"));
+      if (setDefault === true) setDefaultOptions([]);
       return _promise.default.resolve({
         options: []
       });
@@ -338,21 +350,34 @@ var Typeahead = function Typeahead(props) {
       var _context3;
 
       if (typeof search === 'string' && (0, _trim.default)(search).call(search) !== '') search = "/".concat(search);
+      if (setDefault) reactSelect.current.setState(function () {
+        return {
+          isLoading: true
+        };
+      });
       return _config.default.ajax.post((0, _concat.default)(_context3 = "/typeahead/name/".concat(key, "/search")).call(_context3, search), {
         filter: filter
       }).then(function (resp) {
         var _context4;
 
-        return (0, _map.default)(_context4 = resp.data.data).call(_context4, function (value) {
+        var options = (0, _map.default)(_context4 = resp.data.data).call(_context4, function (value) {
           if (duplication) {
             value.duplication = duplication;
           }
 
           return value;
         });
+        if (setDefault === true) setDefaultOptions(options);else setDefaultOptions([]);
+        if (setDefault) reactSelect.current.setState(function () {
+          return {
+            isLoading: false
+          };
+        });
+        return options;
       });
     }
 
+    if (setDefault === true) setDefaultOptions([]);
     return _promise.default.resolve([]);
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode]);
   var formatCreateLabel = (0, _react.useCallback)(function (value) {
@@ -367,25 +392,27 @@ var Typeahead = function Typeahead(props) {
     if (draggable) e.stopPropagation();
   }, [draggable]);
   var handleInputBlur = (0, _react.useCallback)(function () {
-    menuIsOpen && updateIsMenuOpen(false);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
     setIsFocused(false);
-  }, [menuIsOpen, updateIsMenuOpen]);
+  }, [menuIsOpen, updateIsMenuOpen, name]);
   var openMenu = (0, _react.useCallback)(function () {
-    if (!readonly && !disabled && !menuIsOpen) {
-      updateIsMenuOpen(true);
+    if (!readonly && !disabled && !menuIsOpen[name]) {
+      updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, true)));
     }
-  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen]);
+  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name]);
   var setMenuOpenPosition = (0, _react.useCallback)(function () {
     var placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
   var setInputFieldPosition = (0, _react.useCallback)(function () {
-    var position = inputContainer.current.getBoundingClientRect().top;
+    if (inputContainer.current) {
+      var position = inputContainer.current.getBoundingClientRect().top;
 
-    if (fieldPosition !== position) {
-      updateFieldPosition(position);
-    } else {
-      setMenuOpenPosition();
+      if (fieldPosition !== position) {
+        updateFieldPosition(position);
+      } else {
+        setMenuOpenPosition();
+      }
     }
   }, [setMenuOpenPosition, fieldPosition]);
   var handleInputClick = (0, _react.useCallback)(function () {
@@ -410,14 +437,18 @@ var Typeahead = function Typeahead(props) {
   }, [fieldPosition, setMenuOpenPosition]);
   var handleOnInputChange = (0, _react.useCallback)(function (val, e) {
     if (e.action === 'input-change') {
-      !menuIsOpen && openMenu();
+      !menuIsOpen[name] && openMenu();
       updateInputValue(val);
+
+      if (typeof val === 'string' && (0, _trim.default)(val).call(val) === '') {
+        loadOptions(' ', true);
+      }
     } else if (e.action === 'menu-close' && !multi) {
       if (value) {
         updateInputValue('');
       }
     }
-  }, [menuIsOpen, openMenu, updateInputValue, multi, value]);
+  }, [multi, menuIsOpen, name, openMenu, loadOptions, value]);
   var emptyFields = (0, _react.useCallback)(function (fields, changeHandler) {
     (0, _forEach.default)(fields).call(fields, function (field) {
       var e = {
@@ -556,7 +587,7 @@ var Typeahead = function Typeahead(props) {
       handleSingleValueChange(newValue);
     }
 
-    menuIsOpen && updateIsMenuOpen(false); // closes menu when new option gets selected
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false))); // closes menu when new option gets selected
 
     updateInputValue('');
   }, [delimit, delimiter, emptyFields, handleSingleValueChange, multi, name, onChange, stringify, typeahead, menuIsOpen]);
@@ -570,8 +601,25 @@ var Typeahead = function Typeahead(props) {
       });
     }
 
+    if (e.keyCode === 32) {
+      // if key is spacebar, prevent what react select is trying to do with it and just let them enter a whitespace - JRA 02/05/2020
+      e.preventDefault();
+      handleOnInputChange(inputValue + ' ', {
+        action: 'input-change'
+      });
+    }
+
     onKeyDown();
-  }, [onKeyDown, handleChange, allowcreate, inputValue]);
+  }, [onKeyDown, handleChange, allowcreate, inputValue, handleOnInputChange]);
+  var closeMenuOnScroll = (0, _react.useCallback)(function (e) {
+    var menuOpenState = false;
+
+    if (e && e.target && e.target.classList) {
+      menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+    }
+
+    updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, menuOpenState)));
+  }, [menuIsOpen, name, updateIsMenuOpen]);
   var Typeahead = input.Typeahead;
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -598,24 +646,24 @@ var Typeahead = function Typeahead(props) {
     onMouseDown: handleOnFocus,
     style: inputOuter
   }, (0, _core.jsx)(Typeahead, {
+    ref: reactSelect,
     className: className,
     classNamePrefix: "gfb-input",
+    closeMenuOnScroll: !_utils.isMobile ? closeMenuOnScroll : undefined,
     tabIndex: tabIndex,
-    autofocus: autofocus,
+    autoFocus: autofocus,
     blurInputOnSelect: true,
-    cacheOptions: true,
-    isClearable: true,
+    isClearable: isClearable,
     createOptionPosition: "first",
     formatCreateLabel: formatCreateLabel,
     isMulti: multi,
     isDisabled: disabled || readonly || !interactive,
     menuPortalTarget: document.body,
-    menuShouldBlockScroll: true,
     name: name,
     noOptionsMessage: noOptionsMessage,
     placeholder: placeholder,
     inputValue: inputValue,
-    menuIsOpen: !_utils.isMobile ? menuIsOpen : undefined,
+    menuIsOpen: !_utils.isMobile ? menuIsOpen[name] : undefined,
     menuPlacement: !_utils.isMobile ? menuPlacement : undefined,
     onKeyDown: handleOnKeyDown,
     onMouseDown: handleOnMouseDown,
@@ -627,6 +675,7 @@ var Typeahead = function Typeahead(props) {
     value: selectValue,
     autoComplete: autoComplete,
     components: components,
+    defaultOptions: defaultOptions,
     styles: {
       container: function container(base) {
         return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
@@ -699,5 +748,6 @@ Typeahead.propTypes = {
   delimit: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.array]),
   autoComplete: _propTypes.default.string,
   interactive: _propTypes.default.bool,
-  style: _propTypes.default.object
+  style: _propTypes.default.object,
+  isClearable: _propTypes.default.bool
 };

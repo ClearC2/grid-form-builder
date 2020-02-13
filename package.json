@@ -1,6 +1,6 @@
 {
   "name": "grid-form-builder",
-  "version": "3.8.9",
+  "version": "3.15.1",
   "description": "Form Builder built on top of React Grid Layout",
   "repository": {
     "type": "git",
@@ -16,6 +16,9 @@
     "build": "rimraf dist && npm run build:es && npm run build:cjs",
     "build:es": "cross-env NODE_ENV=production babel src/ -d dist/es/ --ignore '**/*.test.js' && cp -r src/styles dist/es/styles/",
     "build:cjs": "cross-env NODE_ENV=production BABEL_MODULES=cjs babel src/ -d dist/cjs/ --ignore '**/*.test.js' && cp -r src/styles dist/cjs/styles/",
+    "build:watch": "npm run build:es:watch && npm run build:cjs:watch",
+    "build:es:watch": "cross-env NODE_ENV=production babel src/ -d dist/es/ --ignore '**/*.test.js' --watch && cp -r src/styles dist/es/styles/",
+    "build:cjs:watch": "cross-env NODE_ENV=production BABEL_MODULES=cjs babel src/ -d dist/cjs/ --ignore '**/*.test.js' --watch && cp -r src/styles dist/cjs/styles/",
     "install:yarn": "./install-yarn.sh",
     "cm": "git-cz",
     "semantic-release": "semantic-release",

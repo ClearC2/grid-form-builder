@@ -497,7 +497,7 @@ exports.default = ConditionalTable;
   formValues: _propTypes.default.object.isRequired,
   onNextClick: _propTypes.default.func.isRequired,
   formSchema: _propTypes.default.object,
-  extraFooters: _propTypes.default.object,
+  extraFooters: _propTypes.default.array,
   handleOnChange: _propTypes.default.func,
   title: _propTypes.default.string,
   primaryButtonClass: _propTypes.default.string,

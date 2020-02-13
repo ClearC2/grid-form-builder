@@ -27,7 +27,8 @@ const Select = props => {
     onChange,
     autoComplete,
     interactive = true,
-    style = {}
+    style = {},
+    isClearable = true
   } = props
 
   const {
@@ -51,11 +52,10 @@ const Select = props => {
     options: optionsTheme = {}
   } = theme
 
-  const {options = []} = keyword
-
+  const [options] = useState(keyword.options || [])
   const [input, changeInput] = useState({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
-  const [menuIsOpen, updateIsMenuOpen] = useState(false)
+  const [menuIsOpen, updateIsMenuOpen] = useState({})
   const [menuPlacement, updateMenuPlacement] = useState('bottom')
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [selectValue, updateSelectValue] = useState({label: '', value: ''})
@@ -64,10 +64,10 @@ const Select = props => {
   const inputContainer = useRef(null)
 
   const openMenu = useCallback(() => {
-    if (!readonly && !disabled && !menuIsOpen) {
-      updateIsMenuOpen(true)
+    if (!readonly && !disabled && !menuIsOpen[name]) {
+      updateIsMenuOpen({...menuIsOpen, [name]: true})
     }
-  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen])
+  }, [readonly, disabled, menuIsOpen, updateIsMenuOpen, name])
 
   const setMenuOpenPosition = useCallback(() => {
     const placement = fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
@@ -75,14 +75,16 @@ const Select = props => {
   }, [fieldPosition, updateMenuPlacement])
 
   const handleInputBlur = useCallback(() => {
-    menuIsOpen && updateIsMenuOpen(false)
+    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     setIsFocused(false)
-  }, [menuIsOpen, updateIsMenuOpen])
+  }, [menuIsOpen, updateIsMenuOpen, name])
 
   const setInputFieldPosition = useCallback(() => {
-    const position = inputContainer.current.getBoundingClientRect().top
-    if (fieldPosition !== position) {
-      updateFieldPosition(position)
+    if (inputContainer.current) {
+      const position = inputContainer.current.getBoundingClientRect().top
+      if (fieldPosition !== position) {
+        updateFieldPosition(position)
+      }
     }
     setTimeout(openMenu) // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
   }, [openMenu, fieldPosition])
@@ -97,6 +99,14 @@ const Select = props => {
     handleInputClick()
     setIsFocused(true)
   }, [handleInputClick])
+
+  const closeMenuOnScroll = useCallback(e => {
+    let menuOpenState = false
+    if (e && e.target && e.target.classList) {
+      menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name]
+    }
+    updateIsMenuOpen({...menuIsOpen, [name]: menuOpenState})
+  }, [menuIsOpen, name, updateIsMenuOpen])
 
   useEffect(() => {
     setMenuOpenPosition()
@@ -119,9 +129,9 @@ const Select = props => {
   }, [value, updateSelectValue, options])
 
   const handleOnKeyDown = useCallback(() => {
-    if (!menuIsOpen) openMenu()
+    if (!menuIsOpen[name]) openMenu()
     onKeyDown()
-  }, [onKeyDown, menuIsOpen, openMenu])
+  }, [onKeyDown, menuIsOpen, openMenu, name])
 
   const handleChange = useCallback(e => {
     onChange({
@@ -130,7 +140,7 @@ const Select = props => {
         value: e === null ? '' : e.value
       }
     })
-    menuIsOpen && updateIsMenuOpen(false)
+    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
   }, [onChange, name, menuIsOpen])
 
   const {Select} = input
@@ -157,18 +167,18 @@ const Select = props => {
         className={className}
         classNamePrefix='gfb-input'
         tabIndex={tabIndex}
-        autofocus={autofocus}
-        isClearable
+        autoFocus={autofocus}
+        closeMenuOnScroll={!isMobile ? closeMenuOnScroll : undefined}
+        isClearable={isClearable}
         isDisabled={disabled || readonly}
         menuPortalTarget={document.body}
-        menuShouldBlockScroll
         name={name}
         options={options}
         placeholder={placeholder}
         onFocus={handleOnFocus}
         onKeyDown={handleOnKeyDown}
         onBlur={handleInputBlur}
-        menuIsOpen={!isMobile ? menuIsOpen : undefined}
+        menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
         menuPlacement={!isMobile ? menuPlacement : undefined}
         value={selectValue}
         defaultValue={selectValue}
@@ -228,5 +238,6 @@ Select.propTypes = {
   onKeyDown: PropTypes.func,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  isClearable: PropTypes.bool
 }

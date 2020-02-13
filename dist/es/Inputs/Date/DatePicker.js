@@ -1,5 +1,5 @@
 import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import 'daterangepicker';
 import '../../styles/daterangepicker.css';
@@ -15,6 +15,10 @@ var DatePicker = function DatePicker(props) {
       showCalendar = props.showCalendar,
       startDate = props.startDate,
       format = props.format;
+  var valueDidChange = useRef(false); // JRA 02/07/2020 - selecting the date that is already selected closes the calendar without a change event
+  // this is undesirable as the fallback date is today's date, and if the user opens a blank date field and picks today, a change event is not fired
+  // in order to get around this issue, this component will check on the calendar hide event if a change had been made or not, and if not, send back the current startDate as a change event
+
   var determinePickerOpenDirection = useMemo(function () {
     var $input = $("#".concat(elementId))[0];
     var viewportHeight = window.innerHeight;
@@ -40,6 +44,7 @@ var DatePicker = function DatePicker(props) {
         startDate: startDate
       }, function (date) {
         if (date && date.isValid && date.isValid()) {
+          valueDidChange.current = true;
           handleOnChange({
             target: {
               name: name,
@@ -68,7 +73,16 @@ var DatePicker = function DatePicker(props) {
           }
         }
       });
-      $input.on('hide.daterangepicker', function () {
+      $input.on('hide.daterangepicker', function (e, calendar) {
+        if (!valueDidChange.current) {
+          handleOnChange({
+            target: {
+              name: name,
+              value: calendar.startDate.format(format)
+            }
+          });
+        }
+
         changeShowPicker(false);
       });
     };

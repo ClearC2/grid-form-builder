@@ -275,7 +275,7 @@ div.gfb-input__indicators {
 div > div.gfb-input__indicators > div.gfb-input__indicator {
   padding-left: 3px;
   padding-right: 3px;
-  padding-top: 2px;
+  padding-top: 1px;
 }
 
 div > div.gfb-input__indicators > div.gfb-color-input-indicator {

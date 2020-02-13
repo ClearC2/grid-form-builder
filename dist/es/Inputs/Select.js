@@ -7,9 +7,9 @@ import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/insta
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
-import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _reduceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/reduce";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -50,7 +50,9 @@ var Select = function Select(props) {
       _props$interactive = props.interactive,
       interactive = _props$interactive === void 0 ? true : _props$interactive,
       _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style;
+      style = _props$style === void 0 ? {} : _props$style,
+      _props$isClearable = props.isClearable,
+      isClearable = _props$isClearable === void 0 ? true : _props$isClearable;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -82,68 +84,72 @@ var Select = function Select(props) {
       indicatorsTheme = _theme$indicators === void 0 ? {} : _theme$indicators,
       _theme$options = theme.options,
       optionsTheme = _theme$options === void 0 ? {} : _theme$options;
-  var _keyword$options = keyword.options,
-      options = _keyword$options === void 0 ? [] : _keyword$options;
 
-  var _useState = useState({
+  var _useState = useState(keyword.options || []),
+      _useState2 = _slicedToArray(_useState, 1),
+      options = _useState2[0];
+
+  var _useState3 = useState({
     Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect
   }),
-      _useState2 = _slicedToArray(_useState, 2),
-      input = _useState2[0],
-      changeInput = _useState2[1];
-
-  var _useState3 = useState(required && requiredWarning && !value.length),
       _useState4 = _slicedToArray(_useState3, 2),
-      isRequiredFlag = _useState4[0],
-      updateIsRequiredFlag = _useState4[1];
+      input = _useState4[0],
+      changeInput = _useState4[1];
 
-  var _useState5 = useState(false),
+  var _useState5 = useState(required && requiredWarning && !value.length),
       _useState6 = _slicedToArray(_useState5, 2),
-      menuIsOpen = _useState6[0],
-      updateIsMenuOpen = _useState6[1];
+      isRequiredFlag = _useState6[0],
+      updateIsRequiredFlag = _useState6[1];
 
-  var _useState7 = useState('bottom'),
+  var _useState7 = useState({}),
       _useState8 = _slicedToArray(_useState7, 2),
-      menuPlacement = _useState8[0],
-      updateMenuPlacement = _useState8[1];
+      menuIsOpen = _useState8[0],
+      updateIsMenuOpen = _useState8[1];
 
-  var _useState9 = useState(0),
+  var _useState9 = useState('bottom'),
       _useState10 = _slicedToArray(_useState9, 2),
-      fieldPosition = _useState10[0],
-      updateFieldPosition = _useState10[1];
+      menuPlacement = _useState10[0],
+      updateMenuPlacement = _useState10[1];
 
-  var _useState11 = useState({
+  var _useState11 = useState(0),
+      _useState12 = _slicedToArray(_useState11, 2),
+      fieldPosition = _useState12[0],
+      updateFieldPosition = _useState12[1];
+
+  var _useState13 = useState({
     label: '',
     value: ''
   }),
-      _useState12 = _slicedToArray(_useState11, 2),
-      selectValue = _useState12[0],
-      updateSelectValue = _useState12[1];
-
-  var _useState13 = useState(false),
       _useState14 = _slicedToArray(_useState13, 2),
-      isFocused = _useState14[0],
-      setIsFocused = _useState14[1];
+      selectValue = _useState14[0],
+      updateSelectValue = _useState14[1];
+
+  var _useState15 = useState(false),
+      _useState16 = _slicedToArray(_useState15, 2),
+      isFocused = _useState16[0],
+      setIsFocused = _useState16[1];
 
   var inputContainer = useRef(null);
   var openMenu = useCallback(function () {
-    if (!readonly && !disabled && !menuIsOpen) {
-      updateIsMenuOpen(true);
+    if (!readonly && !disabled && !menuIsOpen[name]) {
+      updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, true)));
     }
-  }, [readonly, disabled, updateIsMenuOpen, menuIsOpen]);
+  }, [readonly, disabled, menuIsOpen, updateIsMenuOpen, name]);
   var setMenuOpenPosition = useCallback(function () {
     var placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
   var handleInputBlur = useCallback(function () {
-    menuIsOpen && updateIsMenuOpen(false);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, false)));
     setIsFocused(false);
-  }, [menuIsOpen, updateIsMenuOpen]);
+  }, [menuIsOpen, updateIsMenuOpen, name]);
   var setInputFieldPosition = useCallback(function () {
-    var position = inputContainer.current.getBoundingClientRect().top;
+    if (inputContainer.current) {
+      var position = inputContainer.current.getBoundingClientRect().top;
 
-    if (fieldPosition !== position) {
-      updateFieldPosition(position);
+      if (fieldPosition !== position) {
+        updateFieldPosition(position);
+      }
     }
 
     _setTimeout(openMenu); // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
@@ -158,6 +164,15 @@ var Select = function Select(props) {
     handleInputClick();
     setIsFocused(true);
   }, [handleInputClick]);
+  var closeMenuOnScroll = useCallback(function (e) {
+    var menuOpenState = false;
+
+    if (e && e.target && e.target.classList) {
+      menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+    }
+
+    updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, menuOpenState)));
+  }, [menuIsOpen, name, updateIsMenuOpen]);
   useEffect(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);
@@ -181,9 +196,9 @@ var Select = function Select(props) {
     });
   }, [value, updateSelectValue, options]);
   var handleOnKeyDown = useCallback(function () {
-    if (!menuIsOpen) openMenu();
+    if (!menuIsOpen[name]) openMenu();
     onKeyDown();
-  }, [onKeyDown, menuIsOpen, openMenu]);
+  }, [onKeyDown, menuIsOpen, openMenu, name]);
   var handleChange = useCallback(function (e) {
     onChange({
       target: {
@@ -191,7 +206,7 @@ var Select = function Select(props) {
         value: e === null ? '' : e.value
       }
     });
-    menuIsOpen && updateIsMenuOpen(false);
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, false)));
   }, [onChange, name, menuIsOpen]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
@@ -222,18 +237,18 @@ var Select = function Select(props) {
     className: className,
     classNamePrefix: "gfb-input",
     tabIndex: tabIndex,
-    autofocus: autofocus,
-    isClearable: true,
+    autoFocus: autofocus,
+    closeMenuOnScroll: !isMobile ? closeMenuOnScroll : undefined,
+    isClearable: isClearable,
     isDisabled: disabled || readonly,
     menuPortalTarget: document.body,
-    menuShouldBlockScroll: true,
     name: name,
     options: options,
     placeholder: placeholder,
     onFocus: handleOnFocus,
     onKeyDown: handleOnKeyDown,
     onBlur: handleInputBlur,
-    menuIsOpen: !isMobile ? menuIsOpen : undefined,
+    menuIsOpen: !isMobile ? menuIsOpen[name] : undefined,
     menuPlacement: !isMobile ? menuPlacement : undefined,
     value: selectValue,
     defaultValue: selectValue,
@@ -294,5 +309,6 @@ Select.propTypes = {
   onKeyDown: PropTypes.func,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  isClearable: PropTypes.bool
 };
