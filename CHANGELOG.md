@@ -1,3 +1,11 @@
+## [3.15.4](https://github.com/ClearC2/grid-form-builder/compare/v3.15.3...v3.15.4) (2020-02-17)
+
+
+### Bug Fixes
+
+* **log:** remove console log ([8ea778f](https://github.com/ClearC2/grid-form-builder/commit/8ea778f3bfac68b8dd7e3af290ba756c68e003fc))
+* **merge:** for compiler ([f4587cd](https://github.com/ClearC2/grid-form-builder/commit/f4587cd4ba1a776c5a016269089352472c9a5d0a))
+
 ## [3.15.3](https://github.com/ClearC2/grid-form-builder/compare/v3.15.2...v3.15.3) (2020-02-13)
 
 
