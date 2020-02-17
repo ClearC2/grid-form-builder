@@ -78,6 +78,8 @@ const Typeahead = props => {
   const inputContainer = useRef(null)
   const reactSelect = useRef(null)
 
+  const isLoadingOptions = useRef(false) // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
+
   useEffect(() => {
     changeInput({Typeahead: allowcreate ? AsyncCreatable : Async})
   }, [allowcreate, changeInput])
@@ -185,8 +187,10 @@ const Typeahead = props => {
     if (search.length >= minSearchLength || search === ' ') {
       if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
       if (setDefault) reactSelect.current.setState(() => ({isLoading: true}))
+      isLoadingOptions.current = true
       return GFBConfig.ajax.post(`/typeahead/name/${key}/search${search}`, {filter})
         .then(resp => {
+          isLoadingOptions.current = false
           const options = resp.data.data.map(value => {
             if (duplication) {
               value.duplication = duplication
@@ -197,6 +201,10 @@ const Typeahead = props => {
           else setDefaultOptions([])
           if (setDefault) reactSelect.current.setState(() => ({isLoading: false}))
           return options
+        })
+        .catch(err => {
+          isLoadingOptions.current = false
+          return Promise.reject(err)
         })
     }
     if (setDefault === true) setDefaultOptions([])
@@ -413,9 +421,12 @@ const Typeahead = props => {
   ])
 
   const handleOnKeyDown = useCallback(e => {
-    // This fixes the issue where users type and tab too quickly on create fields and the value does not register in the system
+    // if the user presses tab before the loaded options come back the default behavior is to tab to the next field and do nothing
+    // this will capture that tab event and treat it like a create-option was selected - JRA 02/13/2020
     if (e.keyCode === 9 && allowcreate && inputValue) {
-      handleChange({value: inputValue}, {action: 'create-option'})
+      if (isLoadingOptions.current) {
+        handleChange({value: inputValue}, {action: 'create-option'})
+      }
     }
     if (e.keyCode === 32) { // if key is spacebar, prevent what react select is trying to do with it and just let them enter a whitespace - JRA 02/05/2020
       e.preventDefault()

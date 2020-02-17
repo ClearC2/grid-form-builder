@@ -1,3 +1,19 @@
+## [3.15.3](https://github.com/ClearC2/grid-form-builder/compare/v3.15.2...v3.15.3) (2020-02-13)
+
+
+### Bug Fixes
+
+* **typeahead:** tabbing through a typeahead that already has a value will no longer wipe out that value ([30a4e8f](https://github.com/ClearC2/grid-form-builder/commit/30a4e8f515b2d68a3c4ad18552522c5cc36ced18))
+
+## [3.15.2](https://github.com/ClearC2/grid-form-builder/compare/v3.15.1...v3.15.2) (2020-02-13)
+
+
+### Bug Fixes
+
+* **builder:** doesnt build ([13dc27e](https://github.com/ClearC2/grid-form-builder/commit/13dc27e8fa0063472bf4c835052048939f85dceb))
+* **searchMode:** styling ([ed59b35](https://github.com/ClearC2/grid-form-builder/commit/ed59b35bfa9942c70a7662873faf81750a4c3108))
+* **searchMode:** styling ([1d9fe47](https://github.com/ClearC2/grid-form-builder/commit/1d9fe472ec621e5a27a379030e30435ed026fbc0))
+
 ## [3.15.1](https://github.com/ClearC2/grid-form-builder/compare/v3.15.0...v3.15.1) (2020-02-12)
 
 

@@ -162,6 +162,8 @@ var Typeahead = function Typeahead(props) {
 
   var inputContainer = useRef(null);
   var reactSelect = useRef(null);
+  var isLoadingOptions = useRef(false); // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
+
   useEffect(function () {
     changeInput({
       Typeahead: allowcreate ? AsyncCreatable : Async
@@ -317,10 +319,13 @@ var Typeahead = function Typeahead(props) {
           isLoading: true
         };
       });
+      isLoadingOptions.current = true;
       return GFBConfig.ajax.post(_concatInstanceProperty(_context3 = "/typeahead/name/".concat(key, "/search")).call(_context3, search), {
         filter: filter
       }).then(function (resp) {
         var _context4;
+
+        isLoadingOptions.current = false;
 
         var options = _mapInstanceProperty(_context4 = resp.data.data).call(_context4, function (value) {
           if (duplication) {
@@ -337,6 +342,9 @@ var Typeahead = function Typeahead(props) {
           };
         });
         return options;
+      }).catch(function (err) {
+        isLoadingOptions.current = false;
+        return _Promise.reject(err);
       });
     }
 
@@ -561,13 +569,16 @@ var Typeahead = function Typeahead(props) {
     updateInputValue('');
   }, [delimit, delimiter, emptyFields, handleSingleValueChange, multi, name, onChange, stringify, typeahead, menuIsOpen]);
   var handleOnKeyDown = useCallback(function (e) {
-    // This fixes the issue where users type and tab too quickly on create fields and the value does not register in the system
+    // if the user presses tab before the loaded options come back the default behavior is to tab to the next field and do nothing
+    // this will capture that tab event and treat it like a create-option was selected - JRA 02/13/2020
     if (e.keyCode === 9 && allowcreate && inputValue) {
-      handleChange({
-        value: inputValue
-      }, {
-        action: 'create-option'
-      });
+      if (isLoadingOptions.current) {
+        handleChange({
+          value: inputValue
+        }, {
+          action: 'create-option'
+        });
+      }
     }
 
     if (e.keyCode === 32) {
