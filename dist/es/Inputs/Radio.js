@@ -6,6 +6,7 @@ import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
+import { fromJS } from 'immutable';
 
 var Radio = function Radio(props) {
   var name = props.name,
@@ -70,6 +71,7 @@ var Radio = function Radio(props) {
     validationError = 'This Field is Required';
   }
 
+  console.log(fromJS(options), fromJS(props), 'options and props logged inside grid-form-builder/src/Inputs/Radio');
   return jsx("div", {
     className: "gfb-input-outer",
     style: inputOuter,

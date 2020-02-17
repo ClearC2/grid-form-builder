@@ -4,7 +4,6 @@ import {useCallback} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
-
 const Radio = props => {
   const {
     name,
@@ -58,7 +57,6 @@ const Radio = props => {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
-
   return (
     <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
       <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>

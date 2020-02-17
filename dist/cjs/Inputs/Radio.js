@@ -22,6 +22,8 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIco
 
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
+var _immutable = require("immutable");
+
 /** @jsx jsx */
 var Radio = function Radio(props) {
   var name = props.name,
@@ -86,6 +88,7 @@ var Radio = function Radio(props) {
     validationError = 'This Field is Required';
   }
 
+  console.log((0, _immutable.fromJS)(options), (0, _immutable.fromJS)(props), 'options and props logged inside grid-form-builder/src/Inputs/Radio');
   return (0, _core.jsx)("div", {
     className: "gfb-input-outer",
     style: inputOuter,

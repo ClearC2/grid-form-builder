@@ -154,7 +154,6 @@ export default class Example extends Component {
     // console.log(this.state.formValues)
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is true
-      console.log(formSchema.form, 'formschema logggggggggg gfb') // eslint-disable-line
       return (
         <div>
           <div style={{display: 'flex'}}>
