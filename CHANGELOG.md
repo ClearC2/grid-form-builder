@@ -1,3 +1,10 @@
+# [3.16.0](https://github.com/ClearC2/grid-form-builder/compare/v3.15.4...v3.16.0) (2020-02-20)
+
+
+### Features
+
+* **condTable:** remove dependence on formSchemas ([b64c5cb](https://github.com/ClearC2/grid-form-builder/commit/b64c5cbc40bc3e522bb99fef2c354854422b4d73))
+
 ## [3.15.4](https://github.com/ClearC2/grid-form-builder/compare/v3.15.3...v3.15.4) (2020-02-17)
 
 
