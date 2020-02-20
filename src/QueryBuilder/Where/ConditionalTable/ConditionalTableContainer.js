@@ -8,7 +8,7 @@ import {convertFormSchemaToSearch} from '../../Utils'
 
 const getDefaultCondition = (inputType) => {
   let i = 0
-  let max = CONDITIONS.length
+  const max = CONDITIONS.length
   while (i < max) {
     if (!Set(CONDITIONS[i].invalidInputTypes).has(inputType)) {
       return Object.keys(CONDITIONS)[i]
@@ -32,7 +32,7 @@ export const convertQueryToFormValues = (query, clearExistingValues = true, fVal
     if (clearExistingValues) {
       formValues.forEach((v, k) => {
         if (v instanceof Map) {
-          let schema = getFieldSchema(k, formSchema)
+          const schema = getFieldSchema(k, formSchema)
           formValues = formValues.set(k, Map({
             condition: schema ? getDefaultCondition(schema.config.type) : v.get('condition'),
             values: List()
@@ -48,10 +48,10 @@ export const convertQueryToFormValues = (query, clearExistingValues = true, fVal
     }
     if (query.conditions) {
       fromJS(query.conditions).forEach(c => {
-        let schema = getFieldSchema(c.get('name'), formSchema)
+        const schema = getFieldSchema(c.get('name'), formSchema)
         if (schema) {
           if (Set(TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
-            let val = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '')
+            const val = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '')
             formValues = formValues.set(c.get('name'), val)
           } else {
             if (c.get('rawValues') !== undefined) {
@@ -119,7 +119,7 @@ class _ConditionalTableContainer extends Component {
 
   getDefaultCondition = (inputType) => {
     let i = 0
-    let max = CONDITIONS.length
+    const max = CONDITIONS.length
     while (i < max) {
       if (!Set(CONDITIONS[i].invalidInputTypes).has(inputType)) {
         return Object.keys(CONDITIONS)[i]
@@ -130,13 +130,14 @@ class _ConditionalTableContainer extends Component {
   }
 
   getFieldSchema = (key) => {
-    let formSchema = this.state.formSchema
+    const formSchema = this.state.formSchema
     if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
       return List(formSchema.jsonschema.layout).find(row => row.config.name === key)
     } else {
       return undefined
     }
   }
+
   render () {
     return (
       <ConditionalTable

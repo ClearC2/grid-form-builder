@@ -58,7 +58,7 @@ function (_Component) {
   (0, _inherits2.default)(ConditionalTable, _Component);
 
   function ConditionalTable(props) {
-    var _context5;
+    var _context6;
 
     var _this;
 
@@ -118,11 +118,18 @@ function (_Component) {
       }
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getLabel", function (key) {
-      if (_this.props.fieldDefs && _this.props.fieldDefs[key]) {
-        var name = _this.props.fieldDefs[key].fieldlabel;
+      if (_this.props.formSchema && _this.props.formSchema.jsonschema && _this.props.formSchema.jsonschema.layout) {
+        var fieldSchema = _this.props.getFieldSchema(key);
+
+        var name = '';
+
+        if (fieldSchema) {
+          name = fieldSchema.config.label || fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.label;
+        }
+
         return name || '';
       } else {
-        return 'No Key in fieldDefs';
+        return 'No Key in schema';
       }
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildRequest", function () {
@@ -299,7 +306,16 @@ function (_Component) {
       }
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getFieldType", function (fieldName) {
-      return _this.props.fieldDefs && _this.props.fieldDefs[fieldName].format || 'string';
+      var _context5;
+
+      var type = '';
+      (0, _forEach.default)(_context5 = _this.props.formSchema.jsonschema.layout).call(_context5, function (field) {
+        if (field.config.name === fieldName) {
+          type = field.config.type;
+          return true;
+        }
+      });
+      return type;
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildTableRow", function (key, value) {
       if (value && _this.state.noValueConditions.has(value.condition)) {
@@ -354,7 +370,7 @@ function (_Component) {
       }
     });
     var noValueConditions = [];
-    (0, _forEach.default)(_context5 = (0, _keys.default)(_index.CONDITIONS)).call(_context5, function (k) {
+    (0, _forEach.default)(_context6 = (0, _keys.default)(_index.CONDITIONS)).call(_context6, function (k) {
       if (_index.CONDITIONS[k].maxFields === 0) {
         noValueConditions.push(k);
       }
@@ -381,17 +397,17 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _context6,
-          _context7,
+      var _context7,
+          _context8,
           _this2 = this;
 
-      var tbody = (0, _map.default)(_context6 = (0, _sort.default)(_context7 = (0, _keys.default)(this.props.formValues)).call(_context7, function (a, b) {
+      var tbody = (0, _map.default)(_context7 = (0, _sort.default)(_context8 = (0, _keys.default)(this.props.formValues)).call(_context8, function (a, b) {
         if (_this2.getLabel(a) === undefined || _this2.getLabel(b) === undefined) {
           return 0;
         }
 
         return _this2.getLabel(a).localeCompare(_this2.getLabel(b));
-      })).call(_context6, function (key) {
+      })).call(_context7, function (key) {
         if (_this2.props.formValues[key]) {
           return _this2.buildTableRow(key, _this2.props.formValues[key]);
         } else {
@@ -480,7 +496,7 @@ exports.default = ConditionalTable;
 (0, _defineProperty2.default)(ConditionalTable, "propTypes", {
   formValues: _propTypes.default.object.isRequired,
   onNextClick: _propTypes.default.func.isRequired,
-  fieldDefs: _propTypes.default.object,
+  formSchema: _propTypes.default.object,
   extraFooters: _propTypes.default.array,
   handleOnChange: _propTypes.default.func,
   title: _propTypes.default.string,

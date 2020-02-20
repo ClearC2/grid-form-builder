@@ -10,7 +10,7 @@ export default class ConditionalTable extends Component {
   static propTypes = {
     formValues: PropTypes.object.isRequired,
     onNextClick: PropTypes.func.isRequired,
-    fieldDefs: PropTypes.object,
+    formSchema: PropTypes.object,
     extraFooters: PropTypes.array,
     handleOnChange: PropTypes.func,
     title: PropTypes.string,
@@ -102,11 +102,15 @@ export default class ConditionalTable extends Component {
   }
 
   getLabel = (key) => {
-    if (this.props.fieldDefs && this.props.fieldDefs[key]) {
-      const name = this.props.fieldDefs[key].fieldlabel
+    if (this.props.formSchema && this.props.formSchema.jsonschema && this.props.formSchema.jsonschema.layout) {
+      const fieldSchema = this.props.getFieldSchema(key)
+      let name = ''
+      if (fieldSchema) {
+        name = fieldSchema.config.label || (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.label)
+      }
       return name || ''
     } else {
-      return 'No Key in fieldDefs'
+      return 'No Key in schema'
     }
   }
 
@@ -269,7 +273,16 @@ export default class ConditionalTable extends Component {
     }
   }
 
-  getFieldType = (fieldName) => (this.props.fieldDefs && this.props.fieldDefs[fieldName].format) || 'string'
+  getFieldType = (fieldName) => {
+    let type = ''
+    this.props.formSchema.jsonschema.layout.forEach((field) => {
+      if (field.config.name === fieldName) {
+        type = field.config.type
+        return true
+      }
+    })
+    return type
+  }
 
   buildTableRow = (key, value) => {
     if (value && this.state.noValueConditions.has(value.condition)) {
