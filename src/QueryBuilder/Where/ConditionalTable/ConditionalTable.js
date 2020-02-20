@@ -10,7 +10,7 @@ export default class ConditionalTable extends Component {
   static propTypes = {
     formValues: PropTypes.object.isRequired,
     onNextClick: PropTypes.func.isRequired,
-    formSchema: PropTypes.object,
+    fieldDefs: PropTypes.object,
     extraFooters: PropTypes.array,
     handleOnChange: PropTypes.func,
     title: PropTypes.string,
@@ -29,7 +29,7 @@ export default class ConditionalTable extends Component {
 
   constructor (props) {
     super(props)
-    let noValueConditions = []
+    const noValueConditions = []
     Object.keys(CONDITIONS).forEach((k) => {
       if (CONDITIONS[k].maxFields === 0) {
         noValueConditions.push(k)
@@ -63,7 +63,7 @@ export default class ConditionalTable extends Component {
     let valString = ''
     if (value) {
       if (typeof value === 'string') {
-        let splitVal = value.split('¤')
+        const splitVal = value.split('¤')
         if (splitVal.length > 1) {
           value = splitVal
         } else {
@@ -77,7 +77,7 @@ export default class ConditionalTable extends Component {
         }
       }
       let i = value.length
-      let cond = this.getConditionValue(key) || 'contains'
+      const cond = this.getConditionValue(key) || 'contains'
       if (i > CONDITIONS[cond].maxFields) {
         value = List(value).slice(0, CONDITIONS[cond].maxFields).toJS()
       }
@@ -102,20 +102,16 @@ export default class ConditionalTable extends Component {
   }
 
   getLabel = (key) => {
-    if (this.props.formSchema && this.props.formSchema.jsonschema && this.props.formSchema.jsonschema.layout) {
-      let fieldSchema = this.props.getFieldSchema(key)
-      let name = ''
-      if (fieldSchema) {
-        name = fieldSchema.config.label || (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.label)
-      }
+    if (this.props.fieldDefs && this.props.fieldDefs[key]) {
+      const name = this.props.fieldDefs[key].fieldlabel
       return name || ''
     } else {
-      return 'No Key in schema'
+      return 'No Key in fieldDefs'
     }
   }
 
   buildRequest = (formValues = this.props.formValues) => {
-    let req = {
+    const req = {
       query: {
         type: this.state.conditionType,
         conditions: []
@@ -126,7 +122,7 @@ export default class ConditionalTable extends Component {
       let newValue = List()
       if (typeof value === 'string') {
         if (value !== '') {
-          let splitVal = value.split('¤')
+          const splitVal = value.split('¤')
           if (splitVal.length > 1) {
             newValue = List(splitVal)
           } else {
@@ -139,12 +135,12 @@ export default class ConditionalTable extends Component {
         if (typeof value.values[0] === 'object') {
           // for typeaheads
           rawValues = value.values
-          let ids = value.values.map(obj => obj.value)
+          const ids = value.values.map(obj => obj.value)
           newValue = List(ids)
         } else if (typeof value.values[0] === 'string') {
           // inputs
           if (typeof value.values === 'string') {
-            let splitVal = value.values.split('¤')
+            const splitVal = value.values.split('¤')
             if (splitVal.length > 1) {
               newValue = List(splitVal)
             } else {
@@ -174,8 +170,9 @@ export default class ConditionalTable extends Component {
     })
     return req
   }
+
   onNextClick = () => {
-    let req = this.buildRequest()
+    const req = this.buildRequest()
     if (this.props.onNextClick) {
       this.props.onNextClick(req)
     }
@@ -199,7 +196,7 @@ export default class ConditionalTable extends Component {
 
   resetForm = () => {
     Object.keys(this.props.formValues).map(key => {
-      let schema = this.props.getFieldSchema(key)
+      const schema = this.props.getFieldSchema(key)
       if (schema && schema.config && (schema.config.type === 'textarea' ||
           schema.config.type === 'checkbox' ||
           schema.config.type === 'radio'
@@ -225,7 +222,7 @@ export default class ConditionalTable extends Component {
   }
 
   handleRemoveConditionClick = (e, key) => {
-    let schema = this.props.getFieldSchema(key)
+    const schema = this.props.getFieldSchema(key)
     if (schema && schema.config && (schema.config.type === 'textarea' ||
         schema.config.type === 'checkbox' ||
         schema.config.type === 'radio')) {
@@ -271,16 +268,8 @@ export default class ConditionalTable extends Component {
       return 'contains'
     }
   }
-  getFieldType = (fieldName) => {
-    let type = ''
-    this.props.formSchema.jsonschema.layout.forEach((field) => {
-      if (field.config.name === fieldName) {
-        type = field.config.type
-        return true
-      }
-    })
-    return type
-  }
+
+  getFieldType = (fieldName) => (this.props.fieldDefs && this.props.fieldDefs[fieldName].format) || 'string'
 
   buildTableRow = (key, value) => {
     if (value && this.state.noValueConditions.has(value.condition)) {
