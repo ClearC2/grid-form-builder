@@ -1,3 +1,10 @@
+# [3.17.0](https://github.com/ClearC2/grid-form-builder/compare/v3.16.0...v3.17.0) (2020-02-21)
+
+
+### Features
+
+* **dynamicValues:** enable ways to defnie runtime values ads query conditions, rather than hard coded user entered values ([bbda474](https://github.com/ClearC2/grid-form-builder/commit/bbda474908fa56ff0402bc80da6045262bd8af58))
+
 # [3.16.0](https://github.com/ClearC2/grid-form-builder/compare/v3.15.4...v3.16.0) (2020-02-20)
 
 
