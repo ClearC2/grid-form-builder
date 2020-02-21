@@ -35,7 +35,8 @@ export const convertQueryToFormValues = (query, clearExistingValues = true, fVal
           const schema = getFieldSchema(k, formSchema)
           formValues = formValues.set(k, Map({
             condition: schema ? getDefaultCondition(schema.config.type) : v.get('condition'),
-            values: List()
+            values: List(),
+            dynamicValues: v.get('dynamicValues')
           }))
         } else if (typeof v === 'string') {
           formValues = formValues.set(k, '')
@@ -57,12 +58,14 @@ export const convertQueryToFormValues = (query, clearExistingValues = true, fVal
             if (c.get('rawValues') !== undefined) {
               formValues = formValues.set(c.get('name'), Map({
                 condition: c.get('comparator'),
-                values: c.get('rawValues', List())
+                values: c.get('rawValues', List()),
+                dynamicValues: c.get('dynamicValues')
               }))
             } else {
               formValues = formValues.set(c.get('name'), Map({
                 condition: c.get('comparator'),
-                values: c.get('values', List())
+                values: c.get('values', List()),
+                dynamicValues: c.get('dynamicValues')
               }))
             }
           }

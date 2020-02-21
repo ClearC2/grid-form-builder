@@ -34,6 +34,8 @@ var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/ty
 
 var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
+var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
+
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
@@ -62,7 +64,7 @@ var _SearchUtils = require("./SearchUtils");
 
 function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context10; (0, _forEach.default)(_context10 = ownKeys(Object(source), true)).call(_context10, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context11; (0, _forEach.default)(_context11 = ownKeys(Object(source))).call(_context11, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context12; (0, _forEach.default)(_context12 = ownKeys(Object(source), true)).call(_context12, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context13; (0, _forEach.default)(_context13 = ownKeys(Object(source))).call(_context13, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
 
 // eslint-disable-line
 var STRING_VALUES = (0, _immutable.Set)(['input', 'number', 'percentage', 'currency', 'datetime']);
@@ -142,9 +144,13 @@ var ConditionalDialog = function ConditionalDialog(props) {
         }
       }
 
+      if ((0, _values.default)(props).getIn([props.name, 'dynamicValues'])) {
+        initialModalValues.dynamicValues = (0, _values.default)(props).getIn([props.name, 'dynamicValues']);
+      }
+
       setModalValues((0, _immutable.Map)(initialModalValues));
     }
-  }, [props.name]);
+  }, [[props.name]]);
 
   function getMaxFieldCount() {
     if (_SearchUtils.CONDITIONS[condition()]) {
@@ -194,6 +200,12 @@ var ConditionalDialog = function ConditionalDialog(props) {
     return ret;
   }
 
+  function hasDynamicValues() {
+    var _context4;
+
+    return props.typeahead && props.typeahead.key && (0, _startsWith.default)(_context4 = props.typeahead.key.toLowerCase()).call(_context4, 'c3_sec_') && modalValues && modalValues.get('condition', '') === 'is one of';
+  }
+
   function getSchema() {
     var schema = {
       form: {
@@ -233,7 +245,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
     var fieldCount = 0;
 
     if (maxFieldCount < 3 && maxFieldCount > 0) {
-      var _context4;
+      var _context5;
 
       schema.form.jsonschema.layout.push({
         type: 'field',
@@ -253,7 +265,43 @@ var ConditionalDialog = function ConditionalDialog(props) {
               fontSize: '12px'
             }
           },
-          label: (0, _concat.default)(_context4 = "(".concat(maxFieldCount, " value")).call(_context4, maxFieldCount === 1 ? '' : 's', " allowed)")
+          label: (0, _concat.default)(_context5 = "(".concat(maxFieldCount, " value")).call(_context5, maxFieldCount === 1 ? '' : 's', " allowed)")
+        }
+      });
+    }
+
+    if (hasDynamicValues()) {
+      var _context6;
+
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {
+          x: 3,
+          y: 1,
+          h: 2,
+          w: 6
+        },
+        config: {
+          name: 'dynamicValues',
+          type: 'multicheckbox',
+          link: undefined,
+          style: {
+            label: {
+              lineHeight: '12px',
+              fontSize: '12px'
+            }
+          },
+          label: (0, _concat.default)(_context6 = "(".concat(maxFieldCount, " value")).call(_context6, maxFieldCount === 1 ? '' : 's', " allowed)"),
+          keyword: {
+            category: 'NONE',
+            options: [{
+              label: '{Logged on User}',
+              value: '{Logged on User}'
+            }, {
+              label: '{Reports to Logged on User}',
+              value: '{Reports to Logged on User}'
+            }]
+          }
         }
       });
     }
@@ -293,7 +341,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
 
     if (_SearchUtils.MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0) {
       while (fieldCount < minFieldCount || fieldCount < maxFieldCount && fieldCount < nFieldsWithValues() + 1) {
-        var _context5;
+        var _context7;
 
         var label = _SearchUtils.CONDITIONS[condition()];
 
@@ -316,7 +364,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
           config: _objectSpread({}, extraFieldProps, {
             link: undefined,
             readonly: false,
-            name: (0, _concat.default)(_context5 = "".concat(props.name, "-")).call(_context5, fieldCount),
+            name: (0, _concat.default)(_context7 = "".concat(props.name, "-")).call(_context7, fieldCount),
             label: label,
             interactive: true,
             clearable: true,
@@ -383,9 +431,9 @@ var ConditionalDialog = function ConditionalDialog(props) {
       var maxFieldValues = _SearchUtils.CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields;
 
       if (newFieldValue.get('values', (0, _immutable.List)()).size >= maxFieldValues) {
-        var _context6;
+        var _context8;
 
-        newFieldValue = newFieldValue.set('values', (0, _slice.default)(_context6 = newFieldValue.get('values', (0, _immutable.List)())).call(_context6, 0, maxFieldValues));
+        newFieldValue = newFieldValue.set('values', (0, _slice.default)(_context8 = newFieldValue.get('values', (0, _immutable.List)())).call(_context8, 0, maxFieldValues));
       }
 
       props.onChange({
@@ -410,18 +458,18 @@ var ConditionalDialog = function ConditionalDialog(props) {
   }
 
   function deleteIndex(i, values) {
-    var _context9;
+    var _context11;
 
     var stateChanges = modalValues;
 
     for (var x = (0, _parseInt2.default)(i); x < values.size - 1; x++) {
-      var _context7, _context8;
+      var _context9, _context10;
 
       var next = x + 1;
-      stateChanges = stateChanges.set((0, _concat.default)(_context7 = "".concat(props.name, "-")).call(_context7, x), modalValues.get((0, _concat.default)(_context8 = "".concat(props.name, "-")).call(_context8, next), ''));
+      stateChanges = stateChanges.set((0, _concat.default)(_context9 = "".concat(props.name, "-")).call(_context9, x), modalValues.get((0, _concat.default)(_context10 = "".concat(props.name, "-")).call(_context10, next), ''));
     }
 
-    stateChanges = stateChanges.delete((0, _concat.default)(_context9 = "".concat(props.name, "-")).call(_context9, values.size - 1));
+    stateChanges = stateChanges.delete((0, _concat.default)(_context11 = "".concat(props.name, "-")).call(_context11, values.size - 1));
     setModalValues(stateChanges);
     return (0, _splice.default)(values).call(values, i, 1);
   }
@@ -467,6 +515,11 @@ var ConditionalDialog = function ConditionalDialog(props) {
       }
     }
 
+    if (e.target.name === 'dynamicValues') {
+      newFieldValue = newFieldValue.set('condition', 'is one of');
+      newFieldValue = newFieldValue.set('dynamicValues', e.target.value);
+    }
+
     newFieldValue = newFieldValue.set('values', values);
     props.onChange({
       target: {
@@ -478,7 +531,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
 
   var headerHeight = 64;
   var footerHeight = 64;
-  var fieldHeight = 55;
+  var fieldHeight = 55 + (hasDynamicValues() ? 50 : 0);
   var extraBodyHeight = 80;
   var maxModalHeight = 550;
   var modalHeight = (nFieldsWithValues() + 2) * fieldHeight + headerHeight + footerHeight + extraBodyHeight;

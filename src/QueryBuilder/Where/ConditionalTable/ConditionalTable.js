@@ -82,13 +82,14 @@ export default class ConditionalTable extends Component {
         value = List(value).slice(0, CONDITIONS[cond].maxFields).toJS()
       }
       i = value.length
+
       if (value && value.forEach) {
         value.forEach(val => {
           if (typeof val === 'object') {
             if (val.values) {
               val = val.values
             } else {
-              val = val.label
+              val = val.label || val
             }
           }
           valString = valString + val + ((i > 1) ? ', ' : '')
@@ -155,7 +156,7 @@ export default class ConditionalTable extends Component {
           }
         }
       }
-      if (newValue.size > 0 || this.state.noValueConditions.has(value.condition)) {
+      if (newValue.size > 0 || this.state.noValueConditions.has(value.condition) || value.dynamicValues) {
         let cond = 'contains'
         if (formValues[key] && formValues[key].condition) {
           cond = formValues[key].condition
@@ -168,6 +169,7 @@ export default class ConditionalTable extends Component {
           label: this.getLabel(key),
           comparator: cond,
           values: newValue,
+          dynamicValues: value.dynamicValues,
           rawValues: rawValues
         })
       }
@@ -325,15 +327,17 @@ export default class ConditionalTable extends Component {
         </tr>
       )
     } else {
-      if (value.values && value.values.length === 0) {
+      if (value.values &&
+        value.values.length === 0 &&
+        (!value.dynamicValues || (value.dynamicValues && value.dynamicValues.length === 0))) {
         return null
       }
       return (
         <tr key={`row-${key}`}>
           <td key={`column-${key}`}>
             <strong>{this.getLabel(key)}</strong>
-            {this.buildMultiString(key, value.values)}
-            {this.renderDeleteIcon(key, value.values)}
+            {this.buildMultiString(key, value.values.concat(value.dynamicValues || []))}
+            {this.renderDeleteIcon(key, value.values.concat(value.dynamicValues || []))}
           </td>
         </tr>
       )
@@ -428,7 +432,6 @@ export default class ConditionalTable extends Component {
             </tfoot>
           </table>
         </div>
-
       </div>
     )
   }

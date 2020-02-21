@@ -14,6 +14,8 @@ exports.default = void 0;
 
 var _sort = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/sort"));
 
+var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
+
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
 
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
@@ -58,7 +60,7 @@ function (_Component) {
   (0, _inherits2.default)(ConditionalTable, _Component);
 
   function ConditionalTable(props) {
-    var _context6;
+    var _context8;
 
     var _this;
 
@@ -103,7 +105,7 @@ function (_Component) {
               if ((0, _values.default)(val)) {
                 val = (0, _values.default)(val);
               } else {
-                val = val.label;
+                val = val.label || val;
               }
             }
 
@@ -184,7 +186,7 @@ function (_Component) {
           }
         }
 
-        if (newValue.size > 0 || _this.state.noValueConditions.has(value.condition)) {
+        if (newValue.size > 0 || _this.state.noValueConditions.has(value.condition) || value.dynamicValues) {
           var cond = 'contains';
 
           if (formValues[key] && formValues[key].condition) {
@@ -200,6 +202,7 @@ function (_Component) {
             label: _this.getLabel(key),
             comparator: cond,
             values: newValue,
+            dynamicValues: value.dynamicValues,
             rawValues: rawValues
           });
         }
@@ -358,7 +361,9 @@ function (_Component) {
           key: "column-".concat(key)
         }, _react.default.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value)));
       } else {
-        if ((0, _values.default)(value) && (0, _values.default)(value).length === 0) {
+        var _context6, _context7;
+
+        if ((0, _values.default)(value) && (0, _values.default)(value).length === 0 && (!value.dynamicValues || value.dynamicValues && value.dynamicValues.length === 0)) {
           return null;
         }
 
@@ -366,11 +371,11 @@ function (_Component) {
           key: "row-".concat(key)
         }, _react.default.createElement("td", {
           key: "column-".concat(key)
-        }, _react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _values.default)(value)), _this.renderDeleteIcon(key, (0, _values.default)(value))));
+        }, _react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _concat.default)(_context6 = (0, _values.default)(value)).call(_context6, value.dynamicValues || [])), _this.renderDeleteIcon(key, (0, _concat.default)(_context7 = (0, _values.default)(value)).call(_context7, value.dynamicValues || []))));
       }
     });
     var noValueConditions = [];
-    (0, _forEach.default)(_context6 = (0, _keys.default)(_index.CONDITIONS)).call(_context6, function (k) {
+    (0, _forEach.default)(_context8 = (0, _keys.default)(_index.CONDITIONS)).call(_context8, function (k) {
       if (_index.CONDITIONS[k].maxFields === 0) {
         noValueConditions.push(k);
       }
@@ -397,17 +402,17 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _context7,
-          _context8,
+      var _context9,
+          _context10,
           _this2 = this;
 
-      var tbody = (0, _map.default)(_context7 = (0, _sort.default)(_context8 = (0, _keys.default)(this.props.formValues)).call(_context8, function (a, b) {
+      var tbody = (0, _map.default)(_context9 = (0, _sort.default)(_context10 = (0, _keys.default)(this.props.formValues)).call(_context10, function (a, b) {
         if (_this2.getLabel(a) === undefined || _this2.getLabel(b) === undefined) {
           return 0;
         }
 
         return _this2.getLabel(a).localeCompare(_this2.getLabel(b));
-      })).call(_context7, function (key) {
+      })).call(_context9, function (key) {
         if (_this2.props.formValues[key]) {
           return _this2.buildTableRow(key, _this2.props.formValues[key]);
         } else {
