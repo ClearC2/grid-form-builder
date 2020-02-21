@@ -1,3 +1,10 @@
+## [3.17.1](https://github.com/ClearC2/grid-form-builder/compare/v3.17.0...v3.17.1) (2020-02-21)
+
+
+### Bug Fixes
+
+* **undefined:** error for dynamic values when none present ([671fb3f](https://github.com/ClearC2/grid-form-builder/commit/671fb3f71a6858c2630a1fabba46eaca8afe93d7))
+
 # [3.17.0](https://github.com/ClearC2/grid-form-builder/compare/v3.16.0...v3.17.0) (2020-02-21)
 
 
