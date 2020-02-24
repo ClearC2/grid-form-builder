@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'; // import Cleave from 'cleave.js/react'
 
 import Cleave from '../Cleave'; // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
 
-import 'cleave.js/dist/addons/cleave-phone.us';
+import 'cleave.js/dist/addons/cleave-phone.i18n';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 
@@ -29,7 +29,9 @@ var Phone = function Phone(props) {
       requiredWarning = props.requiredWarning,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      required = props.required;
+      required = props.required,
+      _props$region = props.region,
+      region = _props$region === void 0 ? 'US' : _props$region;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -110,7 +112,7 @@ var Phone = function Phone(props) {
     ref: input,
     options: {
       phone: true,
-      phoneRegionCode: 'US',
+      phoneRegionCode: region,
       delimiter: delimiter
     },
     className: className,
@@ -150,5 +152,6 @@ Phone.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  region: PropTypes.string
 };

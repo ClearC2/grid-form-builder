@@ -20,7 +20,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Cleave = _interopRequireDefault(require("../Cleave"));
 
-require("cleave.js/dist/addons/cleave-phone.us");
+require("cleave.js/dist/addons/cleave-phone.i18n");
 
 var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIcon"));
 
@@ -47,7 +47,9 @@ var Phone = function Phone(props) {
       requiredWarning = props.requiredWarning,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      required = props.required;
+      required = props.required,
+      _props$region = props.region,
+      region = _props$region === void 0 ? 'US' : _props$region;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -128,7 +130,7 @@ var Phone = function Phone(props) {
     ref: input,
     options: {
       phone: true,
-      phoneRegionCode: 'US',
+      phoneRegionCode: region,
       delimiter: delimiter
     },
     className: className,
@@ -169,5 +171,6 @@ Phone.propTypes = {
   interactive: _propTypes.default.bool,
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
-  required: _propTypes.default.bool
+  required: _propTypes.default.bool,
+  region: _propTypes.default.string
 };

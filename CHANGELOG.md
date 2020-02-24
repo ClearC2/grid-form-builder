@@ -1,3 +1,10 @@
+# [3.18.0](https://github.com/ClearC2/grid-form-builder/compare/v3.17.1...v3.18.0) (2020-02-24)
+
+
+### Features
+
+* **phone:** region is now an accepted config prop ([c660d72](https://github.com/ClearC2/grid-form-builder/commit/c660d72d7d750ea20e1905c58e999f5293e1550f))
+
 ## [3.17.1](https://github.com/ClearC2/grid-form-builder/compare/v3.17.0...v3.17.1) (2020-02-21)
 
 
