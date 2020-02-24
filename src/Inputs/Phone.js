@@ -4,7 +4,7 @@ import {useCallback, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 // import Cleave from 'cleave.js/react'
 import Cleave from '../Cleave' // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
-import 'cleave.js/dist/addons/cleave-phone.us'
+import 'cleave.js/dist/addons/cleave-phone.i18n'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
 
@@ -23,7 +23,8 @@ const Phone = props => {
     interactive = true,
     requiredWarning,
     style = {},
-    required
+    required,
+    region = 'US'
   } = props
 
   const {
@@ -84,7 +85,7 @@ const Phone = props => {
               ref={input}
               options={{
                 phone: true,
-                phoneRegionCode: 'US',
+                phoneRegionCode: region,
                 delimiter
               }}
               className={className}
@@ -127,5 +128,6 @@ Phone.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  region: PropTypes.string
 }
