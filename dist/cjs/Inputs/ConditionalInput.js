@@ -110,7 +110,7 @@ var ConditionalInput = function ConditionalInput(props) {
         }
       });
     }
-  }, [name, onChange]);
+  }, [name]);
   var cond = values.getIn([name, 'condition'], '');
   var vals = values.getIn([name, 'values'], (0, _immutable.List)());
   var hasValue = vals.size > 0 || (0, _includes.default)(cond).call(cond, 'blank') || cond === 'today' || cond === 'this month' || cond === 'year to date' || values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size;

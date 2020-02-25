@@ -28,7 +28,7 @@ const ConditionalInput = props => {
       }
       onChange({target: {name: name, value: defaults}})
     }
-  }, [name, onChange])
+  }, [name])
 
   const cond = values.getIn([name, 'condition'], '')
   const vals = values.getIn([name, 'values'], List())
