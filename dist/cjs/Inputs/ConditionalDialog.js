@@ -150,7 +150,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
 
       setModalValues((0, _immutable.Map)(initialModalValues));
     }
-  }, [[props.name]]);
+  }, [props.name]);
 
   function getMaxFieldCount() {
     if (_SearchUtils.CONDITIONS[condition()]) {

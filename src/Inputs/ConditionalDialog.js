@@ -61,7 +61,7 @@ const ConditionalDialog = props => {
       }
       setModalValues(Map(initialModalValues))
     }
-  }, [[props.name]])
+  }, [props.name])
   function getMaxFieldCount () {
     if (CONDITIONS[condition()]) {
       return CONDITIONS[condition()].maxFields
