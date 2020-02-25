@@ -1,3 +1,10 @@
+## [3.18.1](https://github.com/ClearC2/grid-form-builder/compare/v3.18.0...v3.18.1) (2020-02-25)
+
+
+### Bug Fixes
+
+* **conditionalDIalog:** useEffect update array causing loop ([b30a0bf](https://github.com/ClearC2/grid-form-builder/commit/b30a0bf5b77bc9728ddbf5950376e4c9c1db2f4c))
+
 # [3.18.0](https://github.com/ClearC2/grid-form-builder/compare/v3.17.1...v3.18.0) (2020-02-24)
 
 
