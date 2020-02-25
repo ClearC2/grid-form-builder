@@ -1,3 +1,10 @@
+## [3.18.2](https://github.com/ClearC2/grid-form-builder/compare/v3.18.1...v3.18.2) (2020-02-25)
+
+
+### Bug Fixes
+
+* **linter:** changed function of code on lint ([5a978ae](https://github.com/ClearC2/grid-form-builder/commit/5a978aed83e3924b9f1f552728472c70aa57dfa0))
+
 ## [3.18.1](https://github.com/ClearC2/grid-form-builder/compare/v3.18.0...v3.18.1) (2020-02-25)
 
 
