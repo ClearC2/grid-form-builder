@@ -32,6 +32,7 @@ import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INP
 var STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime']);
 
 var ConditionalDialog = function ConditionalDialog(props) {
+  console.log('conditional dialog props logggggggggg');
   var propValue = props.value;
 
   if (!propValue) {
