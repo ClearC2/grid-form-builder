@@ -1,3 +1,11 @@
+## [3.18.3](https://github.com/ClearC2/grid-form-builder/compare/v3.18.2...v3.18.3) (2020-02-26)
+
+
+### Bug Fixes
+
+* **condDialog:** height for is between conditions ([b5ced54](https://github.com/ClearC2/grid-form-builder/commit/b5ced5410d1bd05900e924b2c31c8e10ff61bacc))
+* **reports:** extra bracket in the render appeared as text ([c369514](https://github.com/ClearC2/grid-form-builder/commit/c369514555ceb812b25485110bd81d02a3a9c5e6))
+
 ## [3.18.2](https://github.com/ClearC2/grid-form-builder/compare/v3.18.1...v3.18.2) (2020-02-25)
 
 
