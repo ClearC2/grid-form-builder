@@ -73,7 +73,7 @@ export default class ConditionalTable extends Component {
         if (typeof value[0] === 'string' && value[0].split('¤').length > 1) {
           value = value[0].split('¤')
         } else {
-          value = value.map(v => v.label || v)
+          value = value.map(v => v ? v.label || v : '')
         }
       }
       let i = value.length

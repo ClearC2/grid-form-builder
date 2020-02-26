@@ -474,6 +474,10 @@ var ConditionalDialog = function ConditionalDialog(props) {
     return (0, _splice.default)(values).call(values, i, 1);
   }
 
+  function isBetweenCondition() {
+    return (0, _values.default)(props).getIn([props.name, 'condition']) === 'is between';
+  }
+
   var dialogOnChange = function dialogOnChange(e) {
     if (e.target.name === 'condition') {
       handleConditionChange(e);
@@ -534,7 +538,8 @@ var ConditionalDialog = function ConditionalDialog(props) {
   var fieldHeight = 55 + (hasDynamicValues() ? 50 : 0);
   var extraBodyHeight = 80;
   var maxModalHeight = 550;
-  var modalHeight = (nFieldsWithValues() + 2) * fieldHeight + headerHeight + footerHeight + extraBodyHeight;
+  var fieldsHeight = isBetweenCondition() ? fieldHeight * 3 : (nFieldsWithValues() + 2) * fieldHeight;
+  var modalHeight = fieldsHeight + headerHeight + footerHeight + extraBodyHeight;
   var maxBodyHeight = maxModalHeight - headerHeight - footerHeight;
   return _react.default.createElement(_c2Dialog.Dialog, {
     size: {

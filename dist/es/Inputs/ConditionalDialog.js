@@ -32,7 +32,6 @@ import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INP
 var STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime']);
 
 var ConditionalDialog = function ConditionalDialog(props) {
-  console.log('conditional dialog props logggggggggg');
   var propValue = props.value;
 
   if (!propValue) {
@@ -438,6 +437,10 @@ var ConditionalDialog = function ConditionalDialog(props) {
     return _spliceInstanceProperty(values).call(values, i, 1);
   }
 
+  function isBetweenCondition() {
+    return _valuesInstanceProperty(props).getIn([props.name, 'condition']) === 'is between';
+  }
+
   var dialogOnChange = function dialogOnChange(e) {
     if (e.target.name === 'condition') {
       handleConditionChange(e);
@@ -498,7 +501,8 @@ var ConditionalDialog = function ConditionalDialog(props) {
   var fieldHeight = 55 + (hasDynamicValues() ? 50 : 0);
   var extraBodyHeight = 80;
   var maxModalHeight = 550;
-  var modalHeight = (nFieldsWithValues() + 2) * fieldHeight + headerHeight + footerHeight + extraBodyHeight;
+  var fieldsHeight = isBetweenCondition() ? fieldHeight * 3 : (nFieldsWithValues() + 2) * fieldHeight;
+  var modalHeight = fieldsHeight + headerHeight + footerHeight + extraBodyHeight;
   var maxBodyHeight = maxModalHeight - headerHeight - footerHeight;
   return React.createElement(Dialog, {
     size: {

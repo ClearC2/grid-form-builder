@@ -83,7 +83,7 @@ function (_Component) {
             value = value[0].split('¤');
           } else {
             value = (0, _map.default)(value).call(value, function (v) {
-              return v.label || v;
+              return v ? v.label || v : '';
             });
           }
         }

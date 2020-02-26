@@ -51,7 +51,7 @@ function (_Component) {
             value = value[0].split('¤');
           } else {
             value = _mapInstanceProperty(value).call(value, function (v) {
-              return v.label || v;
+              return v ? v.label || v : '';
             });
           }
         }

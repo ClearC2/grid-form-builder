@@ -285,7 +285,9 @@ const ConditionalDialog = props => {
     setModalValues(stateChanges)
     return values.splice(i, 1)
   }
-
+  function isBetweenCondition () {
+    return props.values.getIn([props.name, 'condition']) === 'is between'
+  }
   const dialogOnChange = (e) => {
     if (e.target.name === 'condition') {
       handleConditionChange(e)
@@ -331,7 +333,8 @@ const ConditionalDialog = props => {
   const fieldHeight = 55 + (hasDynamicValues() ? 50 : 0)
   const extraBodyHeight = 80
   const maxModalHeight = 550
-  const modalHeight = (((nFieldsWithValues() + 2) * fieldHeight) + headerHeight + footerHeight + extraBodyHeight)
+  const fieldsHeight = isBetweenCondition() ? fieldHeight * 3 : ((nFieldsWithValues() + 2) * fieldHeight)
+  const modalHeight = (fieldsHeight + headerHeight + footerHeight + extraBodyHeight)
   const maxBodyHeight = maxModalHeight - headerHeight - footerHeight
   return (
     <Dialog
