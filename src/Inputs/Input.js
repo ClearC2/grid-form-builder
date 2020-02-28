@@ -19,7 +19,8 @@ const Input = props => {
     interactive = true,
     requiredWarning,
     style = {},
-    required
+    required,
+    type = 'text'
   } = props
 
   const {
@@ -76,6 +77,7 @@ const Input = props => {
               onBlur={handleOnBlur}
               style={valueStyle}
               css={theme.value}
+              type={type}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
@@ -102,5 +104,6 @@ Input.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  type: PropTypes.string
 }
