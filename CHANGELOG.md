@@ -1,3 +1,10 @@
+# [3.21.0](https://github.com/ClearC2/grid-form-builder/compare/v3.20.0...v3.21.0) (2020-02-28)
+
+
+### Features
+
+* **input:** input now accepts format as a config option ([aa47876](https://github.com/ClearC2/grid-form-builder/commit/aa478764282e417fabe68832e0efa5e0299d8d08))
+
 # [3.20.0](https://github.com/ClearC2/grid-form-builder/compare/v3.19.0...v3.20.0) (2020-02-28)
 
 
