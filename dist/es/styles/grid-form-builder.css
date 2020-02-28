@@ -168,11 +168,17 @@ div.gfb-inner-cell-input {
 
 div.gfb-inner-cell-input, div.gfb-input-outer, div.gfb-input-inner, div.gfb-input__control,
 div.gfb-input__control:hover, div.gfb-input__value-container, div.gfb-input__value-container > div[class^=css-],
-div.gfb-input__input, input.gfb-input__single-value, div.gfb-input__single-value, div.gfb-input__value-container > div > div.gfb-input__input > input
+div.gfb-input__input, input.gfb-input__single-value, div.gfb-input__single-value, div.gfb-input__value-container > div > div.gfb-input__input > input,
+select.gfb-input__input
 {
   flex: 1;
   display: flex !important;
   overflow: hidden;
+}
+
+select.gfb-input__input {
+  border: 0 !important;
+  outline: 0 !important;
 }
 
 div.gfb-input-inner {
@@ -219,7 +225,7 @@ div.gfb-input__value-container > div[class^=css-] {
   align-items: stretch;
 }
 
-div.gfb-input__input {
+div.gfb-input__input, select.gfb-input__input {
   margin: 0;
   padding: 0;
 }

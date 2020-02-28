@@ -22,9 +22,9 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactSelect from 'react-select';
 import Creatable from 'react-select/creatable';
-import { isMobile } from '../utils';
-import ValidationErrorIcon from '../ValidationErrorIcon';
-import useTheme from '../theme/useTheme';
+import { isMobile } from '../../utils';
+import ValidationErrorIcon from '../../ValidationErrorIcon';
+import useTheme from '../../theme/useTheme';
 var viewPortHeight = document.documentElement.clientHeight;
 
 var Select = function Select(props) {

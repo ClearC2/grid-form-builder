@@ -1,3 +1,10 @@
+# [3.19.0](https://github.com/ClearC2/grid-form-builder/compare/v3.18.3...v3.19.0) (2020-02-28)
+
+
+### Features
+
+* **select:** select now accepts a native config bool to switch the element to use a native select tag ([eb3765d](https://github.com/ClearC2/grid-form-builder/commit/eb3765da18715e7b9f2fce3e2b69d8e9c0553638))
+
 ## [3.18.3](https://github.com/ClearC2/grid-form-builder/compare/v3.18.2...v3.18.3) (2020-02-26)
 
 
