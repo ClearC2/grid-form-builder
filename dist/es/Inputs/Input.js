@@ -23,7 +23,9 @@ var Input = function Input(props) {
       requiredWarning = props.requiredWarning,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      required = props.required;
+      required = props.required,
+      _props$type = props.type,
+      type = _props$type === void 0 ? 'text' : _props$type;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -97,7 +99,8 @@ var Input = function Input(props) {
     onFocus: handleOnFocus,
     onBlur: handleOnBlur,
     style: valueStyle,
-    css: theme.value
+    css: theme.value,
+    type: type
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
@@ -121,5 +124,6 @@ Input.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  type: PropTypes.string
 };
