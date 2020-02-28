@@ -783,6 +783,7 @@
           "label": "Normal Select",
           "type": "select",
           "required": true,
+          "native": true,
           "keyword": {
             "category": "TASKS",
             "options": [{

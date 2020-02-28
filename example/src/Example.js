@@ -131,7 +131,7 @@ export default class Example extends Component {
           inputOuter: {},
           inputInner: {},
           inputControl: {
-            borderRadius: '5px !important'
+            // borderRadius: '5px !important'
           },
           valueContainer: {},
           indicators: {},
