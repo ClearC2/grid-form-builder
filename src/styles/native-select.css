@@ -19,3 +19,7 @@
     width: 14px;
     color: rgb(204, 204, 204);
 }
+
+.gfb-native-select-separator {
+    margin-right: 5px;
+}

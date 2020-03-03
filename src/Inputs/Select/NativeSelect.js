@@ -94,7 +94,8 @@ const NativeSelect = props => {
             </select>
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
-            <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
+            <span
+              className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-native-select-separator' />
             <FaChevronDown
               className={isMobile
                 ? 'gfb-native-select-mobile-down-indicator'
