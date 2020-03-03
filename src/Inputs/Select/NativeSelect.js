@@ -6,7 +6,7 @@ import useTheme from '../../theme/useTheme'
 import {useCallback, useState} from 'react'
 import {FaChevronDown} from 'react-icons/fa'
 import {isMobile} from '../../utils'
-import './native-select.css'
+import '../../styles/native-select.css'
 
 const NativeSelect = props => {
   const {

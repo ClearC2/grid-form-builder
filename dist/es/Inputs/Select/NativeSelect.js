@@ -9,7 +9,7 @@ import useTheme from '../../theme/useTheme';
 import { useCallback, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 import { isMobile } from '../../utils';
-import './native-select.css';
+import '../../styles/native-select.css';
 
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,

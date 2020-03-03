@@ -28,7 +28,7 @@ var _fa = require("react-icons/fa");
 
 var _utils = require("../../utils");
 
-require("./native-select.css");
+require("../../styles/native-select.css");
 
 /** @jsx jsx */
 var NativeSelect = function NativeSelect(props) {
