@@ -8,8 +8,16 @@ import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
 import { useCallback, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
-import { isMobile } from '../../utils';
 import '../../styles/native-select.css';
+var _window = window,
+    _window$device = _window.device,
+    device = _window$device === void 0 ? {
+  cordova: false,
+  model: 'browser',
+  platform: 'browser',
+  uuid: 'browser',
+  version: 'browser'
+} : _window$device;
 
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,
@@ -54,6 +62,7 @@ var NativeSelect = function NativeSelect(props) {
       _useState2 = _slicedToArray(_useState, 1),
       options = _useState2[0];
 
+  var platform = device.platform;
   var handleOnChange = useCallback(function (e) {
     var value = e.target.value;
     onChange({
@@ -119,7 +128,7 @@ var NativeSelect = function NativeSelect(props) {
   }, jsx("span", {
     className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator"
   }), jsx(FaChevronDown, {
-    className: isMobile ? 'gfb-native-select-mobile-down-indicator' : 'gfb-native-select-web-down-indicator'
+    className: platform === 'ios' ? 'gfb-native-select-ios-down-indicator' : platform === 'android' ? 'gfb-native-select-android-down-indicator' : 'gfb-native-select-web-down-indicator'
   }), validationError && jsx(ValidationErrorIcon, {
     message: validationError
   })))));
