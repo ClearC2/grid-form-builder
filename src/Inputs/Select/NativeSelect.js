@@ -5,6 +5,8 @@ import ValidationErrorIcon from '../../ValidationErrorIcon'
 import useTheme from '../../theme/useTheme'
 import {useCallback, useState} from 'react'
 import {FaChevronDown} from 'react-icons/fa'
+import {isMobile} from '../../utils'
+import './native-select.css'
 
 const NativeSelect = props => {
   const {
@@ -92,7 +94,7 @@ const NativeSelect = props => {
             </select>
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
-            <FaChevronDown color='rgb(204, 204, 204)' size={14} style={{marginRight: 11, marginTop: 5}} />
+            <FaChevronDown className={isMobile ? 'gfb-native-select-down-indicator' : ''} />
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

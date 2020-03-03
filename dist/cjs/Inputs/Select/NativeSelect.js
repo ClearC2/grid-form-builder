@@ -26,6 +26,10 @@ var _react = require("react");
 
 var _fa = require("react-icons/fa");
 
+var _utils = require("../../utils");
+
+require("./native-select.css");
+
 /** @jsx jsx */
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,
@@ -133,12 +137,7 @@ var NativeSelect = function NativeSelect(props) {
     style: indicators,
     css: theme.indicators
   }, (0, _core.jsx)(_fa.FaChevronDown, {
-    color: "rgb(204, 204, 204)",
-    size: 14,
-    style: {
-      marginRight: 11,
-      marginTop: 5
-    }
+    className: _utils.isMobile ? 'gfb-native-select-down-indicator' : ''
   }), validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationError
   })))));

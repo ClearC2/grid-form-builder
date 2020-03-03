@@ -8,6 +8,8 @@ import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
 import { useCallback, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
+import { isMobile } from '../../utils';
+import './native-select.css';
 
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,
@@ -115,12 +117,7 @@ var NativeSelect = function NativeSelect(props) {
     style: indicators,
     css: theme.indicators
   }, jsx(FaChevronDown, {
-    color: "rgb(204, 204, 204)",
-    size: 14,
-    style: {
-      marginRight: 11,
-      marginTop: 5
-    }
+    className: isMobile ? 'gfb-native-select-down-indicator' : ''
   }), validationError && jsx(ValidationErrorIcon, {
     message: validationError
   })))));
