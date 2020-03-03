@@ -1,4 +1,4 @@
-.gfb-native-select-down-indicator {
+.gfb-native-select-mobile-down-indicator {
     margin-right: 11px;
     margin-top: 5px;
     height: 14px;
@@ -9,4 +9,12 @@
 .gfb-select-webkit-none {
     -webkit-appearance: none;
     margin-left: 2px !important;
+}
+
+.gfb-native-select-web-down-indicator {
+    margin-right: 5px;
+    margin-top: 2px;
+    height: 14px;
+    width: 14px;
+    color: rgb(204, 204, 204);
 }

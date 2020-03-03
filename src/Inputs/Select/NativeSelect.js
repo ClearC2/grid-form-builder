@@ -94,7 +94,11 @@ const NativeSelect = props => {
             </select>
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
-            <FaChevronDown className={isMobile ? 'gfb-native-select-down-indicator' : ''} />
+            <FaChevronDown
+              className={isMobile
+                ? 'gfb-native-select-mobile-down-indicator'
+                : 'gfb-native-select-web-down-indicator'}
+            />
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

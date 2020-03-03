@@ -117,7 +117,7 @@ var NativeSelect = function NativeSelect(props) {
     style: indicators,
     css: theme.indicators
   }, jsx(FaChevronDown, {
-    className: isMobile ? 'gfb-native-select-down-indicator' : ''
+    className: isMobile ? 'gfb-native-select-mobile-down-indicator' : 'gfb-native-select-web-down-indicator'
   }), validationError && jsx(ValidationErrorIcon, {
     message: validationError
   })))));
