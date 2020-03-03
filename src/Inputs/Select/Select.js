@@ -52,7 +52,7 @@ const Select = props => {
     options: optionsTheme = {}
   } = theme
 
-  const [options] = useState(keyword.options || [])
+  const [options, setOptions] = useState(keyword.options || [])
   const [input, changeInput] = useState({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
   const [menuIsOpen, updateIsMenuOpen] = useState({})
@@ -107,6 +107,10 @@ const Select = props => {
     }
     updateIsMenuOpen({...menuIsOpen, [name]: menuOpenState})
   }, [menuIsOpen, name, updateIsMenuOpen])
+
+  useEffect(() => {
+    setOptions(keyword.options)
+  }, [keyword.options, keyword.options.length])
 
   useEffect(() => {
     setMenuOpenPosition()
