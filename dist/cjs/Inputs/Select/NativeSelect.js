@@ -82,7 +82,7 @@ var NativeSelect = function NativeSelect(props) {
       _useState2 = (0, _slicedToArray2.default)(_useState, 1),
       options = _useState2[0];
 
-  var platform = device.platform;
+  var platform = device.platform.toLowerCase();
   var handleOnChange = (0, _react.useCallback)(function (e) {
     var value = e.target.value;
     onChange({

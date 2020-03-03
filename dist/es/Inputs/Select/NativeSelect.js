@@ -62,7 +62,7 @@ var NativeSelect = function NativeSelect(props) {
       _useState2 = _slicedToArray(_useState, 1),
       options = _useState2[0];
 
-  var platform = device.platform;
+  var platform = device.platform.toLowerCase();
   var handleOnChange = useCallback(function (e) {
     var value = e.target.value;
     onChange({

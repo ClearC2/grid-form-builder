@@ -42,7 +42,7 @@ const NativeSelect = props => {
 
   const [options] = useState(keyword.options || [])
 
-  const platform = device.platform
+  const platform = device.platform.toLowerCase()
 
   const handleOnChange = useCallback(e => {
     const {value} = e.target
