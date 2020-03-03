@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
 import useTheme from '../../theme/useTheme'
 import {useCallback, useState} from 'react'
+import {FaChevronDown} from 'react-icons/fa'
+import '../../styles/native-select.css'
+const {device = {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'}} = window
 
 const NativeSelect = props => {
   const {
@@ -39,12 +42,14 @@ const NativeSelect = props => {
 
   const [options] = useState(keyword.options || [])
 
+  const platform = device.platform.toLowerCase()
+
   const handleOnChange = useCallback(e => {
     const {value} = e.target
     onChange({target: {value, name}})
   }, [onChange, name])
 
-  let className = 'gfb-input__single-value gfb-input__input'
+  let className = 'gfb-input__single-value gfb-input__input gfb-select-webkit-none'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
   const valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container'
@@ -90,7 +95,17 @@ const NativeSelect = props => {
               })}
             </select>
           </div>
-          <div className='gfb-input__indicators' style={indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator' />
+            <FaChevronDown
+              className={
+                platform === 'ios'
+                  ? 'gfb-native-select-ios-down-indicator'
+                  : platform === 'android'
+                    ? 'gfb-native-select-android-down-indicator'
+                    : 'gfb-native-select-web-down-indicator'
+              }
+            />
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

@@ -7,6 +7,17 @@ import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
 import { useCallback, useState } from 'react';
+import { FaChevronDown } from 'react-icons/fa';
+import '../../styles/native-select.css';
+var _window = window,
+    _window$device = _window.device,
+    device = _window$device === void 0 ? {
+  cordova: false,
+  model: 'browser',
+  platform: 'browser',
+  uuid: 'browser',
+  version: 'browser'
+} : _window$device;
 
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,
@@ -51,6 +62,7 @@ var NativeSelect = function NativeSelect(props) {
       _useState2 = _slicedToArray(_useState, 1),
       options = _useState2[0];
 
+  var platform = device.platform.toLowerCase();
   var handleOnChange = useCallback(function (e) {
     var value = e.target.value;
     onChange({
@@ -60,7 +72,7 @@ var NativeSelect = function NativeSelect(props) {
       }
     });
   }, [onChange, name]);
-  var className = 'gfb-input__single-value gfb-input__input';
+  var className = 'gfb-input__single-value gfb-input__input gfb-select-webkit-none';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container';
@@ -111,8 +123,13 @@ var NativeSelect = function NativeSelect(props) {
     }, option.label ? option.label : option.value);
   }))), jsx("div", {
     className: "gfb-input__indicators",
-    style: indicators
-  }, validationError && jsx(ValidationErrorIcon, {
+    style: indicators,
+    css: theme.indicators
+  }, jsx("span", {
+    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator"
+  }), jsx(FaChevronDown, {
+    className: platform === 'ios' ? 'gfb-native-select-ios-down-indicator' : platform === 'android' ? 'gfb-native-select-android-down-indicator' : 'gfb-native-select-web-down-indicator'
+  }), validationError && jsx(ValidationErrorIcon, {
     message: validationError
   })))));
 };

@@ -24,7 +24,21 @@ var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
 
 var _react = require("react");
 
+var _fa = require("react-icons/fa");
+
+require("../../styles/native-select.css");
+
 /** @jsx jsx */
+var _window = window,
+    _window$device = _window.device,
+    device = _window$device === void 0 ? {
+  cordova: false,
+  model: 'browser',
+  platform: 'browser',
+  uuid: 'browser',
+  version: 'browser'
+} : _window$device;
+
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -68,6 +82,7 @@ var NativeSelect = function NativeSelect(props) {
       _useState2 = (0, _slicedToArray2.default)(_useState, 1),
       options = _useState2[0];
 
+  var platform = device.platform.toLowerCase();
   var handleOnChange = (0, _react.useCallback)(function (e) {
     var value = e.target.value;
     onChange({
@@ -77,7 +92,7 @@ var NativeSelect = function NativeSelect(props) {
       }
     });
   }, [onChange, name]);
-  var className = 'gfb-input__single-value gfb-input__input';
+  var className = 'gfb-input__single-value gfb-input__input gfb-select-webkit-none';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container';
@@ -128,8 +143,13 @@ var NativeSelect = function NativeSelect(props) {
     }, option.label ? option.label : option.value);
   }))), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
-    style: indicators
-  }, validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+    style: indicators,
+    css: theme.indicators
+  }, (0, _core.jsx)("span", {
+    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator"
+  }), (0, _core.jsx)(_fa.FaChevronDown, {
+    className: platform === 'ios' ? 'gfb-native-select-ios-down-indicator' : platform === 'android' ? 'gfb-native-select-android-down-indicator' : 'gfb-native-select-web-down-indicator'
+  }), validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationError
   })))));
 };

@@ -55,7 +55,16 @@ var randomId = function randomId() {
 };
 
 exports.randomId = randomId;
-var isMobile = !!('ontouchstart' in document.documentElement && navigator.userAgent.match(/Mobi/));
+var _window = window,
+    _window$device = _window.device,
+    device = _window$device === void 0 ? {
+  cordova: false,
+  model: 'browser',
+  platform: 'browser',
+  uuid: 'browser',
+  version: 'browser'
+} : _window$device;
+var isMobile = device.platform.toLowerCase() === 'ios' || device.platform.toLowerCase() === 'android';
 exports.isMobile = isMobile;
 
 var emailValidator = function emailValidator(email) {
