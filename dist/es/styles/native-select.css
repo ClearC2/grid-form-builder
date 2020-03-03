@@ -1,5 +1,5 @@
 .gfb-native-select-ios-down-indicator {
-    margin-right: 3px !important;
+    margin-right: 2px !important;
     margin-top: 5px;
     height: 14px !important;
     width: 14px !important;
@@ -7,7 +7,7 @@
 }
 
 .gfb-native-select-android-down-indicator {
-    margin-right: 5px;
+    margin-right: 6px;
     margin-top: 5px;
     height: 14px;
     width: 14px;
