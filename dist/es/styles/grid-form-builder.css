@@ -368,3 +368,8 @@ div.gfb-inner-cell-label > h3 {
   font-size: 14pt;
   color: #A0A0A0;
 }
+
+.gfb-select-webkit-none {
+  -webkit-appearance: none;
+  margin-left: 2px !important;
+}

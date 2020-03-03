@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
 import { useCallback, useState } from 'react';
+import { FaChevronDown } from 'react-icons/fa';
 
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,
@@ -60,7 +61,7 @@ var NativeSelect = function NativeSelect(props) {
       }
     });
   }, [onChange, name]);
-  var className = 'gfb-input__single-value gfb-input__input';
+  var className = 'gfb-input__single-value gfb-input__input gfb-select-webkit-none';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container';
@@ -111,8 +112,16 @@ var NativeSelect = function NativeSelect(props) {
     }, option.label ? option.label : option.value);
   }))), jsx("div", {
     className: "gfb-input__indicators",
-    style: indicators
-  }, validationError && jsx(ValidationErrorIcon, {
+    style: indicators,
+    css: theme.indicators
+  }, jsx(FaChevronDown, {
+    color: "rgb(204, 204, 204)",
+    size: 14,
+    style: {
+      marginRight: 11,
+      marginTop: 5
+    }
+  }), validationError && jsx(ValidationErrorIcon, {
     message: validationError
   })))));
 };

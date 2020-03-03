@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
 import useTheme from '../../theme/useTheme'
 import {useCallback, useState} from 'react'
+import {FaChevronDown} from 'react-icons/fa'
 
 const NativeSelect = props => {
   const {
@@ -44,7 +45,7 @@ const NativeSelect = props => {
     onChange({target: {value, name}})
   }, [onChange, name])
 
-  let className = 'gfb-input__single-value gfb-input__input'
+  let className = 'gfb-input__single-value gfb-input__input gfb-select-webkit-none'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
   const valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container'
@@ -90,7 +91,8 @@ const NativeSelect = props => {
               })}
             </select>
           </div>
-          <div className='gfb-input__indicators' style={indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            <FaChevronDown color='rgb(204, 204, 204)' size={14} style={{marginRight: 11, marginTop: 5}} />
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
