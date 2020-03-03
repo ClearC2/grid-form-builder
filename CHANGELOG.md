@@ -1,3 +1,10 @@
+## [3.22.1](https://github.com/ClearC2/grid-form-builder/compare/v3.22.0...v3.22.1) (2020-03-03)
+
+
+### Bug Fixes
+
+* **native-select:** add conditional classnames  ([#147](https://github.com/ClearC2/grid-form-builder/issues/147)) ([15053c2](https://github.com/ClearC2/grid-form-builder/commit/15053c261819afc7902deae73564d0d237c34426))
+
 # [3.22.0](https://github.com/ClearC2/grid-form-builder/compare/v3.21.0...v3.22.0) (2020-03-03)
 
 
