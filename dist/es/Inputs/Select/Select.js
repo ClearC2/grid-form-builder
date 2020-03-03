@@ -86,8 +86,9 @@ var Select = function Select(props) {
       optionsTheme = _theme$options === void 0 ? {} : _theme$options;
 
   var _useState = useState(keyword.options || []),
-      _useState2 = _slicedToArray(_useState, 1),
-      options = _useState2[0];
+      _useState2 = _slicedToArray(_useState, 2),
+      options = _useState2[0],
+      setOptions = _useState2[1];
 
   var _useState3 = useState({
     Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect
@@ -173,6 +174,9 @@ var Select = function Select(props) {
 
     updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, menuOpenState)));
   }, [menuIsOpen, name, updateIsMenuOpen]);
+  useEffect(function () {
+    setOptions(keyword.options);
+  }, [keyword.options, keyword.options.length]);
   useEffect(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);

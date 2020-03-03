@@ -1,3 +1,10 @@
+# [3.22.0](https://github.com/ClearC2/grid-form-builder/compare/v3.21.0...v3.22.0) (2020-03-03)
+
+
+### Features
+
+* **select:** if keyword options chance it should now set the state options to the new options ([c6c2aec](https://github.com/ClearC2/grid-form-builder/commit/c6c2aeca23428ed322572cadf5716dc7bbaa4440))
+
 # [3.21.0](https://github.com/ClearC2/grid-form-builder/compare/v3.20.0...v3.21.0) (2020-02-28)
 
 
