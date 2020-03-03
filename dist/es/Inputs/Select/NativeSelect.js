@@ -117,7 +117,7 @@ var NativeSelect = function NativeSelect(props) {
     style: indicators,
     css: theme.indicators
   }, jsx("span", {
-    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-native-select-separator"
+    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator"
   }), jsx(FaChevronDown, {
     className: isMobile ? 'gfb-native-select-mobile-down-indicator' : 'gfb-native-select-web-down-indicator'
   }), validationError && jsx(ValidationErrorIcon, {
