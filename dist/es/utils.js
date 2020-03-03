@@ -23,7 +23,16 @@ export var timeStamp = function timeStamp() {
 export var randomId = function randomId() {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 };
-export var isMobile = !!('ontouchstart' in document.documentElement && navigator.userAgent.match(/Mobi/));
+var _window = window,
+    _window$device = _window.device,
+    device = _window$device === void 0 ? {
+  cordova: false,
+  model: 'browser',
+  platform: 'browser',
+  uuid: 'browser',
+  version: 'browser'
+} : _window$device;
+export var isMobile = device.platform.toLowerCase() === 'ios' || device.platform.toLowerCase() === 'android';
 export var emailValidator = function emailValidator(email) {
   var _context2, _context3, _context4;
 
