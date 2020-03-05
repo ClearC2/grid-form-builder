@@ -59,7 +59,10 @@ const NativeSelect = props => {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
-
+  let indicatorClass = 'gfb-input__indicators'
+  if (readonly || disabled || !interactive) indicatorClass = indicatorClass + ' gfb-disabled-input'
+  let indSeparatorClass = 'gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator'
+  if (readonly || disabled || !interactive) indSeparatorClass = indSeparatorClass + ' gfb-disabled-indicator-separator'
   return (
     <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
       <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
@@ -95,15 +98,17 @@ const NativeSelect = props => {
               })}
             </select>
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
-            <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator' />
+          <div className={indicatorClass} style={indicators} css={theme.indicators}>
+            <span className={indSeparatorClass} />
             <FaChevronDown
               className={
                 platform === 'ios'
                   ? 'gfb-native-select-ios-down-indicator'
                   : platform === 'android'
                     ? 'gfb-native-select-android-down-indicator'
-                    : 'gfb-native-select-web-down-indicator'
+                    : platform === 'browser'
+                      ? 'gfb-native-select-web-down-indicator'
+                      : ''
               }
             />
             {validationError && <ValidationErrorIcon message={validationError} />}

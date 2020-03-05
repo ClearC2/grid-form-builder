@@ -76,6 +76,10 @@ var NativeSelect = function NativeSelect(props) {
     validationError = 'This Field is Required';
   }
 
+  var indicatorClass = 'gfb-input__indicators';
+  if (readonly || disabled || !interactive) indicatorClass = indicatorClass + ' gfb-disabled-input';
+  var indSeparatorClass = 'gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator';
+  if (readonly || disabled || !interactive) indSeparatorClass = indSeparatorClass + ' gfb-disabled-indicator-separator';
   return jsx("div", {
     className: "gfb-input-outer",
     style: inputOuter,
@@ -114,13 +118,13 @@ var NativeSelect = function NativeSelect(props) {
       css: optionsTheme
     }, option.label ? option.label : option.value);
   }))), jsx("div", {
-    className: "gfb-input__indicators",
+    className: indicatorClass,
     style: indicators,
     css: theme.indicators
   }, jsx("span", {
-    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator"
+    className: indSeparatorClass
   }), jsx(FaChevronDown, {
-    className: platform === 'ios' ? 'gfb-native-select-ios-down-indicator' : platform === 'android' ? 'gfb-native-select-android-down-indicator' : 'gfb-native-select-web-down-indicator'
+    className: platform === 'ios' ? 'gfb-native-select-ios-down-indicator' : platform === 'android' ? 'gfb-native-select-android-down-indicator' : platform === 'browser' ? 'gfb-native-select-web-down-indicator' : ''
   }), validationError && jsx(ValidationErrorIcon, {
     message: validationError
   })))));
