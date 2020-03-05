@@ -1,3 +1,10 @@
+## [3.22.2](https://github.com/ClearC2/grid-form-builder/compare/v3.22.1...v3.22.2) (2020-03-05)
+
+
+### Bug Fixes
+
+* **native-select:** add styling for readonly, accept device as a prop ([#148](https://github.com/ClearC2/grid-form-builder/issues/148)) ([e2a3fab](https://github.com/ClearC2/grid-form-builder/commit/e2a3faba5b57cd3546c21329e2be2ec6bc1ce502))
+
 ## [3.22.1](https://github.com/ClearC2/grid-form-builder/compare/v3.22.0...v3.22.1) (2020-03-03)
 
 
