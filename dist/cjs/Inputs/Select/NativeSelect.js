@@ -29,16 +29,6 @@ var _fa = require("react-icons/fa");
 require("../../styles/native-select.css");
 
 /** @jsx jsx */
-var _window = window,
-    _window$device = _window.device,
-    device = _window$device === void 0 ? {
-  cordova: false,
-  model: 'browser',
-  platform: 'browser',
-  uuid: 'browser',
-  version: 'browser'
-} : _window$device;
-
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -54,7 +44,8 @@ var NativeSelect = function NativeSelect(props) {
       _props$interactive = props.interactive,
       interactive = _props$interactive === void 0 ? true : _props$interactive,
       _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style;
+      style = _props$style === void 0 ? {} : _props$style,
+      device = props.device;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -173,7 +164,8 @@ NativeSelect.propTypes = {
   autoComplete: _propTypes.default.string,
   interactive: _propTypes.default.bool,
   style: _propTypes.default.object,
-  isClearable: _propTypes.default.bool
+  isClearable: _propTypes.default.bool,
+  device: _propTypes.default.object
 };
 var _default = NativeSelect;
 exports.default = _default;

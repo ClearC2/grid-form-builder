@@ -54,7 +54,8 @@ const FormBuilder = (props) => {
     dateTimeFormat,
     timeFormat,
     autoComplete,
-    style
+    style,
+    device = {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'}
   } = props
   const [grid, updateGrid] = useState({layout: List(), elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
@@ -202,6 +203,7 @@ const FormBuilder = (props) => {
               dateTimeFormat={dateTimeFormat}
               timeFormat={timeFormat}
               autoComplete={autoComplete}
+              device={device}
             />
           </div>
         )
@@ -358,7 +360,8 @@ FormBuilder.propTypes = {
   dateTimeFormat: PropTypes.string,
   timeFormat: PropTypes.string,
   autoComplete: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
+  device: PropTypes.object
 }
 
 FormBuilder.defaultProps = {

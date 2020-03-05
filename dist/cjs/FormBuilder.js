@@ -130,7 +130,15 @@ var FormBuilder = function FormBuilder(props) {
       dateTimeFormat = props.dateTimeFormat,
       timeFormat = props.timeFormat,
       autoComplete = props.autoComplete,
-      style = props.style;
+      style = props.style,
+      _props$device = props.device,
+      device = _props$device === void 0 ? {
+    cordova: false,
+    model: 'browser',
+    platform: 'browser',
+    uuid: 'browser',
+    version: 'browser'
+  } : _props$device;
 
   var _useState = (0, _react.useState)({
     layout: (0, _immutable.List)(),
@@ -317,7 +325,8 @@ var FormBuilder = function FormBuilder(props) {
           dateFormat: dateFormat,
           dateTimeFormat: dateTimeFormat,
           timeFormat: timeFormat,
-          autoComplete: autoComplete
+          autoComplete: autoComplete,
+          device: device
         })));
         layout.push(dimensions);
       }
@@ -479,7 +488,8 @@ FormBuilder.propTypes = {
   dateTimeFormat: _propTypes.default.string,
   timeFormat: _propTypes.default.string,
   autoComplete: _propTypes.default.string,
-  style: _propTypes.default.object
+  style: _propTypes.default.object,
+  device: _propTypes.default.object
 };
 FormBuilder.defaultProps = {
   columns: 12,

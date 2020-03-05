@@ -6,7 +6,6 @@ import useTheme from '../../theme/useTheme'
 import {useCallback, useState} from 'react'
 import {FaChevronDown} from 'react-icons/fa'
 import '../../styles/native-select.css'
-const {device = {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'}} = window
 
 const NativeSelect = props => {
   const {
@@ -20,7 +19,8 @@ const NativeSelect = props => {
     required,
     onChange,
     interactive = true,
-    style = {}
+    style = {},
+    device
   } = props
 
   const {
@@ -133,7 +133,8 @@ NativeSelect.propTypes = {
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   style: PropTypes.object,
-  isClearable: PropTypes.bool
+  isClearable: PropTypes.bool,
+  device: PropTypes.object
 }
 
 export default NativeSelect

@@ -78,7 +78,8 @@ var InnerCell = function InnerCell(props) {
       dateTimeFormat = props.dateTimeFormat,
       timeFormat = props.timeFormat,
       handleRTEImageClick = props.handleRTEImageClick,
-      autoComplete = props.autoComplete;
+      autoComplete = props.autoComplete,
+      device = props.device;
   var config = field.config;
 
   var _useContext = (0, _react.useContext)(_FormBuilder.FormValueContext),
@@ -185,7 +186,8 @@ var InnerCell = function InnerCell(props) {
     timeFormat: timeFormat,
     handleRTEImageClick: handleRTEImageClick,
     autoComplete: autoComplete,
-    interactive: interactive
+    interactive: interactive,
+    device: device
   }, (0, _core.jsx)(Type, null))));
 };
 
@@ -225,5 +227,6 @@ InnerCell.propTypes = {
   dateTimeFormat: _propTypes.default.string,
   timeFormat: _propTypes.default.string,
   handleRTEImageClick: _propTypes.default.func,
-  autoComplete: _propTypes.default.string
+  autoComplete: _propTypes.default.string,
+  device: _propTypes.default.object
 };

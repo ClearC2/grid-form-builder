@@ -117,7 +117,8 @@ var InputContainer = function InputContainer(props) {
       timeFormat = props.timeFormat,
       handleRTEImageClick = props.handleRTEImageClick,
       autoComplete = props.autoComplete,
-      interactive = props.interactive;
+      interactive = props.interactive,
+      device = props.device;
   var name = config.name,
       required = config.required,
       _config$style = config.style,
@@ -158,7 +159,9 @@ var InputContainer = function InputContainer(props) {
     interactive: interactive,
     required: required,
     style: style
-  }, other)));
+  }, other, {
+    device: device
+  })));
 };
 
 var _default = InputPerformanceOptimizer;
@@ -177,5 +180,6 @@ InputContainer.propTypes = {
   timeFormat: _propTypes.default.string,
   handleRTEImageClick: _propTypes.default.func,
   autoComplete: _propTypes.default.string,
-  interactive: _propTypes.default.bool
+  interactive: _propTypes.default.bool,
+  device: _propTypes.default.object
 };
