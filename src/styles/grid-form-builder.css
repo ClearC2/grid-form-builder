@@ -368,3 +368,7 @@ div.gfb-inner-cell-label > h3 {
   font-size: 14pt;
   color: #A0A0A0;
 }
+
+.gfb-disabled-indicator-separator {
+  border-right: 1px solid #e4e4e4 !important;
+}

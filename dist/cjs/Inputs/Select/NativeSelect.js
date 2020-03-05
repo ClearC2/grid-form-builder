@@ -29,16 +29,6 @@ var _fa = require("react-icons/fa");
 require("../../styles/native-select.css");
 
 /** @jsx jsx */
-var _window = window,
-    _window$device = _window.device,
-    device = _window$device === void 0 ? {
-  cordova: false,
-  model: 'browser',
-  platform: 'browser',
-  uuid: 'browser',
-  version: 'browser'
-} : _window$device;
-
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -54,7 +44,8 @@ var NativeSelect = function NativeSelect(props) {
       _props$interactive = props.interactive,
       interactive = _props$interactive === void 0 ? true : _props$interactive,
       _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style;
+      style = _props$style === void 0 ? {} : _props$style,
+      device = props.device;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -104,6 +95,10 @@ var NativeSelect = function NativeSelect(props) {
     validationError = 'This Field is Required';
   }
 
+  var indicatorClass = 'gfb-input__indicators';
+  if (readonly || disabled || !interactive) indicatorClass = indicatorClass + ' gfb-disabled-input';
+  var indSeparatorClass = 'gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator';
+  if (readonly || disabled || !interactive) indSeparatorClass = indSeparatorClass + ' gfb-disabled-indicator-separator';
   return (0, _core.jsx)("div", {
     className: "gfb-input-outer",
     style: inputOuter,
@@ -142,13 +137,13 @@ var NativeSelect = function NativeSelect(props) {
       css: optionsTheme
     }, option.label ? option.label : option.value);
   }))), (0, _core.jsx)("div", {
-    className: "gfb-input__indicators",
+    className: indicatorClass,
     style: indicators,
     css: theme.indicators
   }, (0, _core.jsx)("span", {
-    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator"
+    className: indSeparatorClass
   }), (0, _core.jsx)(_fa.FaChevronDown, {
-    className: platform === 'ios' ? 'gfb-native-select-ios-down-indicator' : platform === 'android' ? 'gfb-native-select-android-down-indicator' : 'gfb-native-select-web-down-indicator'
+    className: platform === 'ios' ? 'gfb-native-select-ios-down-indicator' : platform === 'android' ? 'gfb-native-select-android-down-indicator' : platform === 'browser' ? 'gfb-native-select-web-down-indicator' : ''
   }), validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationError
   })))));
@@ -173,7 +168,8 @@ NativeSelect.propTypes = {
   autoComplete: _propTypes.default.string,
   interactive: _propTypes.default.bool,
   style: _propTypes.default.object,
-  isClearable: _propTypes.default.bool
+  isClearable: _propTypes.default.bool,
+  device: _propTypes.default.object
 };
 var _default = NativeSelect;
 exports.default = _default;

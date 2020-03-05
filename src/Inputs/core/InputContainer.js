@@ -46,7 +46,8 @@ const InputContainer = props => {
     timeFormat,
     handleRTEImageClick,
     autoComplete,
-    interactive
+    interactive,
+    device
   } = props
   const {name, required, style = {}, tooltips = {}, ...other} = config
   const {input: inputTooltip} = tooltips
@@ -72,7 +73,8 @@ const InputContainer = props => {
         interactive,
         required,
         style,
-        ...other
+        ...other,
+        device
       })}
     </div>
   )
@@ -94,5 +96,6 @@ InputContainer.propTypes = {
   timeFormat: PropTypes.string,
   handleRTEImageClick: PropTypes.func,
   autoComplete: PropTypes.string,
-  interactive: PropTypes.bool
+  interactive: PropTypes.bool,
+  device: PropTypes.object
 }
