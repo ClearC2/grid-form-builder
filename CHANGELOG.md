@@ -1,3 +1,10 @@
+## [3.22.3](https://github.com/ClearC2/grid-form-builder/compare/v3.22.2...v3.22.3) (2020-03-05)
+
+
+### Bug Fixes
+
+* **build:** build new release ([57c47f5](https://github.com/ClearC2/grid-form-builder/commit/57c47f51dd12dfa8119f07d809599ad365b3533c))
+
 ## [3.22.2](https://github.com/ClearC2/grid-form-builder/compare/v3.22.1...v3.22.2) (2020-03-05)
 
 
