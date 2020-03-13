@@ -18,7 +18,9 @@ export default class Example extends Component {
       multiselecttest: ['Contract Signing', 'Customer Service', 'Not A Value'],
       parentid: '00112233445566778899AABBCCEEFFFF',
       phonetest: '5554443333',
-      price: '25.25'
+      price: '25.25',
+      companyid: '12345',
+      personid: 'abcdef'
     }),
     inline: false,
     draggable: false,

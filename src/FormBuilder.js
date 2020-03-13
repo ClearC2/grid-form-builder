@@ -506,8 +506,22 @@ export default class FormValidator extends Component {
     const {formValues} = this.state
     const {handleLinkClick} = this.props
     const values = formValues.toJS ? formValues : fromJS(formValues)
-    const {type = '', id = null} = link
-    const value = values.get(id, null)
+    const {type = ''} = link
+    let {id = null} = link
+    if (typeof id === 'string') {
+      id = [id]
+    }
+    let value = ''
+    if (Array.isArray(id)) {
+      id.forEach(string => {
+        if (typeof string === 'string' || typeof string === 'number') {
+          const val = values.get(string, string)
+          if (typeof val === 'string' || typeof val === 'number') {
+            value = value + val
+          }
+        }
+      })
+    }
     handleLinkClick({
       type,
       id: value

@@ -604,8 +604,8 @@
           "label": "Normal Typeahead",
           "type": "typeahead",
           "link": {
-            "id": "parentid",
-            "type": "c2company",
+            "id": ["www.host.com/company/", "companyid", "/person/", "personid"],
+            "type": "url",
             "icon": "externallink"
           },
           "required": true
