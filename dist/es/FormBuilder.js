@@ -7,6 +7,7 @@ import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
 import _objectWithoutProperties from "@babel/runtime-corejs3/helpers/esm/objectWithoutProperties";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
+import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
@@ -614,10 +615,28 @@ function (_Component) {
       var handleLinkClick = _this.props.handleLinkClick;
       var values = formValues.toJS ? formValues : fromJS(formValues);
       var _link$type = link.type,
-          type = _link$type === void 0 ? '' : _link$type,
-          _link$id = link.id,
+          type = _link$type === void 0 ? '' : _link$type;
+      var _link$id = link.id,
           id = _link$id === void 0 ? null : _link$id;
-      var value = values.get(id, null);
+
+      if (typeof id === 'string') {
+        id = [id];
+      }
+
+      var value = '';
+
+      if (_Array$isArray(id)) {
+        _forEachInstanceProperty(id).call(id, function (string) {
+          if (typeof string === 'string' || typeof string === 'number') {
+            var val = values.get(string, string);
+
+            if (typeof val === 'string' || typeof val === 'number') {
+              value = value + val;
+            }
+          }
+        });
+      }
+
       handleLinkClick({
         type: type,
         id: value
