@@ -22,7 +22,7 @@ import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/insta
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context10; _forEachInstanceProperty(_context10 = ownKeys(Object(source), true)).call(_context10, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context11; _forEachInstanceProperty(_context11 = ownKeys(Object(source))).call(_context11, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context11; _forEachInstanceProperty(_context11 = ownKeys(Object(source), true)).call(_context11, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context12; _forEachInstanceProperty(_context12 = ownKeys(Object(source))).call(_context12, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -72,7 +72,8 @@ var Typeahead = function Typeahead(props) {
       delimit = props.delimit,
       delimiter = props.delimiter,
       _props$isClearable = props.isClearable,
-      isClearable = _props$isClearable === void 0 ? true : _props$isClearable;
+      isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
+      createlabel = props.createlabel;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -352,8 +353,14 @@ var Typeahead = function Typeahead(props) {
     return _Promise.resolve([]);
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode]);
   var formatCreateLabel = useCallback(function (value) {
+    if (typeof createlabel === 'string') {
+      var _context5;
+
+      return _concatInstanceProperty(_context5 = "".concat(createlabel, " ")).call(_context5, value);
+    }
+
     return "Click or Tab to Create \"".concat(value, "\"");
-  }, []);
+  }, [createlabel]);
   var noOptionsMessage = useCallback(function () {
     if (isZipCode) {
       return '3 Digits Required';
@@ -432,9 +439,9 @@ var Typeahead = function Typeahead(props) {
     });
   }, []);
   var handleSingleValueChange = useCallback(function (newValue) {
-    var _context5;
+    var _context6;
 
-    _forEachInstanceProperty(_context5 = _Object$keys(newValue)).call(_context5, function (field) {
+    _forEachInstanceProperty(_context6 = _Object$keys(newValue)).call(_context6, function (field) {
       var newVal = newValue[field];
       if (field === 'duplication') newVal = newValue.value;
       var id = null;
@@ -496,10 +503,10 @@ var Typeahead = function Typeahead(props) {
       if (stringify) {
         if (delimiter) {
           if (_delimit && _Array$isArray(_delimit)) {
-            var _context6;
+            var _context7;
 
             // if we were provided field(s) to delimit by, build up a special string with just those values
-            _forEachInstanceProperty(_context6 = target.value).call(_context6, function (option) {
+            _forEachInstanceProperty(_context7 = target.value).call(_context7, function (option) {
               _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
                 if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
                   _value = _value + option[field] + delimiter;
@@ -510,10 +517,10 @@ var Typeahead = function Typeahead(props) {
             _value = _sliceInstanceProperty(_value).call(_value, 0, -1);
             target.value = _value;
           } else {
-            var _context7;
+            var _context8;
 
             // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
-            _forEachInstanceProperty(_context7 = target.value).call(_context7, function (option) {
+            _forEachInstanceProperty(_context8 = target.value).call(_context8, function (option) {
               _value = _value + _JSON$stringify(option) + delimiter;
             });
 
@@ -521,12 +528,12 @@ var Typeahead = function Typeahead(props) {
             target.value = _value;
           }
         } else if (_delimit && !delimiter) {
-          var _context8;
+          var _context9;
 
           // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
           _value = [];
 
-          _forEachInstanceProperty(_context8 = target.value).call(_context8, function (option) {
+          _forEachInstanceProperty(_context9 = target.value).call(_context9, function (option) {
             _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
               if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
                 _value.push(option[field]);
@@ -541,12 +548,12 @@ var Typeahead = function Typeahead(props) {
           target.value = _JSON$stringify(target.value);
         }
       } else if (_delimit && !delimiter) {
-        var _context9;
+        var _context10;
 
         // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as an array
         _value = [];
 
-        _forEachInstanceProperty(_context9 = target.value).call(_context9, function (option) {
+        _forEachInstanceProperty(_context10 = target.value).call(_context10, function (option) {
           _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
             if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
               _value.push(option[field]);
@@ -728,5 +735,6 @@ Typeahead.propTypes = {
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   style: PropTypes.object,
-  isClearable: PropTypes.bool
+  isClearable: PropTypes.bool,
+  createlabel: PropTypes.string
 };

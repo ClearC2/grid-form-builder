@@ -1,3 +1,10 @@
+# [3.23.0](https://github.com/ClearC2/grid-form-builder/compare/v3.22.3...v3.23.0) (2020-03-13)
+
+
+### Features
+
+* **typeahead:** custom create text is now allowed from the schema ([7fed19f](https://github.com/ClearC2/grid-form-builder/commit/7fed19fac8fbaad2874a0ecdd9ef3fc771f5cdb1))
+
 ## [3.22.3](https://github.com/ClearC2/grid-form-builder/compare/v3.22.2...v3.22.3) (2020-03-05)
 
 

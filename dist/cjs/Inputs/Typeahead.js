@@ -72,7 +72,7 @@ var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
 function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context10; (0, _forEach.default)(_context10 = ownKeys(Object(source), true)).call(_context10, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context11; (0, _forEach.default)(_context11 = ownKeys(Object(source))).call(_context11, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context11; (0, _forEach.default)(_context11 = ownKeys(Object(source), true)).call(_context11, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context12; (0, _forEach.default)(_context12 = ownKeys(Object(source))).call(_context12, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
 
 var viewPortHeight = document.documentElement.clientHeight;
 
@@ -112,7 +112,8 @@ var Typeahead = function Typeahead(props) {
       delimit = props.delimit,
       delimiter = props.delimiter,
       _props$isClearable = props.isClearable,
-      isClearable = _props$isClearable === void 0 ? true : _props$isClearable;
+      isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
+      createlabel = props.createlabel;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -388,8 +389,14 @@ var Typeahead = function Typeahead(props) {
     return _promise.default.resolve([]);
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode]);
   var formatCreateLabel = (0, _react.useCallback)(function (value) {
+    if (typeof createlabel === 'string') {
+      var _context5;
+
+      return (0, _concat.default)(_context5 = "".concat(createlabel, " ")).call(_context5, value);
+    }
+
     return "Click or Tab to Create \"".concat(value, "\"");
-  }, []);
+  }, [createlabel]);
   var noOptionsMessage = (0, _react.useCallback)(function () {
     if (isZipCode) {
       return '3 Digits Required';
@@ -468,9 +475,9 @@ var Typeahead = function Typeahead(props) {
     });
   }, []);
   var handleSingleValueChange = (0, _react.useCallback)(function (newValue) {
-    var _context5;
+    var _context6;
 
-    (0, _forEach.default)(_context5 = (0, _keys.default)(newValue)).call(_context5, function (field) {
+    (0, _forEach.default)(_context6 = (0, _keys.default)(newValue)).call(_context6, function (field) {
       var newVal = newValue[field];
       if (field === 'duplication') newVal = newValue.value;
       var id = null;
@@ -532,10 +539,10 @@ var Typeahead = function Typeahead(props) {
       if (stringify) {
         if (delimiter) {
           if (_delimit && (0, _isArray.default)(_delimit)) {
-            var _context6;
+            var _context7;
 
             // if we were provided field(s) to delimit by, build up a special string with just those values
-            (0, _forEach.default)(_context6 = target.value).call(_context6, function (option) {
+            (0, _forEach.default)(_context7 = target.value).call(_context7, function (option) {
               (0, _forEach.default)(_delimit).call(_delimit, function (field) {
                 if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
                   _value = _value + option[field] + delimiter;
@@ -545,21 +552,21 @@ var Typeahead = function Typeahead(props) {
             _value = (0, _slice.default)(_value).call(_value, 0, -1);
             target.value = _value;
           } else {
-            var _context7;
+            var _context8;
 
             // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
-            (0, _forEach.default)(_context7 = target.value).call(_context7, function (option) {
+            (0, _forEach.default)(_context8 = target.value).call(_context8, function (option) {
               _value = _value + (0, _stringify.default)(option) + delimiter;
             });
             _value = (0, _slice.default)(_value).call(_value, 0, -1);
             target.value = _value;
           }
         } else if (_delimit && !delimiter) {
-          var _context8;
+          var _context9;
 
           // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
           _value = [];
-          (0, _forEach.default)(_context8 = target.value).call(_context8, function (option) {
+          (0, _forEach.default)(_context9 = target.value).call(_context9, function (option) {
             (0, _forEach.default)(_delimit).call(_delimit, function (field) {
               if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
                 _value.push(option[field]);
@@ -573,11 +580,11 @@ var Typeahead = function Typeahead(props) {
           target.value = (0, _stringify.default)(target.value);
         }
       } else if (_delimit && !delimiter) {
-        var _context9;
+        var _context10;
 
         // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as an array
         _value = [];
-        (0, _forEach.default)(_context9 = target.value).call(_context9, function (option) {
+        (0, _forEach.default)(_context10 = target.value).call(_context10, function (option) {
           (0, _forEach.default)(_delimit).call(_delimit, function (field) {
             if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
               _value.push(option[field]);
@@ -759,5 +766,6 @@ Typeahead.propTypes = {
   autoComplete: _propTypes.default.string,
   interactive: _propTypes.default.bool,
   style: _propTypes.default.object,
-  isClearable: _propTypes.default.bool
+  isClearable: _propTypes.default.bool,
+  createlabel: _propTypes.default.string
 };
