@@ -1,3 +1,10 @@
+## [3.24.1](https://github.com/ClearC2/grid-form-builder/compare/v3.24.0...v3.24.1) (2020-03-13)
+
+
+### Bug Fixes
+
+* **link:** if only 1 is provided it will give the value back as blank to be backwards compatable ([45b3ada](https://github.com/ClearC2/grid-form-builder/commit/45b3ada960a3a77b3494c15c655ef376ed5cbef8))
+
 # [3.24.0](https://github.com/ClearC2/grid-form-builder/compare/v3.23.0...v3.24.0) (2020-03-13)
 
 
