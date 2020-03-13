@@ -555,6 +555,7 @@
         },
         "config": {
           "allowcreate": true,
+          "createlabel": "You want to make this?? - ",
           "supressInputReset": true,
           "typeahead": {
             "key": "c2_company",

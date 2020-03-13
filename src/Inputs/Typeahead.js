@@ -38,7 +38,8 @@ const Typeahead = props => {
     style = {},
     delimit,
     delimiter,
-    isClearable = true
+    isClearable = true,
+    createlabel
   } = props
 
   const {
@@ -212,8 +213,11 @@ const Typeahead = props => {
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode])
 
   const formatCreateLabel = useCallback(value => {
+    if (typeof createlabel === 'string') {
+      return `${createlabel} ${value}`
+    }
     return `Click or Tab to Create "${value}"`
-  }, [])
+  }, [createlabel])
 
   const noOptionsMessage = useCallback(() => {
     if (isZipCode) {
@@ -564,5 +568,6 @@ Typeahead.propTypes = {
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   style: PropTypes.object,
-  isClearable: PropTypes.bool
+  isClearable: PropTypes.bool,
+  createlabel: PropTypes.string
 }
