@@ -1,3 +1,10 @@
+# [3.24.0](https://github.com/ClearC2/grid-form-builder/compare/v3.23.0...v3.24.0) (2020-03-13)
+
+
+### Features
+
+* **link:** link id can now be an array of strings ([c6c5eb7](https://github.com/ClearC2/grid-form-builder/commit/c6c5eb7b2a8bac8077162cff5b8fb060b89bab58))
+
 # [3.23.0](https://github.com/ClearC2/grid-form-builder/compare/v3.22.3...v3.23.0) (2020-03-13)
 
 

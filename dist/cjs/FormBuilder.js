@@ -30,6 +30,8 @@ var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime-c
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
 
+var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
+
 var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
@@ -644,10 +646,28 @@ function (_Component) {
       var handleLinkClick = _this.props.handleLinkClick;
       var values = formValues.toJS ? formValues : (0, _immutable.fromJS)(formValues);
       var _link$type = link.type,
-          type = _link$type === void 0 ? '' : _link$type,
-          _link$id = link.id,
+          type = _link$type === void 0 ? '' : _link$type;
+      var _link$id = link.id,
           id = _link$id === void 0 ? null : _link$id;
-      var value = values.get(id, null);
+
+      if (typeof id === 'string') {
+        id = [id];
+      }
+
+      var value = '';
+
+      if ((0, _isArray.default)(id)) {
+        (0, _forEach.default)(id).call(id, function (string) {
+          if (typeof string === 'string' || typeof string === 'number') {
+            var val = values.get(string, string);
+
+            if (typeof val === 'string' || typeof val === 'number') {
+              value = value + val;
+            }
+          }
+        });
+      }
+
       handleLinkClick({
         type: type,
         id: value
