@@ -1,3 +1,10 @@
+## [3.24.2](https://github.com/ClearC2/grid-form-builder/compare/v3.24.1...v3.24.2) (2020-03-16)
+
+
+### Bug Fixes
+
+* **link:** link will now always append the value because the empty value defaults back to the string name ([1ff42ea](https://github.com/ClearC2/grid-form-builder/commit/1ff42ea1460d866e1aa67ca8fbd3376609de102c))
+
 ## [3.24.1](https://github.com/ClearC2/grid-form-builder/compare/v3.24.0...v3.24.1) (2020-03-13)
 
 

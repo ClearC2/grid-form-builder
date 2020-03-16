@@ -661,7 +661,7 @@ function (_Component) {
           if (typeof string === 'string' || typeof string === 'number') {
             var val = values.get(string, string);
 
-            if ((typeof val === 'string' || typeof val === 'number') && id.length > 1) {
+            if (typeof val === 'string' || typeof val === 'number') {
               value = value + val;
             }
           }
