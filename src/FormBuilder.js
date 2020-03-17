@@ -515,9 +515,14 @@ export default class FormValidator extends Component {
     if (Array.isArray(id)) {
       id.forEach(string => {
         if (typeof string === 'string' || typeof string === 'number') {
-          const val = values.get(string, string)
-          if ((typeof val === 'string' || typeof val === 'number')) {
-            value = value + val
+          const val = values.get(string)
+          if (typeof link.id === 'string' && !val) {
+            value = null
+          } else {
+            const val = values.get(string, string)
+            if ((typeof val === 'string' || typeof val === 'number')) {
+              value = value + val
+            }
           }
         }
       })
