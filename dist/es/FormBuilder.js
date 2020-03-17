@@ -628,10 +628,16 @@ function (_Component) {
       if (_Array$isArray(id)) {
         _forEachInstanceProperty(id).call(id, function (string) {
           if (typeof string === 'string' || typeof string === 'number') {
-            var val = values.get(string, string);
+            var val = values.get(string);
 
-            if (typeof val === 'string' || typeof val === 'number') {
-              value = value + val;
+            if (typeof link.id === 'string' && !val) {
+              value = null;
+            } else {
+              var _val = values.get(string, string);
+
+              if (typeof _val === 'string' || typeof _val === 'number') {
+                value = value + _val;
+              }
             }
           }
         });

@@ -1,3 +1,10 @@
+# [3.25.0](https://github.com/ClearC2/grid-form-builder/compare/v3.24.2...v3.25.0) (2020-03-17)
+
+
+### Features
+
+* **link:** links will now default to null if the value of the field is falsy and the id is a string, but give the string back if the id is an array ([b4c4ad4](https://github.com/ClearC2/grid-form-builder/commit/b4c4ad43c91166cc6c9db64fe30ee63abb7f1962))
+
 ## [3.24.2](https://github.com/ClearC2/grid-form-builder/compare/v3.24.1...v3.24.2) (2020-03-16)
 
 
