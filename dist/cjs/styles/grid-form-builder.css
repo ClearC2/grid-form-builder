@@ -263,6 +263,7 @@ label.gfb-multi-input-label-wrapper
   padding-left: 2px !important;
   resize: none;
   height: 100%;
+  align-items: center;
 }
 
 div.grid-form-builder-parent input:focus, div.grid-form-builder-parent textarea:focus {

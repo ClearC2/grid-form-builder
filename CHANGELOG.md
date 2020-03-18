@@ -1,3 +1,10 @@
+# [3.26.0](https://github.com/ClearC2/grid-form-builder/compare/v3.25.0...v3.26.0) (2020-03-18)
+
+
+### Features
+
+* **single-value:** single value css has been modified to always attempt to veritically center text ([dbc10a8](https://github.com/ClearC2/grid-form-builder/commit/dbc10a825633ac6a6ba5a6c4040aba4a658f7992))
+
 # [3.25.0](https://github.com/ClearC2/grid-form-builder/compare/v3.24.2...v3.25.0) (2020-03-17)
 
 
