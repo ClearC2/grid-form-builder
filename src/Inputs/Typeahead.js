@@ -232,6 +232,7 @@ const Typeahead = props => {
   const handleInputBlur = useCallback(() => {
     menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     setIsFocused(false)
+    updateInputValue('')
   }, [menuIsOpen, updateIsMenuOpen, name])
 
   const openMenu = useCallback(() => {
