@@ -1,3 +1,10 @@
+# [3.27.0](https://github.com/ClearC2/grid-form-builder/compare/v3.26.0...v3.27.0) (2020-03-25)
+
+
+### Features
+
+* **typeahead:** on input blur will always clear out the input value ([df575d4](https://github.com/ClearC2/grid-form-builder/commit/df575d411c9e31997df92784ee4e1b21e4752f57))
+
 # [3.26.0](https://github.com/ClearC2/grid-form-builder/compare/v3.25.0...v3.26.0) (2020-03-18)
 
 

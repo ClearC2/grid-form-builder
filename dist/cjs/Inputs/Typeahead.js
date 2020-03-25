@@ -408,6 +408,7 @@ var Typeahead = function Typeahead(props) {
   var handleInputBlur = (0, _react.useCallback)(function () {
     menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
     setIsFocused(false);
+    updateInputValue('');
   }, [menuIsOpen, updateIsMenuOpen, name]);
   var openMenu = (0, _react.useCallback)(function () {
     if (!readonly && !disabled && !menuIsOpen[name]) {
