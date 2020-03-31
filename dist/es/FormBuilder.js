@@ -142,9 +142,9 @@ var FormBuilder = function FormBuilder(props) {
     debugLog('handleCascadeKeywordClick');
     handleCascade(e);
   }, [handleCascade]);
-  var handleRTEImageClick = useCallback(function () {
+  var handleRTEImageClick = useCallback(function (name) {
     debugLog('handleRTEImageClick');
-    onRTEImageClick();
+    onRTEImageClick(name);
   }, [onRTEImageClick]);
   useEffect(function () {
     debugLog('updateCompact');
@@ -235,6 +235,8 @@ var FormBuilder = function FormBuilder(props) {
           tabindex = myOffset + '' + tabindex;
         }
 
+        var _config$rteImageUrl = config.rteImageUrl,
+            rteImageUrl = _config$rteImageUrl === void 0 ? '' : _config$rteImageUrl;
         var isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i;
         var className = isActive ? 'drag-item-active' : '';
         if (config.tooltip) className = className + ' gfb-has-tooltip';
@@ -281,7 +283,8 @@ var FormBuilder = function FormBuilder(props) {
           dateTimeFormat: dateTimeFormat,
           timeFormat: timeFormat,
           autoComplete: autoComplete,
-          device: device
+          device: device,
+          rteImageUrl: rteImageUrl
         })));
         layout.push(dimensions);
       }

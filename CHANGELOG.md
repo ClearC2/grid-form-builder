@@ -1,3 +1,10 @@
+## [3.27.1](https://github.com/ClearC2/grid-form-builder/compare/v3.27.0...v3.27.1) (2020-03-31)
+
+
+### Bug Fixes
+
+* **richtextarea:** fix richtextarea callback function and image Url ([#149](https://github.com/ClearC2/grid-form-builder/issues/149)) ([76f7022](https://github.com/ClearC2/grid-form-builder/commit/76f7022e212840e5040e533714aa56263b35b263))
+
 # [3.27.0](https://github.com/ClearC2/grid-form-builder/compare/v3.26.0...v3.27.0) (2020-03-25)
 
 
