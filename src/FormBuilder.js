@@ -82,9 +82,9 @@ const FormBuilder = (props) => {
     handleCascade(e)
   }, [handleCascade])
 
-  const handleRTEImageClick = useCallback(() => {
+  const handleRTEImageClick = useCallback((name) => {
     debugLog('handleRTEImageClick')
-    onRTEImageClick()
+    onRTEImageClick(name)
   }, [onRTEImageClick])
 
   useEffect(() => {
@@ -165,6 +165,7 @@ const FormBuilder = (props) => {
         } else {
           tabindex = myOffset + '' + tabindex
         }
+        const {rteImageUrl = ''} = config
         const isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i
         let className = isActive ? 'drag-item-active' : ''
         if (config.tooltip) className = className + ' gfb-has-tooltip'
@@ -204,6 +205,7 @@ const FormBuilder = (props) => {
               timeFormat={timeFormat}
               autoComplete={autoComplete}
               device={device}
+              rteImageUrl={rteImageUrl}
             />
           </div>
         )
