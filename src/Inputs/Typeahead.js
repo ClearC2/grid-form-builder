@@ -11,6 +11,8 @@ import useTheme from '../theme/useTheme'
 
 const viewPortHeight = document.documentElement.clientHeight
 
+let debounce = null
+
 const Typeahead = props => {
   const {
     name,
@@ -169,47 +171,55 @@ const Typeahead = props => {
   }, [populateConditionObject])
 
   const loadOptions = useCallback((search, setDefault = false) => {
-    let {key = null, duplication = false, fieldvalue = null, filter = {}} = typeahead
-    if (typeof filter === 'function') filter = filter()
-    const minSearchLength = isZipCode ? 3 : minChars
+    const fetchResults = resolve => {
+      let {key = null, duplication = false, fieldvalue = null, filter = {}} = typeahead
+      if (typeof filter === 'function') filter = filter()
+      const minSearchLength = isZipCode ? 3 : minChars
 
-    if (!key && !fieldvalue) {
-      // eslint-disable-next-line
-      console.error(`The JSON schema representation for ${name} does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}`)
-      if (setDefault === true) setDefaultOptions([])
-      return Promise.resolve({options: []})
-    }
+      if (!key && !fieldvalue) {
+        // eslint-disable-next-line
+        console.error(`The JSON schema representation for ${name} does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}`)
+        if (setDefault === true) setDefaultOptions([])
+        return resolve({options: []})
+      }
 
-    filter = JSON.parse(JSON.stringify(filter)) // deep clone the object as to not mutate the definition
-    populateFilterBody(filter)
+      filter = JSON.parse(JSON.stringify(filter)) // deep clone the object as to not mutate the definition
+      populateFilterBody(filter)
 
-    if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '')
+      if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '')
 
-    if (search.length >= minSearchLength || search === ' ') {
-      if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
-      if (setDefault) reactSelect.current.setState(() => ({isLoading: true}))
-      isLoadingOptions.current = true
-      return GFBConfig.ajax.post(`/typeahead/name/${key}/search${search}`, {filter})
-        .then(resp => {
-          isLoadingOptions.current = false
-          const options = resp.data.data.map(value => {
-            if (duplication) {
-              value.duplication = duplication
-            }
-            return value
+      if (search.length >= minSearchLength || search === ' ') {
+        if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
+        if (setDefault) reactSelect.current.setState(() => ({isLoading: true}))
+        isLoadingOptions.current = true
+        return GFBConfig.ajax.post(`/typeahead/name/${key}/search${search}`, {filter})
+          .then(resp => {
+            isLoadingOptions.current = false
+            const options = resp.data.data.map(value => {
+              if (duplication) {
+                value.duplication = duplication
+              }
+              return value
+            })
+            if (setDefault === true) setDefaultOptions(options)
+            else setDefaultOptions([])
+            if (setDefault) reactSelect.current.setState(() => ({isLoading: false}))
+            return resolve(options)
           })
-          if (setDefault === true) setDefaultOptions(options)
-          else setDefaultOptions([])
-          if (setDefault) reactSelect.current.setState(() => ({isLoading: false}))
-          return options
-        })
-        .catch(err => {
-          isLoadingOptions.current = false
-          return Promise.reject(err)
-        })
+          .catch(err => {
+            isLoadingOptions.current = false
+            return Promise.reject(err)
+          })
+      }
+      if (setDefault === true) setDefaultOptions([])
+      return resolve([])
     }
-    if (setDefault === true) setDefaultOptions([])
-    return Promise.resolve([])
+    return new Promise(resolve => {
+      clearTimeout(debounce)
+      const delay = (typeof search === 'string' && search.length && search.trim() === '') ? 0 : 500 // if they are sending in white space as the search query, don't debounce it, just do a global generic search - JRA 03/31/2020
+      debounce = setTimeout(() => fetchResults(resolve), delay)
+      return debounce
+    })
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode])
 
   const formatCreateLabel = useCallback(value => {
