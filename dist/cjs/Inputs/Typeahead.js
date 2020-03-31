@@ -28,13 +28,15 @@ var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stabl
 
 var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+
+var _promise = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/promise"));
+
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
 var _stringify = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/json/stringify"));
-
-var _promise = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/promise"));
 
 var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
 
@@ -75,6 +77,7 @@ function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object)
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context11; (0, _forEach.default)(_context11 = ownKeys(Object(source), true)).call(_context11, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context12; (0, _forEach.default)(_context12 = ownKeys(Object(source))).call(_context12, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
 
 var viewPortHeight = document.documentElement.clientHeight;
+var debounce = null;
 
 var Typeahead = function Typeahead(props) {
   var name = props.name,
@@ -323,70 +326,82 @@ var Typeahead = function Typeahead(props) {
   var loadOptions = (0, _react.useCallback)(function (search) {
     var setDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-    var _typeahead$key = typeahead.key,
-        key = _typeahead$key === void 0 ? null : _typeahead$key,
-        _typeahead$duplicatio = typeahead.duplication,
-        duplication = _typeahead$duplicatio === void 0 ? false : _typeahead$duplicatio,
-        _typeahead$fieldvalue = typeahead.fieldvalue,
-        fieldvalue = _typeahead$fieldvalue === void 0 ? null : _typeahead$fieldvalue,
-        _typeahead$filter = (0, _filter.default)(typeahead),
-        filter = _typeahead$filter === void 0 ? {} : _typeahead$filter;
+    var fetchResults = function fetchResults(resolve) {
+      var _typeahead$key = typeahead.key,
+          key = _typeahead$key === void 0 ? null : _typeahead$key,
+          _typeahead$duplicatio = typeahead.duplication,
+          duplication = _typeahead$duplicatio === void 0 ? false : _typeahead$duplicatio,
+          _typeahead$fieldvalue = typeahead.fieldvalue,
+          fieldvalue = _typeahead$fieldvalue === void 0 ? null : _typeahead$fieldvalue,
+          _typeahead$filter = (0, _filter.default)(typeahead),
+          filter = _typeahead$filter === void 0 ? {} : _typeahead$filter;
 
-    if (typeof filter === 'function') filter = filter();
-    var minSearchLength = isZipCode ? 3 : minChars;
+      if (typeof filter === 'function') filter = filter();
+      var minSearchLength = isZipCode ? 3 : minChars;
 
-    if (!key && !fieldvalue) {
-      // eslint-disable-next-line
-      console.error("The JSON schema representation for ".concat(name, " does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}"));
-      if (setDefault === true) setDefaultOptions([]);
-      return _promise.default.resolve({
-        options: []
-      });
-    }
-
-    filter = JSON.parse((0, _stringify.default)(filter)); // deep clone the object as to not mutate the definition
-
-    populateFilterBody(filter);
-    if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '');
-
-    if (search.length >= minSearchLength || search === ' ') {
-      var _context3;
-
-      if (typeof search === 'string' && (0, _trim.default)(search).call(search) !== '') search = "/".concat(search);
-      if (setDefault) reactSelect.current.setState(function () {
-        return {
-          isLoading: true
-        };
-      });
-      isLoadingOptions.current = true;
-      return _config.default.ajax.post((0, _concat.default)(_context3 = "/typeahead/name/".concat(key, "/search")).call(_context3, search), {
-        filter: filter
-      }).then(function (resp) {
-        var _context4;
-
-        isLoadingOptions.current = false;
-        var options = (0, _map.default)(_context4 = resp.data.data).call(_context4, function (value) {
-          if (duplication) {
-            value.duplication = duplication;
-          }
-
-          return value;
+      if (!key && !fieldvalue) {
+        // eslint-disable-next-line
+        console.error("The JSON schema representation for ".concat(name, " does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}"));
+        if (setDefault === true) setDefaultOptions([]);
+        return resolve({
+          options: []
         });
-        if (setDefault === true) setDefaultOptions(options);else setDefaultOptions([]);
+      }
+
+      filter = JSON.parse((0, _stringify.default)(filter)); // deep clone the object as to not mutate the definition
+
+      populateFilterBody(filter);
+      if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '');
+
+      if (search.length >= minSearchLength || search === ' ') {
+        var _context3;
+
+        if (typeof search === 'string' && (0, _trim.default)(search).call(search) !== '') search = "/".concat(search);
         if (setDefault) reactSelect.current.setState(function () {
           return {
-            isLoading: false
+            isLoading: true
           };
         });
-        return options;
-      }).catch(function (err) {
-        isLoadingOptions.current = false;
-        return _promise.default.reject(err);
-      });
-    }
+        isLoadingOptions.current = true;
+        return _config.default.ajax.post((0, _concat.default)(_context3 = "/typeahead/name/".concat(key, "/search")).call(_context3, search), {
+          filter: filter
+        }).then(function (resp) {
+          var _context4;
 
-    if (setDefault === true) setDefaultOptions([]);
-    return _promise.default.resolve([]);
+          isLoadingOptions.current = false;
+          var options = (0, _map.default)(_context4 = resp.data.data).call(_context4, function (value) {
+            if (duplication) {
+              value.duplication = duplication;
+            }
+
+            return value;
+          });
+          if (setDefault === true) setDefaultOptions(options);else setDefaultOptions([]);
+          if (setDefault) reactSelect.current.setState(function () {
+            return {
+              isLoading: false
+            };
+          });
+          return resolve(options);
+        }).catch(function (err) {
+          isLoadingOptions.current = false;
+          return _promise.default.reject(err);
+        });
+      }
+
+      if (setDefault === true) setDefaultOptions([]);
+      return resolve([]);
+    };
+
+    return new _promise.default(function (resolve) {
+      clearTimeout(debounce);
+      var delay = typeof search === 'string' && search.length && (0, _trim.default)(search).call(search) === '' ? 0 : 500; // if they are sending in white space as the search query, don't debounce it, just do a global generic search - JRA 03/31/2020
+
+      debounce = (0, _setTimeout2.default)(function () {
+        return fetchResults(resolve);
+      }, delay);
+      return debounce;
+    });
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode]);
   var formatCreateLabel = (0, _react.useCallback)(function (value) {
     if (typeof createlabel === 'string') {

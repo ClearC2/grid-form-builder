@@ -1,3 +1,10 @@
+# [3.28.0](https://github.com/ClearC2/grid-form-builder/compare/v3.27.1...v3.28.0) (2020-03-31)
+
+
+### Features
+
+* **typeahead:** adds 500 ms debounce to non white space queries ([b73a819](https://github.com/ClearC2/grid-form-builder/commit/b73a81940bf4c1f457df961117ea19d8138fd43f))
+
 ## [3.27.1](https://github.com/ClearC2/grid-form-builder/compare/v3.27.0...v3.27.1) (2020-03-31)
 
 

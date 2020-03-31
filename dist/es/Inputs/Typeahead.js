@@ -7,10 +7,11 @@ import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/numb
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _JSON$stringify from "@babel/runtime-corejs3/core-js-stable/json/stringify";
-import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
@@ -35,6 +36,7 @@ import GFBConfig from '../config';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 var viewPortHeight = document.documentElement.clientHeight;
+var debounce = null;
 
 var Typeahead = function Typeahead(props) {
   var name = props.name,
@@ -285,72 +287,84 @@ var Typeahead = function Typeahead(props) {
   var loadOptions = useCallback(function (search) {
     var setDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-    var _typeahead$key = typeahead.key,
-        key = _typeahead$key === void 0 ? null : _typeahead$key,
-        _typeahead$duplicatio = typeahead.duplication,
-        duplication = _typeahead$duplicatio === void 0 ? false : _typeahead$duplicatio,
-        _typeahead$fieldvalue = typeahead.fieldvalue,
-        fieldvalue = _typeahead$fieldvalue === void 0 ? null : _typeahead$fieldvalue,
-        _typeahead$filter = _filterInstanceProperty(typeahead),
-        filter = _typeahead$filter === void 0 ? {} : _typeahead$filter;
+    var fetchResults = function fetchResults(resolve) {
+      var _typeahead$key = typeahead.key,
+          key = _typeahead$key === void 0 ? null : _typeahead$key,
+          _typeahead$duplicatio = typeahead.duplication,
+          duplication = _typeahead$duplicatio === void 0 ? false : _typeahead$duplicatio,
+          _typeahead$fieldvalue = typeahead.fieldvalue,
+          fieldvalue = _typeahead$fieldvalue === void 0 ? null : _typeahead$fieldvalue,
+          _typeahead$filter = _filterInstanceProperty(typeahead),
+          filter = _typeahead$filter === void 0 ? {} : _typeahead$filter;
 
-    if (typeof filter === 'function') filter = filter();
-    var minSearchLength = isZipCode ? 3 : minChars;
+      if (typeof filter === 'function') filter = filter();
+      var minSearchLength = isZipCode ? 3 : minChars;
 
-    if (!key && !fieldvalue) {
-      // eslint-disable-next-line
-      console.error("The JSON schema representation for ".concat(name, " does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}"));
-      if (setDefault === true) setDefaultOptions([]);
-      return _Promise.resolve({
-        options: []
-      });
-    }
-
-    filter = JSON.parse(_JSON$stringify(filter)); // deep clone the object as to not mutate the definition
-
-    populateFilterBody(filter);
-    if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '');
-
-    if (search.length >= minSearchLength || search === ' ') {
-      var _context3;
-
-      if (typeof search === 'string' && _trimInstanceProperty(search).call(search) !== '') search = "/".concat(search);
-      if (setDefault) reactSelect.current.setState(function () {
-        return {
-          isLoading: true
-        };
-      });
-      isLoadingOptions.current = true;
-      return GFBConfig.ajax.post(_concatInstanceProperty(_context3 = "/typeahead/name/".concat(key, "/search")).call(_context3, search), {
-        filter: filter
-      }).then(function (resp) {
-        var _context4;
-
-        isLoadingOptions.current = false;
-
-        var options = _mapInstanceProperty(_context4 = resp.data.data).call(_context4, function (value) {
-          if (duplication) {
-            value.duplication = duplication;
-          }
-
-          return value;
+      if (!key && !fieldvalue) {
+        // eslint-disable-next-line
+        console.error("The JSON schema representation for ".concat(name, " does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}"));
+        if (setDefault === true) setDefaultOptions([]);
+        return resolve({
+          options: []
         });
+      }
 
-        if (setDefault === true) setDefaultOptions(options);else setDefaultOptions([]);
+      filter = JSON.parse(_JSON$stringify(filter)); // deep clone the object as to not mutate the definition
+
+      populateFilterBody(filter);
+      if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '');
+
+      if (search.length >= minSearchLength || search === ' ') {
+        var _context3;
+
+        if (typeof search === 'string' && _trimInstanceProperty(search).call(search) !== '') search = "/".concat(search);
         if (setDefault) reactSelect.current.setState(function () {
           return {
-            isLoading: false
+            isLoading: true
           };
         });
-        return options;
-      }).catch(function (err) {
-        isLoadingOptions.current = false;
-        return _Promise.reject(err);
-      });
-    }
+        isLoadingOptions.current = true;
+        return GFBConfig.ajax.post(_concatInstanceProperty(_context3 = "/typeahead/name/".concat(key, "/search")).call(_context3, search), {
+          filter: filter
+        }).then(function (resp) {
+          var _context4;
 
-    if (setDefault === true) setDefaultOptions([]);
-    return _Promise.resolve([]);
+          isLoadingOptions.current = false;
+
+          var options = _mapInstanceProperty(_context4 = resp.data.data).call(_context4, function (value) {
+            if (duplication) {
+              value.duplication = duplication;
+            }
+
+            return value;
+          });
+
+          if (setDefault === true) setDefaultOptions(options);else setDefaultOptions([]);
+          if (setDefault) reactSelect.current.setState(function () {
+            return {
+              isLoading: false
+            };
+          });
+          return resolve(options);
+        }).catch(function (err) {
+          isLoadingOptions.current = false;
+          return _Promise.reject(err);
+        });
+      }
+
+      if (setDefault === true) setDefaultOptions([]);
+      return resolve([]);
+    };
+
+    return new _Promise(function (resolve) {
+      clearTimeout(debounce);
+      var delay = typeof search === 'string' && search.length && _trimInstanceProperty(search).call(search) === '' ? 0 : 500; // if they are sending in white space as the search query, don't debounce it, just do a global generic search - JRA 03/31/2020
+
+      debounce = _setTimeout(function () {
+        return fetchResults(resolve);
+      }, delay);
+      return debounce;
+    });
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode]);
   var formatCreateLabel = useCallback(function (value) {
     if (typeof createlabel === 'string') {
