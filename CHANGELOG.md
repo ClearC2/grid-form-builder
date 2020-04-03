@@ -1,3 +1,10 @@
+## [3.28.1](https://github.com/ClearC2/grid-form-builder/compare/v3.28.0...v3.28.1) (2020-04-03)
+
+
+### Bug Fixes
+
+* **condTable:** show contains for basic inputs ([25ad0cb](https://github.com/ClearC2/grid-form-builder/commit/25ad0cb651297dcbddcc9f4ceabde34e58472615))
+
 # [3.28.0](https://github.com/ClearC2/grid-form-builder/compare/v3.27.1...v3.28.0) (2020-03-31)
 
 

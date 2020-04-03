@@ -336,7 +336,7 @@ function (_Component) {
             style: {
               wordWrap: 'break-word'
             }
-          }, React.createElement("strong", null, _this.getLabel(key), " "), "is equal to ", val, _this.renderDeleteIcon(key, value)))
+          }, React.createElement("strong", null, _this.getLabel(key), " "), "contains ", val, _this.renderDeleteIcon(key, value)))
         );
       } else if (typeof value === 'boolean') {
         return React.createElement("tr", {

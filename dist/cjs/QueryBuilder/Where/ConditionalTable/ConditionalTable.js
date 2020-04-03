@@ -352,7 +352,7 @@ function (_Component) {
             style: {
               wordWrap: 'break-word'
             }
-          }, _react.default.createElement("strong", null, _this.getLabel(key), " "), "is equal to ", val, _this.renderDeleteIcon(key, value)))
+          }, _react.default.createElement("strong", null, _this.getLabel(key), " "), "contains ", val, _this.renderDeleteIcon(key, value)))
         );
       } else if (typeof value === 'boolean') {
         return _react.default.createElement("tr", {
