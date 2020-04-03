@@ -311,7 +311,7 @@ export default class ConditionalTable extends Component {
         <tr key={`row-${key}`}>
           <td key={`column-${key}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
-            is equal to {val}
+            contains {val}
             {this.renderDeleteIcon(key, value)}
           </td>
         </tr>
