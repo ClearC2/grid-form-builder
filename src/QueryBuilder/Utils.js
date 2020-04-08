@@ -7,6 +7,9 @@ export const convertFormSchemaToSearch = (formSchema = {}) => {
     formSchema.jsonschema.layout = formSchema.jsonschema.layout.map(f => {
       if (f.config.type === 'metadata') {
         if (f.config.conditionalConfig) {
+          if (f.config.conditionalConfig.type === 'typeahead') {
+            f.config.conditionalConfig.type = 'input'
+          }
           const conditionalConfig = Object.assign({}, f.config.conditionalConfig)
           const metaConfig = Object.assign({}, f.config)
           delete metaConfig.conditionalConfig
