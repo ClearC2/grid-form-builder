@@ -11,6 +11,10 @@ export var convertFormSchemaToSearch = function convertFormSchemaToSearch() {
     formSchema.jsonschema.layout = _mapInstanceProperty(_context = formSchema.jsonschema.layout).call(_context, function (f) {
       if (f.config.type === 'metadata') {
         if (f.config.conditionalConfig) {
+          if (f.config.conditionalConfig.type === 'typeahead') {
+            f.config.conditionalConfig.type = 'input';
+          }
+
           var conditionalConfig = _Object$assign({}, f.config.conditionalConfig);
 
           var metaConfig = _Object$assign({}, f.config);

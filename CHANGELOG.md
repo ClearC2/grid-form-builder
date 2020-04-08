@@ -1,3 +1,10 @@
+## [3.28.2](https://github.com/ClearC2/grid-form-builder/compare/v3.28.1...v3.28.2) (2020-04-08)
+
+
+### Bug Fixes
+
+* **metaTypeaheads:** typeaheads arent used in reporting anymore ([17c86d0](https://github.com/ClearC2/grid-form-builder/commit/17c86d0308d8da5dba3968a57da936d2830a1280))
+
 ## [3.28.1](https://github.com/ClearC2/grid-form-builder/compare/v3.28.0...v3.28.1) (2020-04-03)
 
 

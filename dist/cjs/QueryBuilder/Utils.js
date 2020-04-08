@@ -27,6 +27,10 @@ var convertFormSchemaToSearch = function convertFormSchemaToSearch() {
     formSchema.jsonschema.layout = (0, _map.default)(_context = formSchema.jsonschema.layout).call(_context, function (f) {
       if (f.config.type === 'metadata') {
         if (f.config.conditionalConfig) {
+          if (f.config.conditionalConfig.type === 'typeahead') {
+            f.config.conditionalConfig.type = 'input';
+          }
+
           var conditionalConfig = (0, _assign.default)({}, f.config.conditionalConfig);
           var metaConfig = (0, _assign.default)({}, f.config);
           delete metaConfig.conditionalConfig;
