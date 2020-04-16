@@ -63,7 +63,7 @@ const Number = props => {
       newValue = value
       if (input.current) { // if we have the ref of the cleave input, let's update its state back to a valid number so the user does not get confused
         window.setTimeout(() => {
-          input.current.setState({value: input.current.lastInputValue})
+          input.current.setState({value: newValue})
         }, 5) // the package has its own timeout in it which breaks the react lifecycle, so we need to play dirty too - JRA 01/15/2020
       }
     }

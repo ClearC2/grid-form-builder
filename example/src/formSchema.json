@@ -952,10 +952,8 @@
           "name": "number",
           "label": "Number Input",
           "required": true,
-          "validation": {
-            "lowerBound": 0,
-            "upperBound": 100
-          }
+          "maximum": 69,
+          "minimum": 0
         }
       }, {
         "type": "field",
