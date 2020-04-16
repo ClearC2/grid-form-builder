@@ -1,3 +1,10 @@
+## [3.28.3](https://github.com/ClearC2/grid-form-builder/compare/v3.28.2...v3.28.3) (2020-04-16)
+
+
+### Bug Fixes
+
+* **number:** the UI will no longer appear as though you can type numbers outside of the bounds ([bb96ff7](https://github.com/ClearC2/grid-form-builder/commit/bb96ff77a72b0bbf703f49c85e2afc100f4a9721))
+
 ## [3.28.2](https://github.com/ClearC2/grid-form-builder/compare/v3.28.1...v3.28.2) (2020-04-08)
 
 
