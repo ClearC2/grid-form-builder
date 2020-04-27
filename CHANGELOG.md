@@ -1,3 +1,11 @@
+## [3.28.5](https://github.com/ClearC2/grid-form-builder/compare/v3.28.4...v3.28.5) (2020-04-27)
+
+
+### Bug Fixes
+
+* **conditionalTable:** fix toggle value calculation ([1c17415](https://github.com/ClearC2/grid-form-builder/commit/1c174154bc65df049fad65a211c55b641517f906))
+* **conditionalTable:** use props toggle value ([d4e6ac7](https://github.com/ClearC2/grid-form-builder/commit/d4e6ac7cfcba6378f0584361be4704990da7e9c6))
+
 ## [3.28.4](https://github.com/ClearC2/grid-form-builder/compare/v3.28.3...v3.28.4) (2020-04-27)
 
 

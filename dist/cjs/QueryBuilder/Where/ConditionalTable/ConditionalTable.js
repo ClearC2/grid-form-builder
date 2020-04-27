@@ -447,7 +447,7 @@ function (_Component) {
         className: "pull-right"
       }, _react.default.createElement(_Toggle.default, {
         ref: "row-toggle",
-        value: this.state.conditionType === this.props.toggleValue,
+        value: props.toggleValue === 'and',
         onToggle: this.handleToggleClick,
         activeLabel: "and",
         inactiveLabel: "or"
