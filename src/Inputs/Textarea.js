@@ -47,6 +47,7 @@ const Textarea = props => {
 
   const isDisabled = readonly || disabled || !interactive
 
+  // https://github.com/ClearC2/bleu/issues/3104
   const isFirefoxAndDisabled = isFirefox && isDisabled
 
   let className = 'gfb-input__single-value gfb-input__input'
