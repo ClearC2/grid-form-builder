@@ -1,3 +1,10 @@
+## [3.28.6](https://github.com/ClearC2/grid-form-builder/compare/v3.28.5...v3.28.6) (2020-04-27)
+
+
+### Bug Fixes
+
+* **typo:** forgot this.props, put props. ([0cd4102](https://github.com/ClearC2/grid-form-builder/commit/0cd41024a08042fe76e6228b9fac2463daa24980))
+
 ## [3.28.5](https://github.com/ClearC2/grid-form-builder/compare/v3.28.4...v3.28.5) (2020-04-27)
 
 
