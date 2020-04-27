@@ -372,7 +372,7 @@ export default class ConditionalTable extends Component {
                   <span className='pull-right'>
                     <Toggle
                       ref='row-toggle'
-                      value={this.state.conditionType === this.props.toggleValue}
+                      value={this.state.conditionType === 'and'}
                       onToggle={this.handleToggleClick}
                       activeLabel='and'
                       inactiveLabel='or'
