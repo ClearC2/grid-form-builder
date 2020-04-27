@@ -381,7 +381,7 @@ function (_Component) {
       }
     });
     _this.state = {
-      conditionType: props.toggleValue || 'and',
+      conditionType: props.initToggleValue || 'and',
       noValueConditions: (0, _immutable.Set)(noValueConditions),
       showEditReportFieldsModal: false,
       listOpen: true
@@ -510,6 +510,7 @@ exports.default = ConditionalTable;
   enableNextButton: _propTypes.default.bool,
   enableToggle: _propTypes.default.bool,
   toggleValue: _propTypes.default.string,
+  initToggleValue: _propTypes.default.string,
   onToggleChange: _propTypes.default.func,
   enableDelete: _propTypes.default.bool,
   onQueryChange: _propTypes.default.func,

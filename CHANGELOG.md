@@ -1,3 +1,10 @@
+## [3.28.7](https://github.com/ClearC2/grid-form-builder/compare/v3.28.6...v3.28.7) (2020-04-27)
+
+
+### Bug Fixes
+
+* **toggle:** add explicit initialization of toggle value ([2691872](https://github.com/ClearC2/grid-form-builder/commit/2691872f3c38ff9c695ceb540da5bbe204742661))
+
 ## [3.28.6](https://github.com/ClearC2/grid-form-builder/compare/v3.28.5...v3.28.6) (2020-04-27)
 
 

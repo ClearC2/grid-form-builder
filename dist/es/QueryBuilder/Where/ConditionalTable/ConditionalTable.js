@@ -368,7 +368,7 @@ function (_Component) {
     });
 
     _this.state = {
-      conditionType: props.toggleValue || 'and',
+      conditionType: props.initToggleValue || 'and',
       noValueConditions: Set(noValueConditions),
       showEditReportFieldsModal: false,
       listOpen: true
@@ -498,6 +498,7 @@ _defineProperty(ConditionalTable, "propTypes", {
   enableNextButton: PropTypes.bool,
   enableToggle: PropTypes.bool,
   toggleValue: PropTypes.string,
+  initToggleValue: PropTypes.string,
   onToggleChange: PropTypes.func,
   enableDelete: PropTypes.bool,
   onQueryChange: PropTypes.func,
