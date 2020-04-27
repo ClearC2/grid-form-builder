@@ -381,7 +381,7 @@ function (_Component) {
       }
     });
     _this.state = {
-      conditionType: 'and',
+      conditionType: props.toggleValue || 'and',
       noValueConditions: (0, _immutable.Set)(noValueConditions),
       showEditReportFieldsModal: false,
       listOpen: true

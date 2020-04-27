@@ -368,7 +368,7 @@ function (_Component) {
     });
 
     _this.state = {
-      conditionType: 'and',
+      conditionType: props.toggleValue || 'and',
       noValueConditions: Set(noValueConditions),
       showEditReportFieldsModal: false,
       listOpen: true

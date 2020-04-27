@@ -1,3 +1,10 @@
+## [3.28.4](https://github.com/ClearC2/grid-form-builder/compare/v3.28.3...v3.28.4) (2020-04-27)
+
+
+### Bug Fixes
+
+* **conditionalTable:** toggle value can be set with props ([43efaff](https://github.com/ClearC2/grid-form-builder/commit/43efaff1e142518e2fdc0417df6fb23c4c1311aa))
+
 ## [3.28.3](https://github.com/ClearC2/grid-form-builder/compare/v3.28.2...v3.28.3) (2020-04-16)
 
 
