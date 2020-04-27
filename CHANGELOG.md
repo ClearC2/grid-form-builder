@@ -1,3 +1,10 @@
+## [3.28.8](https://github.com/ClearC2/grid-form-builder/compare/v3.28.7...v3.28.8) (2020-04-27)
+
+
+### Bug Fixes
+
+* **firefox:** not able to copy disabled field ([#150](https://github.com/ClearC2/grid-form-builder/issues/150)) ([65c26e5](https://github.com/ClearC2/grid-form-builder/commit/65c26e5b4179073c9c6641fd6112717cb9acda28))
+
 ## [3.28.7](https://github.com/ClearC2/grid-form-builder/compare/v3.28.6...v3.28.7) (2020-04-27)
 
 

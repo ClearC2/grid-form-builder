@@ -166,6 +166,12 @@ div.gfb-inner-cell-input {
   background-color: #f2f2f2 !important;
 }
 
+/* You cannot copy text on disabled field in the firefox browser. The readOnly html attribute is used instead and this classname is used to match readOnly styling to the disabled field */
+.firefox-disabled-field {
+  color: #b6b6b6;
+  cursor: default;
+}
+
 div.gfb-inner-cell-input, div.gfb-input-outer, div.gfb-input-inner, div.gfb-input__control,
 div.gfb-input__control:hover, div.gfb-input__value-container, div.gfb-input__value-container > div[class^=css-],
 div.gfb-input__input, input.gfb-input__single-value, div.gfb-input__single-value, div.gfb-input__value-container > div > div.gfb-input__input > input,
