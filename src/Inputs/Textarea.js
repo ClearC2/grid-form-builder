@@ -43,9 +43,16 @@ const Textarea = props => {
     setIsFocused(false)
   }, [])
 
+  const isFirefox = navigator.userAgent.search('Firefox') > -1
+
+  const isDisabled = readonly || disabled || !interactive
+
+  const isFirefoxAndDisabled = isFirefox && isDisabled
+
   let className = 'gfb-input__single-value gfb-input__input'
-  if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
+  if (isDisabled) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
+  if (isFirefoxAndDisabled) className = className + ' firefox-disabled-field'
   let controlClass = 'gfb-input__control'
   let validationError
   if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
@@ -67,13 +74,14 @@ const Textarea = props => {
               name={name}
               value={value}
               onChange={onChange}
-              disabled={readonly || disabled || !interactive}
+              disabled={isFirefoxAndDisabled ? undefined : isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}
               autoComplete={autoComplete}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
+              readOnly={isFirefoxAndDisabled ? isDisabled : undefined}
               style={valueStyle}
               css={theme.value}
             />
