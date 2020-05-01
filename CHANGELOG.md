@@ -1,3 +1,10 @@
+## [3.28.9](https://github.com/ClearC2/grid-form-builder/compare/v3.28.8...v3.28.9) (2020-05-01)
+
+
+### Bug Fixes
+
+* **typeahead:** pure numeric values should now properly display as a value when the field is set programatically ([a69cf54](https://github.com/ClearC2/grid-form-builder/commit/a69cf54a9b44f54cabf113ffd1272e874da510c1))
+
 ## [3.28.8](https://github.com/ClearC2/grid-form-builder/compare/v3.28.7...v3.28.8) (2020-04-27)
 
 

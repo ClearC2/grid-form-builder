@@ -220,6 +220,8 @@ var Typeahead = function Typeahead(props) {
     updateIsRequiredFlag(required && requiredWarning && !value.length);
   }, [updateIsRequiredFlag, required, requiredWarning, value]);
   var convertValueStringToValueArrayIfNeeded = (0, _react.useCallback)(function (value) {
+    if (typeof value === 'number' && !isNaN(value)) value = value + '';
+
     var attemptConvertStringObjectToObject = function attemptConvertStringObjectToObject(string) {
       try {
         return JSON.parse(string);
