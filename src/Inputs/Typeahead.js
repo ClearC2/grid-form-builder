@@ -96,6 +96,7 @@ const Typeahead = props => {
   }, [updateIsRequiredFlag, required, requiredWarning, value])
 
   const convertValueStringToValueArrayIfNeeded = useCallback(value => {
+    if (typeof value === 'number' && !isNaN(value)) value = value + ''
     const attemptConvertStringObjectToObject = string => {
       try {
         return JSON.parse(string)

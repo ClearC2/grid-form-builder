@@ -4,11 +4,11 @@ module.exports = function (app) {
       res.json({
         'data': [
           {
-            'meta_universalid': '011C984330351D81008633C3A966D648',
-            'companyname': 'test company 1',
-            'ups_am_name': 'Jacy Robb',
-            'label': 'test company 1::C',
-            'value': '011C984330351D81008633C3A966D648'
+            'meta_universalid': 123456789,
+            'companyname': 123456789,
+            'ups_am_name': 123456789,
+            'label': 'test numeric value',
+            'value': 123456789
           },
           {
             'meta_universalid': '011C984330351D81008633C3A966D648',
