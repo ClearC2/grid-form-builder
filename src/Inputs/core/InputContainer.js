@@ -11,7 +11,7 @@ class InputPerformanceOptimizer extends Component {
   static propTypes = {
     config: PropTypes.object,
     values: PropTypes.object,
-    value: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string, PropTypes.number])
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool])
   }
 
   shouldComponentUpdate (p) {
@@ -86,7 +86,7 @@ InputContainer.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.array]),
   config: PropTypes.object,
   values: PropTypes.instanceOf(Map),
-  value: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   onChange: PropTypes.func,
   requiredWarning: PropTypes.bool,
   tabIndex: PropTypes.number,

@@ -58,7 +58,7 @@ export default ConditionalInput
 ConditionalInput.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   values: PropTypes.object,
   disabled: PropTypes.bool,
   readonly: PropTypes.bool,

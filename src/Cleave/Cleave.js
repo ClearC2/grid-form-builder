@@ -15,7 +15,7 @@ import DefaultProperties from 'cleave.js/src/common/DefaultProperties'
 export default class Cleave extends Component {
   static propTypes = {
     options: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string]),
-    value: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
     onKeyDown: PropTypes.func,
     onChange: PropTypes.func,
     onFocus: PropTypes.func,

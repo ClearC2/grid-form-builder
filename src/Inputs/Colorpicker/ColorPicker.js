@@ -46,7 +46,7 @@ export default ColorPicker
 ColorPicker.propTypes = {
   inputId: PropTypes.string,
   pickerId: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   onChange: PropTypes.func,
   name: PropTypes.string
 }

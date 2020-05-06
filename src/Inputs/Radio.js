@@ -107,7 +107,7 @@ export default Radio
 Radio.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   disabled: PropTypes.bool,
   readonly: PropTypes.bool,
   autofocus: PropTypes.bool,

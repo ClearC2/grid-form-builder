@@ -122,7 +122,7 @@ const NativeSelect = props => {
 NativeSelect.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   keyword: PropTypes.object,
   tabIndex: PropTypes.number,
   allowcreate: PropTypes.bool,
