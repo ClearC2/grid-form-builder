@@ -78,7 +78,10 @@ const Richtextarea = props => {
   })
 
   const handleOnChange = useCallback(html => {
-    if (html !== '<p><br></p>') {
+    /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
+    This is undesirable because it will register the onDirty to be true when no user change has
+    occurred so this check is added in to prevent quill from auto formatting when mounting */
+    if (html !== '<p><br></p>' && isFocused) {
       onChange({
         target: {
           name,
@@ -86,7 +89,7 @@ const Richtextarea = props => {
         }
       })
     }
-  }, [onChange, name])
+  }, [isFocused, onChange, name])
 
   const previousRTEImageUrl = usePrevious(rteImageUrl)
 
