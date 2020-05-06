@@ -22,8 +22,7 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIco
 
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
-var _this = void 0;
-
+/** @jsx jsx */
 var Checkbox = function Checkbox(props) {
   var _context3;
 
@@ -67,16 +66,16 @@ var Checkbox = function Checkbox(props) {
   var handleOnChange = (0, _react.useCallback)(function (e) {
     var oppositeOfCurrentValue = null;
 
-    if (offValue && onValue) {
+    if (typeof offValue !== 'undefined' && typeof onValue !== 'undefined') {
       if (value === offValue) oppositeOfCurrentValue = onValue;else if (value === onValue) oppositeOfCurrentValue = offValue;else oppositeOfCurrentValue = onValue; // could be dangerous, this says if you provided an on and off value but the current value isn't either one of them, make the action set this to the true value
     } else if (onValue) {
       var _context;
 
-      if ((0, _indexOf.default)(_context = _this.falsey).call(_context, value) > -1) oppositeOfCurrentValue = onValue;else oppositeOfCurrentValue = ''; // put this weird check in to default off value to blank if only an onValue was provided
+      if ((0, _indexOf.default)(_context = falsey.current).call(_context, value) > -1) oppositeOfCurrentValue = onValue;else oppositeOfCurrentValue = ''; // put this weird check in to default off value to blank if only an onValue was provided
     } else if (offValue) {
       var _context2;
 
-      if ((0, _indexOf.default)(_context2 = _this.truthy).call(_context2, value) > -1) oppositeOfCurrentValue = offValue;else oppositeOfCurrentValue = '1'; // put this weird check in to default on value to 1 if only an offValue was provided
+      if ((0, _indexOf.default)(_context2 = truthy.current).call(_context2, value) > -1) oppositeOfCurrentValue = offValue;else oppositeOfCurrentValue = '1'; // put this weird check in to default on value to 1 if only an offValue was provided
     } else {
       switch (value) {
         case true:
@@ -280,7 +279,7 @@ exports.default = _default;
 Checkbox.propTypes = {
   onChange: _propTypes.default.func,
   name: _propTypes.default.string,
-  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object]),
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   disabled: _propTypes.default.bool,
   readonly: _propTypes.default.bool,
   autofocus: _propTypes.default.bool,

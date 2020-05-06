@@ -1,3 +1,10 @@
+## [3.28.11](https://github.com/ClearC2/grid-form-builder/compare/v3.28.10...v3.28.11) (2020-05-06)
+
+
+### Bug Fixes
+
+* **checkbox:** checkbox should now properly change if custom on and off values were provided ([5b9a917](https://github.com/ClearC2/grid-form-builder/commit/5b9a91772d455fa0212321ac04e89c0ce2e71656))
+
 ## [3.28.10](https://github.com/ClearC2/grid-form-builder/compare/v3.28.9...v3.28.10) (2020-05-06)
 
 

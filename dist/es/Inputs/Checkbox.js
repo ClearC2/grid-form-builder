@@ -1,7 +1,5 @@
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 
-var _this = this;
-
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useCallback, useRef } from 'react';
@@ -52,16 +50,16 @@ var Checkbox = function Checkbox(props) {
   var handleOnChange = useCallback(function (e) {
     var oppositeOfCurrentValue = null;
 
-    if (offValue && onValue) {
+    if (typeof offValue !== 'undefined' && typeof onValue !== 'undefined') {
       if (value === offValue) oppositeOfCurrentValue = onValue;else if (value === onValue) oppositeOfCurrentValue = offValue;else oppositeOfCurrentValue = onValue; // could be dangerous, this says if you provided an on and off value but the current value isn't either one of them, make the action set this to the true value
     } else if (onValue) {
       var _context;
 
-      if (_indexOfInstanceProperty(_context = _this.falsey).call(_context, value) > -1) oppositeOfCurrentValue = onValue;else oppositeOfCurrentValue = ''; // put this weird check in to default off value to blank if only an onValue was provided
+      if (_indexOfInstanceProperty(_context = falsey.current).call(_context, value) > -1) oppositeOfCurrentValue = onValue;else oppositeOfCurrentValue = ''; // put this weird check in to default off value to blank if only an onValue was provided
     } else if (offValue) {
       var _context2;
 
-      if (_indexOfInstanceProperty(_context2 = _this.truthy).call(_context2, value) > -1) oppositeOfCurrentValue = offValue;else oppositeOfCurrentValue = '1'; // put this weird check in to default on value to 1 if only an offValue was provided
+      if (_indexOfInstanceProperty(_context2 = truthy.current).call(_context2, value) > -1) oppositeOfCurrentValue = offValue;else oppositeOfCurrentValue = '1'; // put this weird check in to default on value to 1 if only an offValue was provided
     } else {
       switch (value) {
         case true:
@@ -264,7 +262,7 @@ export default Checkbox;
 Checkbox.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   disabled: PropTypes.bool,
   readonly: PropTypes.bool,
   autofocus: PropTypes.bool,
