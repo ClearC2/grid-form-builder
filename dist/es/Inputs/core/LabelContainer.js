@@ -156,6 +156,6 @@ LabelContainer.propTypes = {
   config: PropTypes.object,
   handleLinkClick: PropTypes.func,
   handleCascadeKeywordClick: PropTypes.func,
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string, PropTypes.array, PropTypes.object]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   type: PropTypes.string
 };

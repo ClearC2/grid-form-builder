@@ -203,7 +203,7 @@ exports.default = _default;
 Listselect.propTypes = {
   onChange: _propTypes.default.func,
   name: _propTypes.default.string,
-  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object]),
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   keyword: _propTypes.default.object,
   disabled: _propTypes.default.bool,
   readonly: _propTypes.default.bool,

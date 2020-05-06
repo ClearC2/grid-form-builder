@@ -142,7 +142,7 @@ exports.default = _default;
 Radio.propTypes = {
   onChange: _propTypes.default.func,
   name: _propTypes.default.string,
-  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object]),
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   disabled: _propTypes.default.bool,
   readonly: _propTypes.default.bool,
   autofocus: _propTypes.default.bool,

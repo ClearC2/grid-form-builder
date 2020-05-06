@@ -182,7 +182,7 @@ GFBInput.propTypes = {
   interactive: _propTypes.default.bool,
   link: _propTypes.default.object,
   cascade: _propTypes.default.object,
-  value: _propTypes.default.oneOfType([_propTypes.default.object, _propTypes.default.array, _propTypes.default.string, _propTypes.default.number]),
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   icon: _propTypes.default.string,
   tooltips: _propTypes.default.object,
   label: _propTypes.default.string,

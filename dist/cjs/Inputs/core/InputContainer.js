@@ -100,7 +100,7 @@ function (_Component) {
 (0, _defineProperty3.default)(InputPerformanceOptimizer, "propTypes", {
   config: _propTypes.default.object,
   values: _propTypes.default.object,
-  value: _propTypes.default.oneOfType([_propTypes.default.object, _propTypes.default.array, _propTypes.default.string, _propTypes.default.number])
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool])
 });
 
 var InputContainer = function InputContainer(props) {
@@ -170,7 +170,7 @@ InputContainer.propTypes = {
   children: _propTypes.default.oneOfType([_propTypes.default.node, _propTypes.default.array]),
   config: _propTypes.default.object,
   values: _propTypes.default.instanceOf(_immutable.Map),
-  value: _propTypes.default.oneOfType([_propTypes.default.object, _propTypes.default.array, _propTypes.default.string, _propTypes.default.number]),
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   onChange: _propTypes.default.func,
   requiredWarning: _propTypes.default.bool,
   tabIndex: _propTypes.default.number,

@@ -152,7 +152,7 @@ GFBInput.propTypes = {
   interactive: PropTypes.bool,
   link: PropTypes.object,
   cascade: PropTypes.object,
-  value: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   icon: PropTypes.string,
   tooltips: PropTypes.object,
   label: PropTypes.string,

@@ -480,7 +480,7 @@ function (_Component) {
 
 _defineProperty(Cleave, "propTypes", {
   options: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string]),
-  value: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   onKeyDown: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,

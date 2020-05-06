@@ -492,7 +492,7 @@ function (_Component) {
 exports.default = Cleave;
 (0, _defineProperty2.default)(Cleave, "propTypes", {
   options: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.object, _propTypes.default.string]),
-  value: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.object, _propTypes.default.string]),
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   onKeyDown: _propTypes.default.func,
   onChange: _propTypes.default.func,
   onFocus: _propTypes.default.func,

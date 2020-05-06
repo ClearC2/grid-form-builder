@@ -53,6 +53,6 @@ var Metadata = function Metadata(props) {
 export default Metadata;
 Metadata.propTypes = {
   name: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   style: PropTypes.object
 };

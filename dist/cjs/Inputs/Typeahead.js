@@ -762,7 +762,7 @@ Typeahead.propTypes = {
   onChange: _propTypes.default.func,
   name: _propTypes.default.string,
   label: _propTypes.default.string,
-  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object]),
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   allowcreate: _propTypes.default.bool,
   autofocus: _propTypes.default.bool,
   multi: _propTypes.default.bool,

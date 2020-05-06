@@ -183,6 +183,6 @@ LabelContainer.propTypes = {
   config: _propTypes.default.object,
   handleLinkClick: _propTypes.default.func,
   handleCascadeKeywordClick: _propTypes.default.func,
-  value: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string, _propTypes.default.array, _propTypes.default.object]),
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   type: _propTypes.default.string
 };
