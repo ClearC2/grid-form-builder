@@ -1,3 +1,10 @@
+## [3.28.10](https://github.com/ClearC2/grid-form-builder/compare/v3.28.9...v3.28.10) (2020-05-06)
+
+
+### Bug Fixes
+
+* **quill:** prevent autoformat on mount ([#151](https://github.com/ClearC2/grid-form-builder/issues/151)) ([5afcbd0](https://github.com/ClearC2/grid-form-builder/commit/5afcbd07407aedbc2411beb576fd83f6503d6cd6))
+
 ## [3.28.9](https://github.com/ClearC2/grid-form-builder/compare/v3.28.8...v3.28.9) (2020-05-01)
 
 

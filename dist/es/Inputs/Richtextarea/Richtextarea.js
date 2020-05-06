@@ -71,7 +71,10 @@ var Richtextarea = function Richtextarea(props) {
     }
   });
   var handleOnChange = useCallback(function (html) {
-    if (html !== '<p><br></p>') {
+    /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
+    This is undesirable because it will register the onDirty to be true when no user change has
+    occurred so this check is added in to prevent quill from auto formatting when mounting */
+    if (html !== '<p><br></p>' && isFocused) {
       onChange({
         target: {
           name: name,
@@ -79,7 +82,7 @@ var Richtextarea = function Richtextarea(props) {
         }
       });
     }
-  }, [onChange, name]);
+  }, [isFocused, onChange, name]);
   var previousRTEImageUrl = usePrevious(rteImageUrl);
   useEffect(function () {
     if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && QuillRef.current) {
