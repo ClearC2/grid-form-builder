@@ -10,6 +10,10 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
+var _sort = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/sort"));
+
+var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
 var _core = require("@emotion/core");
@@ -26,10 +30,18 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIco
 
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
+var _countryCodes = _interopRequireDefault(require("../countryCodes"));
+
+var _immutable = require("immutable");
+
+require("../styles/phone.css");
+
 /** @jsx jsx */
 // import Cleave from 'cleave.js/react'
 // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
 var Phone = function Phone(props) {
+  var _context, _context2;
+
   var name = props.name,
       _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -49,7 +61,10 @@ var Phone = function Phone(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       _props$region = props.region,
-      region = _props$region === void 0 ? 'US' : _props$region;
+      region = _props$region === void 0 ? 'US' : _props$region,
+      _props$regionselect = props.regionselect,
+      regionselect = _props$regionselect === void 0 ? false : _props$regionselect,
+      regions = props.regions;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -67,12 +82,22 @@ var Phone = function Phone(props) {
       theme = _useTheme.theme;
 
   var input = (0, _react.useRef)();
+  var selectableRegionCodes = (0, _react.useRef)(regions || _countryCodes.default);
 
   var _useState = (0, _react.useState)(false),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
 
+  var _useState3 = (0, _react.useState)(region),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      countryCode = _useState4[0],
+      setCountryCode = _useState4[1];
+
+  var handleOnRegionChange = (0, _react.useCallback)(function (e) {
+    var value = e.target.value;
+    setCountryCode(value);
+  }, []);
   var handleOnFocus = (0, _react.useCallback)(function () {
     setIsFocused(true);
   }, []);
@@ -122,15 +147,26 @@ var Phone = function Phone(props) {
     className: controlClass,
     style: inputControl,
     css: theme.inputControl
-  }, (0, _core.jsx)("div", {
+  }, regionselect && (0, _core.jsx)("div", {
+    className: "phone-region-select-container"
+  }, (0, _core.jsx)("select", {
+    value: countryCode,
+    onChange: handleOnRegionChange
+  }, (0, _map.default)(_context = (0, _sort.default)(_context2 = selectableRegionCodes.current).call(_context2)).call(_context, function (country, i) {
+    return (0, _core.jsx)("option", {
+      key: i,
+      value: country
+    }, country);
+  }))), (0, _core.jsx)("div", {
     className: "gfb-input__value-container",
     style: valueContainer,
     css: theme.valueContainer
   }, (0, _core.jsx)(_Cleave.default, {
+    key: countryCode,
     ref: input,
     options: {
       phone: true,
-      phoneRegionCode: region,
+      phoneRegionCode: countryCode,
       delimiter: delimiter
     },
     className: className,
@@ -172,5 +208,7 @@ Phone.propTypes = {
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
-  region: _propTypes.default.string
+  region: _propTypes.default.string,
+  regionselect: _propTypes.default.bool,
+  regions: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.instanceOf(_immutable.List)])
 };

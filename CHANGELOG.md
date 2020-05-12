@@ -1,3 +1,12 @@
+# [3.29.0](https://github.com/ClearC2/grid-form-builder/compare/v3.28.11...v3.29.0) (2020-05-12)
+
+
+### Features
+
+* **multiselect:** multiselect will now only be as big as the values selected when the input is focused ([f25542d](https://github.com/ClearC2/grid-form-builder/commit/f25542da5ab6f706e790555c26f5b305c369e840))
+* **multiselect:** searchable is now a config option that defaults to false ([8cccb21](https://github.com/ClearC2/grid-form-builder/commit/8cccb21900e1370b890c625ffe9818777968cebe))
+* **phone:** adds optional region picker to phone field ([4333447](https://github.com/ClearC2/grid-form-builder/commit/4333447d48c0e4da6d437a7f00afd9def0fac21e))
+
 ## [3.28.11](https://github.com/ClearC2/grid-form-builder/compare/v3.28.10...v3.28.11) (2020-05-06)
 
 

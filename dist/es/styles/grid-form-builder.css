@@ -241,6 +241,7 @@ div.grid-form-builder-parent div.gfb-input__value-container > div.gfb-input__mul
   margin-left: 2px;
   height: 19px;
   margin-top: 2px;
+  margin-bottom: 2px;
   flex: 0 1 auto;
   justify-content: space-between;
   width: auto;
@@ -275,6 +276,16 @@ label.gfb-multi-input-label-wrapper
 div.grid-form-builder-parent input:focus, div.grid-form-builder-parent textarea:focus {
   outline: transparent;
   outline-offset: 0;
+}
+
+div.gfb-input__value-container--is-multi.gfb-input__value-container {
+  height: 100%;
+}
+
+div.multiselect-focus.gfb-has-focus {
+  position: absolute;
+  width: 100%;
+  padding-bottom: 30px !important;
 }
 
 div.gfb-has-focus > div > div.gfb-input__control {

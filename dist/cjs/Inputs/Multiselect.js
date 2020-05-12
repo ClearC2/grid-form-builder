@@ -89,7 +89,9 @@ var Multiselect = function Multiselect(props) {
       delimiter = _props$delimiter === void 0 ? '¤' : _props$delimiter,
       stringify = props.stringify,
       _props$isClearable = props.isClearable,
-      isClearable = _props$isClearable === void 0 ? true : _props$isClearable;
+      isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
+      _props$searchable = props.searchable,
+      searchable = _props$searchable === void 0 ? false : _props$searchable;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -289,7 +291,7 @@ var Multiselect = function Multiselect(props) {
   }
 
   if (isFocused) {
-    outerClass = outerClass + ' gfb-has-focus';
+    outerClass = outerClass + ' gfb-has-focus multiselect-focus';
   }
 
   return (0, _core.jsx)("div", {
@@ -299,6 +301,7 @@ var Multiselect = function Multiselect(props) {
     style: inputOuter,
     css: theme.inputOuter
   }, (0, _core.jsx)(Select, {
+    isSearchable: searchable,
     className: className,
     classNamePrefix: "gfb-input",
     tabIndex: tabIndex,
@@ -383,5 +386,6 @@ Multiselect.propTypes = {
   stringify: _propTypes.default.bool,
   delimiter: _propTypes.default.string,
   delimit: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.array]),
-  isClearable: _propTypes.default.bool
+  isClearable: _propTypes.default.bool,
+  searchable: _propTypes.default.bool
 };

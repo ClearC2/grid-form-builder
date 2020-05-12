@@ -1,3 +1,5 @@
+import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 /** @jsx jsx */
@@ -10,8 +12,13 @@ import Cleave from '../Cleave'; // switch this back to cleave.js package as soon
 import 'cleave.js/dist/addons/cleave-phone.i18n';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
+import countryCodes from '../countryCodes';
+import { List } from 'immutable';
+import '../styles/phone.css';
 
 var Phone = function Phone(props) {
+  var _context, _context2;
+
   var name = props.name,
       _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -31,7 +38,10 @@ var Phone = function Phone(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       _props$region = props.region,
-      region = _props$region === void 0 ? 'US' : _props$region;
+      region = _props$region === void 0 ? 'US' : _props$region,
+      _props$regionselect = props.regionselect,
+      regionselect = _props$regionselect === void 0 ? false : _props$regionselect,
+      regions = props.regions;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -49,12 +59,22 @@ var Phone = function Phone(props) {
       theme = _useTheme.theme;
 
   var input = useRef();
+  var selectableRegionCodes = useRef(regions || countryCodes);
 
   var _useState = useState(false),
       _useState2 = _slicedToArray(_useState, 2),
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
 
+  var _useState3 = useState(region),
+      _useState4 = _slicedToArray(_useState3, 2),
+      countryCode = _useState4[0],
+      setCountryCode = _useState4[1];
+
+  var handleOnRegionChange = useCallback(function (e) {
+    var value = e.target.value;
+    setCountryCode(value);
+  }, []);
   var handleOnFocus = useCallback(function () {
     setIsFocused(true);
   }, []);
@@ -104,15 +124,26 @@ var Phone = function Phone(props) {
     className: controlClass,
     style: inputControl,
     css: theme.inputControl
-  }, jsx("div", {
+  }, regionselect && jsx("div", {
+    className: "phone-region-select-container"
+  }, jsx("select", {
+    value: countryCode,
+    onChange: handleOnRegionChange
+  }, _mapInstanceProperty(_context = _sortInstanceProperty(_context2 = selectableRegionCodes.current).call(_context2)).call(_context, function (country, i) {
+    return jsx("option", {
+      key: i,
+      value: country
+    }, country);
+  }))), jsx("div", {
     className: "gfb-input__value-container",
     style: valueContainer,
     css: theme.valueContainer
   }, jsx(Cleave, {
+    key: countryCode,
     ref: input,
     options: {
       phone: true,
-      phoneRegionCode: region,
+      phoneRegionCode: countryCode,
       delimiter: delimiter
     },
     className: className,
@@ -153,5 +184,7 @@ Phone.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  region: PropTypes.string
+  region: PropTypes.string,
+  regionselect: PropTypes.bool,
+  regions: PropTypes.oneOfType([PropTypes.array, PropTypes.instanceOf(List)])
 };
