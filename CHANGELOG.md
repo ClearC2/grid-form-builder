@@ -1,3 +1,10 @@
+# [3.32.0](https://github.com/ClearC2/grid-form-builder/compare/v3.31.0...v3.32.0) (2020-05-12)
+
+
+### Features
+
+* **condition:** scrolling is now a little cleaner ([91ee5e6](https://github.com/ClearC2/grid-form-builder/commit/91ee5e6dd710babfe99f9af33e0b87d07ae5b7b7))
+
 # [3.31.0](https://github.com/ClearC2/grid-form-builder/compare/v3.30.0...v3.31.0) (2020-05-12)
 
 

@@ -600,13 +600,14 @@ var ConditionalDialog = function ConditionalDialog(props) {
       height: 'calc(100% - 54px)',
       padding: '10px',
       scroll: 'auto',
-      overflowY: 'auto',
+      overflow: 'hidden',
       display: 'flex'
     }
   }, _react.default.createElement("div", {
     style: {
-      width: 'calc(100% - 50px)',
-      height: '100%'
+      width: '100%',
+      height: '100%',
+      overflowY: 'auto'
     }
   }, _react.default.createElement(_index.FormBuilder, {
     formSchema: getSchema(),
@@ -615,24 +616,19 @@ var ConditionalDialog = function ConditionalDialog(props) {
     handleOnChange: dialogOnChange,
     draggable: false,
     interactive: true
-  })), _react.default.createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'flex-end',
-      padding: '10px',
-      height: '100%'
-    }
-  }, _react.default.createElement("button", {
+  }))), _react.default.createElement("button", {
     type: "button",
     className: "btn btn-primary",
     style: {
-      marginRight: '15px',
-      height: 35
+      height: 35,
+      position: 'absolute',
+      bottom: 15,
+      right: 30
     },
     onClick: function onClick() {
       return props.handleClose(false);
     }
-  }, "Ok")))));
+  }, "Ok")));
 };
 
 var _default = ConditionalDialog;
