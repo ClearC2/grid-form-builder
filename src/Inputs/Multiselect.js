@@ -185,7 +185,7 @@ const Multiselect = props => {
     }
   }
   if (isFocused) {
-    outerClass = outerClass + ' gfb-has-focus'
+    outerClass = outerClass + ' gfb-has-focus multiselect-focus'
   }
 
   return (

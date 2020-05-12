@@ -15,7 +15,7 @@ export default class Example extends Component {
       textareatest: '1234 Main Street',
       meta_created_date: 'swiggity swoogity here comes the moogity',
       listselecttest: List(['Customer Service', 'Executive Meeting']),
-      multiselecttest: ['Contract Signing', 'Customer Service', 'Not A Value'],
+      multiselecttest: ['Contract Signing', 'Customer Service', 'Not A Value', 'Initial Meeting', 'Internet Hub'],
       parentid: '00112233445566778899AABBCCEEFFFF',
       phonetest: '5554443333',
       price: '25.25',

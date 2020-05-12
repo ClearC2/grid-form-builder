@@ -239,11 +239,8 @@
           "type": "phone",
           "regionselect": true,
           "regions": ["US", "GB", "RU"],
-          "delimiter": "-",
-          "cascade": {
-            "keyword": "C2_PEOPLE_SOMETHING",
-            "icon": "tree"
-          }
+          "region": "US",
+          "delimiter": "-"
         }
       }, {
         "type": "field",
