@@ -368,31 +368,34 @@ const ConditionalDialog = props => {
         </div>
         <div
           style={{
-            width: '720px',
-            maxHeight: `${maxBodyHeight}px`,
+            width: '100%',
+            height: 'calc(100% - 54px)',
             padding: '10px',
             scroll: 'auto',
-            overflowY: 'auto'
+            overflowY: 'auto',
+            display: 'flex'
           }}
         >
-          <FormBuilder
-            formSchema={getSchema()}
-            formValues={modalValues}
-            conditionalSearch={false}
-            handleOnChange={dialogOnChange}
-            draggable={false}
-            interactive
-          />
-        </div>
-        <div style={{display: 'flex', flexDirection: 'row-reverse', padding: '10px', height: '54px'}}>
-          <button
-            type='button'
-            className='btn btn-primary'
-            style={{marginRight: '15px'}}
-            onClick={() => props.handleClose(false)}
-          >
-            Ok
-          </button>
+          <div style={{width: 'calc(100% - 50px)', height: '100%'}}>
+            <FormBuilder
+              formSchema={getSchema()}
+              formValues={modalValues}
+              conditionalSearch={false}
+              handleOnChange={dialogOnChange}
+              draggable={false}
+              interactive
+            />
+          </div>
+          <div style={{display: 'flex', alignItems: 'flex-end', padding: '10px', height: '100%'}}>
+            <button
+              type='button'
+              className='btn btn-primary'
+              style={{marginRight: '15px', height: 35}}
+              onClick={() => props.handleClose(false)}
+            >
+              Ok
+            </button>
+          </div>
         </div>
       </div>
     </Dialog>
