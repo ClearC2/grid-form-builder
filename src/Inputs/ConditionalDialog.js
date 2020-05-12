@@ -374,11 +374,11 @@ const ConditionalDialog = props => {
             height: 'calc(100% - 54px)',
             padding: '10px',
             scroll: 'auto',
-            overflowY: 'auto',
+            overflow: 'hidden',
             display: 'flex'
           }}
         >
-          <div style={{width: 'calc(100% - 50px)', height: '100%'}}>
+          <div style={{width: '100%', height: '100%', overflowY: 'auto'}}>
             <FormBuilder
               formSchema={getSchema()}
               formValues={modalValues}
@@ -388,17 +388,15 @@ const ConditionalDialog = props => {
               interactive
             />
           </div>
-          <div style={{display: 'flex', alignItems: 'flex-end', padding: '10px', height: '100%'}}>
-            <button
-              type='button'
-              className='btn btn-primary'
-              style={{marginRight: '15px', height: 35}}
-              onClick={() => props.handleClose(false)}
-            >
-              Ok
-            </button>
-          </div>
         </div>
+        <button
+          type='button'
+          className='btn btn-primary'
+          style={{height: 35, position: 'absolute', bottom: 15, right: 30}}
+          onClick={() => props.handleClose(false)}
+        >
+          Ok
+        </button>
       </div>
     </Dialog>
   )
