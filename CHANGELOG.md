@@ -1,3 +1,10 @@
+# [3.31.0](https://github.com/ClearC2/grid-form-builder/compare/v3.30.0...v3.31.0) (2020-05-12)
+
+
+### Features
+
+* **condition:** hard coded some heights that will work in most use cases to make the forms generally look a little better ([0fccca4](https://github.com/ClearC2/grid-form-builder/commit/0fccca43eef3886c6be6eda4f9e65304b160c1d4))
+
 # [3.30.0](https://github.com/ClearC2/grid-form-builder/compare/v3.29.0...v3.30.0) (2020-05-12)
 
 
