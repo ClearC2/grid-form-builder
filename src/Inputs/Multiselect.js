@@ -31,7 +31,8 @@ const Multiselect = props => {
     delimit,
     delimiter = '¤',
     stringify,
-    isClearable = true
+    isClearable = true,
+    searchable = false
   } = props
 
   const {
@@ -196,6 +197,7 @@ const Multiselect = props => {
       css={theme.inputOuter}
     >
       <Select
+        isSearchable={searchable}
         className={className}
         classNamePrefix='gfb-input'
         tabIndex={tabIndex}
@@ -278,5 +280,6 @@ Multiselect.propTypes = {
   stringify: PropTypes.bool,
   delimiter: PropTypes.string,
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  isClearable: PropTypes.bool
+  isClearable: PropTypes.bool,
+  searchable: PropTypes.bool
 }
