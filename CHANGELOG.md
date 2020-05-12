@@ -1,3 +1,10 @@
+# [3.30.0](https://github.com/ClearC2/grid-form-builder/compare/v3.29.0...v3.30.0) (2020-05-12)
+
+
+### Features
+
+* **conditions:** changed css in the condition dialog to let the form take up all of the space inside the dialog if needed ([da1a7b5](https://github.com/ClearC2/grid-form-builder/commit/da1a7b513bb1e4fdaa1bab11ccf85403ce1370fa))
+
 # [3.29.0](https://github.com/ClearC2/grid-form-builder/compare/v3.28.11...v3.29.0) (2020-05-12)
 
 

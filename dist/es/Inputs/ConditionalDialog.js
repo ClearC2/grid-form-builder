@@ -550,11 +550,17 @@ var ConditionalDialog = function ConditionalDialog(props) {
     }
   }, React.createElement("span", null, "\xD7")))), React.createElement("div", {
     style: {
-      width: '720px',
-      maxHeight: "".concat(maxBodyHeight, "px"),
+      width: '100%',
+      height: 'calc(100% - 54px)',
       padding: '10px',
       scroll: 'auto',
-      overflowY: 'auto'
+      overflowY: 'auto',
+      display: 'flex'
+    }
+  }, React.createElement("div", {
+    style: {
+      width: 'calc(100% - 50px)',
+      height: '100%'
     }
   }, React.createElement(FormBuilder, {
     formSchema: getSchema(),
@@ -566,20 +572,21 @@ var ConditionalDialog = function ConditionalDialog(props) {
   })), React.createElement("div", {
     style: {
       display: 'flex',
-      flexDirection: 'row-reverse',
+      alignItems: 'flex-end',
       padding: '10px',
-      height: '54px'
+      height: '100%'
     }
   }, React.createElement("button", {
     type: "button",
     className: "btn btn-primary",
     style: {
-      marginRight: '15px'
+      marginRight: '15px',
+      height: 35
     },
     onClick: function onClick() {
       return props.handleClose(false);
     }
-  }, "Ok"))));
+  }, "Ok")))));
 };
 
 export default ConditionalDialog;
