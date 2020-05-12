@@ -544,7 +544,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
   return _react.default.createElement(_c2Dialog.Dialog, {
     size: {
       width: '800px',
-      height: "".concat(Math.min(modalHeight, maxModalHeight), "px")
+      height: "420px"
     },
     default: {
       y: window.innerHeight / 2 - 250 + window.scrollY,
@@ -562,7 +562,8 @@ var ConditionalDialog = function ConditionalDialog(props) {
     disableDragging: true
   }, _react.default.createElement("div", {
     style: {
-      width: '100%'
+      width: '100%',
+      height: '100%'
     }
   }, _react.default.createElement("div", {
     style: {
@@ -575,7 +576,15 @@ var ConditionalDialog = function ConditionalDialog(props) {
     style: {
       width: '90%'
     }
-  }, _react.default.createElement("h4", null, props.label, " condition:")), _react.default.createElement("div", {
+  }, _react.default.createElement("h4", {
+    style: {
+      height: '100%',
+      margin: 0,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
+    }
+  }, props.label, " condition:")), _react.default.createElement("div", {
     style: {
       width: '10%'
     }

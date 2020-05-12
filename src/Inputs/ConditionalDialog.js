@@ -338,7 +338,7 @@ const ConditionalDialog = props => {
   const maxBodyHeight = maxModalHeight - headerHeight - footerHeight
   return (
     <Dialog
-      size={{width: '800px', height: `${Math.min(modalHeight, maxModalHeight)}px`}}
+      size={{width: '800px', height: `420px`}}
       default={{y: ((window.innerHeight / 2) - 250 + window.scrollY), x: ((window.innerWidth / 2) - 260)}}
       center
       style={{
@@ -351,10 +351,12 @@ const ConditionalDialog = props => {
       enableResizing
       disableDragging
     >
-      <div style={{width: '100%'}}>
+      <div style={{width: '100%', height: '100%'}}>
         <div style={{display: 'flex', flexDirection: 'row', padding: '10px', height: '54px'}}>
           <div style={{width: '90%'}}>
-            <h4>{props.label} condition:</h4>
+            <h4 style={{height: '100%', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
+              {props.label} condition:
+            </h4>
           </div>
           <div style={{width: '10%'}}>
             <button
