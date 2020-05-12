@@ -7,6 +7,9 @@ import Cleave from '../Cleave' // switch this back to cleave.js package as soon 
 import 'cleave.js/dist/addons/cleave-phone.i18n'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
+import countryCodes from '../countryCodes'
+import {List} from 'immutable'
+import '../styles/phone.css'
 
 const Phone = props => {
   const {
@@ -24,7 +27,9 @@ const Phone = props => {
     requiredWarning,
     style = {},
     required,
-    region = 'US'
+    region = 'US',
+    regionselect = false,
+    regions
   } = props
 
   const {
@@ -39,7 +44,17 @@ const Phone = props => {
   const {theme} = useTheme()
 
   const input = useRef()
+
+  const selectableRegionCodes = useRef(regions || countryCodes)
+
   const [isFocused, setIsFocused] = useState(false)
+
+  const [countryCode, setCountryCode] = useState(region)
+
+  const handleOnRegionChange = useCallback(e => {
+    const {value} = e.target
+    setCountryCode(value)
+  }, [])
 
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)
@@ -80,12 +95,26 @@ const Phone = props => {
     <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
       <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
         <div className={controlClass} style={inputControl} css={theme.inputControl}>
+          {regionselect && (
+            <div className='phone-region-select-container'>
+              <select value={countryCode} onChange={handleOnRegionChange}>
+                {selectableRegionCodes.current.sort().map((country, i) => {
+                  return (
+                    <option key={i} value={country}>
+                      {country}
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
+          )}
           <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
             <Cleave
+              key={countryCode}
               ref={input}
               options={{
                 phone: true,
-                phoneRegionCode: region,
+                phoneRegionCode: countryCode,
                 delimiter
               }}
               className={className}
@@ -129,5 +158,7 @@ Phone.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  region: PropTypes.string
+  region: PropTypes.string,
+  regionselect: PropTypes.bool,
+  regions: PropTypes.oneOfType([PropTypes.array, PropTypes.instanceOf(List)])
 }
