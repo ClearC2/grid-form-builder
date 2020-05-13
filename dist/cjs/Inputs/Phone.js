@@ -16,6 +16,8 @@ var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
+var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
+
 var _core = require("@emotion/core");
 
 var _react = require("react");
@@ -64,7 +66,8 @@ var Phone = function Phone(props) {
       region = _props$region === void 0 ? 'US' : _props$region,
       _props$regionselect = props.regionselect,
       regionselect = _props$regionselect === void 0 ? false : _props$regionselect,
-      regions = props.regions;
+      regions = props.regions,
+      values = (0, _values.default)(props);
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -89,15 +92,26 @@ var Phone = function Phone(props) {
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(region),
+  var _useState3 = (0, _react.useState)(typeof region === 'string' && region.length === 2 ? region : values.get(region) || 'US'),
       _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
       countryCode = _useState4[0],
       setCountryCode = _useState4[1];
 
   var handleOnRegionChange = (0, _react.useCallback)(function (e) {
-    var value = e.target.value;
-    setCountryCode(value);
-  }, []);
+    var newValue = e.target.value;
+
+    if (typeof region === 'string' && region.length > 2) {
+      // if a hard coded region wasn't provided, assume it's read from a field
+      onChange({
+        target: {
+          value: newValue,
+          name: region
+        }
+      });
+    }
+
+    setCountryCode(newValue);
+  }, [region, onChange]);
   var handleOnFocus = (0, _react.useCallback)(function () {
     setIsFocused(true);
   }, []);
@@ -210,5 +224,6 @@ Phone.propTypes = {
   required: _propTypes.default.bool,
   region: _propTypes.default.string,
   regionselect: _propTypes.default.bool,
-  regions: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.instanceOf(_immutable.List)])
+  regions: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.instanceOf(_immutable.List)]),
+  values: _propTypes.default.instanceOf(_immutable.Map)
 };

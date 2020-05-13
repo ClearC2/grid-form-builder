@@ -1,6 +1,7 @@
 import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -13,7 +14,7 @@ import 'cleave.js/dist/addons/cleave-phone.i18n';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 import countryCodes from '../countryCodes';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import '../styles/phone.css';
 
 var Phone = function Phone(props) {
@@ -41,7 +42,9 @@ var Phone = function Phone(props) {
       region = _props$region === void 0 ? 'US' : _props$region,
       _props$regionselect = props.regionselect,
       regionselect = _props$regionselect === void 0 ? false : _props$regionselect,
-      regions = props.regions;
+      regions = props.regions,
+      values = _valuesInstanceProperty(props);
+
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -66,15 +69,26 @@ var Phone = function Phone(props) {
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
 
-  var _useState3 = useState(region),
+  var _useState3 = useState(typeof region === 'string' && region.length === 2 ? region : values.get(region) || 'US'),
       _useState4 = _slicedToArray(_useState3, 2),
       countryCode = _useState4[0],
       setCountryCode = _useState4[1];
 
   var handleOnRegionChange = useCallback(function (e) {
-    var value = e.target.value;
-    setCountryCode(value);
-  }, []);
+    var newValue = e.target.value;
+
+    if (typeof region === 'string' && region.length > 2) {
+      // if a hard coded region wasn't provided, assume it's read from a field
+      onChange({
+        target: {
+          value: newValue,
+          name: region
+        }
+      });
+    }
+
+    setCountryCode(newValue);
+  }, [region, onChange]);
   var handleOnFocus = useCallback(function () {
     setIsFocused(true);
   }, []);
@@ -186,5 +200,6 @@ Phone.propTypes = {
   required: PropTypes.bool,
   region: PropTypes.string,
   regionselect: PropTypes.bool,
-  regions: PropTypes.oneOfType([PropTypes.array, PropTypes.instanceOf(List)])
+  regions: PropTypes.oneOfType([PropTypes.array, PropTypes.instanceOf(List)]),
+  values: PropTypes.instanceOf(Map)
 };

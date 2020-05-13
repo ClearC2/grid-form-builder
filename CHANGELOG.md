@@ -1,3 +1,10 @@
+# [3.33.0](https://github.com/ClearC2/grid-form-builder/compare/v3.32.0...v3.33.0) (2020-05-13)
+
+
+### Features
+
+* **phone:** phone region now accepts providing a field name as the region, which will update if the region gets updated ([a938340](https://github.com/ClearC2/grid-form-builder/commit/a9383408bfd7bcd64db6524d608d1fcc11367e70))
+
 # [3.32.0](https://github.com/ClearC2/grid-form-builder/compare/v3.31.0...v3.32.0) (2020-05-12)
 
 
