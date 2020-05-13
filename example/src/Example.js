@@ -20,7 +20,8 @@ export default class Example extends Component {
       phonetest: '5554443333',
       price: '25.25',
       companyid: '12345',
-      personid: 'abcdef'
+      personid: 'abcdef',
+      pp_mobile_phone_region: 'RU'
     }),
     inline: false,
     draggable: false,

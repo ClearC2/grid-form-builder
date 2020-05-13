@@ -8,7 +8,7 @@ import 'cleave.js/dist/addons/cleave-phone.i18n'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
 import countryCodes from '../countryCodes'
-import {List} from 'immutable'
+import {List, Map} from 'immutable'
 import '../styles/phone.css'
 
 const Phone = props => {
@@ -29,7 +29,8 @@ const Phone = props => {
     required,
     region = 'US',
     regionselect = false,
-    regions
+    regions,
+    values
   } = props
 
   const {
@@ -49,12 +50,22 @@ const Phone = props => {
 
   const [isFocused, setIsFocused] = useState(false)
 
-  const [countryCode, setCountryCode] = useState(region)
+  const [countryCode, setCountryCode] = useState(
+    typeof region === 'string' && region.length === 2 ? region : (values.get(region) || 'US')
+  )
 
   const handleOnRegionChange = useCallback(e => {
-    const {value} = e.target
-    setCountryCode(value)
-  }, [])
+    const {value: newValue} = e.target
+    if (typeof region === 'string' && region.length > 2) { // if a hard coded region wasn't provided, assume it's read from a field
+      onChange({
+        target: {
+          value: newValue,
+          name: region
+        }
+      })
+    }
+    setCountryCode(newValue)
+  }, [region, onChange])
 
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)
@@ -160,5 +171,6 @@ Phone.propTypes = {
   required: PropTypes.bool,
   region: PropTypes.string,
   regionselect: PropTypes.bool,
-  regions: PropTypes.oneOfType([PropTypes.array, PropTypes.instanceOf(List)])
+  regions: PropTypes.oneOfType([PropTypes.array, PropTypes.instanceOf(List)]),
+  values: PropTypes.instanceOf(Map)
 }

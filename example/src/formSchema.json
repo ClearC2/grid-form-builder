@@ -225,7 +225,7 @@
       }, {
         "type": "field",
         "dimensions": {
-          "w": 6,
+          "w": 3,
           "h": 1,
           "x": 6,
           "y": 16,
@@ -239,8 +239,27 @@
           "type": "phone",
           "regionselect": true,
           "regions": ["US", "GB", "RU"],
-          "region": "US",
+          "region": "pp_mobile_phone_region",
           "delimiter": "-"
+        }
+      }, {
+        "type": "field",
+        "dimensions": {
+          "w": 3,
+          "h": 1,
+          "x": 9,
+          "y": 16,
+          "moved": false,
+          "static": false
+        },
+        "config": {
+          "required": true,
+          "name": "phonetest2",
+          "label": "Phone",
+          "type": "phone",
+          "regionselect": true,
+          "region": "pp_mobile_phone_region2",
+          "delimiter": " "
         }
       }, {
         "type": "field",
