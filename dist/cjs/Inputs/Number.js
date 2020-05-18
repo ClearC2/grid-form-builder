@@ -55,7 +55,9 @@ var Number = function Number(props) {
       requiredWarning = props.requiredWarning,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      required = props.required;
+      required = props.required,
+      _props$maxlength = props.maxlength,
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -126,6 +128,12 @@ var Number = function Number(props) {
     validationError = 'This Field is Required';
   }
 
+  var validationWarning;
+
+  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+    validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+  }
+
   var outerClass = 'gfb-input-outer';
 
   if (isFocused) {
@@ -169,12 +177,19 @@ var Number = function Number(props) {
     onFocus: handleOnFocus,
     onBlur: handleOnBlur,
     style: valueStyle,
-    css: theme.value
+    css: theme.value,
+    maxLength: maxlength
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
+    message: validationWarning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && validationError && (0, _core.jsx)("span", {
+    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
+  }), validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationError
   })))));
 };
@@ -200,5 +215,6 @@ Number.propTypes = {
   interactive: _propTypes.default.bool,
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
-  required: _propTypes.default.bool
+  required: _propTypes.default.bool,
+  maxlength: _propTypes.default.number
 };

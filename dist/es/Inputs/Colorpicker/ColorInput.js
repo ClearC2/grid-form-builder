@@ -26,7 +26,9 @@ var ColorInput = function ColorInput(props) {
       requiredWarning = props.requiredWarning,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      required = props.required;
+      required = props.required,
+      _props$maxlength = props.maxlength,
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -103,6 +105,12 @@ var ColorInput = function ColorInput(props) {
     validationError = 'This Field is Required';
   }
 
+  var validationWarning;
+
+  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+    validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+  }
+
   var outerClass = 'gfb-input-outer';
 
   if (isFocused) {
@@ -139,7 +147,8 @@ var ColorInput = function ColorInput(props) {
     onBlur: handleOnBlur,
     autoComplete: autoComplete,
     style: valueStyle,
-    css: theme.value
+    css: theme.value,
+    maxLength: maxlength
   }), showPicker && jsx(ColorPicker, {
     ref: portalRef,
     inputId: inputId.current,
@@ -150,16 +159,22 @@ var ColorInput = function ColorInput(props) {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, jsx("div", {
+  }, validationWarning && jsx(ValidationErrorIcon, {
+    message: validationWarning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && validationError && jsx("span", {
+    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
+  }), validationError && jsx(ValidationErrorIcon, {
+    message: validationError
+  }), (validationError || validationWarning) && jsx("span", {
+    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
+  }), jsx("div", {
     className: "gfb-color-input-indicator",
     style: {
       backgroundColor: value
     },
     onClick: handleOnFocus
-  }), validationError && jsx(ValidationErrorIcon, {
-    message: validationError
-  }), validationError && jsx("span", {
-    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
   })))));
 };
 
@@ -177,5 +192,6 @@ ColorInput.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  maxlength: PropTypes.number
 };

@@ -1,3 +1,19 @@
+# [3.34.0](https://github.com/ClearC2/grid-form-builder/compare/v3.33.0...v3.34.0) (2020-05-18)
+
+
+### Features
+
+* **currency:** currency area now accepts maxlength ([43e7d3c](https://github.com/ClearC2/grid-form-builder/commit/43e7d3c90c6e6c97c6098b36aa061337ce5c8adc))
+* **email:** email area now accepts maxlength ([100a8ec](https://github.com/ClearC2/grid-form-builder/commit/100a8ec1d5c0da63deb86b6c6a3aa2dd0958ec6f))
+* **input:** date, datetime, time now accepts maxlength ([9467a5d](https://github.com/ClearC2/grid-form-builder/commit/9467a5d878f3ed6e5a1c2b31471fc39030738c9c))
+* **input:** input now accepts maxlength ([fcac1aa](https://github.com/ClearC2/grid-form-builder/commit/fcac1aac859010c72942fe7902a884484e152508))
+* **input:** input now accepts maxlength ([d9a65f9](https://github.com/ClearC2/grid-form-builder/commit/d9a65f9474b51a5a2804f719c9938786c7ec267d))
+* **number:** number area now accepts maxlength ([882ccf6](https://github.com/ClearC2/grid-form-builder/commit/882ccf6f655f6cc5bf882b190abd34ac957a3228))
+* **percent:** percent now accepts maxlength ([394c32e](https://github.com/ClearC2/grid-form-builder/commit/394c32ef545b83f45a6bf73cdfdbb4e756dba456))
+* **phone:** phone now accepts maxlength ([b23e37f](https://github.com/ClearC2/grid-form-builder/commit/b23e37f7349748fa2ca19ed9e02d5bf3cf379db5))
+* **richtext:** rich text area now accepts maxlength ([20c065d](https://github.com/ClearC2/grid-form-builder/commit/20c065df1c18d0ff7dab1097a54fbe53dbbe33a1))
+* **textarea:** textarea now accepts maxlength ([0ba013a](https://github.com/ClearC2/grid-form-builder/commit/0ba013ae0370b0dbbd27d66d5e2dd44dc47c9b88))
+
 # [3.33.0](https://github.com/ClearC2/grid-form-builder/compare/v3.32.0...v3.33.0) (2020-05-13)
 
 

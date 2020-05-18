@@ -25,7 +25,9 @@ var Input = function Input(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       _props$format = props.format,
-      format = _props$format === void 0 ? 'text' : _props$format;
+      format = _props$format === void 0 ? 'text' : _props$format,
+      _props$maxlength = props.maxlength,
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -53,6 +55,9 @@ var Input = function Input(props) {
   var handleOnBlur = useCallback(function () {
     setIsFocused(false);
   }, []);
+  var handleOnChange = useCallback(function (e) {
+    onChange(e);
+  }, [onChange]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -62,6 +67,12 @@ var Input = function Input(props) {
   if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
+  }
+
+  var validationWarning;
+
+  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+    validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
   }
 
   var outerClass = 'gfb-input-outer';
@@ -90,7 +101,7 @@ var Input = function Input(props) {
     className: className,
     name: name,
     value: value,
-    onChange: onChange,
+    onChange: handleOnChange,
     disabled: readonly || disabled || !interactive,
     autoFocus: autofocus,
     placeholder: placeholder,
@@ -100,12 +111,19 @@ var Input = function Input(props) {
     onBlur: handleOnBlur,
     style: valueStyle,
     css: theme.value,
-    type: format
+    type: format,
+    maxLength: maxlength
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationError && jsx(ValidationErrorIcon, {
+  }, validationWarning && jsx(ValidationErrorIcon, {
+    message: validationWarning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && validationError && jsx("span", {
+    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
+  }), validationError && jsx(ValidationErrorIcon, {
     message: validationError
   })))));
 };
@@ -125,5 +143,6 @@ Input.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  format: PropTypes.string
+  format: PropTypes.string,
+  maxlength: PropTypes.number
 };

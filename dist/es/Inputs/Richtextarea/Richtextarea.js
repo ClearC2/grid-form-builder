@@ -1,4 +1,5 @@
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -31,7 +32,9 @@ var Richtextarea = function Richtextarea(props) {
       requiredWarning = props.requiredWarning,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      required = props.required;
+      required = props.required,
+      _props$maxlength = props.maxlength,
+      maxlength = _props$maxlength === void 0 ? _Number$MAX_SAFE_INTEGER : _props$maxlength;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -74,7 +77,8 @@ var Richtextarea = function Richtextarea(props) {
     /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
     This is undesirable because it will register the onDirty to be true when no user change has
     occurred so this check is added in to prevent quill from auto formatting when mounting */
-    if (html !== '<p><br></p>' && isFocused) {
+    if (html && html !== '<p><br></p>' && isFocused) {
+      if (html.length > maxlength) html = html.substring(0, maxlength);
       onChange({
         target: {
           name: name,
@@ -82,7 +86,7 @@ var Richtextarea = function Richtextarea(props) {
         }
       });
     }
-  }, [isFocused, onChange, name]);
+  }, [isFocused, onChange, name, maxlength]);
   var previousRTEImageUrl = usePrevious(rteImageUrl);
   useEffect(function () {
     if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && QuillRef.current) {
@@ -107,6 +111,12 @@ var Richtextarea = function Richtextarea(props) {
   if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
+  }
+
+  var validationWarning;
+
+  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+    validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
   }
 
   var outerClass = 'gfb-input-outer';
@@ -152,12 +162,19 @@ var Richtextarea = function Richtextarea(props) {
     onFocus: handleOnFocus,
     onBlur: handleOnBlur,
     style: valueStyle,
-    css: theme.value
+    css: theme.value,
+    maxLength: maxlength
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationError && jsx(ValidationErrorIcon, {
+  }, validationWarning && jsx(ValidationErrorIcon, {
+    message: validationWarning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && validationError && jsx("span", {
+    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
+  }), validationError && jsx(ValidationErrorIcon, {
     message: validationError
   })))));
 };
@@ -178,5 +195,6 @@ Richtextarea.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  maxlength: PropTypes.number
 };

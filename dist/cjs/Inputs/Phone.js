@@ -67,7 +67,9 @@ var Phone = function Phone(props) {
       _props$regionselect = props.regionselect,
       regionselect = _props$regionselect === void 0 ? false : _props$regionselect,
       regions = props.regions,
-      values = (0, _values.default)(props);
+      values = (0, _values.default)(props),
+      _props$maxlength = props.maxlength,
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -143,6 +145,12 @@ var Phone = function Phone(props) {
     validationError = 'This Field is Required';
   }
 
+  var validationWarning;
+
+  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+    validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+  }
+
   var outerClass = 'gfb-input-outer';
 
   if (isFocused) {
@@ -195,12 +203,19 @@ var Phone = function Phone(props) {
     onFocus: handleOnFocus,
     onBlur: handleOnBlur,
     style: valueStyle,
-    css: theme.value
+    css: theme.value,
+    maxLength: maxlength + Math.floor((value + '').length / 4)
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
+    message: validationWarning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && validationError && (0, _core.jsx)("span", {
+    className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
+  }), validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationError
   })))));
 };
@@ -225,5 +240,6 @@ Phone.propTypes = {
   region: _propTypes.default.string,
   regionselect: _propTypes.default.bool,
   regions: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.instanceOf(_immutable.List)]),
-  values: _propTypes.default.instanceOf(_immutable.Map)
+  values: _propTypes.default.instanceOf(_immutable.Map),
+  maxlength: _propTypes.default.number
 };
