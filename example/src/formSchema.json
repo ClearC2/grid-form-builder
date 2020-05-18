@@ -326,8 +326,7 @@
           "delimit": ["value"],
           "name": "multiselecttest",
           "label": "Multiselect",
-          "type": "conditionalinput",
-          "inputType": "multiselect",
+          "type": "multiselect",
           "keyword": {
             "category": "TASKS",
             "options": [{
