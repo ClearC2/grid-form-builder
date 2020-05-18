@@ -396,6 +396,7 @@
         },
         "config": {
           "required": true,
+          "maxlength": 2,
           "name": "datetest",
           "label": "Date",
           "type": "date",
