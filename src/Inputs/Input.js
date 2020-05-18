@@ -20,7 +20,8 @@ const Input = props => {
     requiredWarning,
     style = {},
     required,
-    format = 'text'
+    format = 'text',
+    maxlength = 524288
   } = props
 
   const {
@@ -44,14 +45,22 @@ const Input = props => {
     setIsFocused(false)
   }, [])
 
+  const handleOnChange = useCallback(e => {
+    onChange(e)
+  }, [onChange])
+
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control'
   let validationError
+  let validationWarning
   if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
+  }
+  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+    validationWarning = `Maximum character limit of ${maxlength} reached.`
   }
   let outerClass = 'gfb-input-outer'
   if (isFocused) {
@@ -67,7 +76,7 @@ const Input = props => {
               className={className}
               name={name}
               value={value}
-              onChange={onChange}
+              onChange={handleOnChange}
               disabled={readonly || disabled || !interactive}
               autoFocus={autofocus}
               placeholder={placeholder}
@@ -78,9 +87,11 @@ const Input = props => {
               style={valueStyle}
               css={theme.value}
               type={format}
+              maxLength={maxlength}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
@@ -105,5 +116,6 @@ Input.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  format: PropTypes.string
+  format: PropTypes.string,
+  maxlength: PropTypes.number
 }

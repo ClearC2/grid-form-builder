@@ -81,6 +81,7 @@
         },
         "config": {
           "required": true,
+          "maxlength": 10,
           "name": "unique-test-input",
           "label": "Test Input",
           "type": "input",
