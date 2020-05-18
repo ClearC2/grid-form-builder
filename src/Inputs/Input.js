@@ -54,11 +54,11 @@ const Input = props => {
   if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control'
   let validationError
-  let validationWarning
   if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
+  let validationWarning
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
     validationWarning = `Maximum character limit of ${maxlength} reached.`
   }
@@ -92,6 +92,9 @@ const Input = props => {
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
+            {validationWarning && validationError && (
+              <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
+            )}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

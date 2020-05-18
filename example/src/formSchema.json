@@ -846,6 +846,7 @@
         },
         "config": {
           "required": true,
+          "maxlength": 10,
           "name": "colorpickertest",
           "label": "Color Picker",
           "type": "colorpicker",
