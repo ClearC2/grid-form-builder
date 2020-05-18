@@ -243,7 +243,8 @@
           "regionselect": true,
           "regions": ["US", "GB", "RU"],
           "region": "pp_mobile_phone_region",
-          "delimiter": "-"
+          "delimiter": "-",
+          "maxlength": 6
         }
       }, {
         "type": "field",

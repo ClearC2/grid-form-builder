@@ -30,7 +30,8 @@ const Phone = props => {
     region = 'US',
     regionselect = false,
     regions,
-    values
+    values,
+    maxlength = 524288
   } = props
 
   const {
@@ -97,6 +98,10 @@ const Phone = props => {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
+  let validationWarning
+  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+    validationWarning = `Maximum character limit of ${maxlength} reached.`
+  }
   let outerClass = 'gfb-input-outer'
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus'
@@ -141,9 +146,14 @@ const Phone = props => {
               onBlur={handleOnBlur}
               style={valueStyle}
               css={theme.value}
+              maxLength={maxlength + Math.floor(((value + '').length / 4))}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
+            {validationWarning && validationError && (
+              <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
+            )}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
@@ -172,5 +182,6 @@ Phone.propTypes = {
   region: PropTypes.string,
   regionselect: PropTypes.bool,
   regions: PropTypes.oneOfType([PropTypes.array, PropTypes.instanceOf(List)]),
-  values: PropTypes.instanceOf(Map)
+  values: PropTypes.instanceOf(Map),
+  maxlength: PropTypes.number
 }
