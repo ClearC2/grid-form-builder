@@ -27,7 +27,8 @@ const Richtextarea = props => {
     interactive = true,
     requiredWarning,
     style = {},
-    required
+    required,
+    maxlength = Number.MAX_SAFE_INTEGER
   } = props
 
   const {
@@ -81,7 +82,8 @@ const Richtextarea = props => {
     /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
     This is undesirable because it will register the onDirty to be true when no user change has
     occurred so this check is added in to prevent quill from auto formatting when mounting */
-    if (html !== '<p><br></p>' && isFocused) {
+    if (html && html !== '<p><br></p>' && isFocused) {
+      if (html.length > maxlength) html = html.substring(0, maxlength)
       onChange({
         target: {
           name,
@@ -89,7 +91,7 @@ const Richtextarea = props => {
         }
       })
     }
-  }, [isFocused, onChange, name])
+  }, [isFocused, onChange, name, maxlength])
 
   const previousRTEImageUrl = usePrevious(rteImageUrl)
 
@@ -118,6 +120,10 @@ const Richtextarea = props => {
   if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
+  }
+  let validationWarning
+  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+    validationWarning = `Maximum character limit of ${maxlength} reached.`
   }
   let outerClass = 'gfb-input-outer'
   if (isFocused) {
@@ -150,9 +156,14 @@ const Richtextarea = props => {
               onBlur={handleOnBlur}
               style={valueStyle}
               css={theme.value}
+              maxLength={maxlength}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
+            {validationWarning && validationError && (
+              <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
+            )}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
@@ -178,5 +189,6 @@ Richtextarea.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  maxlength: PropTypes.number
 }
