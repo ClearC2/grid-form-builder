@@ -151,6 +151,7 @@
           "static": false
         },
         "config": {
+          "maxlength": 3,
           "required": true,
           "name": "cfd_percent",
           "label": "Percent Input",
