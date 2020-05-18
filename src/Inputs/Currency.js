@@ -24,7 +24,8 @@ const Currency = props => {
     interactive = true,
     requiredWarning,
     style = {},
-    required
+    required,
+    maxlength = 524288
   } = props
 
   const {
@@ -72,6 +73,10 @@ const Currency = props => {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
+  let validationWarning
+  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+    validationWarning = `Maximum character limit of ${maxlength} reached.`
+  }
   let outerClass = 'gfb-input-outer'
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus'
@@ -103,9 +108,14 @@ const Currency = props => {
               onBlur={handleOnBlur}
               style={valueStyle}
               css={theme.value}
+              maxLength={maxlength + Math.ceil(((value + '').length / 3))}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators}>
+            {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
+            {validationWarning && validationError && (
+              <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
+            )}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
@@ -132,5 +142,6 @@ Currency.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  maxlength: PropTypes.number
 }

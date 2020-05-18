@@ -103,6 +103,7 @@
         },
         "config": {
           "required": true,
+          "maxlength": 10,
           "name": "price",
           "label": "Price (Currency Input)",
           "type": "currency"
