@@ -203,7 +203,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
   function hasDynamicValues() {
     var _context4;
 
-    return props.typeahead && props.typeahead.key && (0, _startsWith.default)(_context4 = props.typeahead.key.toLowerCase()).call(_context4, 'c3_sec_') && modalValues && modalValues.get('condition', '') === 'is one of';
+    return props.typeahead && props.typeahead.key && (0, _startsWith.default)(_context4 = props.typeahead.key.toLowerCase()).call(_context4, 'c3_sec_') && modalValues && (modalValues.get('condition', '') === 'is one of' || modalValues.get('condition', '') === 'is not one of');
   }
 
   function getSchema() {
@@ -520,7 +520,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
     }
 
     if (e.target.name === 'dynamicValues') {
-      newFieldValue = newFieldValue.set('condition', 'is one of');
+      // newFieldValue = newFieldValue.set('condition', 'is one of')
       newFieldValue = newFieldValue.set('dynamicValues', e.target.value);
     }
 

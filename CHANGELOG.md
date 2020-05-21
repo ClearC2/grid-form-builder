@@ -1,3 +1,10 @@
+# [3.35.0](https://github.com/ClearC2/grid-form-builder/compare/v3.34.0...v3.35.0) (2020-05-21)
+
+
+### Features
+
+* **dynamicValues:** allow dynamic values on is not one of ([71ac5da](https://github.com/ClearC2/grid-form-builder/commit/71ac5da7a6f7eb0ef8c0dd83becc665df660ea3b))
+
 # [3.34.0](https://github.com/ClearC2/grid-form-builder/compare/v3.33.0...v3.34.0) (2020-05-18)
 
 
