@@ -107,7 +107,7 @@ const ConditionalDialog = props => {
       props.typeahead.key &&
       props.typeahead.key.toLowerCase().startsWith('c3_sec_') &&
       modalValues &&
-      modalValues.get('condition', '') === 'is one of'
+      (modalValues.get('condition', '') === 'is one of' || modalValues.get('condition', '') === 'is not one of')
   }
   function getSchema () {
     const schema = {
@@ -322,7 +322,7 @@ const ConditionalDialog = props => {
       }
     }
     if (e.target.name === 'dynamicValues') {
-      newFieldValue = newFieldValue.set('condition', 'is one of')
+      // newFieldValue = newFieldValue.set('condition', 'is one of')
       newFieldValue = newFieldValue.set('dynamicValues', e.target.value)
     }
     newFieldValue = newFieldValue.set('values', values)
