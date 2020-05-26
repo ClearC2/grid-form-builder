@@ -122,8 +122,12 @@ div.gfb-input__control.gfb-boxless-input > .gfb-input__value-container > .gfb-in
 input[class^="gfb-input"][type="checkbox"], input[class^="gfb-input"][type="radio"] {
   height: 16px;
   width: 16px;
-  margin-left: 5px;
+  margin-left: 3px;
   margin-right: 5px;
+}
+
+div.gfb-input-outer input[type="checkbox"]:checked {
+  background: url("./check_radio_sheet.png") -19px top no-repeat;
 }
 
 div.gfb-inner-cell-label:not(.gfb-small) {
