@@ -1,3 +1,12 @@
+## [3.35.1](https://github.com/ClearC2/grid-form-builder/compare/v3.35.0...v3.35.1) (2020-05-26)
+
+
+### Bug Fixes
+
+* **checkbox:** fixes margins of checkbox so they look like checkboxes in all browser updates ([43f5a5d](https://github.com/ClearC2/grid-form-builder/commit/43f5a5d8fcd51a5b01f657050e118ddd734cd2f9))
+* **checkbox:** fixes margins of checkbox so they look like checkboxes in all browser updates ([9cb5ba7](https://github.com/ClearC2/grid-form-builder/commit/9cb5ba73ca8c14c7830da0543e6ffdbda81e351e))
+* **checkbox:** fixes margins of checkbox so they look like checkboxes in all browser updates ([dcf1cf2](https://github.com/ClearC2/grid-form-builder/commit/dcf1cf2f89faa883ead7d87a7a9204412666b4a5))
+
 # [3.35.0](https://github.com/ClearC2/grid-form-builder/compare/v3.34.0...v3.35.0) (2020-05-21)
 
 
