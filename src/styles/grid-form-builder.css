@@ -126,9 +126,10 @@ input[class^="gfb-input"][type="checkbox"], input[class^="gfb-input"][type="radi
   margin-right: 5px;
 }
 
-div.gfb-input-outer input[type="checkbox"]:checked {
-  background: url("check_radio_sheet.png") -19px top no-repeat;
-}
+/*div.gfb-input-outer input[type="checkbox"]:checked {*/
+/*  to use this you need to display none the input tag and replace the background of a label element for that input*/
+/*  background: url("./check_radio_sheet.png") -19px top no-repeat;*/
+/*}*/
 
 div.gfb-inner-cell-label:not(.gfb-small) {
   height: 20px;
