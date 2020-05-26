@@ -127,7 +127,7 @@ input[class^="gfb-input"][type="checkbox"], input[class^="gfb-input"][type="radi
 }
 
 div.gfb-input-outer input[type="checkbox"]:checked {
-  background: url("./check_radio_sheet.png") -19px top no-repeat;
+  background: url("check_radio_sheet.png") -19px top no-repeat;
 }
 
 div.gfb-inner-cell-label:not(.gfb-small) {
