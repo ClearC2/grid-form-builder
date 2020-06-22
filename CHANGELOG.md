@@ -1,3 +1,10 @@
+# [3.37.0](https://github.com/ClearC2/grid-form-builder/compare/v3.36.0...v3.37.0) (2020-06-22)
+
+
+### Features
+
+* **validation:** field values are now trimmed of white space before checking if they are empty ([333c569](https://github.com/ClearC2/grid-form-builder/commit/333c5696e636d8352e9678418915bcb32f236e7d))
+
 # [3.36.0](https://github.com/ClearC2/grid-form-builder/compare/v3.35.1...v3.36.0) (2020-06-22)
 
 

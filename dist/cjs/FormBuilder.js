@@ -32,6 +32,8 @@ var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stabl
 
 var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
 
+var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
+
 var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
@@ -84,7 +86,7 @@ var _useTheme2 = _interopRequireWildcard(require("./theme/useTheme"));
 
 function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context4; (0, _forEach.default)(_context4 = ownKeys(Object(source), true)).call(_context4, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context5; (0, _forEach.default)(_context5 = ownKeys(Object(source))).call(_context5, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context5; (0, _forEach.default)(_context5 = ownKeys(Object(source), true)).call(_context5, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context6; (0, _forEach.default)(_context6 = ownKeys(Object(source))).call(_context6, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
 
 var inputEventListenerDebouncer = null;
 var FormValueContext = (0, _react.createContext)([(0, _immutable.Map)(), function () {}]);
@@ -598,6 +600,8 @@ function (_Component) {
       var layout = (0, _utils.searchForLayoutArray)(formSchema);
       var reasons = [];
       (0, _forEach.default)(layout).call(layout, function (field) {
+        var _context2;
+
         var _field$config3 = field.config,
             config = _field$config3 === void 0 ? {} : _field$config3;
         var _config$required2 = config.required,
@@ -607,7 +611,7 @@ function (_Component) {
             label = _config$label === void 0 ? name : _config$label,
             type = config.type;
 
-        if (required && (formValues.get(name, '') + '').length === 0) {
+        if (required && (0, _trim.default)(_context2 = formValues.get(name, '') + '').call(_context2).length === 0) {
           reasons.push({
             reason: 'required',
             message: "".concat(label, " cannot be blank."),
@@ -688,9 +692,9 @@ function (_Component) {
   (0, _createClass2.default)(FormValidator, [{
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(p, s) {
-      var _context2,
+      var _context3,
           _this2 = this,
-          _context3;
+          _context4;
 
       if (p.formValues !== this.props.formValues) {
         this.updateFormValues(p.formValues); // this kills the extra render from values updating, the context updating will render - JRA 11/07/2019
@@ -698,14 +702,14 @@ function (_Component) {
         return false;
       }
 
-      var update = (0, _some.default)(_context2 = (0, _keys.default)(this.props)).call(_context2, function (prop) {
+      var update = (0, _some.default)(_context3 = (0, _keys.default)(this.props)).call(_context3, function (prop) {
         if (_this2.props[prop] && p[prop] && typeof _this2.props[prop].toJS === 'function' && typeof p[prop].toJS === 'function') {
           return !_this2.props[prop].equals(p[prop]);
         } else {
           return _this2.props[prop] !== p[prop];
         }
       });
-      if (!update) update = (0, _some.default)(_context3 = (0, _keys.default)(this.state)).call(_context3, function (state) {
+      if (!update) update = (0, _some.default)(_context4 = (0, _keys.default)(this.state)).call(_context4, function (state) {
         return _this2.state[state] !== s[state];
       });
       return update;
