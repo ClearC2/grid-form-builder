@@ -10,6 +10,8 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
+var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
+
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
 var _core = require("@emotion/core");
@@ -70,7 +72,18 @@ var Email = function Email(props) {
   }, []);
   var handleOnBlur = (0, _react.useCallback)(function () {
     setIsFocused(false);
-  }, []);
+
+    if (value) {
+      var _context;
+
+      onChange({
+        target: {
+          name: name,
+          value: (0, _trim.default)(_context = value + '').call(_context)
+        }
+      });
+    }
+  }, [onChange, value, name]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';

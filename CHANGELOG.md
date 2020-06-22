@@ -1,3 +1,10 @@
+# [3.36.0](https://github.com/ClearC2/grid-form-builder/compare/v3.35.1...v3.36.0) (2020-06-22)
+
+
+### Features
+
+* **email:** email fields trim themselves on blur ([#152](https://github.com/ClearC2/grid-form-builder/issues/152)) ([02cfdce](https://github.com/ClearC2/grid-form-builder/commit/02cfdced200022b41104734c9c06d79e6a236cc8))
+
 ## [3.35.1](https://github.com/ClearC2/grid-form-builder/compare/v3.35.0...v3.35.1) (2020-05-26)
 
 

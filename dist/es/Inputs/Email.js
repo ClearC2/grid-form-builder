@@ -1,3 +1,4 @@
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 /** @jsx jsx */
@@ -53,7 +54,18 @@ var Email = function Email(props) {
   }, []);
   var handleOnBlur = useCallback(function () {
     setIsFocused(false);
-  }, []);
+
+    if (value) {
+      var _context;
+
+      onChange({
+        target: {
+          name: name,
+          value: _trimInstanceProperty(_context = value + '').call(_context)
+        }
+      });
+    }
+  }, [onChange, value, name]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
