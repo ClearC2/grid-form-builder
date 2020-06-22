@@ -992,7 +992,6 @@
           "static": false
         },
         "config": {
-          "maxlength": 10,
           "type": "email",
           "name": "email",
           "label": "Email Input",
