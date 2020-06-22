@@ -1,3 +1,4 @@
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 /** @jsx jsx */
@@ -8,6 +9,8 @@ import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 
 var Percentage = function Percentage(props) {
+  var _context;
+
   var name = props.name,
       _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -73,7 +76,7 @@ var Percentage = function Percentage(props) {
   var controlClass = 'gfb-input__control';
   var validationError;
 
-  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && _trimInstanceProperty(_context = value + '').call(_context).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }

@@ -1,3 +1,4 @@
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 
 /** @jsx jsx */
@@ -8,7 +9,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 
 var Checkbox = function Checkbox(props) {
-  var _context3;
+  var _context3, _context4;
 
   var name = props.name,
       _props$value = props.value,
@@ -215,7 +216,7 @@ var Checkbox = function Checkbox(props) {
   var controlClass = 'gfb-input__control gfb-boxless-input';
   var validationError;
 
-  if (required && requiredWarning && (value + '').length === 0) {
+  if (required && requiredWarning && _trimInstanceProperty(_context4 = value + '').call(_context4).length === 0) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }

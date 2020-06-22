@@ -10,6 +10,8 @@ import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 
 var Email = function Email(props) {
+  var _context2;
+
   var name = props.name,
       _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -77,7 +79,7 @@ var Email = function Email(props) {
     validationError = 'Invalid Email Format';
   }
 
-  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && _trimInstanceProperty(_context2 = value + '').call(_context2).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }

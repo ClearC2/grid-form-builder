@@ -1,5 +1,6 @@
 import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 
@@ -18,7 +19,7 @@ import { List, Map } from 'immutable';
 import '../styles/phone.css';
 
 var Phone = function Phone(props) {
-  var _context, _context2;
+  var _context, _context2, _context3;
 
   var name = props.name,
       _props$value = props.value,
@@ -117,7 +118,7 @@ var Phone = function Phone(props) {
   var controlClass = 'gfb-input__control';
   var validationError;
 
-  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && _trimInstanceProperty(_context = value + '').call(_context).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }
@@ -151,7 +152,7 @@ var Phone = function Phone(props) {
   }, jsx("select", {
     value: countryCode,
     onChange: handleOnRegionChange
-  }, _mapInstanceProperty(_context = _sortInstanceProperty(_context2 = selectableRegionCodes.current).call(_context2)).call(_context, function (country, i) {
+  }, _mapInstanceProperty(_context2 = _sortInstanceProperty(_context3 = selectableRegionCodes.current).call(_context3)).call(_context2, function (country, i) {
     return jsx("option", {
       key: i,
       value: country

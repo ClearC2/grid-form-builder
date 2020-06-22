@@ -14,6 +14,8 @@ var _sort = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stabl
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
+var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
+
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
@@ -42,7 +44,7 @@ require("../styles/phone.css");
 // import Cleave from 'cleave.js/react'
 // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
 var Phone = function Phone(props) {
-  var _context, _context2;
+  var _context, _context2, _context3;
 
   var name = props.name,
       _props$value = props.value,
@@ -140,7 +142,7 @@ var Phone = function Phone(props) {
   var controlClass = 'gfb-input__control';
   var validationError;
 
-  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && (0, _trim.default)(_context = value + '').call(_context).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }
@@ -174,7 +176,7 @@ var Phone = function Phone(props) {
   }, (0, _core.jsx)("select", {
     value: countryCode,
     onChange: handleOnRegionChange
-  }, (0, _map.default)(_context = (0, _sort.default)(_context2 = selectableRegionCodes.current).call(_context2)).call(_context, function (country, i) {
+  }, (0, _map.default)(_context2 = (0, _sort.default)(_context3 = selectableRegionCodes.current).call(_context3)).call(_context2, function (country, i) {
     return (0, _core.jsx)("option", {
       key: i,
       value: country

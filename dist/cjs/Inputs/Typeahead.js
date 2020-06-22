@@ -74,12 +74,14 @@ var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
 function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context11; (0, _forEach.default)(_context11 = ownKeys(Object(source), true)).call(_context11, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context12; (0, _forEach.default)(_context12 = ownKeys(Object(source))).call(_context12, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context12; (0, _forEach.default)(_context12 = ownKeys(Object(source), true)).call(_context12, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context13; (0, _forEach.default)(_context13 = ownKeys(Object(source))).call(_context13, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
 
 var viewPortHeight = document.documentElement.clientHeight;
 var debounce = null;
 
 var Typeahead = function Typeahead(props) {
+  var _context11;
+
   var name = props.name,
       label = props.label,
       _props$value = props.value,
@@ -661,7 +663,7 @@ var Typeahead = function Typeahead(props) {
   var outerClass = 'gfb-input-outer';
   var components = {};
 
-  if (isRequiredFlag && (value + '').length === 0 && !isFocused) {
+  if (isRequiredFlag && (0, _trim.default)(_context11 = value + '').call(_context11).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
 
     components.DropdownIndicator = function () {

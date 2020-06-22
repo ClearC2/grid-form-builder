@@ -10,6 +10,8 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
+var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
+
 var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/index-of"));
 
 var _core = require("@emotion/core");
@@ -24,7 +26,7 @@ var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
 /** @jsx jsx */
 var Checkbox = function Checkbox(props) {
-  var _context3;
+  var _context3, _context4;
 
   var name = props.name,
       _props$value = props.value,
@@ -231,7 +233,7 @@ var Checkbox = function Checkbox(props) {
   var controlClass = 'gfb-input__control gfb-boxless-input';
   var validationError;
 
-  if (required && requiredWarning && (value + '').length === 0) {
+  if (required && requiredWarning && (0, _trim.default)(_context4 = value + '').call(_context4).length === 0) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }

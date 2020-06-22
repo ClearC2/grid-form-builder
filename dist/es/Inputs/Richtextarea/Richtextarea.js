@@ -1,3 +1,4 @@
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 
@@ -15,6 +16,8 @@ import 'react-quill/dist/quill.core.css';
 import useTheme from '../../theme/useTheme';
 
 var Richtextarea = function Richtextarea(props) {
+  var _context;
+
   var name = props.name,
       _props$value = props.value,
       value = _props$value === void 0 ? '<p>&nbsp;</p>' : _props$value,
@@ -108,7 +111,7 @@ var Richtextarea = function Richtextarea(props) {
   var controlClass = 'gfb-input__control';
   var validationError;
 
-  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && _trimInstanceProperty(_context = value + '').call(_context).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }

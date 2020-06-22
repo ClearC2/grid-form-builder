@@ -1,3 +1,10 @@
+# [3.38.0](https://github.com/ClearC2/grid-form-builder/compare/v3.37.0...v3.38.0) (2020-06-22)
+
+
+### Features
+
+* **inputs:** all inputs will show trim current value when checking for required empty ([534aaf9](https://github.com/ClearC2/grid-form-builder/commit/534aaf90cd404e85e7d9283a40bc72e6d19d8ac2))
+
 # [3.37.0](https://github.com/ClearC2/grid-form-builder/compare/v3.36.0...v3.37.0) (2020-06-22)
 
 

@@ -10,6 +10,8 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
+var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
+
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
 var _core = require("@emotion/core");
@@ -30,6 +32,8 @@ var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
 
 /** @jsx jsx */
 var DateInput = function DateInput(props) {
+  var _context;
+
   var name = props.name,
       _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -187,7 +191,7 @@ var DateInput = function DateInput(props) {
   var controlClass = 'gfb-input__control';
   var validationError;
 
-  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && (0, _trim.default)(_context = value + '').call(_context).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }

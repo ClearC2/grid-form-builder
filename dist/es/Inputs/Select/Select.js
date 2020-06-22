@@ -7,6 +7,7 @@ import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/insta
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _reduceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/reduce";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
@@ -14,7 +15,7 @@ import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; _forEachInstanceProperty(_context = ownKeys(Object(source), true)).call(_context, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context2; _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context2; _forEachInstanceProperty(_context2 = ownKeys(Object(source), true)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context3; _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -28,6 +29,8 @@ import useTheme from '../../theme/useTheme';
 var viewPortHeight = document.documentElement.clientHeight;
 
 var Select = function Select(props) {
+  var _context;
+
   var allowcreate = props.allowcreate,
       _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -218,7 +221,7 @@ var Select = function Select(props) {
   var outerClass = 'gfb-input-outer';
   var components = {};
 
-  if (isRequiredFlag && (value + '').length === 0 && !isFocused) {
+  if (isRequiredFlag && _trimInstanceProperty(_context = value + '').call(_context).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
 
     components.DropdownIndicator = function () {

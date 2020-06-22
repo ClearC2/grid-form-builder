@@ -23,7 +23,7 @@ import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/insta
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context11; _forEachInstanceProperty(_context11 = ownKeys(Object(source), true)).call(_context11, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context12; _forEachInstanceProperty(_context12 = ownKeys(Object(source))).call(_context12, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context12; _forEachInstanceProperty(_context12 = ownKeys(Object(source), true)).call(_context12, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context13; _forEachInstanceProperty(_context13 = ownKeys(Object(source))).call(_context13, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -39,6 +39,8 @@ var viewPortHeight = document.documentElement.clientHeight;
 var debounce = null;
 
 var Typeahead = function Typeahead(props) {
+  var _context11;
+
   var name = props.name,
       label = props.label,
       _props$value = props.value,
@@ -630,7 +632,7 @@ var Typeahead = function Typeahead(props) {
   var outerClass = 'gfb-input-outer';
   var components = {};
 
-  if (isRequiredFlag && (value + '').length === 0 && !isFocused) {
+  if (isRequiredFlag && _trimInstanceProperty(_context11 = value + '').call(_context11).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
 
     components.DropdownIndicator = function () {
