@@ -473,7 +473,7 @@ export default class FormValidator extends Component {
     layout.forEach(field => {
       const {config = {}} = field
       const {required = false, name, label = name, type} = config
-      if (required && (formValues.get(name, '') + '').length === 0) {
+      if (required && (formValues.get(name, '') + '').trim().length === 0) {
         reasons.push({
           reason: 'required',
           message: `${label} cannot be blank.`,
