@@ -136,7 +136,7 @@ const Checkbox = props => {
   if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control gfb-boxless-input'
   let validationError
-  if (required && requiredWarning && (value + '').length === 0) {
+  if (required && requiredWarning && (value + '').trim().length === 0) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }

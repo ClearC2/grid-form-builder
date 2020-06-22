@@ -62,7 +62,7 @@ const Email = props => {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'Invalid Email Format'
   }
-  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && (value + '').trim().length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }

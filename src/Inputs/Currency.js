@@ -69,7 +69,7 @@ const Currency = props => {
   if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control'
   let validationError
-  if (required && requiredWarning && (value + '').length === 0 && !isFocused) {
+  if (required && requiredWarning && (value + '').trim().length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }

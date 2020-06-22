@@ -155,7 +155,7 @@ const Select = props => {
   let outerClass = 'gfb-input-outer'
   const components = {}
 
-  if (isRequiredFlag && (value + '').length === 0 && !isFocused) {
+  if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error'
     components.DropdownIndicator = () => {
       return <ValidationErrorIcon message='This Field is Required' />
