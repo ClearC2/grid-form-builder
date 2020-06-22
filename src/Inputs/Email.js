@@ -43,7 +43,15 @@ const Email = props => {
 
   const handleOnBlur = useCallback(() => {
     setIsFocused(false)
-  }, [])
+    if (value) {
+      onChange({
+        target: {
+          name,
+          value: (value + '').trim()
+        }
+      })
+    }
+  }, [onChange, value, name])
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
