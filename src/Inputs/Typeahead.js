@@ -362,6 +362,9 @@ const Typeahead = props => {
         onChange({target: {name, value: ''}})
         return
       }
+      case 'remove-value': {
+        if (!newValue) newValue = []
+      }
     }
 
     if (Array.isArray(newValue)) {
