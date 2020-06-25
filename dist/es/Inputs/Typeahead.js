@@ -513,6 +513,11 @@ var Typeahead = function Typeahead(props) {
           });
           return;
         }
+
+      case 'remove-value':
+        {
+          if (!newValue) newValue = [];
+        }
     }
 
     if (_Array$isArray(newValue)) {

@@ -1,3 +1,10 @@
+## [3.38.1](https://github.com/ClearC2/grid-form-builder/compare/v3.38.0...v3.38.1) (2020-06-25)
+
+
+### Bug Fixes
+
+* **typeahead:** adds a check when removing the last option of a multi typeahead to coerce the value to an empty array ([d76b83e](https://github.com/ClearC2/grid-form-builder/commit/d76b83e76e26e419d603ca157cc60141f8693212))
+
 # [3.38.0](https://github.com/ClearC2/grid-form-builder/compare/v3.37.0...v3.38.0) (2020-06-22)
 
 

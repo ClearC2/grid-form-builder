@@ -550,6 +550,11 @@ var Typeahead = function Typeahead(props) {
           });
           return;
         }
+
+      case 'remove-value':
+        {
+          if (!newValue) newValue = [];
+        }
     }
 
     if ((0, _isArray.default)(newValue)) {
