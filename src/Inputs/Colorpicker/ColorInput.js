@@ -58,6 +58,9 @@ const ColorInput = props => {
   useEffect(() => {
     if (showPicker) window.addEventListener('mousedown', windowClickListener)
     else window.removeEventListener('mousedown', windowClickListener)
+    return () => {
+      window.removeEventListener('mousedown', windowClickListener)
+    }
   }, [showPicker, windowClickListener])
 
   const handleOnInputChange = useCallback(e => {
