@@ -1,3 +1,10 @@
+## [3.38.2](https://github.com/ClearC2/grid-form-builder/compare/v3.38.1...v3.38.2) (2020-07-30)
+
+
+### Bug Fixes
+
+* **colorinput:** remove event listener on unmount ([b5475b8](https://github.com/ClearC2/grid-form-builder/commit/b5475b8edafc9e7059085ac70c0cbef4697c090f))
+
 ## [3.38.1](https://github.com/ClearC2/grid-form-builder/compare/v3.38.0...v3.38.1) (2020-06-25)
 
 

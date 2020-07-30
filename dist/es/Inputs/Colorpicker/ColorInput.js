@@ -76,6 +76,9 @@ var ColorInput = function ColorInput(props) {
   }, []);
   useEffect(function () {
     if (showPicker) window.addEventListener('mousedown', windowClickListener);else window.removeEventListener('mousedown', windowClickListener);
+    return function () {
+      window.removeEventListener('mousedown', windowClickListener);
+    };
   }, [showPicker, windowClickListener]);
   var handleOnInputChange = useCallback(function (e) {
     var newValue = e.target.value;

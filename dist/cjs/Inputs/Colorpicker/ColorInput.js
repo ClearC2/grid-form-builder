@@ -96,6 +96,9 @@ var ColorInput = function ColorInput(props) {
   }, []);
   (0, _react.useEffect)(function () {
     if (showPicker) window.addEventListener('mousedown', windowClickListener);else window.removeEventListener('mousedown', windowClickListener);
+    return function () {
+      window.removeEventListener('mousedown', windowClickListener);
+    };
   }, [showPicker, windowClickListener]);
   var handleOnInputChange = (0, _react.useCallback)(function (e) {
     var newValue = e.target.value;
