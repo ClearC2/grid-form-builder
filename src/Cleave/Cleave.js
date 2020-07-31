@@ -22,7 +22,8 @@ export default class Cleave extends Component {
     onBlur: PropTypes.func,
     onInit: PropTypes.func,
     htmlRef: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    readOnly: PropTypes.bool
   }
 
   constructor (props) {
@@ -306,7 +307,7 @@ export default class Cleave extends Component {
 
   onInput = (value, fromProps, bypassSetState) => {
     let pps = this.properties
-    const {disabled} = this.props
+    const {disabled, readOnly} = this.props
 
     // case 1: delete one more character "4"
     // 1234*| -> hit backspace -> 123|
@@ -321,7 +322,7 @@ export default class Cleave extends Component {
     if (pps.phone) {
       if (pps.prefix && (!pps.noImmediatePrefix || value.length)) {
         pps.result = pps.prefix + pps.phoneFormatter.format(value).slice(pps.prefix.length)
-      } else if (disabled && !pps.phoneFormatter.format(value)) {
+      } else if ((disabled || readOnly) && !pps.phoneFormatter.format(value)) {
         pps.result = value
         return this.updateValueState(false)
       } else {
