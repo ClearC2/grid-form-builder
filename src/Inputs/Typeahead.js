@@ -29,10 +29,10 @@ const Typeahead = props => {
     requiredWarning,
     required,
     tabIndex,
-    onKeyDown = () => null, // sometimes provided in the config object
+    onKeyDown,
     draggable,
     persist = true,
-    typeahead = {},
+    typeahead,
     minChars = 1,
     stringify,
     autoComplete,
@@ -77,11 +77,104 @@ const Typeahead = props => {
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [isFocused, setIsFocused] = useState(false)
   const [defaultOptions, setDefaultOptions] = useState([])
+  const [components, setComponents] = useState({})
+  const [reactSelectStyles, setReactSelectStyles] = useState({
+    container: base => {
+      return ({...base, ...inputInner, ...inputInnerTheme})
+    },
+    control: base => {
+      return ({...base, ...inputControl, ...inputControlTheme})
+    },
+    valueContainer: base => {
+      return ({...base, ...valueContainer, ...valueContainerTheme})
+    },
+    indicatorsContainer: base => {
+      return ({...base, ...indicators, ...indicatorsTheme})
+    },
+    option: base => {
+      return ({...base, ...optionsStyle, ...optionsTheme})
+    },
+    multiValue: base => {
+      if (!interactive) {
+        base.color = 'green'
+        base.backgroundColor = '#a6eca67a'
+      } else {
+        base.backgroundColor = '#8bb7ff91'
+      }
+      return ({...base, ...valueStyle, ...valueTheme})
+    },
+    singleValue: base => {
+      if (!interactive) {
+        base.color = 'green'
+      }
+      return ({...base, ...valueStyle, ...valueTheme})
+    },
+    menuPortal: base => {
+      const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
+      const zIndex = Number.MAX_SAFE_INTEGER
+      return ({...base, top, zIndex})
+    }
+  })
 
   const inputContainer = useRef(null)
   const reactSelect = useRef(null)
 
   const isLoadingOptions = useRef(false) // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
+
+  useEffect(() => {
+    setReactSelectStyles({
+      container: base => {
+        return ({...base, ...inputInner, ...inputInnerTheme})
+      },
+      control: base => {
+        return ({...base, ...inputControl, ...inputControlTheme})
+      },
+      valueContainer: base => {
+        return ({...base, ...valueContainer, ...valueContainerTheme})
+      },
+      indicatorsContainer: base => {
+        return ({...base, ...indicators, ...indicatorsTheme})
+      },
+      option: base => {
+        return ({...base, ...optionsStyle, ...optionsTheme})
+      },
+      multiValue: base => {
+        if (!interactive) {
+          base.color = 'green'
+          base.backgroundColor = '#a6eca67a'
+        } else {
+          base.backgroundColor = '#8bb7ff91'
+        }
+        return ({...base, ...valueStyle, ...valueTheme})
+      },
+      singleValue: base => {
+        if (!interactive) {
+          base.color = 'green'
+        }
+        return ({...base, ...valueStyle, ...valueTheme})
+      },
+      menuPortal: base => {
+        const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
+        const zIndex = Number.MAX_SAFE_INTEGER
+        return ({...base, top, zIndex})
+      }
+    }) // going to ignore dynamic style changes for the time being - JRA 07/31/2020
+  }, [ // eslint-disable-line
+    interactive,
+    menuPlacement
+  ])
+
+  useEffect(() => {
+    if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused && !components.DropdownIndicator) {
+      setComponents({
+        DropdownIndicator: () => {
+          return <ValidationErrorIcon message='This Field is Required' />
+        }
+      })
+    } else if (isRequiredFlag && components.DropdownIndicator && (!(value + '').trim().length === 0 || isFocused)) {
+      setComponents({})
+    }
+  }, [isRequiredFlag, value, isFocused, components])
 
   useEffect(() => {
     changeInput({Typeahead: allowcreate ? AsyncCreatable : Async})
@@ -223,6 +316,30 @@ const Typeahead = props => {
     })
   }, [typeahead, populateFilterBody, name, values, minChars, isZipCode])
 
+  useEffect(() => {
+    console.log('typeahead')
+  }, [typeahead])
+
+  useEffect(() => {
+    console.log('populateFilterBody')
+  }, [populateFilterBody])
+
+  useEffect(() => {
+    console.log('name')
+  }, [name])
+
+  useEffect(() => {
+    console.log('values')
+  }, [values])
+
+  useEffect(() => {
+    console.log('minChars')
+  }, [minChars])
+
+  useEffect(() => {
+    console.log('isZipCode')
+  }, [isZipCode])
+
   const formatCreateLabel = useCallback(value => {
     if (typeof createlabel === 'string') {
       return `${createlabel} ${value}`
@@ -328,7 +445,6 @@ const Typeahead = props => {
         }
       }
       if (
-        values.get(field) !== newVal &&
         field !== 'className' &&
         field !== 'value' &&
         field !== 'label'
@@ -336,7 +452,7 @@ const Typeahead = props => {
         onChange(e)
       }
     })
-  }, [values, onChange])
+  }, [onChange])
 
   const handleChange = useCallback((newValue, {action}) => {
     let _delimit = delimit
@@ -468,17 +584,24 @@ const Typeahead = props => {
   if (!interactive) className = className + ' gfb-non-interactive-input'
 
   let outerClass = 'gfb-input-outer'
-  const components = {}
 
   if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error'
-    components.DropdownIndicator = () => {
-      return <ValidationErrorIcon message='This Field is Required' />
-    }
   }
+
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus'
   }
+
+  useEffect(() => {
+    console.log('final >>> handleOnKeyDown')
+  }, [handleOnKeyDown])
+  useEffect(() => {
+    console.log('final >>> handleOnInputChange')
+  }, [handleOnInputChange])
+  useEffect(() => {
+    console.log('final >>> loadOptions')
+  }, [loadOptions])
 
   return (
     <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
@@ -513,49 +636,18 @@ const Typeahead = props => {
         autoComplete={autoComplete}
         components={components}
         defaultOptions={defaultOptions}
-        styles={{
-          container: base => {
-            return ({...base, ...inputInner, ...inputInnerTheme})
-          },
-          control: base => {
-            return ({...base, ...inputControl, ...inputControlTheme})
-          },
-          valueContainer: base => {
-            return ({...base, ...valueContainer, ...valueContainerTheme})
-          },
-          indicatorsContainer: base => {
-            return ({...base, ...indicators, ...indicatorsTheme})
-          },
-          option: base => {
-            return ({...base, ...optionsStyle, ...optionsTheme})
-          },
-          multiValue: base => {
-            if (!interactive) {
-              base.color = 'green'
-              base.backgroundColor = '#a6eca67a'
-            } else {
-              base.backgroundColor = '#8bb7ff91'
-            }
-            return ({...base, ...valueStyle, ...valueTheme})
-          },
-          singleValue: base => {
-            if (!interactive) {
-              base.color = 'green'
-            }
-            return ({...base, ...valueStyle, ...valueTheme})
-          },
-          menuPortal: base => {
-            const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
-            const zIndex = Number.MAX_SAFE_INTEGER
-            return ({...base, top, zIndex})
-          }
-        }}
+        styles={reactSelectStyles}
       />
     </div>
   )
 }
 
 export default Typeahead
+
+Typeahead.defaultProps = {
+  onKeyDown: () => null,
+  typeahead: {}
+}
 
 Typeahead.propTypes = {
   onChange: PropTypes.func,
