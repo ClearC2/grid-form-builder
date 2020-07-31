@@ -1,3 +1,10 @@
+## [3.38.3](https://github.com/ClearC2/grid-form-builder/compare/v3.38.2...v3.38.3) (2020-07-31)
+
+
+### Bug Fixes
+
+* **firefox:** fix drag and drop onto disabled inputs in firefox ([d12c93a](https://github.com/ClearC2/grid-form-builder/commit/d12c93a5605064d91d258f5ba97b085cbfb3885a))
+
 ## [3.38.2](https://github.com/ClearC2/grid-form-builder/compare/v3.38.1...v3.38.2) (2020-07-30)
 
 

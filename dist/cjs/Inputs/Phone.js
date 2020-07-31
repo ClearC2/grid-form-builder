@@ -136,6 +136,8 @@ var Phone = function Phone(props) {
       }
     });
   }, [onChange, name]);
+  var isFirefox = navigator.userAgent.search('Firefox') > -1;
+  var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -197,7 +199,8 @@ var Phone = function Phone(props) {
     name: name,
     value: value,
     onChange: handleOnChange,
-    disabled: readonly || disabled || !interactive,
+    disabled: isFirefox ? false : isDisabled,
+    readOnly: isFirefox && isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,

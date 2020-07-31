@@ -250,7 +250,9 @@ function (_Component) {
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "onInput", function (value, fromProps, bypassSetState) {
       var pps = _this.properties;
-      var disabled = _this.props.disabled; // case 1: delete one more character "4"
+      var _this$props = _this.props,
+          disabled = _this$props.disabled,
+          readOnly = _this$props.readOnly; // case 1: delete one more character "4"
       // 1234*| -> hit backspace -> 123|
       // case 2: last character is not delimiter which is:
       // 12|34* -> hit backspace -> 1|34*
@@ -267,7 +269,7 @@ function (_Component) {
           var _context;
 
           pps.result = pps.prefix + (0, _slice.default)(_context = pps.phoneFormatter.format(value)).call(_context, pps.prefix.length);
-        } else if (disabled && !pps.phoneFormatter.format(value)) {
+        } else if ((disabled || readOnly) && !pps.phoneFormatter.format(value)) {
           pps.result = value;
           return _this.updateValueState(false);
         } else {
@@ -457,16 +459,16 @@ function (_Component) {
       var _arguments = arguments,
           _this2 = this;
 
-      var _this$props = this.props,
-          value = _this$props.value,
-          options = _this$props.options,
-          onKeyDown = _this$props.onKeyDown,
-          onFocus = _this$props.onFocus,
-          onBlur = _this$props.onBlur,
-          onChange = _this$props.onChange,
-          onInit = _this$props.onInit,
-          htmlRef = _this$props.htmlRef,
-          propsToTransfer = (0, _objectWithoutProperties2.default)(_this$props, ["value", "options", "onKeyDown", "onFocus", "onBlur", "onChange", "onInit", "htmlRef"]);
+      var _this$props2 = this.props,
+          value = _this$props2.value,
+          options = _this$props2.options,
+          onKeyDown = _this$props2.onKeyDown,
+          onFocus = _this$props2.onFocus,
+          onBlur = _this$props2.onBlur,
+          onChange = _this$props2.onChange,
+          onInit = _this$props2.onInit,
+          htmlRef = _this$props2.htmlRef,
+          propsToTransfer = (0, _objectWithoutProperties2.default)(_this$props2, ["value", "options", "onKeyDown", "onFocus", "onBlur", "onChange", "onInit", "htmlRef"]);
       return _react.default.createElement("input", (0, _extends2.default)({
         type: "text",
         ref: function ref(_ref) {
@@ -499,5 +501,6 @@ exports.default = Cleave;
   onBlur: _propTypes.default.func,
   onInit: _propTypes.default.func,
   htmlRef: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  readOnly: _propTypes.default.bool
 });
