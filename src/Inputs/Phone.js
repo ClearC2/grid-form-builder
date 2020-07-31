@@ -89,6 +89,10 @@ const Phone = props => {
     })
   }, [onChange, name])
 
+  const isFirefox = navigator.userAgent.search('Firefox') > -1
+
+  const isDisabled = readonly || disabled || !interactive
+
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
@@ -137,7 +141,8 @@ const Phone = props => {
               name={name}
               value={value}
               onChange={handleOnChange}
-              disabled={readonly || disabled || !interactive}
+              disabled={isFirefox ? false : isDisabled}
+              readOnly={isFirefox && isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}
