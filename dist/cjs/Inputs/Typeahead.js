@@ -48,11 +48,21 @@ var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-st
 
 var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
 
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
-
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/inherits"));
+
+var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _core = require("@emotion/core");
 
@@ -78,6 +88,125 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 var viewPortHeight = document.documentElement.clientHeight;
 var debounce = null;
+
+var TypeaheadPerformanceOptimizer =
+/*#__PURE__*/
+function (_PureComponent) {
+  (0, _inherits2.default)(TypeaheadPerformanceOptimizer, _PureComponent);
+
+  function TypeaheadPerformanceOptimizer() {
+    (0, _classCallCheck2.default)(this, TypeaheadPerformanceOptimizer);
+    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(TypeaheadPerformanceOptimizer).apply(this, arguments));
+  }
+
+  (0, _createClass2.default)(TypeaheadPerformanceOptimizer, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+          Typeahead = _this$props.Typeahead,
+          ref = _this$props.ref,
+          className = _this$props.className,
+          classNamePrefix = _this$props.classNamePrefix,
+          closeMenuOnScroll = _this$props.closeMenuOnScroll,
+          tabIndex = _this$props.tabIndex,
+          autoFocus = _this$props.autoFocus,
+          blurInputOnSelect = _this$props.blurInputOnSelect,
+          isClearable = _this$props.isClearable,
+          createOptionPosition = _this$props.createOptionPosition,
+          formatCreateLabel = _this$props.formatCreateLabel,
+          isMulti = _this$props.isMulti,
+          isDisabled = _this$props.isDisabled,
+          menuPortalTarget = _this$props.menuPortalTarget,
+          name = _this$props.name,
+          noOptionsMessage = _this$props.noOptionsMessage,
+          placeholder = _this$props.placeholder,
+          inputValue = _this$props.inputValue,
+          menuIsOpen = _this$props.menuIsOpen,
+          menuPlacement = _this$props.menuPlacement,
+          onKeyDown = _this$props.onKeyDown,
+          onMouseDown = _this$props.onMouseDown,
+          onFocus = _this$props.onFocus,
+          onBlur = _this$props.onBlur,
+          onInputChange = _this$props.onInputChange,
+          loadOptions = _this$props.loadOptions,
+          onChange = _this$props.onChange,
+          value = _this$props.value,
+          autoComplete = _this$props.autoComplete,
+          components = _this$props.components,
+          defaultOptions = _this$props.defaultOptions,
+          styles = _this$props.styles;
+      return (0, _core.jsx)(Typeahead, {
+        ref: ref,
+        className: className,
+        classNamePrefix: classNamePrefix,
+        closeMenuOnScroll: closeMenuOnScroll,
+        tabIndex: tabIndex,
+        autoFocus: autoFocus,
+        blurInputOnSelect: blurInputOnSelect,
+        isClearable: isClearable,
+        createOptionPosition: createOptionPosition,
+        formatCreateLabel: formatCreateLabel,
+        isMulti: isMulti,
+        isDisabled: isDisabled,
+        menuPortalTarget: menuPortalTarget,
+        name: name,
+        noOptionsMessage: noOptionsMessage,
+        placeholder: placeholder,
+        inputValue: inputValue,
+        menuIsOpen: menuIsOpen,
+        menuPlacement: menuPlacement,
+        onKeyDown: onKeyDown,
+        onMouseDown: onMouseDown,
+        onFocus: onFocus,
+        onBlur: onBlur,
+        onInputChange: onInputChange,
+        loadOptions: loadOptions,
+        onChange: onChange,
+        value: value,
+        autoComplete: autoComplete,
+        components: components,
+        defaultOptions: defaultOptions,
+        styles: styles
+      });
+    }
+  }]);
+  return TypeaheadPerformanceOptimizer;
+}(_react.PureComponent);
+
+(0, _defineProperty3.default)(TypeaheadPerformanceOptimizer, "propTypes", {
+  Typeahead: _propTypes.default.func,
+  ref: _propTypes.default.func,
+  className: _propTypes.default.string,
+  classNamePrefix: _propTypes.default.string,
+  closeMenuOnScroll: _propTypes.default.bool,
+  tabIndex: _propTypes.default.number,
+  autoFocus: _propTypes.default.bool,
+  blurInputOnSelect: _propTypes.default.bool,
+  isClearable: _propTypes.default.bool,
+  createOptionPosition: _propTypes.default.string,
+  formatCreateLabel: _propTypes.default.func,
+  isMulti: _propTypes.default.bool,
+  isDisabled: _propTypes.default.bool,
+  menuPortalTarget: _propTypes.default.node,
+  name: _propTypes.default.string,
+  noOptionsMessage: _propTypes.default.string,
+  placeholder: _propTypes.default.string,
+  inputValue: _propTypes.default.string,
+  menuIsOpen: _propTypes.default.bool,
+  menuPlacement: _propTypes.default.string,
+  onKeyDown: _propTypes.default.func,
+  onMouseDown: _propTypes.default.func,
+  onFocus: _propTypes.default.func,
+  onBlur: _propTypes.default.func,
+  onInputChange: _propTypes.default.func,
+  loadOptions: _propTypes.default.func,
+  onChange: _propTypes.default.func,
+  value: _propTypes.default.string,
+  autoComplete: _propTypes.default.bool,
+  components: _propTypes.default.object,
+  defaultOptions: _propTypes.default.object,
+  styles: _propTypes.default.object
+});
 
 var Typeahead = function Typeahead(props) {
   var _context13;
@@ -810,7 +939,8 @@ var Typeahead = function Typeahead(props) {
     ref: inputContainer,
     onMouseDown: handleOnFocus,
     style: inputOuter
-  }, (0, _core.jsx)(Typeahead, {
+  }, (0, _core.jsx)(TypeaheadPerformanceOptimizer, {
+    Typeahead: Typeahead,
     ref: reactSelect,
     className: className,
     classNamePrefix: "gfb-input",

@@ -1,3 +1,10 @@
+# [3.40.0](https://github.com/ClearC2/grid-form-builder/compare/v3.39.0...v3.40.0) (2020-08-03)
+
+
+### Features
+
+* **typeahead:** wraps react select in a pure component to kill rerenders ([68ab39d](https://github.com/ClearC2/grid-form-builder/commit/68ab39d12f7feb38590ede6aed8dfff9bd928cb5))
+
 # [3.39.0](https://github.com/ClearC2/grid-form-builder/compare/v3.38.4...v3.39.0) (2020-08-03)
 
 
