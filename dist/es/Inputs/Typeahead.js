@@ -59,7 +59,7 @@ function (_PureComponent) {
     value: function render() {
       var _this$props = this.props,
           Typeahead = _this$props.Typeahead,
-          ref = _this$props.ref,
+          setRef = _this$props.setRef,
           className = _this$props.className,
           classNamePrefix = _this$props.classNamePrefix,
           closeMenuOnScroll = _this$props.closeMenuOnScroll,
@@ -91,7 +91,7 @@ function (_PureComponent) {
           defaultOptions = _this$props.defaultOptions,
           styles = _this$props.styles;
       return jsx(Typeahead, {
-        ref: ref,
+        ref: setRef,
         className: className,
         classNamePrefix: classNamePrefix,
         closeMenuOnScroll: closeMenuOnScroll,
@@ -131,10 +131,10 @@ function (_PureComponent) {
 
 _defineProperty(TypeaheadPerformanceOptimizer, "propTypes", {
   Typeahead: PropTypes.func,
-  ref: PropTypes.func,
+  setRef: PropTypes.any,
   className: PropTypes.string,
   classNamePrefix: PropTypes.string,
-  closeMenuOnScroll: PropTypes.bool,
+  closeMenuOnScroll: PropTypes.func,
   tabIndex: PropTypes.number,
   autoFocus: PropTypes.bool,
   blurInputOnSelect: PropTypes.bool,
@@ -143,9 +143,9 @@ _defineProperty(TypeaheadPerformanceOptimizer, "propTypes", {
   formatCreateLabel: PropTypes.func,
   isMulti: PropTypes.bool,
   isDisabled: PropTypes.bool,
-  menuPortalTarget: PropTypes.node,
+  menuPortalTarget: PropTypes.any,
   name: PropTypes.string,
-  noOptionsMessage: PropTypes.string,
+  noOptionsMessage: PropTypes.func,
   placeholder: PropTypes.string,
   inputValue: PropTypes.string,
   menuIsOpen: PropTypes.bool,
@@ -157,10 +157,10 @@ _defineProperty(TypeaheadPerformanceOptimizer, "propTypes", {
   onInputChange: PropTypes.func,
   loadOptions: PropTypes.func,
   onChange: PropTypes.func,
-  value: PropTypes.string,
-  autoComplete: PropTypes.bool,
+  value: PropTypes.any,
+  autoComplete: PropTypes.any,
   components: PropTypes.object,
-  defaultOptions: PropTypes.object,
+  defaultOptions: PropTypes.any,
   styles: PropTypes.object
 });
 

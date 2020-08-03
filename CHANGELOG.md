@@ -1,3 +1,10 @@
+## [3.40.1](https://github.com/ClearC2/grid-form-builder/compare/v3.40.0...v3.40.1) (2020-08-03)
+
+
+### Bug Fixes
+
+* **typeahead:** fixed proptypes ([76d04ad](https://github.com/ClearC2/grid-form-builder/commit/76d04adb47a1d030233f26de790e09bb5ef8bd4f))
+
 # [3.40.0](https://github.com/ClearC2/grid-form-builder/compare/v3.39.0...v3.40.0) (2020-08-03)
 
 

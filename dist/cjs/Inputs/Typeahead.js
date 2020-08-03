@@ -104,7 +104,7 @@ function (_PureComponent) {
     value: function render() {
       var _this$props = this.props,
           Typeahead = _this$props.Typeahead,
-          ref = _this$props.ref,
+          setRef = _this$props.setRef,
           className = _this$props.className,
           classNamePrefix = _this$props.classNamePrefix,
           closeMenuOnScroll = _this$props.closeMenuOnScroll,
@@ -136,7 +136,7 @@ function (_PureComponent) {
           defaultOptions = _this$props.defaultOptions,
           styles = _this$props.styles;
       return (0, _core.jsx)(Typeahead, {
-        ref: ref,
+        ref: setRef,
         className: className,
         classNamePrefix: classNamePrefix,
         closeMenuOnScroll: closeMenuOnScroll,
@@ -175,10 +175,10 @@ function (_PureComponent) {
 
 (0, _defineProperty3.default)(TypeaheadPerformanceOptimizer, "propTypes", {
   Typeahead: _propTypes.default.func,
-  ref: _propTypes.default.func,
+  setRef: _propTypes.default.any,
   className: _propTypes.default.string,
   classNamePrefix: _propTypes.default.string,
-  closeMenuOnScroll: _propTypes.default.bool,
+  closeMenuOnScroll: _propTypes.default.func,
   tabIndex: _propTypes.default.number,
   autoFocus: _propTypes.default.bool,
   blurInputOnSelect: _propTypes.default.bool,
@@ -187,9 +187,9 @@ function (_PureComponent) {
   formatCreateLabel: _propTypes.default.func,
   isMulti: _propTypes.default.bool,
   isDisabled: _propTypes.default.bool,
-  menuPortalTarget: _propTypes.default.node,
+  menuPortalTarget: _propTypes.default.any,
   name: _propTypes.default.string,
-  noOptionsMessage: _propTypes.default.string,
+  noOptionsMessage: _propTypes.default.func,
   placeholder: _propTypes.default.string,
   inputValue: _propTypes.default.string,
   menuIsOpen: _propTypes.default.bool,
@@ -201,10 +201,10 @@ function (_PureComponent) {
   onInputChange: _propTypes.default.func,
   loadOptions: _propTypes.default.func,
   onChange: _propTypes.default.func,
-  value: _propTypes.default.string,
-  autoComplete: _propTypes.default.bool,
+  value: _propTypes.default.any,
+  autoComplete: _propTypes.default.any,
   components: _propTypes.default.object,
-  defaultOptions: _propTypes.default.object,
+  defaultOptions: _propTypes.default.any,
   styles: _propTypes.default.object
 });
 
