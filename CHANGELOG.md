@@ -1,3 +1,10 @@
+## [3.40.2](https://github.com/ClearC2/grid-form-builder/compare/v3.40.1...v3.40.2) (2020-08-03)
+
+
+### Bug Fixes
+
+* **email:** fix drag and drop to email field in firefox ([7e30656](https://github.com/ClearC2/grid-form-builder/commit/7e30656243a820fa88b80fb770c2dda37557848f))
+
 ## [3.40.1](https://github.com/ClearC2/grid-form-builder/compare/v3.40.0...v3.40.1) (2020-08-03)
 
 
