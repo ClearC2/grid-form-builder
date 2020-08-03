@@ -3,27 +3,27 @@ import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/obje
 import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
 import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
-import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
+import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _JSON$stringify from "@babel/runtime-corejs3/core-js-stable/json/stringify";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
-import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
+import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context12; _forEachInstanceProperty(_context12 = ownKeys(Object(source), true)).call(_context12, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context13; _forEachInstanceProperty(_context13 = ownKeys(Object(source))).call(_context13, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context14; _forEachInstanceProperty(_context14 = ownKeys(Object(source), true)).call(_context14, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context15; _forEachInstanceProperty(_context15 = ownKeys(Object(source))).call(_context15, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -39,7 +39,7 @@ var viewPortHeight = document.documentElement.clientHeight;
 var debounce = null;
 
 var Typeahead = function Typeahead(props) {
-  var _context11;
+  var _context13;
 
   var name = props.name,
       label = props.label,
@@ -56,15 +56,11 @@ var Typeahead = function Typeahead(props) {
       requiredWarning = props.requiredWarning,
       required = props.required,
       tabIndex = props.tabIndex,
-      _props$onKeyDown = props.onKeyDown,
-      onKeyDown = _props$onKeyDown === void 0 ? function () {
-    return null;
-  } : _props$onKeyDown,
+      onKeyDown = props.onKeyDown,
       draggable = props.draggable,
       _props$persist = props.persist,
       persist = _props$persist === void 0 ? true : _props$persist,
-      _props$typeahead = props.typeahead,
-      typeahead = _props$typeahead === void 0 ? {} : _props$typeahead,
+      typeahead = props.typeahead,
       _props$minChars = props.minChars,
       minChars = _props$minChars === void 0 ? 1 : _props$minChars,
       stringify = props.stringify,
@@ -165,10 +161,201 @@ var Typeahead = function Typeahead(props) {
       defaultOptions = _useState20[0],
       setDefaultOptions = _useState20[1];
 
+  var _useState21 = useState({}),
+      _useState22 = _slicedToArray(_useState21, 2),
+      components = _useState22[0],
+      setComponents = _useState22[1];
+
+  var _useState23 = useState(null),
+      _useState24 = _slicedToArray(_useState23, 2),
+      dynamicTypeaheadKey = _useState24[0],
+      setDynamicTypeaheadKey = _useState24[1];
+
+  var _useState25 = useState({}),
+      _useState26 = _slicedToArray(_useState25, 2),
+      conditions = _useState26[0],
+      setConditions = _useState26[1];
+
+  var _useState27 = useState({
+    container: function container(base) {
+      return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
+    },
+    control: function control(base) {
+      return _objectSpread({}, base, {}, inputControl, {}, inputControlTheme);
+    },
+    valueContainer: function valueContainer(base) {
+      return _objectSpread({}, base, {}, _valueContainer, {}, valueContainerTheme);
+    },
+    indicatorsContainer: function indicatorsContainer(base) {
+      return _objectSpread({}, base, {}, indicators, {}, indicatorsTheme);
+    },
+    option: function option(base) {
+      return _objectSpread({}, base, {}, optionsStyle, {}, optionsTheme);
+    },
+    multiValue: function multiValue(base) {
+      if (!interactive) {
+        base.color = 'green';
+        base.backgroundColor = '#a6eca67a';
+      } else {
+        base.backgroundColor = '#8bb7ff91';
+      }
+
+      return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
+    },
+    singleValue: function singleValue(base) {
+      if (!interactive) {
+        base.color = 'green';
+      }
+
+      return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
+    },
+    menuPortal: function menuPortal(base) {
+      var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
+      var zIndex = _Number$MAX_SAFE_INTEGER;
+      return _objectSpread({}, base, {
+        top: top,
+        zIndex: zIndex
+      });
+    }
+  }),
+      _useState28 = _slicedToArray(_useState27, 2),
+      reactSelectStyles = _useState28[0],
+      setReactSelectStyles = _useState28[1];
+
   var inputContainer = useRef(null);
   var reactSelect = useRef(null);
   var isLoadingOptions = useRef(false); // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
 
+  useEffect(function () {
+    var populateConditionObject = function populateConditionObject() {
+      var _context;
+
+      var condition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+        name: null,
+        comparator: null,
+        values: []
+      };
+      if (!condition.hasOwnProperty('values')) condition.values = []; //eslint-disable-line
+
+      var pluggedInValues = [];
+
+      _forEachInstanceProperty(_context = _valuesInstanceProperty(condition)).call(_context, function (value) {
+        var formValueForThisValueName = values.get(value, '');
+
+        if (formValueForThisValueName && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, formValueForThisValueName) === -1) {
+          pluggedInValues.push(formValueForThisValueName);
+        } else {
+          pluggedInValues.push(value);
+        }
+      });
+
+      var value = values.get(condition.name, '');
+
+      if (!pluggedInValues.length && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, value) === -1) {
+        pluggedInValues.push(value);
+      }
+
+      condition.values = pluggedInValues;
+      return condition;
+    };
+
+    var populateFilterBody = function populateFilterBody() {
+      var filter = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      // eslint-disable-next-line
+      if (filter.hasOwnProperty('name')) {
+        populateConditionObject(filter); // eslint-disable-next-line
+      } else if (filter.hasOwnProperty('conditions') && _Array$isArray(filter.conditions)) {
+        var _context2;
+
+        _mapInstanceProperty(_context2 = filter.conditions).call(_context2, function (condition) {
+          return populateFilterBody(condition);
+        });
+      }
+
+      return filter;
+    };
+
+    var _typeahead$filter = _filterInstanceProperty(typeahead),
+        filter = _typeahead$filter === void 0 ? {} : _typeahead$filter;
+
+    if (typeof filter === 'function') filter = filter();
+    filter = JSON.parse(_JSON$stringify(filter)); // deep clone the object as to not mutate the definition
+
+    filter = populateFilterBody(filter);
+
+    if (_JSON$stringify(filter) !== _JSON$stringify(conditions)) {
+      setConditions(filter);
+    }
+  }, [values, typeahead, conditions]);
+  useEffect(function () {
+    var _typeahead$key = typeahead.key,
+        key = _typeahead$key === void 0 ? null : _typeahead$key,
+        _typeahead$fieldvalue = typeahead.fieldvalue,
+        fieldvalue = _typeahead$fieldvalue === void 0 ? null : _typeahead$fieldvalue;
+    if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '');
+    setDynamicTypeaheadKey(key);
+  }, [typeahead, values]);
+  useEffect(function () {
+    setReactSelectStyles({
+      container: function container(base) {
+        return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
+      },
+      control: function control(base) {
+        return _objectSpread({}, base, {}, inputControl, {}, inputControlTheme);
+      },
+      valueContainer: function valueContainer(base) {
+        return _objectSpread({}, base, {}, _valueContainer, {}, valueContainerTheme);
+      },
+      indicatorsContainer: function indicatorsContainer(base) {
+        return _objectSpread({}, base, {}, indicators, {}, indicatorsTheme);
+      },
+      option: function option(base) {
+        return _objectSpread({}, base, {}, optionsStyle, {}, optionsTheme);
+      },
+      multiValue: function multiValue(base) {
+        if (!interactive) {
+          base.color = 'green';
+          base.backgroundColor = '#a6eca67a';
+        } else {
+          base.backgroundColor = '#8bb7ff91';
+        }
+
+        return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
+      },
+      singleValue: function singleValue(base) {
+        if (!interactive) {
+          base.color = 'green';
+        }
+
+        return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
+      },
+      menuPortal: function menuPortal(base) {
+        var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
+        var zIndex = _Number$MAX_SAFE_INTEGER;
+        return _objectSpread({}, base, {
+          top: top,
+          zIndex: zIndex
+        });
+      }
+    }); // going to ignore dynamic style changes for the time being - JRA 07/31/2020
+  }, [// eslint-disable-line
+  interactive, menuPlacement]);
+  useEffect(function () {
+    var _context3, _context4;
+
+    if (isRequiredFlag && _trimInstanceProperty(_context3 = value + '').call(_context3).length === 0 && !isFocused && !components.DropdownIndicator) {
+      setComponents({
+        DropdownIndicator: function DropdownIndicator() {
+          return jsx(ValidationErrorIcon, {
+            message: "This Field is Required"
+          });
+        }
+      });
+    } else if (isRequiredFlag && components.DropdownIndicator && (!_trimInstanceProperty(_context4 = value + '').call(_context4).length === 0 || isFocused)) {
+      setComponents({});
+    }
+  }, [isRequiredFlag, value, isFocused, components]);
   useEffect(function () {
     changeInput({
       Typeahead: allowcreate ? AsyncCreatable : Async
@@ -241,67 +428,16 @@ var Typeahead = function Typeahead(props) {
     updateInputValue('');
     updateSelectValue(parsedValue);
   }, [value, convertValueStringToValueArrayIfNeeded, multi]);
-  var populateConditionObject = useCallback(function () {
-    var _context;
-
-    var condition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-      name: null,
-      comparator: null,
-      values: []
-    };
-    if (!condition.hasOwnProperty('values')) condition.values = []; //eslint-disable-line
-
-    var pluggedInValues = [];
-
-    _forEachInstanceProperty(_context = _valuesInstanceProperty(condition)).call(_context, function (value) {
-      var formValueForThisValueName = values.get(value, '');
-
-      if (formValueForThisValueName && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, formValueForThisValueName) === -1) {
-        pluggedInValues.push(formValueForThisValueName);
-      } else {
-        pluggedInValues.push(value);
-      }
-    });
-
-    var value = values.get(condition.name, '');
-
-    if (!pluggedInValues.length && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, value) === -1) {
-      pluggedInValues.push(value);
-    }
-
-    condition.values = pluggedInValues;
-    return condition;
-  }, [values]);
-  var populateFilterBody = useCallback(function () {
-    var filter = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    // eslint-disable-next-line
-    if (filter.hasOwnProperty('name')) {
-      populateConditionObject(filter); // eslint-disable-next-line
-    } else if (filter.hasOwnProperty('conditions') && _Array$isArray(filter.conditions)) {
-      var _context2;
-
-      _mapInstanceProperty(_context2 = filter.conditions).call(_context2, function (condition) {
-        return populateFilterBody(condition);
-      });
-    }
-
-    return filter;
-  }, [populateConditionObject]);
   var loadOptions = useCallback(function (search) {
     var setDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
     var fetchResults = function fetchResults(resolve) {
-      var _typeahead$key = typeahead.key,
-          key = _typeahead$key === void 0 ? null : _typeahead$key,
+      var _typeahead$key2 = typeahead.key,
+          key = _typeahead$key2 === void 0 ? null : _typeahead$key2,
           _typeahead$duplicatio = typeahead.duplication,
           duplication = _typeahead$duplicatio === void 0 ? false : _typeahead$duplicatio,
-          _typeahead$fieldvalue = typeahead.fieldvalue,
-          fieldvalue = _typeahead$fieldvalue === void 0 ? null : _typeahead$fieldvalue,
-          _typeahead$filter = _filterInstanceProperty(typeahead),
-          filter = _typeahead$filter === void 0 ? {} : _typeahead$filter;
-
-      if (typeof filter === 'function') filter = filter();
+          _typeahead$fieldvalue2 = typeahead.fieldvalue,
+          fieldvalue = _typeahead$fieldvalue2 === void 0 ? null : _typeahead$fieldvalue2;
       var minSearchLength = isZipCode ? 3 : minChars;
 
       if (!key && !fieldvalue) {
@@ -313,29 +449,24 @@ var Typeahead = function Typeahead(props) {
         });
       }
 
-      filter = JSON.parse(_JSON$stringify(filter)); // deep clone the object as to not mutate the definition
-
-      populateFilterBody(filter);
-      if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '');
-
       if (search.length >= minSearchLength || search === ' ') {
-        var _context3;
+        var _context5;
 
-        if (typeof search === 'string' && _trimInstanceProperty(search).call(search) !== '') search = "/".concat(search);
+        if (typeof search === 'string' && _trimInstanceProperty(search).call(search) !== '') search = "/".concat(encodeURIComponent(search));
         if (setDefault) reactSelect.current.setState(function () {
           return {
             isLoading: true
           };
         });
         isLoadingOptions.current = true;
-        return GFBConfig.ajax.post(_concatInstanceProperty(_context3 = "/typeahead/name/".concat(key, "/search")).call(_context3, search), {
-          filter: filter
+        return GFBConfig.ajax.post(_concatInstanceProperty(_context5 = "/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search")).call(_context5, search), {
+          conditions: conditions
         }).then(function (resp) {
-          var _context4;
+          var _context6;
 
           isLoadingOptions.current = false;
 
-          var options = _mapInstanceProperty(_context4 = resp.data.data).call(_context4, function (value) {
+          var options = _mapInstanceProperty(_context6 = resp.data.data).call(_context6, function (value) {
             if (duplication) {
               value.duplication = duplication;
             }
@@ -369,12 +500,12 @@ var Typeahead = function Typeahead(props) {
       }, delay);
       return debounce;
     });
-  }, [typeahead, populateFilterBody, name, values, minChars, isZipCode]);
+  }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions]);
   var formatCreateLabel = useCallback(function (value) {
     if (typeof createlabel === 'string') {
-      var _context5;
+      var _context7;
 
-      return _concatInstanceProperty(_context5 = "".concat(createlabel, " ")).call(_context5, value);
+      return _concatInstanceProperty(_context7 = "".concat(createlabel, " ")).call(_context7, value);
     }
 
     return "Click or Tab to Create \"".concat(value, "\"");
@@ -458,9 +589,9 @@ var Typeahead = function Typeahead(props) {
     });
   }, []);
   var handleSingleValueChange = useCallback(function (newValue) {
-    var _context6;
+    var _context8;
 
-    _forEachInstanceProperty(_context6 = _Object$keys(newValue)).call(_context6, function (field) {
+    _forEachInstanceProperty(_context8 = _Object$keys(newValue)).call(_context8, function (field) {
       var newVal = newValue[field];
       if (field === 'duplication') newVal = newValue.value;
       var id = null;
@@ -472,11 +603,11 @@ var Typeahead = function Typeahead(props) {
         }
       };
 
-      if (values.get(field) !== newVal && field !== 'className' && field !== 'value' && field !== 'label') {
+      if (field !== 'className' && field !== 'value' && field !== 'label') {
         onChange(e);
       }
     });
-  }, [values, onChange]);
+  }, [onChange]);
   var handleChange = useCallback(function (newValue, _ref) {
     var action = _ref.action;
     var _delimit = delimit;
@@ -527,10 +658,10 @@ var Typeahead = function Typeahead(props) {
       if (stringify) {
         if (delimiter) {
           if (_delimit && _Array$isArray(_delimit)) {
-            var _context7;
+            var _context9;
 
             // if we were provided field(s) to delimit by, build up a special string with just those values
-            _forEachInstanceProperty(_context7 = target.value).call(_context7, function (option) {
+            _forEachInstanceProperty(_context9 = target.value).call(_context9, function (option) {
               _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
                 if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
                   _value = _value + option[field] + delimiter;
@@ -541,10 +672,10 @@ var Typeahead = function Typeahead(props) {
             _value = _sliceInstanceProperty(_value).call(_value, 0, -1);
             target.value = _value;
           } else {
-            var _context8;
+            var _context10;
 
             // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
-            _forEachInstanceProperty(_context8 = target.value).call(_context8, function (option) {
+            _forEachInstanceProperty(_context10 = target.value).call(_context10, function (option) {
               _value = _value + _JSON$stringify(option) + delimiter;
             });
 
@@ -552,12 +683,12 @@ var Typeahead = function Typeahead(props) {
             target.value = _value;
           }
         } else if (_delimit && !delimiter) {
-          var _context9;
+          var _context11;
 
           // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
           _value = [];
 
-          _forEachInstanceProperty(_context9 = target.value).call(_context9, function (option) {
+          _forEachInstanceProperty(_context11 = target.value).call(_context11, function (option) {
             _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
               if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
                 _value.push(option[field]);
@@ -572,12 +703,12 @@ var Typeahead = function Typeahead(props) {
           target.value = _JSON$stringify(target.value);
         }
       } else if (_delimit && !delimiter) {
-        var _context10;
+        var _context12;
 
         // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as an array
         _value = [];
 
-        _forEachInstanceProperty(_context10 = target.value).call(_context10, function (option) {
+        _forEachInstanceProperty(_context12 = target.value).call(_context12, function (option) {
           _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
             if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
               _value.push(option[field]);
@@ -635,16 +766,9 @@ var Typeahead = function Typeahead(props) {
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
-  var components = {};
 
-  if (isRequiredFlag && _trimInstanceProperty(_context11 = value + '').call(_context11).length === 0 && !isFocused) {
+  if (isRequiredFlag && _trimInstanceProperty(_context13 = value + '').call(_context13).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
-
-    components.DropdownIndicator = function () {
-      return jsx(ValidationErrorIcon, {
-        message: "This Field is Required"
-      });
-    };
   }
 
   if (isFocused) {
@@ -687,52 +811,17 @@ var Typeahead = function Typeahead(props) {
     autoComplete: autoComplete,
     components: components,
     defaultOptions: defaultOptions,
-    styles: {
-      container: function container(base) {
-        return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
-      },
-      control: function control(base) {
-        return _objectSpread({}, base, {}, inputControl, {}, inputControlTheme);
-      },
-      valueContainer: function valueContainer(base) {
-        return _objectSpread({}, base, {}, _valueContainer, {}, valueContainerTheme);
-      },
-      indicatorsContainer: function indicatorsContainer(base) {
-        return _objectSpread({}, base, {}, indicators, {}, indicatorsTheme);
-      },
-      option: function option(base) {
-        return _objectSpread({}, base, {}, optionsStyle, {}, optionsTheme);
-      },
-      multiValue: function multiValue(base) {
-        if (!interactive) {
-          base.color = 'green';
-          base.backgroundColor = '#a6eca67a';
-        } else {
-          base.backgroundColor = '#8bb7ff91';
-        }
-
-        return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
-      },
-      singleValue: function singleValue(base) {
-        if (!interactive) {
-          base.color = 'green';
-        }
-
-        return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
-      },
-      menuPortal: function menuPortal(base) {
-        var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
-        var zIndex = _Number$MAX_SAFE_INTEGER;
-        return _objectSpread({}, base, {
-          top: top,
-          zIndex: zIndex
-        });
-      }
-    }
+    styles: reactSelectStyles
   }));
 };
 
 export default Typeahead;
+Typeahead.defaultProps = {
+  onKeyDown: function onKeyDown() {
+    return null;
+  },
+  typeahead: {}
+};
 Typeahead.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,

@@ -29,10 +29,10 @@ const Typeahead = props => {
     requiredWarning,
     required,
     tabIndex,
-    onKeyDown = () => null, // sometimes provided in the config object
+    onKeyDown,
     draggable,
     persist = true,
-    typeahead = {},
+    typeahead,
     minChars = 1,
     stringify,
     autoComplete,
@@ -77,11 +77,150 @@ const Typeahead = props => {
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [isFocused, setIsFocused] = useState(false)
   const [defaultOptions, setDefaultOptions] = useState([])
+  const [components, setComponents] = useState({})
+  const [dynamicTypeaheadKey, setDynamicTypeaheadKey] = useState(null)
+  const [conditions, setConditions] = useState({})
+  const [reactSelectStyles, setReactSelectStyles] = useState({
+    container: base => {
+      return ({...base, ...inputInner, ...inputInnerTheme})
+    },
+    control: base => {
+      return ({...base, ...inputControl, ...inputControlTheme})
+    },
+    valueContainer: base => {
+      return ({...base, ...valueContainer, ...valueContainerTheme})
+    },
+    indicatorsContainer: base => {
+      return ({...base, ...indicators, ...indicatorsTheme})
+    },
+    option: base => {
+      return ({...base, ...optionsStyle, ...optionsTheme})
+    },
+    multiValue: base => {
+      if (!interactive) {
+        base.color = 'green'
+        base.backgroundColor = '#a6eca67a'
+      } else {
+        base.backgroundColor = '#8bb7ff91'
+      }
+      return ({...base, ...valueStyle, ...valueTheme})
+    },
+    singleValue: base => {
+      if (!interactive) {
+        base.color = 'green'
+      }
+      return ({...base, ...valueStyle, ...valueTheme})
+    },
+    menuPortal: base => {
+      const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
+      const zIndex = Number.MAX_SAFE_INTEGER
+      return ({...base, top, zIndex})
+    }
+  })
 
   const inputContainer = useRef(null)
   const reactSelect = useRef(null)
 
   const isLoadingOptions = useRef(false) // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
+
+  useEffect(() => {
+    const populateConditionObject = (condition = {name: null, comparator: null, values: []}) => {
+      if (!condition.hasOwnProperty('values')) condition.values = [] //eslint-disable-line
+      const pluggedInValues = []
+      condition.values.forEach(value => {
+        const formValueForThisValueName = values.get(value, '')
+        if (formValueForThisValueName && pluggedInValues.indexOf(formValueForThisValueName) === -1) {
+          pluggedInValues.push(formValueForThisValueName)
+        } else {
+          pluggedInValues.push(value)
+        }
+      })
+      const value = values.get(condition.name, '')
+      if (!pluggedInValues.length && pluggedInValues.indexOf(value) === -1) {
+        pluggedInValues.push(value)
+      }
+      condition.values = pluggedInValues
+      return condition
+    }
+    const populateFilterBody = (filter = {}) => {
+      // eslint-disable-next-line
+      if (filter.hasOwnProperty('name')) {
+        populateConditionObject(filter)
+        // eslint-disable-next-line
+      } else if (filter.hasOwnProperty('conditions') && Array.isArray(filter.conditions)) {
+        filter.conditions.map(condition => populateFilterBody(condition))
+      }
+      return filter
+    }
+    let {filter = {}} = typeahead
+    if (typeof filter === 'function') filter = filter()
+    filter = JSON.parse(JSON.stringify(filter)) // deep clone the object as to not mutate the definition
+    filter = populateFilterBody(filter)
+    if (JSON.stringify(filter) !== JSON.stringify(conditions)) {
+      setConditions(filter)
+    }
+  }, [values, typeahead, conditions])
+
+  useEffect(() => {
+    let {key = null, fieldvalue = null} = typeahead
+    if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '')
+    setDynamicTypeaheadKey(key)
+  }, [typeahead, values])
+
+  useEffect(() => {
+    setReactSelectStyles({
+      container: base => {
+        return ({...base, ...inputInner, ...inputInnerTheme})
+      },
+      control: base => {
+        return ({...base, ...inputControl, ...inputControlTheme})
+      },
+      valueContainer: base => {
+        return ({...base, ...valueContainer, ...valueContainerTheme})
+      },
+      indicatorsContainer: base => {
+        return ({...base, ...indicators, ...indicatorsTheme})
+      },
+      option: base => {
+        return ({...base, ...optionsStyle, ...optionsTheme})
+      },
+      multiValue: base => {
+        if (!interactive) {
+          base.color = 'green'
+          base.backgroundColor = '#a6eca67a'
+        } else {
+          base.backgroundColor = '#8bb7ff91'
+        }
+        return ({...base, ...valueStyle, ...valueTheme})
+      },
+      singleValue: base => {
+        if (!interactive) {
+          base.color = 'green'
+        }
+        return ({...base, ...valueStyle, ...valueTheme})
+      },
+      menuPortal: base => {
+        const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
+        const zIndex = Number.MAX_SAFE_INTEGER
+        return ({...base, top, zIndex})
+      }
+    }) // going to ignore dynamic style changes for the time being - JRA 07/31/2020
+  }, [ // eslint-disable-line
+    interactive,
+    menuPlacement
+  ])
+
+  useEffect(() => {
+    if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused && !components.DropdownIndicator) {
+      setComponents({
+        DropdownIndicator: () => {
+          return <ValidationErrorIcon message='This Field is Required' />
+        }
+      })
+    } else if (isRequiredFlag && components.DropdownIndicator && (!(value + '').trim().length === 0 || isFocused)) {
+      setComponents({})
+    }
+  }, [isRequiredFlag, value, isFocused, components])
 
   useEffect(() => {
     changeInput({Typeahead: allowcreate ? AsyncCreatable : Async})
@@ -141,40 +280,9 @@ const Typeahead = props => {
     updateSelectValue(parsedValue)
   }, [value, convertValueStringToValueArrayIfNeeded, multi])
 
-  const populateConditionObject = useCallback((condition = {name: null, comparator: null, values: []}) => {
-    if (!condition.hasOwnProperty('values')) condition.values = [] //eslint-disable-line
-    const pluggedInValues = []
-    condition.values.forEach(value => {
-      const formValueForThisValueName = values.get(value, '')
-      if (formValueForThisValueName && pluggedInValues.indexOf(formValueForThisValueName) === -1) {
-        pluggedInValues.push(formValueForThisValueName)
-      } else {
-        pluggedInValues.push(value)
-      }
-    })
-    const value = values.get(condition.name, '')
-    if (!pluggedInValues.length && pluggedInValues.indexOf(value) === -1) {
-      pluggedInValues.push(value)
-    }
-    condition.values = pluggedInValues
-    return condition
-  }, [values])
-
-  const populateFilterBody = useCallback((filter = {}) => {
-    // eslint-disable-next-line
-    if (filter.hasOwnProperty('name')) {
-      populateConditionObject(filter)
-      // eslint-disable-next-line
-    } else if (filter.hasOwnProperty('conditions') && Array.isArray(filter.conditions)) {
-      filter.conditions.map(condition => populateFilterBody(condition))
-    }
-    return filter
-  }, [populateConditionObject])
-
   const loadOptions = useCallback((search, setDefault = false) => {
     const fetchResults = resolve => {
-      let {key = null, duplication = false, fieldvalue = null, filter = {}} = typeahead
-      if (typeof filter === 'function') filter = filter()
+      const {key = null, duplication = false, fieldvalue = null} = typeahead
       const minSearchLength = isZipCode ? 3 : minChars
 
       if (!key && !fieldvalue) {
@@ -184,16 +292,14 @@ const Typeahead = props => {
         return resolve({options: []})
       }
 
-      filter = JSON.parse(JSON.stringify(filter)) // deep clone the object as to not mutate the definition
-      populateFilterBody(filter)
-
-      if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '')
-
       if (search.length >= minSearchLength || search === ' ') {
-        if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
+        if (typeof search === 'string' && search.trim() !== '') search = `/${encodeURIComponent(search)}`
         if (setDefault) reactSelect.current.setState(() => ({isLoading: true}))
         isLoadingOptions.current = true
-        return GFBConfig.ajax.post(`/typeahead/name/${key}/search${search}`, {filter})
+        return GFBConfig.ajax.post(
+          `/typeahead/name/${encodeURIComponent(dynamicTypeaheadKey)}/search${search}`,
+          {conditions}
+        )
           .then(resp => {
             isLoadingOptions.current = false
             const options = resp.data.data.map(value => {
@@ -221,7 +327,7 @@ const Typeahead = props => {
       debounce = setTimeout(() => fetchResults(resolve), delay)
       return debounce
     })
-  }, [typeahead, populateFilterBody, name, values, minChars, isZipCode])
+  }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions])
 
   const formatCreateLabel = useCallback(value => {
     if (typeof createlabel === 'string') {
@@ -328,7 +434,6 @@ const Typeahead = props => {
         }
       }
       if (
-        values.get(field) !== newVal &&
         field !== 'className' &&
         field !== 'value' &&
         field !== 'label'
@@ -336,7 +441,7 @@ const Typeahead = props => {
         onChange(e)
       }
     })
-  }, [values, onChange])
+  }, [onChange])
 
   const handleChange = useCallback((newValue, {action}) => {
     let _delimit = delimit
@@ -468,14 +573,11 @@ const Typeahead = props => {
   if (!interactive) className = className + ' gfb-non-interactive-input'
 
   let outerClass = 'gfb-input-outer'
-  const components = {}
 
   if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error'
-    components.DropdownIndicator = () => {
-      return <ValidationErrorIcon message='This Field is Required' />
-    }
   }
+
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus'
   }
@@ -513,49 +615,18 @@ const Typeahead = props => {
         autoComplete={autoComplete}
         components={components}
         defaultOptions={defaultOptions}
-        styles={{
-          container: base => {
-            return ({...base, ...inputInner, ...inputInnerTheme})
-          },
-          control: base => {
-            return ({...base, ...inputControl, ...inputControlTheme})
-          },
-          valueContainer: base => {
-            return ({...base, ...valueContainer, ...valueContainerTheme})
-          },
-          indicatorsContainer: base => {
-            return ({...base, ...indicators, ...indicatorsTheme})
-          },
-          option: base => {
-            return ({...base, ...optionsStyle, ...optionsTheme})
-          },
-          multiValue: base => {
-            if (!interactive) {
-              base.color = 'green'
-              base.backgroundColor = '#a6eca67a'
-            } else {
-              base.backgroundColor = '#8bb7ff91'
-            }
-            return ({...base, ...valueStyle, ...valueTheme})
-          },
-          singleValue: base => {
-            if (!interactive) {
-              base.color = 'green'
-            }
-            return ({...base, ...valueStyle, ...valueTheme})
-          },
-          menuPortal: base => {
-            const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
-            const zIndex = Number.MAX_SAFE_INTEGER
-            return ({...base, top, zIndex})
-          }
-        }}
+        styles={reactSelectStyles}
       />
     </div>
   )
 }
 
 export default Typeahead
+
+Typeahead.defaultProps = {
+  onKeyDown: () => null,
+  typeahead: {}
+}
 
 Typeahead.propTypes = {
   onChange: PropTypes.func,
