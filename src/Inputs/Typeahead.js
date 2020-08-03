@@ -78,6 +78,8 @@ const Typeahead = props => {
   const [isFocused, setIsFocused] = useState(false)
   const [defaultOptions, setDefaultOptions] = useState([])
   const [components, setComponents] = useState({})
+  const [dynamicTypeaheadKey, setDynamicTypeaheadKey] = useState(null)
+  const [conditions, setConditions] = useState({})
   const [reactSelectStyles, setReactSelectStyles] = useState({
     container: base => {
       return ({...base, ...inputInner, ...inputInnerTheme})
@@ -120,6 +122,50 @@ const Typeahead = props => {
   const reactSelect = useRef(null)
 
   const isLoadingOptions = useRef(false) // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
+
+  useEffect(() => {
+    const populateConditionObject = (condition = {name: null, comparator: null, values: []}) => {
+      if (!condition.hasOwnProperty('values')) condition.values = [] //eslint-disable-line
+      const pluggedInValues = []
+      condition.values.forEach(value => {
+        const formValueForThisValueName = values.get(value, '')
+        if (formValueForThisValueName && pluggedInValues.indexOf(formValueForThisValueName) === -1) {
+          pluggedInValues.push(formValueForThisValueName)
+        } else {
+          pluggedInValues.push(value)
+        }
+      })
+      const value = values.get(condition.name, '')
+      if (!pluggedInValues.length && pluggedInValues.indexOf(value) === -1) {
+        pluggedInValues.push(value)
+      }
+      condition.values = pluggedInValues
+      return condition
+    }
+    const populateFilterBody = (filter = {}) => {
+      // eslint-disable-next-line
+      if (filter.hasOwnProperty('name')) {
+        populateConditionObject(filter)
+        // eslint-disable-next-line
+      } else if (filter.hasOwnProperty('conditions') && Array.isArray(filter.conditions)) {
+        filter.conditions.map(condition => populateFilterBody(condition))
+      }
+      return filter
+    }
+    let {filter = {}} = typeahead
+    if (typeof filter === 'function') filter = filter()
+    filter = JSON.parse(JSON.stringify(filter)) // deep clone the object as to not mutate the definition
+    filter = populateFilterBody(filter)
+    if (JSON.stringify(filter) !== JSON.stringify(conditions)) {
+      setConditions(filter)
+    }
+  }, [values, typeahead, conditions])
+
+  useEffect(() => {
+    let {key = null, fieldvalue = null} = typeahead
+    if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '')
+    setDynamicTypeaheadKey(key)
+  }, [typeahead, values])
 
   useEffect(() => {
     setReactSelectStyles({
@@ -234,40 +280,9 @@ const Typeahead = props => {
     updateSelectValue(parsedValue)
   }, [value, convertValueStringToValueArrayIfNeeded, multi])
 
-  const populateConditionObject = useCallback((condition = {name: null, comparator: null, values: []}) => {
-    if (!condition.hasOwnProperty('values')) condition.values = [] //eslint-disable-line
-    const pluggedInValues = []
-    condition.values.forEach(value => {
-      const formValueForThisValueName = values.get(value, '')
-      if (formValueForThisValueName && pluggedInValues.indexOf(formValueForThisValueName) === -1) {
-        pluggedInValues.push(formValueForThisValueName)
-      } else {
-        pluggedInValues.push(value)
-      }
-    })
-    const value = values.get(condition.name, '')
-    if (!pluggedInValues.length && pluggedInValues.indexOf(value) === -1) {
-      pluggedInValues.push(value)
-    }
-    condition.values = pluggedInValues
-    return condition
-  }, [values])
-
-  const populateFilterBody = useCallback((filter = {}) => {
-    // eslint-disable-next-line
-    if (filter.hasOwnProperty('name')) {
-      populateConditionObject(filter)
-      // eslint-disable-next-line
-    } else if (filter.hasOwnProperty('conditions') && Array.isArray(filter.conditions)) {
-      filter.conditions.map(condition => populateFilterBody(condition))
-    }
-    return filter
-  }, [populateConditionObject])
-
   const loadOptions = useCallback((search, setDefault = false) => {
     const fetchResults = resolve => {
-      let {key = null, duplication = false, fieldvalue = null, filter = {}} = typeahead
-      if (typeof filter === 'function') filter = filter()
+      const {key = null, duplication = false, fieldvalue = null} = typeahead
       const minSearchLength = isZipCode ? 3 : minChars
 
       if (!key && !fieldvalue) {
@@ -277,16 +292,14 @@ const Typeahead = props => {
         return resolve({options: []})
       }
 
-      filter = JSON.parse(JSON.stringify(filter)) // deep clone the object as to not mutate the definition
-      populateFilterBody(filter)
-
-      if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '')
-
       if (search.length >= minSearchLength || search === ' ') {
-        if (typeof search === 'string' && search.trim() !== '') search = `/${search}`
+        if (typeof search === 'string' && search.trim() !== '') search = `/${encodeURIComponent(search)}`
         if (setDefault) reactSelect.current.setState(() => ({isLoading: true}))
         isLoadingOptions.current = true
-        return GFBConfig.ajax.post(`/typeahead/name/${key}/search${search}`, {filter})
+        return GFBConfig.ajax.post(
+          `/typeahead/name/${encodeURIComponent(dynamicTypeaheadKey)}/search${search}`,
+          {conditions}
+        )
           .then(resp => {
             isLoadingOptions.current = false
             const options = resp.data.data.map(value => {
@@ -314,31 +327,7 @@ const Typeahead = props => {
       debounce = setTimeout(() => fetchResults(resolve), delay)
       return debounce
     })
-  }, [typeahead, populateFilterBody, name, values, minChars, isZipCode])
-
-  useEffect(() => {
-    console.log('typeahead')
-  }, [typeahead])
-
-  useEffect(() => {
-    console.log('populateFilterBody')
-  }, [populateFilterBody])
-
-  useEffect(() => {
-    console.log('name')
-  }, [name])
-
-  useEffect(() => {
-    console.log('values')
-  }, [values])
-
-  useEffect(() => {
-    console.log('minChars')
-  }, [minChars])
-
-  useEffect(() => {
-    console.log('isZipCode')
-  }, [isZipCode])
+  }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions])
 
   const formatCreateLabel = useCallback(value => {
     if (typeof createlabel === 'string') {
@@ -592,16 +581,6 @@ const Typeahead = props => {
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus'
   }
-
-  useEffect(() => {
-    console.log('final >>> handleOnKeyDown')
-  }, [handleOnKeyDown])
-  useEffect(() => {
-    console.log('final >>> handleOnInputChange')
-  }, [handleOnInputChange])
-  useEffect(() => {
-    console.log('final >>> loadOptions')
-  }, [loadOptions])
 
   return (
     <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>

@@ -8,14 +8,14 @@ import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
+import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _JSON$stringify from "@babel/runtime-corejs3/core-js-stable/json/stringify";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
-import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
-import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
@@ -166,7 +166,17 @@ var Typeahead = function Typeahead(props) {
       components = _useState22[0],
       setComponents = _useState22[1];
 
-  var _useState23 = useState({
+  var _useState23 = useState(null),
+      _useState24 = _slicedToArray(_useState23, 2),
+      dynamicTypeaheadKey = _useState24[0],
+      setDynamicTypeaheadKey = _useState24[1];
+
+  var _useState25 = useState({}),
+      _useState26 = _slicedToArray(_useState25, 2),
+      conditions = _useState26[0],
+      setConditions = _useState26[1];
+
+  var _useState27 = useState({
     container: function container(base) {
       return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
     },
@@ -208,14 +218,84 @@ var Typeahead = function Typeahead(props) {
       });
     }
   }),
-      _useState24 = _slicedToArray(_useState23, 2),
-      reactSelectStyles = _useState24[0],
-      setReactSelectStyles = _useState24[1];
+      _useState28 = _slicedToArray(_useState27, 2),
+      reactSelectStyles = _useState28[0],
+      setReactSelectStyles = _useState28[1];
 
   var inputContainer = useRef(null);
   var reactSelect = useRef(null);
   var isLoadingOptions = useRef(false); // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
 
+  useEffect(function () {
+    var populateConditionObject = function populateConditionObject() {
+      var _context;
+
+      var condition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+        name: null,
+        comparator: null,
+        values: []
+      };
+      if (!condition.hasOwnProperty('values')) condition.values = []; //eslint-disable-line
+
+      var pluggedInValues = [];
+
+      _forEachInstanceProperty(_context = _valuesInstanceProperty(condition)).call(_context, function (value) {
+        var formValueForThisValueName = values.get(value, '');
+
+        if (formValueForThisValueName && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, formValueForThisValueName) === -1) {
+          pluggedInValues.push(formValueForThisValueName);
+        } else {
+          pluggedInValues.push(value);
+        }
+      });
+
+      var value = values.get(condition.name, '');
+
+      if (!pluggedInValues.length && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, value) === -1) {
+        pluggedInValues.push(value);
+      }
+
+      condition.values = pluggedInValues;
+      return condition;
+    };
+
+    var populateFilterBody = function populateFilterBody() {
+      var filter = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      // eslint-disable-next-line
+      if (filter.hasOwnProperty('name')) {
+        populateConditionObject(filter); // eslint-disable-next-line
+      } else if (filter.hasOwnProperty('conditions') && _Array$isArray(filter.conditions)) {
+        var _context2;
+
+        _mapInstanceProperty(_context2 = filter.conditions).call(_context2, function (condition) {
+          return populateFilterBody(condition);
+        });
+      }
+
+      return filter;
+    };
+
+    var _typeahead$filter = _filterInstanceProperty(typeahead),
+        filter = _typeahead$filter === void 0 ? {} : _typeahead$filter;
+
+    if (typeof filter === 'function') filter = filter();
+    filter = JSON.parse(_JSON$stringify(filter)); // deep clone the object as to not mutate the definition
+
+    filter = populateFilterBody(filter);
+
+    if (_JSON$stringify(filter) !== _JSON$stringify(conditions)) {
+      setConditions(filter);
+    }
+  }, [values, typeahead, conditions]);
+  useEffect(function () {
+    var _typeahead$key = typeahead.key,
+        key = _typeahead$key === void 0 ? null : _typeahead$key,
+        _typeahead$fieldvalue = typeahead.fieldvalue,
+        fieldvalue = _typeahead$fieldvalue === void 0 ? null : _typeahead$fieldvalue;
+    if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '');
+    setDynamicTypeaheadKey(key);
+  }, [typeahead, values]);
   useEffect(function () {
     setReactSelectStyles({
       container: function container(base) {
@@ -262,9 +342,9 @@ var Typeahead = function Typeahead(props) {
   }, [// eslint-disable-line
   interactive, menuPlacement]);
   useEffect(function () {
-    var _context, _context2;
+    var _context3, _context4;
 
-    if (isRequiredFlag && _trimInstanceProperty(_context = value + '').call(_context).length === 0 && !isFocused && !components.DropdownIndicator) {
+    if (isRequiredFlag && _trimInstanceProperty(_context3 = value + '').call(_context3).length === 0 && !isFocused && !components.DropdownIndicator) {
       setComponents({
         DropdownIndicator: function DropdownIndicator() {
           return jsx(ValidationErrorIcon, {
@@ -272,7 +352,7 @@ var Typeahead = function Typeahead(props) {
           });
         }
       });
-    } else if (isRequiredFlag && components.DropdownIndicator && (!_trimInstanceProperty(_context2 = value + '').call(_context2).length === 0 || isFocused)) {
+    } else if (isRequiredFlag && components.DropdownIndicator && (!_trimInstanceProperty(_context4 = value + '').call(_context4).length === 0 || isFocused)) {
       setComponents({});
     }
   }, [isRequiredFlag, value, isFocused, components]);
@@ -348,67 +428,16 @@ var Typeahead = function Typeahead(props) {
     updateInputValue('');
     updateSelectValue(parsedValue);
   }, [value, convertValueStringToValueArrayIfNeeded, multi]);
-  var populateConditionObject = useCallback(function () {
-    var _context3;
-
-    var condition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-      name: null,
-      comparator: null,
-      values: []
-    };
-    if (!condition.hasOwnProperty('values')) condition.values = []; //eslint-disable-line
-
-    var pluggedInValues = [];
-
-    _forEachInstanceProperty(_context3 = _valuesInstanceProperty(condition)).call(_context3, function (value) {
-      var formValueForThisValueName = values.get(value, '');
-
-      if (formValueForThisValueName && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, formValueForThisValueName) === -1) {
-        pluggedInValues.push(formValueForThisValueName);
-      } else {
-        pluggedInValues.push(value);
-      }
-    });
-
-    var value = values.get(condition.name, '');
-
-    if (!pluggedInValues.length && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, value) === -1) {
-      pluggedInValues.push(value);
-    }
-
-    condition.values = pluggedInValues;
-    return condition;
-  }, [values]);
-  var populateFilterBody = useCallback(function () {
-    var filter = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-    // eslint-disable-next-line
-    if (filter.hasOwnProperty('name')) {
-      populateConditionObject(filter); // eslint-disable-next-line
-    } else if (filter.hasOwnProperty('conditions') && _Array$isArray(filter.conditions)) {
-      var _context4;
-
-      _mapInstanceProperty(_context4 = filter.conditions).call(_context4, function (condition) {
-        return populateFilterBody(condition);
-      });
-    }
-
-    return filter;
-  }, [populateConditionObject]);
   var loadOptions = useCallback(function (search) {
     var setDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
     var fetchResults = function fetchResults(resolve) {
-      var _typeahead$key = typeahead.key,
-          key = _typeahead$key === void 0 ? null : _typeahead$key,
+      var _typeahead$key2 = typeahead.key,
+          key = _typeahead$key2 === void 0 ? null : _typeahead$key2,
           _typeahead$duplicatio = typeahead.duplication,
           duplication = _typeahead$duplicatio === void 0 ? false : _typeahead$duplicatio,
-          _typeahead$fieldvalue = typeahead.fieldvalue,
-          fieldvalue = _typeahead$fieldvalue === void 0 ? null : _typeahead$fieldvalue,
-          _typeahead$filter = _filterInstanceProperty(typeahead),
-          filter = _typeahead$filter === void 0 ? {} : _typeahead$filter;
-
-      if (typeof filter === 'function') filter = filter();
+          _typeahead$fieldvalue2 = typeahead.fieldvalue,
+          fieldvalue = _typeahead$fieldvalue2 === void 0 ? null : _typeahead$fieldvalue2;
       var minSearchLength = isZipCode ? 3 : minChars;
 
       if (!key && !fieldvalue) {
@@ -420,23 +449,18 @@ var Typeahead = function Typeahead(props) {
         });
       }
 
-      filter = JSON.parse(_JSON$stringify(filter)); // deep clone the object as to not mutate the definition
-
-      populateFilterBody(filter);
-      if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '');
-
       if (search.length >= minSearchLength || search === ' ') {
         var _context5;
 
-        if (typeof search === 'string' && _trimInstanceProperty(search).call(search) !== '') search = "/".concat(search);
+        if (typeof search === 'string' && _trimInstanceProperty(search).call(search) !== '') search = "/".concat(encodeURIComponent(search));
         if (setDefault) reactSelect.current.setState(function () {
           return {
             isLoading: true
           };
         });
         isLoadingOptions.current = true;
-        return GFBConfig.ajax.post(_concatInstanceProperty(_context5 = "/typeahead/name/".concat(key, "/search")).call(_context5, search), {
-          filter: filter
+        return GFBConfig.ajax.post(_concatInstanceProperty(_context5 = "/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search")).call(_context5, search), {
+          conditions: conditions
         }).then(function (resp) {
           var _context6;
 
@@ -476,25 +500,7 @@ var Typeahead = function Typeahead(props) {
       }, delay);
       return debounce;
     });
-  }, [typeahead, populateFilterBody, name, values, minChars, isZipCode]);
-  useEffect(function () {
-    console.log('typeahead');
-  }, [typeahead]);
-  useEffect(function () {
-    console.log('populateFilterBody');
-  }, [populateFilterBody]);
-  useEffect(function () {
-    console.log('name');
-  }, [name]);
-  useEffect(function () {
-    console.log('values');
-  }, [values]);
-  useEffect(function () {
-    console.log('minChars');
-  }, [minChars]);
-  useEffect(function () {
-    console.log('isZipCode');
-  }, [isZipCode]);
+  }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions]);
   var formatCreateLabel = useCallback(function (value) {
     if (typeof createlabel === 'string') {
       var _context7;
@@ -769,15 +775,6 @@ var Typeahead = function Typeahead(props) {
     outerClass = outerClass + ' gfb-has-focus';
   }
 
-  useEffect(function () {
-    console.log('final >>> handleOnKeyDown');
-  }, [handleOnKeyDown]);
-  useEffect(function () {
-    console.log('final >>> handleOnInputChange');
-  }, [handleOnInputChange]);
-  useEffect(function () {
-    console.log('final >>> loadOptions');
-  }, [loadOptions]);
   return jsx("div", {
     className: outerClass,
     ref: inputContainer,
