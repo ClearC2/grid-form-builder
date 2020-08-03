@@ -67,8 +67,7 @@ var Typeahead = function Typeahead(props) {
       autoComplete = props.autoComplete,
       _props$interactive = props.interactive,
       interactive = _props$interactive === void 0 ? true : _props$interactive,
-      _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
+      style = props.style,
       delimit = props.delimit,
       delimiter = props.delimiter,
       _props$isClearable = props.isClearable,
@@ -820,7 +819,8 @@ Typeahead.defaultProps = {
   onKeyDown: function onKeyDown() {
     return null;
   },
-  typeahead: {}
+  typeahead: {},
+  style: {}
 };
 Typeahead.propTypes = {
   onChange: PropTypes.func,

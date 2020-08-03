@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import RGL from 'react-grid-layout'
 import {emailValidator, searchForLayoutArray, updateLayoutArray} from './utils'
 import sizeMe from 'react-sizeme'
-import {List, fromJS, Map, Set} from 'immutable'
+import {fromJS, Map, Set} from 'immutable'
 import $ from 'jquery'
 import {convertFieldToSearch} from './QueryBuilder/Utils'
 import InnerCell from './Inputs'
@@ -57,7 +57,7 @@ const FormBuilder = (props) => {
     style,
     device = {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'}
   } = props
-  const [grid, updateGrid] = useState({layout: List(), elements: []})
+  const [grid, updateGrid] = useState({layout: [], elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
   const [compact, updateCompact] = useState(
     verticalCompact ? 'vertical' : typeof compactType === 'undefined' ? null : compactType
@@ -212,7 +212,7 @@ const FormBuilder = (props) => {
         layout.push(dimensions)
       }
     })
-    updateGrid({layout: fromJS(layout), elements})
+    updateGrid({layout, elements})
   }, [ // eslint-disable-line
     conditionalFieldValues,
     conditionalSearch,
@@ -238,13 +238,13 @@ const FormBuilder = (props) => {
       const schema = searchForLayoutArray(formSchema)
       schema.splice(i, 1)
       const newFormSchema = updateLayoutArray(formSchema, schema)
-      updateGrid({layout: List(), elements: []}) // clearing these out first so nothing funky happens with the indexes - JRA 11/13/2019
+      updateGrid({layout: [], elements: []}) // clearing these out first so nothing funky happens with the indexes - JRA 11/13/2019
       handleOnDimensionChange(newFormSchema)
     } else {
       // this is a hack to break react's internal batching - clear the dashboard and reset it - JRA 11/06/2019
       console.warn('A grid item attempted to remove itself but no handleOnDimensionChange callback was provided to update the schema.') // eslint-disable-line
-      updateGrid({layout: List(), elements: []})
-      setTimeout(() => updateGrid({layout: fromJS(grid.layout), elements: grid.elements}))
+      updateGrid({layout: [], elements: []})
+      setTimeout(() => updateGrid({layout: grid.layout, elements: grid.elements}))
     }
   }, [formSchema, updateGrid, handleOnDimensionChange, grid])
 
@@ -263,8 +263,8 @@ const FormBuilder = (props) => {
     } else {
       // this is a hack to break react's internal batching - clear the dashboard and reset it - JRA 11/06/2019
       console.warn('A change was detected to the layout but no handleOnDimensionChange callback was provided to update the schema.') // eslint-disable-line
-      updateGrid({layout: List(), elements: []})
-      setTimeout(() => updateGrid({layout: fromJS(grid.layout), elements: grid.elements}))
+      updateGrid({layout: [], elements: []})
+      setTimeout(() => updateGrid({layout: grid.layout, elements: grid.elements}))
     }
   }, [grid, updateGrid, handleOnDimensionChange, formSchema])
 
@@ -298,6 +298,8 @@ const FormBuilder = (props) => {
 
   debugLog('render')
 
+  dropItemDimensions.i = '-1'
+
   return (
     <div
       id={id}
@@ -312,10 +314,10 @@ const FormBuilder = (props) => {
         width={size.width}
         cols={columns}
         rowHeight={rowHeight || (inline ? 27 : 45)}
-        layout={grid.layout.toJS()}
+        layout={grid.layout}
         onDragStop={onItemLayoutUpdate}
         onResizeStop={onItemLayoutUpdate}
-        droppingItem={{...dropItemDimensions, i: '-1'}}
+        droppingItem={dropItemDimensions}
         isDroppable={droppable}
         onDrop={onDrop}
         isDraggable={draggable}

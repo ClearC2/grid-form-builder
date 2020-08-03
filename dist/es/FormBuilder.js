@@ -95,7 +95,7 @@ var FormBuilder = function FormBuilder(props) {
   } : _props$device;
 
   var _useState = useState({
-    layout: List(),
+    layout: [],
     elements: []
   }),
       _useState2 = _slicedToArray(_useState, 2),
@@ -292,7 +292,7 @@ var FormBuilder = function FormBuilder(props) {
     });
 
     updateGrid({
-      layout: fromJS(layout),
+      layout: layout,
       elements: elements
     });
   }, [// eslint-disable-line
@@ -305,7 +305,7 @@ var FormBuilder = function FormBuilder(props) {
 
       var newFormSchema = updateLayoutArray(formSchema, schema);
       updateGrid({
-        layout: List(),
+        layout: [],
         elements: []
       }); // clearing these out first so nothing funky happens with the indexes - JRA 11/13/2019
 
@@ -315,13 +315,13 @@ var FormBuilder = function FormBuilder(props) {
       console.warn('A grid item attempted to remove itself but no handleOnDimensionChange callback was provided to update the schema.'); // eslint-disable-line
 
       updateGrid({
-        layout: List(),
+        layout: [],
         elements: []
       });
 
       _setTimeout(function () {
         return updateGrid({
-          layout: fromJS(grid.layout),
+          layout: grid.layout,
           elements: grid.elements
         });
       });
@@ -348,13 +348,13 @@ var FormBuilder = function FormBuilder(props) {
       console.warn('A change was detected to the layout but no handleOnDimensionChange callback was provided to update the schema.'); // eslint-disable-line
 
       updateGrid({
-        layout: List(),
+        layout: [],
         elements: []
       });
 
       _setTimeout(function () {
         return updateGrid({
-          layout: fromJS(grid.layout),
+          layout: grid.layout,
           elements: grid.elements
         });
       });
@@ -395,6 +395,7 @@ var FormBuilder = function FormBuilder(props) {
     }
   }, [formSchema, dropItemConfig, handleOnDimensionChange]);
   debugLog('render');
+  dropItemDimensions.i = '-1';
   return React.createElement("div", {
     id: id,
     className: "grid-form-builder-parent",
@@ -407,12 +408,10 @@ var FormBuilder = function FormBuilder(props) {
     width: size.width,
     cols: columns,
     rowHeight: rowHeight || (inline ? 27 : 45),
-    layout: grid.layout.toJS(),
+    layout: grid.layout,
     onDragStop: onItemLayoutUpdate,
     onResizeStop: onItemLayoutUpdate,
-    droppingItem: _objectSpread({}, dropItemDimensions, {
-      i: '-1'
-    }),
+    droppingItem: dropItemDimensions,
     isDroppable: droppable,
     onDrop: onDrop,
     isDraggable: draggable,

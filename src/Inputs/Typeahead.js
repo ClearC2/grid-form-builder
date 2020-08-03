@@ -37,7 +37,7 @@ const Typeahead = props => {
     stringify,
     autoComplete,
     interactive = true,
-    style = {},
+    style,
     delimit,
     delimiter,
     isClearable = true,
@@ -625,7 +625,8 @@ export default Typeahead
 
 Typeahead.defaultProps = {
   onKeyDown: () => null,
-  typeahead: {}
+  typeahead: {},
+  style: {}
 }
 
 Typeahead.propTypes = {
