@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useState, useEffect, useCallback, useRef} from 'react'
+import {useState, useEffect, useCallback, useRef, PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import Async from 'react-select/async'
 import AsyncCreatable from 'react-select/async-creatable'
@@ -12,6 +12,115 @@ import useTheme from '../theme/useTheme'
 const viewPortHeight = document.documentElement.clientHeight
 
 let debounce = null
+
+class TypeaheadPerformanceOptimizer extends PureComponent {
+  static propTypes = {
+    Typeahead: PropTypes.func,
+    ref: PropTypes.func,
+    className: PropTypes.string,
+    classNamePrefix: PropTypes.string,
+    closeMenuOnScroll: PropTypes.bool,
+    tabIndex: PropTypes.number,
+    autoFocus: PropTypes.bool,
+    blurInputOnSelect: PropTypes.bool,
+    isClearable: PropTypes.bool,
+    createOptionPosition: PropTypes.string,
+    formatCreateLabel: PropTypes.func,
+    isMulti: PropTypes.bool,
+    isDisabled: PropTypes.bool,
+    menuPortalTarget: PropTypes.node,
+    name: PropTypes.string,
+    noOptionsMessage: PropTypes.string,
+    placeholder: PropTypes.string,
+    inputValue: PropTypes.string,
+    menuIsOpen: PropTypes.bool,
+    menuPlacement: PropTypes.string,
+    onKeyDown: PropTypes.func,
+    onMouseDown: PropTypes.func,
+    onFocus: PropTypes.func,
+    onBlur: PropTypes.func,
+    onInputChange: PropTypes.func,
+    loadOptions: PropTypes.func,
+    onChange: PropTypes.func,
+    value: PropTypes.string,
+    autoComplete: PropTypes.bool,
+    components: PropTypes.object,
+    defaultOptions: PropTypes.object,
+    styles: PropTypes.object
+  }
+
+  render () {
+    const {
+      Typeahead,
+      ref,
+      className,
+      classNamePrefix,
+      closeMenuOnScroll,
+      tabIndex,
+      autoFocus,
+      blurInputOnSelect,
+      isClearable,
+      createOptionPosition,
+      formatCreateLabel,
+      isMulti,
+      isDisabled,
+      menuPortalTarget,
+      name,
+      noOptionsMessage,
+      placeholder,
+      inputValue,
+      menuIsOpen,
+      menuPlacement,
+      onKeyDown,
+      onMouseDown,
+      onFocus,
+      onBlur,
+      onInputChange,
+      loadOptions,
+      onChange,
+      value,
+      autoComplete,
+      components,
+      defaultOptions,
+      styles
+    } = this.props
+    return (
+      <Typeahead
+        ref={ref}
+        className={className}
+        classNamePrefix={classNamePrefix}
+        closeMenuOnScroll={closeMenuOnScroll}
+        tabIndex={tabIndex}
+        autoFocus={autoFocus}
+        blurInputOnSelect={blurInputOnSelect}
+        isClearable={isClearable}
+        createOptionPosition={createOptionPosition}
+        formatCreateLabel={formatCreateLabel}
+        isMulti={isMulti}
+        isDisabled={isDisabled}
+        menuPortalTarget={menuPortalTarget}
+        name={name}
+        noOptionsMessage={noOptionsMessage}
+        placeholder={placeholder}
+        inputValue={inputValue}
+        menuIsOpen={menuIsOpen}
+        menuPlacement={menuPlacement}
+        onKeyDown={onKeyDown}
+        onMouseDown={onMouseDown}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onInputChange={onInputChange}
+        loadOptions={loadOptions}
+        onChange={onChange}
+        value={value}
+        autoComplete={autoComplete}
+        components={components}
+        defaultOptions={defaultOptions}
+        styles={styles}
+      />
+    )
+  }
+}
 
 const Typeahead = props => {
   const {
@@ -584,7 +693,8 @@ const Typeahead = props => {
 
   return (
     <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
-      <Typeahead
+      <TypeaheadPerformanceOptimizer
+        Typeahead={Typeahead}
         ref={reactSelect}
         className={className}
         classNamePrefix='gfb-input'
