@@ -16,10 +16,10 @@ let debounce = null
 class TypeaheadPerformanceOptimizer extends PureComponent {
   static propTypes = {
     Typeahead: PropTypes.func,
-    ref: PropTypes.func,
+    setRef: PropTypes.any,
     className: PropTypes.string,
     classNamePrefix: PropTypes.string,
-    closeMenuOnScroll: PropTypes.bool,
+    closeMenuOnScroll: PropTypes.func,
     tabIndex: PropTypes.number,
     autoFocus: PropTypes.bool,
     blurInputOnSelect: PropTypes.bool,
@@ -28,9 +28,9 @@ class TypeaheadPerformanceOptimizer extends PureComponent {
     formatCreateLabel: PropTypes.func,
     isMulti: PropTypes.bool,
     isDisabled: PropTypes.bool,
-    menuPortalTarget: PropTypes.node,
+    menuPortalTarget: PropTypes.any,
     name: PropTypes.string,
-    noOptionsMessage: PropTypes.string,
+    noOptionsMessage: PropTypes.func,
     placeholder: PropTypes.string,
     inputValue: PropTypes.string,
     menuIsOpen: PropTypes.bool,
@@ -42,17 +42,17 @@ class TypeaheadPerformanceOptimizer extends PureComponent {
     onInputChange: PropTypes.func,
     loadOptions: PropTypes.func,
     onChange: PropTypes.func,
-    value: PropTypes.string,
-    autoComplete: PropTypes.bool,
+    value: PropTypes.any,
+    autoComplete: PropTypes.any,
     components: PropTypes.object,
-    defaultOptions: PropTypes.object,
+    defaultOptions: PropTypes.any,
     styles: PropTypes.object
   }
 
   render () {
     const {
       Typeahead,
-      ref,
+      setRef,
       className,
       classNamePrefix,
       closeMenuOnScroll,
@@ -86,7 +86,7 @@ class TypeaheadPerformanceOptimizer extends PureComponent {
     } = this.props
     return (
       <Typeahead
-        ref={ref}
+        ref={setRef}
         className={className}
         classNamePrefix={classNamePrefix}
         closeMenuOnScroll={closeMenuOnScroll}
