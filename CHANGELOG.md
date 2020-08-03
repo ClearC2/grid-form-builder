@@ -1,3 +1,10 @@
+## [3.38.4](https://github.com/ClearC2/grid-form-builder/compare/v3.38.3...v3.38.4) (2020-08-03)
+
+
+### Bug Fixes
+
+* **typeahead:** memoized props for performance ([#154](https://github.com/ClearC2/grid-form-builder/issues/154)) ([6425b96](https://github.com/ClearC2/grid-form-builder/commit/6425b960bff9c75c769860bee0f8bac9e404b4b7))
+
 ## [3.38.3](https://github.com/ClearC2/grid-form-builder/compare/v3.38.2...v3.38.3) (2020-07-31)
 
 
