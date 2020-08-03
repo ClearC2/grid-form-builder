@@ -33,7 +33,7 @@ import PropTypes from 'prop-types';
 import RGL from 'react-grid-layout';
 import { emailValidator, searchForLayoutArray, updateLayoutArray } from './utils';
 import sizeMe from 'react-sizeme';
-import { List, fromJS, Map, Set } from 'immutable';
+import { fromJS, Map, Set } from 'immutable';
 import $ from 'jquery';
 import { convertFieldToSearch } from './QueryBuilder/Utils';
 import InnerCell from './Inputs';

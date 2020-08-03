@@ -1,3 +1,10 @@
+# [3.39.0](https://github.com/ClearC2/grid-form-builder/compare/v3.38.4...v3.39.0) (2020-08-03)
+
+
+### Features
+
+* **performance:** memo more props ([38740ea](https://github.com/ClearC2/grid-form-builder/commit/38740ea2adf5c3780e1d053f453c72318a2884f1))
+
 ## [3.38.4](https://github.com/ClearC2/grid-form-builder/compare/v3.38.3...v3.38.4) (2020-08-03)
 
 
