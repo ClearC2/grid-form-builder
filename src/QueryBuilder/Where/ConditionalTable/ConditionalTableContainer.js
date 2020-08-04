@@ -18,6 +18,7 @@ const getDefaultCondition = (inputType) => {
   return '' // no conditions are valid for this input type ??? you shouldnt get here.
 }
 const getFieldSchema = (key, formSchema) => {
+  if (formSchema && typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
   if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
     formSchema = convertFormSchemaToSearch(formSchema)
     return List(formSchema.jsonschema.layout).find(row => row.config.name === key)
@@ -27,6 +28,7 @@ const getFieldSchema = (key, formSchema) => {
 }
 export const convertQueryToFormValues = (query, clearExistingValues = true, fValues, formSchema) => {
   let formValues = fromJS(fValues)
+  if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
   if (query) {
     // clear previous formValues
     if (clearExistingValues) {
@@ -105,19 +107,29 @@ class _ConditionalTableContainer extends Component {
 
   constructor (props) {
     super(props)
+    let {formSchema} = props
+    if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
     this.state = {
-      formSchema: convertFormSchemaToSearch(props.formSchema)
+      formSchema: convertFormSchemaToSearch(formSchema)
     }
   }
 
   componentDidUpdate (props) {
-    if (Object.keys(props.formSchema).length !== Object.keys(this.state.formSchema).length) {
-      this.setState({formSchema: convertFormSchemaToSearch(props.formSchema)})
+    let {formSchema} = props
+    if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
+    let {formSchema: stateSchema = []} = this.state
+    if (typeof stateSchema.toJS === 'function') stateSchema = stateSchema.toJS()
+    if (Object.keys(formSchema).length !== Object.keys(stateSchema).length) {
+      this.setState({formSchema: convertFormSchemaToSearch(formSchema)})
     }
   }
 
   convertQueryToFormValues = (query, clearExistingValues = true) => {
-    return convertQueryToFormValues(query, clearExistingValues, this.props.formValues, this.state.formSchema)
+    let {formValues} = this.props
+    let {formSchema} = this.state
+    if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
+    if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
+    return convertQueryToFormValues(query, clearExistingValues, formValues, formSchema)
   }
 
   getDefaultCondition = (inputType) => {
@@ -133,7 +145,8 @@ class _ConditionalTableContainer extends Component {
   }
 
   getFieldSchema = (key) => {
-    const formSchema = this.state.formSchema
+    let {formSchema} = this.state
+    if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
     if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
       return List(formSchema.jsonschema.layout).find(row => row.config.name === key)
     } else {

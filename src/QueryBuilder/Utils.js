@@ -3,6 +3,7 @@ import {Set} from 'immutable'
 const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
 
 export const convertFormSchemaToSearch = (formSchema = {}) => {
+  if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
   if (formSchema.jsonschema) {
     formSchema.jsonschema.layout = formSchema.jsonschema.layout.map(f => {
       if (f.config.type === 'metadata') {

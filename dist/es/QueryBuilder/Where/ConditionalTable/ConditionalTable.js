@@ -89,7 +89,11 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "getLabel", function (key) {
-      if (_this.props.formSchema && _this.props.formSchema.jsonschema && _this.props.formSchema.jsonschema.layout) {
+      var _this$props$formSchem = _this.props.formSchema,
+          formSchema = _this$props$formSchem === void 0 ? {} : _this$props$formSchem;
+      if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
+
+      if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
         var fieldSchema = _this.props.getFieldSchema(key);
 
         var name = '';
@@ -108,6 +112,7 @@ function (_Component) {
       var _context2;
 
       var formValues = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.props.formValues;
+      if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
       var req = {
         query: {
           type: _this.state.conditionType,
@@ -217,7 +222,10 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "resetForm", function () {
       var _context4;
 
-      _mapInstanceProperty(_context4 = _Object$keys(_this.props.formValues)).call(_context4, function (key) {
+      var formValues = _this.prop.formValues;
+      if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
+
+      _mapInstanceProperty(_context4 = _Object$keys(formValues)).call(_context4, function (key) {
         var schema = _this.props.getFieldSchema(key);
 
         if (schema && schema.config && (schema.config.type === 'textarea' || schema.config.type === 'checkbox' || schema.config.type === 'radio')) {
@@ -282,8 +290,12 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "getConditionValue", function (key) {
-      if (_this.props.formValues[key] && _this.props.formValues[key].condition) {
-        return _this.props.formValues[key].condition;
+      var _this$props$formValue = _this.props.formValues,
+          formValues = _this$props$formValue === void 0 ? {} : _this$props$formValue;
+      if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
+
+      if (formValues[key] && formValues[key].condition) {
+        return formValues[key].condition;
       } else {
         return 'contains';
       }
@@ -292,9 +304,12 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "getFieldType", function (fieldName) {
       var _context5;
 
+      var _this$props$formSchem2 = _this.props.formSchema,
+          formSchema = _this$props$formSchem2 === void 0 ? {} : _this$props$formSchem2;
+      if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
       var type = '';
 
-      _forEachInstanceProperty(_context5 = _this.props.formSchema.jsonschema.layout).call(_context5, function (field) {
+      _forEachInstanceProperty(_context5 = formSchema.jsonschema.layout).call(_context5, function (field) {
         if (field.config.name === fieldName) {
           type = field.config.type;
           return true;
@@ -393,7 +408,11 @@ function (_Component) {
           _context10,
           _this2 = this;
 
-      var tbody = _mapInstanceProperty(_context9 = _sortInstanceProperty(_context10 = _Object$keys(this.props.formValues)).call(_context10, function (a, b) {
+      var _this$props$formValue2 = this.props.formValues,
+          formValues = _this$props$formValue2 === void 0 ? {} : _this$props$formValue2;
+      if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
+
+      var tbody = _mapInstanceProperty(_context9 = _sortInstanceProperty(_context10 = _Object$keys(formValues)).call(_context10, function (a, b) {
         if (_this2.getLabel(a) === undefined || _this2.getLabel(b) === undefined) {
           return 0;
         }

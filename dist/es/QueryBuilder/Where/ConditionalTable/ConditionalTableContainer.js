@@ -33,6 +33,8 @@ var getDefaultCondition = function getDefaultCondition(inputType) {
 };
 
 var getFieldSchema = function getFieldSchema(key, formSchema) {
+  if (formSchema && typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
+
   if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
     var _context;
 
@@ -50,6 +52,7 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
   var fValues = arguments.length > 2 ? arguments[2] : undefined;
   var formSchema = arguments.length > 3 ? arguments[3] : undefined;
   var formValues = fromJS(fValues);
+  if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
   if (query) {
     // clear previous formValues
@@ -123,7 +126,11 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "convertQueryToFormValues", function (query) {
       var clearExistingValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-      return convertQueryToFormValues(query, clearExistingValues, _this.props.formValues, _this.state.formSchema);
+      var formValues = _this.props.formValues;
+      var formSchema = _this.state.formSchema;
+      if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
+      if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
+      return convertQueryToFormValues(query, clearExistingValues, formValues, formSchema);
     });
 
     _defineProperty(_assertThisInitialized(_this), "getDefaultCondition", function (inputType) {
@@ -143,6 +150,7 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "getFieldSchema", function (key) {
       var formSchema = _this.state.formSchema;
+      if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
         var _context3;
@@ -155,8 +163,10 @@ function (_Component) {
       }
     });
 
+    var _formSchema = props.formSchema;
+    if (typeof _formSchema.toJS === 'function') _formSchema = _formSchema.toJS();
     _this.state = {
-      formSchema: convertFormSchemaToSearch(props.formSchema)
+      formSchema: convertFormSchemaToSearch(_formSchema)
     };
     return _this;
   }
@@ -164,9 +174,15 @@ function (_Component) {
   _createClass(_ConditionalTableContainer, [{
     key: "componentDidUpdate",
     value: function componentDidUpdate(props) {
-      if (_Object$keys(props.formSchema).length !== _Object$keys(this.state.formSchema).length) {
+      var formSchema = props.formSchema;
+      if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
+      var _this$state$formSchem = this.state.formSchema,
+          stateSchema = _this$state$formSchem === void 0 ? [] : _this$state$formSchem;
+      if (typeof stateSchema.toJS === 'function') stateSchema = stateSchema.toJS();
+
+      if (_Object$keys(formSchema).length !== _Object$keys(stateSchema).length) {
         this.setState({
-          formSchema: convertFormSchemaToSearch(props.formSchema)
+          formSchema: convertFormSchemaToSearch(formSchema)
         });
       }
     }

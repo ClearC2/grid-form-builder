@@ -104,7 +104,9 @@ export default class ConditionalTable extends Component {
   }
 
   getLabel = (key) => {
-    if (this.props.formSchema && this.props.formSchema.jsonschema && this.props.formSchema.jsonschema.layout) {
+    let {formSchema = {}} = this.props
+    if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
+    if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
       const fieldSchema = this.props.getFieldSchema(key)
       let name = ''
       if (fieldSchema) {
@@ -117,6 +119,7 @@ export default class ConditionalTable extends Component {
   }
 
   buildRequest = (formValues = this.props.formValues) => {
+    if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
     const req = {
       query: {
         type: this.state.conditionType,
@@ -202,7 +205,9 @@ export default class ConditionalTable extends Component {
   }
 
   resetForm = () => {
-    Object.keys(this.props.formValues).map(key => {
+    let {formValues} = this.prop
+    if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
+    Object.keys(formValues).map(key => {
       const schema = this.props.getFieldSchema(key)
       if (schema && schema.config && (schema.config.type === 'textarea' ||
           schema.config.type === 'checkbox' ||
@@ -269,16 +274,20 @@ export default class ConditionalTable extends Component {
   }
 
   getConditionValue = (key) => {
-    if (this.props.formValues[key] && this.props.formValues[key].condition) {
-      return this.props.formValues[key].condition
+    let {formValues = {}} = this.props
+    if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
+    if (formValues[key] && formValues[key].condition) {
+      return formValues[key].condition
     } else {
       return 'contains'
     }
   }
 
   getFieldType = (fieldName) => {
+    let {formSchema = {}} = this.props
+    if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
     let type = ''
-    this.props.formSchema.jsonschema.layout.forEach((field) => {
+    formSchema.jsonschema.layout.forEach((field) => {
       if (field.config.name === fieldName) {
         type = field.config.type
         return true
@@ -346,7 +355,9 @@ export default class ConditionalTable extends Component {
   }
 
   render () {
-    const tbody = Object.keys(this.props.formValues)
+    let {formValues = {}} = this.props
+    if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
+    const tbody = Object.keys(formValues)
       .sort((a, b) => {
         if (this.getLabel(a) === undefined || this.getLabel(b) === undefined) {
           return 0
