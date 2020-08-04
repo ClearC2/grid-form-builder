@@ -20,6 +20,7 @@ var unconditionalFields = (0, _immutable.Set)(['header', 'conditionalinput', 'ch
 
 var convertFormSchemaToSearch = function convertFormSchemaToSearch() {
   var formSchema = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
   if (formSchema.jsonschema) {
     var _context;

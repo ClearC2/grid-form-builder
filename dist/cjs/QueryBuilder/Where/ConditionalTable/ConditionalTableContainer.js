@@ -64,6 +64,8 @@ var getDefaultCondition = function getDefaultCondition(inputType) {
 };
 
 var getFieldSchema = function getFieldSchema(key, formSchema) {
+  if (formSchema && typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
+
   if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
     var _context;
 
@@ -81,6 +83,7 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
   var fValues = arguments.length > 2 ? arguments[2] : undefined;
   var formSchema = arguments.length > 3 ? arguments[3] : undefined;
   var formValues = (0, _immutable.fromJS)(fValues);
+  if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
   if (query) {
     // clear previous formValues
@@ -154,7 +157,11 @@ function (_Component) {
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(_ConditionalTableContainer).call(this, props));
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "convertQueryToFormValues", function (query) {
       var clearExistingValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-      return convertQueryToFormValues(query, clearExistingValues, _this.props.formValues, _this.state.formSchema);
+      var formValues = _this.props.formValues;
+      var formSchema = _this.state.formSchema;
+      if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
+      if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
+      return convertQueryToFormValues(query, clearExistingValues, formValues, formSchema);
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getDefaultCondition", function (inputType) {
       var i = 0;
@@ -172,6 +179,7 @@ function (_Component) {
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getFieldSchema", function (key) {
       var formSchema = _this.state.formSchema;
+      if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
         var _context3;
@@ -183,8 +191,10 @@ function (_Component) {
         return undefined;
       }
     });
+    var _formSchema = props.formSchema;
+    if (typeof _formSchema.toJS === 'function') _formSchema = _formSchema.toJS();
     _this.state = {
-      formSchema: (0, _Utils.convertFormSchemaToSearch)(props.formSchema)
+      formSchema: (0, _Utils.convertFormSchemaToSearch)(_formSchema)
     };
     return _this;
   }
@@ -192,9 +202,15 @@ function (_Component) {
   (0, _createClass2.default)(_ConditionalTableContainer, [{
     key: "componentDidUpdate",
     value: function componentDidUpdate(props) {
-      if ((0, _keys.default)(props.formSchema).length !== (0, _keys.default)(this.state.formSchema).length) {
+      var formSchema = props.formSchema;
+      if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
+      var _this$state$formSchem = this.state.formSchema,
+          stateSchema = _this$state$formSchem === void 0 ? [] : _this$state$formSchem;
+      if (typeof stateSchema.toJS === 'function') stateSchema = stateSchema.toJS();
+
+      if ((0, _keys.default)(formSchema).length !== (0, _keys.default)(stateSchema).length) {
         this.setState({
-          formSchema: (0, _Utils.convertFormSchemaToSearch)(props.formSchema)
+          formSchema: (0, _Utils.convertFormSchemaToSearch)(formSchema)
         });
       }
     }

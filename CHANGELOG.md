@@ -1,3 +1,10 @@
+## [3.40.4](https://github.com/ClearC2/grid-form-builder/compare/v3.40.3...v3.40.4) (2020-08-04)
+
+
+### Bug Fixes
+
+* **query:** attempted to check to see if any schema or values were immutable and convert them to json before parsing ([0144262](https://github.com/ClearC2/grid-form-builder/commit/0144262e6b1df381ffb67d7417dd0dd319f37bfa))
+
 ## [3.40.3](https://github.com/ClearC2/grid-form-builder/compare/v3.40.2...v3.40.3) (2020-08-04)
 
 
