@@ -4,15 +4,15 @@ import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-st
 import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
-import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
-import _objectWithoutProperties from "@babel/runtime-corejs3/helpers/esm/objectWithoutProperties";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
+import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
+import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
+import _objectWithoutProperties from "@babel/runtime-corejs3/helpers/esm/objectWithoutProperties";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
-import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
 import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
@@ -26,9 +26,9 @@ import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context5; _forEachInstanceProperty(_context5 = ownKeys(Object(source), true)).call(_context5, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context6; _forEachInstanceProperty(_context6 = ownKeys(Object(source))).call(_context6, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context6; _forEachInstanceProperty(_context6 = ownKeys(Object(source), true)).call(_context6, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context7; _forEachInstanceProperty(_context7 = ownKeys(Object(source))).call(_context7, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-import React, { Component, useState, useEffect, useCallback, useRef, createContext } from 'react';
+import React, { Component, PureComponent, useState, useEffect, useCallback, useRef, createContext } from 'react';
 import PropTypes from 'prop-types';
 import RGL from 'react-grid-layout';
 import { emailValidator, searchForLayoutArray, updateLayoutArray } from './utils';
@@ -53,7 +53,7 @@ var FormBuilder = function FormBuilder(props) {
   var rowHeight = props.rowHeight,
       columns = props.columns,
       formSchema = props.formSchema,
-      size = props.size,
+      width = props.width,
       handleOnDimensionChange = props.handleOnDimensionChange,
       dropItemDimensions = props.dropItemDimensions,
       dropItemConfig = props.dropItemConfig,
@@ -405,7 +405,7 @@ var FormBuilder = function FormBuilder(props) {
     ref: ReactGridLayout,
     autoSize: rglAutoSize,
     style: rglStyle,
-    width: size.width,
+    width: width,
     cols: columns,
     rowHeight: rowHeight || (inline ? 27 : 45),
     layout: grid.layout,
@@ -426,7 +426,7 @@ FormBuilder.propTypes = {
   handleOnChange: PropTypes.func,
   rowHeight: PropTypes.number,
   columns: PropTypes.number,
-  size: PropTypes.object,
+  width: PropTypes.number,
   handleOnDimensionChange: PropTypes.func,
   dropItemDimensions: PropTypes.object,
   dropItemConfig: PropTypes.object,
@@ -499,7 +499,62 @@ FormBuilder.defaultProps = {
   style: {}
 };
 FormBuilder.count = 1;
-var SizeMeHOC = sizeMe()(FormBuilder);
+
+var PureFormBuilder =
+/*#__PURE__*/
+function (_PureComponent) {
+  _inherits(PureFormBuilder, _PureComponent);
+
+  function PureFormBuilder() {
+    var _getPrototypeOf2, _context;
+
+    var _this;
+
+    _classCallCheck(this, PureFormBuilder);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PureFormBuilder)).call.apply(_getPrototypeOf2, _concatInstanceProperty(_context = [this]).call(_context, args)));
+
+    _defineProperty(_assertThisInitialized(_this), "render", function () {
+      return React.createElement(FormBuilder, _this.props);
+    });
+
+    return _this;
+  }
+
+  return PureFormBuilder;
+}(PureComponent);
+
+var SizeMemoizer = function SizeMemoizer(props) {
+  var size = props.size,
+      rest = _objectWithoutProperties(props, ["size"]);
+
+  var _useState11 = useState(size.width),
+      _useState12 = _slicedToArray(_useState11, 2),
+      width = _useState12[0],
+      setWidth = _useState12[1];
+
+  useEffect(function () {
+    var w = Math.ceil(size.width);
+
+    if (w !== width) {
+      setWidth(w);
+    }
+  }, [size, width]);
+  return React.createElement(PureFormBuilder, _extends({
+    width: width
+  }, rest));
+};
+
+SizeMemoizer.propTypes = {
+  size: PropTypes.object
+};
+var SizeMeHOC = sizeMe({
+  refreshRate: 75
+})(SizeMemoizer);
 
 var FormValidator =
 /*#__PURE__*/
@@ -507,31 +562,31 @@ function (_Component) {
   _inherits(FormValidator, _Component);
 
   function FormValidator() {
-    var _getPrototypeOf2, _context;
+    var _getPrototypeOf3, _context2;
 
-    var _this;
+    var _this2;
 
     _classCallCheck(this, FormValidator);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FormValidator)).call.apply(_getPrototypeOf2, _concatInstanceProperty(_context = [this]).call(_context, args)));
+    _this2 = _possibleConstructorReturn(this, (_getPrototypeOf3 = _getPrototypeOf(FormValidator)).call.apply(_getPrototypeOf3, _concatInstanceProperty(_context2 = [this]).call(_context2, args)));
 
-    _defineProperty(_assertThisInitialized(_this), "state", {
+    _defineProperty(_assertThisInitialized(_this2), "state", {
       validate: false,
       requiredWarning: false,
-      formValues: _this.props.formValues ? _this.props.formValues.toJS ? _this.props.formValues : fromJS(_this.props.formValues) : Map()
+      formValues: _this2.props.formValues ? _this2.props.formValues.toJS ? _this2.props.formValues : fromJS(_this2.props.formValues) : Map()
     });
 
-    _defineProperty(_assertThisInitialized(_this), "onSubmit", function () {
-      var _this$props = _this.props,
-          _this$props$formSchem = _this$props.formSchema,
-          formSchema = _this$props$formSchem === void 0 ? Map() : _this$props$formSchem,
-          _this$props$formValue = _this$props.formValues,
-          formValues = _this$props$formValue === void 0 ? Map() : _this$props$formValue,
-          handleSubmit = _this$props.handleSubmit;
+    _defineProperty(_assertThisInitialized(_this2), "onSubmit", function () {
+      var _this2$props = _this2.props,
+          _this2$props$formSche = _this2$props.formSchema,
+          formSchema = _this2$props$formSche === void 0 ? Map() : _this2$props$formSche,
+          _this2$props$formValu = _this2$props.formValues,
+          formValues = _this2$props$formValu === void 0 ? Map() : _this2$props$formValu,
+          handleSubmit = _this2$props.handleSubmit;
       formValues = formValues.toJS ? formValues : fromJS(formValues);
       var layout = searchForLayoutArray(formSchema);
 
@@ -545,7 +600,7 @@ function (_Component) {
       });
 
       if (formIncomplete) {
-        _this.setState({
+        _this2.setState({
           requiredWarning: true
         });
       } else {
@@ -553,18 +608,18 @@ function (_Component) {
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "validate", function () {
-      var _this$props2 = _this.props,
-          _this$props2$formSche = _this$props2.formSchema,
-          formSchema = _this$props2$formSche === void 0 ? Map() : _this$props2$formSche,
-          _this$props2$formValu = _this$props2.formValues,
-          formValues = _this$props2$formValu === void 0 ? Map() : _this$props2$formValu;
+    _defineProperty(_assertThisInitialized(_this2), "validate", function () {
+      var _this2$props2 = _this2.props,
+          _this2$props2$formSch = _this2$props2.formSchema,
+          formSchema = _this2$props2$formSch === void 0 ? Map() : _this2$props2$formSch,
+          _this2$props2$formVal = _this2$props2.formValues,
+          formValues = _this2$props2$formVal === void 0 ? Map() : _this2$props2$formVal;
       formValues = formValues.toJS ? formValues : fromJS(formValues);
       var layout = searchForLayoutArray(formSchema);
       var reasons = [];
 
       _forEachInstanceProperty(layout).call(layout, function (field) {
-        var _context2;
+        var _context3;
 
         var _field$config3 = field.config,
             config = _field$config3 === void 0 ? {} : _field$config3;
@@ -575,7 +630,7 @@ function (_Component) {
             label = _config$label === void 0 ? name : _config$label,
             type = config.type;
 
-        if (required && _trimInstanceProperty(_context2 = formValues.get(name, '') + '').call(_context2).length === 0) {
+        if (required && _trimInstanceProperty(_context3 = formValues.get(name, '') + '').call(_context3).length === 0) {
           reasons.push({
             reason: 'required',
             message: "".concat(label, " cannot be blank."),
@@ -593,7 +648,7 @@ function (_Component) {
       });
 
       if (reasons.length > 0) {
-        _this.setState({
+        _this2.setState({
           requiredWarning: true,
           validate: true
         }, function () {// this.grid && this.grid.scrollIntoView() // this breaks c2 cards for some very strange reason. The header bar of dialogs overflows outside of the dialog container for no apparent reason - JRA 12/13/2019
@@ -603,21 +658,21 @@ function (_Component) {
       return reasons;
     });
 
-    _defineProperty(_assertThisInitialized(_this), "setContainerRef", function (ref) {
-      _this.grid = ref;
+    _defineProperty(_assertThisInitialized(_this2), "setContainerRef", function (ref) {
+      _this2.grid = ref;
     });
 
-    _defineProperty(_assertThisInitialized(_this), "updateFormValues", function (formValues) {
-      return _this.setState(function () {
+    _defineProperty(_assertThisInitialized(_this2), "updateFormValues", function (formValues) {
+      return _this2.setState(function () {
         return {
           formValues: formValues.toJS ? formValues : fromJS(formValues)
         };
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleLinkClick", function (link) {
-      var formValues = _this.state.formValues;
-      var handleLinkClick = _this.props.handleLinkClick;
+    _defineProperty(_assertThisInitialized(_this2), "handleLinkClick", function (link) {
+      var formValues = _this2.state.formValues;
+      var handleLinkClick = _this2.props.handleLinkClick;
       var values = formValues.toJS ? formValues : fromJS(formValues);
       var _link$type = link.type,
           type = _link$type === void 0 ? '' : _link$type;
@@ -654,15 +709,15 @@ function (_Component) {
       });
     });
 
-    return _this;
+    return _this2;
   }
 
   _createClass(FormValidator, [{
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(p, s) {
-      var _context3,
-          _this2 = this,
-          _context4;
+      var _context4,
+          _this3 = this,
+          _context5;
 
       if (p.formValues !== this.props.formValues) {
         this.updateFormValues(p.formValues); // this kills the extra render from values updating, the context updating will render - JRA 11/07/2019
@@ -670,16 +725,16 @@ function (_Component) {
         return false;
       }
 
-      var update = _someInstanceProperty(_context3 = _Object$keys(this.props)).call(_context3, function (prop) {
-        if (_this2.props[prop] && p[prop] && typeof _this2.props[prop].toJS === 'function' && typeof p[prop].toJS === 'function') {
-          return !_this2.props[prop].equals(p[prop]);
+      var update = _someInstanceProperty(_context4 = _Object$keys(this.props)).call(_context4, function (prop) {
+        if (_this3.props[prop] && p[prop] && typeof _this3.props[prop].toJS === 'function' && typeof p[prop].toJS === 'function') {
+          return !_this3.props[prop].equals(p[prop]);
         } else {
-          return _this2.props[prop] !== p[prop];
+          return _this3.props[prop] !== p[prop];
         }
       });
 
-      if (!update) update = _someInstanceProperty(_context4 = _Object$keys(this.state)).call(_context4, function (state) {
-        return _this2.state[state] !== s[state];
+      if (!update) update = _someInstanceProperty(_context5 = _Object$keys(this.state)).call(_context5, function (state) {
+        return _this3.state[state] !== s[state];
       });
       return update;
     }
@@ -691,10 +746,10 @@ function (_Component) {
           formValues = _this$state.formValues,
           validate = _this$state.validate;
 
-      var _this$props3 = this.props,
-          values = _this$props3.formValues,
-          theme = _this$props3.theme,
-          rest = _objectWithoutProperties(_this$props3, ["formValues", "theme"]);
+      var _this$props = this.props,
+          values = _this$props.formValues,
+          theme = _this$props.theme,
+          rest = _objectWithoutProperties(_this$props, ["formValues", "theme"]);
 
       return React.createElement(ThemeProvider, {
         theme: theme

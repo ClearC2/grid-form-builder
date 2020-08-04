@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect, useCallback, useRef, createContext} from 'react'
+import React, {Component, PureComponent, useState, useEffect, useCallback, useRef, createContext} from 'react'
 import PropTypes from 'prop-types'
 import RGL from 'react-grid-layout'
 import {emailValidator, searchForLayoutArray, updateLayoutArray} from './utils'
@@ -25,7 +25,7 @@ const FormBuilder = (props) => {
     rowHeight,
     columns,
     formSchema,
-    size,
+    width,
     handleOnDimensionChange,
     dropItemDimensions,
     dropItemConfig,
@@ -311,7 +311,7 @@ const FormBuilder = (props) => {
         ref={ReactGridLayout}
         autoSize={rglAutoSize}
         style={rglStyle}
-        width={size.width}
+        width={width}
         cols={columns}
         rowHeight={rowHeight || (inline ? 27 : 45)}
         layout={grid.layout}
@@ -336,7 +336,7 @@ FormBuilder.propTypes = {
   handleOnChange: PropTypes.func,
   rowHeight: PropTypes.number,
   columns: PropTypes.number,
-  size: PropTypes.object,
+  width: PropTypes.number,
   handleOnDimensionChange: PropTypes.func,
   dropItemDimensions: PropTypes.object,
   dropItemConfig: PropTypes.object,
@@ -400,7 +400,34 @@ FormBuilder.defaultProps = {
 
 FormBuilder.count = 1
 
-const SizeMeHOC = sizeMe()(FormBuilder)
+class PureFormBuilder extends PureComponent {
+  render = () => <FormBuilder {...this.props} />
+}
+
+const SizeMemoizer = props => {
+  const {size, ...rest} = props
+  const [width, setWidth] = useState(size.width)
+
+  useEffect(() => {
+    const w = Math.ceil(size.width)
+    if (w !== width) {
+      setWidth(w)
+    }
+  }, [size, width])
+
+  return (
+    <PureFormBuilder
+      width={width}
+      {...rest}
+    />
+  )
+}
+
+SizeMemoizer.propTypes = {
+  size: PropTypes.object
+}
+
+const SizeMeHOC = sizeMe({refreshRate: 75})(SizeMemoizer)
 
 export default class FormValidator extends Component {
   // this class provides the necessary class methods that were previously being used in ref's to make this backwards compatible
