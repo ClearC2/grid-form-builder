@@ -201,7 +201,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement(_ConditionalTable.default, (0, _extends2.default)({
+      return _react.default.createElement(_ConditionalTable.default, (0, _extends2.default)({}, this.props, {
         formSchema: this.state.formSchema,
         formValues: (0, _immutable.fromJS)(this.props.formValues).toJS(),
         title: this.props.title || 'Query:',
@@ -217,7 +217,7 @@ function (_Component) {
         enableToggle: this.props.enableToggle,
         onToggleChange: this.props.onToggleChange,
         enableListToggle: this.props.enableListToggle
-      }, this.props));
+      }));
     }
   }]);
   return _ConditionalTableContainer;

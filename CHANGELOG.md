@@ -1,3 +1,10 @@
+## [3.40.3](https://github.com/ClearC2/grid-form-builder/compare/v3.40.2...v3.40.3) (2020-08-04)
+
+
+### Bug Fixes
+
+* **conditions:** moves prop spread above specific prop declarations so they wouldn't be overwritten ([4b79268](https://github.com/ClearC2/grid-form-builder/commit/4b7926867ffad4512c8715c02635d7164f10729e))
+
 ## [3.40.2](https://github.com/ClearC2/grid-form-builder/compare/v3.40.1...v3.40.2) (2020-08-03)
 
 
