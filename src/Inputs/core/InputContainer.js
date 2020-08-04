@@ -17,9 +17,12 @@ class InputPerformanceOptimizer extends Component {
   shouldComponentUpdate (p) {
     const {config, values, value} = this.props
     const type = (typeof config.type === 'string' && config.type.toLowerCase()) || 'input'
-    if (type !== 'typeahead') {
-      if (!values.equals(p.values) && value === p.value) {
-        // if this is not a typeahead and its own value hasn't changed, don't rerender due to form values changing - JRA 01/24/2020
+    if (!values.equals(p.values) && value === p.value) {
+      // if the values object is the thing changing but it isn't the value for this field
+      if (
+        (type !== 'typeahead') || // if its not a typeahead, don't update just because the entire fields object updated
+        (config.typeahead && !config.typeahead.filter && !config.typeahead.fieldvalue) // if it is a typeahead but doesn't have filters or use a fieldvalue as a key, it doesn't care either
+      ) {
         return false
       }
     }

@@ -3,10 +3,10 @@ import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/obje
 import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
 import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _objectWithoutProperties from "@babel/runtime-corejs3/helpers/esm/objectWithoutProperties";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
@@ -49,11 +49,13 @@ function (_Component) {
 
       var type = typeof config.type === 'string' && config.type.toLowerCase() || 'input';
 
-      if (type !== 'typeahead') {
-        if (!values.equals(_valuesInstanceProperty(p)) && value === p.value) {
-          // if this is not a typeahead and its own value hasn't changed, don't rerender due to form values changing - JRA 01/24/2020
-          return false;
-        }
+      if (!values.equals(_valuesInstanceProperty(p)) && value === p.value) {
+        // if the values object is the thing changing but it isn't the value for this field
+        if (type !== 'typeahead' || // if its not a typeahead, don't update just because the entire fields object updated
+        config.typeahead && !_filterInstanceProperty(config.typeahead) && !config.typeahead.fieldvalue // if it is a typeahead but doesn't have filters or use a fieldvalue as a key, it doesn't care either
+        ) {
+            return false;
+          }
       }
 
       return true;
