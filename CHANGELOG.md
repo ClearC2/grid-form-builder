@@ -1,3 +1,11 @@
+# [3.41.0](https://github.com/ClearC2/grid-form-builder/compare/v3.40.4...v3.41.0) (2020-08-04)
+
+
+### Features
+
+* **performance:** includes typeaheads that do not need all the form values in with the performance render killer ([e1d3bf6](https://github.com/ClearC2/grid-form-builder/commit/e1d3bf6807f222dda2100ad53e7af2f7bd0e36ff))
+* **performance:** memoized the sizeme width prop to cut down on even more renders ([21f9856](https://github.com/ClearC2/grid-form-builder/commit/21f98561f442d7e90089199f3de6769c4611d44e))
+
 ## [3.40.4](https://github.com/ClearC2/grid-form-builder/compare/v3.40.3...v3.40.4) (2020-08-04)
 
 

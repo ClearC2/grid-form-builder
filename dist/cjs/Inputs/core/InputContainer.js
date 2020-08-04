@@ -20,13 +20,13 @@ var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-st
 
 var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor"));
 
-var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
-
 var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
 
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/objectWithoutProperties"));
+
+var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
 
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
 
@@ -79,11 +79,13 @@ function (_Component) {
           value = _this$props.value;
       var type = typeof config.type === 'string' && config.type.toLowerCase() || 'input';
 
-      if (type !== 'typeahead') {
-        if (!values.equals((0, _values.default)(p)) && value === p.value) {
-          // if this is not a typeahead and its own value hasn't changed, don't rerender due to form values changing - JRA 01/24/2020
-          return false;
-        }
+      if (!values.equals((0, _values.default)(p)) && value === p.value) {
+        // if the values object is the thing changing but it isn't the value for this field
+        if (type !== 'typeahead' || // if its not a typeahead, don't update just because the entire fields object updated
+        config.typeahead && !(0, _filter.default)(config.typeahead) && !config.typeahead.fieldvalue // if it is a typeahead but doesn't have filters or use a fieldvalue as a key, it doesn't care either
+        ) {
+            return false;
+          }
       }
 
       return true;
