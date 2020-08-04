@@ -173,7 +173,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return React.createElement(ConditionalTable, _extends({
+      return React.createElement(ConditionalTable, _extends({}, this.props, {
         formSchema: this.state.formSchema,
         formValues: fromJS(this.props.formValues).toJS(),
         title: this.props.title || 'Query:',
@@ -189,7 +189,7 @@ function (_Component) {
         enableToggle: this.props.enableToggle,
         onToggleChange: this.props.onToggleChange,
         enableListToggle: this.props.enableListToggle
-      }, this.props));
+      }));
     }
   }]);
 

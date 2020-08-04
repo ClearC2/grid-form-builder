@@ -144,6 +144,7 @@ class _ConditionalTableContainer extends Component {
   render () {
     return (
       <ConditionalTable
+        {...this.props}
         formSchema={this.state.formSchema}
         formValues={fromJS(this.props.formValues).toJS()}
         title={this.props.title || 'Query:'}
@@ -159,7 +160,6 @@ class _ConditionalTableContainer extends Component {
         enableToggle={this.props.enableToggle}
         onToggleChange={this.props.onToggleChange}
         enableListToggle={this.props.enableListToggle}
-        {...this.props}
       />
     )
   }
