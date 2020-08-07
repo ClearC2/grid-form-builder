@@ -82,6 +82,9 @@ const Currency = props => {
     outerClass = outerClass + ' gfb-has-focus'
   }
 
+  const isFirefox = navigator.userAgent.search('Firefox') > -1
+  const isDisabled = readonly || disabled || !interactive
+
   return (
     <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
       <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
@@ -99,7 +102,8 @@ const Currency = props => {
               name={name}
               value={value}
               onChange={handleOnChange}
-              disabled={readonly || disabled || !interactive}
+              disabled={isFirefox ? false : isDisabled}
+              readOnly={isFirefox && isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}

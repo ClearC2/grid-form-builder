@@ -152,6 +152,8 @@ const DateInput = props => {
   }
 
   const startDate = convertDateToMomentFormat(inputValue)
+  const isFirefox = navigator.userAgent.search('Firefox') > -1
+  const isDisabled = readonly || disabled || !interactive
 
   return (
     <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
@@ -164,7 +166,8 @@ const DateInput = props => {
               name={name}
               value={inputValue}
               onChange={handleOnInputChange}
-              disabled={readonly || disabled || !interactive}
+              disabled={isFirefox ? false : isDisabled}
+              readOnly={isFirefox && isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}
