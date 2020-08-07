@@ -1,3 +1,10 @@
+## [3.41.1](https://github.com/ClearC2/grid-form-builder/compare/v3.41.0...v3.41.1) (2020-08-07)
+
+
+### Bug Fixes
+
+* **firefox:** drag and drop onto read-only fields ([93500cd](https://github.com/ClearC2/grid-form-builder/commit/93500cd05ebdb07b9390643243054a17b3d7175c))
+
 # [3.41.0](https://github.com/ClearC2/grid-form-builder/compare/v3.40.4...v3.41.0) (2020-08-04)
 
 

@@ -105,6 +105,8 @@ var Currency = function Currency(props) {
     outerClass = outerClass + ' gfb-has-focus';
   }
 
+  var isFirefox = navigator.userAgent.search('Firefox') > -1;
+  var isDisabled = readonly || disabled || !interactive;
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -133,7 +135,8 @@ var Currency = function Currency(props) {
     name: name,
     value: value,
     onChange: handleOnChange,
-    disabled: readonly || disabled || !interactive,
+    disabled: isFirefox ? false : isDisabled,
+    readOnly: isFirefox && isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,

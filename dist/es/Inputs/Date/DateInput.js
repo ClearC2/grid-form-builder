@@ -189,6 +189,8 @@ var DateInput = function DateInput(props) {
   }
 
   var startDate = convertDateToMomentFormat(inputValue);
+  var isFirefox = navigator.userAgent.search('Firefox') > -1;
+  var isDisabled = readonly || disabled || !interactive;
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -211,7 +213,8 @@ var DateInput = function DateInput(props) {
     name: name,
     value: inputValue,
     onChange: handleOnInputChange,
-    disabled: readonly || disabled || !interactive,
+    disabled: isFirefox ? false : isDisabled,
+    readOnly: isFirefox && isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,
