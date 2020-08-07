@@ -337,6 +337,9 @@ export default class Cleave extends Component {
       // This mostly because we need to show user the native input placeholder
       if (pps.prefix && pps.noImmediatePrefix && value.length === 0) {
         pps.result = ''
+      } else if (readOnly) {
+        pps.result = value
+        return this.updateValueState(false)
       } else {
         pps.result = pps.numeralFormatter.format(value)
       }
