@@ -21,7 +21,8 @@ export default class Example extends Component {
       price: '25.25',
       companyid: '12345',
       personid: 'abcdef',
-      pp_mobile_phone_region: 'RU'
+      pp_mobile_phone_region: 'RU',
+      datetest: '1900-01-01 00:00:00.000'
     }),
     inline: false,
     draggable: false,
