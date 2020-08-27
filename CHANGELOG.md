@@ -1,3 +1,10 @@
+## [3.41.2](https://github.com/ClearC2/grid-form-builder/compare/v3.41.1...v3.41.2) (2020-08-27)
+
+
+### Bug Fixes
+
+* **date:** purposly blanking out the default sql date should now persist ([1345f9b](https://github.com/ClearC2/grid-form-builder/commit/1345f9bea757d151aa133b11c3acbfac563413a3))
+
 ## [3.41.1](https://github.com/ClearC2/grid-form-builder/compare/v3.41.0...v3.41.1) (2020-08-07)
 
 

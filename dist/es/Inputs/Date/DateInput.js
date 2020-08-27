@@ -108,6 +108,7 @@ var DateInput = function DateInput(props) {
   }, [inputFormat]);
   useEffect(function () {
     var val = value;
+    var blank = false;
 
     if (typeof val === 'string') {
       val = convertDateToMomentFormat(val);
@@ -117,12 +118,13 @@ var DateInput = function DateInput(props) {
       if (val.format('MM-DD-YYYY') === '01-01-1900') {
         // this is the default SQL date, we can ignore this value and assume it is blank
         val = '';
+        blank = true;
       } else {
         val = val.format(inputFormat);
       }
     }
 
-    if (!val && value) val = value;
+    if (!val && value && !blank) val = value;
     if (!val) val = '';
     changeInputValue(val);
   }, [inputFormat, value, convertDateToMomentFormat]);
