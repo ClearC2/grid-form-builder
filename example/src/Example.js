@@ -21,8 +21,7 @@ export default class Example extends Component {
       price: '25.25',
       companyid: '12345',
       personid: 'abcdef',
-      pp_mobile_phone_region: 'RU',
-      datetest: '1900-01-01 00:00:00.000'
+      pp_mobile_phone_region: 'RU'
     }),
     inline: false,
     draggable: false,
@@ -122,7 +121,7 @@ export default class Example extends Component {
 
   componentDidMount = () => {
     setTimeout(() => { // simulate getting schema from api
-      this.setState(() => ({
+      this.setState(s => ({
         formSchema: schema,
         theme: {
           gridItem: {},
@@ -144,6 +143,11 @@ export default class Example extends Component {
         }
       }))
     }, 250)
+    setTimeout(() => {
+      this.setState(s => ({
+        formValues: s.formValues.set('rich-text-input-1', '')
+      }))
+    }, 2000)
     // setTimeout(() => {
     //   debugger
     // }, 2000)
