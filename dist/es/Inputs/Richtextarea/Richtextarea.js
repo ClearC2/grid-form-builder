@@ -80,7 +80,7 @@ var Richtextarea = function Richtextarea(props) {
     /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
     This is undesirable because it will register the onDirty to be true when no user change has
     occurred so this check is added in to prevent quill from auto formatting when mounting */
-    if (html && html !== '<p><br></p>' && isFocused) {
+    if (html && html !== '<p><br></p>') {
       if (html.length > maxlength) html = html.substring(0, maxlength);
       onChange({
         target: {

@@ -1,3 +1,10 @@
+## [3.41.3](https://github.com/ClearC2/grid-form-builder/compare/v3.41.2...v3.41.3) (2020-09-01)
+
+
+### Bug Fixes
+
+* **rte:** quill has a bug that blurs the input on paste, so to circumvent that we are allowing changes while the input is blured ([443eee7](https://github.com/ClearC2/grid-form-builder/commit/443eee7485bd49e948f854d4f493bdb434d162ce))
+
 ## [3.41.2](https://github.com/ClearC2/grid-form-builder/compare/v3.41.1...v3.41.2) (2020-08-27)
 
 
