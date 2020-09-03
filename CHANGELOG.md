@@ -1,3 +1,10 @@
+# [3.42.0](https://github.com/ClearC2/grid-form-builder/compare/v3.41.3...v3.42.0) (2020-09-03)
+
+
+### Features
+
+* **conditional:** add comparators ([397b681](https://github.com/ClearC2/grid-form-builder/commit/397b681302ba1126606a49cfb828fe95dae36899))
+
 ## [3.41.3](https://github.com/ClearC2/grid-form-builder/compare/v3.41.2...v3.41.3) (2020-09-01)
 
 
