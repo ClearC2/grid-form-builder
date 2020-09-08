@@ -627,7 +627,9 @@ var Typeahead = function Typeahead(props) {
         });
         isLoadingOptions.current = true;
         return _config.default.ajax.post((0, _concat.default)(_context5 = "/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search")).call(_context5, search), {
-          conditions: conditions
+          filter: {
+            conditions: conditions
+          }
         }).then(function (resp) {
           var _context6;
 

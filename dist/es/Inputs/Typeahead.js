@@ -585,7 +585,9 @@ var Typeahead = function Typeahead(props) {
         });
         isLoadingOptions.current = true;
         return GFBConfig.ajax.post(_concatInstanceProperty(_context5 = "/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search")).call(_context5, search), {
-          conditions: conditions
+          filter: {
+            conditions: conditions
+          }
         }).then(function (resp) {
           var _context6;
 

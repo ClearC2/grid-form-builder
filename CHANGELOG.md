@@ -1,3 +1,10 @@
+## [3.42.1](https://github.com/ClearC2/grid-form-builder/compare/v3.42.0...v3.42.1) (2020-09-08)
+
+
+### Bug Fixes
+
+* **typeahead:** typeahead filters should properly be nested in the filter key now ([64f2793](https://github.com/ClearC2/grid-form-builder/commit/64f2793a7a1ec6803b0309677c6bac0ab48b1573))
+
 # [3.42.0](https://github.com/ClearC2/grid-form-builder/compare/v3.41.3...v3.42.0) (2020-09-03)
 
 
