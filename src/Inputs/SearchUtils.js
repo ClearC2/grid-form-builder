@@ -92,7 +92,17 @@ export const CONDITIONS = {
     minFields: 0,
     invalidInputTypes: []
   },
+  'yesterday': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
   'today': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'tomorrow': {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
