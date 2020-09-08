@@ -407,7 +407,7 @@ const Typeahead = props => {
         isLoadingOptions.current = true
         return GFBConfig.ajax.post(
           `/typeahead/name/${encodeURIComponent(dynamicTypeaheadKey)}/search${search}`,
-          {conditions}
+          {filter: {conditions}}
         )
           .then(resp => {
             isLoadingOptions.current = false
