@@ -30,7 +30,7 @@ var ColorPicker = (0, _react.forwardRef)(function (props, ref) {
       onChange = props.onChange,
       value = props.value,
       name = props.name,
-      onBlur = props.onBlur;
+      onChangeComplete = props.onChangeComplete;
 
   var _useState = (0, _react.useState)('compact'),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
@@ -62,7 +62,7 @@ var ColorPicker = (0, _react.forwardRef)(function (props, ref) {
     className: "btn btn-primary",
     onClick: togglePickerType
   }, "Toggle Picker Type")), _react.default.createElement(Picker, {
-    onBlur: onBlur,
+    onChangeComplete: onChangeComplete,
     onChange: handleOnChange,
     color: value
   })));
@@ -74,6 +74,6 @@ ColorPicker.propTypes = {
   pickerId: _propTypes.default.string,
   value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   onChange: _propTypes.default.func,
-  onBlur: _propTypes.default.func,
+  onChangeComplete: _propTypes.default.func,
   name: _propTypes.default.string
 };

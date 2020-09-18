@@ -1,3 +1,10 @@
+# [3.44.0](https://github.com/ClearC2/grid-form-builder/compare/v3.43.0...v3.44.0) (2020-09-18)
+
+
+### Features
+
+* **colorPicker:** allow onChnageComplete to be passed directly to colorPicker if needed. not used in normal forms ([20bb5c8](https://github.com/ClearC2/grid-form-builder/commit/20bb5c8de35f72490754ca3b621c30e4a9719f03))
+
 # [3.43.0](https://github.com/ClearC2/grid-form-builder/compare/v3.42.1...v3.43.0) (2020-09-18)
 
 
