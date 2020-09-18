@@ -1,3 +1,10 @@
+# [3.43.0](https://github.com/ClearC2/grid-form-builder/compare/v3.42.1...v3.43.0) (2020-09-18)
+
+
+### Features
+
+* **colorPicker:** allow onBlur to be passed directly to colorPicker if needed. not used in normal forms ([662a71f](https://github.com/ClearC2/grid-form-builder/commit/662a71f534392fec99ebbb4fc092c2f3213b2a0d))
+
 ## [3.42.1](https://github.com/ClearC2/grid-form-builder/compare/v3.42.0...v3.42.1) (2020-09-08)
 
 
