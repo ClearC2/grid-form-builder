@@ -5,7 +5,7 @@ import {SketchPicker, CompactPicker} from 'react-color' // eslint-disable-line
 import '../../styles/colorpicker.css'
 
 const ColorPicker = forwardRef((props, ref) => {
-  const {inputId, onChange, value, name, onBlur} = props
+  const {inputId, onChange, value, name, onChangeComplete} = props
   const [picker, setPicker] = useState('compact')
 
   const togglePickerType = useCallback(() => {
@@ -33,7 +33,7 @@ const ColorPicker = forwardRef((props, ref) => {
           </button>
         </div>
         <Picker
-          onBlur={onBlur}
+          onChangeComplete={onChangeComplete}
           onChange={handleOnChange}
           color={value}
         />
@@ -49,6 +49,6 @@ ColorPicker.propTypes = {
   pickerId: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   onChange: PropTypes.func,
-  onBlur: PropTypes.func,
+  onChangeComplete: PropTypes.func,
   name: PropTypes.string
 }
