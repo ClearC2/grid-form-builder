@@ -1,3 +1,10 @@
+# [3.45.0](https://github.com/ClearC2/grid-form-builder/compare/v3.44.0...v3.45.0) (2020-09-30)
+
+
+### Features
+
+* **reporting:** allow report config for overriding default config ([2c05e20](https://github.com/ClearC2/grid-form-builder/commit/2c05e200e1473b06c363c2b665fa575a863e036a))
+
 # [3.44.0](https://github.com/ClearC2/grid-form-builder/compare/v3.43.0...v3.44.0) (2020-09-18)
 
 
