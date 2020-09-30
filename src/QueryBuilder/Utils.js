@@ -29,6 +29,9 @@ export const convertFormSchemaToSearch = (formSchema = {}) => {
 export const convertFieldToSearch = (field = {}, forCondTable = false) => {
   if (!unconditionalFields.has(field.config.type ? field.config.type.toLowerCase() : 'input')) {
     if (!field.config.forceUnconditional && !field.config.forceunconditional) {
+      if (field.config.conditionalConfig) {
+        field.config = {...field.config, ...field.config.conditionalConfig} // overwrite default config if special report config is provided
+      }
       if (field.config.type === 'typeahead') {
         field.config.type = 'input'
         // if (field.config.typeahead && !field.config.typeahead.fieldId) {
