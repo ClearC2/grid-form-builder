@@ -13,6 +13,14 @@ Grid Form Builder is a component that accepts JSON to generate forms on a [react
 "grid-form-builder": "git+ssh://git@github.com:ClearC2/grid-form-builder.git",
 ```
 
+**Testing Changes Locally**
+
+Using `yarn link` is the recommended way to test local changes
+- On GFB, run `yarn link` you should get a success message saying `Registered "grid-form-builder"`
+- On the project that is using GFB, run `yarn link grid-form-builder` you should get a success message saying `Using linked package for "grid-form-builder"`
+- Back over to GFB, run `yarn build:watch` to compile the code and watch for changes
+- When you are done testing, run `yarn unlink grid-form-builder` on the project where you are using GFB and `yarn unlink` on GFB. You should always unlink from the project that is using GFB first
+
 # Important - Grid Form Builder now requires react-dnd@9.4.0 and react-dnd-html5-backend@9.4.0 and react-dnd-test-backed@9.4.0 to be installed as peer dependencies.
 
 Your project will need to set up the html5 backend context in the root of your application.
