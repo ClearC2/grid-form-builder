@@ -138,8 +138,8 @@ const ConditionalDialog = props => {
                 name: 'not',
                 label: 'Exclude Condition',
                 type: 'checkbox',
-                onValue: true,
-                offValue: false
+                onValue: '1',
+                offValue: '0'
               }
             }
           ]
@@ -308,6 +308,11 @@ const ConditionalDialog = props => {
     setModalValues(modalValues.set(e.target.name, e.target.value)) // for display in the dialog
     let newFieldValue = props.value || Map({condition: 'contains', values: List()})
     let values = newFieldValue.get('values', List())
+    if (e.target.name === 'not') {
+      newFieldValue = newFieldValue.set('not', e.target.value)
+      props.onChange({target: {name: props.name, value: newFieldValue}})
+      return
+    }
     if (STRING_VALUES.has(props.inputType.toLowerCase())) {
       // i have a string. what index?
       const i = parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1])
@@ -331,9 +336,6 @@ const ConditionalDialog = props => {
       } else {
         values = fromJS(e.target.value)
       }
-    }
-    if (e.target.name === 'not') {
-      newFieldValue = newFieldValue.set('not', e.target.value)
     }
     if (e.target.name === 'dynamicValues') {
       // newFieldValue = newFieldValue.set('condition', 'is one of')
