@@ -470,6 +470,17 @@ var ConditionalDialog = function ConditionalDialog(props) {
     });
     var values = newFieldValue.get('values', List());
 
+    if (e.target.name === 'not') {
+      newFieldValue = newFieldValue.set('not', e.target.value);
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      });
+      return;
+    }
+
     if (STRING_VALUES.has(props.inputType.toLowerCase())) {
       // i have a string. what index?
       var i = _parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1]);
@@ -495,10 +506,6 @@ var ConditionalDialog = function ConditionalDialog(props) {
       } else {
         values = fromJS(e.target.value);
       }
-    }
-
-    if (e.target.name === 'not') {
-      newFieldValue = newFieldValue.set('not', e.target.value);
     }
 
     if (e.target.name === 'dynamicValues') {

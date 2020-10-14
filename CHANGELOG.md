@@ -1,3 +1,10 @@
+## [3.46.1](https://github.com/ClearC2/grid-form-builder/compare/v3.46.0...v3.46.1) (2020-10-14)
+
+
+### Bug Fixes
+
+* **conditional-dialog:** fix setting not value ([#160](https://github.com/ClearC2/grid-form-builder/issues/160)) ([bad7eea](https://github.com/ClearC2/grid-form-builder/commit/bad7eea208af7223f2726cda121678e23c3dd083))
+
 # [3.46.0](https://github.com/ClearC2/grid-form-builder/compare/v3.45.0...v3.46.0) (2020-10-14)
 
 
