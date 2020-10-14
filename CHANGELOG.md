@@ -1,3 +1,10 @@
+# [3.46.0](https://github.com/ClearC2/grid-form-builder/compare/v3.45.0...v3.46.0) (2020-10-14)
+
+
+### Features
+
+* **conditions:** add exclude checkbox ([#159](https://github.com/ClearC2/grid-form-builder/issues/159)) ([0662fa7](https://github.com/ClearC2/grid-form-builder/commit/0662fa7e56b2d1e235e1a938b9f88ee42fe24272))
+
 # [3.45.0](https://github.com/ClearC2/grid-form-builder/compare/v3.44.0...v3.45.0) (2020-09-30)
 
 

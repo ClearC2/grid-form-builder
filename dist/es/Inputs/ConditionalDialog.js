@@ -523,7 +523,6 @@ var ConditionalDialog = function ConditionalDialog(props) {
   var fieldsHeight = isBetweenCondition() ? fieldHeight * 3 : (nFieldsWithValues() + 2) * fieldHeight;
   var modalHeight = fieldsHeight + headerHeight + footerHeight + extraBodyHeight;
   var maxBodyHeight = maxModalHeight - headerHeight - footerHeight;
-  console.log('test');
   return React.createElement(Dialog, {
     size: {
       width: '800px',
