@@ -231,6 +231,21 @@ var ConditionalDialog = function ConditionalDialog(props) {
                 options: inputTypeOptionsList()
               }
             }
+          }, {
+            type: 'field',
+            dimensions: {
+              x: 1,
+              y: 1,
+              h: 1,
+              w: 3
+            },
+            config: {
+              name: 'not',
+              label: 'Exclude Condition',
+              type: 'checkbox',
+              onValue: true,
+              offValue: false
+            }
           }]
         }
       },
@@ -517,6 +532,10 @@ var ConditionalDialog = function ConditionalDialog(props) {
       } else {
         values = (0, _immutable.fromJS)(e.target.value);
       }
+    }
+
+    if (e.target.name === 'not') {
+      newFieldValue = newFieldValue.set('not', e.target.value);
     }
 
     if (e.target.name === 'dynamicValues') {
