@@ -194,6 +194,21 @@ var ConditionalDialog = function ConditionalDialog(props) {
                 options: inputTypeOptionsList()
               }
             }
+          }, {
+            type: 'field',
+            dimensions: {
+              x: 1,
+              y: 1,
+              h: 1,
+              w: 3
+            },
+            config: {
+              name: 'not',
+              label: 'Exclude Condition',
+              type: 'checkbox',
+              onValue: true,
+              offValue: false
+            }
           }]
         }
       },
@@ -482,6 +497,10 @@ var ConditionalDialog = function ConditionalDialog(props) {
       }
     }
 
+    if (e.target.name === 'not') {
+      newFieldValue = newFieldValue.set('not', e.target.value);
+    }
+
     if (e.target.name === 'dynamicValues') {
       // newFieldValue = newFieldValue.set('condition', 'is one of')
       newFieldValue = newFieldValue.set('dynamicValues', e.target.value);
@@ -504,6 +523,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
   var fieldsHeight = isBetweenCondition() ? fieldHeight * 3 : (nFieldsWithValues() + 2) * fieldHeight;
   var modalHeight = fieldsHeight + headerHeight + footerHeight + extraBodyHeight;
   var maxBodyHeight = maxModalHeight - headerHeight - footerHeight;
+  console.log('test');
   return React.createElement(Dialog, {
     size: {
       width: '800px',
