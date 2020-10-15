@@ -1,3 +1,10 @@
+## [3.46.3](https://github.com/ClearC2/grid-form-builder/compare/v3.46.2...v3.46.3) (2020-10-15)
+
+
+### Bug Fixes
+
+* **condition:** update convert query func to include not key ([#162](https://github.com/ClearC2/grid-form-builder/issues/162)) ([566bcfa](https://github.com/ClearC2/grid-form-builder/commit/566bcfa0dd21fc9bfd13ede86f6cc3f8fef686dd))
+
 ## [3.46.2](https://github.com/ClearC2/grid-form-builder/compare/v3.46.1...v3.46.2) (2020-10-15)
 
 

@@ -63,7 +63,8 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
           formValues = formValues.set(k, Map({
             condition: schema ? getDefaultCondition(schema.config.type) : v.get('condition'),
             values: List(),
-            dynamicValues: v.get('dynamicValues')
+            dynamicValues: v.get('dynamicValues'),
+            not: v.get('not', false)
           }));
         } else if (typeof v === 'string') {
           formValues = formValues.set(k, '');
@@ -91,13 +92,15 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
               formValues = formValues.set(c.get('name'), Map({
                 condition: c.get('comparator'),
                 values: c.get('rawValues', List()),
-                dynamicValues: c.get('dynamicValues')
+                dynamicValues: c.get('dynamicValues'),
+                not: c.get('not', false)
               }));
             } else {
               formValues = formValues.set(c.get('name'), Map({
                 condition: c.get('comparator'),
                 values: c.get('values', List()),
-                dynamicValues: c.get('dynamicValues')
+                dynamicValues: c.get('dynamicValues'),
+                not: c.get('not', false)
               }));
             }
           }
