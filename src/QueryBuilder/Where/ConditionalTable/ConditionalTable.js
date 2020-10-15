@@ -60,7 +60,7 @@ export default class ConditionalTable extends Component {
     }
   }
 
-  buildMultiString = (key, value) => {
+  buildMultiString = (key, value, exclude = false) => {
     let valString = ''
     if (value) {
       if (typeof value === 'string') {
@@ -97,7 +97,7 @@ export default class ConditionalTable extends Component {
           i--
         })
       }
-      return ' ' + this.getConditionValue(key) + ' ' + valString
+      return `${exclude ? ' (exclude) ' : ''}` + ' ' + this.getConditionValue(key) + ' ' + valString
     } else {
       return ''
     }
@@ -174,7 +174,8 @@ export default class ConditionalTable extends Component {
           comparator: cond,
           values: newValue,
           dynamicValues: value.dynamicValues,
-          rawValues: rawValues
+          rawValues: rawValues,
+          not: value.not || false
         })
       }
     })
@@ -302,7 +303,7 @@ export default class ConditionalTable extends Component {
         <tr key={`row-${key}`}>
           <td key={`column-${key}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
-            {value.condition}
+            {value.not && '(exclude) '}{value.condition}
             {this.renderDeleteIcon(key)}
           </td>
         </tr>
@@ -321,7 +322,7 @@ export default class ConditionalTable extends Component {
         <tr key={`row-${key}`}>
           <td key={`column-${key}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
-            contains {val}
+            {value.not && '(exclude) '}contains {val}
             {this.renderDeleteIcon(key, value)}
           </td>
         </tr>
@@ -346,7 +347,7 @@ export default class ConditionalTable extends Component {
         <tr key={`row-${key}`}>
           <td key={`column-${key}`}>
             <strong>{this.getLabel(key)}</strong>
-            {this.buildMultiString(key, value.values.concat(value.dynamicValues || []))}
+            {this.buildMultiString(key, value.values.concat(value.dynamicValues || []), value.not)}
             {this.renderDeleteIcon(key, value.values.concat(value.dynamicValues || []))}
           </td>
         </tr>

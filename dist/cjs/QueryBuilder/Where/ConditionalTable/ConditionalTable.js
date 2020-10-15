@@ -67,6 +67,7 @@ function (_Component) {
     (0, _classCallCheck2.default)(this, ConditionalTable);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(ConditionalTable).call(this, props));
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildMultiString", function (key, value) {
+      var exclude = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       var valString = '';
 
       if (value) {
@@ -114,7 +115,7 @@ function (_Component) {
           });
         }
 
-        return ' ' + _this.getConditionValue(key) + ' ' + valString;
+        return "".concat(exclude ? ' (exclude) ' : '') + ' ' + _this.getConditionValue(key) + ' ' + valString;
       } else {
         return '';
       }
@@ -208,7 +209,8 @@ function (_Component) {
             comparator: cond,
             values: newValue,
             dynamicValues: value.dynamicValues,
-            rawValues: rawValues
+            rawValues: rawValues,
+            not: value.not || false
           });
         }
       });
@@ -343,7 +345,7 @@ function (_Component) {
           style: {
             wordWrap: 'break-word'
           }
-        }, _react.default.createElement("strong", null, _this.getLabel(key), " "), value.condition, _this.renderDeleteIcon(key)));
+        }, _react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key)));
       }
 
       if (value && typeof value === 'string') {
@@ -366,7 +368,7 @@ function (_Component) {
             style: {
               wordWrap: 'break-word'
             }
-          }, _react.default.createElement("strong", null, _this.getLabel(key), " "), "contains ", val, _this.renderDeleteIcon(key, value)))
+          }, _react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value)))
         );
       } else if (typeof value === 'boolean') {
         return _react.default.createElement("tr", {
@@ -385,7 +387,7 @@ function (_Component) {
           key: "row-".concat(key)
         }, _react.default.createElement("td", {
           key: "column-".concat(key)
-        }, _react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _concat.default)(_context6 = (0, _values.default)(value)).call(_context6, value.dynamicValues || [])), _this.renderDeleteIcon(key, (0, _concat.default)(_context7 = (0, _values.default)(value)).call(_context7, value.dynamicValues || []))));
+        }, _react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _concat.default)(_context6 = (0, _values.default)(value)).call(_context6, value.dynamicValues || []), value.not), _this.renderDeleteIcon(key, (0, _concat.default)(_context7 = (0, _values.default)(value)).call(_context7, value.dynamicValues || []))));
       }
     });
     var noValueConditions = [];
