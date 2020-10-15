@@ -94,7 +94,8 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
           formValues = formValues.set(k, (0, _immutable.Map)({
             condition: schema ? getDefaultCondition(schema.config.type) : v.get('condition'),
             values: (0, _immutable.List)(),
-            dynamicValues: v.get('dynamicValues')
+            dynamicValues: v.get('dynamicValues'),
+            not: v.get('not', false)
           }));
         } else if (typeof v === 'string') {
           formValues = formValues.set(k, '');
@@ -122,13 +123,15 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
               formValues = formValues.set(c.get('name'), (0, _immutable.Map)({
                 condition: c.get('comparator'),
                 values: c.get('rawValues', (0, _immutable.List)()),
-                dynamicValues: c.get('dynamicValues')
+                dynamicValues: c.get('dynamicValues'),
+                not: c.get('not', false)
               }));
             } else {
               formValues = formValues.set(c.get('name'), (0, _immutable.Map)({
                 condition: c.get('comparator'),
                 values: c.get('values', (0, _immutable.List)()),
-                dynamicValues: c.get('dynamicValues')
+                dynamicValues: c.get('dynamicValues'),
+                not: c.get('not', false)
               }));
             }
           }
