@@ -1,3 +1,10 @@
+## [3.46.2](https://github.com/ClearC2/grid-form-builder/compare/v3.46.1...v3.46.2) (2020-10-15)
+
+
+### Bug Fixes
+
+* **conditional:** add not value to query builder/table ([#161](https://github.com/ClearC2/grid-form-builder/issues/161)) ([082763b](https://github.com/ClearC2/grid-form-builder/commit/082763b95266d9e80365c27155da3a6344e77f4d))
+
 ## [3.46.1](https://github.com/ClearC2/grid-form-builder/compare/v3.46.0...v3.46.1) (2020-10-14)
 
 

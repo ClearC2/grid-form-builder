@@ -35,6 +35,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ConditionalTable).call(this, props));
 
     _defineProperty(_assertThisInitialized(_this), "buildMultiString", function (key, value) {
+      var exclude = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       var valString = '';
 
       if (value) {
@@ -82,7 +83,7 @@ function (_Component) {
           });
         }
 
-        return ' ' + _this.getConditionValue(key) + ' ' + valString;
+        return "".concat(exclude ? ' (exclude) ' : '') + ' ' + _this.getConditionValue(key) + ' ' + valString;
       } else {
         return '';
       }
@@ -181,7 +182,8 @@ function (_Component) {
             comparator: cond,
             values: newValue,
             dynamicValues: value.dynamicValues,
-            rawValues: rawValues
+            rawValues: rawValues,
+            not: value.not || false
           });
         }
       });
@@ -328,7 +330,7 @@ function (_Component) {
           style: {
             wordWrap: 'break-word'
           }
-        }, React.createElement("strong", null, _this.getLabel(key), " "), value.condition, _this.renderDeleteIcon(key)));
+        }, React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key)));
       }
 
       if (value && typeof value === 'string') {
@@ -351,7 +353,7 @@ function (_Component) {
             style: {
               wordWrap: 'break-word'
             }
-          }, React.createElement("strong", null, _this.getLabel(key), " "), "contains ", val, _this.renderDeleteIcon(key, value)))
+          }, React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value)))
         );
       } else if (typeof value === 'boolean') {
         return React.createElement("tr", {
@@ -370,7 +372,7 @@ function (_Component) {
           key: "row-".concat(key)
         }, React.createElement("td", {
           key: "column-".concat(key)
-        }, React.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, _concatInstanceProperty(_context6 = _valuesInstanceProperty(value)).call(_context6, value.dynamicValues || [])), _this.renderDeleteIcon(key, _concatInstanceProperty(_context7 = _valuesInstanceProperty(value)).call(_context7, value.dynamicValues || []))));
+        }, React.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, _concatInstanceProperty(_context6 = _valuesInstanceProperty(value)).call(_context6, value.dynamicValues || []), value.not), _this.renderDeleteIcon(key, _concatInstanceProperty(_context7 = _valuesInstanceProperty(value)).call(_context7, value.dynamicValues || []))));
       }
     });
 
