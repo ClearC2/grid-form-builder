@@ -243,8 +243,8 @@ var ConditionalDialog = function ConditionalDialog(props) {
               name: 'not',
               label: 'Exclude Condition',
               type: 'checkbox',
-              onValue: '1',
-              offValue: '0'
+              onValue: true,
+              offValue: false
             }
           }]
         }
