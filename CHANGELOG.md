@@ -1,3 +1,10 @@
+# [3.47.0](https://github.com/ClearC2/grid-form-builder/compare/v3.46.3...v3.47.0) (2020-10-21)
+
+
+### Features
+
+* **richtextarea:** puts in a more robust catch to try to prevent the change handler from firing if its just quill trying to auto format the value ([2610617](https://github.com/ClearC2/grid-form-builder/commit/26106172b5ea705d177cc7296c5e0997930cbb0a))
+
 ## [3.46.3](https://github.com/ClearC2/grid-form-builder/compare/v3.46.2...v3.46.3) (2020-10-15)
 
 

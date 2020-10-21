@@ -1,4 +1,5 @@
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
+import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 
@@ -56,8 +57,13 @@ var Richtextarea = function Richtextarea(props) {
 
   var _useState = useState(false),
       _useState2 = _slicedToArray(_useState, 2),
-      isFocused = _useState2[0],
-      setIsFocused = _useState2[1];
+      hasBlockedAutoFormat = _useState2[0],
+      setHasBlockedAutoFormat = _useState2[1];
+
+  var _useState3 = useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isFocused = _useState4[0],
+      setIsFocused = _useState4[1];
 
   var elementId = useRef('gfb-' + randomId());
   var QuillRef = useRef();
@@ -77,19 +83,23 @@ var Richtextarea = function Richtextarea(props) {
     }
   });
   var handleOnChange = useCallback(function (html) {
-    /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
-    This is undesirable because it will register the onDirty to be true when no user change has
-    occurred so this check is added in to prevent quill from auto formatting when mounting */
-    if (html && html !== '<p><br></p>') {
-      if (html.length > maxlength) html = html.substring(0, maxlength);
-      onChange({
-        target: {
-          name: name,
-          value: html
-        }
-      });
+    if (!readonly && !disabled) {
+      /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
+      This is undesirable because it will register the onDirty to be true when no user change has
+      occurred so this check is added in to prevent quill from auto formatting when mounting */
+      if (!hasBlockedAutoFormat && typeof value === 'string' && typeof html === 'string' && (_indexOfInstanceProperty(value).call(value, '<html') > -1 && _indexOfInstanceProperty(html).call(html, '<html') === -1 || _indexOfInstanceProperty(value).call(value, '<head') > -1 && _indexOfInstanceProperty(html).call(html, '<head') === -1 || _indexOfInstanceProperty(value).call(value, '<meta') > -1 && _indexOfInstanceProperty(html).call(html, '<meta') === -1)) {
+        setHasBlockedAutoFormat(true);
+      } else if (html && html !== '<p><br></p>') {
+        if (html.length > maxlength) html = html.substring(0, maxlength);
+        onChange({
+          target: {
+            name: name,
+            value: html
+          }
+        });
+      }
     }
-  }, [isFocused, onChange, name, maxlength]);
+  }, [isFocused, onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat]);
   var previousRTEImageUrl = usePrevious(rteImageUrl);
   useEffect(function () {
     if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && QuillRef.current) {

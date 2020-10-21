@@ -12,6 +12,8 @@ exports.default = void 0;
 
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
+var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/index-of"));
+
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
 var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
@@ -80,8 +82,13 @@ var Richtextarea = function Richtextarea(props) {
 
   var _useState = (0, _react.useState)(false),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-      isFocused = _useState2[0],
-      setIsFocused = _useState2[1];
+      hasBlockedAutoFormat = _useState2[0],
+      setHasBlockedAutoFormat = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(false),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      isFocused = _useState4[0],
+      setIsFocused = _useState4[1];
 
   var elementId = (0, _react.useRef)('gfb-' + (0, _utils.randomId)());
   var QuillRef = (0, _react.useRef)();
@@ -101,19 +108,23 @@ var Richtextarea = function Richtextarea(props) {
     }
   });
   var handleOnChange = (0, _react.useCallback)(function (html) {
-    /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
-    This is undesirable because it will register the onDirty to be true when no user change has
-    occurred so this check is added in to prevent quill from auto formatting when mounting */
-    if (html && html !== '<p><br></p>') {
-      if (html.length > maxlength) html = html.substring(0, maxlength);
-      onChange({
-        target: {
-          name: name,
-          value: html
-        }
-      });
+    if (!readonly && !disabled) {
+      /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
+      This is undesirable because it will register the onDirty to be true when no user change has
+      occurred so this check is added in to prevent quill from auto formatting when mounting */
+      if (!hasBlockedAutoFormat && typeof value === 'string' && typeof html === 'string' && ((0, _indexOf.default)(value).call(value, '<html') > -1 && (0, _indexOf.default)(html).call(html, '<html') === -1 || (0, _indexOf.default)(value).call(value, '<head') > -1 && (0, _indexOf.default)(html).call(html, '<head') === -1 || (0, _indexOf.default)(value).call(value, '<meta') > -1 && (0, _indexOf.default)(html).call(html, '<meta') === -1)) {
+        setHasBlockedAutoFormat(true);
+      } else if (html && html !== '<p><br></p>') {
+        if (html.length > maxlength) html = html.substring(0, maxlength);
+        onChange({
+          target: {
+            name: name,
+            value: html
+          }
+        });
+      }
     }
-  }, [isFocused, onChange, name, maxlength]);
+  }, [isFocused, onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat]);
   var previousRTEImageUrl = (0, _utils.usePrevious)(rteImageUrl);
   (0, _react.useEffect)(function () {
     if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && QuillRef.current) {
