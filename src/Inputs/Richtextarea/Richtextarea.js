@@ -42,6 +42,7 @@ const Richtextarea = props => {
 
   const {theme} = useTheme()
 
+  const [hasBlockedAutoFormat, setHasBlockedAutoFormat] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const elementId = useRef('gfb-' + randomId())
   const QuillRef = useRef()
@@ -79,19 +80,32 @@ const Richtextarea = props => {
   })
 
   const handleOnChange = useCallback(html => {
-    /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
-    This is undesirable because it will register the onDirty to be true when no user change has
-    occurred so this check is added in to prevent quill from auto formatting when mounting */
-    if (html && html !== '<p><br></p>') {
-      if (html.length > maxlength) html = html.substring(0, maxlength)
-      onChange({
-        target: {
-          name,
-          value: html
-        }
-      })
+    if (!readonly && !disabled) {
+      /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
+      This is undesirable because it will register the onDirty to be true when no user change has
+      occurred so this check is added in to prevent quill from auto formatting when mounting */
+      if (
+        !hasBlockedAutoFormat &&
+        typeof value === 'string' &&
+        typeof html === 'string' &&
+        (
+          (value.indexOf('<html') > -1 && html.indexOf('<html') === -1) ||
+          (value.indexOf('<head') > -1 && html.indexOf('<head') === -1) ||
+          (value.indexOf('<meta') > -1 && html.indexOf('<meta') === -1)
+        )
+      ) {
+        setHasBlockedAutoFormat(true)
+      } else if (html && html !== '<p><br></p>') {
+        if (html.length > maxlength) html = html.substring(0, maxlength)
+        onChange({
+          target: {
+            name,
+            value: html
+          }
+        })
+      }
     }
-  }, [isFocused, onChange, name, maxlength])
+  }, [isFocused, onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat])
 
   const previousRTEImageUrl = usePrevious(rteImageUrl)
 
