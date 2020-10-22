@@ -1,3 +1,10 @@
+## [3.47.2](https://github.com/ClearC2/grid-form-builder/compare/v3.47.1...v3.47.2) (2020-10-22)
+
+
+### Bug Fixes
+
+* **currency:** fix disabled input logic ([a5a69a2](https://github.com/ClearC2/grid-form-builder/commit/a5a69a2318731e7c2e37dfa17e5763a853c4aefb))
+
 ## [3.47.1](https://github.com/ClearC2/grid-form-builder/compare/v3.47.0...v3.47.1) (2020-10-22)
 
 
