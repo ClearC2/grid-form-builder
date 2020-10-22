@@ -1,3 +1,10 @@
+## [3.47.1](https://github.com/ClearC2/grid-form-builder/compare/v3.47.0...v3.47.1) (2020-10-22)
+
+
+### Bug Fixes
+
+* **currency:** fix mapping to currency fields ([28712a7](https://github.com/ClearC2/grid-form-builder/commit/28712a74fadd1498fca8560c5db499d185eaf8cb))
+
 # [3.47.0](https://github.com/ClearC2/grid-form-builder/compare/v3.46.3...v3.47.0) (2020-10-21)
 
 
