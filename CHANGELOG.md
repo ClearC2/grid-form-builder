@@ -1,3 +1,10 @@
+## [3.49.1](https://github.com/ClearC2/grid-form-builder/compare/v3.49.0...v3.49.1) (2020-10-28)
+
+
+### Bug Fixes
+
+* **innercell:** schemas should now handle empty objects without crashing ([7516b19](https://github.com/ClearC2/grid-form-builder/commit/7516b19400e0662dd047f3bedb675d226d5df134))
+
 # [3.49.0](https://github.com/ClearC2/grid-form-builder/compare/v3.48.0...v3.49.0) (2020-10-28)
 
 

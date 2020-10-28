@@ -50,7 +50,8 @@ var InnerCell = function InnerCell(props) {
       handleRTEImageClick = props.handleRTEImageClick,
       autoComplete = props.autoComplete,
       device = props.device;
-  var config = field.config;
+  var _field$config = field.config,
+      config = _field$config === void 0 ? {} : _field$config;
 
   var _useContext = useContext(FormValueContext),
       _useContext2 = _slicedToArray(_useContext, 1),
