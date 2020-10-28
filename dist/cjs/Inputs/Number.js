@@ -213,12 +213,12 @@ Number.propTypes = {
   delimiter: _propTypes.default.string,
   prefix: _propTypes.default.string,
   numeralDecimalMark: _propTypes.default.string,
-  maximum: _propTypes.default.number,
-  minimum: _propTypes.default.number,
+  maximum: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
+  minimum: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
   decimals: _propTypes.default.number,
   interactive: _propTypes.default.bool,
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
-  maxlength: _propTypes.default.number
+  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
 };

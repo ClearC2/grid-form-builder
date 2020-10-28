@@ -246,5 +246,5 @@ Phone.propTypes = {
   regionselect: _propTypes.default.bool,
   regions: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.instanceOf(_immutable.List)]),
   values: _propTypes.default.instanceOf(_immutable.Map),
-  maxlength: _propTypes.default.number
+  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
 };

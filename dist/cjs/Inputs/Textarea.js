@@ -164,5 +164,5 @@ Textarea.propTypes = {
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
-  maxlength: _propTypes.default.number
+  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
 };

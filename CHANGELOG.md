@@ -1,3 +1,10 @@
+# [3.49.0](https://github.com/ClearC2/grid-form-builder/compare/v3.48.0...v3.49.0) (2020-10-28)
+
+
+### Features
+
+* **version:** pushing a version commit to auto release new build ([03f3356](https://github.com/ClearC2/grid-form-builder/commit/03f3356e18514e758bfa68c3b50b85cc030d3033))
+
 # [3.48.0](https://github.com/ClearC2/grid-form-builder/compare/v3.47.2...v3.48.0) (2020-10-28)
 
 

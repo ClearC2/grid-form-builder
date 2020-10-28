@@ -168,5 +168,5 @@ Input.propTypes = {
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
   format: _propTypes.default.string,
-  maxlength: _propTypes.default.number
+  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
 };

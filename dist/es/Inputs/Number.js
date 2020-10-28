@@ -194,12 +194,12 @@ Number.propTypes = {
   delimiter: PropTypes.string,
   prefix: PropTypes.string,
   numeralDecimalMark: PropTypes.string,
-  maximum: PropTypes.number,
-  minimum: PropTypes.number,
+  maximum: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  minimum: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   decimals: PropTypes.number,
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.number
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };

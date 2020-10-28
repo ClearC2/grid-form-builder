@@ -272,5 +272,5 @@ DateInput.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.number
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
