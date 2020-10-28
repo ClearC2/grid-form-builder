@@ -213,7 +213,9 @@ var Typeahead = function Typeahead(props) {
       _style$indicators = style.indicators,
       indicators = _style$indicators === void 0 ? {} : _style$indicators,
       _style$options = style.options,
-      optionsStyle = _style$options === void 0 ? {} : _style$options;
+      optionsStyle = _style$options === void 0 ? {} : _style$options,
+      _style$menuPortal = style.menuPortal,
+      _menuPortal = _style$menuPortal === void 0 ? {} : _style$menuPortal;
 
   var _useTheme = useTheme(),
       theme = _useTheme.theme;
@@ -335,12 +337,12 @@ var Typeahead = function Typeahead(props) {
       return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
     },
     menuPortal: function menuPortal(base) {
-      var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
+      var top = menuPlacement === 'bottom' ? base.top - 8 + (_menuPortal.bottomTopBias || 0) : base.top + 8 + (_menuPortal.topTopBias || 0);
       var zIndex = _Number$MAX_SAFE_INTEGER;
       return _objectSpread({}, base, {
         top: top,
         zIndex: zIndex
-      });
+      }, _menuPortal);
     }
   }),
       _useState28 = _slicedToArray(_useState27, 2),
@@ -456,12 +458,12 @@ var Typeahead = function Typeahead(props) {
         return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
       },
       menuPortal: function menuPortal(base) {
-        var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
+        var top = menuPlacement === 'bottom' ? base.top - 8 + (_menuPortal.bottomTopBias || 0) : base.top + 8 + (_menuPortal.topTopBias || 0);
         var zIndex = _Number$MAX_SAFE_INTEGER;
         return _objectSpread({}, base, {
           top: top,
           zIndex: zIndex
-        });
+        }, _menuPortal);
       }
     }); // going to ignore dynamic style changes for the time being - JRA 07/31/2020
   }, [// eslint-disable-line
