@@ -36,7 +36,7 @@ const InnerCell = props => {
     device
   } = props
 
-  const {config} = field
+  const {config = {}} = field
   const [formValues] = useContext(FormValueContext)
   const cellId = useRef(randomId())
 
