@@ -160,7 +160,8 @@ const Typeahead = props => {
     inputControl = {},
     valueContainer = {},
     indicators = {},
-    options: optionsStyle = {}
+    options: optionsStyle = {},
+    menuPortal = {}
   } = style
 
   const {theme} = useTheme()
@@ -221,9 +222,10 @@ const Typeahead = props => {
       return ({...base, ...valueStyle, ...valueTheme})
     },
     menuPortal: base => {
-      const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
+      const top = menuPlacement === 'bottom'
+        ? base.top - 8 + (menuPortal.bottomTopBias || 0) : base.top + 8 + (menuPortal.topTopBias || 0)
       const zIndex = Number.MAX_SAFE_INTEGER
-      return ({...base, top, zIndex})
+      return ({...base, top, zIndex, ...menuPortal})
     }
   })
 
@@ -309,9 +311,10 @@ const Typeahead = props => {
         return ({...base, ...valueStyle, ...valueTheme})
       },
       menuPortal: base => {
-        const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
+        const top = menuPlacement === 'bottom'
+          ? base.top - 8 + (menuPortal.bottomTopBias || 0) : base.top + 8 + (menuPortal.topTopBias || 0)
         const zIndex = Number.MAX_SAFE_INTEGER
-        return ({...base, top, zIndex})
+        return ({...base, top, zIndex, ...menuPortal})
       }
     }) // going to ignore dynamic style changes for the time being - JRA 07/31/2020
   }, [ // eslint-disable-line
