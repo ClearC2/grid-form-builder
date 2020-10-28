@@ -125,5 +125,5 @@ Input.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   format: PropTypes.string,
-  maxlength: PropTypes.number
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }

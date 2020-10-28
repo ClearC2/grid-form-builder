@@ -188,5 +188,5 @@ Phone.propTypes = {
   regionselect: PropTypes.bool,
   regions: PropTypes.oneOfType([PropTypes.array, PropTypes.instanceOf(List)]),
   values: PropTypes.instanceOf(Map),
-  maxlength: PropTypes.number
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
