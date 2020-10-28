@@ -1,3 +1,10 @@
+# [3.48.0](https://github.com/ClearC2/grid-form-builder/compare/v3.47.2...v3.48.0) (2020-10-28)
+
+
+### Features
+
+* **typeahead:** can control menuPortal styles ([7352b71](https://github.com/ClearC2/grid-form-builder/commit/7352b71926a860e5aaa6dbd8c4a0539e6dab57bf))
+
 ## [3.47.2](https://github.com/ClearC2/grid-form-builder/compare/v3.47.1...v3.47.2) (2020-10-22)
 
 
