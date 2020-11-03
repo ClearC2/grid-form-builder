@@ -89,7 +89,7 @@ var Richtextarea = function Richtextarea(props) {
       occurred so this check is added in to prevent quill from auto formatting when mounting */
       if (!hasBlockedAutoFormat && typeof value === 'string' && typeof html === 'string' && (_indexOfInstanceProperty(value).call(value, '<html') > -1 && _indexOfInstanceProperty(html).call(html, '<html') === -1 || _indexOfInstanceProperty(value).call(value, '<head') > -1 && _indexOfInstanceProperty(html).call(html, '<head') === -1 || _indexOfInstanceProperty(value).call(value, '<meta') > -1 && _indexOfInstanceProperty(html).call(html, '<meta') === -1)) {
         setHasBlockedAutoFormat(true);
-      } else if (html && html !== '<p><br></p>') {
+      } else if (html) {
         if (html.length > maxlength) html = html.substring(0, maxlength);
         onChange({
           target: {
