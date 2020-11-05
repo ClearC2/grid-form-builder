@@ -95,7 +95,7 @@ const Richtextarea = props => {
         )
       ) {
         setHasBlockedAutoFormat(true)
-      } else if (html && html !== '<p><br></p>') {
+      } else if (html) {
         if (html.length > maxlength) html = html.substring(0, maxlength)
         onChange({
           target: {
