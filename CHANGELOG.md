@@ -1,3 +1,10 @@
+## [3.49.2](https://github.com/ClearC2/grid-form-builder/compare/v3.49.1...v3.49.2) (2020-11-05)
+
+
+### Bug Fixes
+
+* **Richtextarea:** allow empty values to set ([#165](https://github.com/ClearC2/grid-form-builder/issues/165)) ([81a00a1](https://github.com/ClearC2/grid-form-builder/commit/81a00a1f164d2a21c6320ed62fb75a8be3210285))
+
 ## [3.49.1](https://github.com/ClearC2/grid-form-builder/compare/v3.49.0...v3.49.1) (2020-10-28)
 
 
