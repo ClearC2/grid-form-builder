@@ -45,6 +45,13 @@ _Object$defineProperty(exports, "TEXT_INPUTS", {
   }
 });
 
+_Object$defineProperty(exports, "DATES", {
+  enumerable: true,
+  get: function get() {
+    return _SearchUtils.DATES;
+  }
+});
+
 _Object$defineProperty(exports, "GFBInput", {
   enumerable: true,
   get: function get() {

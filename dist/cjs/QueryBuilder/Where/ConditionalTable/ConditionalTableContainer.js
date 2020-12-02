@@ -63,6 +63,21 @@ var getDefaultCondition = function getDefaultCondition(inputType) {
   return ''; // no conditions are valid for this input type ??? you shouldnt get here.
 };
 
+var getDefaultFormat = function getDefaultFormat(inputType) {
+  var i = 0;
+  var max = _index.DATES.length;
+
+  while (i < max) {
+    if (!(0, _immutable.Set)(_index.DATES[i].invalidInputTypes).has(inputType)) {
+      return (0, _keys.default)(_index.DATES)[i];
+    }
+
+    i++;
+  }
+
+  return ''; // type should not be a date
+};
+
 var getFieldSchema = function getFieldSchema(key, formSchema) {
   if (formSchema && typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
@@ -95,7 +110,8 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
             condition: schema ? getDefaultCondition(schema.config.type) : v.get('condition'),
             values: (0, _immutable.List)(),
             dynamicValues: v.get('dynamicValues'),
-            not: v.get('not', false)
+            not: v.get('not', false),
+            format: schema ? getDefaultFormat(schema.config.format) : v.get('format', '')
           }));
         } else if (typeof v === 'string') {
           formValues = formValues.set(k, '');
@@ -124,14 +140,16 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
                 condition: c.get('comparator'),
                 values: c.get('rawValues', (0, _immutable.List)()),
                 dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false)
+                not: c.get('not', false),
+                format: c.get('format', '')
               }));
             } else {
               formValues = formValues.set(c.get('name'), (0, _immutable.Map)({
                 condition: c.get('comparator'),
                 values: c.get('values', (0, _immutable.List)()),
                 dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false)
+                not: c.get('not', false),
+                format: c.get('format', '')
               }));
             }
           }

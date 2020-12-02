@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fromJS, Map, List, Set } from 'immutable';
 import ConditionalTable from './ConditionalTable';
-import { CONDITIONS, TEXT_INPUTS } from '../../../index';
+import { CONDITIONS, TEXT_INPUTS, DATES } from '../../../index';
 import { convertFormSchemaToSearch } from '../../Utils';
 
 var getDefaultCondition = function getDefaultCondition(inputType) {
@@ -30,6 +30,21 @@ var getDefaultCondition = function getDefaultCondition(inputType) {
   }
 
   return ''; // no conditions are valid for this input type ??? you shouldnt get here.
+};
+
+var getDefaultFormat = function getDefaultFormat(inputType) {
+  var i = 0;
+  var max = DATES.length;
+
+  while (i < max) {
+    if (!Set(DATES[i].invalidInputTypes).has(inputType)) {
+      return _Object$keys(DATES)[i];
+    }
+
+    i++;
+  }
+
+  return ''; // type should not be a date
 };
 
 var getFieldSchema = function getFieldSchema(key, formSchema) {
@@ -64,7 +79,8 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
             condition: schema ? getDefaultCondition(schema.config.type) : v.get('condition'),
             values: List(),
             dynamicValues: v.get('dynamicValues'),
-            not: v.get('not', false)
+            not: v.get('not', false),
+            format: schema ? getDefaultFormat(schema.config.format) : v.get('format', '')
           }));
         } else if (typeof v === 'string') {
           formValues = formValues.set(k, '');
@@ -93,14 +109,16 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
                 condition: c.get('comparator'),
                 values: c.get('rawValues', List()),
                 dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false)
+                not: c.get('not', false),
+                format: c.get('format', '')
               }));
             } else {
               formValues = formValues.set(c.get('name'), Map({
                 condition: c.get('comparator'),
                 values: c.get('values', List()),
                 dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false)
+                not: c.get('not', false),
+                format: c.get('format', '')
               }));
             }
           }

@@ -1,3 +1,10 @@
+## [3.49.4](https://github.com/ClearC2/grid-form-builder/compare/v3.49.3...v3.49.4) (2020-12-02)
+
+
+### Bug Fixes
+
+* **conditional-table:** add schema format to condition ([#166](https://github.com/ClearC2/grid-form-builder/issues/166)) ([86623fe](https://github.com/ClearC2/grid-form-builder/commit/86623fe65846678c127a604eefcc4bd8b249ee82))
+
 ## [3.49.3](https://github.com/ClearC2/grid-form-builder/compare/v3.49.2...v3.49.3) (2020-12-02)
 
 

@@ -4,7 +4,7 @@ import { Map } from 'immutable';
 export { default as FormDroppable } from './FormDroppable';
 export { initFormBuilderAjax } from './config';
 export { default as Conditionalinput } from './Inputs/ConditionalInput';
-export { CONDITIONS, TEXT_INPUTS } from './Inputs/SearchUtils';
+export { CONDITIONS, TEXT_INPUTS, DATES } from './Inputs/SearchUtils';
 export { default as GFBInput } from './GFBInput';
 export { default as Typeahead } from './Inputs/Typeahead';
 export { default as Checkbox } from './Inputs/Checkbox';

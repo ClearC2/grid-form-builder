@@ -139,6 +139,31 @@ function (_Component) {
         return 'No Key in schema';
       }
     });
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getFormat", function (key) {
+      var _this$props$formSchem2 = _this.props.formSchema,
+          formSchema = _this$props$formSchem2 === void 0 ? {} : _this$props$formSchem2;
+      if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
+
+      if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
+        var fieldSchema = _this.props.getFieldSchema(key);
+
+        var format = '';
+        var type = '';
+
+        if (fieldSchema) {
+          format = fieldSchema.config.format || fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.format;
+          type = fieldSchema.config.type || fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.type;
+
+          if (!format && (type === 'date' || type === 'datetime')) {
+            format = type;
+          }
+        }
+
+        return format || '';
+      }
+
+      return '';
+    });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildRequest", function () {
       var _context2;
 
@@ -210,7 +235,8 @@ function (_Component) {
             values: newValue,
             dynamicValues: value.dynamicValues,
             rawValues: rawValues,
-            not: value.not || false
+            not: value.not || false,
+            format: _this.getFormat(key)
           });
         }
       });
@@ -324,8 +350,8 @@ function (_Component) {
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getFieldType", function (fieldName) {
       var _context5;
 
-      var _this$props$formSchem2 = _this.props.formSchema,
-          formSchema = _this$props$formSchem2 === void 0 ? {} : _this$props$formSchem2;
+      var _this$props$formSchem3 = _this.props.formSchema,
+          formSchema = _this$props$formSchem3 === void 0 ? {} : _this$props$formSchem3;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
       var type = '';
       (0, _forEach.default)(_context5 = formSchema.jsonschema.layout).call(_context5, function (field) {
