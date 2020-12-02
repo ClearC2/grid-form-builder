@@ -118,6 +118,30 @@ export default class ConditionalTable extends Component {
     }
   }
 
+  getFormat = (key) => {
+    let {formSchema = {}} = this.props
+    if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
+    if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
+      const fieldSchema = this.props.getFieldSchema(key)
+
+      let format = ''
+      let type = ''
+
+      if (fieldSchema) {
+        format = fieldSchema.config.format || (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.format)
+        type = fieldSchema.config.type || (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.type)
+
+        if (!format && (type === 'date' || type === 'datetime')) {
+          format = type
+        }
+      }
+
+      return format || ''
+    }
+
+    return ''
+  }
+
   buildRequest = (formValues = this.props.formValues) => {
     if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
     const req = {
@@ -175,7 +199,8 @@ export default class ConditionalTable extends Component {
           values: newValue,
           dynamicValues: value.dynamicValues,
           rawValues: rawValues,
-          not: value.not || false
+          not: value.not || false,
+          format: this.getFormat(key)
         })
       }
     })
