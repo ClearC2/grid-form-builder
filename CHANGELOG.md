@@ -1,3 +1,10 @@
+## [3.49.3](https://github.com/ClearC2/grid-form-builder/compare/v3.49.2...v3.49.3) (2020-12-02)
+
+
+### Bug Fixes
+
+* **colorpicker:** correct blur functionality on firefox ([#167](https://github.com/ClearC2/grid-form-builder/issues/167)) ([1cbd862](https://github.com/ClearC2/grid-form-builder/commit/1cbd8625238a00b8533c0154d8006f8bf895dc9f))
+
 ## [3.49.2](https://github.com/ClearC2/grid-form-builder/compare/v3.49.1...v3.49.2) (2020-11-05)
 
 

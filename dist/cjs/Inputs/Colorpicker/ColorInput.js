@@ -32,7 +32,7 @@ var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
 
 /** @jsx jsx */
 var ColorInput = function ColorInput(props) {
-  var _context2;
+  var _context;
 
   var name = props.name,
       _props$value = props.value,
@@ -83,9 +83,8 @@ var ColorInput = function ColorInput(props) {
 
   var windowClickListener = (0, _react.useMemo)(function () {
     return function (e) {
-      var _context;
-
-      var insideClick = (0, _some.default)(_context = e.path).call(_context, function (path) {
+      var pathHandler = e.path || e.composedPath();
+      var insideClick = (0, _some.default)(pathHandler).call(pathHandler, function (path) {
         return path.id === inputId.current || path.id === portalRef.current.state.id;
       });
 
@@ -126,7 +125,7 @@ var ColorInput = function ColorInput(props) {
   var controlClass = 'gfb-input__control';
   var validationError;
 
-  if (required && requiredWarning && (0, _trim.default)(_context2 = value + '').call(_context2).length === 0 && !isFocused) {
+  if (required && requiredWarning && (0, _trim.default)(_context = value + '').call(_context).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }
