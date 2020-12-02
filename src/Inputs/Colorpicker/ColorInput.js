@@ -43,7 +43,8 @@ const ColorInput = props => {
 
   const windowClickListener = useMemo(() => {
     return e => {
-      const insideClick = e.path.some(path => {
+      const pathHandler = (e.path || e.composedPath())
+      const insideClick = pathHandler.some(path => {
         return (
           path.id === inputId.current ||
           path.id === portalRef.current.state.id
