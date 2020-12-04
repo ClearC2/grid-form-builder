@@ -1,3 +1,10 @@
+## [3.49.5](https://github.com/ClearC2/grid-form-builder/compare/v3.49.4...v3.49.5) (2020-12-04)
+
+
+### Bug Fixes
+
+* **date-format:** change default date format to include 2 digit days/months ([#168](https://github.com/ClearC2/grid-form-builder/issues/168)) ([f553440](https://github.com/ClearC2/grid-form-builder/commit/f55344086a91fba99b73c8e9a3afe58e62afc6d2))
+
 ## [3.49.4](https://github.com/ClearC2/grid-form-builder/compare/v3.49.3...v3.49.4) (2020-12-02)
 
 
