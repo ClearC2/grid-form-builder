@@ -391,8 +391,8 @@ FormBuilder.defaultProps = {
   handleLinkClick: () => null,
   draggable: false,
   interactive: true,
-  dateFormat: 'M/D/YYYY',
-  dateTimeFormat: 'M/D/YYYY h:mm a',
+  dateFormat: 'MM/DD/YYYY',
+  dateTimeFormat: 'MM/DD/YYYY h:mm a',
   timeFormat: 'h:mm a',
   autoComplete: 'ac_off',
   style: {}
