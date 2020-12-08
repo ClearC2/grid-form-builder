@@ -91,9 +91,10 @@ div.gfb-month-picker-footer {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    height: 43px;
+    height: 38px;
     border-top: 1px solid #ddd;
     padding: 7px;
+    font-size: 9pt;
 }
 
 button.gfb-month-button-cancel {
