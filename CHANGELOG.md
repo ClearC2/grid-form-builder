@@ -1,3 +1,10 @@
+# [3.50.0](https://github.com/ClearC2/grid-form-builder/compare/v3.49.6...v3.50.0) (2020-12-08)
+
+
+### Features
+
+* **month:** adds a month picker custom component ([3d7d2d4](https://github.com/ClearC2/grid-form-builder/commit/3d7d2d4962bae7df59fb196453a7bf340beb651d))
+
 ## [3.49.6](https://github.com/ClearC2/grid-form-builder/compare/v3.49.5...v3.49.6) (2020-12-08)
 
 

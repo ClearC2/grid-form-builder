@@ -1,0 +1,113 @@
+div.gfb-month-picker-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 10px, rgba(0, 0, 0, 0.1) 0 2px 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
+div.gfb-month-picker-year-header {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    width: 100%;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #ddd;
+}
+
+div.gfb-month-picker-left-month-arrow {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+div.gfb-month-picker-right-month-arrow {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+div.gfb-month-picker-right-month-arrow:hover, div.gfb-month-picker-left-month-arrow:hover {
+    background-color: #eee;
+}
+
+div.gfb-month-picker-selected-year {
+    width: 165px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+div.gfb-month-picker-month-cluster {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+div.gfb-month-cluser-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+div.gfb-month-cluster-month-button {
+    display: flex;
+    flex: 1;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    margin: 2px;
+    cursor: pointer;
+}
+
+div.gfb-month-cluster-month-button.month-selected, div.gfb-month-cluster-month-button.month-selected:hover {
+    background-color: #357ebd;
+    color: white;
+}
+
+div.gfb-month-cluster-month-button:hover {
+    background-color: #eee;
+}
+
+div.gfb-month-picker-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 43px;
+    border-top: 1px solid #ddd;
+    padding: 7px;
+}
+
+button.gfb-month-button-cancel {
+    font-weight: bold;
+}
+
+button.gfb-month-button-apply {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+select.gfb-month-picker-year-select {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}

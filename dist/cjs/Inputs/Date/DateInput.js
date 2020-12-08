@@ -22,6 +22,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _DatePicker = _interopRequireDefault(require("./DatePicker"));
 
+var _MonthPicker = _interopRequireDefault(require("./MonthPicker"));
+
 var _moment = _interopRequireDefault(require("moment"));
 
 var _utils = require("../../utils");
@@ -59,7 +61,13 @@ var DateInput = function DateInput(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
+      _props$canPickDay = props.canPickDay,
+      canPickDay = _props$canPickDay === void 0 ? true : _props$canPickDay,
+      _props$pastYears = props.pastYears,
+      pastYears = _props$pastYears === void 0 ? 12 : _props$pastYears,
+      _props$futureYears = props.futureYears,
+      futureYears = _props$futureYears === void 0 ? 12 : _props$futureYears;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -86,6 +94,7 @@ var DateInput = function DateInput(props) {
       changeInputValue = _useState2[1];
 
   var elementId = (0, _react.useRef)((0, _utils.randomId)());
+  var portalRef = (0, _react.useRef)();
 
   var _useState3 = (0, _react.useState)(false),
       _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
@@ -213,6 +222,8 @@ var DateInput = function DateInput(props) {
   var startDate = convertDateToMomentFormat(inputValue);
   var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
+  var valueOverride = type === 'month' && startDate ? startDate.format('MM/YYYY') : inputValue; // if this is a special input that only shows months, manually overwrite what the display value is - JRA 12/08/2020
+
   return (0, _core.jsx)("div", {
     className: outerClass,
     style: inputOuter,
@@ -233,7 +244,7 @@ var DateInput = function DateInput(props) {
     id: elementId.current,
     className: className,
     name: name,
-    value: inputValue,
+    value: valueOverride,
     onChange: handleOnInputChange,
     disabled: isFirefox ? false : isDisabled,
     readOnly: isFirefox && isDisabled,
@@ -242,11 +253,16 @@ var DateInput = function DateInput(props) {
     tabIndex: tabIndex,
     onFocus: handleOnFocus,
     onBlur: handleOnBlur,
+    onKeyDown: function onKeyDown(e) {
+      if (e.keyCode === 9 && type === 'month') {
+        changeShowPicker(false);
+      }
+    },
     autoComplete: autoComplete,
     style: valueStyle,
     css: theme.value,
     maxLength: maxlength
-  }), showPicker && (0, _core.jsx)(_DatePicker.default, {
+  }), showPicker && canPickDay && (0, _core.jsx)(_DatePicker.default, {
     elementId: elementId.current,
     handleOnChange: handleOnCalendarChange,
     changeShowPicker: changeShowPicker,
@@ -255,6 +271,17 @@ var DateInput = function DateInput(props) {
     showCalendar: showCalendar,
     startDate: startDate,
     format: inputFormat
+  }), showPicker && !canPickDay && (0, _core.jsx)(_MonthPicker.default, {
+    elementId: elementId.current,
+    ref: portalRef,
+    onChange: onChange,
+    changeShowPicker: changeShowPicker,
+    startDate: startDate,
+    format: inputFormat,
+    pastYears: pastYears,
+    futureYears: futureYears,
+    showPicker: showPicker,
+    name: name
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
@@ -293,5 +320,8 @@ DateInput.propTypes = {
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
-  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
+  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
+  canPickDay: _propTypes.default.bool,
+  pastYears: _propTypes.default.number,
+  futureYears: _propTypes.default.number
 };

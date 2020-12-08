@@ -18,7 +18,7 @@ import { uppercaseFirstLetter } from '../utils';
 import Checkbox from './Checkbox';
 import Colorpicker from './Colorpicker';
 import Currency from './Currency';
-import { Date, Datetime, Time } from './Date';
+import { Date, Datetime, Time, Month } from './Date';
 import Email from './Email';
 import Header from './Header';
 import Icon from './Icon';
@@ -48,6 +48,7 @@ var FormComponents = {
   Input: Input,
   Listselect: Listselect,
   Metadata: Metadata,
+  Month: Month,
   Multicheckbox: Multicheckbox,
   Multiselect: Multiselect,
   Number: Number,

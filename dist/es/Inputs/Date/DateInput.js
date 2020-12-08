@@ -6,6 +6,7 @@ import { jsx } from '@emotion/core';
 import { useCallback, useEffect, useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from './DatePicker';
+import MonthPicker from './MonthPicker';
 import moment from 'moment';
 import { randomId } from '../../utils';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
@@ -39,7 +40,13 @@ var DateInput = function DateInput(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
+      _props$canPickDay = props.canPickDay,
+      canPickDay = _props$canPickDay === void 0 ? true : _props$canPickDay,
+      _props$pastYears = props.pastYears,
+      pastYears = _props$pastYears === void 0 ? 12 : _props$pastYears,
+      _props$futureYears = props.futureYears,
+      futureYears = _props$futureYears === void 0 ? 12 : _props$futureYears;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -66,6 +73,7 @@ var DateInput = function DateInput(props) {
       changeInputValue = _useState2[1];
 
   var elementId = useRef(randomId());
+  var portalRef = useRef();
 
   var _useState3 = useState(false),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -193,6 +201,8 @@ var DateInput = function DateInput(props) {
   var startDate = convertDateToMomentFormat(inputValue);
   var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
+  var valueOverride = type === 'month' && startDate ? startDate.format('MM/YYYY') : inputValue; // if this is a special input that only shows months, manually overwrite what the display value is - JRA 12/08/2020
+
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -213,7 +223,7 @@ var DateInput = function DateInput(props) {
     id: elementId.current,
     className: className,
     name: name,
-    value: inputValue,
+    value: valueOverride,
     onChange: handleOnInputChange,
     disabled: isFirefox ? false : isDisabled,
     readOnly: isFirefox && isDisabled,
@@ -222,11 +232,16 @@ var DateInput = function DateInput(props) {
     tabIndex: tabIndex,
     onFocus: handleOnFocus,
     onBlur: handleOnBlur,
+    onKeyDown: function onKeyDown(e) {
+      if (e.keyCode === 9 && type === 'month') {
+        changeShowPicker(false);
+      }
+    },
     autoComplete: autoComplete,
     style: valueStyle,
     css: theme.value,
     maxLength: maxlength
-  }), showPicker && jsx(DatePicker, {
+  }), showPicker && canPickDay && jsx(DatePicker, {
     elementId: elementId.current,
     handleOnChange: handleOnCalendarChange,
     changeShowPicker: changeShowPicker,
@@ -235,6 +250,17 @@ var DateInput = function DateInput(props) {
     showCalendar: showCalendar,
     startDate: startDate,
     format: inputFormat
+  }), showPicker && !canPickDay && jsx(MonthPicker, {
+    elementId: elementId.current,
+    ref: portalRef,
+    onChange: onChange,
+    changeShowPicker: changeShowPicker,
+    startDate: startDate,
+    format: inputFormat,
+    pastYears: pastYears,
+    futureYears: futureYears,
+    showPicker: showPicker,
+    name: name
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
@@ -272,5 +298,8 @@ DateInput.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  canPickDay: PropTypes.bool,
+  pastYears: PropTypes.number,
+  futureYears: PropTypes.number
 };
