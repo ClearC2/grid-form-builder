@@ -192,16 +192,29 @@ export default class ConditionalTable extends Component {
         if (newValue.size > CONDITIONS[cond].maxFields) {
           newValue = newValue.slice(0, CONDITIONS[cond].maxFields)
         }
-        req.query.conditions.push({
-          name: key,
-          label: this.getLabel(key),
-          comparator: cond,
-          values: newValue,
-          dynamicValues: value.dynamicValues,
-          rawValues: rawValues,
-          not: value.not || false,
-          format: this.getFormat(key)
-        })
+        if (cond === 'is between') {
+          req.query.conditions.push({
+            name: key,
+            values: [newValue.get('0', '')],
+            comparator: 'is greater than'
+          })
+          req.query.conditions.push({
+            name: key,
+            values: [newValue.get('1', '')],
+            comparator: 'is less than'
+          })
+        } else {
+          req.query.conditions.push({
+            name: key,
+            label: this.getLabel(key),
+            comparator: cond,
+            values: newValue,
+            dynamicValues: value.dynamicValues,
+            rawValues: rawValues,
+            not: value.not || false,
+            format: this.getFormat(key)
+          })
+        }
       }
     })
     return req
