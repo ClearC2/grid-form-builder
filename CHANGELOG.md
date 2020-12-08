@@ -1,3 +1,10 @@
+## [3.50.2](https://github.com/ClearC2/grid-form-builder/compare/v3.50.1...v3.50.2) (2020-12-08)
+
+
+### Bug Fixes
+
+* **month:** month footer buttons should now be similar in size to the date range picker footer ([effa5b8](https://github.com/ClearC2/grid-form-builder/commit/effa5b8c93cc304cc475c5ec642b1c94f5991de2))
+
 ## [3.50.1](https://github.com/ClearC2/grid-form-builder/compare/v3.50.0...v3.50.1) (2020-12-08)
 
 
