@@ -399,11 +399,9 @@
           "static": false
         },
         "config": {
-          "required": true,
-          "maxlength": 2,
-          "name": "datetest",
+          "name": "monthtest",
           "label": "Date",
-          "type": "date",
+          "type": "month",
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
@@ -977,7 +975,6 @@
           "type": "number",
           "name": "number",
           "label": "Number Input",
-          "required": true,
           "maximum": 42069,
           "minimum": 0
         }

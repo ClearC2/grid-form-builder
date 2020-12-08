@@ -3,6 +3,7 @@ import {jsx} from '@emotion/core'
 import {useCallback, useEffect, useState, useRef, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import DatePicker from './DatePicker'
+import MonthPicker from './MonthPicker'
 import moment from 'moment'
 import {randomId} from '../../utils'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
@@ -29,7 +30,10 @@ const DateInput = props => {
     requiredWarning,
     style = {},
     required,
-    maxlength = 524288
+    maxlength = 524288,
+    canPickDay = true,
+    pastYears = 12,
+    futureYears = 12
   } = props
 
   const {
@@ -47,6 +51,7 @@ const DateInput = props => {
   type = type.toLowerCase()
   const [inputValue, changeInputValue] = useState('')
   const elementId = useRef(randomId())
+  const portalRef = useRef()
   const [showPicker, changeShowPicker] = useState(false)
   const [inputFormat, setInputFormat] = useState()
   const [isFocused, setIsFocused] = useState(false)
@@ -157,6 +162,8 @@ const DateInput = props => {
   const isFirefox = navigator.userAgent.search('Firefox') > -1
   const isDisabled = readonly || disabled || !interactive
 
+  const valueOverride = type === 'month' && startDate ? startDate.format('MM/YYYY') : inputValue // if this is a special input that only shows months, manually overwrite what the display value is - JRA 12/08/2020
+
   return (
     <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
       <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
@@ -166,7 +173,7 @@ const DateInput = props => {
               id={elementId.current}
               className={className}
               name={name}
-              value={inputValue}
+              value={valueOverride}
               onChange={handleOnInputChange}
               disabled={isFirefox ? false : isDisabled}
               readOnly={isFirefox && isDisabled}
@@ -175,12 +182,19 @@ const DateInput = props => {
               tabIndex={tabIndex}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
+              onKeyDown={
+                e => {
+                  if (e.keyCode === 9 && type === 'month') {
+                    changeShowPicker(false)
+                  }
+                }
+              }
               autoComplete={autoComplete}
               style={valueStyle}
               css={theme.value}
               maxLength={maxlength}
             />
-            {showPicker && (
+            {showPicker && canPickDay && (
               <DatePicker
                 elementId={elementId.current}
                 handleOnChange={handleOnCalendarChange}
@@ -190,6 +204,20 @@ const DateInput = props => {
                 showCalendar={showCalendar}
                 startDate={startDate}
                 format={inputFormat}
+              />
+            )}
+            {showPicker && !canPickDay && (
+              <MonthPicker
+                elementId={elementId.current}
+                ref={portalRef}
+                onChange={onChange}
+                changeShowPicker={changeShowPicker}
+                startDate={startDate}
+                format={inputFormat}
+                pastYears={pastYears}
+                futureYears={futureYears}
+                showPicker={showPicker}
+                name={name}
               />
             )}
           </div>
@@ -229,5 +257,8 @@ DateInput.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  canPickDay: PropTypes.bool,
+  pastYears: PropTypes.number,
+  futureYears: PropTypes.number
 }
