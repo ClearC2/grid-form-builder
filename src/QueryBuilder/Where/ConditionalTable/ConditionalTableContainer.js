@@ -38,6 +38,15 @@ const getFieldSchema = (key, formSchema) => {
     return undefined
   }
 }
+
+const getBetweenDatesValues = (query) => {
+  return query.map(q => {
+    if (q.values && q.values.length) {
+      return q.values[0]
+    }
+  })
+}
+
 export const convertQueryToFormValues = (query, clearExistingValues = true, fValues, formSchema) => {
   let formValues = fromJS(fValues)
   if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
@@ -64,17 +73,28 @@ export const convertQueryToFormValues = (query, clearExistingValues = true, fVal
       query = query.query
     }
     if (query.conditions) {
+      const inBetweenDateValues = getBetweenDatesValues(query.conditions)
       fromJS(query.conditions).forEach(c => {
         const schema = getFieldSchema(c.get('name'), formSchema)
+        const mergeDate = c.get('mergeDate', false)
         if (schema) {
           if (Set(TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
             const val = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '')
             formValues = formValues.set(c.get('name'), val)
           } else {
-            if (c.get('rawValues') !== undefined) {
+            if (c.get('rawValues') !== undefined && !mergeDate) {
               formValues = formValues.set(c.get('name'), Map({
                 condition: c.get('comparator'),
                 values: c.get('rawValues', List()),
+                dynamicValues: c.get('dynamicValues'),
+                not: c.get('not', false),
+                format: c.get('format', '')
+              }))
+            // https://github.com/ClearC2/bleu/issues/4734
+            } else if (mergeDate) {
+              formValues = formValues.set(c.get('name'), Map({
+                condition: 'is between',
+                values: List(inBetweenDateValues),
                 dynamicValues: c.get('dynamicValues'),
                 not: c.get('not', false),
                 format: c.get('format', '')
