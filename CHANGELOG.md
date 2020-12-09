@@ -1,3 +1,10 @@
+## [3.50.3](https://github.com/ClearC2/grid-form-builder/compare/v3.50.2...v3.50.3) (2020-12-09)
+
+
+### Bug Fixes
+
+* **conditionalTable:** date display ([#170](https://github.com/ClearC2/grid-form-builder/issues/170)) ([2e4b138](https://github.com/ClearC2/grid-form-builder/commit/2e4b138244dd0e578a228a505ff146524bae30e3))
+
 ## [3.50.2](https://github.com/ClearC2/grid-form-builder/compare/v3.50.1...v3.50.2) (2020-12-08)
 
 

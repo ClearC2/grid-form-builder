@@ -30,6 +30,10 @@ var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/he
 
 var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
 
+var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
+
+var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+
 var _find = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/find"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
@@ -93,6 +97,14 @@ var getFieldSchema = function getFieldSchema(key, formSchema) {
   }
 };
 
+var getBetweenDatesValues = function getBetweenDatesValues(query) {
+  return (0, _map.default)(query).call(query, function (q) {
+    if ((0, _values.default)(q) && (0, _values.default)(q).length) {
+      return (0, _values.default)(q)[0];
+    }
+  });
+};
+
 var convertQueryToFormValues = function convertQueryToFormValues(query) {
   var clearExistingValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var fValues = arguments.length > 2 ? arguments[2] : undefined;
@@ -127,18 +139,28 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
     if (query.conditions) {
       var _context2;
 
+      var inBetweenDateValues = getBetweenDatesValues(query.conditions);
       (0, _forEach.default)(_context2 = (0, _immutable.fromJS)(query.conditions)).call(_context2, function (c) {
         var schema = getFieldSchema(c.get('name'), formSchema);
+        var mergeDate = c.get('mergeDate', false);
 
         if (schema) {
           if ((0, _immutable.Set)(_index.TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
             var val = c.get('values') instanceof _immutable.List ? c.getIn(['values', 0], ['']) : c.get('values', '');
             formValues = formValues.set(c.get('name'), val);
           } else {
-            if (c.get('rawValues') !== undefined) {
+            if (c.get('rawValues') !== undefined && !mergeDate) {
               formValues = formValues.set(c.get('name'), (0, _immutable.Map)({
                 condition: c.get('comparator'),
                 values: c.get('rawValues', (0, _immutable.List)()),
+                dynamicValues: c.get('dynamicValues'),
+                not: c.get('not', false),
+                format: c.get('format', '')
+              })); // https://github.com/ClearC2/bleu/issues/4734
+            } else if (mergeDate) {
+              formValues = formValues.set(c.get('name'), (0, _immutable.Map)({
+                condition: 'is between',
+                values: (0, _immutable.List)(inBetweenDateValues),
                 dynamicValues: c.get('dynamicValues'),
                 not: c.get('not', false),
                 format: c.get('format', '')

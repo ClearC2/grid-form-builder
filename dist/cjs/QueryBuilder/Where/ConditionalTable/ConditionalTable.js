@@ -226,18 +226,21 @@ function (_Component) {
 
           if (newValue.size > _index.CONDITIONS[cond].maxFields) {
             newValue = (0, _slice.default)(newValue).call(newValue, 0, _index.CONDITIONS[cond].maxFields);
-          }
+          } // https://github.com/ClearC2/bleu/issues/4734
+
 
           if (cond === 'is between') {
             req.query.conditions.push({
               name: key,
               values: [newValue.get('0', '')],
-              comparator: 'is greater than'
+              comparator: 'is greater than',
+              mergeDate: true
             });
             req.query.conditions.push({
               name: key,
               values: [newValue.get('1', '')],
-              comparator: 'is less than'
+              comparator: 'is less than',
+              mergeDate: true
             });
           } else {
             req.query.conditions.push({
