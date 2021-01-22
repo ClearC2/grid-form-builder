@@ -401,7 +401,9 @@
         "config": {
           "name": "monthtest",
           "label": "Date",
-          "type": "month",
+          "type": "date",
+          "minDate":  "01-01-2021",
+          "maxDate": "06-22-2021",
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"

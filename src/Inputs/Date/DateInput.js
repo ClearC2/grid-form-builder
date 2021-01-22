@@ -33,7 +33,9 @@ const DateInput = props => {
     maxlength = 524288,
     canPickDay = true,
     pastYears = 12,
-    futureYears = 12
+    futureYears = 12,
+    minDate,
+    maxDate
   } = props
 
   const {
@@ -204,6 +206,8 @@ const DateInput = props => {
                 showCalendar={showCalendar}
                 startDate={startDate}
                 format={inputFormat}
+                minDate={minDate}
+                maxDate={maxDate}
               />
             )}
             {showPicker && !canPickDay && (
@@ -260,5 +264,7 @@ DateInput.propTypes = {
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   canPickDay: PropTypes.bool,
   pastYears: PropTypes.number,
-  futureYears: PropTypes.number
+  futureYears: PropTypes.number,
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string
 }

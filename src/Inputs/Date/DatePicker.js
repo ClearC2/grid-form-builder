@@ -14,7 +14,9 @@ const DatePicker = props => {
     timePicker,
     showCalendar,
     startDate,
-    format
+    format,
+    minDate,
+    maxDate
   } = props
 
   const valueDidChange = useRef(false) // JRA 02/07/2020 - selecting the date that is already selected closes the calendar without a change event
@@ -47,7 +49,9 @@ const DatePicker = props => {
           autoUpdateInput: false,
           timePicker,
           drops: determinePickerOpenDirection(),
-          startDate
+          startDate,
+          minDate,
+          maxDate
         },
         date => {
           if (date && date.isValid && date.isValid()) {
