@@ -1,3 +1,10 @@
+# [3.51.0](https://github.com/ClearC2/grid-form-builder/compare/v3.50.3...v3.51.0) (2021-01-22)
+
+
+### Features
+
+* **date:** adds minDate and maxDate config options ([78271f3](https://github.com/ClearC2/grid-form-builder/commit/78271f3222cd417af54f6b87ae9bca04186b9fd1))
+
 ## [3.50.3](https://github.com/ClearC2/grid-form-builder/compare/v3.50.2...v3.50.3) (2020-12-09)
 
 

@@ -32,7 +32,9 @@ var DatePicker = function DatePicker(props) {
       timePicker = props.timePicker,
       showCalendar = props.showCalendar,
       startDate = props.startDate,
-      format = props.format;
+      format = props.format,
+      minDate = props.minDate,
+      maxDate = props.maxDate;
   var valueDidChange = (0, _react.useRef)(false); // JRA 02/07/2020 - selecting the date that is already selected closes the calendar without a change event
   // this is undesirable as the fallback date is today's date, and if the user opens a blank date field and picks today, a change event is not fired
   // in order to get around this issue, this component will check on the calendar hide event if a change had been made or not, and if not, send back the current startDate as a change event
@@ -59,7 +61,9 @@ var DatePicker = function DatePicker(props) {
         autoUpdateInput: false,
         timePicker: timePicker,
         drops: determinePickerOpenDirection(),
-        startDate: startDate
+        startDate: startDate,
+        minDate: minDate,
+        maxDate: maxDate
       }, function (date) {
         if (date && date.isValid && date.isValid()) {
           valueDidChange.current = true;

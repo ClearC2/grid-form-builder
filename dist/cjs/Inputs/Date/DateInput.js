@@ -67,7 +67,9 @@ var DateInput = function DateInput(props) {
       _props$pastYears = props.pastYears,
       pastYears = _props$pastYears === void 0 ? 12 : _props$pastYears,
       _props$futureYears = props.futureYears,
-      futureYears = _props$futureYears === void 0 ? 12 : _props$futureYears;
+      futureYears = _props$futureYears === void 0 ? 12 : _props$futureYears,
+      minDate = props.minDate,
+      maxDate = props.maxDate;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -270,7 +272,9 @@ var DateInput = function DateInput(props) {
     timePicker: timePicker,
     showCalendar: showCalendar,
     startDate: startDate,
-    format: inputFormat
+    format: inputFormat,
+    minDate: minDate,
+    maxDate: maxDate
   }), showPicker && !canPickDay && (0, _core.jsx)(_MonthPicker.default, {
     elementId: elementId.current,
     ref: portalRef,
@@ -323,5 +327,7 @@ DateInput.propTypes = {
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
   canPickDay: _propTypes.default.bool,
   pastYears: _propTypes.default.number,
-  futureYears: _propTypes.default.number
+  futureYears: _propTypes.default.number,
+  minDate: _propTypes.default.string,
+  maxDate: _propTypes.default.string
 };
