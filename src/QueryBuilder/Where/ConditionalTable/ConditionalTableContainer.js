@@ -40,11 +40,13 @@ const getFieldSchema = (key, formSchema) => {
 }
 
 const getBetweenDatesValues = (query) => {
-  return query.map(q => {
-    if (q.values && q.values.length) {
-      return q.values[0]
-    }
-  })
+  return query
+    .map(q => {
+      if (q.values && q.values.length) {
+        return q.values[0]
+      }
+    })
+    .filter(Boolean)
 }
 
 export const convertQueryToFormValues = (query, clearExistingValues = true, fValues, formSchema) => {
