@@ -34,6 +34,8 @@ var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-sta
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
+var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
+
 var _find = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/find"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
@@ -98,11 +100,13 @@ var getFieldSchema = function getFieldSchema(key, formSchema) {
 };
 
 var getBetweenDatesValues = function getBetweenDatesValues(query) {
-  return (0, _map.default)(query).call(query, function (q) {
+  var _context2;
+
+  return (0, _filter.default)(_context2 = (0, _map.default)(query).call(query, function (q) {
     if ((0, _values.default)(q) && (0, _values.default)(q).length) {
       return (0, _values.default)(q)[0];
     }
-  });
+  })).call(_context2, Boolean);
 };
 
 var convertQueryToFormValues = function convertQueryToFormValues(query) {
@@ -137,10 +141,10 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
     }
 
     if (query.conditions) {
-      var _context2;
+      var _context3;
 
       var inBetweenDateValues = getBetweenDatesValues(query.conditions);
-      (0, _forEach.default)(_context2 = (0, _immutable.fromJS)(query.conditions)).call(_context2, function (c) {
+      (0, _forEach.default)(_context3 = (0, _immutable.fromJS)(query.conditions)).call(_context3, function (c) {
         var schema = getFieldSchema(c.get('name'), formSchema);
         var mergeDate = c.get('mergeDate', false);
 
@@ -225,9 +229,9 @@ function (_Component) {
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-        var _context3;
+        var _context4;
 
-        return (0, _find.default)(_context3 = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context3, function (row) {
+        return (0, _find.default)(_context4 = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context4, function (row) {
           return row.config.name === key;
         });
       } else {

@@ -9,6 +9,7 @@ import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import React, { Component } from 'react';
@@ -65,11 +66,13 @@ var getFieldSchema = function getFieldSchema(key, formSchema) {
 };
 
 var getBetweenDatesValues = function getBetweenDatesValues(query) {
-  return _mapInstanceProperty(query).call(query, function (q) {
+  var _context2;
+
+  return _filterInstanceProperty(_context2 = _mapInstanceProperty(query).call(query, function (q) {
     if (_valuesInstanceProperty(q) && _valuesInstanceProperty(q).length) {
       return _valuesInstanceProperty(q)[0];
     }
-  });
+  })).call(_context2, Boolean);
 };
 
 export var convertQueryToFormValues = function convertQueryToFormValues(query) {
@@ -104,11 +107,11 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
     }
 
     if (query.conditions) {
-      var _context2;
+      var _context3;
 
       var inBetweenDateValues = getBetweenDatesValues(query.conditions);
 
-      _forEachInstanceProperty(_context2 = fromJS(query.conditions)).call(_context2, function (c) {
+      _forEachInstanceProperty(_context3 = fromJS(query.conditions)).call(_context3, function (c) {
         var schema = getFieldSchema(c.get('name'), formSchema);
         var mergeDate = c.get('mergeDate', false);
 
@@ -195,9 +198,9 @@ function (_Component) {
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-        var _context3;
+        var _context4;
 
-        return _findInstanceProperty(_context3 = List(formSchema.jsonschema.layout)).call(_context3, function (row) {
+        return _findInstanceProperty(_context4 = List(formSchema.jsonschema.layout)).call(_context4, function (row) {
           return row.config.name === key;
         });
       } else {
