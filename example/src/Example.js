@@ -183,6 +183,7 @@ export default class Example extends Component {
                 formSchema={this.state.formSchema.form}
                 handleFormValueChange={this.handleOnChange}
                 formValues={this.state.formValues.toJS()}
+                enableDelete
                 onNextClick={(e) => {
                   console.log(this.state.formValues, e, 'form val loggggggggg') // eslint-disable-line
                 }}

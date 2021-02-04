@@ -60,7 +60,7 @@ export default class ConditionalTable extends Component {
     }
   }
 
-  buildMultiString = (key, value, exclude = false) => {
+  buildMultiString = (key, value, exclude = false, rawValue) => {
     let valString = ''
     if (value) {
       if (typeof value === 'string') {
@@ -78,7 +78,7 @@ export default class ConditionalTable extends Component {
         }
       }
       let i = value.length
-      const cond = this.getConditionValue(key) || 'contains'
+      const cond = this.getConditionValue(rawValue) || 'contains'
       if (i > CONDITIONS[cond].maxFields) {
         value = List(value).slice(0, CONDITIONS[cond].maxFields).toJS()
       }
@@ -97,7 +97,7 @@ export default class ConditionalTable extends Component {
           i--
         })
       }
-      return `${exclude ? ' (exclude) ' : ''}` + ' ' + this.getConditionValue(key) + ' ' + valString
+      return `${exclude ? ' (exclude) ' : ''}` + ' ' + this.getConditionValue(rawValue) + ' ' + valString
     } else {
       return ''
     }
@@ -324,7 +324,7 @@ export default class ConditionalTable extends Component {
     })
   }
 
-  handleRemoveConditionClick = (e, key) => {
+  handleRemoveConditionClick = (e, key, predicateIndex) => {
     const schema = this.props.getFieldSchema(key)
     if (schema && schema.config && (schema.config.type === 'textarea' ||
         schema.config.type === 'checkbox' ||
@@ -336,26 +336,41 @@ export default class ConditionalTable extends Component {
         }
       })
     } else {
-      this.props.handleOnChange({
-        target: {
-          name: key,
-          value: Map({
-            condition: this.props.getDefaultCondition(schema.config.type),
-            values: List()
-          })
-        }
-      })
+      if (predicateIndex >= 0) {
+        let predicate = this.props.formValues[key]
+        predicate = predicate.deleteIn(['conditions', predicateIndex])
+        //   , Map({
+        //   condition: this.props.getDefaultCondition(schema.config.type),
+        //   values: List()
+        // }))
+        this.props.handleOnChange({
+          target: {
+            name: key,
+            value: predicate
+          }
+        })
+      } else {
+        this.props.handleOnChange({
+          target: {
+            name: key,
+            value: Map({
+              condition: this.props.getDefaultCondition(schema.config.type),
+              values: List()
+            })
+          }
+        })
+      }
     }
   }
 
-  renderDeleteIcon = (key) => {
+  renderDeleteIcon = (key, predicateIndex) => {
     if (this.props.enableDelete) {
       return (
         <i
           className={X_ICON_CLASS}
           style={{color: '#8c0000', marginTop: '3px'}}
           onClick={(e) => {
-            this.handleRemoveConditionClick(e, key)
+            this.handleRemoveConditionClick(e, key, predicateIndex)
           }}
         />
       )
@@ -364,11 +379,9 @@ export default class ConditionalTable extends Component {
     }
   }
 
-  getConditionValue = (key) => {
-    let {formValues = {}} = this.props
-    if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
-    if (formValues[key] && formValues[key].condition) {
-      return formValues[key].condition
+  getConditionValue = (rawValue) => {
+    if (rawValue && rawValue.condition) {
+      return rawValue.condition
     } else {
       return 'contains'
     }
@@ -387,14 +400,14 @@ export default class ConditionalTable extends Component {
     return type
   }
 
-  buildTableRow = (key, value, predicateIndex = 0) => {
+  buildTableRow = (key, value, predicateIndex = -1) => {
     if (value && this.state.noValueConditions.has(value.condition)) {
       return (
         <tr key={`row-${key}-${predicateIndex}`}>
           <td key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
             {value.not && '(exclude) '}{value.condition}
-            {this.renderDeleteIcon(key)}
+            {this.renderDeleteIcon(key, predicateIndex)}
           </td>
         </tr>
       )
@@ -413,7 +426,7 @@ export default class ConditionalTable extends Component {
           <td key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
             {value.not && '(exclude) '}contains {val}
-            {this.renderDeleteIcon(key, value)}
+            {this.renderDeleteIcon(key, value, predicateIndex)}
           </td>
         </tr>
       )
@@ -423,7 +436,7 @@ export default class ConditionalTable extends Component {
           <td key={`column-${key}-${predicateIndex}`}>
             <strong>{this.getLabel(key)} </strong>
             is {value ? 'True' : 'False'}
-            {this.renderDeleteIcon(key, value)}
+            {this.renderDeleteIcon(key, value, predicateIndex)}
           </td>
         </tr>
       )
@@ -437,8 +450,8 @@ export default class ConditionalTable extends Component {
         <tr key={`row-${key}-${predicateIndex}`}>
           <td key={`column-${key}-${predicateIndex}`}>
             <strong>{this.getLabel(key)}</strong>
-            {this.buildMultiString(key, value.values.concat(value.dynamicValues || []), value.not)}
-            {this.renderDeleteIcon(key, value.values.concat(value.dynamicValues || []))}
+            {this.buildMultiString(key, value.values.concat(value.dynamicValues || []), value.not, value)}
+            {this.renderDeleteIcon(key, value.values.concat(value.dynamicValues || []), predicateIndex)}
           </td>
         </tr>
       )

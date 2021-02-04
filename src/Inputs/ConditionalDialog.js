@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {Dialog} from 'c2-dialog'
 import {Map, List} from 'immutable'
 import ConditionalPredicate from './ConditionalPredicate'
+import Toggle from '../QueryBuilder/Where/ConditionalTable/Toggle'
 const ConditionalDialog = props => {
   const {value} = props
   const [conditions, setConditions] = useState(1)
@@ -19,7 +20,7 @@ const ConditionalDialog = props => {
     if (conditions > 1) {
       if (!value.get('type')) {
         let filter = Map({
-          type: 'all',
+          type: 'and',
           conditions: List([value])
         })
         e.target.value = e.target.value.set('name', e.target.name)
@@ -52,11 +53,32 @@ const ConditionalDialog = props => {
       let indexedValue = value
       if (value.get('type')) {
         indexedValue = value.getIn(['conditions', i], Map({condition: 'contains', values: List()}))
+      } else if (conditions > 1) {
+        indexedValue = Map({condition: 'contains', values: List()})
       }
-      conditionElements.push(<ConditionalPredicate {...props} value={indexedValue} onChange={onChange} index={i} />)
+      conditionElements.push(
+        <div style={{borderTop: '1px solid lightgray'}}>
+          <ConditionalPredicate {...props} value={indexedValue} onChange={onChange} index={i} />
+        </div>
+      )
     }
     return conditionElements
   }
+  const handleToggleClick = (e) => {
+    if (e) {
+      // switch to or
+      let filter = value
+      filter = filter.set('type', 'or')
+      props.onChange({target: {name: props.name, value: filter}})
+    } else {
+      // switch to and
+      let filter = value
+      filter = filter.set('type', 'and')
+      props.onChange({target: {name: props.name, value: filter}})
+    }
+  }
+  const closeModal = () => props.handleClose(false)
+  const addCondition = () => setConditions(conditions + 1)
   return (
     <Dialog
       size={{width: '800px', height: `420px`}}
@@ -73,17 +95,26 @@ const ConditionalDialog = props => {
       disableDragging
     >
       <div style={{width: '100%', height: '100%'}}>
+
         <div style={{display: 'flex', flexDirection: 'row', padding: '10px', height: '54px'}}>
           <div style={{width: '90%'}}>
             <h4 style={{height: '100%', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
               {props.label} condition:
             </h4>
+            {conditions > 1 && value.get('type') &&
+            <span className='pull-right' style={{marginTop: '-32px'}}>
+              <Toggle
+                value={value.get('type') === 'and'}
+                onToggle={handleToggleClick}
+                activeLabel='and'
+                inactiveLabel='or'
+              /></span>}
           </div>
           <div style={{width: '10%'}}>
             <button
               type='button'
               className='close'
-              onClick={() => props.handleClose(false)}
+              onClick={closeModal}
             >
               <span>&times;</span>
             </button>
@@ -105,7 +136,7 @@ const ConditionalDialog = props => {
           type='button'
           className='btn btn-primary'
           style={{height: 35, position: 'absolute', bottom: 15, right: 90}}
-          onClick={() => setConditions(conditions + 1)}
+          onClick={addCondition}
         >
           Add Condition
         </button>
@@ -113,7 +144,7 @@ const ConditionalDialog = props => {
           type='button'
           className='btn btn-primary'
           style={{height: 35, position: 'absolute', bottom: 15, right: 30}}
-          onClick={() => props.handleClose(false)}
+          onClick={closeModal}
         >
           Ok
         </button>

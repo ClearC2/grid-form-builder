@@ -40,8 +40,8 @@ const ConditionalPredicate = props => {
     // const v = props.values[props.name]
     if (props.name) {
       let initCondition = inputTypeOptionsList()[0].value
-      if (props.values.getIn([props.name, 'condition'])) {
-        initCondition = props.values.getIn([props.name, 'condition'], inputTypeOptionsList()[0].value)
+      if (props.value.getIn(['condition'])) {
+        initCondition = props.value.getIn(['condition'], inputTypeOptionsList()[0].value)
       }
       const initialModalValues = {condition: initCondition}
       if (SINGLE_FIELD_INPUTS.has(props.inputType.toLowerCase())) {
@@ -55,8 +55,8 @@ const ConditionalPredicate = props => {
           initialModalValues[`${props.name}-0`] = ''
         }
       }
-      if (props.values.getIn([props.name, 'dynamicValues'])) {
-        initialModalValues.dynamicValues = props.values.getIn([props.name, 'dynamicValues'])
+      if (props.value.getIn(['dynamicValues'])) {
+        initialModalValues.dynamicValues = props.value.getIn(['dynamicValues'])
       }
       setModalValues(Map(initialModalValues))
     }
@@ -206,7 +206,7 @@ const ConditionalPredicate = props => {
           label: `${props.label}`,
           interactive: true,
           clearable: true,
-          type: DATES.has(props.inputType.toLowerCase()) && NUMERICAL_CONDITIONS.has(props.values.getIn([props.name, 'condition'], '')) ? 'number' : props.inputType.toLowerCase(),// eslint-disable-line
+          type: DATES.has(props.inputType.toLowerCase()) && NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),// eslint-disable-line
           handleOnChange: dialogOnChange
         }
       })
@@ -232,7 +232,7 @@ const ConditionalPredicate = props => {
             label: label,
             interactive: true,
             clearable: true,
-            type: DATES.has(props.inputType.toLowerCase()) && NUMERICAL_CONDITIONS.has(props.values.getIn([props.name, 'condition'], '')) ? 'number' : props.inputType.toLowerCase(),// eslint-disable-line
+            type: DATES.has(props.inputType.toLowerCase()) && NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),// eslint-disable-line
             handleOnChange: dialogOnChange
           }
         }
@@ -247,9 +247,9 @@ const ConditionalPredicate = props => {
   }
 
   function condition () {
-    const oldValue = props.values.get(props.name)
+    const oldValue = props.value
     if (oldValue && oldValue instanceof Map) {
-      return props.values.get(props.name, Map()).get('condition', '')
+      return props.value.get('condition', '')
     } else {
       return modalValues.get('condition', 'contains')
     }
@@ -265,20 +265,20 @@ const ConditionalPredicate = props => {
         setTimeout(() => { dialogOnChange({target: {name: `${props.name}-0`, value: List()}}) }, 0)
       }
     }
-    const oldValue = props.values.get(props.name)
+    const oldValue = props.value
     if (oldValue && oldValue instanceof Map) {
-      let newFieldValue = props.values.get(props.name, Map()).set(e.target.name, e.target.value)
+      let newFieldValue = props.value.set(e.target.name, e.target.value)
       const maxFieldValues = CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields
       if (newFieldValue.get('values', List()).size >= maxFieldValues) {
         newFieldValue = newFieldValue.set('values', newFieldValue.get('values', List()).slice(0, maxFieldValues))
       }
       props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
     }
-    if ((!NUMERICAL_CONDITIONS.has(props.values.getIn([props.name, 'condition'], '')) &&
+    if ((!NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) &&
         NUMERICAL_CONDITIONS.has(e.target.value)) ||
-      (NUMERICAL_CONDITIONS.has(props.values.getIn([props.name, 'condition'], '')) &&
+      (NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) &&
         !NUMERICAL_CONDITIONS.has(e.target.value))) {
-      let newFieldValue = props.values.get(props.name, Map()).set(e.target.name, e.target.value)
+      let newFieldValue = props.value.set(e.target.name, e.target.value)
       newFieldValue = newFieldValue.set('values', List())
       props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
     }
