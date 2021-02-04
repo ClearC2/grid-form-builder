@@ -11,17 +11,17 @@ export default class Example extends Component {
   state = {
     isInvalidWarning: false,
     formValues: Map({
-      inputtest: 'Clear C2, Inc.',
-      textareatest: '1234 Main Street',
-      meta_created_date: 'swiggity swoogity here comes the moogity',
-      listselecttest: List(['Customer Service', 'Executive Meeting']),
-      multiselecttest: ['Contract Signing', 'Customer Service', 'Not A Value', 'Initial Meeting', 'Internet Hub'],
-      parentid: '00112233445566778899AABBCCEEFFFF',
-      phonetest: '5554443333',
-      price: '25.25',
-      companyid: '12345',
-      personid: 'abcdef',
-      pp_mobile_phone_region: 'RU'
+      // inputtest: 'Clear C2, Inc.',
+      // textareatest: '1234 Main Street',
+      // meta_created_date: 'swiggity swoogity here comes the moogity',
+      // listselecttest: List(['Customer Service', 'Executive Meeting']),
+      // multiselecttest: ['Contract Signing', 'Customer Service', 'Not A Value', 'Initial Meeting', 'Internet Hub'],
+      // parentid: '00112233445566778899AABBCCEEFFFF',
+      // phonetest: '5554443333',
+      // price: '25.25',
+      // companyid: '12345',
+      // personid: 'abcdef',
+      // pp_mobile_phone_region: 'RU'
     }),
     inline: false,
     draggable: false,
@@ -95,6 +95,7 @@ export default class Example extends Component {
   toggleDroppable = () => this.setState({droppable: !this.state.droppable})
 
   handleOnChange = e => {
+    console.log(e, 'e loggggggggg example')
     const input = e.target
     this.setState(s => {
       return {formValues: s.formValues.set(input.name, input.value)}

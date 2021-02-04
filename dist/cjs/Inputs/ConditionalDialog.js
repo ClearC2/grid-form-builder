@@ -31,14 +31,16 @@ var _Toggle = _interopRequireDefault(require("../QueryBuilder/Where/ConditionalT
 var ConditionalDialog = function ConditionalDialog(props) {
   var value = props.value;
 
-  var _useState = (0, _react.useState)(1),
+  var _useState = (0, _react.useState)(value && value.get ? value.get('conditions', (0, _immutable.List)()).size : 1),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       conditions = _useState2[0],
       setConditions = _useState2[1]; // const [value, setValue] = useState(props.value)
 
 
   (0, _react.useEffect)(function () {
-    if (value.get('type')) {
+    console.log(value, 'value logggggggg');
+
+    if (value && value.get('type')) {
       setConditions(value.get('conditions').size);
     } else {
       setConditions(1);
@@ -47,7 +49,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
 
   var onChange = function onChange(e, i) {
     if (conditions > 1) {
-      if (!value.get('type')) {
+      if (value && !value.get('type')) {
         var filter = (0, _immutable.Map)({
           type: 'and',
           conditions: (0, _immutable.List)([value])
@@ -98,12 +100,21 @@ var ConditionalDialog = function ConditionalDialog(props) {
     for (var i = 0; i < conditions; i++) {
       var indexedValue = value;
 
-      if (value.get('type')) {
+      if (value && value.get('type')) {
         indexedValue = value.getIn(['conditions', i], (0, _immutable.Map)({
           condition: 'contains',
           values: (0, _immutable.List)()
         }));
       } else if (conditions > 1) {
+        indexedValue = (0, _immutable.Map)({
+          condition: 'contains',
+          values: (0, _immutable.List)()
+        });
+      }
+
+      console.log(indexedValue, 'value logggggg');
+
+      if (typeof indexedValue === 'string') {
         indexedValue = (0, _immutable.Map)({
           condition: 'contains',
           values: (0, _immutable.List)()
@@ -199,7 +210,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap'
     }
-  }, props.label, " condition:"), conditions > 1 && value.get('type') && _react.default.createElement("span", {
+  }, props.label, " condition:"), conditions > 1 && value && value.get('type') && _react.default.createElement("span", {
     className: "pull-right",
     style: {
       marginTop: '-32px'

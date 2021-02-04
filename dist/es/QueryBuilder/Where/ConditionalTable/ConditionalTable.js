@@ -209,7 +209,7 @@ function (_Component) {
         if (!value.type) {
           var resp = _this.getNewValue(value, key);
 
-          newValue = resp.newValues;
+          newValue = resp.newValue;
           rawValues = resp.rawValues;
         }
 
@@ -260,11 +260,15 @@ function (_Component) {
                 newValue = _this$getNewValue.newValue,
                 rawValues = _this$getNewValue.rawValues;
 
-            if (newValue.size > 0 || _this.state.noValueConditions.has(value.condition) || value.dynamicValues) {
+            if (newValue.size > 0 || _this.state.noValueConditions.has(v.condition) || v.dynamicValues || _this.state.noValueConditions.has(v.comparator)) {
               var _cond = 'contains';
 
-              if (value && value.condition) {
-                _cond = value.condition;
+              if (v && v.condition) {
+                _cond = v.condition;
+              }
+
+              if (v && v.comparator) {
+                _cond = v.comparator;
               }
 
               if (newValue.size > CONDITIONS[_cond].maxFields) {
@@ -293,7 +297,7 @@ function (_Component) {
                   values: newValue,
                   dynamicValues: value.dynamicValues,
                   rawValues: rawValues,
-                  not: value.not || false,
+                  not: v.not || false,
                   format: _this.getFormat(key)
                 });
               }
@@ -391,14 +395,33 @@ function (_Component) {
             }
           });
 
-          predicate.conditions = newConditions;
+          if (newConditions.length === 0) {
+            _this.props.handleOnChange({
+              target: {
+                name: key,
+                value: Map({
+                  condition: _this.props.getDefaultCondition(schema.config.type),
+                  values: List()
+                })
+              }
+            });
+          } else if (newConditions.length === 1) {
+            _this.props.handleOnChange({
+              target: {
+                name: key,
+                value: predicate.conditions[0]
+              }
+            });
+          } else {
+            predicate.conditions = newConditions;
 
-          _this.props.handleOnChange({
-            target: {
-              name: key,
-              value: predicate
-            }
-          });
+            _this.props.handleOnChange({
+              target: {
+                name: key,
+                value: predicate
+              }
+            });
+          }
         } else {
           _this.props.handleOnChange({
             target: {
@@ -542,7 +565,8 @@ function (_Component) {
       // eslint-disable-line
       if (this.props.formValues !== props.formValues) {
         if (this.props.onQueryChange) {
-          this.props.onQueryChange(this.buildRequest(this.props.formValues));
+          var query = this.buildRequest(this.props.formValues);
+          this.props.onQueryChange(query);
         }
       }
     }
@@ -580,6 +604,7 @@ function (_Component) {
         }
       });
 
+      var isDisabled = this.buildRequest(this.props.formValues).query.conditions.length === 0;
       var listOpen = this.state.listOpen;
       var extraFooters = this.props.extraFooters ? this.props.extraFooters : [];
       return React.createElement("div", {
@@ -643,7 +668,7 @@ function (_Component) {
           marginBottom: '10px'
         },
         onClick: this.resetForm,
-        disabled: this.buildRequest().query.conditions.length === 0
+        disabled: isDisabled
       }, "Reset"), this.props.enableNextButton && React.createElement("button", {
         className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
         style: {
@@ -651,7 +676,7 @@ function (_Component) {
           marginBottom: '10px'
         },
         onClick: this.onNextClick,
-        disabled: this.buildRequest().query.conditions.length === 0
+        disabled: isDisabled
       }, "Next"), extraFooters) : null))))));
     }
   }]);

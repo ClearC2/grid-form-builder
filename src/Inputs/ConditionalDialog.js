@@ -6,10 +6,10 @@ import ConditionalPredicate from './ConditionalPredicate'
 import Toggle from '../QueryBuilder/Where/ConditionalTable/Toggle'
 const ConditionalDialog = props => {
   const {value} = props
-  const [conditions, setConditions] = useState(1)
+  const [conditions, setConditions] = useState((value && value.get) ? value.get('conditions', List()).size : 1)
   // const [value, setValue] = useState(props.value)
   useEffect(() => {
-    if (value.get('type')) {
+    if (value && value.get('type')) {
       setConditions(value.get('conditions').size)
     } else {
       setConditions(1)
@@ -18,7 +18,7 @@ const ConditionalDialog = props => {
 
   const onChange = (e, i) => {
     if (conditions > 1) {
-      if (!value.get('type')) {
+      if (value && !value.get('type')) {
         let filter = Map({
           type: 'and',
           conditions: List([value])
@@ -51,9 +51,12 @@ const ConditionalDialog = props => {
     const conditionElements = []
     for (let i = 0; i < conditions; i++) {
       let indexedValue = value
-      if (value.get('type')) {
+      if (value && value.get('type')) {
         indexedValue = value.getIn(['conditions', i], Map({condition: 'contains', values: List()}))
       } else if (conditions > 1) {
+        indexedValue = Map({condition: 'contains', values: List()})
+      }
+      if (typeof indexedValue === 'string') {
         indexedValue = Map({condition: 'contains', values: List()})
       }
       conditionElements.push(
@@ -101,7 +104,7 @@ const ConditionalDialog = props => {
             <h4 style={{height: '100%', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>
               {props.label} condition:
             </h4>
-            {conditions > 1 && value.get('type') &&
+            {conditions > 1 && value && value.get('type') &&
             <span className='pull-right' style={{marginTop: '-32px'}}>
               <Toggle
                 value={value.get('type') === 'and'}

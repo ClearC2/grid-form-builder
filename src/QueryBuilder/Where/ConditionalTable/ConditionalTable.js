@@ -55,7 +55,8 @@ export default class ConditionalTable extends Component {
   componentDidUpdate (props) { // eslint-disable-line
     if (this.props.formValues !== props.formValues) {
       if (this.props.onQueryChange) {
-        this.props.onQueryChange(this.buildRequest(this.props.formValues))
+        const query = this.buildRequest(this.props.formValues)
+        this.props.onQueryChange(query)
       }
     }
   }
@@ -196,7 +197,7 @@ export default class ConditionalTable extends Component {
       let rawValues
       if (!value.type) {
         const resp = this.getNewValue(value, key)
-        newValue = resp.newValues
+        newValue = resp.newValue
         rawValues = resp.rawValues
       }
       if (newValue && (newValue.size > 0 || this.state.noValueConditions.has(value.condition) || value.dynamicValues)) {
@@ -237,10 +238,14 @@ export default class ConditionalTable extends Component {
         const newValues = []
         value.conditions.forEach(v => {
           let {newValue, rawValues} = this.getNewValue(v, key)
-          if (newValue.size > 0 || this.state.noValueConditions.has(value.condition) || value.dynamicValues) {
+          if (newValue.size > 0 || this.state.noValueConditions.has(v.condition) ||
+            v.dynamicValues || this.state.noValueConditions.has(v.comparator)) {
             let cond = 'contains'
-            if (value && value.condition) {
-              cond = value.condition
+            if (v && v.condition) {
+              cond = v.condition
+            }
+            if (v && v.comparator) {
+              cond = v.comparator
             }
             if (newValue.size > CONDITIONS[cond].maxFields) {
               newValue = newValue.slice(0, CONDITIONS[cond].maxFields)
@@ -267,7 +272,7 @@ export default class ConditionalTable extends Component {
                 values: newValue,
                 dynamicValues: value.dynamicValues,
                 rawValues: rawValues,
-                not: value.not || false,
+                not: v.not || false,
                 format: this.getFormat(key)
               })
             }
@@ -352,13 +357,32 @@ export default class ConditionalTable extends Component {
             newConditions.push(c)
           }
         })
-        predicate.conditions = newConditions
-        this.props.handleOnChange({
-          target: {
-            name: key,
-            value: predicate
-          }
-        })
+        if (newConditions.length === 0) {
+          this.props.handleOnChange({
+            target: {
+              name: key,
+              value: Map({
+                condition: this.props.getDefaultCondition(schema.config.type),
+                values: List()
+              })
+            }
+          })
+        } else if (newConditions.length === 1) {
+          this.props.handleOnChange({
+            target: {
+              name: key,
+              value: predicate.conditions[0]
+            }
+          })
+        } else {
+          predicate.conditions = newConditions
+          this.props.handleOnChange({
+            target: {
+              name: key,
+              value: predicate
+            }
+          })
+        }
       } else {
         this.props.handleOnChange({
           target: {
@@ -490,6 +514,7 @@ export default class ConditionalTable extends Component {
         }
       }
     })
+    const isDisabled = this.buildRequest(this.props.formValues).query.conditions.length === 0
     const {listOpen} = this.state
     const extraFooters = this.props.extraFooters ? this.props.extraFooters : []
     return (
@@ -544,7 +569,7 @@ export default class ConditionalTable extends Component {
                       className={this.props.primaryButtonClass || 'btn btn-primary pull-right'}
                       style={{marginRight: '10px', marginBottom: '10px'}}
                       onClick={this.resetForm}
-                      disabled={this.buildRequest().query.conditions.length === 0}
+                      disabled={isDisabled}
                     >
                       Reset
                     </button>}
@@ -552,7 +577,7 @@ export default class ConditionalTable extends Component {
                       className={this.props.primaryButtonClass || 'btn btn-primary pull-right'}
                       style={{marginRight: '10px', marginBottom: '10px'}}
                       onClick={this.onNextClick}
-                      disabled={this.buildRequest().query.conditions.length === 0}
+                      disabled={isDisabled}
                     >
                       Next
                     </button>}

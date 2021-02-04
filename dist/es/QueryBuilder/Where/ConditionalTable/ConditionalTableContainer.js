@@ -75,6 +75,47 @@ var getBetweenDatesValues = function getBetweenDatesValues(query) {
   })).call(_context2, Boolean);
 };
 
+var convertSingleField = function convertSingleField(c, formSchema, inBetweenDateValues) {
+  var newFormValue;
+  var schema = getFieldSchema(c.get('name'), formSchema);
+  var mergeDate = c.get('mergeDate', false);
+
+  if (schema) {
+    if (Set(TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
+      var val = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '');
+      newFormValue = val;
+    } else {
+      if (c.get('rawValues') !== undefined && !mergeDate) {
+        newFormValue = Map({
+          condition: c.get('comparator'),
+          values: c.get('rawValues', List()),
+          dynamicValues: c.get('dynamicValues'),
+          not: c.get('not', false),
+          format: c.get('format', '')
+        }); // https://github.com/ClearC2/bleu/issues/4734
+      } else if (mergeDate) {
+        newFormValue = Map({
+          condition: 'is between',
+          values: List(inBetweenDateValues),
+          dynamicValues: c.get('dynamicValues'),
+          not: c.get('not', false),
+          format: c.get('format', '')
+        });
+      } else {
+        newFormValue = Map({
+          condition: c.get('comparator'),
+          values: c.get('values', List()),
+          dynamicValues: c.get('dynamicValues'),
+          not: c.get('not', false),
+          format: c.get('format', '')
+        });
+      }
+    }
+  }
+
+  return newFormValue;
+};
+
 export var convertQueryToFormValues = function convertQueryToFormValues(query) {
   var clearExistingValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var fValues = arguments.length > 2 ? arguments[2] : undefined;
@@ -112,40 +153,24 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
       var inBetweenDateValues = getBetweenDatesValues(query.conditions);
 
       _forEachInstanceProperty(_context3 = fromJS(query.conditions)).call(_context3, function (c) {
-        var schema = getFieldSchema(c.get('name'), formSchema);
-        var mergeDate = c.get('mergeDate', false);
+        if (c.get('conditions')) {
+          var _context4;
 
-        if (schema) {
-          if (Set(TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
-            var val = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '');
-            formValues = formValues.set(c.get('name'), val);
-          } else {
-            if (c.get('rawValues') !== undefined && !mergeDate) {
-              formValues = formValues.set(c.get('name'), Map({
-                condition: c.get('comparator'),
-                values: c.get('rawValues', List()),
-                dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false),
-                format: c.get('format', '')
-              })); // https://github.com/ClearC2/bleu/issues/4734
-            } else if (mergeDate) {
-              formValues = formValues.set(c.get('name'), Map({
-                condition: 'is between',
-                values: List(inBetweenDateValues),
-                dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false),
-                format: c.get('format', '')
-              }));
-            } else {
-              formValues = formValues.set(c.get('name'), Map({
-                condition: c.get('comparator'),
-                values: c.get('values', List()),
-                dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false),
-                format: c.get('format', '')
-              }));
-            }
-          }
+          var conditions = List();
+
+          _forEachInstanceProperty(_context4 = c.get('conditions')).call(_context4, function (pred) {
+            var newField = convertSingleField(pred, formSchema, inBetweenDateValues);
+            newField = newField.set('name', pred);
+            conditions = conditions.push(newField);
+          });
+
+          formValues = formValues.set(c.getIn(['conditions', 1, 'name']), fromJS({
+            conditions: conditions,
+            type: c.get('type')
+          }));
+        } else {
+          var newValue = convertSingleField(c, formSchema, inBetweenDateValues);
+          formValues = formValues.set(c.get('name'), newValue);
         }
       });
     }
@@ -154,6 +179,7 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
     console.warn('Empty Query object received');
   }
 
+  console.log(fromJS(formValues), 'form val loggggg');
   return formValues;
 };
 
@@ -198,9 +224,9 @@ function (_Component) {
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-        var _context4;
+        var _context5;
 
-        return _findInstanceProperty(_context4 = List(formSchema.jsonschema.layout)).call(_context4, function (row) {
+        return _findInstanceProperty(_context5 = List(formSchema.jsonschema.layout)).call(_context5, function (row) {
           return row.config.name === key;
         });
       } else {

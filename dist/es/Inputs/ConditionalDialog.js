@@ -10,14 +10,16 @@ import Toggle from '../QueryBuilder/Where/ConditionalTable/Toggle';
 var ConditionalDialog = function ConditionalDialog(props) {
   var value = props.value;
 
-  var _useState = useState(1),
+  var _useState = useState(value && value.get ? value.get('conditions', List()).size : 1),
       _useState2 = _slicedToArray(_useState, 2),
       conditions = _useState2[0],
       setConditions = _useState2[1]; // const [value, setValue] = useState(props.value)
 
 
   useEffect(function () {
-    if (value.get('type')) {
+    console.log(value, 'value logggggggg');
+
+    if (value && value.get('type')) {
       setConditions(value.get('conditions').size);
     } else {
       setConditions(1);
@@ -26,7 +28,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
 
   var onChange = function onChange(e, i) {
     if (conditions > 1) {
-      if (!value.get('type')) {
+      if (value && !value.get('type')) {
         var filter = Map({
           type: 'and',
           conditions: List([value])
@@ -77,12 +79,21 @@ var ConditionalDialog = function ConditionalDialog(props) {
     for (var i = 0; i < conditions; i++) {
       var indexedValue = value;
 
-      if (value.get('type')) {
+      if (value && value.get('type')) {
         indexedValue = value.getIn(['conditions', i], Map({
           condition: 'contains',
           values: List()
         }));
       } else if (conditions > 1) {
+        indexedValue = Map({
+          condition: 'contains',
+          values: List()
+        });
+      }
+
+      console.log(indexedValue, 'value logggggg');
+
+      if (typeof indexedValue === 'string') {
         indexedValue = Map({
           condition: 'contains',
           values: List()
@@ -178,7 +189,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap'
     }
-  }, props.label, " condition:"), conditions > 1 && value.get('type') && React.createElement("span", {
+  }, props.label, " condition:"), conditions > 1 && value && value.get('type') && React.createElement("span", {
     className: "pull-right",
     style: {
       marginTop: '-32px'
