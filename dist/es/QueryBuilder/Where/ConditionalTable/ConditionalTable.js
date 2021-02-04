@@ -26,7 +26,7 @@ function (_Component) {
   _inherits(ConditionalTable, _Component);
 
   function ConditionalTable(props) {
-    var _context8;
+    var _context18;
 
     var _this;
 
@@ -36,6 +36,7 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "buildMultiString", function (key, value) {
       var exclude = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var rawValue = arguments.length > 3 ? arguments[3] : undefined;
       var valString = '';
 
       if (value) {
@@ -58,7 +59,7 @@ function (_Component) {
         }
 
         var i = value.length;
-        var cond = _this.getConditionValue(key) || 'contains';
+        var cond = _this.getConditionValue(rawValue) || 'contains';
 
         if (i > CONDITIONS[cond].maxFields) {
           var _context;
@@ -83,7 +84,7 @@ function (_Component) {
           });
         }
 
-        return "".concat(exclude ? ' (exclude) ' : '') + ' ' + _this.getConditionValue(key) + ' ' + valString;
+        return "".concat(exclude ? ' (exclude) ' : '') + ' ' + _this.getConditionValue(rawValue) + ' ' + valString;
       } else {
         return '';
       }
@@ -135,8 +136,62 @@ function (_Component) {
       return '';
     });
 
+    _defineProperty(_assertThisInitialized(_this), "getNewValue", function (value, key) {
+      var rawValues;
+      var newValue = List();
+
+      if (typeof value === 'string') {
+        if (value !== '') {
+          var splitVal = value.split('¤');
+
+          if (splitVal.length > 1) {
+            newValue = List(splitVal);
+          } else {
+            newValue = List([value]);
+          }
+        }
+      } else if (_typeof(value) === 'object' && value.condition === undefined) {
+        if (!value.type && !_valuesInstanceProperty(value)) {
+          newValue = List(value);
+        } else {
+          newValue = List(_valuesInstanceProperty(value));
+        }
+      } else {
+        if (_typeof(_valuesInstanceProperty(value)[0]) === 'object') {
+          var _context2;
+
+          // for typeaheads
+          rawValues = _valuesInstanceProperty(value);
+
+          var ids = _mapInstanceProperty(_context2 = _valuesInstanceProperty(value)).call(_context2, function (obj) {
+            return obj.value;
+          });
+
+          newValue = List(ids);
+        } else if (typeof _valuesInstanceProperty(value)[0] === 'string') {
+          // inputs
+          if (typeof _valuesInstanceProperty(value) === 'string') {
+            var _splitVal = _valuesInstanceProperty(value).split('¤');
+
+            if (_splitVal.length > 1) {
+              newValue = List(_splitVal);
+            } else {
+              newValue = List(_valuesInstanceProperty(value));
+            }
+          } else {
+            newValue = List(_valuesInstanceProperty(value));
+          }
+        }
+      }
+
+      return {
+        newValue: newValue,
+        rawValues: rawValues
+      };
+    });
+
     _defineProperty(_assertThisInitialized(_this), "buildRequest", function () {
-      var _context2;
+      var _context3;
 
       var formValues = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.props.formValues;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
@@ -147,51 +202,18 @@ function (_Component) {
         }
       };
 
-      _forEachInstanceProperty(_context2 = Map(formValues)).call(_context2, function (value, key) {
+      _forEachInstanceProperty(_context3 = Map(formValues)).call(_context3, function (value, key) {
+        var newValue;
         var rawValues;
-        var newValue = List();
 
-        if (typeof value === 'string') {
-          if (value !== '') {
-            var splitVal = value.split('¤');
+        if (!value.type) {
+          var resp = _this.getNewValue(value, key);
 
-            if (splitVal.length > 1) {
-              newValue = List(splitVal);
-            } else {
-              newValue = List([value]);
-            }
-          }
-        } else if (_typeof(value) === 'object' && value.condition === undefined) {
-          newValue = List(value);
-        } else {
-          if (_typeof(_valuesInstanceProperty(value)[0]) === 'object') {
-            var _context3;
-
-            // for typeaheads
-            rawValues = _valuesInstanceProperty(value);
-
-            var ids = _mapInstanceProperty(_context3 = _valuesInstanceProperty(value)).call(_context3, function (obj) {
-              return obj.value;
-            });
-
-            newValue = List(ids);
-          } else if (typeof _valuesInstanceProperty(value)[0] === 'string') {
-            // inputs
-            if (typeof _valuesInstanceProperty(value) === 'string') {
-              var _splitVal = _valuesInstanceProperty(value).split('¤');
-
-              if (_splitVal.length > 1) {
-                newValue = List(_splitVal);
-              } else {
-                newValue = List(_valuesInstanceProperty(value));
-              }
-            } else {
-              newValue = List(_valuesInstanceProperty(value));
-            }
-          }
+          newValue = resp.newValues;
+          rawValues = resp.rawValues;
         }
 
-        if (newValue.size > 0 || _this.state.noValueConditions.has(value.condition) || value.dynamicValues) {
+        if (newValue && (newValue.size > 0 || _this.state.noValueConditions.has(value.condition) || value.dynamicValues)) {
           var cond = 'contains';
 
           if (formValues[key] && formValues[key].condition) {
@@ -228,6 +250,58 @@ function (_Component) {
               format: _this.getFormat(key)
             });
           }
+        } else if (value.type) {
+          var _context4;
+
+          var newValues = [];
+
+          _forEachInstanceProperty(_context4 = value.conditions).call(_context4, function (v) {
+            var _this$getNewValue = _this.getNewValue(v, key),
+                newValue = _this$getNewValue.newValue,
+                rawValues = _this$getNewValue.rawValues;
+
+            if (newValue.size > 0 || _this.state.noValueConditions.has(value.condition) || value.dynamicValues) {
+              var _cond = 'contains';
+
+              if (value && value.condition) {
+                _cond = value.condition;
+              }
+
+              if (newValue.size > CONDITIONS[_cond].maxFields) {
+                newValue = _sliceInstanceProperty(newValue).call(newValue, 0, CONDITIONS[_cond].maxFields);
+              } // https://github.com/ClearC2/bleu/issues/4734
+
+
+              if (_cond === 'is between') {
+                newValues.push({
+                  name: key,
+                  values: [newValue.get('0', '')],
+                  comparator: 'is greater than',
+                  mergeDate: true
+                });
+                newValues.push({
+                  name: key,
+                  values: [newValue.get('1', '')],
+                  comparator: 'is less than',
+                  mergeDate: true
+                });
+              } else {
+                newValues.push({
+                  name: key,
+                  label: _this.getLabel(key),
+                  comparator: _cond,
+                  values: newValue,
+                  dynamicValues: value.dynamicValues,
+                  rawValues: rawValues,
+                  not: value.not || false,
+                  format: _this.getFormat(key)
+                });
+              }
+            }
+          });
+
+          value.conditions = newValues;
+          req.query.conditions.push(value);
         }
       });
 
@@ -265,12 +339,12 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "resetForm", function () {
-      var _context4;
+      var _context5;
 
       var formValues = _this.prop.formValues;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
 
-      _mapInstanceProperty(_context4 = _Object$keys(formValues)).call(_context4, function (key) {
+      _mapInstanceProperty(_context5 = _Object$keys(formValues)).call(_context5, function (key) {
         var schema = _this.props.getFieldSchema(key);
 
         if (schema && schema.config && (schema.config.type === 'textarea' || schema.config.type === 'checkbox' || schema.config.type === 'radio')) {
@@ -294,7 +368,7 @@ function (_Component) {
       });
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleRemoveConditionClick", function (e, key) {
+    _defineProperty(_assertThisInitialized(_this), "handleRemoveConditionClick", function (e, key, predicateIndex) {
       var schema = _this.props.getFieldSchema(key);
 
       if (schema && schema.config && (schema.config.type === 'textarea' || schema.config.type === 'checkbox' || schema.config.type === 'radio')) {
@@ -305,19 +379,41 @@ function (_Component) {
           }
         });
       } else {
-        _this.props.handleOnChange({
-          target: {
-            name: key,
-            value: Map({
-              condition: _this.props.getDefaultCondition(schema.config.type),
-              values: List()
-            })
-          }
-        });
+        if (predicateIndex >= 0) {
+          var _context6;
+
+          var predicate = _this.props.formValues[key];
+          var newConditions = [];
+
+          _forEachInstanceProperty(_context6 = predicate.conditions).call(_context6, function (c, i) {
+            if (i !== predicateIndex) {
+              newConditions.push(c);
+            }
+          });
+
+          predicate.conditions = newConditions;
+
+          _this.props.handleOnChange({
+            target: {
+              name: key,
+              value: predicate
+            }
+          });
+        } else {
+          _this.props.handleOnChange({
+            target: {
+              name: key,
+              value: Map({
+                condition: _this.props.getDefaultCondition(schema.config.type),
+                values: List()
+              })
+            }
+          });
+        }
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "renderDeleteIcon", function (key) {
+    _defineProperty(_assertThisInitialized(_this), "renderDeleteIcon", function (key, value, predicateIndex) {
       if (_this.props.enableDelete) {
         return React.createElement("i", {
           className: X_ICON_CLASS,
@@ -326,7 +422,7 @@ function (_Component) {
             marginTop: '3px'
           },
           onClick: function onClick(e) {
-            _this.handleRemoveConditionClick(e, key);
+            _this.handleRemoveConditionClick(e, key, predicateIndex);
           }
         });
       } else {
@@ -334,27 +430,23 @@ function (_Component) {
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "getConditionValue", function (key) {
-      var _this$props$formValue = _this.props.formValues,
-          formValues = _this$props$formValue === void 0 ? {} : _this$props$formValue;
-      if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
-
-      if (formValues[key] && formValues[key].condition) {
-        return formValues[key].condition;
+    _defineProperty(_assertThisInitialized(_this), "getConditionValue", function (rawValue) {
+      if (rawValue && rawValue.condition) {
+        return rawValue.condition;
       } else {
         return 'contains';
       }
     });
 
     _defineProperty(_assertThisInitialized(_this), "getFieldType", function (fieldName) {
-      var _context5;
+      var _context7;
 
       var _this$props$formSchem3 = _this.props.formSchema,
           formSchema = _this$props$formSchem3 === void 0 ? {} : _this$props$formSchem3;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
       var type = '';
 
-      _forEachInstanceProperty(_context5 = formSchema.jsonschema.layout).call(_context5, function (field) {
+      _forEachInstanceProperty(_context7 = formSchema.jsonschema.layout).call(_context7, function (field) {
         if (field.config.name === fieldName) {
           type = field.config.type;
           return true;
@@ -365,18 +457,24 @@ function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "buildTableRow", function (key, value) {
+      var predicateIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
+
       if (value && _this.state.noValueConditions.has(value.condition)) {
+        var _context8, _context9;
+
         return React.createElement("tr", {
-          key: "row-".concat(key)
+          key: _concatInstanceProperty(_context8 = "row-".concat(key, "-")).call(_context8, predicateIndex)
         }, React.createElement("td", {
-          key: "column-".concat(key),
+          key: _concatInstanceProperty(_context9 = "column-".concat(key, "-")).call(_context9, predicateIndex),
           style: {
             wordWrap: 'break-word'
           }
-        }, React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key)));
+        }, React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key, value, predicateIndex)));
       }
 
       if (value && typeof value === 'string') {
+        var _context10, _context11;
+
         // raw inputs
         var val = value;
 
@@ -390,38 +488,40 @@ function (_Component) {
 
         return (// for basic input
           React.createElement("tr", {
-            key: "row-".concat(key)
+            key: _concatInstanceProperty(_context10 = "row-".concat(key, "-")).call(_context10, predicateIndex)
           }, React.createElement("td", {
-            key: "column-".concat(key),
+            key: _concatInstanceProperty(_context11 = "column-".concat(key, "-")).call(_context11, predicateIndex),
             style: {
               wordWrap: 'break-word'
             }
-          }, React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value)))
+          }, React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value, predicateIndex)))
         );
       } else if (typeof value === 'boolean') {
+        var _context12, _context13;
+
         return React.createElement("tr", {
-          key: "row-".concat(key)
+          key: _concatInstanceProperty(_context12 = "row-".concat(key, "-")).call(_context12, predicateIndex)
         }, React.createElement("td", {
-          key: "column-".concat(key)
-        }, React.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value)));
+          key: _concatInstanceProperty(_context13 = "column-".concat(key, "-")).call(_context13, predicateIndex)
+        }, React.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
       } else {
-        var _context6, _context7;
+        var _context14, _context15, _context16, _context17;
 
         if (_valuesInstanceProperty(value) && _valuesInstanceProperty(value).length === 0 && (!value.dynamicValues || value.dynamicValues && value.dynamicValues.length === 0)) {
           return null;
         }
 
         return React.createElement("tr", {
-          key: "row-".concat(key)
+          key: _concatInstanceProperty(_context14 = "row-".concat(key, "-")).call(_context14, predicateIndex)
         }, React.createElement("td", {
-          key: "column-".concat(key)
-        }, React.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, _concatInstanceProperty(_context6 = _valuesInstanceProperty(value)).call(_context6, value.dynamicValues || []), value.not), _this.renderDeleteIcon(key, _concatInstanceProperty(_context7 = _valuesInstanceProperty(value)).call(_context7, value.dynamicValues || []))));
+          key: _concatInstanceProperty(_context15 = "column-".concat(key, "-")).call(_context15, predicateIndex)
+        }, React.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, _concatInstanceProperty(_context16 = _valuesInstanceProperty(value)).call(_context16, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, _concatInstanceProperty(_context17 = _valuesInstanceProperty(value)).call(_context17, value.dynamicValues || []), predicateIndex)));
       }
     });
 
     var noValueConditions = [];
 
-    _forEachInstanceProperty(_context8 = _Object$keys(CONDITIONS)).call(_context8, function (k) {
+    _forEachInstanceProperty(_context18 = _Object$keys(CONDITIONS)).call(_context18, function (k) {
       if (CONDITIONS[k].maxFields === 0) {
         noValueConditions.push(k);
       }
@@ -449,25 +549,34 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _context9,
-          _context10,
+      var _context19,
           _this2 = this;
 
-      var _this$props$formValue2 = this.props.formValues,
-          formValues = _this$props$formValue2 === void 0 ? {} : _this$props$formValue2;
+      var _this$props$formValue = this.props.formValues,
+          formValues = _this$props$formValue === void 0 ? {} : _this$props$formValue;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
 
-      var tbody = _mapInstanceProperty(_context9 = _sortInstanceProperty(_context10 = _Object$keys(formValues)).call(_context10, function (a, b) {
+      var singleRows = _sortInstanceProperty(_context19 = _Object$keys(formValues)).call(_context19, function (a, b) {
         if (_this2.getLabel(a) === undefined || _this2.getLabel(b) === undefined) {
           return 0;
         }
 
         return _this2.getLabel(a).localeCompare(_this2.getLabel(b));
-      })).call(_context9, function (key) {
+      });
+
+      var tbody = [];
+
+      _forEachInstanceProperty(singleRows).call(singleRows, function (key) {
         if (_this2.props.formValues[key]) {
-          return _this2.buildTableRow(key, _this2.props.formValues[key]);
-        } else {
-          return null;
+          if (_this2.props.formValues[key].type) {
+            var _context20;
+
+            _forEachInstanceProperty(_context20 = _this2.props.formValues[key].conditions).call(_context20, function (v, predicateIndex) {
+              tbody.push(_this2.buildTableRow(key, v, predicateIndex));
+            });
+          } else {
+            tbody.push(_this2.buildTableRow(key, _this2.props.formValues[key]));
+          }
         }
       });
 

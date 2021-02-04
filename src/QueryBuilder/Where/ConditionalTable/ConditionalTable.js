@@ -155,8 +155,10 @@ export default class ConditionalTable extends Component {
         }
       }
     } else if (typeof value === 'object' && value.condition === undefined) {
-      if (!value.type) {
+      if (!value.type && !value.values) {
         newValue = List(value)
+      } else {
+        newValue = List(value.values)
       }
     } else {
       if (typeof value.values[0] === 'object') {
@@ -190,8 +192,14 @@ export default class ConditionalTable extends Component {
       }
     }
     Map(formValues).forEach((value, key) => {
-      let {newValue, rawValues} = this.getNewValue(value, key)
-      if (newValue.size > 0 || this.state.noValueConditions.has(value.condition) || value.dynamicValues) {
+      let newValue
+      let rawValues
+      if (!value.type) {
+        const resp = this.getNewValue(value, key)
+        newValue = resp.newValues
+        rawValues = resp.rawValues
+      }
+      if (newValue && (newValue.size > 0 || this.state.noValueConditions.has(value.condition) || value.dynamicValues)) {
         let cond = 'contains'
         if (formValues[key] && formValues[key].condition) {
           cond = formValues[key].condition
@@ -337,12 +345,14 @@ export default class ConditionalTable extends Component {
       })
     } else {
       if (predicateIndex >= 0) {
-        let predicate = this.props.formValues[key]
-        predicate = predicate.deleteIn(['conditions', predicateIndex])
-        //   , Map({
-        //   condition: this.props.getDefaultCondition(schema.config.type),
-        //   values: List()
-        // }))
+        const predicate = this.props.formValues[key]
+        const newConditions = []
+        predicate.conditions.forEach((c, i) => {
+          if (i !== predicateIndex) {
+            newConditions.push(c)
+          }
+        })
+        predicate.conditions = newConditions
         this.props.handleOnChange({
           target: {
             name: key,
@@ -363,7 +373,7 @@ export default class ConditionalTable extends Component {
     }
   }
 
-  renderDeleteIcon = (key, predicateIndex) => {
+  renderDeleteIcon = (key, value, predicateIndex) => {
     if (this.props.enableDelete) {
       return (
         <i
@@ -407,7 +417,7 @@ export default class ConditionalTable extends Component {
           <td key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
             {value.not && '(exclude) '}{value.condition}
-            {this.renderDeleteIcon(key, predicateIndex)}
+            {this.renderDeleteIcon(key, value, predicateIndex)}
           </td>
         </tr>
       )

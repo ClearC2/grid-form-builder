@@ -40,7 +40,8 @@ const ConditionalPredicate = props => {
     // const v = props.values[props.name]
     if (props.name) {
       let initCondition = inputTypeOptionsList()[0].value
-      if (props.value.getIn(['condition'])) {
+      if (props.value.getIn(['condition']) && inputTypeOptionsList()
+        .some(c => c.value === props.value.getIn(['condition']))) {
         initCondition = props.value.getIn(['condition'], inputTypeOptionsList()[0].value)
       }
       const initialModalValues = {condition: initCondition}
@@ -58,6 +59,7 @@ const ConditionalPredicate = props => {
       if (props.value.getIn(['dynamicValues'])) {
         initialModalValues.dynamicValues = props.value.getIn(['dynamicValues'])
       }
+      dialogOnChange({target: {name: 'condition', value: initCondition}})
       setModalValues(Map(initialModalValues))
     }
   }, [props.name])
