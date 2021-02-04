@@ -170,6 +170,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
   }
 
   function getSchema() {
+    console.log(props, 'props loggggggg');
     var schema = {
       form: {
         name: 'Conditional Input1',

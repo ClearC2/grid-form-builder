@@ -142,6 +142,45 @@ export default class ConditionalTable extends Component {
     return ''
   }
 
+  getNewValue = (value, key) => {
+    let rawValues
+    let newValue = List()
+    if (typeof value === 'string') {
+      if (value !== '') {
+        const splitVal = value.split('¤')
+        if (splitVal.length > 1) {
+          newValue = List(splitVal)
+        } else {
+          newValue = List([value])
+        }
+      }
+    } else if (typeof value === 'object' && value.condition === undefined) {
+      if (!value.type) {
+        newValue = List(value)
+      }
+    } else {
+      if (typeof value.values[0] === 'object') {
+        // for typeaheads
+        rawValues = value.values
+        const ids = value.values.map(obj => obj.value)
+        newValue = List(ids)
+      } else if (typeof value.values[0] === 'string') {
+        // inputs
+        if (typeof value.values === 'string') {
+          const splitVal = value.values.split('¤')
+          if (splitVal.length > 1) {
+            newValue = List(splitVal)
+          } else {
+            newValue = List(value.values)
+          }
+        } else {
+          newValue = List(value.values)
+        }
+      }
+    }
+    return ({newValue: newValue, rawValues: rawValues})
+  }
+
   buildRequest = (formValues = this.props.formValues) => {
     if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
     const req = {
@@ -151,39 +190,7 @@ export default class ConditionalTable extends Component {
       }
     }
     Map(formValues).forEach((value, key) => {
-      let rawValues
-      let newValue = List()
-      if (typeof value === 'string') {
-        if (value !== '') {
-          const splitVal = value.split('¤')
-          if (splitVal.length > 1) {
-            newValue = List(splitVal)
-          } else {
-            newValue = List([value])
-          }
-        }
-      } else if (typeof value === 'object' && value.condition === undefined) {
-        newValue = List(value)
-      } else {
-        if (typeof value.values[0] === 'object') {
-          // for typeaheads
-          rawValues = value.values
-          const ids = value.values.map(obj => obj.value)
-          newValue = List(ids)
-        } else if (typeof value.values[0] === 'string') {
-          // inputs
-          if (typeof value.values === 'string') {
-            const splitVal = value.values.split('¤')
-            if (splitVal.length > 1) {
-              newValue = List(splitVal)
-            } else {
-              newValue = List(value.values)
-            }
-          } else {
-            newValue = List(value.values)
-          }
-        }
-      }
+      let {newValue, rawValues} = this.getNewValue(value, key)
       if (newValue.size > 0 || this.state.noValueConditions.has(value.condition) || value.dynamicValues) {
         let cond = 'contains'
         if (formValues[key] && formValues[key].condition) {
@@ -218,6 +225,48 @@ export default class ConditionalTable extends Component {
             format: this.getFormat(key)
           })
         }
+      } else if (value.type) {
+        const newValues = []
+        value.conditions.forEach(v => {
+          let {newValue, rawValues} = this.getNewValue(v, key)
+          if (newValue.size > 0 || this.state.noValueConditions.has(value.condition) || value.dynamicValues) {
+            let cond = 'contains'
+            if (value && value.condition) {
+              cond = value.condition
+            }
+            if (newValue.size > CONDITIONS[cond].maxFields) {
+              newValue = newValue.slice(0, CONDITIONS[cond].maxFields)
+            }
+            // https://github.com/ClearC2/bleu/issues/4734
+            if (cond === 'is between') {
+              newValues.push({
+                name: key,
+                values: [newValue.get('0', '')],
+                comparator: 'is greater than',
+                mergeDate: true
+              })
+              newValues.push({
+                name: key,
+                values: [newValue.get('1', '')],
+                comparator: 'is less than',
+                mergeDate: true
+              })
+            } else {
+              newValues.push({
+                name: key,
+                label: this.getLabel(key),
+                comparator: cond,
+                values: newValue,
+                dynamicValues: value.dynamicValues,
+                rawValues: rawValues,
+                not: value.not || false,
+                format: this.getFormat(key)
+              })
+            }
+          }
+        })
+        value.conditions = newValues
+        req.query.conditions.push(value)
       }
     })
     return req
@@ -338,11 +387,11 @@ export default class ConditionalTable extends Component {
     return type
   }
 
-  buildTableRow = (key, value) => {
+  buildTableRow = (key, value, predicateIndex = 0) => {
     if (value && this.state.noValueConditions.has(value.condition)) {
       return (
-        <tr key={`row-${key}`}>
-          <td key={`column-${key}`} style={{wordWrap: 'break-word'}}>
+        <tr key={`row-${key}-${predicateIndex}`}>
+          <td key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
             {value.not && '(exclude) '}{value.condition}
             {this.renderDeleteIcon(key)}
@@ -360,8 +409,8 @@ export default class ConditionalTable extends Component {
         }
       }
       return ( // for basic input
-        <tr key={`row-${key}`}>
-          <td key={`column-${key}`} style={{wordWrap: 'break-word'}}>
+        <tr key={`row-${key}-${predicateIndex}`}>
+          <td key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
             {value.not && '(exclude) '}contains {val}
             {this.renderDeleteIcon(key, value)}
@@ -370,8 +419,8 @@ export default class ConditionalTable extends Component {
       )
     } else if (typeof value === 'boolean') {
       return (
-        <tr key={`row-${key}`}>
-          <td key={`column-${key}`}>
+        <tr key={`row-${key}-${predicateIndex}`}>
+          <td key={`column-${key}-${predicateIndex}`}>
             <strong>{this.getLabel(key)} </strong>
             is {value ? 'True' : 'False'}
             {this.renderDeleteIcon(key, value)}
@@ -385,8 +434,8 @@ export default class ConditionalTable extends Component {
         return null
       }
       return (
-        <tr key={`row-${key}`}>
-          <td key={`column-${key}`}>
+        <tr key={`row-${key}-${predicateIndex}`}>
+          <td key={`column-${key}-${predicateIndex}`}>
             <strong>{this.getLabel(key)}</strong>
             {this.buildMultiString(key, value.values.concat(value.dynamicValues || []), value.not)}
             {this.renderDeleteIcon(key, value.values.concat(value.dynamicValues || []))}
@@ -399,20 +448,25 @@ export default class ConditionalTable extends Component {
   render () {
     let {formValues = {}} = this.props
     if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
-    const tbody = Object.keys(formValues)
+    const singleRows = Object.keys(formValues)
       .sort((a, b) => {
         if (this.getLabel(a) === undefined || this.getLabel(b) === undefined) {
           return 0
         }
         return this.getLabel(a).localeCompare(this.getLabel(b))
       })
-      .map((key) => {
-        if (this.props.formValues[key]) {
-          return this.buildTableRow(key, this.props.formValues[key])
+    const tbody = []
+    singleRows.forEach((key) => {
+      if (this.props.formValues[key]) {
+        if (this.props.formValues[key].type) {
+          this.props.formValues[key].conditions.forEach((v, predicateIndex) => {
+            tbody.push(this.buildTableRow(key, v, predicateIndex))
+          })
         } else {
-          return null
+          tbody.push(this.buildTableRow(key, this.props.formValues[key]))
         }
-      })
+      }
+    })
     const {listOpen} = this.state
     const extraFooters = this.props.extraFooters ? this.props.extraFooters : []
     return (
