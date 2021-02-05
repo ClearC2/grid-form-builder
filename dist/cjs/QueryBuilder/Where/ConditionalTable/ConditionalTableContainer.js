@@ -210,7 +210,6 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
     console.warn('Empty Query object received');
   }
 
-  console.log((0, _immutable.fromJS)(formValues), 'form val loggggg');
   return formValues;
 };
 

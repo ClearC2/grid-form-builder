@@ -14,7 +14,7 @@ import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThi
 import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import React, { Component } from 'react';
-import { Map, List, Set } from 'immutable';
+import { Map, List, Set, fromJS } from 'immutable';
 import PropTypes from 'prop-types';
 import Toggle from './Toggle';
 import { CONDITIONS } from '../../../index';
@@ -275,6 +275,8 @@ function (_Component) {
                 newValue = _sliceInstanceProperty(newValue).call(newValue, 0, CONDITIONS[_cond].maxFields);
               } // https://github.com/ClearC2/bleu/issues/4734
 
+
+              console.log(key, fromJS(v), 'key value logggggggg');
 
               if (_cond === 'is between') {
                 newValues.push({

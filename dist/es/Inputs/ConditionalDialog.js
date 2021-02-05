@@ -17,8 +17,6 @@ var ConditionalDialog = function ConditionalDialog(props) {
 
 
   useEffect(function () {
-    console.log(value, 'value logggggggg');
-
     if (value && value.get('type')) {
       setConditions(value.get('conditions').size);
     } else {
@@ -86,15 +84,15 @@ var ConditionalDialog = function ConditionalDialog(props) {
         }));
       } else if (conditions > 1) {
         indexedValue = Map({
+          name: props.name,
           condition: 'contains',
           values: List()
         });
       }
 
-      console.log(indexedValue, 'value logggggg');
-
       if (typeof indexedValue === 'string') {
         indexedValue = Map({
+          name: props.name,
           condition: 'contains',
           values: List()
         });

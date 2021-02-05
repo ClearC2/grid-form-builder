@@ -54,10 +54,10 @@ const ConditionalDialog = props => {
       if (value && value.get('type')) {
         indexedValue = value.getIn(['conditions', i], Map({condition: 'contains', values: List()}))
       } else if (conditions > 1) {
-        indexedValue = Map({condition: 'contains', values: List()})
+        indexedValue = Map({name: props.name, condition: 'contains', values: List()})
       }
       if (typeof indexedValue === 'string') {
-        indexedValue = Map({condition: 'contains', values: List()})
+        indexedValue = Map({name: props.name, condition: 'contains', values: List()})
       }
       conditionElements.push(
         <div style={{borderTop: '1px solid lightgray'}}>

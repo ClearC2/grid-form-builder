@@ -38,8 +38,6 @@ var ConditionalDialog = function ConditionalDialog(props) {
 
 
   (0, _react.useEffect)(function () {
-    console.log(value, 'value logggggggg');
-
     if (value && value.get('type')) {
       setConditions(value.get('conditions').size);
     } else {
@@ -107,15 +105,15 @@ var ConditionalDialog = function ConditionalDialog(props) {
         }));
       } else if (conditions > 1) {
         indexedValue = (0, _immutable.Map)({
+          name: props.name,
           condition: 'contains',
           values: (0, _immutable.List)()
         });
       }
 
-      console.log(indexedValue, 'value logggggg');
-
       if (typeof indexedValue === 'string') {
         indexedValue = (0, _immutable.Map)({
+          name: props.name,
           condition: 'contains',
           values: (0, _immutable.List)()
         });
