@@ -32,7 +32,8 @@ const Multiselect = props => {
     delimiter = '¤',
     stringify,
     isClearable = true,
-    searchable = false
+    searchable = false,
+    closeMenuOnSelect = true
   } = props
 
   const {
@@ -203,6 +204,7 @@ const Multiselect = props => {
         tabIndex={tabIndex}
         autoFocus={autofocus}
         closeMenuOnScroll={!isMobile ? closeMenuOnScroll : undefined}
+        closeMenuOnSelect={closeMenuOnSelect}
         isClearable={isClearable}
         isDisabled={disabled || readonly || !interactive}
         menuPortalTarget={document.body}
@@ -281,5 +283,6 @@ Multiselect.propTypes = {
   delimiter: PropTypes.string,
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   isClearable: PropTypes.bool,
-  searchable: PropTypes.bool
+  searchable: PropTypes.bool,
+  closeMenuOnSelect: PropTypes.bool
 }
