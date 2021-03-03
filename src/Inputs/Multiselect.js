@@ -164,8 +164,10 @@ const Multiselect = props => {
         value: convertLabelValueArrayIntoDelimitedValue({value: val, delimiter, delimit, stringify})
       }
     })
-    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
-  }, [onChange, name, delimiter, delimit, stringify, menuIsOpen])
+    if (closeMenuOnSelect) {
+      menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
+    }
+  }, [closeMenuOnSelect, onChange, name, delimiter, delimit, stringify, menuIsOpen])
 
   const handleOnKeyDown = useCallback(() => {
     if (!menuIsOpen[name]) openMenu()
