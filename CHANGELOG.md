@@ -1,3 +1,10 @@
+# [3.52.0](https://github.com/ClearC2/grid-form-builder/compare/v3.51.1...v3.52.0) (2021-03-03)
+
+
+### Features
+
+* **multi-select:** add closeOnMenuSelect prop to be passed in ([ddfafcb](https://github.com/ClearC2/grid-form-builder/commit/ddfafcb10057693c5bfc7dd9ebedcb73e184da5d))
+
 ## [3.51.1](https://github.com/ClearC2/grid-form-builder/compare/v3.51.0...v3.51.1) (2021-02-01)
 
 

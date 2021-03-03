@@ -91,7 +91,9 @@ var Multiselect = function Multiselect(props) {
       _props$isClearable = props.isClearable,
       isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
       _props$searchable = props.searchable,
-      searchable = _props$searchable === void 0 ? false : _props$searchable;
+      searchable = _props$searchable === void 0 ? false : _props$searchable,
+      _props$closeMenuOnSel = props.closeMenuOnSelect,
+      closeMenuOnSelect = _props$closeMenuOnSel === void 0 ? true : _props$closeMenuOnSel;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -307,6 +309,7 @@ var Multiselect = function Multiselect(props) {
     tabIndex: tabIndex,
     autoFocus: autofocus,
     closeMenuOnScroll: !_utils.isMobile ? closeMenuOnScroll : undefined,
+    closeMenuOnSelect: closeMenuOnSelect,
     isClearable: isClearable,
     isDisabled: disabled || readonly || !interactive,
     menuPortalTarget: document.body,
@@ -387,5 +390,6 @@ Multiselect.propTypes = {
   delimiter: _propTypes.default.string,
   delimit: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.array]),
   isClearable: _propTypes.default.bool,
-  searchable: _propTypes.default.bool
+  searchable: _propTypes.default.bool,
+  closeMenuOnSelect: _propTypes.default.bool
 };
