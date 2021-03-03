@@ -270,8 +270,11 @@ var Multiselect = function Multiselect(props) {
         })
       }
     });
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
-  }, [onChange, name, delimiter, delimit, stringify, menuIsOpen]);
+
+    if (closeMenuOnSelect) {
+      menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
+    }
+  }, [closeMenuOnSelect, onChange, name, delimiter, delimit, stringify, menuIsOpen]);
   var handleOnKeyDown = (0, _react.useCallback)(function () {
     if (!menuIsOpen[name]) openMenu();
     onKeyDown();

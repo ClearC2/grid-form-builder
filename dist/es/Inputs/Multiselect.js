@@ -239,8 +239,11 @@ var Multiselect = function Multiselect(props) {
         })
       }
     });
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, false)));
-  }, [onChange, name, delimiter, delimit, stringify, menuIsOpen]);
+
+    if (closeMenuOnSelect) {
+      menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, false)));
+    }
+  }, [closeMenuOnSelect, onChange, name, delimiter, delimit, stringify, menuIsOpen]);
   var handleOnKeyDown = useCallback(function () {
     if (!menuIsOpen[name]) openMenu();
     onKeyDown();

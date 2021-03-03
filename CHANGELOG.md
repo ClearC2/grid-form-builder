@@ -1,3 +1,10 @@
+## [3.52.1](https://github.com/ClearC2/grid-form-builder/compare/v3.52.0...v3.52.1) (2021-03-03)
+
+
+### Bug Fixes
+
+* **multi-select:** check if closeOnMenuSelect before closing menu ([5792cb9](https://github.com/ClearC2/grid-form-builder/commit/5792cb95365b0e7c2e1fe1b3088d769090ace8db))
+
 # [3.52.0](https://github.com/ClearC2/grid-form-builder/compare/v3.51.1...v3.52.0) (2021-03-03)
 
 
