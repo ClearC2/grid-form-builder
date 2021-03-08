@@ -109,6 +109,47 @@ var getBetweenDatesValues = function getBetweenDatesValues(query) {
   })).call(_context2, Boolean);
 };
 
+var convertSingleField = function convertSingleField(c, formSchema, inBetweenDateValues) {
+  var newFormValue;
+  var schema = getFieldSchema(c.get('name'), formSchema);
+  var mergeDate = c.get('mergeDate', false);
+
+  if (schema) {
+    if ((0, _immutable.Set)(_index.TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
+      var val = c.get('values') instanceof _immutable.List ? c.getIn(['values', 0], ['']) : c.get('values', '');
+      newFormValue = val;
+    } else {
+      if (c.get('rawValues') !== undefined && !mergeDate) {
+        newFormValue = (0, _immutable.Map)({
+          condition: c.get('comparator'),
+          values: c.get('rawValues', (0, _immutable.List)()),
+          dynamicValues: c.get('dynamicValues'),
+          not: c.get('not', false),
+          format: c.get('format', '')
+        }); // https://github.com/ClearC2/bleu/issues/4734
+      } else if (mergeDate) {
+        newFormValue = (0, _immutable.Map)({
+          condition: 'is between',
+          values: (0, _immutable.List)(inBetweenDateValues),
+          dynamicValues: c.get('dynamicValues'),
+          not: c.get('not', false),
+          format: c.get('format', '')
+        });
+      } else {
+        newFormValue = (0, _immutable.Map)({
+          condition: c.get('comparator'),
+          values: c.get('values', (0, _immutable.List)()),
+          dynamicValues: c.get('dynamicValues'),
+          not: c.get('not', false),
+          format: c.get('format', '')
+        });
+      }
+    }
+  }
+
+  return newFormValue;
+};
+
 var convertQueryToFormValues = function convertQueryToFormValues(query) {
   var clearExistingValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var fValues = arguments.length > 2 ? arguments[2] : undefined;
@@ -145,40 +186,22 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
 
       var inBetweenDateValues = getBetweenDatesValues(query.conditions);
       (0, _forEach.default)(_context3 = (0, _immutable.fromJS)(query.conditions)).call(_context3, function (c) {
-        var schema = getFieldSchema(c.get('name'), formSchema);
-        var mergeDate = c.get('mergeDate', false);
+        if (c.get('conditions')) {
+          var _context4;
 
-        if (schema) {
-          if ((0, _immutable.Set)(_index.TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
-            var val = c.get('values') instanceof _immutable.List ? c.getIn(['values', 0], ['']) : c.get('values', '');
-            formValues = formValues.set(c.get('name'), val);
-          } else {
-            if (c.get('rawValues') !== undefined && !mergeDate) {
-              formValues = formValues.set(c.get('name'), (0, _immutable.Map)({
-                condition: c.get('comparator'),
-                values: c.get('rawValues', (0, _immutable.List)()),
-                dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false),
-                format: c.get('format', '')
-              })); // https://github.com/ClearC2/bleu/issues/4734
-            } else if (mergeDate) {
-              formValues = formValues.set(c.get('name'), (0, _immutable.Map)({
-                condition: 'is between',
-                values: (0, _immutable.List)(inBetweenDateValues),
-                dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false),
-                format: c.get('format', '')
-              }));
-            } else {
-              formValues = formValues.set(c.get('name'), (0, _immutable.Map)({
-                condition: c.get('comparator'),
-                values: c.get('values', (0, _immutable.List)()),
-                dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false),
-                format: c.get('format', '')
-              }));
-            }
-          }
+          var conditions = (0, _immutable.List)();
+          (0, _forEach.default)(_context4 = c.get('conditions')).call(_context4, function (pred) {
+            var newField = convertSingleField(pred, formSchema, inBetweenDateValues);
+            newField = newField.set('name', pred);
+            conditions = conditions.push(newField);
+          });
+          formValues = formValues.set(c.getIn(['conditions', 1, 'name']), (0, _immutable.fromJS)({
+            conditions: conditions,
+            type: c.get('type')
+          }));
+        } else {
+          var newValue = convertSingleField(c, formSchema, inBetweenDateValues);
+          formValues = formValues.set(c.get('name'), newValue);
         }
       });
     }
@@ -229,9 +252,9 @@ function (_Component) {
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-        var _context4;
+        var _context5;
 
-        return (0, _find.default)(_context4 = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context4, function (row) {
+        return (0, _find.default)(_context5 = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context5, function (row) {
           return row.config.name === key;
         });
       } else {

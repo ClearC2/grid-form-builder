@@ -60,7 +60,7 @@ function (_Component) {
   (0, _inherits2.default)(ConditionalTable, _Component);
 
   function ConditionalTable(props) {
-    var _context8;
+    var _context18;
 
     var _this;
 
@@ -68,6 +68,7 @@ function (_Component) {
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(ConditionalTable).call(this, props));
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildMultiString", function (key, value) {
       var exclude = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var rawValue = arguments.length > 3 ? arguments[3] : undefined;
       var valString = '';
 
       if (value) {
@@ -90,7 +91,7 @@ function (_Component) {
         }
 
         var i = value.length;
-        var cond = _this.getConditionValue(key) || 'contains';
+        var cond = _this.getConditionValue(rawValue) || 'contains';
 
         if (i > _index.CONDITIONS[cond].maxFields) {
           var _context;
@@ -115,7 +116,7 @@ function (_Component) {
           });
         }
 
-        return "".concat(exclude ? ' (exclude) ' : '') + ' ' + _this.getConditionValue(key) + ' ' + valString;
+        return "".concat(exclude ? ' (exclude) ' : '') + ' ' + _this.getConditionValue(rawValue) + ' ' + valString;
       } else {
         return '';
       }
@@ -164,8 +165,59 @@ function (_Component) {
 
       return '';
     });
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getNewValue", function (value, key) {
+      var rawValues;
+      var newValue = (0, _immutable.List)();
+
+      if (typeof value === 'string') {
+        if (value !== '') {
+          var splitVal = value.split('¤');
+
+          if (splitVal.length > 1) {
+            newValue = (0, _immutable.List)(splitVal);
+          } else {
+            newValue = (0, _immutable.List)([value]);
+          }
+        }
+      } else if ((0, _typeof2.default)(value) === 'object' && value.condition === undefined) {
+        if (!value.type && !(0, _values.default)(value)) {
+          newValue = (0, _immutable.List)(value);
+        } else {
+          newValue = (0, _immutable.List)((0, _values.default)(value));
+        }
+      } else {
+        if ((0, _typeof2.default)((0, _values.default)(value)[0]) === 'object') {
+          var _context2;
+
+          // for typeaheads
+          rawValues = (0, _values.default)(value);
+          var ids = (0, _map.default)(_context2 = (0, _values.default)(value)).call(_context2, function (obj) {
+            return obj.value;
+          });
+          newValue = (0, _immutable.List)(ids);
+        } else if (typeof (0, _values.default)(value)[0] === 'string') {
+          // inputs
+          if (typeof (0, _values.default)(value) === 'string') {
+            var _splitVal = (0, _values.default)(value).split('¤');
+
+            if (_splitVal.length > 1) {
+              newValue = (0, _immutable.List)(_splitVal);
+            } else {
+              newValue = (0, _immutable.List)((0, _values.default)(value));
+            }
+          } else {
+            newValue = (0, _immutable.List)((0, _values.default)(value));
+          }
+        }
+      }
+
+      return {
+        newValue: newValue,
+        rawValues: rawValues
+      };
+    });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildRequest", function () {
-      var _context2;
+      var _context3;
 
       var formValues = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.props.formValues;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
@@ -175,49 +227,18 @@ function (_Component) {
           conditions: []
         }
       };
-      (0, _forEach.default)(_context2 = (0, _immutable.Map)(formValues)).call(_context2, function (value, key) {
+      (0, _forEach.default)(_context3 = (0, _immutable.Map)(formValues)).call(_context3, function (value, key) {
+        var newValue;
         var rawValues;
-        var newValue = (0, _immutable.List)();
 
-        if (typeof value === 'string') {
-          if (value !== '') {
-            var splitVal = value.split('¤');
+        if (!value.type) {
+          var resp = _this.getNewValue(value, key);
 
-            if (splitVal.length > 1) {
-              newValue = (0, _immutable.List)(splitVal);
-            } else {
-              newValue = (0, _immutable.List)([value]);
-            }
-          }
-        } else if ((0, _typeof2.default)(value) === 'object' && value.condition === undefined) {
-          newValue = (0, _immutable.List)(value);
-        } else {
-          if ((0, _typeof2.default)((0, _values.default)(value)[0]) === 'object') {
-            var _context3;
-
-            // for typeaheads
-            rawValues = (0, _values.default)(value);
-            var ids = (0, _map.default)(_context3 = (0, _values.default)(value)).call(_context3, function (obj) {
-              return obj.value;
-            });
-            newValue = (0, _immutable.List)(ids);
-          } else if (typeof (0, _values.default)(value)[0] === 'string') {
-            // inputs
-            if (typeof (0, _values.default)(value) === 'string') {
-              var _splitVal = (0, _values.default)(value).split('¤');
-
-              if (_splitVal.length > 1) {
-                newValue = (0, _immutable.List)(_splitVal);
-              } else {
-                newValue = (0, _immutable.List)((0, _values.default)(value));
-              }
-            } else {
-              newValue = (0, _immutable.List)((0, _values.default)(value));
-            }
-          }
+          newValue = resp.newValue;
+          rawValues = resp.rawValues;
         }
 
-        if (newValue.size > 0 || _this.state.noValueConditions.has(value.condition) || value.dynamicValues) {
+        if (newValue && (newValue.size > 0 || _this.state.noValueConditions.has(value.condition) || value.dynamicValues)) {
           var cond = 'contains';
 
           if (formValues[key] && formValues[key].condition) {
@@ -254,6 +275,62 @@ function (_Component) {
               format: _this.getFormat(key)
             });
           }
+        } else if (value.type) {
+          var _context4;
+
+          var newValues = [];
+          (0, _forEach.default)(_context4 = value.conditions).call(_context4, function (v) {
+            var _this$getNewValue = _this.getNewValue(v, key),
+                newValue = _this$getNewValue.newValue,
+                rawValues = _this$getNewValue.rawValues;
+
+            if (newValue.size > 0 || _this.state.noValueConditions.has(v.condition) || v.dynamicValues || _this.state.noValueConditions.has(v.comparator)) {
+              var _cond = 'contains';
+
+              if (v && v.condition) {
+                _cond = v.condition;
+              }
+
+              if (v && v.comparator) {
+                _cond = v.comparator;
+              }
+
+              if (newValue.size > _index.CONDITIONS[_cond].maxFields) {
+                newValue = (0, _slice.default)(newValue).call(newValue, 0, _index.CONDITIONS[_cond].maxFields);
+              } // https://github.com/ClearC2/bleu/issues/4734
+
+
+              console.log(key, (0, _immutable.fromJS)(v), 'key value logggggggg');
+
+              if (_cond === 'is between') {
+                newValues.push({
+                  name: key,
+                  values: [newValue.get('0', '')],
+                  comparator: 'is greater than',
+                  mergeDate: true
+                });
+                newValues.push({
+                  name: key,
+                  values: [newValue.get('1', '')],
+                  comparator: 'is less than',
+                  mergeDate: true
+                });
+              } else {
+                newValues.push({
+                  name: key,
+                  label: _this.getLabel(key),
+                  comparator: _cond,
+                  values: newValue,
+                  dynamicValues: value.dynamicValues,
+                  rawValues: rawValues,
+                  not: v.not || false,
+                  format: _this.getFormat(key)
+                });
+              }
+            }
+          });
+          value.conditions = newValues;
+          req.query.conditions.push(value);
         }
       });
       return req;
@@ -287,11 +364,11 @@ function (_Component) {
       }
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "resetForm", function () {
-      var _context4;
+      var _context5;
 
       var formValues = _this.prop.formValues;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
-      (0, _map.default)(_context4 = (0, _keys.default)(formValues)).call(_context4, function (key) {
+      (0, _map.default)(_context5 = (0, _keys.default)(formValues)).call(_context5, function (key) {
         var schema = _this.props.getFieldSchema(key);
 
         if (schema && schema.config && (schema.config.type === 'textarea' || schema.config.type === 'checkbox' || schema.config.type === 'radio')) {
@@ -314,7 +391,7 @@ function (_Component) {
         }
       });
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "handleRemoveConditionClick", function (e, key) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "handleRemoveConditionClick", function (e, key, predicateIndex) {
       var schema = _this.props.getFieldSchema(key);
 
       if (schema && schema.config && (schema.config.type === 'textarea' || schema.config.type === 'checkbox' || schema.config.type === 'radio')) {
@@ -325,18 +402,58 @@ function (_Component) {
           }
         });
       } else {
-        _this.props.handleOnChange({
-          target: {
-            name: key,
-            value: (0, _immutable.Map)({
-              condition: _this.props.getDefaultCondition(schema.config.type),
-              values: (0, _immutable.List)()
-            })
+        if (predicateIndex >= 0) {
+          var _context6;
+
+          var predicate = _this.props.formValues[key];
+          var newConditions = [];
+          (0, _forEach.default)(_context6 = predicate.conditions).call(_context6, function (c, i) {
+            if (i !== predicateIndex) {
+              newConditions.push(c);
+            }
+          });
+
+          if (newConditions.length === 0) {
+            _this.props.handleOnChange({
+              target: {
+                name: key,
+                value: (0, _immutable.Map)({
+                  condition: _this.props.getDefaultCondition(schema.config.type),
+                  values: (0, _immutable.List)()
+                })
+              }
+            });
+          } else if (newConditions.length === 1) {
+            _this.props.handleOnChange({
+              target: {
+                name: key,
+                value: predicate.conditions[0]
+              }
+            });
+          } else {
+            predicate.conditions = newConditions;
+
+            _this.props.handleOnChange({
+              target: {
+                name: key,
+                value: predicate
+              }
+            });
           }
-        });
+        } else {
+          _this.props.handleOnChange({
+            target: {
+              name: key,
+              value: (0, _immutable.Map)({
+                condition: _this.props.getDefaultCondition(schema.config.type),
+                values: (0, _immutable.List)()
+              })
+            }
+          });
+        }
       }
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "renderDeleteIcon", function (key) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "renderDeleteIcon", function (key, value, predicateIndex) {
       if (_this.props.enableDelete) {
         return _react.default.createElement("i", {
           className: X_ICON_CLASS,
@@ -345,32 +462,28 @@ function (_Component) {
             marginTop: '3px'
           },
           onClick: function onClick(e) {
-            _this.handleRemoveConditionClick(e, key);
+            _this.handleRemoveConditionClick(e, key, predicateIndex);
           }
         });
       } else {
         return null;
       }
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getConditionValue", function (key) {
-      var _this$props$formValue = _this.props.formValues,
-          formValues = _this$props$formValue === void 0 ? {} : _this$props$formValue;
-      if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
-
-      if (formValues[key] && formValues[key].condition) {
-        return formValues[key].condition;
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getConditionValue", function (rawValue) {
+      if (rawValue && rawValue.condition) {
+        return rawValue.condition;
       } else {
         return 'contains';
       }
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getFieldType", function (fieldName) {
-      var _context5;
+      var _context7;
 
       var _this$props$formSchem3 = _this.props.formSchema,
           formSchema = _this$props$formSchem3 === void 0 ? {} : _this$props$formSchem3;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
       var type = '';
-      (0, _forEach.default)(_context5 = formSchema.jsonschema.layout).call(_context5, function (field) {
+      (0, _forEach.default)(_context7 = formSchema.jsonschema.layout).call(_context7, function (field) {
         if (field.config.name === fieldName) {
           type = field.config.type;
           return true;
@@ -379,18 +492,24 @@ function (_Component) {
       return type;
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildTableRow", function (key, value) {
+      var predicateIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
+
       if (value && _this.state.noValueConditions.has(value.condition)) {
+        var _context8, _context9;
+
         return _react.default.createElement("tr", {
-          key: "row-".concat(key)
+          key: (0, _concat.default)(_context8 = "row-".concat(key, "-")).call(_context8, predicateIndex)
         }, _react.default.createElement("td", {
-          key: "column-".concat(key),
+          key: (0, _concat.default)(_context9 = "column-".concat(key, "-")).call(_context9, predicateIndex),
           style: {
             wordWrap: 'break-word'
           }
-        }, _react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key)));
+        }, _react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key, value, predicateIndex)));
       }
 
       if (value && typeof value === 'string') {
+        var _context10, _context11;
+
         // raw inputs
         var val = value;
 
@@ -404,36 +523,38 @@ function (_Component) {
 
         return (// for basic input
           _react.default.createElement("tr", {
-            key: "row-".concat(key)
+            key: (0, _concat.default)(_context10 = "row-".concat(key, "-")).call(_context10, predicateIndex)
           }, _react.default.createElement("td", {
-            key: "column-".concat(key),
+            key: (0, _concat.default)(_context11 = "column-".concat(key, "-")).call(_context11, predicateIndex),
             style: {
               wordWrap: 'break-word'
             }
-          }, _react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value)))
+          }, _react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value, predicateIndex)))
         );
       } else if (typeof value === 'boolean') {
+        var _context12, _context13;
+
         return _react.default.createElement("tr", {
-          key: "row-".concat(key)
+          key: (0, _concat.default)(_context12 = "row-".concat(key, "-")).call(_context12, predicateIndex)
         }, _react.default.createElement("td", {
-          key: "column-".concat(key)
-        }, _react.default.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value)));
+          key: (0, _concat.default)(_context13 = "column-".concat(key, "-")).call(_context13, predicateIndex)
+        }, _react.default.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
       } else {
-        var _context6, _context7;
+        var _context14, _context15, _context16, _context17;
 
         if ((0, _values.default)(value) && (0, _values.default)(value).length === 0 && (!value.dynamicValues || value.dynamicValues && value.dynamicValues.length === 0)) {
           return null;
         }
 
         return _react.default.createElement("tr", {
-          key: "row-".concat(key)
+          key: (0, _concat.default)(_context14 = "row-".concat(key, "-")).call(_context14, predicateIndex)
         }, _react.default.createElement("td", {
-          key: "column-".concat(key)
-        }, _react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _concat.default)(_context6 = (0, _values.default)(value)).call(_context6, value.dynamicValues || []), value.not), _this.renderDeleteIcon(key, (0, _concat.default)(_context7 = (0, _values.default)(value)).call(_context7, value.dynamicValues || []))));
+          key: (0, _concat.default)(_context15 = "column-".concat(key, "-")).call(_context15, predicateIndex)
+        }, _react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _concat.default)(_context16 = (0, _values.default)(value)).call(_context16, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, (0, _concat.default)(_context17 = (0, _values.default)(value)).call(_context17, value.dynamicValues || []), predicateIndex)));
       }
     });
     var noValueConditions = [];
-    (0, _forEach.default)(_context8 = (0, _keys.default)(_index.CONDITIONS)).call(_context8, function (k) {
+    (0, _forEach.default)(_context18 = (0, _keys.default)(_index.CONDITIONS)).call(_context18, function (k) {
       if (_index.CONDITIONS[k].maxFields === 0) {
         noValueConditions.push(k);
       }
@@ -453,33 +574,42 @@ function (_Component) {
       // eslint-disable-line
       if (this.props.formValues !== props.formValues) {
         if (this.props.onQueryChange) {
-          this.props.onQueryChange(this.buildRequest(this.props.formValues));
+          var query = this.buildRequest(this.props.formValues);
+          this.props.onQueryChange(query);
         }
       }
     }
   }, {
     key: "render",
     value: function render() {
-      var _context9,
-          _context10,
+      var _context19,
           _this2 = this;
 
-      var _this$props$formValue2 = this.props.formValues,
-          formValues = _this$props$formValue2 === void 0 ? {} : _this$props$formValue2;
+      var _this$props$formValue = this.props.formValues,
+          formValues = _this$props$formValue === void 0 ? {} : _this$props$formValue;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
-      var tbody = (0, _map.default)(_context9 = (0, _sort.default)(_context10 = (0, _keys.default)(formValues)).call(_context10, function (a, b) {
+      var singleRows = (0, _sort.default)(_context19 = (0, _keys.default)(formValues)).call(_context19, function (a, b) {
         if (_this2.getLabel(a) === undefined || _this2.getLabel(b) === undefined) {
           return 0;
         }
 
         return _this2.getLabel(a).localeCompare(_this2.getLabel(b));
-      })).call(_context9, function (key) {
+      });
+      var tbody = [];
+      (0, _forEach.default)(singleRows).call(singleRows, function (key) {
         if (_this2.props.formValues[key]) {
-          return _this2.buildTableRow(key, _this2.props.formValues[key]);
-        } else {
-          return null;
+          if (_this2.props.formValues[key].type) {
+            var _context20;
+
+            (0, _forEach.default)(_context20 = _this2.props.formValues[key].conditions).call(_context20, function (v, predicateIndex) {
+              tbody.push(_this2.buildTableRow(key, v, predicateIndex));
+            });
+          } else {
+            tbody.push(_this2.buildTableRow(key, _this2.props.formValues[key]));
+          }
         }
       });
+      var isDisabled = this.buildRequest(this.props.formValues).query.conditions.length === 0;
       var listOpen = this.state.listOpen;
       var extraFooters = this.props.extraFooters ? this.props.extraFooters : [];
       return _react.default.createElement("div", {
@@ -543,7 +673,7 @@ function (_Component) {
           marginBottom: '10px'
         },
         onClick: this.resetForm,
-        disabled: this.buildRequest().query.conditions.length === 0
+        disabled: isDisabled
       }, "Reset"), this.props.enableNextButton && _react.default.createElement("button", {
         className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
         style: {
@@ -551,7 +681,7 @@ function (_Component) {
           marginBottom: '10px'
         },
         onClick: this.onNextClick,
-        disabled: this.buildRequest().query.conditions.length === 0
+        disabled: isDisabled
       }, "Next"), extraFooters) : null))))));
     }
   }]);

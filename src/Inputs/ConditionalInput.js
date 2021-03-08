@@ -34,7 +34,8 @@ const ConditionalInput = props => {
   const vals = values.getIn([name, 'values'], List())
   const hasValue = vals.size > 0 || cond.includes('blank') ||
     cond === 'today' || cond === 'this month' || cond === 'year to date' ||
-    (values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size)
+    (values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size) ||
+    (values.getIn([name, 'conditions'], List()).size > 0)
   return (
     <div className='gfb-input-outer' style={inputOuter}>
       <div className='gfb-input-inner' style={inputInner}>

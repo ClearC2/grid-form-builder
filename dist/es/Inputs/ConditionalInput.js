@@ -83,7 +83,7 @@ var ConditionalInput = function ConditionalInput(props) {
   }, [name]);
   var cond = values.getIn([name, 'condition'], '');
   var vals = values.getIn([name, 'values'], List());
-  var hasValue = vals.size > 0 || _includesInstanceProperty(cond).call(cond, 'blank') || cond === 'today' || cond === 'this month' || cond === 'year to date' || values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size;
+  var hasValue = vals.size > 0 || _includesInstanceProperty(cond).call(cond, 'blank') || cond === 'today' || cond === 'this month' || cond === 'year to date' || values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size || values.getIn([name, 'conditions'], List()).size > 0;
   return React.createElement("div", {
     className: "gfb-input-outer",
     style: inputOuter

@@ -49,6 +49,45 @@ const getBetweenDatesValues = (query) => {
     .filter(Boolean)
 }
 
+const convertSingleField = (c, formSchema, inBetweenDateValues) => {
+  let newFormValue
+  const schema = getFieldSchema(c.get('name'), formSchema)
+  const mergeDate = c.get('mergeDate', false)
+  if (schema) {
+    if (Set(TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
+      const val = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '')
+      newFormValue = val
+    } else {
+      if (c.get('rawValues') !== undefined && !mergeDate) {
+        newFormValue = Map({
+          condition: c.get('comparator'),
+          values: c.get('rawValues', List()),
+          dynamicValues: c.get('dynamicValues'),
+          not: c.get('not', false),
+          format: c.get('format', '')
+        })
+        // https://github.com/ClearC2/bleu/issues/4734
+      } else if (mergeDate) {
+        newFormValue = Map({
+          condition: 'is between',
+          values: List(inBetweenDateValues),
+          dynamicValues: c.get('dynamicValues'),
+          not: c.get('not', false),
+          format: c.get('format', '')
+        })
+      } else {
+        newFormValue = Map({
+          condition: c.get('comparator'),
+          values: c.get('values', List()),
+          dynamicValues: c.get('dynamicValues'),
+          not: c.get('not', false),
+          format: c.get('format', '')
+        })
+      }
+    }
+  }
+  return newFormValue
+}
 export const convertQueryToFormValues = (query, clearExistingValues = true, fValues, formSchema) => {
   let formValues = fromJS(fValues)
   if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
@@ -77,40 +116,20 @@ export const convertQueryToFormValues = (query, clearExistingValues = true, fVal
     if (query.conditions) {
       const inBetweenDateValues = getBetweenDatesValues(query.conditions)
       fromJS(query.conditions).forEach(c => {
-        const schema = getFieldSchema(c.get('name'), formSchema)
-        const mergeDate = c.get('mergeDate', false)
-        if (schema) {
-          if (Set(TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
-            const val = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '')
-            formValues = formValues.set(c.get('name'), val)
-          } else {
-            if (c.get('rawValues') !== undefined && !mergeDate) {
-              formValues = formValues.set(c.get('name'), Map({
-                condition: c.get('comparator'),
-                values: c.get('rawValues', List()),
-                dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false),
-                format: c.get('format', '')
-              }))
-            // https://github.com/ClearC2/bleu/issues/4734
-            } else if (mergeDate) {
-              formValues = formValues.set(c.get('name'), Map({
-                condition: 'is between',
-                values: List(inBetweenDateValues),
-                dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false),
-                format: c.get('format', '')
-              }))
-            } else {
-              formValues = formValues.set(c.get('name'), Map({
-                condition: c.get('comparator'),
-                values: c.get('values', List()),
-                dynamicValues: c.get('dynamicValues'),
-                not: c.get('not', false),
-                format: c.get('format', '')
-              }))
-            }
-          }
+        if (c.get('conditions')) {
+          let conditions = List()
+          c.get('conditions').forEach(pred => {
+            let newField = convertSingleField(pred, formSchema, inBetweenDateValues)
+            newField = newField.set('name', pred)
+            conditions = conditions.push(newField)
+          })
+          formValues = formValues.set(c.getIn(['conditions', 1, 'name']), fromJS({
+            conditions: conditions,
+            type: c.get('type')
+          }))
+        } else {
+          const newValue = convertSingleField(c, formSchema, inBetweenDateValues)
+          formValues = formValues.set(c.get('name'), newValue)
         }
       })
     }
