@@ -60,7 +60,7 @@ const ConditionalDialog = props => {
         indexedValue = Map({name: props.name, condition: 'contains', values: List()})
       }
       conditionElements.push(
-        <div style={{borderTop: '1px solid lightgray'}}>
+        <div style={{borderTop: '1px solid lightgray'}} key={i}>
           <ConditionalPredicate {...props} value={indexedValue} onChange={onChange} index={i} />
         </div>
       )
