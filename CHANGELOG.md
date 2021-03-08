@@ -1,3 +1,15 @@
+# [3.54.0](https://github.com/ClearC2/grid-form-builder/compare/v3.53.0...v3.54.0) (2021-03-08)
+
+
+### Bug Fixes
+
+* **conditions:** children have unique keys to silence obvious react errors that I have no idea how you could have missed ([4f78a0c](https://github.com/ClearC2/grid-form-builder/commit/4f78a0c075f5a38459f57c9dca9bf18106256059))
+
+
+### Features
+
+* **conditions:** condition input will only set default values if it doesn't already have a value ([dce03e2](https://github.com/ClearC2/grid-form-builder/commit/dce03e21610965cb90f1895f783b47db7f029820))
+
 # [3.53.0](https://github.com/ClearC2/grid-form-builder/compare/v3.52.1...v3.53.0) (2021-03-08)
 
 

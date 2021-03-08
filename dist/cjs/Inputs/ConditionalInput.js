@@ -53,17 +53,11 @@ function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object)
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; (0, _forEach.default)(_context = ownKeys(Object(source), true)).call(_context, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context2; (0, _forEach.default)(_context2 = ownKeys(Object(source))).call(_context2, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
 
 var ConditionalInput = function ConditionalInput(props) {
-  var _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
-      _props$name = props.name,
-      name = _props$name === void 0 ? '' : _props$name,
-      _props$value = props.value,
-      value = _props$value === void 0 ? (0, _immutable.List)() : _props$value,
-      _props$values = (0, _values.default)(props),
-      values = _props$values === void 0 ? (0, _immutable.Map)() : _props$values,
-      _props$onChange = props.onChange,
-      onChange = _props$onChange === void 0 ? function () {} : _props$onChange;
-
+  var style = props.style,
+      name = props.name,
+      value = props.value,
+      values = (0, _values.default)(props),
+      onChange = props.onChange;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -87,7 +81,7 @@ var ConditionalInput = function ConditionalInput(props) {
   }, []);
   (0, _react.useEffect)(function () {
     // const v = values[props.name]
-    if (name) {
+    if (name && (!value || value instanceof _immutable.Map && (!value.has('condition') || !value.has('values')))) {
       var defaults = (0, _immutable.Map)({
         condition: 'contains',
         values: (0, _immutable.List)()
@@ -110,7 +104,7 @@ var ConditionalInput = function ConditionalInput(props) {
         }
       });
     }
-  }, [name]);
+  }, [name, onChange, value]);
   var cond = values.getIn([name, 'condition'], '');
   var vals = values.getIn([name, 'values'], (0, _immutable.List)());
   var hasValue = vals.size > 0 || (0, _includes.default)(cond).call(cond, 'blank') || cond === 'today' || cond === 'this month' || cond === 'year to date' || values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size || values.getIn([name, 'conditions'], (0, _immutable.List)()).size > 0;
@@ -138,6 +132,13 @@ var ConditionalInput = function ConditionalInput(props) {
 
 var _default = ConditionalInput;
 exports.default = _default;
+ConditionalInput.defaultProps = {
+  style: {},
+  name: '',
+  value: (0, _immutable.Map)(),
+  values: (0, _immutable.Map)(),
+  onChange: function onChange() {}
+};
 ConditionalInput.propTypes = {
   onChange: _propTypes.default.func,
   name: _propTypes.default.string,

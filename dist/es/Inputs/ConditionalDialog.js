@@ -101,7 +101,8 @@ var ConditionalDialog = function ConditionalDialog(props) {
       conditionElements.push(React.createElement("div", {
         style: {
           borderTop: '1px solid lightgray'
-        }
+        },
+        key: i
       }, React.createElement(ConditionalPredicate, _extends({}, props, {
         value: indexedValue,
         onChange: onChange,

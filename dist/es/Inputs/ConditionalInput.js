@@ -23,16 +23,11 @@ import ConditionalDialog from './ConditionalDialog';
 import { Map, List, fromJS } from 'immutable';
 
 var ConditionalInput = function ConditionalInput(props) {
-  var _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
-      _props$name = props.name,
-      name = _props$name === void 0 ? '' : _props$name,
-      _props$value = props.value,
-      value = _props$value === void 0 ? List() : _props$value,
-      _props$values = _valuesInstanceProperty(props),
-      values = _props$values === void 0 ? Map() : _props$values,
-      _props$onChange = props.onChange,
-      onChange = _props$onChange === void 0 ? function () {} : _props$onChange;
+  var style = props.style,
+      name = props.name,
+      value = props.value,
+      values = _valuesInstanceProperty(props),
+      onChange = props.onChange;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -57,7 +52,7 @@ var ConditionalInput = function ConditionalInput(props) {
   }, []);
   useEffect(function () {
     // const v = values[props.name]
-    if (name) {
+    if (name && (!value || value instanceof Map && (!value.has('condition') || !value.has('values')))) {
       var defaults = Map({
         condition: 'contains',
         values: List()
@@ -80,7 +75,7 @@ var ConditionalInput = function ConditionalInput(props) {
         }
       });
     }
-  }, [name]);
+  }, [name, onChange, value]);
   var cond = values.getIn([name, 'condition'], '');
   var vals = values.getIn([name, 'values'], List());
   var hasValue = vals.size > 0 || _includesInstanceProperty(cond).call(cond, 'blank') || cond === 'today' || cond === 'this month' || cond === 'year to date' || values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size || values.getIn([name, 'conditions'], List()).size > 0;
@@ -107,6 +102,13 @@ var ConditionalInput = function ConditionalInput(props) {
 };
 
 export default ConditionalInput;
+ConditionalInput.defaultProps = {
+  style: {},
+  name: '',
+  value: Map(),
+  values: Map(),
+  onChange: function onChange() {}
+};
 ConditionalInput.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
