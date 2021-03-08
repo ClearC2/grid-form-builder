@@ -1,3 +1,19 @@
+# [3.53.0](https://github.com/ClearC2/grid-form-builder/compare/v3.52.1...v3.53.0) (2021-03-08)
+
+
+### Bug Fixes
+
+* **predicates:** add predicate dist files ([afcfb34](https://github.com/ClearC2/grid-form-builder/commit/afcfb34b507aa99670c27f646d17d3418f973368))
+* **report:** editing existing reports was breaking ([59fb620](https://github.com/ClearC2/grid-form-builder/commit/59fb6207efb429585e61e9112464ac69241a67bc))
+* **report:** name to be kept with predicates now ([f01d5ee](https://github.com/ClearC2/grid-form-builder/commit/f01d5ee768e5012f7df35e4abf8670a3ccc2dc9b))
+* **reporting:** delete functionality now deletes just one predicate ([841fc75](https://github.com/ClearC2/grid-form-builder/commit/841fc756780a1f44bccdeabc162dfa481f373911))
+* **reporting:** fix delete condition logic for predicates ([9098a7c](https://github.com/ClearC2/grid-form-builder/commit/9098a7c14c9b2cf6bd7b6c2aaa4e268dd72f0b47))
+
+
+### Features
+
+* **reporting:** can make multiple conditions ([d7b0afa](https://github.com/ClearC2/grid-form-builder/commit/d7b0afab109cecc028e9e628dc8a0b2b90b9b38d))
+
 ## [3.52.1](https://github.com/ClearC2/grid-form-builder/compare/v3.52.0...v3.52.1) (2021-03-03)
 
 

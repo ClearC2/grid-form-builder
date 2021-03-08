@@ -300,8 +300,6 @@ function (_Component) {
               } // https://github.com/ClearC2/bleu/issues/4734
 
 
-              console.log(key, (0, _immutable.fromJS)(v), 'key value logggggggg');
-
               if (_cond === 'is between') {
                 newValues.push({
                   name: key,
