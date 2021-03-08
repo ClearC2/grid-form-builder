@@ -2,8 +2,9 @@ import React, {useCallback, useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import ConditionalDialog from './ConditionalDialog'
 import {Map, List, fromJS} from 'immutable'
+
 const ConditionalInput = props => {
-  const {style = {}, name = '', value = List(), values = Map(), onChange = () => {}} = props
+  const {style, name, value, values, onChange} = props
 
   const {value: valueStyle = {}, inputOuter = {}, inputInner = {}, inputControl = {}, valueContainer = {}, indicators = {}} = style// eslint-disable-line
 
@@ -15,7 +16,7 @@ const ConditionalInput = props => {
 
   useEffect(() => {
     // const v = values[props.name]
-    if (name) {
+    if (name && (!value || (value instanceof Map && (!value.has('condition') || !value.has('values'))))) {
       let defaults = Map({condition: 'contains', values: List()})
       if (typeof value === 'string') {
         if (value !== '') {
@@ -28,7 +29,7 @@ const ConditionalInput = props => {
       }
       onChange({target: {name: name, value: defaults}})
     }
-  }, [name])
+  }, [name, onChange, value])
 
   const cond = values.getIn([name, 'condition'], '')
   const vals = values.getIn([name, 'values'], List())
@@ -55,6 +56,14 @@ const ConditionalInput = props => {
 }
 
 export default ConditionalInput
+
+ConditionalInput.defaultProps = {
+  style: {},
+  name: '',
+  value: Map(),
+  values: Map(),
+  onChange: () => {}
+}
 
 ConditionalInput.propTypes = {
   onChange: PropTypes.func,

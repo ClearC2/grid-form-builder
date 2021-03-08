@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Map, List, fromJS} from 'immutable'
+import {Map, fromJS} from 'immutable'
 import {ConditionalTable} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import FormBuilder from '../../src/FormBuilder'
@@ -95,7 +95,6 @@ export default class Example extends Component {
   toggleDroppable = () => this.setState({droppable: !this.state.droppable})
 
   handleOnChange = e => {
-    console.log(e, 'e loggggggggg example')
     const input = e.target
     this.setState(s => {
       return {formValues: s.formValues.set(input.name, input.value)}
