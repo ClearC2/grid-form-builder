@@ -1,3 +1,10 @@
+# [3.55.0](https://github.com/ClearC2/grid-form-builder/compare/v3.54.0...v3.55.0) (2021-03-23)
+
+
+### Features
+
+* **performance:** if the values prop is the only prop that changes, typeaheads as well as custom components will now update ([69df27f](https://github.com/ClearC2/grid-form-builder/commit/69df27f575e8501ad94c5112aaf6bed93c596a41))
+
 # [3.54.0](https://github.com/ClearC2/grid-form-builder/compare/v3.53.0...v3.54.0) (2021-03-08)
 
 
