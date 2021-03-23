@@ -15,8 +15,12 @@ const ConditionalInput = props => {
   }, [])
 
   useEffect(() => {
-    // const v = values[props.name]
-    if (name && (!value || (value instanceof Map && (!value.has('condition') || !value.has('values'))))) {
+    let setDefaults = true
+    if (value instanceof Map) {
+      if (value.has('condition') && value.has('values')) setDefaults = false
+      if (value.has('conditions') && value.has('type')) setDefaults = false
+    }
+    if (name && setDefaults) {
       let defaults = Map({condition: 'contains', values: List()})
       if (typeof value === 'string') {
         if (value !== '') {
