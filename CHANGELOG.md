@@ -1,3 +1,10 @@
+## [3.55.1](https://github.com/ClearC2/grid-form-builder/compare/v3.55.0...v3.55.1) (2021-03-23)
+
+
+### Bug Fixes
+
+* **reports:** fixed an issue where default conditions were being set if you tried to add multiple conditions to the same field ([6885b03](https://github.com/ClearC2/grid-form-builder/commit/6885b03934fcc6a16c361e6075e8376c52949e91))
+
 # [3.55.0](https://github.com/ClearC2/grid-form-builder/compare/v3.54.0...v3.55.0) (2021-03-23)
 
 

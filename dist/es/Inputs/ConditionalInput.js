@@ -51,8 +51,14 @@ var ConditionalInput = function ConditionalInput(props) {
     setShowDialog(false);
   }, []);
   useEffect(function () {
-    // const v = values[props.name]
-    if (name && (!value || value instanceof Map && (!value.has('condition') || !value.has('values')))) {
+    var setDefaults = true;
+
+    if (value instanceof Map) {
+      if (value.has('condition') && value.has('values')) setDefaults = false;
+      if (value.has('conditions') && value.has('type')) setDefaults = false;
+    }
+
+    if (name && setDefaults) {
       var defaults = Map({
         condition: 'contains',
         values: List()
