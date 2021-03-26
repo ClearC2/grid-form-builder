@@ -35,7 +35,8 @@ const DateInput = props => {
     pastYears = 12,
     futureYears = 12,
     minDate,
-    maxDate
+    maxDate,
+    onChangeValidator
   } = props
 
   const {
@@ -136,11 +137,15 @@ const DateInput = props => {
 
   const handleOnCalendarChange = useCallback(e => {
     if (allowCalendarChangeEvent.current) {
-      onChange(e)
+      if (onChangeValidator({raw: inputValue, formatted: e.target.value})) {
+        onChange(e)
+      } else {
+        changeInputValue('')
+      }
     } else {
       allowCalendarChangeEvent.current = true
     }
-  }, [onChange])
+  }, [onChange, changeInputValue, onChangeValidator, inputValue])
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
@@ -266,5 +271,10 @@ DateInput.propTypes = {
   pastYears: PropTypes.number,
   futureYears: PropTypes.number,
   minDate: PropTypes.string,
-  maxDate: PropTypes.string
+  maxDate: PropTypes.string,
+  onChangeValidator: PropTypes.func
+}
+
+DateInput.defaultProps = {
+  onChangeValidator: () => true
 }
