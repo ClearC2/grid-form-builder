@@ -1,3 +1,10 @@
+# [3.57.0](https://github.com/ClearC2/grid-form-builder/compare/v3.56.0...v3.57.0) (2021-03-26)
+
+
+### Features
+
+* **date:** added a manual validation if the date field is blurred with the tab key ([0885b73](https://github.com/ClearC2/grid-form-builder/commit/0885b73cd96568180cc6fa4b4dc24f74b1318a93))
+
 # [3.56.0](https://github.com/ClearC2/grid-form-builder/compare/v3.55.1...v3.56.0) (2021-03-26)
 
 

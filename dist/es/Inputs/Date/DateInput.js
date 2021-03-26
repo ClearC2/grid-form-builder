@@ -94,6 +94,12 @@ var DateInput = function DateInput(props) {
       setIsFocused = _useState8[1];
 
   var allowCalendarChangeEvent = useRef(true);
+
+  var _useState9 = useState(false),
+      _useState10 = _slicedToArray(_useState9, 2),
+      manualBlurCheck = _useState10[0],
+      setManualBlurCheck = _useState10[1];
+
   var convertDateToMomentFormat = useMemo(function () {
     return function (value) {
       var time;
@@ -167,12 +173,36 @@ var DateInput = function DateInput(props) {
   var handleOnFocus = useCallback(function () {
     changeShowPicker(true);
     setIsFocused(true);
+    setManualBlurCheck(true);
   }, [changeShowPicker]);
-  var handleOnBlur = useCallback(function () {
+  var handleOnBlur = useCallback(function (e) {
+    if (manualBlurCheck) {
+      // this is to circumvent an issue where the daterangepicker change handler isn't firing when you tab out of the input - JRA 03/26/2021
+      var formatted = inputValue ? moment(inputValue).format(dateFormat) : '';
+
+      if (onChangeValidator({
+        raw: inputValue,
+        formatted: formatted
+      })) {
+        onChange({
+          target: {
+            name: name,
+            value: formatted
+          }
+        });
+      } else {
+        changeInputValue('');
+      }
+    }
+
+    setManualBlurCheck(true);
+    changeShowPicker(false);
     setIsFocused(false);
-  }, []);
+  }, [manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name]);
   var handleOnCalendarChange = useCallback(function (e) {
     if (allowCalendarChangeEvent.current) {
+      setManualBlurCheck(false);
+
       if (onChangeValidator({
         raw: inputValue,
         formatted: e.target.value
