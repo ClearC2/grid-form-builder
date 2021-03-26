@@ -1,3 +1,10 @@
+# [3.56.0](https://github.com/ClearC2/grid-form-builder/compare/v3.55.1...v3.56.0) (2021-03-26)
+
+
+### Features
+
+* **date:** adds an onchange validator function for standalone gfbinputs ([d168544](https://github.com/ClearC2/grid-form-builder/commit/d168544e8347c1025cc733e50a26605bd493bada))
+
 ## [3.55.1](https://github.com/ClearC2/grid-form-builder/compare/v3.55.0...v3.55.1) (2021-03-23)
 
 
