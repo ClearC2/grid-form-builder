@@ -59,6 +59,7 @@ const DateInput = props => {
   const [inputFormat, setInputFormat] = useState()
   const [isFocused, setIsFocused] = useState(false)
   const allowCalendarChangeEvent = useRef(true)
+  const [manualBlurCheck, setManualBlurCheck] = useState(false)
 
   const convertDateToMomentFormat = useMemo(() => {
     return value => {
@@ -129,14 +130,28 @@ const DateInput = props => {
   const handleOnFocus = useCallback(() => {
     changeShowPicker(true)
     setIsFocused(true)
+    setManualBlurCheck(true)
   }, [changeShowPicker])
 
-  const handleOnBlur = useCallback(() => {
+  const handleOnBlur = useCallback(e => {
+    if (manualBlurCheck) { // this is to circumvent an issue where the daterangepicker change handler isn't firing when you tab out of the input - JRA 03/26/2021
+      const formatted = inputValue ? moment(inputValue).format(dateFormat) : ''
+      if (onChangeValidator({raw: inputValue, formatted})) {
+        onChange({
+          target: {name, value: formatted}
+        })
+      } else {
+        changeInputValue('')
+      }
+    }
+    setManualBlurCheck(true)
+    changeShowPicker(false)
     setIsFocused(false)
-  }, [])
+  }, [manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name])
 
   const handleOnCalendarChange = useCallback(e => {
     if (allowCalendarChangeEvent.current) {
+      setManualBlurCheck(false)
       if (onChangeValidator({raw: inputValue, formatted: e.target.value})) {
         onChange(e)
       } else {

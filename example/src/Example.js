@@ -206,6 +206,22 @@ export default class Example extends Component {
             display: 'flex',
             justifyContent: 'center'
           }}>
+            {/*<div style={{height: 47, width: 200}}>*/}
+            {/*  <GFBInput*/}
+            {/*    label='Start'*/}
+            {/*    name='start_date'*/}
+            {/*    type='date'*/}
+            {/*    value={this.state.formValues.get('start_date', '')}*/}
+            {/*    onChange={this.handleOnChange}*/}
+            {/*    onChangeValidator={value => {*/}
+            {/*      const {raw, formatted} = value*/}
+            {/*      console.log(raw, 'is what they literally typed in, what the user sees in the input')*/}
+            {/*      console.log(formatted, 'is what the calendar thinks the raw value means, this will be what is sent up by the change handler')*/}
+            {/*      // return false if date is invalid and the input will blank itself out*/}
+            {/*      return true*/}
+            {/*    }}*/}
+            {/*  />*/}
+            {/*</div>*/}
             <button
               onClick={this.toggleDraggable}
               style={{marginRight: 10}}
