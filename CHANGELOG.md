@@ -1,3 +1,10 @@
+# [3.58.0](https://github.com/ClearC2/grid-form-builder/compare/v3.57.0...v3.58.0) (2021-03-26)
+
+
+### Features
+
+* **date:** validator function accepts a string return to overwrite the value of the input ([f4dbd69](https://github.com/ClearC2/grid-form-builder/commit/f4dbd696c7c809a519482506ee54fee07aa96538))
+
 # [3.57.0](https://github.com/ClearC2/grid-form-builder/compare/v3.56.0...v3.57.0) (2021-03-26)
 
 

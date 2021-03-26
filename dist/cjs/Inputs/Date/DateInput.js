@@ -200,19 +200,34 @@ var DateInput = function DateInput(props) {
     if (manualBlurCheck) {
       // this is to circumvent an issue where the daterangepicker change handler isn't firing when you tab out of the input - JRA 03/26/2021
       var formatted = inputValue ? (0, _moment.default)(inputValue).format(dateFormat) : '';
-
-      if (onChangeValidator({
+      var validate = onChangeValidator({
         raw: inputValue,
         formatted: formatted
-      })) {
+      });
+
+      if (typeof validate === 'string') {
+        changeInputValue(validate);
+        onChange({
+          target: {
+            name: name,
+            value: validate
+          }
+        });
+      } else if (!validate) {
+        changeInputValue('');
+        onChange({
+          target: {
+            name: name,
+            value: ''
+          }
+        });
+      } else {
         onChange({
           target: {
             name: name,
             value: formatted
           }
         });
-      } else {
-        changeInputValue('');
       }
     }
 
@@ -223,19 +238,34 @@ var DateInput = function DateInput(props) {
   var handleOnCalendarChange = (0, _react.useCallback)(function (e) {
     if (allowCalendarChangeEvent.current) {
       setManualBlurCheck(false);
-
-      if (onChangeValidator({
+      var validate = onChangeValidator({
         raw: inputValue,
         formatted: e.target.value
-      })) {
-        onChange(e);
-      } else {
+      });
+
+      if (typeof validate === 'string') {
+        changeInputValue(validate);
+        onChange({
+          target: {
+            name: name,
+            value: validate
+          }
+        });
+      } else if (!validate) {
         changeInputValue('');
+        onChange({
+          target: {
+            name: name,
+            value: ''
+          }
+        });
+      } else {
+        onChange(e);
       }
     } else {
       allowCalendarChangeEvent.current = true;
     }
-  }, [onChange, changeInputValue, onChangeValidator, inputValue]);
+  }, [onChangeValidator, inputValue, onChange, name]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
