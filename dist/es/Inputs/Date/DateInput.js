@@ -48,7 +48,8 @@ var DateInput = function DateInput(props) {
       _props$futureYears = props.futureYears,
       futureYears = _props$futureYears === void 0 ? 12 : _props$futureYears,
       minDate = props.minDate,
-      maxDate = props.maxDate;
+      maxDate = props.maxDate,
+      onChangeValidator = props.onChangeValidator;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -172,11 +173,18 @@ var DateInput = function DateInput(props) {
   }, []);
   var handleOnCalendarChange = useCallback(function (e) {
     if (allowCalendarChangeEvent.current) {
-      onChange(e);
+      if (onChangeValidator({
+        raw: inputValue,
+        formatted: e.target.value
+      })) {
+        onChange(e);
+      } else {
+        changeInputValue('');
+      }
     } else {
       allowCalendarChangeEvent.current = true;
     }
-  }, [onChange]);
+  }, [onChange, changeInputValue, onChangeValidator, inputValue]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -307,5 +315,11 @@ DateInput.propTypes = {
   pastYears: PropTypes.number,
   futureYears: PropTypes.number,
   minDate: PropTypes.string,
-  maxDate: PropTypes.string
+  maxDate: PropTypes.string,
+  onChangeValidator: PropTypes.func
+};
+DateInput.defaultProps = {
+  onChangeValidator: function onChangeValidator() {
+    return true;
+  }
 };
