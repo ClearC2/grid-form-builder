@@ -136,12 +136,21 @@ const DateInput = props => {
   const handleOnBlur = useCallback(e => {
     if (manualBlurCheck) { // this is to circumvent an issue where the daterangepicker change handler isn't firing when you tab out of the input - JRA 03/26/2021
       const formatted = inputValue ? moment(inputValue).format(dateFormat) : ''
-      if (onChangeValidator({raw: inputValue, formatted})) {
+      const validate = onChangeValidator({raw: inputValue, formatted})
+      if (typeof validate === 'string') {
+        changeInputValue(validate)
+        onChange({
+          target: {name, value: validate}
+        })
+      } else if (!validate) {
+        changeInputValue('')
+        onChange({
+          target: {name, value: ''}
+        })
+      } else {
         onChange({
           target: {name, value: formatted}
         })
-      } else {
-        changeInputValue('')
       }
     }
     setManualBlurCheck(true)
@@ -152,15 +161,24 @@ const DateInput = props => {
   const handleOnCalendarChange = useCallback(e => {
     if (allowCalendarChangeEvent.current) {
       setManualBlurCheck(false)
-      if (onChangeValidator({raw: inputValue, formatted: e.target.value})) {
-        onChange(e)
-      } else {
+      const validate = onChangeValidator({raw: inputValue, formatted: e.target.value})
+      if (typeof validate === 'string') {
+        changeInputValue(validate)
+        onChange({
+          target: {name, value: validate}
+        })
+      } else if (!validate) {
         changeInputValue('')
+        onChange({
+          target: {name, value: ''}
+        })
+      } else {
+        onChange(e)
       }
     } else {
       allowCalendarChangeEvent.current = true
     }
-  }, [onChange, changeInputValue, onChangeValidator, inputValue])
+  }, [onChangeValidator, inputValue, onChange, name])
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'

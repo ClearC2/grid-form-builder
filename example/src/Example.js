@@ -218,6 +218,7 @@ export default class Example extends Component {
             {/*      console.log(raw, 'is what they literally typed in, what the user sees in the input')*/}
             {/*      console.log(formatted, 'is what the calendar thinks the raw value means, this will be what is sent up by the change handler')*/}
             {/*      // return false if date is invalid and the input will blank itself out*/}
+            {/*      // return a string and the input will be overwritten by the string that is returned from this function*/}
             {/*      return true*/}
             {/*    }}*/}
             {/*  />*/}
