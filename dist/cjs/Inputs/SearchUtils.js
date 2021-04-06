@@ -60,7 +60,7 @@ var TEXT_INPUTS = ['textarea', 'checkbox', 'radio']; // export const LIST_INPUTS
 
 exports.TEXT_INPUTS = TEXT_INPUTS;
 var CONDITIONS = {
-  'contains': {
+  contains: {
     maxFields: 999,
     minFields: 1,
     invalidInputTypes: (0, _concat.default)(_context = []).call(_context, (0, _toConsumableArray2.default)(ONLY_CATEGORICAL_INPUT), (0, _toConsumableArray2.default)(DATES))
@@ -122,17 +122,17 @@ var CONDITIONS = {
     minFields: 0,
     invalidInputTypes: []
   },
-  'yesterday': {
+  yesterday: {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
   },
-  'today': {
+  today: {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
   },
-  'tomorrow': {
+  tomorrow: {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
@@ -143,6 +143,16 @@ var CONDITIONS = {
     invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
   },
   'year to date': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
+  },
+  'this quarter': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
+  },
+  'quarter to date': {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)

@@ -1,3 +1,10 @@
+# [3.59.0](https://github.com/ClearC2/grid-form-builder/compare/v3.58.0...v3.59.0) (2021-04-06)
+
+
+### Features
+
+* **comparators:** add this quarter and quarter to date comparators ([94e3e25](https://github.com/ClearC2/grid-form-builder/commit/94e3e250124a5727069a6684f63aa9dc1c1f68bb))
+
 # [3.58.0](https://github.com/ClearC2/grid-form-builder/compare/v3.57.0...v3.58.0) (2021-03-26)
 
 
