@@ -39,6 +39,7 @@ const ConditionalInput = props => {
   const vals = values.getIn([name, 'values'], List())
   const hasValue = vals.size > 0 || cond.includes('blank') ||
     cond === 'today' || cond === 'this month' || cond === 'year to date' ||
+    cond === 'this quarter' || cond === 'quarter to date' ||
     (values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size) ||
     (values.getIn([name, 'conditions'], List()).size > 0)
   return (
