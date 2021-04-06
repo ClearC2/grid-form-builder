@@ -30,7 +30,7 @@ export const TEXT_INPUTS = ['textarea', 'checkbox', 'radio']
 // export const LIST_INPUTS = []
 
 export const CONDITIONS = {
-  'contains': {
+  contains: {
     maxFields: 999,
     minFields: 1,
     invalidInputTypes: [...ONLY_CATEGORICAL_INPUT, ...DATES]
@@ -92,17 +92,17 @@ export const CONDITIONS = {
     minFields: 0,
     invalidInputTypes: []
   },
-  'yesterday': {
+  yesterday: {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
-  'today': {
+  today: {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
-  'tomorrow': {
+  tomorrow: {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
@@ -113,6 +113,16 @@ export const CONDITIONS = {
     invalidInputTypes: [...ALL_BUT_DATES]
   },
   'year to date': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'this quarter': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'quarter to date': {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
