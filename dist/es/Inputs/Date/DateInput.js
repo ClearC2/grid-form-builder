@@ -211,7 +211,6 @@ var DateInput = function DateInput(props) {
     }
 
     setManualBlurCheck(true);
-    changeShowPicker(false);
     setIsFocused(false);
   }, [manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name]);
   var handleOnCalendarChange = useCallback(function (e) {

@@ -1,3 +1,10 @@
+## [3.59.1](https://github.com/ClearC2/grid-form-builder/compare/v3.59.0...v3.59.1) (2021-04-07)
+
+
+### Bug Fixes
+
+* **date:** fixes an issue that would always close the calendar when trying to pick a date ([1533e81](https://github.com/ClearC2/grid-form-builder/commit/1533e81b9cf39f92471d5e2525c5033f32702862))
+
 # [3.59.0](https://github.com/ClearC2/grid-form-builder/compare/v3.58.0...v3.59.0) (2021-04-06)
 
 
