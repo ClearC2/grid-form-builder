@@ -1,3 +1,10 @@
+## [3.59.2](https://github.com/ClearC2/grid-form-builder/compare/v3.59.1...v3.59.2) (2021-04-07)
+
+
+### Bug Fixes
+
+* **time:** removed manual validation of time fields ([4eed3d1](https://github.com/ClearC2/grid-form-builder/commit/4eed3d1a6ead0937343c6880463385ac6c5389c0))
+
 ## [3.59.1](https://github.com/ClearC2/grid-form-builder/compare/v3.59.0...v3.59.1) (2021-04-07)
 
 
