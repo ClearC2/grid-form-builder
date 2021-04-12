@@ -176,7 +176,7 @@ var DateInput = function DateInput(props) {
     setManualBlurCheck(true);
   }, [changeShowPicker]);
   var handleOnBlur = useCallback(function (e) {
-    if (type !== 'time' && manualBlurCheck) {
+    if (type !== 'time' && manualBlurCheck && typeof onChangeValidator === 'function') {
       // this is to circumvent an issue where the daterangepicker change handler isn't firing when you tab out of the input - JRA 03/26/2021
       var formatted = inputValue ? moment(inputValue).format(dateFormat) : '';
       var validate = onChangeValidator({
@@ -216,10 +216,10 @@ var DateInput = function DateInput(props) {
   var handleOnCalendarChange = useCallback(function (e) {
     if (allowCalendarChangeEvent.current) {
       setManualBlurCheck(false);
-      var validate = onChangeValidator({
+      var validate = typeof onChangeValidator === 'function' ? onChangeValidator({
         raw: inputValue,
         formatted: e.target.value
-      });
+      }) : true;
 
       if (typeof validate === 'string') {
         changeInputValue(validate);
@@ -376,9 +376,4 @@ DateInput.propTypes = {
   minDate: PropTypes.string,
   maxDate: PropTypes.string,
   onChangeValidator: PropTypes.func
-};
-DateInput.defaultProps = {
-  onChangeValidator: function onChangeValidator() {
-    return true;
-  }
 };

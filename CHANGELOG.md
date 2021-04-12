@@ -1,3 +1,10 @@
+## [3.59.3](https://github.com/ClearC2/grid-form-builder/compare/v3.59.2...v3.59.3) (2021-04-12)
+
+
+### Bug Fixes
+
+* **date:** the date validator will now ignore the validation function if one is not provided ([0fcfbd0](https://github.com/ClearC2/grid-form-builder/commit/0fcfbd0f53d96b56d466d78f23a1dcdbd80251aa))
+
 ## [3.59.2](https://github.com/ClearC2/grid-form-builder/compare/v3.59.1...v3.59.2) (2021-04-07)
 
 
