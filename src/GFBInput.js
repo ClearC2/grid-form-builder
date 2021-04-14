@@ -65,6 +65,7 @@ const GFBInput = props => {
 
   const config = {
     ...props,
+    ...props.config,
     required,
     link,
     cascade,
@@ -137,7 +138,8 @@ GFBInput.propTypes = {
   tooltips: PropTypes.object,
   label: PropTypes.string,
   name: PropTypes.string,
-  delimiter: PropTypes.string
+  delimiter: PropTypes.string,
+  config: PropTypes.object
 }
 
 export default GFBInput
