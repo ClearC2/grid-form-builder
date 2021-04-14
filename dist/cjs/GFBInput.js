@@ -119,7 +119,7 @@ var GFBInput = function GFBInput(props) {
     className = className + ' gfb-inline-cell';
   }
 
-  var config = _objectSpread({}, props, {
+  var config = _objectSpread({}, props, {}, props.config, {
     required: required,
     link: link,
     cascade: cascade,
@@ -187,7 +187,8 @@ GFBInput.propTypes = {
   tooltips: _propTypes.default.object,
   label: _propTypes.default.string,
   name: _propTypes.default.string,
-  delimiter: _propTypes.default.string
+  delimiter: _propTypes.default.string,
+  config: _propTypes.default.object
 };
 var _default = GFBInput;
 exports.default = _default;

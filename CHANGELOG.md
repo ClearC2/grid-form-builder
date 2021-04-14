@@ -1,3 +1,10 @@
+## [3.59.4](https://github.com/ClearC2/grid-form-builder/compare/v3.59.3...v3.59.4) (2021-04-14)
+
+
+### Bug Fixes
+
+* **gfg-input:** config object ([ee17354](https://github.com/ClearC2/grid-form-builder/commit/ee173549f69291c8ff3e9cecb4ffb6806786ea6c))
+
 ## [3.59.3](https://github.com/ClearC2/grid-form-builder/compare/v3.59.2...v3.59.3) (2021-04-12)
 
 
