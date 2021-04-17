@@ -28,6 +28,8 @@ var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-j
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/promise"));
 
+var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
+
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
@@ -74,6 +76,8 @@ var _async = _interopRequireDefault(require("react-select/async"));
 
 var _asyncCreatable = _interopRequireDefault(require("react-select/async-creatable"));
 
+var _reactSelect = require("react-select");
+
 var _utils = require("../utils");
 
 var _config = _interopRequireDefault(require("../config"));
@@ -84,7 +88,7 @@ var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
 function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context14; (0, _forEach.default)(_context14 = ownKeys(Object(source), true)).call(_context14, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context15; (0, _forEach.default)(_context15 = ownKeys(Object(source))).call(_context15, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context15; (0, _forEach.default)(_context15 = ownKeys(Object(source), true)).call(_context15, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context16; (0, _forEach.default)(_context16 = ownKeys(Object(source))).call(_context16, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
 
 var viewPortHeight = document.documentElement.clientHeight;
 var debounce = null;
@@ -209,7 +213,7 @@ function (_PureComponent) {
 });
 
 var Typeahead = function Typeahead(props) {
-  var _context13;
+  var _context14;
 
   var name = props.name,
       label = props.label,
@@ -332,7 +336,21 @@ var Typeahead = function Typeahead(props) {
       defaultOptions = _useState20[0],
       setDefaultOptions = _useState20[1];
 
-  var _useState21 = (0, _react.useState)({}),
+  var _useState21 = (0, _react.useState)({
+    Option: function Option(base) {
+      if (base.isDisabled) {
+        base.innerProps.style = {
+          height: 20,
+          fontSize: '10pt',
+          paddingBottom: 0,
+          paddingLeft: 5,
+          paddingTop: 0
+        };
+      }
+
+      return (0, _core.jsx)(_reactSelect.components.Option, base);
+    }
+  }),
       _useState22 = (0, _slicedToArray2.default)(_useState21, 2),
       components = _useState22[0],
       setComponents = _useState22[1];
@@ -511,18 +529,25 @@ var Typeahead = function Typeahead(props) {
   }, [// eslint-disable-line
   interactive, menuPlacement]);
   (0, _react.useEffect)(function () {
-    var _context3, _context4;
+    var _context3;
 
-    if (isRequiredFlag && (0, _trim.default)(_context3 = value + '').call(_context3).length === 0 && !isFocused && !components.DropdownIndicator) {
-      setComponents({
-        DropdownIndicator: function DropdownIndicator() {
-          return (0, _core.jsx)(_ValidationErrorIcon.default, {
-            message: "This Field is Required"
-          });
-        }
-      });
-    } else if (isRequiredFlag && components.DropdownIndicator && (!(0, _trim.default)(_context4 = value + '').call(_context4).length === 0 || isFocused)) {
-      setComponents({});
+    if (isRequiredFlag && (0, _trim.default)(_context3 = value + '').call(_context3).length === 0 && !isFocused) {
+      if (!components.showValidationError) {
+        // if it already is showing validation error, don't needlessly update state, this will cause an infinite loop
+        setComponents(_objectSpread({}, components, {
+          DropdownIndicator: function DropdownIndicator() {
+            return (0, _core.jsx)(_ValidationErrorIcon.default, {
+              message: "This Field is Required"
+            });
+          },
+          showValidationError: true
+        }));
+      }
+    } else if (components.showValidationError) {
+      setComponents(_objectSpread({}, components, {
+        showValidationError: false,
+        DropdownIndicator: _reactSelect.components.DropdownIndicator
+      }));
     }
   }, [isRequiredFlag, value, isFocused, components]);
   (0, _react.useEffect)(function () {
@@ -619,7 +644,7 @@ var Typeahead = function Typeahead(props) {
       }
 
       if (search.length >= minSearchLength || search === ' ') {
-        var _context5;
+        var _context4;
 
         if (typeof search === 'string' && (0, _trim.default)(search).call(search) !== '') search = "/".concat(encodeURIComponent(search));
         if (setDefault) reactSelect.current.setState(function () {
@@ -628,21 +653,55 @@ var Typeahead = function Typeahead(props) {
           };
         });
         isLoadingOptions.current = true;
-        return _config.default.ajax.post((0, _concat.default)(_context5 = "/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search")).call(_context5, search), {
+        return _config.default.ajax.post((0, _concat.default)(_context4 = "/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search")).call(_context4, search), {
           filter: {
             conditions: conditions
           }
         }).then(function (resp) {
-          var _context6;
-
           isLoadingOptions.current = false;
-          var options = (0, _map.default)(_context6 = resp.data.data).call(_context6, function (value) {
-            if (duplication) {
-              value.duplication = duplication;
-            }
+          var options = [];
 
-            return value;
-          });
+          if ((0, _isArray.default)(resp.data.contains) && (0, _isArray.default)((0, _startsWith.default)(resp.data))) {
+            var _context5, _context6;
+
+            var _resp$data = resp.data,
+                contains = _resp$data.contains,
+                startsWith = (0, _startsWith.default)(_resp$data);
+            options.push({
+              label: (0, _concat.default)(_context5 = "".concat(startsWith.length, " options start with \"")).call(_context5, decodeURIComponent(search.substring(1)), "\" ..."),
+              isDisabled: true
+            });
+            (0, _forEach.default)(startsWith).call(startsWith, function (value) {
+              if (duplication) {
+                value.duplication = duplication;
+              }
+
+              options.push(value);
+            });
+            options.push({
+              label: (0, _concat.default)(_context6 = "".concat(contains.length, " options contain \"")).call(_context6, decodeURIComponent(search.substring(1)), "\" ..."),
+              isDisabled: true,
+              className: 'gfb-typeahead-flavor-option'
+            });
+            (0, _forEach.default)(contains).call(contains, function (value) {
+              if (duplication) {
+                value.duplication = duplication;
+              }
+
+              options.push(value);
+            });
+          } else {
+            var _context7;
+
+            (0, _forEach.default)(_context7 = resp.data.data).call(_context7, function (value) {
+              if (duplication) {
+                value.duplication = duplication;
+              }
+
+              options.push(value);
+            });
+          }
+
           if (setDefault === true) setDefaultOptions(options);else setDefaultOptions([]);
           if (setDefault) reactSelect.current.setState(function () {
             return {
@@ -672,9 +731,9 @@ var Typeahead = function Typeahead(props) {
   }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions]);
   var formatCreateLabel = (0, _react.useCallback)(function (value) {
     if (typeof createlabel === 'string') {
-      var _context7;
+      var _context8;
 
-      return (0, _concat.default)(_context7 = "".concat(createlabel, " ")).call(_context7, value);
+      return (0, _concat.default)(_context8 = "".concat(createlabel, " ")).call(_context8, value);
     }
 
     return "Click or Tab to Create \"".concat(value, "\"");
@@ -758,9 +817,9 @@ var Typeahead = function Typeahead(props) {
     });
   }, []);
   var handleSingleValueChange = (0, _react.useCallback)(function (newValue) {
-    var _context8;
+    var _context9;
 
-    (0, _forEach.default)(_context8 = (0, _keys.default)(newValue)).call(_context8, function (field) {
+    (0, _forEach.default)(_context9 = (0, _keys.default)(newValue)).call(_context9, function (field) {
       var newVal = newValue[field];
       if (field === 'duplication') newVal = newValue.value;
       var id = null;
@@ -827,10 +886,10 @@ var Typeahead = function Typeahead(props) {
       if (stringify) {
         if (delimiter) {
           if (_delimit && (0, _isArray.default)(_delimit)) {
-            var _context9;
+            var _context10;
 
             // if we were provided field(s) to delimit by, build up a special string with just those values
-            (0, _forEach.default)(_context9 = target.value).call(_context9, function (option) {
+            (0, _forEach.default)(_context10 = target.value).call(_context10, function (option) {
               (0, _forEach.default)(_delimit).call(_delimit, function (field) {
                 if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
                   _value = _value + option[field] + delimiter;
@@ -840,21 +899,21 @@ var Typeahead = function Typeahead(props) {
             _value = (0, _slice.default)(_value).call(_value, 0, -1);
             target.value = _value;
           } else {
-            var _context10;
+            var _context11;
 
             // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
-            (0, _forEach.default)(_context10 = target.value).call(_context10, function (option) {
+            (0, _forEach.default)(_context11 = target.value).call(_context11, function (option) {
               _value = _value + (0, _stringify.default)(option) + delimiter;
             });
             _value = (0, _slice.default)(_value).call(_value, 0, -1);
             target.value = _value;
           }
         } else if (_delimit && !delimiter) {
-          var _context11;
+          var _context12;
 
           // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
           _value = [];
-          (0, _forEach.default)(_context11 = target.value).call(_context11, function (option) {
+          (0, _forEach.default)(_context12 = target.value).call(_context12, function (option) {
             (0, _forEach.default)(_delimit).call(_delimit, function (field) {
               if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
                 _value.push(option[field]);
@@ -868,11 +927,11 @@ var Typeahead = function Typeahead(props) {
           target.value = (0, _stringify.default)(target.value);
         }
       } else if (_delimit && !delimiter) {
-        var _context12;
+        var _context13;
 
         // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as an array
         _value = [];
-        (0, _forEach.default)(_context12 = target.value).call(_context12, function (option) {
+        (0, _forEach.default)(_context13 = target.value).call(_context13, function (option) {
           (0, _forEach.default)(_delimit).call(_delimit, function (field) {
             if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
               _value.push(option[field]);
@@ -930,7 +989,7 @@ var Typeahead = function Typeahead(props) {
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
 
-  if (isRequiredFlag && (0, _trim.default)(_context13 = value + '').call(_context13).length === 0 && !isFocused) {
+  if (isRequiredFlag && (0, _trim.default)(_context14 = value + '').call(_context14).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
   }
 

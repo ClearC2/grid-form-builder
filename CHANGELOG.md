@@ -1,3 +1,10 @@
+# [3.60.0](https://github.com/ClearC2/grid-form-builder/compare/v3.59.4...v3.60.0) (2021-04-17)
+
+
+### Features
+
+* **typeahead:** typeahead will always look for startswith/contains data arrays before falling back to the generic data array ([74f102a](https://github.com/ClearC2/grid-form-builder/commit/74f102a97d7b8f3af871848e31bcea62f2cfc886))
+
 ## [3.59.4](https://github.com/ClearC2/grid-form-builder/compare/v3.59.3...v3.59.4) (2021-04-14)
 
 
