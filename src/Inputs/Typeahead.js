@@ -4,6 +4,7 @@ import {useState, useEffect, useCallback, useRef, PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import Async from 'react-select/async'
 import AsyncCreatable from 'react-select/async-creatable'
+import {components as ReactSelectBaseComponents} from 'react-select'
 import {isMobile} from '../utils'
 import GFBConfig from '../config'
 import ValidationErrorIcon from '../ValidationErrorIcon'
@@ -187,7 +188,22 @@ const Typeahead = props => {
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [isFocused, setIsFocused] = useState(false)
   const [defaultOptions, setDefaultOptions] = useState([])
-  const [components, setComponents] = useState({})
+  const [components, setComponents] = useState({
+    Option: base => {
+      if (base.isDisabled) {
+        base.innerProps.style = {
+          height: 20,
+          fontSize: '10pt',
+          paddingBottom: 0,
+          paddingLeft: 5,
+          paddingTop: 0
+        }
+      }
+      return (
+        <ReactSelectBaseComponents.Option {...base} />
+      )
+    }
+  })
   const [dynamicTypeaheadKey, setDynamicTypeaheadKey] = useState(null)
   const [conditions, setConditions] = useState({})
   const [reactSelectStyles, setReactSelectStyles] = useState({
@@ -323,14 +339,22 @@ const Typeahead = props => {
   ])
 
   useEffect(() => {
-    if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused && !components.DropdownIndicator) {
+    if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused) {
+      if (!components.showValidationError) { // if it already is showing validation error, don't needlessly update state, this will cause an infinite loop
+        setComponents({
+          ...components,
+          DropdownIndicator: () => {
+            return <ValidationErrorIcon message='This Field is Required' />
+          },
+          showValidationError: true
+        })
+      }
+    } else if (components.showValidationError) {
       setComponents({
-        DropdownIndicator: () => {
-          return <ValidationErrorIcon message='This Field is Required' />
-        }
+        ...components,
+        showValidationError: false,
+        DropdownIndicator: ReactSelectBaseComponents.DropdownIndicator
       })
-    } else if (isRequiredFlag && components.DropdownIndicator && (!(value + '').trim().length === 0 || isFocused)) {
-      setComponents({})
     }
   }, [isRequiredFlag, value, isFocused, components])
 
@@ -414,12 +438,38 @@ const Typeahead = props => {
         )
           .then(resp => {
             isLoadingOptions.current = false
-            const options = resp.data.data.map(value => {
-              if (duplication) {
-                value.duplication = duplication
-              }
-              return value
-            })
+            const options = []
+            if (Array.isArray(resp.data.contains) && Array.isArray(resp.data.startsWith)) {
+              const {contains, startsWith} = resp.data
+              options.push({
+                label: `${startsWith.length} options start with "${decodeURIComponent(search.substring(1))}" ...`,
+                isDisabled: true
+              })
+              startsWith.forEach(value => {
+                if (duplication) {
+                  value.duplication = duplication
+                }
+                options.push(value)
+              })
+              options.push({
+                label: `${contains.length} options contain "${decodeURIComponent(search.substring(1))}" ...`,
+                isDisabled: true,
+                className: 'gfb-typeahead-flavor-option'
+              })
+              contains.forEach(value => {
+                if (duplication) {
+                  value.duplication = duplication
+                }
+                options.push(value)
+              })
+            } else {
+              resp.data.data.forEach(value => {
+                if (duplication) {
+                  value.duplication = duplication
+                }
+                options.push(value)
+              })
+            }
             if (setDefault === true) setDefaultOptions(options)
             else setDefaultOptions([])
             if (setDefault) reactSelect.current.setState(() => ({isLoading: false}))

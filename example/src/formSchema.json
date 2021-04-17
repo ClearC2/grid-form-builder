@@ -620,7 +620,7 @@
               }]
             }
           },
-          "name": "companyname",
+          "name": "cfd_companyname",
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
