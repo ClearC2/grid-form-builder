@@ -9,7 +9,6 @@ const ConditionalPredicate = props => {
   if (!propValue) {
     propValue = Map()
   }
-
   function convertListToOptions (list) {
     const inputType = props.inputType.toLowerCase()
     if (inputType === 'number' || inputType === 'currency' || inputType === 'decimal') {
@@ -58,6 +57,9 @@ const ConditionalPredicate = props => {
       }
       if (props.value.getIn(['dynamicValues'])) {
         initialModalValues.dynamicValues = props.value.getIn(['dynamicValues'])
+      }
+      if (props.value.getIn(['relative'])) {
+        initialModalValues.relative = props.value.getIn(['relative'])
       }
       dialogOnChange({target: {name: 'condition', value: initCondition}})
       setModalValues(Map(initialModalValues))
@@ -154,8 +156,7 @@ const ConditionalPredicate = props => {
     }
 
     const relativeConditions = ['is equal to', 'is greater than', 'is less than']
-
-    if (relativeConditions.includes(modalValues.get('condition'))) {
+    if (relativeConditions.includes(modalValues.get('condition')) && props.inputType === 'date') {
       schema.form.jsonschema.layout.push(
         {
           type: 'field',
@@ -164,8 +165,8 @@ const ConditionalPredicate = props => {
             name: 'relative',
             label: 'Use Relative Dates',
             type: 'checkbox',
-            onValue: true,
-            offValue: false
+            onValue: 1,
+            offValue: 0
           }
         }
       )
@@ -175,8 +176,8 @@ const ConditionalPredicate = props => {
             type: 'field',
             dimensions: {x: 1, y: 3, h: 1, w: 8},
             config: {
-              name: `relative-date-0`,
-              label: 'Relative Date',
+              name: `${props.name}-0`,
+              label: `${props.name}`,
               type: 'select',
               suppressBlankOption: true,
               clearable: false,
@@ -354,6 +355,15 @@ const ConditionalPredicate = props => {
     setModalValues(modalValues.set(e.target.name, e.target.value)) // for display in the dialog
     let newFieldValue = props.value || Map({condition: 'contains', values: List()})
     let values = newFieldValue.get('values', List())
+    if (e.target.name === 'relative') {
+      newFieldValue = newFieldValue.set('relative', e.target.value)
+      newFieldValue = newFieldValue.set('values', List())
+      let m = modalValues.set(e.target.name, e.target.value)
+      m = m.delete(`${props.name}-0`)
+      setModalValues(m)
+      props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+      return
+    }
     if (e.target.name === 'not') {
       newFieldValue = newFieldValue.set('not', e.target.value)
       props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
@@ -381,7 +391,7 @@ const ConditionalPredicate = props => {
             }
           } else {
             if (e.target.name) {
-              values = fromJS(e.target.value)
+              values = fromJS([e.target.value])
             } else {
               values = values.set(i, e.target.value)
             }
