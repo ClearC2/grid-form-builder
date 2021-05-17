@@ -152,6 +152,51 @@ const ConditionalPredicate = props => {
       createdDate: '2018-02-26 10:16:14',
       createdBy: 'will darden'
     }
+
+    const relativeConditions = ['is equal to', 'is greater than', 'is less than']
+
+    if (relativeConditions.includes(modalValues.get('condition'))) {
+      schema.form.jsonschema.layout.push(
+        {
+          type: 'field',
+          dimensions: {x: 1, y: 2, h: 1, w: 3},
+          config: {
+            name: 'relative',
+            label: 'Use Relative Dates',
+            type: 'checkbox',
+            onValue: true,
+            offValue: false
+          }
+        }
+      )
+      if (modalValues.get('relative')) {
+        schema.form.jsonschema.layout.push(
+          {
+            type: 'field',
+            dimensions: {x: 1, y: 3, h: 1, w: 8},
+            config: {
+              name: `relative-date-0`,
+              label: 'Relative Date',
+              type: 'select',
+              suppressBlankOption: true,
+              clearable: false,
+              keyword: {
+                category: 'NONE',
+                options: [
+                  {label: 'Yesterday', value: 'yesterday'},
+                  {label: 'Today', value: 'today'},
+                  {label: 'Tomorrow', value: 'tomorrow'},
+                  {label: 'This Month', value: 'this month'},
+                  {label: 'This Year', value: 'this year'},
+                  {label: 'This Quarter', value: 'this quarter'}
+                ]
+              }
+            }
+          }
+        )
+      }
+    }
+
     const maxFieldCount = getMaxFieldCount()
     const minFieldCount = getMinFieldCount()
     let fieldCount = 0
@@ -195,7 +240,7 @@ const ConditionalPredicate = props => {
     delete extraFieldProps.name
     delete extraFieldProps.values
     delete extraFieldProps.value
-    if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0) {
+    if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {x: 1, y: 2, h: calculateFieldHeight(props.inputType.toLowerCase()), w: 8},
@@ -214,7 +259,7 @@ const ConditionalPredicate = props => {
       })
       fieldCount++
     }
-    if (MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0) {
+    if (MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0 && !modalValues.get('relative')) {
       while (fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < nFieldsWithValues() + 1)) {
         let label = CONDITIONS[condition()]
         if (typeof label === 'object') {
@@ -293,7 +338,9 @@ const ConditionalPredicate = props => {
       stateChanges = stateChanges.set(`${props.name}-${x}`, modalValues.get(`${props.name}-${next}`, ''))
     }
     stateChanges = stateChanges.delete(`${props.name}-${values.size - 1}`)
-
+    if (i === 'relative') {
+      stateChanges = stateChanges.delete(`${i}`)
+    }
     setModalValues(stateChanges)
     return values.splice(i, 1)
   }
@@ -327,9 +374,17 @@ const ConditionalPredicate = props => {
           values = values.concat(fromJS([e.target.value]))
         } else {
           if (e.target.value === '') {
-            values = deleteIndex(i, values)
+            if (i) {
+              values = deleteIndex(i, values)
+            } else {
+              values = deleteIndex(e.target.name, values)
+            }
           } else {
-            values = values.set(i, e.target.value)
+            if (e.target.name) {
+              values = fromJS(e.target.value)
+            } else {
+              values = values.set(i, e.target.value)
+            }
           }
         }
       } else {
