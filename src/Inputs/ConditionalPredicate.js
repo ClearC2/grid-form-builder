@@ -177,7 +177,7 @@ const ConditionalPredicate = props => {
             dimensions: {x: 1, y: 3, h: 1, w: 8},
             config: {
               name: `${props.name}-0`,
-              label: `${props.name}`,
+              label: `${props.label}`,
               type: 'select',
               suppressBlankOption: true,
               clearable: false,
