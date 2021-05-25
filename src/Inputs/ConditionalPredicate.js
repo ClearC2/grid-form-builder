@@ -159,10 +159,10 @@ const ConditionalPredicate = props => {
     if (!relativeConditions.includes(modalValues.get('condition')) &&
       modalValues.get('relative') && props.inputType === 'date') {
       let newValues = modalValues.delete('relative')
-      newValues = newValues.delete('monthtest-0')
-      newValues = newValues.delete('values')
+      newValues = newValues.set('monthtest-0', '')
+      newValues = newValues.set('values', [''])
       setModalValues(newValues)
-      props.onChange({target: {name: 'monthtest', value: ''}}, props.index)
+      props.onChange({target: {name: 'monthtest', value: Map(newValues)}}, props.index)
     }
     if (relativeConditions.includes(modalValues.get('condition')) && props.inputType === 'date') {
       schema.form.jsonschema.layout.push(
