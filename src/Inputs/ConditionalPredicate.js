@@ -156,6 +156,12 @@ const ConditionalPredicate = props => {
     }
 
     const relativeConditions = ['is equal to', 'is greater than', 'is less than']
+    if (!relativeConditions.includes(modalValues.get('condition')) &&
+      modalValues.get('relative') && props.inputType === 'date') {
+      let newValues = modalValues.delete('relative')
+      newValues = newValues.delete('monthtest-0')
+      setModalValues(newValues)
+    }
     if (relativeConditions.includes(modalValues.get('condition')) && props.inputType === 'date') {
       schema.form.jsonschema.layout.push(
         {
