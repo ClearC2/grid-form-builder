@@ -480,6 +480,7 @@ export default class ConditionalTable extends Component {
         (!value.dynamicValues || (value.dynamicValues && value.dynamicValues.length === 0))) {
         return null
       }
+
       return (
         <tr key={`row-${key}-${predicateIndex}`}>
           <td key={`column-${key}-${predicateIndex}`}>

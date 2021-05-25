@@ -9,7 +9,6 @@ const ConditionalPredicate = props => {
   if (!propValue) {
     propValue = Map()
   }
-
   function convertListToOptions (list) {
     const inputType = props.inputType.toLowerCase()
     if (inputType === 'number' || inputType === 'currency' || inputType === 'decimal') {
@@ -58,6 +57,9 @@ const ConditionalPredicate = props => {
       }
       if (props.value.getIn(['dynamicValues'])) {
         initialModalValues.dynamicValues = props.value.getIn(['dynamicValues'])
+      }
+      if (props.value.getIn(['relative'])) {
+        initialModalValues.relative = props.value.getIn(['relative'])
       }
       dialogOnChange({target: {name: 'condition', value: initCondition}})
       setModalValues(Map(initialModalValues))
@@ -152,6 +154,58 @@ const ConditionalPredicate = props => {
       createdDate: '2018-02-26 10:16:14',
       createdBy: 'will darden'
     }
+
+    const relativeConditions = ['is equal to', 'is greater than', 'is less than']
+    if (!relativeConditions.includes(modalValues.get('condition')) &&
+      modalValues.get('relative') && props.inputType === 'date') {
+      let newValues = modalValues.delete('relative')
+      newValues = newValues.set('monthtest-0', '')
+      newValues = newValues.set('values', [''])
+      setModalValues(newValues)
+      props.onChange({target: {name: 'monthtest', value: Map(newValues)}}, props.index)
+    }
+    if (relativeConditions.includes(modalValues.get('condition')) && props.inputType === 'date') {
+      schema.form.jsonschema.layout.push(
+        {
+          type: 'field',
+          dimensions: {x: 1, y: 2, h: 1, w: 3},
+          config: {
+            name: 'relative',
+            label: 'Use Relative Dates',
+            type: 'checkbox',
+            onValue: 1,
+            offValue: 0
+          }
+        }
+      )
+      if (modalValues.get('relative')) {
+        schema.form.jsonschema.layout.push(
+          {
+            type: 'field',
+            dimensions: {x: 1, y: 3, h: 1, w: 8},
+            config: {
+              name: `${props.name}-0`,
+              label: `${props.label}`,
+              type: 'select',
+              suppressBlankOption: true,
+              clearable: false,
+              keyword: {
+                category: 'NONE',
+                options: [
+                  {label: 'Yesterday', value: 'yesterday'},
+                  {label: 'Today', value: 'today'},
+                  {label: 'Tomorrow', value: 'tomorrow'},
+                  {label: 'This Month', value: 'this month'},
+                  {label: 'This Year', value: 'this year'},
+                  {label: 'This Quarter', value: 'this quarter'}
+                ]
+              }
+            }
+          }
+        )
+      }
+    }
+
     const maxFieldCount = getMaxFieldCount()
     const minFieldCount = getMinFieldCount()
     let fieldCount = 0
@@ -195,7 +249,7 @@ const ConditionalPredicate = props => {
     delete extraFieldProps.name
     delete extraFieldProps.values
     delete extraFieldProps.value
-    if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0) {
+    if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {x: 1, y: 2, h: calculateFieldHeight(props.inputType.toLowerCase()), w: 8},
@@ -214,7 +268,7 @@ const ConditionalPredicate = props => {
       })
       fieldCount++
     }
-    if (MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0) {
+    if (MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0 && !modalValues.get('relative')) {
       while (fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < nFieldsWithValues() + 1)) {
         let label = CONDITIONS[condition()]
         if (typeof label === 'object') {
@@ -293,7 +347,9 @@ const ConditionalPredicate = props => {
       stateChanges = stateChanges.set(`${props.name}-${x}`, modalValues.get(`${props.name}-${next}`, ''))
     }
     stateChanges = stateChanges.delete(`${props.name}-${values.size - 1}`)
-
+    if (i === 'relative') {
+      stateChanges = stateChanges.delete(`${i}`)
+    }
     setModalValues(stateChanges)
     return values.splice(i, 1)
   }
@@ -303,10 +359,25 @@ const ConditionalPredicate = props => {
       handleConditionChange(e)
       return
     }
-
     setModalValues(modalValues.set(e.target.name, e.target.value)) // for display in the dialog
     let newFieldValue = props.value || Map({condition: 'contains', values: List()})
     let values = newFieldValue.get('values', List())
+    if (e.target.name === 'monthtest-0' && e.target.value === '') {
+      newFieldValue = newFieldValue.set(e.target.name, e.target.value)
+      newFieldValue = newFieldValue.set('values', List())
+      newFieldValue = newFieldValue.delete('relative')
+      props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+      return
+    }
+    if (e.target.name === 'relative') {
+      newFieldValue = newFieldValue.set('relative', e.target.value)
+      newFieldValue = newFieldValue.set('values', List())
+      let m = modalValues.set(e.target.name, e.target.value)
+      m = m.delete(`${props.name}-0`)
+      setModalValues(m)
+      props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+      return
+    }
     if (e.target.name === 'not') {
       newFieldValue = newFieldValue.set('not', e.target.value)
       props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
@@ -327,9 +398,17 @@ const ConditionalPredicate = props => {
           values = values.concat(fromJS([e.target.value]))
         } else {
           if (e.target.value === '') {
-            values = deleteIndex(i, values)
+            if (i) {
+              values = deleteIndex(i, values)
+            } else {
+              values = deleteIndex(e.target.name, values)
+            }
           } else {
-            values = values.set(i, e.target.value)
+            if (e.target.name) {
+              values = fromJS([e.target.value])
+            } else {
+              values = values.set(i, e.target.value)
+            }
           }
         }
       } else {
