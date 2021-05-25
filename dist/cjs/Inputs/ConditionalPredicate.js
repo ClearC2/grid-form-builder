@@ -36,6 +36,8 @@ var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-sta
 
 var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
+var _includes = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/includes"));
+
 var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
@@ -152,6 +154,10 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
         initialModalValues.dynamicValues = props.value.getIn(['dynamicValues']);
       }
 
+      if (props.value.getIn(['relative'])) {
+        initialModalValues.relative = props.value.getIn(['relative']);
+      }
+
       dialogOnChange({
         target: {
           name: 'condition',
@@ -265,6 +271,81 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       createdDate: '2018-02-26 10:16:14',
       createdBy: 'will darden'
     };
+    var relativeConditions = ['is equal to', 'is greater than', 'is less than'];
+
+    if (!(0, _includes.default)(relativeConditions).call(relativeConditions, modalValues.get('condition')) && modalValues.get('relative') && props.inputType === 'date') {
+      var newValues = modalValues.delete('relative');
+      newValues = newValues.set('monthtest-0', '');
+      newValues = newValues.set('values', ['']);
+      setModalValues(newValues);
+      props.onChange({
+        target: {
+          name: 'monthtest',
+          value: (0, _immutable.Map)(newValues)
+        }
+      }, props.index);
+    }
+
+    if ((0, _includes.default)(relativeConditions).call(relativeConditions, modalValues.get('condition')) && props.inputType === 'date') {
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {
+          x: 1,
+          y: 2,
+          h: 1,
+          w: 3
+        },
+        config: {
+          name: 'relative',
+          label: 'Use Relative Dates',
+          type: 'checkbox',
+          onValue: 1,
+          offValue: 0
+        }
+      });
+
+      if (modalValues.get('relative')) {
+        schema.form.jsonschema.layout.push({
+          type: 'field',
+          dimensions: {
+            x: 1,
+            y: 3,
+            h: 1,
+            w: 8
+          },
+          config: {
+            name: "".concat(props.name, "-0"),
+            label: "".concat(props.label),
+            type: 'select',
+            suppressBlankOption: true,
+            clearable: false,
+            keyword: {
+              category: 'NONE',
+              options: [{
+                label: 'Yesterday',
+                value: 'yesterday'
+              }, {
+                label: 'Today',
+                value: 'today'
+              }, {
+                label: 'Tomorrow',
+                value: 'tomorrow'
+              }, {
+                label: 'This Month',
+                value: 'this month'
+              }, {
+                label: 'This Year',
+                value: 'this year'
+              }, {
+                label: 'This Quarter',
+                value: 'this quarter'
+              }]
+            }
+          }
+        });
+      }
+    }
+
     var maxFieldCount = getMaxFieldCount();
     var minFieldCount = getMinFieldCount();
     var fieldCount = 0;
@@ -339,7 +420,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     delete (0, _values.default)(extraFieldProps);
     delete extraFieldProps.value;
 
-    if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0) {
+    if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {
@@ -364,7 +445,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       fieldCount++;
     }
 
-    if (_SearchUtils.MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0) {
+    if (_SearchUtils.MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0 && !modalValues.get('relative')) {
       while (fieldCount < minFieldCount || fieldCount < maxFieldCount && fieldCount < nFieldsWithValues() + 1) {
         var _context8;
 
@@ -495,6 +576,11 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     }
 
     stateChanges = stateChanges.delete((0, _concat.default)(_context12 = "".concat(props.name, "-")).call(_context12, values.size - 1));
+
+    if (i === 'relative') {
+      stateChanges = stateChanges.delete("".concat(i));
+    }
+
     setModalValues(stateChanges);
     return (0, _splice.default)(values).call(values, i, 1);
   }
@@ -512,6 +598,34 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       values: (0, _immutable.List)()
     });
     var values = newFieldValue.get('values', (0, _immutable.List)());
+
+    if (e.target.name === 'monthtest-0' && e.target.value === '') {
+      newFieldValue = newFieldValue.set(e.target.name, e.target.value);
+      newFieldValue = newFieldValue.set('values', (0, _immutable.List)());
+      newFieldValue = newFieldValue.delete('relative');
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      }, props.index);
+      return;
+    }
+
+    if (e.target.name === 'relative') {
+      newFieldValue = newFieldValue.set('relative', e.target.value);
+      newFieldValue = newFieldValue.set('values', (0, _immutable.List)());
+      var m = modalValues.set(e.target.name, e.target.value);
+      m = m.delete("".concat(props.name, "-0"));
+      setModalValues(m);
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      }, props.index);
+      return;
+    }
 
     if (e.target.name === 'not') {
       newFieldValue = newFieldValue.set('not', e.target.value);
@@ -541,9 +655,17 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           values = (0, _concat.default)(values).call(values, (0, _immutable.fromJS)([e.target.value]));
         } else {
           if (e.target.value === '') {
-            values = deleteIndex(_i, values);
+            if (_i) {
+              values = deleteIndex(_i, values);
+            } else {
+              values = deleteIndex(e.target.name, values);
+            }
           } else {
-            values = values.set(_i, e.target.value);
+            if (e.target.name) {
+              values = (0, _immutable.fromJS)([e.target.value]);
+            } else {
+              values = values.set(_i, e.target.value);
+            }
           }
         }
       } else {

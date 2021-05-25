@@ -1,3 +1,20 @@
+# [3.61.0](https://github.com/ClearC2/grid-form-builder/compare/v3.60.0...v3.61.0) (2021-05-25)
+
+
+### Bug Fixes
+
+* **conditional:** fixed relative dates ([30d3de5](https://github.com/ClearC2/grid-form-builder/commit/30d3de5f5e2e94a8b7a925def3781a71d81861c7))
+* **conditional:** fixed relative dates when switching to one of ([37d18da](https://github.com/ClearC2/grid-form-builder/commit/37d18da90c5673746bc6f10c4d77431cae473205))
+* **conditional:** fixed relative dates when switching to one of ([f97d757](https://github.com/ClearC2/grid-form-builder/commit/f97d7575da3b45a4930e0cff4d04a4b0bcb53120))
+* **conditional:** fixed relative dates when switching to one of ([aa14199](https://github.com/ClearC2/grid-form-builder/commit/aa14199d01947f60812b432e62b1722574ba4df3))
+* **conditional:** fixed relative dates when switching to one of ([6fa4308](https://github.com/ClearC2/grid-form-builder/commit/6fa43082c6deb1261e60b3bf0b3ecd097c8510d1))
+* **grid:** fixed label on relative field ([f197647](https://github.com/ClearC2/grid-form-builder/commit/f197647d3e503c9c7115a1247c47d08df049ca7f))
+
+
+### Features
+
+* **conditional:** Add relative dates ([69fd3dd](https://github.com/ClearC2/grid-form-builder/commit/69fd3dd07f4c28960691344a88c5bc2cb07869cf))
+
 # [3.60.0](https://github.com/ClearC2/grid-form-builder/compare/v3.59.4...v3.60.0) (2021-04-17)
 
 

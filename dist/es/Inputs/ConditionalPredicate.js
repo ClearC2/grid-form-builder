@@ -10,6 +10,7 @@ import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
+import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
 import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
@@ -113,6 +114,10 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
 
       if (props.value.getIn(['dynamicValues'])) {
         initialModalValues.dynamicValues = props.value.getIn(['dynamicValues']);
+      }
+
+      if (props.value.getIn(['relative'])) {
+        initialModalValues.relative = props.value.getIn(['relative']);
       }
 
       dialogOnChange({
@@ -228,6 +233,81 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       createdDate: '2018-02-26 10:16:14',
       createdBy: 'will darden'
     };
+    var relativeConditions = ['is equal to', 'is greater than', 'is less than'];
+
+    if (!_includesInstanceProperty(relativeConditions).call(relativeConditions, modalValues.get('condition')) && modalValues.get('relative') && props.inputType === 'date') {
+      var newValues = modalValues.delete('relative');
+      newValues = newValues.set('monthtest-0', '');
+      newValues = newValues.set('values', ['']);
+      setModalValues(newValues);
+      props.onChange({
+        target: {
+          name: 'monthtest',
+          value: Map(newValues)
+        }
+      }, props.index);
+    }
+
+    if (_includesInstanceProperty(relativeConditions).call(relativeConditions, modalValues.get('condition')) && props.inputType === 'date') {
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {
+          x: 1,
+          y: 2,
+          h: 1,
+          w: 3
+        },
+        config: {
+          name: 'relative',
+          label: 'Use Relative Dates',
+          type: 'checkbox',
+          onValue: 1,
+          offValue: 0
+        }
+      });
+
+      if (modalValues.get('relative')) {
+        schema.form.jsonschema.layout.push({
+          type: 'field',
+          dimensions: {
+            x: 1,
+            y: 3,
+            h: 1,
+            w: 8
+          },
+          config: {
+            name: "".concat(props.name, "-0"),
+            label: "".concat(props.label),
+            type: 'select',
+            suppressBlankOption: true,
+            clearable: false,
+            keyword: {
+              category: 'NONE',
+              options: [{
+                label: 'Yesterday',
+                value: 'yesterday'
+              }, {
+                label: 'Today',
+                value: 'today'
+              }, {
+                label: 'Tomorrow',
+                value: 'tomorrow'
+              }, {
+                label: 'This Month',
+                value: 'this month'
+              }, {
+                label: 'This Year',
+                value: 'this year'
+              }, {
+                label: 'This Quarter',
+                value: 'this quarter'
+              }]
+            }
+          }
+        });
+      }
+    }
+
     var maxFieldCount = getMaxFieldCount();
     var minFieldCount = getMinFieldCount();
     var fieldCount = 0;
@@ -302,7 +382,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     delete _valuesInstanceProperty(extraFieldProps);
     delete extraFieldProps.value;
 
-    if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0) {
+    if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {
@@ -327,7 +407,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       fieldCount++;
     }
 
-    if (MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0) {
+    if (MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0 && !modalValues.get('relative')) {
       while (fieldCount < minFieldCount || fieldCount < maxFieldCount && fieldCount < nFieldsWithValues() + 1) {
         var _context8;
 
@@ -457,6 +537,11 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     }
 
     stateChanges = stateChanges.delete(_concatInstanceProperty(_context12 = "".concat(props.name, "-")).call(_context12, values.size - 1));
+
+    if (i === 'relative') {
+      stateChanges = stateChanges.delete("".concat(i));
+    }
+
     setModalValues(stateChanges);
     return _spliceInstanceProperty(values).call(values, i, 1);
   }
@@ -474,6 +559,34 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       values: List()
     });
     var values = newFieldValue.get('values', List());
+
+    if (e.target.name === 'monthtest-0' && e.target.value === '') {
+      newFieldValue = newFieldValue.set(e.target.name, e.target.value);
+      newFieldValue = newFieldValue.set('values', List());
+      newFieldValue = newFieldValue.delete('relative');
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      }, props.index);
+      return;
+    }
+
+    if (e.target.name === 'relative') {
+      newFieldValue = newFieldValue.set('relative', e.target.value);
+      newFieldValue = newFieldValue.set('values', List());
+      var m = modalValues.set(e.target.name, e.target.value);
+      m = m.delete("".concat(props.name, "-0"));
+      setModalValues(m);
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      }, props.index);
+      return;
+    }
 
     if (e.target.name === 'not') {
       newFieldValue = newFieldValue.set('not', e.target.value);
@@ -503,9 +616,17 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           values = _concatInstanceProperty(values).call(values, fromJS([e.target.value]));
         } else {
           if (e.target.value === '') {
-            values = deleteIndex(_i, values);
+            if (_i) {
+              values = deleteIndex(_i, values);
+            } else {
+              values = deleteIndex(e.target.name, values);
+            }
           } else {
-            values = values.set(_i, e.target.value);
+            if (e.target.name) {
+              values = fromJS([e.target.value]);
+            } else {
+              values = values.set(_i, e.target.value);
+            }
           }
         }
       } else {
