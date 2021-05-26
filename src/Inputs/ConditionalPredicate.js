@@ -155,7 +155,7 @@ const ConditionalPredicate = props => {
       createdBy: 'will darden'
     }
 
-    const relativeConditions = ['is equal to', 'is greater than', 'is less than']
+    const relativeConditions = ['is greater than', 'is less than']
     if (!relativeConditions.includes(modalValues.get('condition')) &&
       modalValues.get('relative') && props.inputType === 'date') {
       let newValues = modalValues.delete('relative')
@@ -365,7 +365,6 @@ const ConditionalPredicate = props => {
     if (e.target.name === 'monthtest-0' && e.target.value === '') {
       newFieldValue = newFieldValue.set(e.target.name, e.target.value)
       newFieldValue = newFieldValue.set('values', List())
-      newFieldValue = newFieldValue.delete('relative')
       props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
       return
     }
