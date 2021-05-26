@@ -1,3 +1,10 @@
+## [3.61.1](https://github.com/ClearC2/grid-form-builder/compare/v3.61.0...v3.61.1) (2021-05-26)
+
+
+### Bug Fixes
+
+* **conditional:** removed is equal to from relative dates ([044b28c](https://github.com/ClearC2/grid-form-builder/commit/044b28c25ebad4f57b9d0b7b5e5d7e1bc8c80553))
+
 # [3.61.0](https://github.com/ClearC2/grid-form-builder/compare/v3.60.0...v3.61.0) (2021-05-25)
 
 
