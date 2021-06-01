@@ -273,19 +273,6 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     };
     var relativeConditions = ['is greater than', 'is less than'];
 
-    if (!(0, _includes.default)(relativeConditions).call(relativeConditions, modalValues.get('condition')) && modalValues.get('relative') && props.inputType === 'date') {
-      var newValues = modalValues.delete('relative');
-      newValues = newValues.set('monthtest-0', '');
-      newValues = newValues.set('values', ['']);
-      setModalValues(newValues);
-      props.onChange({
-        target: {
-          name: 'monthtest',
-          value: (0, _immutable.Map)(newValues)
-        }
-      }, props.index);
-    }
-
     if ((0, _includes.default)(relativeConditions).call(relativeConditions, modalValues.get('condition')) && props.inputType === 'date') {
       schema.form.jsonschema.layout.push({
         type: 'field',
