@@ -282,6 +282,10 @@ function (_Component) {
         this.setState({
           formSchema: (0, _Utils.convertFormSchemaToSearch)(formSchema)
         });
+      } else if (stateSchema && stateSchema.jsonschema && stateSchema.jsonschema.layout && formSchema && formSchema.jsonschema && formSchema.jsonschema.layout && stateSchema.jsonschema.layout.length !== formSchema.jsonschema.layout.length) {
+        this.setState({
+          formSchema: (0, _Utils.convertFormSchemaToSearch)(formSchema)
+        });
       }
     }
   }, {

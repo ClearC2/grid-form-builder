@@ -180,6 +180,14 @@ class _ConditionalTableContainer extends Component {
     if (typeof stateSchema.toJS === 'function') stateSchema = stateSchema.toJS()
     if (Object.keys(formSchema).length !== Object.keys(stateSchema).length) {
       this.setState({formSchema: convertFormSchemaToSearch(formSchema)})
+    } else if (stateSchema &&
+      stateSchema.jsonschema &&
+      stateSchema.jsonschema.layout &&
+      formSchema &&
+      formSchema.jsonschema &&
+      formSchema.jsonschema.layout &&
+      stateSchema.jsonschema.layout.length !== formSchema.jsonschema.layout.length) {
+      this.setState({formSchema: convertFormSchemaToSearch(formSchema)})
     }
   }
 
