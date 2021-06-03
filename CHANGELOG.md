@@ -1,3 +1,10 @@
+## [3.61.3](https://github.com/ClearC2/grid-form-builder/compare/v3.61.2...v3.61.3) (2021-06-03)
+
+
+### Bug Fixes
+
+* **condTable:** update formSchema if new one recieved ([cdebbc6](https://github.com/ClearC2/grid-form-builder/commit/cdebbc65efe292c194084cf908748ead1a542ac2))
+
 ## [3.61.2](https://github.com/ClearC2/grid-form-builder/compare/v3.61.1...v3.61.2) (2021-06-01)
 
 
