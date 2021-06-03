@@ -1,3 +1,9 @@
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
@@ -13,6 +19,11 @@ import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
 import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context21; _forEachInstanceProperty(_context21 = ownKeys(Object(source), true)).call(_context21, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context22; _forEachInstanceProperty(_context22 = ownKeys(Object(source))).call(_context22, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 import React, { Component } from 'react';
 import { Map, List, Set } from 'immutable';
 import PropTypes from 'prop-types';
@@ -439,6 +450,7 @@ function (_Component) {
     _defineProperty(_assertThisInitialized(_this), "renderDeleteIcon", function (key, value, predicateIndex) {
       if (_this.props.enableDelete) {
         return React.createElement("i", {
+          id: 'deleteIcon',
           className: X_ICON_CLASS,
           style: {
             color: '#8c0000',
@@ -446,6 +458,8 @@ function (_Component) {
           },
           onClick: function onClick(e) {
             _this.handleRemoveConditionClick(e, key, predicateIndex);
+
+            e.preventDefault();
           }
         });
       } else {
@@ -481,12 +495,28 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "buildTableRow", function (key, value) {
       var predicateIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
+      var extraCondRowStyles = {};
+      var rowClick;
+
+      if (_this.props.conditionRowOnClick) {
+        extraCondRowStyles = _objectSpread({}, extraCondRowStyles, {
+          cursor: 'pointer'
+        });
+
+        rowClick = function rowClick(e) {
+          if (e.target.id !== 'deleteIcon') {
+            _this.props.conditionRowOnClick(key, value);
+          }
+        };
+      }
 
       if (value && _this.state.noValueConditions.has(value.condition)) {
         var _context8, _context9;
 
         return React.createElement("tr", {
-          key: _concatInstanceProperty(_context8 = "row-".concat(key, "-")).call(_context8, predicateIndex)
+          key: _concatInstanceProperty(_context8 = "row-".concat(key, "-")).call(_context8, predicateIndex),
+          style: _objectSpread({}, extraCondRowStyles),
+          onClick: rowClick
         }, React.createElement("td", {
           key: _concatInstanceProperty(_context9 = "column-".concat(key, "-")).call(_context9, predicateIndex),
           style: {
@@ -511,7 +541,9 @@ function (_Component) {
 
         return (// for basic input
           React.createElement("tr", {
-            key: _concatInstanceProperty(_context10 = "row-".concat(key, "-")).call(_context10, predicateIndex)
+            key: _concatInstanceProperty(_context10 = "row-".concat(key, "-")).call(_context10, predicateIndex),
+            style: _objectSpread({}, extraCondRowStyles),
+            onClick: rowClick
           }, React.createElement("td", {
             key: _concatInstanceProperty(_context11 = "column-".concat(key, "-")).call(_context11, predicateIndex),
             style: {
@@ -523,7 +555,9 @@ function (_Component) {
         var _context12, _context13;
 
         return React.createElement("tr", {
-          key: _concatInstanceProperty(_context12 = "row-".concat(key, "-")).call(_context12, predicateIndex)
+          key: _concatInstanceProperty(_context12 = "row-".concat(key, "-")).call(_context12, predicateIndex),
+          style: _objectSpread({}, extraCondRowStyles),
+          onClick: rowClick
         }, React.createElement("td", {
           key: _concatInstanceProperty(_context13 = "column-".concat(key, "-")).call(_context13, predicateIndex)
         }, React.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
@@ -535,7 +569,9 @@ function (_Component) {
         }
 
         return React.createElement("tr", {
-          key: _concatInstanceProperty(_context14 = "row-".concat(key, "-")).call(_context14, predicateIndex)
+          key: _concatInstanceProperty(_context14 = "row-".concat(key, "-")).call(_context14, predicateIndex),
+          style: _objectSpread({}, extraCondRowStyles),
+          onClick: rowClick
         }, React.createElement("td", {
           key: _concatInstanceProperty(_context15 = "column-".concat(key, "-")).call(_context15, predicateIndex)
         }, React.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, _concatInstanceProperty(_context16 = _valuesInstanceProperty(value)).call(_context16, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, _concatInstanceProperty(_context17 = _valuesInstanceProperty(value)).call(_context17, value.dynamicValues || []), predicateIndex)));

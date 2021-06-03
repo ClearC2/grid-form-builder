@@ -24,6 +24,7 @@ export default class ConditionalTable extends Component {
     enableDelete: PropTypes.bool,
     onQueryChange: PropTypes.func,
     getDefaultCondition: PropTypes.func,
+    conditionRowOnClick: PropTypes.func,
     getFieldSchema: PropTypes.func,
     enableListToggle: PropTypes.bool
   }
@@ -401,10 +402,12 @@ export default class ConditionalTable extends Component {
     if (this.props.enableDelete) {
       return (
         <i
+          id={'deleteIcon'}
           className={X_ICON_CLASS}
           style={{color: '#8c0000', marginTop: '3px'}}
           onClick={(e) => {
             this.handleRemoveConditionClick(e, key, predicateIndex)
+            e.preventDefault()
           }}
         />
       )
@@ -435,9 +438,19 @@ export default class ConditionalTable extends Component {
   }
 
   buildTableRow = (key, value, predicateIndex = -1) => {
+    let extraCondRowStyles = {}
+    let rowClick
+    if (this.props.conditionRowOnClick) {
+      extraCondRowStyles = {...extraCondRowStyles, cursor: 'pointer'}
+      rowClick = (e) => {
+        if (e.target.id !== 'deleteIcon') {
+          this.props.conditionRowOnClick(key, value)
+        }
+      }
+    }
     if (value && this.state.noValueConditions.has(value.condition)) {
       return (
-        <tr key={`row-${key}-${predicateIndex}`}>
+        <tr key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
           <td key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
             {value.not && '(exclude) '}{value.condition}
@@ -456,7 +469,7 @@ export default class ConditionalTable extends Component {
         }
       }
       return ( // for basic input
-        <tr key={`row-${key}-${predicateIndex}`}>
+        <tr key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
           <td key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
             {value.not && '(exclude) '}contains {val}
@@ -466,7 +479,7 @@ export default class ConditionalTable extends Component {
       )
     } else if (typeof value === 'boolean') {
       return (
-        <tr key={`row-${key}-${predicateIndex}`}>
+        <tr key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
           <td key={`column-${key}-${predicateIndex}`}>
             <strong>{this.getLabel(key)} </strong>
             is {value ? 'True' : 'False'}
@@ -482,7 +495,7 @@ export default class ConditionalTable extends Component {
       }
 
       return (
-        <tr key={`row-${key}-${predicateIndex}`}>
+        <tr key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
           <td key={`column-${key}-${predicateIndex}`}>
             <strong>{this.getLabel(key)}</strong>
             {this.buildMultiString(key, value.values.concat(value.dynamicValues || []), value.not, value)}

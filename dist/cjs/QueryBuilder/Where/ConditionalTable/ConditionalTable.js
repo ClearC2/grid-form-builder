@@ -4,13 +4,25 @@ var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopReq
 
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
-var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+var _Object$defineProperty2 = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
 
-_Object$defineProperty(exports, "__esModule", {
+_Object$defineProperty2(exports, "__esModule", {
   value: true
 });
 
 exports.default = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-property"));
+
+var _defineProperties = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-properties"));
+
+var _getOwnPropertyDescriptors = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors"));
+
+var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor"));
+
+var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
+
+var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols"));
 
 var _sort = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/sort"));
 
@@ -40,7 +52,7 @@ var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime-cor
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/inherits"));
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
+var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -51,6 +63,10 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 var _Toggle = _interopRequireDefault(require("./Toggle"));
 
 var _index = require("../../../index");
+
+function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context21; (0, _forEach.default)(_context21 = ownKeys(Object(source), true)).call(_context21, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context22; (0, _forEach.default)(_context22 = ownKeys(Object(source))).call(_context22, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
 
 var X_ICON_CLASS = 'icon-close pull-right pointer';
 
@@ -66,7 +82,7 @@ function (_Component) {
 
     (0, _classCallCheck2.default)(this, ConditionalTable);
     _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(ConditionalTable).call(this, props));
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildMultiString", function (key, value) {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "buildMultiString", function (key, value) {
       var exclude = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       var rawValue = arguments.length > 3 ? arguments[3] : undefined;
       var valString = '';
@@ -121,7 +137,7 @@ function (_Component) {
         return '';
       }
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getLabel", function (key) {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "getLabel", function (key) {
       var _this$props$formSchem = _this.props.formSchema,
           formSchema = _this$props$formSchem === void 0 ? {} : _this$props$formSchem;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
@@ -140,7 +156,7 @@ function (_Component) {
         return 'No Key in schema';
       }
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getFormat", function (key) {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "getFormat", function (key) {
       var _this$props$formSchem2 = _this.props.formSchema,
           formSchema = _this$props$formSchem2 === void 0 ? {} : _this$props$formSchem2;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
@@ -165,7 +181,7 @@ function (_Component) {
 
       return '';
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getNewValue", function (value, key) {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "getNewValue", function (value, key) {
       var rawValues;
       var newValue = (0, _immutable.List)();
 
@@ -216,7 +232,7 @@ function (_Component) {
         rawValues: rawValues
       };
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildRequest", function () {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "buildRequest", function () {
       var _context3;
 
       var formValues = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.props.formValues;
@@ -333,14 +349,14 @@ function (_Component) {
       });
       return req;
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "onNextClick", function () {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "onNextClick", function () {
       var req = _this.buildRequest();
 
       if (_this.props.onNextClick) {
         _this.props.onNextClick(req);
       }
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "handleToggleClick", function (e) {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "handleToggleClick", function (e) {
       if (_this.props.enableToggle) {
         if (e) {
           _this.setState({
@@ -361,7 +377,7 @@ function (_Component) {
         }
       }
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "resetForm", function () {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "resetForm", function () {
       var _context5;
 
       var formValues = _this.prop.formValues;
@@ -389,7 +405,7 @@ function (_Component) {
         }
       });
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "handleRemoveConditionClick", function (e, key, predicateIndex) {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "handleRemoveConditionClick", function (e, key, predicateIndex) {
       var schema = _this.props.getFieldSchema(key);
 
       if (schema && schema.config && (schema.config.type === 'textarea' || schema.config.type === 'checkbox' || schema.config.type === 'radio')) {
@@ -451,9 +467,10 @@ function (_Component) {
         }
       }
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "renderDeleteIcon", function (key, value, predicateIndex) {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "renderDeleteIcon", function (key, value, predicateIndex) {
       if (_this.props.enableDelete) {
         return _react.default.createElement("i", {
+          id: 'deleteIcon',
           className: X_ICON_CLASS,
           style: {
             color: '#8c0000',
@@ -461,20 +478,22 @@ function (_Component) {
           },
           onClick: function onClick(e) {
             _this.handleRemoveConditionClick(e, key, predicateIndex);
+
+            e.preventDefault();
           }
         });
       } else {
         return null;
       }
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getConditionValue", function (rawValue) {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "getConditionValue", function (rawValue) {
       if (rawValue && rawValue.condition) {
         return rawValue.condition;
       } else {
         return 'contains';
       }
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getFieldType", function (fieldName) {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "getFieldType", function (fieldName) {
       var _context7;
 
       var _this$props$formSchem3 = _this.props.formSchema,
@@ -489,14 +508,30 @@ function (_Component) {
       });
       return type;
     });
-    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildTableRow", function (key, value) {
+    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "buildTableRow", function (key, value) {
       var predicateIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
+      var extraCondRowStyles = {};
+      var rowClick;
+
+      if (_this.props.conditionRowOnClick) {
+        extraCondRowStyles = _objectSpread({}, extraCondRowStyles, {
+          cursor: 'pointer'
+        });
+
+        rowClick = function rowClick(e) {
+          if (e.target.id !== 'deleteIcon') {
+            _this.props.conditionRowOnClick(key, value);
+          }
+        };
+      }
 
       if (value && _this.state.noValueConditions.has(value.condition)) {
         var _context8, _context9;
 
         return _react.default.createElement("tr", {
-          key: (0, _concat.default)(_context8 = "row-".concat(key, "-")).call(_context8, predicateIndex)
+          key: (0, _concat.default)(_context8 = "row-".concat(key, "-")).call(_context8, predicateIndex),
+          style: _objectSpread({}, extraCondRowStyles),
+          onClick: rowClick
         }, _react.default.createElement("td", {
           key: (0, _concat.default)(_context9 = "column-".concat(key, "-")).call(_context9, predicateIndex),
           style: {
@@ -521,7 +556,9 @@ function (_Component) {
 
         return (// for basic input
           _react.default.createElement("tr", {
-            key: (0, _concat.default)(_context10 = "row-".concat(key, "-")).call(_context10, predicateIndex)
+            key: (0, _concat.default)(_context10 = "row-".concat(key, "-")).call(_context10, predicateIndex),
+            style: _objectSpread({}, extraCondRowStyles),
+            onClick: rowClick
           }, _react.default.createElement("td", {
             key: (0, _concat.default)(_context11 = "column-".concat(key, "-")).call(_context11, predicateIndex),
             style: {
@@ -533,7 +570,9 @@ function (_Component) {
         var _context12, _context13;
 
         return _react.default.createElement("tr", {
-          key: (0, _concat.default)(_context12 = "row-".concat(key, "-")).call(_context12, predicateIndex)
+          key: (0, _concat.default)(_context12 = "row-".concat(key, "-")).call(_context12, predicateIndex),
+          style: _objectSpread({}, extraCondRowStyles),
+          onClick: rowClick
         }, _react.default.createElement("td", {
           key: (0, _concat.default)(_context13 = "column-".concat(key, "-")).call(_context13, predicateIndex)
         }, _react.default.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
@@ -545,7 +584,9 @@ function (_Component) {
         }
 
         return _react.default.createElement("tr", {
-          key: (0, _concat.default)(_context14 = "row-".concat(key, "-")).call(_context14, predicateIndex)
+          key: (0, _concat.default)(_context14 = "row-".concat(key, "-")).call(_context14, predicateIndex),
+          style: _objectSpread({}, extraCondRowStyles),
+          onClick: rowClick
         }, _react.default.createElement("td", {
           key: (0, _concat.default)(_context15 = "column-".concat(key, "-")).call(_context15, predicateIndex)
         }, _react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _concat.default)(_context16 = (0, _values.default)(value)).call(_context16, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, (0, _concat.default)(_context17 = (0, _values.default)(value)).call(_context17, value.dynamicValues || []), predicateIndex)));
@@ -687,7 +728,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = ConditionalTable;
-(0, _defineProperty2.default)(ConditionalTable, "propTypes", {
+(0, _defineProperty3.default)(ConditionalTable, "propTypes", {
   formValues: _propTypes.default.object.isRequired,
   onNextClick: _propTypes.default.func.isRequired,
   formSchema: _propTypes.default.object,
@@ -707,7 +748,7 @@ exports.default = ConditionalTable;
   getFieldSchema: _propTypes.default.func,
   enableListToggle: _propTypes.default.bool
 });
-(0, _defineProperty2.default)(ConditionalTable, "defaultProps", {
+(0, _defineProperty3.default)(ConditionalTable, "defaultProps", {
   formValues: {},
   enableToggle: true,
   enableDelete: true,
