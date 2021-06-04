@@ -1,3 +1,10 @@
+# [3.62.0](https://github.com/ClearC2/grid-form-builder/compare/v3.61.3...v3.62.0) (2021-06-04)
+
+
+### Features
+
+* **conditionalTable:** allow condition row onClicks to be passed in ([8a1e99d](https://github.com/ClearC2/grid-form-builder/commit/8a1e99db78b777a35a1440421f17cc796a79841e))
+
 ## [3.61.3](https://github.com/ClearC2/grid-form-builder/compare/v3.61.2...v3.61.3) (2021-06-03)
 
 

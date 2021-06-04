@@ -737,6 +737,7 @@ _defineProperty(ConditionalTable, "propTypes", {
   enableDelete: PropTypes.bool,
   onQueryChange: PropTypes.func,
   getDefaultCondition: PropTypes.func,
+  conditionRowOnClick: PropTypes.func,
   getFieldSchema: PropTypes.func,
   enableListToggle: PropTypes.bool
 });

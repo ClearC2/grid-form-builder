@@ -745,6 +745,7 @@ exports.default = ConditionalTable;
   enableDelete: _propTypes.default.bool,
   onQueryChange: _propTypes.default.func,
   getDefaultCondition: _propTypes.default.func,
+  conditionRowOnClick: _propTypes.default.func,
   getFieldSchema: _propTypes.default.func,
   enableListToggle: _propTypes.default.bool
 });
