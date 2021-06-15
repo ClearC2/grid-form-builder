@@ -1,3 +1,10 @@
+## [3.62.1](https://github.com/ClearC2/grid-form-builder/compare/v3.62.0...v3.62.1) (2021-06-15)
+
+
+### Bug Fixes
+
+* **conditional:** invalid condition when no value ([d0f6c09](https://github.com/ClearC2/grid-form-builder/commit/d0f6c096a9874ac698ea06182c1fe765191d182e))
+
 # [3.62.0](https://github.com/ClearC2/grid-form-builder/compare/v3.61.3...v3.62.0) (2021-06-04)
 
 

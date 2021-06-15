@@ -588,6 +588,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
 
     if (e.target.name === 'monthtest-0' && e.target.value === '') {
       newFieldValue = newFieldValue.set(e.target.name, e.target.value);
+      newFieldValue = newFieldValue.delete('relative');
       newFieldValue = newFieldValue.set('values', (0, _immutable.List)());
       props.onChange({
         target: {
