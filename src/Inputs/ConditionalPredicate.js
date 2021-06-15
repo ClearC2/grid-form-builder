@@ -354,6 +354,22 @@ const ConditionalPredicate = props => {
     setModalValues(modalValues.set(e.target.name, e.target.value)) // for display in the dialog
     let newFieldValue = props.value || Map({condition: 'contains', values: List()})
     let values = newFieldValue.get('values', List())
+    if (newFieldValue.get('relative') && e.target.value === '') {
+      newFieldValue = newFieldValue.set(e.target.name, e.target.value)
+      newFieldValue = newFieldValue.delete('relative')
+      newFieldValue = newFieldValue.set('values', List())
+      var m = modalValues
+      m = m.set(e.target.name, '')
+      m = m.delete('relative')
+      setModalValues(m)
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      }, props.index)
+      return
+    }
     if (e.target.name === 'monthtest-0' && e.target.value === '') {
       newFieldValue = newFieldValue.set(e.target.name, e.target.value)
       newFieldValue = newFieldValue.delete('relative')
