@@ -551,6 +551,10 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       newFieldValue = newFieldValue.set(e.target.name, e.target.value);
       newFieldValue = newFieldValue.delete('relative');
       newFieldValue = newFieldValue.set('values', List());
+      var m = modalValues;
+      m = m.set('monthtest-0', '');
+      m = m.delete('relative');
+      setModalValues(m);
       props.onChange({
         target: {
           name: props.name,
@@ -563,9 +567,11 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     if (e.target.name === 'relative') {
       newFieldValue = newFieldValue.set('relative', e.target.value);
       newFieldValue = newFieldValue.set('values', List());
-      var m = modalValues.set(e.target.name, e.target.value);
-      m = m.delete("".concat(props.name, "-0"));
-      setModalValues(m);
+
+      var _m = modalValues.set(e.target.name, e.target.value);
+
+      _m = _m.delete("".concat(props.name, "-0"));
+      setModalValues(_m);
       props.onChange({
         target: {
           name: props.name,
