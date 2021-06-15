@@ -356,6 +356,7 @@ const ConditionalPredicate = props => {
     let values = newFieldValue.get('values', List())
     if (e.target.name === 'monthtest-0' && e.target.value === '') {
       newFieldValue = newFieldValue.set(e.target.name, e.target.value)
+      newFieldValue = newFieldValue.delete('relative')
       newFieldValue = newFieldValue.set('values', List())
       props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
       return
