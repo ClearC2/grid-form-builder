@@ -1,3 +1,10 @@
+## [3.62.4](https://github.com/ClearC2/grid-form-builder/compare/v3.62.3...v3.62.4) (2021-07-01)
+
+
+### Bug Fixes
+
+* **listselect:** list select now correctly uses the value instead of the label for the array of string values ([2562320](https://github.com/ClearC2/grid-form-builder/commit/2562320661b55c234e28e49a1c98a818e3c14a1d))
+
 ## [3.62.3](https://github.com/ClearC2/grid-form-builder/compare/v3.62.2...v3.62.3) (2021-06-15)
 
 

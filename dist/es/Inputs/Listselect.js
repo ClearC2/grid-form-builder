@@ -72,7 +72,7 @@ var Listselect = function Listselect(props) {
   }, [props.value, props.value.length]);
   var handleOnChange = useCallback(function (e) {
     if (!disabled && !readonly && interactive) {
-      var clickedValue = e.target.innerHTML;
+      var clickedValue = e.target.dataset.value;
 
       var newvalue = _toConsumableArray(value);
 
@@ -152,6 +152,7 @@ var Listselect = function Listselect(props) {
       className: className,
       onClick: handleOnChange,
       style: _objectSpread({}, valueStyle, {}, optionsStyle),
+      "data-value": option.value,
       css: theme.value
     }, display);
   })), jsx("div", {

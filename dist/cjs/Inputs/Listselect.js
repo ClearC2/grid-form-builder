@@ -99,7 +99,7 @@ var Listselect = function Listselect(props) {
   }, [props.value, props.value.length]);
   var handleOnChange = (0, _react.useCallback)(function (e) {
     if (!disabled && !readonly && interactive) {
-      var clickedValue = e.target.innerHTML;
+      var clickedValue = e.target.dataset.value;
       var newvalue = (0, _toConsumableArray2.default)(value);
 
       if ((0, _indexOf.default)(newvalue).call(newvalue, clickedValue) > -1) {
@@ -177,6 +177,7 @@ var Listselect = function Listselect(props) {
       className: className,
       onClick: handleOnChange,
       style: _objectSpread({}, valueStyle, {}, optionsStyle),
+      "data-value": option.value,
       css: theme.value
     }, display);
   })), (0, _core.jsx)("div", {
