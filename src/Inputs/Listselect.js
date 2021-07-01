@@ -42,7 +42,7 @@ const Listselect = props => {
 
   const handleOnChange = useCallback(e => {
     if (!disabled && !readonly && interactive) {
-      const {innerHTML: clickedValue} = e.target
+      const {value: clickedValue} = e.target.dataset
       let newvalue = [...value]
       if (newvalue.indexOf(clickedValue) > -1) {
         newvalue = newvalue.filter(val => val !== clickedValue)
@@ -110,6 +110,7 @@ const Listselect = props => {
                   className={className}
                   onClick={handleOnChange}
                   style={{...valueStyle, ...optionsStyle}}
+                  data-value={option.value}
                   css={theme.value}
                 >
                   {display}

@@ -468,25 +468,25 @@
             "category": "TASKS",
             "options": [{
               "label": "Contract Signing",
-              "value": "Contract Signing"
+              "value": "Contract"
             }, {
               "label": "Customer Service",
-              "value": "Customer Service"
+              "value": "Customer"
             }, {
               "label": "Demonstration",
-              "value": "Demonstration"
+              "value": "Demo"
             }, {
               "label": "Executive Meeting",
-              "value": "Executive Meeting"
+              "value": "Executive"
             }, {
               "label": "Initial Meeting",
-              "value": "Initial Meeting"
+              "value": "Initial"
             }, {
               "label": "Kick Off Meeting",
-              "value": "Kick Off Meeting"
+              "value": "Kick Off"
             }, {
               "label": "Internet Hub",
-              "value": "Internet Hub"
+              "value": "Internet"
             }]
           },
           "cascade": {
