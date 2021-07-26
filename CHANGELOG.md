@@ -1,3 +1,10 @@
+# [3.63.0](https://github.com/ClearC2/grid-form-builder/compare/v3.62.4...v3.63.0) (2021-07-26)
+
+
+### Features
+
+* **comparators:** added this week as a date only comparator ([29d9a3b](https://github.com/ClearC2/grid-form-builder/commit/29d9a3bbb019de26e98945de2cb8a9614da21c27))
+
 ## [3.62.4](https://github.com/ClearC2/grid-form-builder/compare/v3.62.3...v3.62.4) (2021-07-01)
 
 
