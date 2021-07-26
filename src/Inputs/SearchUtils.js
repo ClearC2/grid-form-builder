@@ -107,6 +107,11 @@ export const CONDITIONS = {
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
+  'this week': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
   'this month': {
     maxFields: 0,
     minFields: 0,
