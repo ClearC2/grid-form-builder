@@ -1,3 +1,10 @@
+## [3.63.1](https://github.com/ClearC2/grid-form-builder/compare/v3.63.0...v3.63.1) (2021-07-26)
+
+
+### Bug Fixes
+
+* **conditions:** show values... when cond is this week ([a270a78](https://github.com/ClearC2/grid-form-builder/commit/a270a78f93b518b039d97e08c34b18b6cdc77f8d))
+
 # [3.63.0](https://github.com/ClearC2/grid-form-builder/compare/v3.62.4...v3.63.0) (2021-07-26)
 
 
