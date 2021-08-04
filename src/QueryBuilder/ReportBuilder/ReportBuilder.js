@@ -42,7 +42,7 @@ export class ReportBuilder extends Component {
       headerName: col.label.split(' (')[0],
       field: col.value
     }
-    if (!def.type.includes('Column')) {
+    if (def.type && !def.type.includes('Column')) {
       delete def.type
     }
     return def
@@ -55,11 +55,12 @@ export class ReportBuilder extends Component {
       field: col.value,
       filter: 'date'
     }
-    if (!def.type.includes('Column')) {
+    if (def.type && !def.type.includes('Column')) {
       delete def.type
     }
     return def
   }
+
   buildBoolColDef = (col) => {
     let def = {
       ...col,
@@ -85,7 +86,7 @@ export class ReportBuilder extends Component {
         }
       }
     }
-    if (!def.type.includes('Column')) {
+    if (def.type && !def.type.includes('Column')) {
       delete def.type
     }
     return def

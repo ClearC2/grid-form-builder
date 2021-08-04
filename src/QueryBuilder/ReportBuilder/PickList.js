@@ -50,9 +50,11 @@ class Pane extends Component {
 
     items = () => {
       let {items, labelKey} = this.props
-      const {search, searchText} = this.state
+      const {search} = this.state
+      let {searchText = ''} = this.state
+      if (typeof searchText !== 'string') searchText = ''
       if (search) {
-        items = items.filter(item => String(item[labelKey]).toLowerCase().includes(searchText.toLowerCase()))
+        items = items.filter(item => String(item[labelKey] || '').toLowerCase().includes(searchText.toLowerCase()))
       }
       return items
     }
@@ -180,7 +182,8 @@ export default class PickList extends Component {
       } else {
         if (originalValue.length !== this.props.options.length) {
           let _values = Object.values(originalValue.map(ov => ov[valueKey]))
-          let result = this.props.options.filter(opt => !_values.includes(opt[valueKey]))
+          if (!Array.isArray(_values)) _values = []
+          const result = this.props.options.filter(opt => !_values.includes(opt[valueKey]))
           onChange([...originalValue, ...result])
         }
       }
