@@ -115,9 +115,8 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
   var mergeDate = c.get('mergeDate', false);
 
   if (schema) {
-    if ((0, _immutable.Set)(_index.TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
-      var val = c.get('values') instanceof _immutable.List ? c.getIn(['values', 0], ['']) : c.get('values', '');
-      newFormValue = val;
+    if (schema.config && schema.config.type && (0, _immutable.Set)(_index.TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
+      newFormValue = c.get('values') instanceof _immutable.List ? c.getIn(['values', 0], ['']) : c.get('values', '');
     } else {
       if (c.get('rawValues') !== undefined && !mergeDate) {
         newFormValue = (0, _immutable.Map)({

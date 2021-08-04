@@ -18,6 +18,8 @@ var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-st
 
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/toConsumableArray"));
 
+var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
+
 var _values2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/values"));
 
 var _find = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/find"));
@@ -109,15 +111,16 @@ function (_Component) {
       var _this$props = _this.props,
           items = _this$props.items,
           labelKey = _this$props.labelKey;
-      var _this$state = _this.state,
-          search = _this$state.search,
-          searchText = _this$state.searchText;
+      var search = _this.state.search;
+      var _this$state$searchTex = _this.state.searchText,
+          searchText = _this$state$searchTex === void 0 ? '' : _this$state$searchTex;
+      if (typeof searchText !== 'string') searchText = '';
 
       if (search) {
         items = (0, _filter.default)(items).call(items, function (item) {
           var _context4;
 
-          return (0, _includes.default)(_context4 = String(item[labelKey]).toLowerCase()).call(_context4, searchText.toLowerCase());
+          return (0, _includes.default)(_context4 = String(item[labelKey] || '').toLowerCase()).call(_context4, searchText.toLowerCase());
         });
       }
 
@@ -292,6 +295,7 @@ function (_Component2) {
             return ov[valueKey];
           }));
 
+          if (!(0, _isArray.default)(_values)) _values = [];
           var result = (0, _filter.default)(_context6 = _this3.props.options).call(_context6, function (opt) {
             return !(0, _includes.default)(_values).call(_values, opt[valueKey]);
           });

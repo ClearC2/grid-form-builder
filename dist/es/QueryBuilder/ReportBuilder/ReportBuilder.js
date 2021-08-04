@@ -48,7 +48,7 @@ function (_Component) {
         field: col.value
       });
 
-      if (!_includesInstanceProperty(_context = def.type).call(_context, 'Column')) {
+      if (def.type && !_includesInstanceProperty(_context = def.type).call(_context, 'Column')) {
         delete def.type;
       }
 
@@ -64,7 +64,7 @@ function (_Component) {
         filter: 'date'
       });
 
-      if (!_includesInstanceProperty(_context2 = def.type).call(_context2, 'Column')) {
+      if (def.type && !_includesInstanceProperty(_context2 = def.type).call(_context2, 'Column')) {
         delete def.type;
       }
 
@@ -103,7 +103,7 @@ function (_Component) {
         }
       });
 
-      if (!_includesInstanceProperty(_context3 = def.type).call(_context3, 'Column')) {
+      if (def.type && !_includesInstanceProperty(_context3 = def.type).call(_context3, 'Column')) {
         delete def.type;
       }
 

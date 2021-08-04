@@ -86,7 +86,7 @@ function (_Component) {
         field: col.value
       });
 
-      if (!(0, _includes.default)(_context = def.type).call(_context, 'Column')) {
+      if (def.type && !(0, _includes.default)(_context = def.type).call(_context, 'Column')) {
         delete def.type;
       }
 
@@ -101,7 +101,7 @@ function (_Component) {
         filter: 'date'
       });
 
-      if (!(0, _includes.default)(_context2 = def.type).call(_context2, 'Column')) {
+      if (def.type && !(0, _includes.default)(_context2 = def.type).call(_context2, 'Column')) {
         delete def.type;
       }
 
@@ -139,7 +139,7 @@ function (_Component) {
         }
       });
 
-      if (!(0, _includes.default)(_context3 = def.type).call(_context3, 'Column')) {
+      if (def.type && !(0, _includes.default)(_context3 = def.type).call(_context3, 'Column')) {
         delete def.type;
       }
 

@@ -1,6 +1,7 @@
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _toConsumableArray from "@babel/runtime-corejs3/helpers/esm/toConsumableArray";
+import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _Object$values from "@babel/runtime-corejs3/core-js-stable/object/values";
 import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
@@ -78,15 +79,16 @@ function (_Component) {
       var _this$props = _this.props,
           items = _this$props.items,
           labelKey = _this$props.labelKey;
-      var _this$state = _this.state,
-          search = _this$state.search,
-          searchText = _this$state.searchText;
+      var search = _this.state.search;
+      var _this$state$searchTex = _this.state.searchText,
+          searchText = _this$state$searchTex === void 0 ? '' : _this$state$searchTex;
+      if (typeof searchText !== 'string') searchText = '';
 
       if (search) {
         items = _filterInstanceProperty(items).call(items, function (item) {
           var _context4;
 
-          return _includesInstanceProperty(_context4 = String(item[labelKey]).toLowerCase()).call(_context4, searchText.toLowerCase());
+          return _includesInstanceProperty(_context4 = String(item[labelKey] || '').toLowerCase()).call(_context4, searchText.toLowerCase());
         });
       }
 
@@ -268,6 +270,8 @@ function (_Component2) {
           var _values = _Object$values(_mapInstanceProperty(originalValue).call(originalValue, function (ov) {
             return ov[valueKey];
           }));
+
+          if (!_Array$isArray(_values)) _values = [];
 
           var result = _filterInstanceProperty(_context6 = _this3.props.options).call(_context6, function (opt) {
             return !_includesInstanceProperty(_values).call(_values, opt[valueKey]);

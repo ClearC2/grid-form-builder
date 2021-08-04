@@ -1,3 +1,10 @@
+## [3.63.2](https://github.com/ClearC2/grid-form-builder/compare/v3.63.1...v3.63.2) (2021-08-04)
+
+
+### Bug Fixes
+
+* **reports:** added some defensive checks to try to prevent javascript errors within the package ([ca53772](https://github.com/ClearC2/grid-form-builder/commit/ca537724a932b561023b605f457d2e7a5d1a35cf))
+
 ## [3.63.1](https://github.com/ClearC2/grid-form-builder/compare/v3.63.0...v3.63.1) (2021-07-26)
 
 
