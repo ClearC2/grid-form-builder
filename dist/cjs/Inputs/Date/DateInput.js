@@ -397,3 +397,8 @@ DateInput.propTypes = {
   maxDate: _propTypes.default.string,
   onChangeValidator: _propTypes.default.func
 };
+DateInput.defaultProps = {
+  onChangeValidator: function onChangeValidator() {
+    return true;
+  }
+};

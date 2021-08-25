@@ -1,3 +1,10 @@
+# [3.65.0](https://github.com/ClearC2/grid-form-builder/compare/v3.64.0...v3.65.0) (2021-08-25)
+
+
+### Features
+
+* **date:** provides default date validator ([58e024d](https://github.com/ClearC2/grid-form-builder/commit/58e024d68e2fcd03e7ca75d936c806b0444f1145))
+
 # [3.64.0](https://github.com/ClearC2/grid-form-builder/compare/v3.63.2...v3.64.0) (2021-08-25)
 
 
