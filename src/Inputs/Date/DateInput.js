@@ -109,19 +109,17 @@ const DateInput = props => {
   }, [dateFormat, dateTimeFormat, format, showCalendar, timeFormat, timePicker, type])
 
   const handleOnInputChange = useCallback(e => {
+    allowCalendarChangeEvent.current = false
     const {value: newValue} = e.target
     if (newValue === '') {
       // if the input was just blanked out, send up a blank value as the new value for this field - JRA 02/07/2020
       // also suppress the calendar's change event so it does not send up what is selected when the calendar closes
-      allowCalendarChangeEvent.current = false
       onChange({
         target: {
           name,
           value: ''
         }
       })
-    } else {
-      allowCalendarChangeEvent.current = true
     }
     changeInputValue(newValue)
     if (!showPicker) changeShowPicker(true)
