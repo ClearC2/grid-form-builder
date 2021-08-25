@@ -1,3 +1,10 @@
+# [3.64.0](https://github.com/ClearC2/grid-form-builder/compare/v3.63.2...v3.64.0) (2021-08-25)
+
+
+### Features
+
+* **date:** typing into a date input should always cancel the ability for the picker to try to auto select a date ([a412b45](https://github.com/ClearC2/grid-form-builder/commit/a412b4502c8de43cde893919a108137a03036b3c))
+
 ## [3.63.2](https://github.com/ClearC2/grid-form-builder/compare/v3.63.1...v3.63.2) (2021-08-04)
 
 
