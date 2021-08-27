@@ -1,3 +1,10 @@
+## [3.65.1](https://github.com/ClearC2/grid-form-builder/compare/v3.65.0...v3.65.1) (2021-08-27)
+
+
+### Bug Fixes
+
+* **conditional-table:** fix return value ([d861379](https://github.com/ClearC2/grid-form-builder/commit/d8613797cc78e557b0a611a2a938e4e23efb07aa))
+
 # [3.65.0](https://github.com/ClearC2/grid-form-builder/compare/v3.64.0...v3.65.0) (2021-08-25)
 
 

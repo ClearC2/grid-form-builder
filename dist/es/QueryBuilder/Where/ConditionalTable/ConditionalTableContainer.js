@@ -81,7 +81,7 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
   var mergeDate = c.get('mergeDate', false);
 
   if (schema) {
-    if (schema.config && schema.config.type && Set(TEXT_INPUTS).has(schema.config.type.toLowerCase())) {
+    if (schema.config && schema.config.type && Set(TEXT_INPUTS).has(schema.config.type.toLowerCase()) && c.get('comparator') !== 'is blank' && c.get('comparator') !== 'is not blank') {
       newFormValue = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '');
     } else {
       if (c.get('rawValues') !== undefined && !mergeDate) {
