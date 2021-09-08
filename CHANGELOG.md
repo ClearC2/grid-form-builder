@@ -1,3 +1,10 @@
+## [3.65.2](https://github.com/ClearC2/grid-form-builder/compare/v3.65.1...v3.65.2) (2021-09-08)
+
+
+### Bug Fixes
+
+* **date:** date pickers should now function properly when used in report builder mode ([4ffce49](https://github.com/ClearC2/grid-form-builder/commit/4ffce4907ff05ffb9c73a7d34526082a19856c6d))
+
 ## [3.65.1](https://github.com/ClearC2/grid-form-builder/compare/v3.65.0...v3.65.1) (2021-08-27)
 
 
