@@ -48,6 +48,9 @@ export const convertFieldToSearch = (field = {}, forCondTable = false) => {
       if (field.config.type === 'email') {
         field.config.type = 'input'
       }
+      if (['date', 'datetime', 'time', 'month'].indexOf(field.config.type) > -1) {
+        field.config.onChangeValidator = null
+      }
       if (field.config.type === 'metadata') {
         if (field.config.conditionalConfig) {
           const conditionalConfig = Object.assign({}, field.config.conditionalConfig)
