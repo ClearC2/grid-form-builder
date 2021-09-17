@@ -18,7 +18,8 @@ var MonthPicker = forwardRef(function (props, ref) {
       showPicker = props.showPicker,
       onChange = props.onChange,
       name = props.name,
-      format = props.format;
+      format = props.format,
+      setManualBlurCheck = props.setManualBlurCheck;
 
   var _useState = useState([]),
       _useState2 = _slicedToArray(_useState, 2),
@@ -34,6 +35,11 @@ var MonthPicker = forwardRef(function (props, ref) {
       _useState6 = _slicedToArray(_useState5, 2),
       currentMonth = _useState6[0],
       setCurrentMonth = _useState6[1];
+
+  var _useState7 = useState(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      isDirty = _useState8[0],
+      setIsDirty = _useState8[1];
 
   var isSelectedMonth = useCallback(function (month) {
     return month === currentMonth;
@@ -61,6 +67,7 @@ var MonthPicker = forwardRef(function (props, ref) {
     if (currentYear && currentMonth) {
       var _context;
 
+      setManualBlurCheck(false);
       onChange({
         target: {
           name: name,
@@ -69,7 +76,7 @@ var MonthPicker = forwardRef(function (props, ref) {
       });
       changeShowPicker(false);
     }
-  }, [changeShowPicker, currentMonth, currentYear, format, name, onChange]);
+  }, [changeShowPicker, currentMonth, currentYear, format, name, onChange, setManualBlurCheck]);
   var windowClickListener = useMemo(function () {
     return function (e) {
       var pathHandler = e.path || e.composedPath();
@@ -79,9 +86,10 @@ var MonthPicker = forwardRef(function (props, ref) {
       });
 
       if (!insideClick) {
-        if (currentYear && currentMonth) {
+        if (isDirty && currentYear && currentMonth) {
           var _context2;
 
+          setManualBlurCheck(false);
           onChange({
             target: {
               name: name,
@@ -93,7 +101,7 @@ var MonthPicker = forwardRef(function (props, ref) {
         changeShowPicker(false);
       }
     };
-  }, [elementId, ref, changeShowPicker, onChange, currentYear, currentMonth, name, format]);
+  }, [elementId, ref, changeShowPicker, onChange, currentYear, currentMonth, name, format, setManualBlurCheck, isDirty]);
   useEffect(function () {
     if (showPicker) window.addEventListener('mousedown', windowClickListener);else window.removeEventListener('mousedown', windowClickListener);
     return function () {
@@ -121,6 +129,11 @@ var MonthPicker = forwardRef(function (props, ref) {
     setCurrentYear(year);
     setCurrentMonth(month);
   }, [startDate]);
+
+  if (_indexOfInstanceProperty(yearOptions).call(yearOptions, currentYear) === -1) {
+    yearOptions.unshift(currentYear);
+  }
+
   return React.createElement(Portal, {
     id: elementId,
     ref: ref
@@ -136,6 +149,7 @@ var MonthPicker = forwardRef(function (props, ref) {
   }, React.createElement("select", {
     value: currentYear,
     onChange: function onChange(e) {
+      setIsDirty(true);
       setCurrentYear(+e.target.value);
       setCurrentMonth(0);
     },
@@ -155,68 +169,80 @@ var MonthPicker = forwardRef(function (props, ref) {
   }, React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(1) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(1);
+      setIsDirty(true);
+      setCurrentMonth(1);
     }
   }, "Jan"), React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(2) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(2);
+      setIsDirty(true);
+      setCurrentMonth(2);
     }
   }, "Feb"), React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(3) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(3);
+      setIsDirty(true);
+      setCurrentMonth(3);
     }
   }, "Mar")), React.createElement("div", {
     className: "gfb-month-cluser-row"
   }, React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(4) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(4);
+      setIsDirty(true);
+      setCurrentMonth(4);
     }
   }, "Apr"), React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(5) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(5);
+      setIsDirty(true);
+      setCurrentMonth(5);
     }
   }, "May"), React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(6) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(6);
+      setIsDirty(true);
+      setCurrentMonth(6);
     }
   }, "June")), React.createElement("div", {
     className: "gfb-month-cluser-row"
   }, React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(7) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(7);
+      setIsDirty(true);
+      setCurrentMonth(7);
     }
   }, "July"), React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(8) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(8);
+      setIsDirty(true);
+      setCurrentMonth(8);
     }
   }, "Aug"), React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(9) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(9);
+      setIsDirty(true);
+      setCurrentMonth(9);
     }
   }, "Sep")), React.createElement("div", {
     className: "gfb-month-cluser-row"
   }, React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(10) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(10);
+      setIsDirty(true);
+      setCurrentMonth(10);
     }
   }, "Oct"), React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(11) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(11);
+      setIsDirty(true);
+      setCurrentMonth(11);
     }
   }, "Nov"), React.createElement("div", {
     className: "gfb-month-cluster-month-button".concat(isSelectedMonth(12) ? ' month-selected' : ''),
     onClick: function onClick() {
-      return setCurrentMonth(12);
+      setIsDirty(true);
+      setCurrentMonth(12);
     }
   }, "Dec"))), React.createElement("div", {
     className: "gfb-month-picker-footer"
@@ -240,5 +266,6 @@ MonthPicker.propTypes = {
   pastYears: PropTypes.number,
   futureYears: PropTypes.number,
   showPicker: PropTypes.bool,
-  name: PropTypes.string
+  name: PropTypes.string,
+  setManualBlurCheck: PropTypes.func
 };

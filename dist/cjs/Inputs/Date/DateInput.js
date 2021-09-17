@@ -121,6 +121,11 @@ var DateInput = function DateInput(props) {
       manualBlurCheck = _useState10[0],
       setManualBlurCheck = _useState10[1];
 
+  var _useState11 = (0, _react.useState)(true),
+      _useState12 = (0, _slicedToArray2.default)(_useState11, 2),
+      showMonthFormatted = _useState12[0],
+      setShowMonthFormatted = _useState12[1];
+
   var convertDateToMomentFormat = (0, _react.useMemo)(function () {
     return function (value) {
       var time;
@@ -187,20 +192,30 @@ var DateInput = function DateInput(props) {
     }
 
     changeInputValue(newValue);
-    if (!showPicker) changeShowPicker(true);
-  }, [showPicker, onChange, name]);
+    if (!showPicker && type !== 'month') changeShowPicker(true);
+  }, [showPicker, onChange, name, type]);
   var handleOnFocus = (0, _react.useCallback)(function () {
     changeShowPicker(true);
     setIsFocused(true);
-    setManualBlurCheck(true);
-  }, [changeShowPicker]);
+    setManualBlurCheck(type !== 'month');
+  }, [changeShowPicker, type]);
   var handleOnBlur = (0, _react.useCallback)(function (e) {
-    if (type !== 'time' && manualBlurCheck && typeof onChangeValidator === 'function') {
+    if (type === 'month' && manualBlurCheck) {
+      var formatted = inputValue ? (0, _moment.default)(inputValue, 'MM/YYYY').format(inputFormat) : '';
+      setShowMonthFormatted(true);
+      onChange({
+        target: {
+          name: name,
+          value: formatted
+        }
+      });
+    } else if (type !== 'time' && manualBlurCheck && typeof onChangeValidator === 'function') {
       // this is to circumvent an issue where the daterangepicker change handler isn't firing when you tab out of the input - JRA 03/26/2021
-      var formatted = inputValue ? (0, _moment.default)(inputValue).format(dateFormat) : '';
+      var _formatted = inputValue ? (0, _moment.default)(inputValue).format(dateFormat) : '';
+
       var validate = onChangeValidator({
         raw: inputValue,
-        formatted: formatted
+        formatted: _formatted
       });
 
       if (typeof validate === 'string') {
@@ -223,7 +238,7 @@ var DateInput = function DateInput(props) {
         onChange({
           target: {
             name: name,
-            value: formatted
+            value: _formatted
           }
         });
       }
@@ -289,7 +304,12 @@ var DateInput = function DateInput(props) {
   var startDate = convertDateToMomentFormat(inputValue);
   var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
-  var valueOverride = type === 'month' && startDate ? startDate.format('MM/YYYY') : inputValue; // if this is a special input that only shows months, manually overwrite what the display value is - JRA 12/08/2020
+  var valueOverride = inputValue;
+
+  if (type === 'month' && showMonthFormatted && startDate) {
+    // if this is a special input that only shows months, manually overwrite what the display value is - JRA 12/08/2020
+    valueOverride = startDate.format('MM/YYYY');
+  }
 
   return (0, _core.jsx)("div", {
     className: outerClass,
@@ -320,15 +340,18 @@ var DateInput = function DateInput(props) {
     tabIndex: tabIndex,
     onFocus: handleOnFocus,
     onBlur: handleOnBlur,
-    onKeyDown: function onKeyDown(e) {
-      if (e.keyCode === 9 && type === 'month') {
-        changeShowPicker(false);
-      }
-    },
     autoComplete: autoComplete,
     style: valueStyle,
     css: theme.value,
-    maxLength: maxlength
+    maxLength: maxlength,
+    onKeyDown: function onKeyDown(e) {
+      if (type === 'month') {
+        if (showPicker) changeInputValue(e.target.value);
+        setManualBlurCheck(true);
+        changeShowPicker(false);
+        setShowMonthFormatted(false);
+      }
+    }
   }), showPicker && canPickDay && (0, _core.jsx)(_DatePicker.default, {
     elementId: elementId.current,
     handleOnChange: handleOnCalendarChange,
@@ -350,7 +373,8 @@ var DateInput = function DateInput(props) {
     pastYears: pastYears,
     futureYears: futureYears,
     showPicker: showPicker,
-    name: name
+    name: name,
+    setManualBlurCheck: setManualBlurCheck
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,

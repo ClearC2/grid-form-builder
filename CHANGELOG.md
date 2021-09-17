@@ -1,3 +1,10 @@
+# [3.66.0](https://github.com/ClearC2/grid-form-builder/compare/v3.65.2...v3.66.0) (2021-09-17)
+
+
+### Features
+
+* **date:** month fields will now be more user friendly when trying to manually enter a date ([542660f](https://github.com/ClearC2/grid-form-builder/commit/542660fcf463d7807f8a8dfa183da08229273701))
+
 ## [3.65.2](https://github.com/ClearC2/grid-form-builder/compare/v3.65.1...v3.65.2) (2021-09-08)
 
 
