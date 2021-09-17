@@ -60,6 +60,7 @@ const DateInput = props => {
   const [isFocused, setIsFocused] = useState(false)
   const allowCalendarChangeEvent = useRef(true)
   const [manualBlurCheck, setManualBlurCheck] = useState(false)
+  const [showMonthFormatted, setShowMonthFormatted] = useState(true)
 
   const convertDateToMomentFormat = useMemo(() => {
     return value => {
@@ -122,17 +123,23 @@ const DateInput = props => {
       })
     }
     changeInputValue(newValue)
-    if (!showPicker) changeShowPicker(true)
-  }, [showPicker, onChange, name])
+    if (!showPicker && type !== 'month') changeShowPicker(true)
+  }, [showPicker, onChange, name, type])
 
   const handleOnFocus = useCallback(() => {
     changeShowPicker(true)
     setIsFocused(true)
-    setManualBlurCheck(true)
-  }, [changeShowPicker])
+    setManualBlurCheck(type !== 'month')
+  }, [changeShowPicker, type])
 
   const handleOnBlur = useCallback(e => {
-    if (type !== 'time' && manualBlurCheck && typeof onChangeValidator === 'function') { // this is to circumvent an issue where the daterangepicker change handler isn't firing when you tab out of the input - JRA 03/26/2021
+    if (type === 'month' && manualBlurCheck) {
+      const formatted = inputValue ? moment(inputValue, 'MM/YYYY').format(inputFormat) : ''
+      setShowMonthFormatted(true)
+      onChange({
+        target: {name, value: formatted}
+      })
+    } else if (type !== 'time' && manualBlurCheck && typeof onChangeValidator === 'function') { // this is to circumvent an issue where the daterangepicker change handler isn't firing when you tab out of the input - JRA 03/26/2021
       const formatted = inputValue ? moment(inputValue).format(dateFormat) : ''
       const validate = onChangeValidator({raw: inputValue, formatted})
       if (typeof validate === 'string') {
@@ -201,7 +208,10 @@ const DateInput = props => {
   const isFirefox = navigator.userAgent.search('Firefox') > -1
   const isDisabled = readonly || disabled || !interactive
 
-  const valueOverride = type === 'month' && startDate ? startDate.format('MM/YYYY') : inputValue // if this is a special input that only shows months, manually overwrite what the display value is - JRA 12/08/2020
+  let valueOverride = inputValue
+  if (type === 'month' && showMonthFormatted && startDate) { // if this is a special input that only shows months, manually overwrite what the display value is - JRA 12/08/2020
+    valueOverride = startDate.format('MM/YYYY')
+  }
 
   return (
     <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
@@ -221,17 +231,20 @@ const DateInput = props => {
               tabIndex={tabIndex}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
-              onKeyDown={
-                e => {
-                  if (e.keyCode === 9 && type === 'month') {
-                    changeShowPicker(false)
-                  }
-                }
-              }
               autoComplete={autoComplete}
               style={valueStyle}
               css={theme.value}
               maxLength={maxlength}
+              onKeyDown={
+                e => {
+                  if (type === 'month') {
+                    if (showPicker) changeInputValue(e.target.value)
+                    setManualBlurCheck(true)
+                    changeShowPicker(false)
+                    setShowMonthFormatted(false)
+                  }
+                }
+              }
             />
             {showPicker && canPickDay && (
               <DatePicker
@@ -259,6 +272,7 @@ const DateInput = props => {
                 futureYears={futureYears}
                 showPicker={showPicker}
                 name={name}
+                setManualBlurCheck={setManualBlurCheck}
               />
             )}
           </div>
