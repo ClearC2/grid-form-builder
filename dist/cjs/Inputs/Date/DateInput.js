@@ -193,11 +193,12 @@ var DateInput = function DateInput(props) {
 
     changeInputValue(newValue);
     if (!showPicker && type !== 'month') changeShowPicker(true);
+    if (type === 'datetime') setManualBlurCheck(true);
   }, [showPicker, onChange, name, type]);
   var handleOnFocus = (0, _react.useCallback)(function () {
     changeShowPicker(true);
     setIsFocused(true);
-    setManualBlurCheck(type !== 'month');
+    setManualBlurCheck(type !== 'month' && type !== 'datetime');
   }, [changeShowPicker, type]);
   var handleOnBlur = (0, _react.useCallback)(function (e) {
     if (type === 'month' && manualBlurCheck) {
@@ -211,7 +212,7 @@ var DateInput = function DateInput(props) {
       });
     } else if (type !== 'time' && manualBlurCheck && typeof onChangeValidator === 'function') {
       // this is to circumvent an issue where the daterangepicker change handler isn't firing when you tab out of the input - JRA 03/26/2021
-      var _formatted = inputValue ? (0, _moment.default)(inputValue).format(dateFormat) : '';
+      var _formatted = inputValue ? (0, _moment.default)(inputValue).format(type === 'datetime' ? dateTimeFormat : dateFormat) : '';
 
       var validate = onChangeValidator({
         raw: inputValue,
@@ -246,7 +247,7 @@ var DateInput = function DateInput(props) {
 
     setManualBlurCheck(true);
     setIsFocused(false);
-  }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name]);
+  }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name, dateTimeFormat]);
   var handleOnCalendarChange = (0, _react.useCallback)(function (e) {
     if (allowCalendarChangeEvent.current) {
       setManualBlurCheck(false);

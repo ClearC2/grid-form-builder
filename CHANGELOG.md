@@ -1,3 +1,10 @@
+## [3.66.1](https://github.com/ClearC2/grid-form-builder/compare/v3.66.0...v3.66.1) (2021-10-06)
+
+
+### Bug Fixes
+
+* **date:** datetime field should now let you type in a date and select dates without auto closing the picker ([e2b7c6f](https://github.com/ClearC2/grid-form-builder/commit/e2b7c6f4f340ca79247627aee551879de50657d9))
+
 # [3.66.0](https://github.com/ClearC2/grid-form-builder/compare/v3.65.2...v3.66.0) (2021-09-17)
 
 
