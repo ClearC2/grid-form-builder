@@ -124,12 +124,13 @@ const DateInput = props => {
     }
     changeInputValue(newValue)
     if (!showPicker && type !== 'month') changeShowPicker(true)
+    if (type === 'datetime') setManualBlurCheck(true)
   }, [showPicker, onChange, name, type])
 
   const handleOnFocus = useCallback(() => {
     changeShowPicker(true)
     setIsFocused(true)
-    setManualBlurCheck(type !== 'month')
+    setManualBlurCheck((type !== 'month' && type !== 'datetime'))
   }, [changeShowPicker, type])
 
   const handleOnBlur = useCallback(e => {
@@ -140,7 +141,7 @@ const DateInput = props => {
         target: {name, value: formatted}
       })
     } else if (type !== 'time' && manualBlurCheck && typeof onChangeValidator === 'function') { // this is to circumvent an issue where the daterangepicker change handler isn't firing when you tab out of the input - JRA 03/26/2021
-      const formatted = inputValue ? moment(inputValue).format(dateFormat) : ''
+      const formatted = inputValue ? moment(inputValue).format(type === 'datetime' ? dateTimeFormat : dateFormat) : ''
       const validate = onChangeValidator({raw: inputValue, formatted})
       if (typeof validate === 'string') {
         changeInputValue(validate)
@@ -160,7 +161,7 @@ const DateInput = props => {
     }
     setManualBlurCheck(true)
     setIsFocused(false)
-  }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name])
+  }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name, dateTimeFormat])
 
   const handleOnCalendarChange = useCallback(e => {
     if (allowCalendarChangeEvent.current) {
