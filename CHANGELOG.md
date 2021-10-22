@@ -1,3 +1,10 @@
+## [3.66.2](https://github.com/ClearC2/grid-form-builder/compare/v3.66.1...v3.66.2) (2021-10-22)
+
+
+### Bug Fixes
+
+* **multiselect:** treat empty array as non-valued ([#185](https://github.com/ClearC2/grid-form-builder/issues/185)) ([5ca4369](https://github.com/ClearC2/grid-form-builder/commit/5ca436991097446ead997533a0e8258356bfcefd))
+
 ## [3.66.1](https://github.com/ClearC2/grid-form-builder/compare/v3.66.0...v3.66.1) (2021-10-06)
 
 

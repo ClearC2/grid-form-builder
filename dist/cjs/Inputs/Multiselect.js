@@ -285,7 +285,7 @@ var Multiselect = function Multiselect(props) {
   var outerClass = 'gfb-input-outer';
   var components = {};
 
-  if (isRequiredFlag && value.length === 0 && !isFocused) {
+  if (isRequiredFlag && (value.length === 0 || value.size === 0) && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
 
     components.DropdownIndicator = function () {
