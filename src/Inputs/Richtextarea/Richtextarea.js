@@ -60,7 +60,8 @@ const Richtextarea = props => {
     'indent',
     'link',
     'image',
-    'color'
+    'color',
+    'background'
   ])
 
   const insertImage = useCallback(() => {

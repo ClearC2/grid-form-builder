@@ -14,6 +14,9 @@ const Toolbar = ({id}) => (
     <button className='ql-bold' />
     <button className='ql-italic' />
     <button className='ql-underline' />
+    <button className='ql-strike' />
+    <select className='ql-color' />
+    <select className='ql-background' />
     <button className='ql-link' />
     <button className='ql-list' value='bullet' />
     <button className='ql-list' value='ordered' />
