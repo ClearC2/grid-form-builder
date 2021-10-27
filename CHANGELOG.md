@@ -1,3 +1,10 @@
+# [3.67.0](https://github.com/ClearC2/grid-form-builder/compare/v3.66.2...v3.67.0) (2021-10-27)
+
+
+### Features
+
+* **rich-text:** add font color and background to toolbar ([2fb4d7c](https://github.com/ClearC2/grid-form-builder/commit/2fb4d7ca6954791e39b9abd646bac2755268f8b8))
+
 ## [3.66.2](https://github.com/ClearC2/grid-form-builder/compare/v3.66.1...v3.66.2) (2021-10-22)
 
 

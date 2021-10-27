@@ -45,6 +45,12 @@ var Toolbar = function Toolbar(_ref) {
   }), (0, _core.jsx)("button", {
     className: "ql-underline"
   }), (0, _core.jsx)("button", {
+    className: "ql-strike"
+  }), (0, _core.jsx)("select", {
+    className: "ql-color"
+  }), (0, _core.jsx)("select", {
+    className: "ql-background"
+  }), (0, _core.jsx)("button", {
     className: "ql-link"
   }), (0, _core.jsx)("button", {
     className: "ql-list",

@@ -67,7 +67,7 @@ var Richtextarea = function Richtextarea(props) {
 
   var elementId = useRef('gfb-' + randomId());
   var QuillRef = useRef();
-  var formats = useRef(['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'color']);
+  var formats = useRef(['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'color', 'background']);
   var insertImage = useCallback(function () {
     handleRTEImageClick(name);
   }, [handleRTEImageClick, name]);

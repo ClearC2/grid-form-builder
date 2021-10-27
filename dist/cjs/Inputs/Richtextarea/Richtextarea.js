@@ -92,7 +92,7 @@ var Richtextarea = function Richtextarea(props) {
 
   var elementId = (0, _react.useRef)('gfb-' + (0, _utils.randomId)());
   var QuillRef = (0, _react.useRef)();
-  var formats = (0, _react.useRef)(['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'color']);
+  var formats = (0, _react.useRef)(['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'color', 'background']);
   var insertImage = (0, _react.useCallback)(function () {
     handleRTEImageClick(name);
   }, [handleRTEImageClick, name]);
