@@ -33,7 +33,7 @@ export const CONDITIONS = {
   contains: {
     maxFields: 999,
     minFields: 1,
-    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT, ...DATES]
+    invalidInputTypes: [...DATES]
   },
   'is equal to': {
     maxFields: 1,
@@ -70,7 +70,7 @@ export const CONDITIONS = {
   'does not contain': {
     maxFields: 999,
     minFields: 1,
-    invalidInputTypes: [...ONLY_CATEGORICAL_INPUT, ...DATES]
+    invalidInputTypes: [...DATES]
   },
   'is not equal to': {
     maxFields: 1,
