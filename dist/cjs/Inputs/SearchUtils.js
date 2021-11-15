@@ -16,7 +16,7 @@ var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs3
 
 var _immutable = require("immutable");
 
-var _context, _context2, _context3;
+var _context;
 
 /*
   Select Fields are converted to multiselects
@@ -63,7 +63,7 @@ var CONDITIONS = {
   contains: {
     maxFields: 999,
     minFields: 1,
-    invalidInputTypes: (0, _concat.default)(_context = []).call(_context, (0, _toConsumableArray2.default)(ONLY_CATEGORICAL_INPUT), (0, _toConsumableArray2.default)(DATES))
+    invalidInputTypes: (0, _toConsumableArray2.default)(DATES)
   },
   'is equal to': {
     maxFields: 1,
@@ -94,13 +94,13 @@ var CONDITIONS = {
   'is not between': {
     maxFields: 2,
     minFields: 2,
-    invalidInputTypes: (0, _concat.default)(_context2 = []).call(_context2, (0, _toConsumableArray2.default)(ONLY_CATEGORICAL_INPUT), (0, _toConsumableArray2.default)(DATES)),
+    invalidInputTypes: (0, _concat.default)(_context = []).call(_context, (0, _toConsumableArray2.default)(ONLY_CATEGORICAL_INPUT), (0, _toConsumableArray2.default)(DATES)),
     joinString: "      and"
   },
   'does not contain': {
     maxFields: 999,
     minFields: 1,
-    invalidInputTypes: (0, _concat.default)(_context3 = []).call(_context3, (0, _toConsumableArray2.default)(ONLY_CATEGORICAL_INPUT), (0, _toConsumableArray2.default)(DATES))
+    invalidInputTypes: (0, _toConsumableArray2.default)(DATES)
   },
   'is not equal to': {
     maxFields: 1,

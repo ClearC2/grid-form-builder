@@ -1,7 +1,7 @@
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _toConsumableArray from "@babel/runtime-corejs3/helpers/esm/toConsumableArray";
 
-var _context, _context2, _context3;
+var _context;
 
 import { Set } from 'immutable';
 /*
@@ -42,7 +42,7 @@ export var CONDITIONS = {
   contains: {
     maxFields: 999,
     minFields: 1,
-    invalidInputTypes: _concatInstanceProperty(_context = []).call(_context, _toConsumableArray(ONLY_CATEGORICAL_INPUT), _toConsumableArray(DATES))
+    invalidInputTypes: _toConsumableArray(DATES)
   },
   'is equal to': {
     maxFields: 1,
@@ -73,13 +73,13 @@ export var CONDITIONS = {
   'is not between': {
     maxFields: 2,
     minFields: 2,
-    invalidInputTypes: _concatInstanceProperty(_context2 = []).call(_context2, _toConsumableArray(ONLY_CATEGORICAL_INPUT), _toConsumableArray(DATES)),
+    invalidInputTypes: _concatInstanceProperty(_context = []).call(_context, _toConsumableArray(ONLY_CATEGORICAL_INPUT), _toConsumableArray(DATES)),
     joinString: "      and"
   },
   'does not contain': {
     maxFields: 999,
     minFields: 1,
-    invalidInputTypes: _concatInstanceProperty(_context3 = []).call(_context3, _toConsumableArray(ONLY_CATEGORICAL_INPUT), _toConsumableArray(DATES))
+    invalidInputTypes: _toConsumableArray(DATES)
   },
   'is not equal to': {
     maxFields: 1,

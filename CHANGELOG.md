@@ -1,3 +1,10 @@
+## [3.67.1](https://github.com/ClearC2/grid-form-builder/compare/v3.67.0...v3.67.1) (2021-11-15)
+
+
+### Bug Fixes
+
+* **conditions:** let multiselects use contains conditions ([13434bf](https://github.com/ClearC2/grid-form-builder/commit/13434bf8b040456e39c4c180687ec94f10cef7e1))
+
 # [3.67.0](https://github.com/ClearC2/grid-form-builder/compare/v3.66.2...v3.67.0) (2021-10-27)
 
 
