@@ -1,3 +1,10 @@
+# [3.68.0](https://github.com/ClearC2/grid-form-builder/compare/v3.67.1...v3.68.0) (2021-11-22)
+
+
+### Features
+
+* **conditions:** add 2 ordered list conditionals ([9e8b5fe](https://github.com/ClearC2/grid-form-builder/commit/9e8b5fece405eb7c6053c838a8df1b7a8dc6cf5d))
+
 ## [3.67.1](https://github.com/ClearC2/grid-form-builder/compare/v3.67.0...v3.67.1) (2021-11-15)
 
 

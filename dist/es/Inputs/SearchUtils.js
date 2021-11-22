@@ -161,6 +161,26 @@ export var CONDITIONS = {
     minFields: 1,
     invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
   },
+  'is top (x)': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: ['input', 'phone', 'email', 'multicheckbox', 'multiselect', 'listselect', 'typeahead', 'textarea', 'checkbox', 'radio']
+  },
+  'is top (%)': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: ['input', 'phone', 'email', 'multicheckbox', 'multiselect', 'listselect', 'typeahead', 'textarea', 'checkbox', 'radio']
+  },
+  'is bottom (x)': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: ['input', 'phone', 'email', 'multicheckbox', 'multiselect', 'listselect', 'typeahead', 'textarea', 'checkbox', 'radio']
+  },
+  'is bottom (%)': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: ['input', 'phone', 'email', 'multicheckbox', 'multiselect', 'listselect', 'typeahead', 'textarea', 'checkbox', 'radio']
+  },
   '': {
     maxFields: 999,
     minFields: 1,
