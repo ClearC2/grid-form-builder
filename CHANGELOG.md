@@ -1,3 +1,10 @@
+## [3.68.2](https://github.com/ClearC2/grid-form-builder/compare/v3.68.1...v3.68.2) (2021-12-21)
+
+
+### Bug Fixes
+
+* **topConds:** top x typo ([92dd004](https://github.com/ClearC2/grid-form-builder/commit/92dd00459bbb370c2b9ad6fac933e78f40447187))
+
 ## [3.68.1](https://github.com/ClearC2/grid-form-builder/compare/v3.68.0...v3.68.1) (2021-12-21)
 
 
