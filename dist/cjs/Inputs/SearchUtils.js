@@ -54,7 +54,7 @@ var DATES = (0, _immutable.Set)(['date', 'datetime']);
 exports.DATES = DATES;
 var TYPEAHEAD_CONDITIONS = (0, _immutable.Set)(['is equal to', 'is not equal to', 'is one of', 'is not one of']);
 exports.TYPEAHEAD_CONDITIONS = TYPEAHEAD_CONDITIONS;
-var NUMERICAL_CONDITIONS = (0, _immutable.Set)(['last (x) days', 'last (x) months', 'next (x) days', 'next (x) months']);
+var NUMERICAL_CONDITIONS = (0, _immutable.Set)(['last (x) days', 'last (x) months', 'next (x) days', 'next (x) months', 'is top (x)', 'is bottom (x)', 'is top %', 'is bottom (%)']);
 exports.NUMERICAL_CONDITIONS = NUMERICAL_CONDITIONS;
 var TEXT_INPUTS = ['textarea', 'checkbox', 'radio']; // export const LIST_INPUTS = []
 
