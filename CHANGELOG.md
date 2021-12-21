@@ -1,3 +1,10 @@
+## [3.68.1](https://github.com/ClearC2/grid-form-builder/compare/v3.68.0...v3.68.1) (2021-12-21)
+
+
+### Bug Fixes
+
+* **topConds:** add top/bottom conds to numerical input enumeration ([81333ad](https://github.com/ClearC2/grid-form-builder/commit/81333ad822dd85022ad4b1c641f28fa95738f54a))
+
 # [3.68.0](https://github.com/ClearC2/grid-form-builder/compare/v3.67.1...v3.68.0) (2021-11-22)
 
 
