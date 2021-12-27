@@ -10,11 +10,13 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
+var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
+
+var _find = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/find"));
+
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
-var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/index-of"));
-
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/toConsumableArray"));
+var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
 
 var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
 
@@ -29,6 +31,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIcon"));
 
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
+
+var _utils = require("../utils");
 
 /** @jsx jsx */
 var Multicheckbox = function Multicheckbox(props) {
@@ -46,7 +50,11 @@ var Multicheckbox = function Multicheckbox(props) {
       requiredWarning = props.requiredWarning,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      required = props.required;
+      required = props.required,
+      delimit = props.delimit,
+      _props$delimiter = props.delimiter,
+      delimiter = _props$delimiter === void 0 ? '¤' : _props$delimiter,
+      stringify = props.stringify;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -65,43 +73,87 @@ var Multicheckbox = function Multicheckbox(props) {
   var _useTheme = (0, _useTheme2.default)(),
       theme = _useTheme.theme;
 
-  var _keyword$options = keyword.options,
-      options = _keyword$options === void 0 ? [] : _keyword$options;
-
   var _useState = (0, _react.useState)([]),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-      value = _useState2[0],
-      updateValue = _useState2[1];
+      options = _useState2[0],
+      updateSelectOptions = _useState2[1];
+
+  var _useState3 = (0, _react.useState)([]),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      value = _useState4[0],
+      updateValue = _useState4[1];
 
   (0, _react.useEffect)(function () {
-    var val = props.value;
-    if (typeof val === 'string') val = val.split('¤');
-    val = (0, _filter.default)(val).call(val, function (val) {
-      return !!val;
+    var formattedOptions = keyword.options || [];
+    if (!formattedOptions) formattedOptions = [];
+    if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split(delimiter);
+    if (formattedOptions.toJS) formattedOptions = formattedOptions.toJS();
+    var duplicate = {}; // get rid of duplicates
+
+    formattedOptions = (0, _filter.default)(formattedOptions).call(formattedOptions, function (option) {
+      if (!option) return false;
+      if (typeof option === 'string') return true;
+      if ((0, _typeof2.default)(option) === 'object' && !option.value) option.value = option.label;
+
+      if (option.value && !duplicate[option.value]) {
+        duplicate[option.value] = true;
+        return true;
+      }
+    }); // format into an array of {label, value} objects
+
+    formattedOptions = (0, _map.default)(formattedOptions).call(formattedOptions, function (option) {
+      if (typeof option === 'string') option = {
+        label: option,
+        value: option
+      };
+      if (!option.value) option.value = option.label;
+      return option;
     });
-    updateValue(val);
-  }, [props.value, props.value.length]);
+    updateSelectOptions(formattedOptions);
+  }, [delimiter, keyword.options]);
+  (0, _react.useEffect)(function () {
+    var formattedValue = (0, _utils.convertDelimitedValueIntoLabelValueArray)({
+      value: props.value,
+      delimit: delimit,
+      delimiter: delimiter,
+      options: options
+    });
+    updateValue(formattedValue);
+  }, [props.value, updateValue, name, delimit, delimiter, stringify, options]);
   var handleOnChange = (0, _react.useCallback)(function (e) {
     if (!disabled && !readonly && interactive) {
       var clickedValue = e.target.value;
-      var newvalue = (0, _toConsumableArray2.default)(value);
+      var clickedOption = (0, _find.default)(options).call(options, function (option) {
+        return option.value === clickedValue || option.value === +clickedValue;
+      });
+      var found = false;
+      var newValue = (0, _filter.default)(value).call(value, function (val) {
+        if (val.value === clickedOption.value) {
+          found = true;
+          return false;
+        }
 
-      if ((0, _indexOf.default)(newvalue).call(newvalue, clickedValue) > -1) {
-        newvalue = (0, _filter.default)(newvalue).call(newvalue, function (val) {
-          return val !== clickedValue;
-        });
-      } else {
-        newvalue.push(clickedValue);
+        return true;
+      });
+
+      if (!found) {
+        newValue.push(clickedOption);
       }
 
+      newValue = (0, _utils.convertLabelValueArrayIntoDelimitedValue)({
+        value: newValue,
+        delimiter: delimiter,
+        delimit: delimit,
+        stringify: stringify
+      });
       onChange({
         target: {
           name: name,
-          value: newvalue
+          value: newValue
         }
       });
     }
-  }, [disabled, readonly, interactive, value, onChange, name]);
+  }, [disabled, readonly, interactive, value, delimiter, delimit, stringify, onChange, name, options]);
   var valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container';
 
   if (inline) {
@@ -133,8 +185,9 @@ var Multicheckbox = function Multicheckbox(props) {
     style: valueContainer,
     css: theme.valueContainer
   }, (0, _map.default)(options).call(options, function (option, i) {
-    var checked = (0, _indexOf.default)(value).call(value, option.value) > -1 || (0, _indexOf.default)(value).call(value, option.value + '') > -1; // the option value may be a number but the field have the value as a string
-
+    var checked = (0, _some.default)(value).call(value, function (val) {
+      return val.value === option.value;
+    });
     var className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input';
     if (checked) className = className + ' gfb-multi-input-selected';
     if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input';
@@ -180,5 +233,8 @@ Multicheckbox.propTypes = {
   interactive: _propTypes.default.bool,
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
-  required: _propTypes.default.bool
+  required: _propTypes.default.bool,
+  stringify: _propTypes.default.bool,
+  delimiter: _propTypes.default.string,
+  delimit: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.array])
 };

@@ -1,3 +1,10 @@
+# [3.69.0](https://github.com/ClearC2/grid-form-builder/compare/v3.68.2...v3.69.0) (2021-12-27)
+
+
+### Features
+
+* **multicheckbox:** adds ability to delmit and stringify multicheckbox ([ce0654b](https://github.com/ClearC2/grid-form-builder/commit/ce0654be082cfd81087e333af8ae41d8df44ae38))
+
 ## [3.68.2](https://github.com/ClearC2/grid-form-builder/compare/v3.68.1...v3.68.2) (2021-12-21)
 
 
