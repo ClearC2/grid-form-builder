@@ -347,6 +347,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
             }
           },
           label: _concatInstanceProperty(_context7 = "(".concat(maxFieldCount, " value")).call(_context7, maxFieldCount === 1 ? '' : 's', " allowed)"),
+          delimit: 'value',
           keyword: {
             category: 'NONE',
             options: [{
