@@ -1,3 +1,10 @@
+## [3.69.1](https://github.com/ClearC2/grid-form-builder/compare/v3.69.0...v3.69.1) (2022-01-04)
+
+
+### Bug Fixes
+
+* **query:** fixes the dynamic multicheckbox values to delimit by value so it behaves like it used to before the update to multicheckbox ([aa1df9c](https://github.com/ClearC2/grid-form-builder/commit/aa1df9c643fcd66eca7481046584fee552746304))
+
 # [3.69.0](https://github.com/ClearC2/grid-form-builder/compare/v3.68.2...v3.69.0) (2021-12-27)
 
 
