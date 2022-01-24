@@ -14,6 +14,8 @@ const viewPortHeight = document.documentElement.clientHeight
 
 let debounce = null
 
+let labelCopyTimer = null
+
 class TypeaheadPerformanceOptimizer extends PureComponent {
   static propTypes = {
     Typeahead: PropTypes.func,
@@ -201,6 +203,23 @@ const Typeahead = props => {
       }
       return (
         <ReactSelectBaseComponents.Option {...base} />
+      )
+    },
+    MultiValue: (base) => {
+      const {children = ''} = base
+      const [label, setLabel] = useState(children) // eslint-disable-line
+      const copyValueToClipboard = () => {
+        navigator.clipboard.writeText(children)
+        clearTimeout(labelCopyTimer)
+        setLabel(' -- copied -- ')
+        labelCopyTimer = setTimeout(() => {
+          setLabel(children)
+        }, 750)
+      }
+      return (
+        <div onClick={copyValueToClipboard}>
+          <ReactSelectBaseComponents.MultiValue {...base} children={label} />
+        </div>
       )
     }
   })
