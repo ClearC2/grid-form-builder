@@ -6,6 +6,7 @@ import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-sta
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
+import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
@@ -21,12 +22,13 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 import { jsx } from '@emotion/core';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import ReactSelect from 'react-select';
+import ReactSelect, { components as ReactSelectBaseComponents } from 'react-select';
 import Creatable from 'react-select/creatable';
 import { isMobile, convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue } from '../utils';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 var viewPortHeight = document.documentElement.clientHeight;
+var labelCopyTimer = null;
 
 var Multiselect = function Multiselect(props) {
   var allowcreate = props.allowcreate,
@@ -253,6 +255,32 @@ var Multiselect = function Multiselect(props) {
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
   var components = {};
+
+  components.MultiValue = function (p) {
+    var _p$children = p.children,
+        children = _p$children === void 0 ? '' : _p$children;
+
+    var _useState17 = useState(children),
+        _useState18 = _slicedToArray(_useState17, 2),
+        label = _useState18[0],
+        setLabel = _useState18[1]; // eslint-disable-line
+
+
+    var copyValueToClipboard = function copyValueToClipboard() {
+      navigator.clipboard.writeText(children);
+      clearTimeout(labelCopyTimer);
+      setLabel(' -- copied -- ');
+      labelCopyTimer = _setTimeout(function () {
+        setLabel(children);
+      }, 750);
+    };
+
+    return jsx("div", {
+      onClick: copyValueToClipboard
+    }, jsx(ReactSelectBaseComponents.MultiValue, _extends({}, p, {
+      children: label
+    })));
+  };
 
   if (isRequiredFlag && (value.length === 0 || value.size === 0) && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';

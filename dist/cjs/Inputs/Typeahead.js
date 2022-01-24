@@ -24,8 +24,6 @@ var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stab
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
 
-var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
-
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/promise"));
 
 var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
@@ -49,6 +47,10 @@ var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-st
 var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
 
 var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/extends"));
+
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
@@ -92,6 +94,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 var viewPortHeight = document.documentElement.clientHeight;
 var debounce = null;
+var labelCopyTimer = null;
 
 var TypeaheadPerformanceOptimizer =
 /*#__PURE__*/
@@ -349,23 +352,48 @@ var Typeahead = function Typeahead(props) {
       }
 
       return (0, _core.jsx)(_reactSelect.components.Option, base);
+    },
+    MultiValue: function MultiValue(base) {
+      var _base$children = base.children,
+          children = _base$children === void 0 ? '' : _base$children;
+
+      var _useState23 = (0, _react.useState)(children),
+          _useState24 = (0, _slicedToArray2.default)(_useState23, 2),
+          label = _useState24[0],
+          setLabel = _useState24[1]; // eslint-disable-line
+
+
+      var copyValueToClipboard = function copyValueToClipboard() {
+        navigator.clipboard.writeText(children);
+        clearTimeout(labelCopyTimer);
+        setLabel(' -- copied -- ');
+        labelCopyTimer = (0, _setTimeout2.default)(function () {
+          setLabel(children);
+        }, 750);
+      };
+
+      return (0, _core.jsx)("div", {
+        onClick: copyValueToClipboard
+      }, (0, _core.jsx)(_reactSelect.components.MultiValue, (0, _extends2.default)({}, base, {
+        children: label
+      })));
     }
   }),
       _useState22 = (0, _slicedToArray2.default)(_useState21, 2),
       components = _useState22[0],
       setComponents = _useState22[1];
 
-  var _useState23 = (0, _react.useState)(null),
-      _useState24 = (0, _slicedToArray2.default)(_useState23, 2),
-      dynamicTypeaheadKey = _useState24[0],
-      setDynamicTypeaheadKey = _useState24[1];
-
-  var _useState25 = (0, _react.useState)({}),
+  var _useState25 = (0, _react.useState)(null),
       _useState26 = (0, _slicedToArray2.default)(_useState25, 2),
-      conditions = _useState26[0],
-      setConditions = _useState26[1];
+      dynamicTypeaheadKey = _useState26[0],
+      setDynamicTypeaheadKey = _useState26[1];
 
-  var _useState27 = (0, _react.useState)({
+  var _useState27 = (0, _react.useState)({}),
+      _useState28 = (0, _slicedToArray2.default)(_useState27, 2),
+      conditions = _useState28[0],
+      setConditions = _useState28[1];
+
+  var _useState29 = (0, _react.useState)({
     container: function container(base) {
       return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
     },
@@ -407,9 +435,9 @@ var Typeahead = function Typeahead(props) {
       }, _menuPortal);
     }
   }),
-      _useState28 = (0, _slicedToArray2.default)(_useState27, 2),
-      reactSelectStyles = _useState28[0],
-      setReactSelectStyles = _useState28[1];
+      _useState30 = (0, _slicedToArray2.default)(_useState29, 2),
+      reactSelectStyles = _useState30[0],
+      setReactSelectStyles = _useState30[1];
 
   var inputContainer = (0, _react.useRef)(null);
   var reactSelect = (0, _react.useRef)(null);

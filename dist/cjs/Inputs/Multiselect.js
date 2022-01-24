@@ -1,5 +1,7 @@
 "use strict";
 
+var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopRequireWildcard");
+
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 var _Object$defineProperty2 = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
@@ -26,6 +28,8 @@ var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stabl
 
 var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
 
+var _extends2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/extends"));
+
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
@@ -44,7 +48,7 @@ var _react = require("react");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _reactSelect = _interopRequireDefault(require("react-select"));
+var _reactSelect = _interopRequireWildcard(require("react-select"));
 
 var _creatable = _interopRequireDefault(require("react-select/creatable"));
 
@@ -59,6 +63,7 @@ function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object)
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; (0, _forEach.default)(_context = ownKeys(Object(source), true)).call(_context, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context2; (0, _forEach.default)(_context2 = ownKeys(Object(source))).call(_context2, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
 
 var viewPortHeight = document.documentElement.clientHeight;
+var labelCopyTimer = null;
 
 var Multiselect = function Multiselect(props) {
   var allowcreate = props.allowcreate,
@@ -284,6 +289,32 @@ var Multiselect = function Multiselect(props) {
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
   var components = {};
+
+  components.MultiValue = function (p) {
+    var _p$children = p.children,
+        children = _p$children === void 0 ? '' : _p$children;
+
+    var _useState17 = (0, _react.useState)(children),
+        _useState18 = (0, _slicedToArray2.default)(_useState17, 2),
+        label = _useState18[0],
+        setLabel = _useState18[1]; // eslint-disable-line
+
+
+    var copyValueToClipboard = function copyValueToClipboard() {
+      navigator.clipboard.writeText(children);
+      clearTimeout(labelCopyTimer);
+      setLabel(' -- copied -- ');
+      labelCopyTimer = (0, _setTimeout2.default)(function () {
+        setLabel(children);
+      }, 750);
+    };
+
+    return (0, _core.jsx)("div", {
+      onClick: copyValueToClipboard
+    }, (0, _core.jsx)(_reactSelect.components.MultiValue, (0, _extends2.default)({}, p, {
+      children: label
+    })));
+  };
 
   if (isRequiredFlag && (value.length === 0 || value.size === 0) && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';

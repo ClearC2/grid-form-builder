@@ -1,3 +1,10 @@
+# [3.70.0](https://github.com/ClearC2/grid-form-builder/compare/v3.69.1...v3.70.0) (2022-01-24)
+
+
+### Features
+
+* **multi:** multi value fields have values that can be copied by clicking on one of the values ([69cad46](https://github.com/ClearC2/grid-form-builder/commit/69cad4690d7524b3fc3b79d5996e5b57b5e7a3c5))
+
 ## [3.69.1](https://github.com/ClearC2/grid-form-builder/compare/v3.69.0...v3.69.1) (2022-01-04)
 
 
