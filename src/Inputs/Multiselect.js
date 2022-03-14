@@ -2,13 +2,15 @@
 import {jsx} from '@emotion/core'
 import {useEffect, useRef, useState, useCallback} from 'react'
 import PropTypes from 'prop-types'
-import ReactSelect from 'react-select'
+import ReactSelect, {components as ReactSelectBaseComponents} from 'react-select'
 import Creatable from 'react-select/creatable'
 import {isMobile, convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue} from '../utils'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
 
 const viewPortHeight = document.documentElement.clientHeight
+
+let labelCopyTimer = null
 
 const Multiselect = props => {
   const {
@@ -181,6 +183,23 @@ const Multiselect = props => {
 
   let outerClass = 'gfb-input-outer'
   const components = {}
+  components.MultiValue = (p) => {
+    const {children = ''} = p
+    const [label, setLabel] = useState(children) // eslint-disable-line
+    const copyValueToClipboard = () => {
+      navigator.clipboard.writeText(children)
+      clearTimeout(labelCopyTimer)
+      setLabel(' -- copied -- ')
+      labelCopyTimer = setTimeout(() => {
+        setLabel(children)
+      }, 750)
+    }
+    return (
+      <div onClick={copyValueToClipboard}>
+        <ReactSelectBaseComponents.MultiValue {...p} children={label} />
+      </div>
+    )
+  }
   if (isRequiredFlag && (value.length === 0 || value.size === 0) && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error'
     components.DropdownIndicator = () => {

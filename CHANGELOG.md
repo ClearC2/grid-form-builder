@@ -1,3 +1,31 @@
+# [3.70.0](https://github.com/ClearC2/grid-form-builder/compare/v3.69.1...v3.70.0) (2022-01-24)
+
+
+### Features
+
+* **multi:** multi value fields have values that can be copied by clicking on one of the values ([69cad46](https://github.com/ClearC2/grid-form-builder/commit/69cad4690d7524b3fc3b79d5996e5b57b5e7a3c5))
+
+## [3.69.1](https://github.com/ClearC2/grid-form-builder/compare/v3.69.0...v3.69.1) (2022-01-04)
+
+
+### Bug Fixes
+
+* **query:** fixes the dynamic multicheckbox values to delimit by value so it behaves like it used to before the update to multicheckbox ([aa1df9c](https://github.com/ClearC2/grid-form-builder/commit/aa1df9c643fcd66eca7481046584fee552746304))
+
+# [3.69.0](https://github.com/ClearC2/grid-form-builder/compare/v3.68.2...v3.69.0) (2021-12-27)
+
+
+### Features
+
+* **multicheckbox:** adds ability to delmit and stringify multicheckbox ([ce0654b](https://github.com/ClearC2/grid-form-builder/commit/ce0654be082cfd81087e333af8ae41d8df44ae38))
+
+## [3.68.2](https://github.com/ClearC2/grid-form-builder/compare/v3.68.1...v3.68.2) (2021-12-21)
+
+
+### Bug Fixes
+
+* **topConds:** top x typo ([92dd004](https://github.com/ClearC2/grid-form-builder/commit/92dd00459bbb370c2b9ad6fac933e78f40447187))
+
 ## [3.68.1](https://github.com/ClearC2/grid-form-builder/compare/v3.68.0...v3.68.1) (2021-12-21)
 
 

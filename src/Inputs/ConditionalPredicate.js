@@ -225,6 +225,7 @@ const ConditionalPredicate = props => {
           link: undefined,
           style: {label: {lineHeight: '12px', fontSize: '12px'}},
           label: `(${maxFieldCount} value${maxFieldCount === 1 ? '' : 's'} allowed)`,
+          delimit: 'value',
           keyword: {
             category: 'NONE',
             options: [

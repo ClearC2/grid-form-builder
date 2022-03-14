@@ -4,6 +4,7 @@ import {useCallback, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
+import {convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue} from '../utils'
 
 const Multicheckbox = props => {
   const {
@@ -18,7 +19,10 @@ const Multicheckbox = props => {
     interactive = true,
     requiredWarning,
     style = {},
-    required
+    required,
+    delimit,
+    delimiter = '¤',
+    stringify
   } = props
 
   const {
@@ -33,33 +37,68 @@ const Multicheckbox = props => {
 
   const {theme} = useTheme()
 
-  const {options = []} = keyword
+  const [options, updateSelectOptions] = useState([])
   const [value, updateValue] = useState([])
 
   useEffect(() => {
-    let val = props.value
-    if (typeof val === 'string') val = val.split('¤')
-    val = val.filter(val => !!val)
-    updateValue(val)
-  }, [props.value, props.value.length])
+    let formattedOptions = keyword.options || []
+    if (!formattedOptions) formattedOptions = []
+    if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split(delimiter)
+    if (formattedOptions.toJS) formattedOptions = formattedOptions.toJS()
+
+    const duplicate = {}
+    // get rid of duplicates
+    formattedOptions = formattedOptions.filter(option => {
+      if (!option) return false
+      if (typeof option === 'string') return true
+      if (typeof option === 'object' && !option.value) option.value = option.label
+      if (option.value && !duplicate[option.value]) {
+        duplicate[option.value] = true
+        return true
+      }
+    })
+
+    // format into an array of {label, value} objects
+    formattedOptions = formattedOptions.map(option => {
+      if (typeof option === 'string') option = {label: option, value: option}
+      if (!option.value) option.value = option.label
+      return option
+    })
+
+    updateSelectOptions(formattedOptions)
+  }, [delimiter, keyword.options])
+
+  useEffect(() => {
+    const formattedValue = convertDelimitedValueIntoLabelValueArray({value: props.value, delimit, delimiter, options})
+    updateValue(formattedValue)
+  }, [props.value, updateValue, name, delimit, delimiter, stringify, options])
 
   const handleOnChange = useCallback(e => {
     if (!disabled && !readonly && interactive) {
       const {value: clickedValue} = e.target
-      let newvalue = [...value]
-      if (newvalue.indexOf(clickedValue) > -1) {
-        newvalue = newvalue.filter(val => val !== clickedValue)
-      } else {
-        newvalue.push(clickedValue)
+      const clickedOption = options.find(option => {
+        return (option.value === clickedValue || option.value === +clickedValue)
+      })
+      let found = false
+      let newValue = value.filter(val => {
+        if (val.value === clickedOption.value) {
+          found = true
+          return false
+        }
+        return true
+      })
+      if (!found) {
+        newValue.push(clickedOption)
       }
+      newValue = convertLabelValueArrayIntoDelimitedValue({value: newValue, delimiter, delimit, stringify})
       onChange({
         target: {
           name,
-          value: newvalue
+          value: newValue
         }
       })
     }
-  }, [disabled, readonly, interactive, value, onChange, name])
+  }, [disabled, readonly, interactive, value, delimiter, delimit, stringify, onChange, name, options])
 
   let valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container'
   if (inline) {
@@ -78,7 +117,9 @@ const Multicheckbox = props => {
         <div className={controlClass} style={inputControl} css={theme.inputControl}>
           <div className={valueContainerClassName} style={valueContainer} css={theme.valueContainer}>
             {options.map((option, i) => {
-              const checked = value.indexOf(option.value) > -1 || value.indexOf(option.value + '') > -1 // the option value may be a number but the field have the value as a string
+              const checked = value.some(val => {
+                return (val.value === option.value)
+              })
               let className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input'
               if (checked) className = className + ' gfb-multi-input-selected'
               if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input'
@@ -132,5 +173,8 @@ Multicheckbox.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  stringify: PropTypes.bool,
+  delimiter: PropTypes.string,
+  delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
 }

@@ -5,7 +5,6 @@ import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-sta
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
 import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
@@ -18,6 +17,8 @@ import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
+import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
@@ -44,6 +45,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 var viewPortHeight = document.documentElement.clientHeight;
 var debounce = null;
+var labelCopyTimer = null;
 
 var TypeaheadPerformanceOptimizer =
 /*#__PURE__*/
@@ -303,23 +305,48 @@ var Typeahead = function Typeahead(props) {
       }
 
       return jsx(ReactSelectBaseComponents.Option, base);
+    },
+    MultiValue: function MultiValue(base) {
+      var _base$children = base.children,
+          children = _base$children === void 0 ? '' : _base$children;
+
+      var _useState23 = useState(children),
+          _useState24 = _slicedToArray(_useState23, 2),
+          label = _useState24[0],
+          setLabel = _useState24[1]; // eslint-disable-line
+
+
+      var copyValueToClipboard = function copyValueToClipboard() {
+        navigator.clipboard.writeText(children);
+        clearTimeout(labelCopyTimer);
+        setLabel(' -- copied -- ');
+        labelCopyTimer = _setTimeout(function () {
+          setLabel(children);
+        }, 750);
+      };
+
+      return jsx("div", {
+        onClick: copyValueToClipboard
+      }, jsx(ReactSelectBaseComponents.MultiValue, _extends({}, base, {
+        children: label
+      })));
     }
   }),
       _useState22 = _slicedToArray(_useState21, 2),
       components = _useState22[0],
       setComponents = _useState22[1];
 
-  var _useState23 = useState(null),
-      _useState24 = _slicedToArray(_useState23, 2),
-      dynamicTypeaheadKey = _useState24[0],
-      setDynamicTypeaheadKey = _useState24[1];
-
-  var _useState25 = useState({}),
+  var _useState25 = useState(null),
       _useState26 = _slicedToArray(_useState25, 2),
-      conditions = _useState26[0],
-      setConditions = _useState26[1];
+      dynamicTypeaheadKey = _useState26[0],
+      setDynamicTypeaheadKey = _useState26[1];
 
-  var _useState27 = useState({
+  var _useState27 = useState({}),
+      _useState28 = _slicedToArray(_useState27, 2),
+      conditions = _useState28[0],
+      setConditions = _useState28[1];
+
+  var _useState29 = useState({
     container: function container(base) {
       return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
     },
@@ -361,9 +388,9 @@ var Typeahead = function Typeahead(props) {
       }, _menuPortal);
     }
   }),
-      _useState28 = _slicedToArray(_useState27, 2),
-      reactSelectStyles = _useState28[0],
-      setReactSelectStyles = _useState28[1];
+      _useState30 = _slicedToArray(_useState29, 2),
+      reactSelectStyles = _useState30[0],
+      setReactSelectStyles = _useState30[1];
 
   var inputContainer = useRef(null);
   var reactSelect = useRef(null);

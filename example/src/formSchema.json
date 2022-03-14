@@ -505,17 +505,19 @@
           "type": "multicheckbox",
           "required": true,
           "inline": true,
+          "stringify": true,
+          "delimit": "value",
           "keyword": {
             "category": "TASKS",
             "options": [{
               "label": "Contract Signing",
-              "value": 1
+              "value": "1"
             }, {
               "label": "Customer Service",
-              "value": 2
+              "value": "2"
             }, {
               "label": "Demonstration",
-              "value": 3
+              "value": "3"
             }, {
               "label": "Executive Meeting",
               "value": "N/A"
