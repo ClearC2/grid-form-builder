@@ -386,6 +386,8 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           label: "".concat(props.label),
           interactive: true,
           clearable: true,
+          searchable: true,
+          // I just added this line
           type: DATES.has(props.inputType.toLowerCase()) && NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
           // eslint-disable-line
           handleOnChange: dialogOnChange
