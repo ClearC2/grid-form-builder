@@ -137,17 +137,17 @@ export const CONDITIONS = {
     minFields: 1,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
+  'last (x) weeks': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
   'last (x) months': {
     maxFields: 1,
     minFields: 1,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
   'next (x) days': {
-    maxFields: 1,
-    minFields: 1,
-    invalidInputTypes: [...ALL_BUT_DATES]
-  },
-  'last (x) weeks': {
     maxFields: 1,
     minFields: 1,
     invalidInputTypes: [...ALL_BUT_DATES]
