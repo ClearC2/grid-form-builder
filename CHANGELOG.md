@@ -1,3 +1,10 @@
+## [3.71.1](https://github.com/ClearC2/grid-form-builder/compare/v3.71.0...v3.71.1) (2022-03-14)
+
+
+### Bug Fixes
+
+* **conditions:** sort date conditions; ([5934ffa](https://github.com/ClearC2/grid-form-builder/commit/5934ffa3676fcb43e502341e8709bfc46a754892))
+
 # [3.71.0](https://github.com/ClearC2/grid-form-builder/compare/v3.70.0...v3.71.0) (2022-03-14)
 
 
