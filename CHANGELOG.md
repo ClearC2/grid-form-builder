@@ -1,3 +1,10 @@
+# [3.71.0](https://github.com/ClearC2/grid-form-builder/compare/v3.70.0...v3.71.0) (2022-03-14)
+
+
+### Features
+
+* **weeks:** add last/next weeks condition ([067b2d4](https://github.com/ClearC2/grid-form-builder/commit/067b2d4d61a83c0de3be17d209894111c5a84056))
+
 # [3.70.0](https://github.com/ClearC2/grid-form-builder/compare/v3.69.1...v3.70.0) (2022-01-24)
 
 
