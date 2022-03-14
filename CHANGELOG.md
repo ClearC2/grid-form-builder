@@ -1,3 +1,10 @@
+## [3.71.2](https://github.com/ClearC2/grid-form-builder/compare/v3.71.1...v3.71.2) (2022-03-14)
+
+
+### Bug Fixes
+
+* **build:** need to build before upgrade? ([f9010d7](https://github.com/ClearC2/grid-form-builder/commit/f9010d7e9769ae8eccbf28db5f66804c926279bb))
+
 ## [3.71.1](https://github.com/ClearC2/grid-form-builder/compare/v3.71.0...v3.71.1) (2022-03-14)
 
 
