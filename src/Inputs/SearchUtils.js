@@ -25,7 +25,7 @@ export const DATES = Set(['date', 'datetime'])
 * the input type may change
 */
 export const TYPEAHEAD_CONDITIONS = Set(['is equal to', 'is not equal to', 'is one of', 'is not one of'])
-export const NUMERICAL_CONDITIONS = Set(['last (x) days', 'last (x) months', 'next (x) days', 'next (x) months', 'is top (x)', 'is bottom (x)', 'is top (%)', 'is bottom (%)'])
+export const NUMERICAL_CONDITIONS = Set(['last (x) days', 'last (x) months', 'next (x) days', 'last (x) weeks', 'next (x) weeks', 'next (x) months', 'is top (x)', 'is bottom (x)', 'is top (%)', 'is bottom (%)'])
 export const TEXT_INPUTS = ['textarea', 'checkbox', 'radio']
 // export const LIST_INPUTS = []
 
@@ -143,6 +143,16 @@ export const CONDITIONS = {
     invalidInputTypes: [...ALL_BUT_DATES]
   },
   'next (x) days': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'last (x) weeks': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'next (x) weeks': {
     maxFields: 1,
     minFields: 1,
     invalidInputTypes: [...ALL_BUT_DATES]
