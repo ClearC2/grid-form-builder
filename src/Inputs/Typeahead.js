@@ -153,7 +153,8 @@ const Typeahead = props => {
     delimit,
     delimiter,
     isClearable = true,
-    createlabel
+    createlabel,
+    options: typeaheadOptions
   } = props
 
   const {
@@ -451,9 +452,20 @@ const Typeahead = props => {
         if (typeof search === 'string' && search.trim() !== '') search = `/${encodeURIComponent(search)}`
         if (setDefault) reactSelect.current.setState(() => ({isLoading: true}))
         isLoadingOptions.current = true
+        const {
+          queryRowCount: showQueryCountOption,
+          data: showDataArrayOption,
+          useProcedure: useStoredProcedureInSQL
+        } = typeaheadOptions
+
         return GFBConfig.ajax.post(
           `/typeahead/name/${encodeURIComponent(dynamicTypeaheadKey)}/search${search}`,
-          {filter: {conditions}}
+          {
+            filter: {conditions},
+            queryRowCount: showQueryCountOption, /* Will return queryRowCount as 0 to UI, time saver for API */
+            data: showDataArrayOption, /* Returns an empty array in the response, time saver for API */
+            useProcedure: useStoredProcedureInSQL /* Uses Stored Procedure in backend for search */
+          }
         )
           .then(resp => {
             isLoadingOptions.current = false
@@ -508,7 +520,7 @@ const Typeahead = props => {
       debounce = setTimeout(() => fetchResults(resolve), delay)
       return debounce
     })
-  }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions])
+  }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions, typeaheadOptions])
 
   const formatCreateLabel = useCallback(value => {
     if (typeof createlabel === 'string') {
@@ -808,7 +820,8 @@ export default Typeahead
 Typeahead.defaultProps = {
   onKeyDown: () => null,
   typeahead: {},
-  style: {}
+  style: {},
+  options: {}
 }
 
 Typeahead.propTypes = {
@@ -838,5 +851,10 @@ Typeahead.propTypes = {
   interactive: PropTypes.bool,
   style: PropTypes.object,
   isClearable: PropTypes.bool,
-  createlabel: PropTypes.string
+  createlabel: PropTypes.string,
+  options: PropTypes.shape({
+    data: PropTypes.bool,
+    useProcedure: PropTypes.bool,
+    queryRowCount: PropTypes.bool
+  })
 }
