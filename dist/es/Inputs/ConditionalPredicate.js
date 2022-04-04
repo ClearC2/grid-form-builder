@@ -389,7 +389,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           clearable: true,
           searchable: true,
           // I just added this line
-          type: DATES.has(props.inputType.toLowerCase()) && NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
+          type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
           // eslint-disable-line
           handleOnChange: dialogOnChange
         })
@@ -426,7 +426,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
             label: label,
             interactive: true,
             clearable: true,
-            type: DATES.has(props.inputType.toLowerCase()) && NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
+            type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
             // eslint-disable-line
             handleOnChange: dialogOnChange
           })
