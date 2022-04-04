@@ -1,3 +1,10 @@
+## [3.71.3](https://github.com/ClearC2/grid-form-builder/compare/v3.71.2...v3.71.3) (2022-04-04)
+
+
+### Bug Fixes
+
+* **reporting:** top/bottom conditions now use numerical field inputs ([a6498c2](https://github.com/ClearC2/grid-form-builder/commit/a6498c2d16ce38141b1fcbde9c0a893a97ff22c9))
+
 ## [3.71.2](https://github.com/ClearC2/grid-form-builder/compare/v3.71.1...v3.71.2) (2022-03-14)
 
 
