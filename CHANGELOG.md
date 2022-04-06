@@ -1,3 +1,10 @@
+# [3.72.0](https://github.com/ClearC2/grid-form-builder/compare/v3.71.3...v3.72.0) (2022-04-06)
+
+
+### Features
+
+* **typeahead:** add options for new api payload ([#187](https://github.com/ClearC2/grid-form-builder/issues/187)) ([a59cb49](https://github.com/ClearC2/grid-form-builder/commit/a59cb49053bea401f1710141fd0edce37e6fb399))
+
 ## [3.71.3](https://github.com/ClearC2/grid-form-builder/compare/v3.71.2...v3.71.3) (2022-04-04)
 
 

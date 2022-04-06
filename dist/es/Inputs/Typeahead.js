@@ -202,7 +202,8 @@ var Typeahead = function Typeahead(props) {
       delimiter = props.delimiter,
       _props$isClearable = props.isClearable,
       isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
-      createlabel = props.createlabel;
+      createlabel = props.createlabel,
+      typeaheadOptions = props.options;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -636,10 +637,22 @@ var Typeahead = function Typeahead(props) {
           };
         });
         isLoadingOptions.current = true;
+        var showQueryCountOption = typeaheadOptions.queryRowCount,
+            showDataArrayOption = typeaheadOptions.data,
+            useStoredProcedureInSQL = typeaheadOptions.useProcedure;
         return GFBConfig.ajax.post(_concatInstanceProperty(_context4 = "/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search")).call(_context4, search), {
           filter: {
             conditions: conditions
-          }
+          },
+          queryRowCount: showQueryCountOption,
+
+          /* Will return queryRowCount as 0 to UI, time saver for API */
+          data: showDataArrayOption,
+
+          /* Returns an empty array in the response, time saver for API */
+          useProcedure: useStoredProcedureInSQL
+          /* Uses Stored Procedure in backend for search */
+
         }).then(function (resp) {
           isLoadingOptions.current = false;
           var options = [];
@@ -715,7 +728,7 @@ var Typeahead = function Typeahead(props) {
       }, delay);
       return debounce;
     });
-  }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions]);
+  }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions, typeaheadOptions]);
   var formatCreateLabel = useCallback(function (value) {
     if (typeof createlabel === 'string') {
       var _context8;
@@ -1037,7 +1050,8 @@ Typeahead.defaultProps = {
     return null;
   },
   typeahead: {},
-  style: {}
+  style: {},
+  options: {}
 };
 Typeahead.propTypes = {
   onChange: PropTypes.func,
@@ -1066,5 +1080,10 @@ Typeahead.propTypes = {
   interactive: PropTypes.bool,
   style: PropTypes.object,
   isClearable: PropTypes.bool,
-  createlabel: PropTypes.string
+  createlabel: PropTypes.string,
+  options: PropTypes.shape({
+    data: PropTypes.bool,
+    useProcedure: PropTypes.bool,
+    queryRowCount: PropTypes.bool
+  })
 };
