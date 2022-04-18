@@ -1,3 +1,11 @@
+# [3.74.0](https://github.com/ClearC2/grid-form-builder/compare/v3.73.0...v3.74.0) (2022-04-18)
+
+
+### Features
+
+* **Input:** onBlur returns current value ([d5e2eb1](https://github.com/ClearC2/grid-form-builder/commit/d5e2eb17d6c141b0f89879ef90b9e6367b9d88a2))
+* **Input:** onBlur returns current value ([e04af58](https://github.com/ClearC2/grid-form-builder/commit/e04af5891373a67f5a03c39b9abd5ad195b99083))
+
 # [3.73.0](https://github.com/ClearC2/grid-form-builder/compare/v3.72.0...v3.73.0) (2022-04-18)
 
 
