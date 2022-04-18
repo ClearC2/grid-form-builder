@@ -1,3 +1,10 @@
+# [3.73.0](https://github.com/ClearC2/grid-form-builder/compare/v3.72.0...v3.73.0) (2022-04-18)
+
+
+### Features
+
+* **Input:** onBlur can now be passed into inputs, if desired ([f3b2759](https://github.com/ClearC2/grid-form-builder/commit/f3b2759114fb8cd29fad0f24ee52073743cc4cd2))
+
 # [3.72.0](https://github.com/ClearC2/grid-form-builder/compare/v3.71.3...v3.72.0) (2022-04-06)
 
 

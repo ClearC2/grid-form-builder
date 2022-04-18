@@ -31,8 +31,7 @@ var Input = function Input(props) {
       format = _props$format === void 0 ? 'text' : _props$format,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
-      _props$onBlur = props.onBlur,
-      onBlur = _props$onBlur === void 0 ? function () {} : _props$onBlur;
+      onBlur = props.onBlur;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -59,7 +58,10 @@ var Input = function Input(props) {
   }, []);
   var handleOnBlur = useCallback(function () {
     setIsFocused(false);
-    onBlur();
+
+    if (onBlur) {
+      onBlur();
+    }
   }, []);
   var handleOnChange = useCallback(function (e) {
     onChange(e);
@@ -140,6 +142,7 @@ var Input = function Input(props) {
 export default Input;
 Input.propTypes = {
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   disabled: PropTypes.bool,
