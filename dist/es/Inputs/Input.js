@@ -30,7 +30,9 @@ var Input = function Input(props) {
       _props$format = props.format,
       format = _props$format === void 0 ? 'text' : _props$format,
       _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
+      _props$onBlur = props.onBlur,
+      onBlur = _props$onBlur === void 0 ? function () {} : _props$onBlur;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -57,6 +59,7 @@ var Input = function Input(props) {
   }, []);
   var handleOnBlur = useCallback(function () {
     setIsFocused(false);
+    onBlur();
   }, []);
   var handleOnChange = useCallback(function (e) {
     onChange(e);

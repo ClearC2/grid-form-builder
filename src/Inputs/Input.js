@@ -21,7 +21,8 @@ const Input = props => {
     style = {},
     required,
     format = 'text',
-    maxlength = 524288
+    maxlength = 524288,
+    onBlur
   } = props
 
   const {
@@ -43,6 +44,9 @@ const Input = props => {
 
   const handleOnBlur = useCallback(() => {
     setIsFocused(false)
+    if (onBlur) {
+      onBlur()
+    }
   }, [])
 
   const handleOnChange = useCallback(e => {
@@ -112,6 +116,7 @@ export default Input
 
 Input.propTypes = {
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   name: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   disabled: PropTypes.bool,
