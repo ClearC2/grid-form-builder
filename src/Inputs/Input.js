@@ -45,9 +45,9 @@ const Input = props => {
   const handleOnBlur = useCallback(() => {
     setIsFocused(false)
     if (onBlur) {
-      onBlur()
+      onBlur(value)
     }
-  }, [])
+  }, [value])
 
   const handleOnChange = useCallback(e => {
     onChange(e)

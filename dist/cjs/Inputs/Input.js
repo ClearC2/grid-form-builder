@@ -48,8 +48,7 @@ var Input = function Input(props) {
       format = _props$format === void 0 ? 'text' : _props$format,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
-      _props$onBlur = props.onBlur,
-      onBlur = _props$onBlur === void 0 ? function () {} : _props$onBlur;
+      onBlur = props.onBlur;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -76,8 +75,11 @@ var Input = function Input(props) {
   }, []);
   var handleOnBlur = (0, _react.useCallback)(function () {
     setIsFocused(false);
-    onBlur();
-  }, []);
+
+    if (onBlur) {
+      onBlur(value);
+    }
+  }, [value]);
   var handleOnChange = (0, _react.useCallback)(function (e) {
     onChange(e);
   }, [onChange]);
@@ -158,6 +160,7 @@ var _default = Input;
 exports.default = _default;
 Input.propTypes = {
   onChange: _propTypes.default.func,
+  onBlur: _propTypes.default.func,
   name: _propTypes.default.string,
   value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   disabled: _propTypes.default.bool,
