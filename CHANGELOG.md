@@ -1,3 +1,10 @@
+# [3.75.0](https://github.com/ClearC2/grid-form-builder/compare/v3.74.0...v3.75.0) (2022-05-04)
+
+
+### Features
+
+* **typeahead:** changed the default behavior to not open the options results on click ([1a9cbf1](https://github.com/ClearC2/grid-form-builder/commit/1a9cbf10254e23f052581e22599072f9588dac09))
+
 # [3.74.0](https://github.com/ClearC2/grid-form-builder/compare/v3.73.0...v3.74.0) (2022-04-18)
 
 
