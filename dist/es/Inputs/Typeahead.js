@@ -125,7 +125,8 @@ function (_PureComponent) {
         autoComplete: autoComplete,
         components: components,
         defaultOptions: defaultOptions,
-        styles: styles
+        styles: styles,
+        openMenuOnClick: false
       });
     }
   }]);

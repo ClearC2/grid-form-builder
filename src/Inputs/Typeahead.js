@@ -120,6 +120,7 @@ class TypeaheadPerformanceOptimizer extends PureComponent {
         components={components}
         defaultOptions={defaultOptions}
         styles={styles}
+        openMenuOnClick={false}
       />
     )
   }

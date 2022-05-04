@@ -3,6 +3,28 @@
     "name": "Company 1",
     "description": "Show company data on the screen.",
     "jsonschema": {
+      "conditions": [
+        {
+          "filter": {
+            "type": "and",
+            "conditions": [{
+              "name": "company_type",
+              "comparator": "is equal to",
+              "values": ["101"]
+            }, {
+              "name": "contact_name",
+              "comparator": "is not equal to",
+              "values": ["jake"]
+            }]
+          },
+          "actions": [
+            {
+              "type": "updateFormName",
+              "formname": "CompanyShortForm"
+            }
+          ]
+        }
+      ],
       "layout": [{
         "type": "field",
         "dimensions": {
