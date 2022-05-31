@@ -81,6 +81,16 @@ export var CONDITIONS = {
     minFields: 1,
     invalidInputTypes: _toConsumableArray(DATES)
   },
+  'starts with': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: _toConsumableArray(DATES)
+  },
+  'ends with': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: _toConsumableArray(DATES)
+  },
   'is not equal to': {
     maxFields: 1,
     minFields: 1,
