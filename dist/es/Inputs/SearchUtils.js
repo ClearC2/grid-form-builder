@@ -81,12 +81,12 @@ export var CONDITIONS = {
     minFields: 1,
     invalidInputTypes: _toConsumableArray(DATES)
   },
-  'starts with': {
+  'startswith': {
     maxFields: 1,
     minFields: 1,
     invalidInputTypes: _toConsumableArray(DATES)
   },
-  'ends with': {
+  'endswith': {
     maxFields: 1,
     minFields: 1,
     invalidInputTypes: _toConsumableArray(DATES)
