@@ -6,6 +6,7 @@ import { Dialog } from 'c2-dialog';
 import { Map, List } from 'immutable';
 import ConditionalPredicate from './ConditionalPredicate';
 import Toggle from '../QueryBuilder/Where/ConditionalTable/Toggle';
+import { dataTypeFromInput } from '../QueryBuilder/Utils';
 
 var ConditionalDialog = function ConditionalDialog(props) {
   var value = props.value;
@@ -25,6 +26,9 @@ var ConditionalDialog = function ConditionalDialog(props) {
   }, [value]);
 
   var onChange = function onChange(e, i) {
+    e.target.value = e.target.value.set('format', dataTypeFromInput(props.inputType));
+    e.target.value = e.target.value.set('label', props.label);
+
     if (conditions > 1) {
       if (value && !value.get('type')) {
         var filter = Map({
@@ -67,6 +71,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
         });
       }
     } else {
+      // e.target.value = e.target.value.set('format', dataTypeFromInput(props.inputType))
       props.onChange(e);
     }
   };
@@ -242,7 +247,6 @@ export default ConditionalDialog;
 ConditionalDialog.propTypes = {
   onChange: PropTypes.func,
   handleClose: PropTypes.func,
-  handleOnChange: PropTypes.func,
   name: PropTypes.string,
   inputType: PropTypes.string,
   label: PropTypes.string,

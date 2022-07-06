@@ -17,6 +17,15 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 import { Set } from 'immutable';
 var unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea']);
+export function dataTypeFromInput(inputType) {
+  switch (inputType) {
+    case 'input':
+      return 'string';
+
+    default:
+      return inputType;
+  }
+}
 export var convertFormSchemaToSearch = function convertFormSchemaToSearch() {
   var formSchema = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();

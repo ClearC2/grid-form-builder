@@ -21,6 +21,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ConditionalDialog from './ConditionalDialog';
 import { Map, List, fromJS } from 'immutable';
+import { dataTypeFromInput } from '../QueryBuilder/Utils';
 
 var ConditionalInput = function ConditionalInput(props) {
   var style = props.style,
@@ -74,6 +75,8 @@ var ConditionalInput = function ConditionalInput(props) {
         defaults = defaults.set('values', fromJS(value));
       }
 
+      defaults = defaults.set('format', dataTypeFromInput(props.inputType));
+      defaults = defaults.set('label', props.label);
       onChange({
         target: {
           name: name,

@@ -2,6 +2,7 @@ import React, {useCallback, useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import ConditionalDialog from './ConditionalDialog'
 import {Map, List, fromJS} from 'immutable'
+import { dataTypeFromInput } from '../QueryBuilder/Utils'
 
 const ConditionalInput = props => {
   const {style, name, value, values, onChange} = props
@@ -31,6 +32,8 @@ const ConditionalInput = props => {
       } else if (value instanceof List || Array.isArray(value)) {
         defaults = defaults.set('values', fromJS(value))
       }
+      defaults = defaults.set('format', dataTypeFromInput(props.inputType))
+      defaults = defaults.set('label', props.label)
       onChange({target: {name: name, value: defaults}})
     }
   }, [name, onChange, value])

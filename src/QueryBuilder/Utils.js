@@ -2,6 +2,15 @@ import {Set} from 'immutable'
 
 const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
 
+export function dataTypeFromInput (inputType) {
+  switch (inputType) {
+    case 'input':
+      return 'string'
+    default:
+      return inputType
+  }
+}
+
 export const convertFormSchemaToSearch = (formSchema = {}) => {
   if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
   if (formSchema.jsonschema) {

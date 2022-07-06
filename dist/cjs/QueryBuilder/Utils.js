@@ -8,6 +8,7 @@ _Object$defineProperty2(exports, "__esModule", {
   value: true
 });
 
+exports.dataTypeFromInput = dataTypeFromInput;
 exports.convertFieldToSearch = exports.convertFormSchemaToSearch = void 0;
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-property"));
@@ -41,6 +42,16 @@ function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object)
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context3; (0, _forEach.default)(_context3 = ownKeys(Object(source), true)).call(_context3, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context4; (0, _forEach.default)(_context4 = ownKeys(Object(source))).call(_context4, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
 
 var unconditionalFields = (0, _immutable.Set)(['header', 'conditionalinput', 'checkbox', 'textarea']);
+
+function dataTypeFromInput(inputType) {
+  switch (inputType) {
+    case 'input':
+      return 'string';
+
+    default:
+      return inputType;
+  }
+}
 
 var convertFormSchemaToSearch = function convertFormSchemaToSearch() {
   var formSchema = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};

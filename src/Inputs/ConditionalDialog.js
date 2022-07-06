@@ -4,6 +4,7 @@ import {Dialog} from 'c2-dialog'
 import {Map, List} from 'immutable'
 import ConditionalPredicate from './ConditionalPredicate'
 import Toggle from '../QueryBuilder/Where/ConditionalTable/Toggle'
+import { dataTypeFromInput } from '../QueryBuilder/Utils'
 const ConditionalDialog = props => {
   const {value} = props
   const [conditions, setConditions] = useState((value && value.get) ? value.get('conditions', List()).size : 1)
@@ -17,6 +18,8 @@ const ConditionalDialog = props => {
   }, [value])
 
   const onChange = (e, i) => {
+    e.target.value = e.target.value.set('format', dataTypeFromInput(props.inputType))
+    e.target.value = e.target.value.set('label', props.label)
     if (conditions > 1) {
       if (value && !value.get('type')) {
         let filter = Map({
@@ -44,6 +47,7 @@ const ConditionalDialog = props => {
         props.onChange({target: {name: e.target.name, value: filter}})
       }
     } else {
+      // e.target.value = e.target.value.set('format', dataTypeFromInput(props.inputType))
       props.onChange(e)
     }
   }
@@ -161,7 +165,6 @@ export default ConditionalDialog
 ConditionalDialog.propTypes = {
   onChange: PropTypes.func,
   handleClose: PropTypes.func,
-  handleOnChange: PropTypes.func,
   name: PropTypes.string,
   inputType: PropTypes.string,
   label: PropTypes.string,

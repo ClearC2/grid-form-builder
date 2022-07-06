@@ -28,6 +28,8 @@ var _ConditionalPredicate = _interopRequireDefault(require("./ConditionalPredica
 
 var _Toggle = _interopRequireDefault(require("../QueryBuilder/Where/ConditionalTable/Toggle"));
 
+var _Utils = require("../QueryBuilder/Utils");
+
 var ConditionalDialog = function ConditionalDialog(props) {
   var value = props.value;
 
@@ -46,6 +48,9 @@ var ConditionalDialog = function ConditionalDialog(props) {
   }, [value]);
 
   var onChange = function onChange(e, i) {
+    e.target.value = e.target.value.set('format', (0, _Utils.dataTypeFromInput)(props.inputType));
+    e.target.value = e.target.value.set('label', props.label);
+
     if (conditions > 1) {
       if (value && !value.get('type')) {
         var filter = (0, _immutable.Map)({
@@ -88,6 +93,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
         });
       }
     } else {
+      // e.target.value = e.target.value.set('format', dataTypeFromInput(props.inputType))
       props.onChange(e);
     }
   };
@@ -264,7 +270,6 @@ exports.default = _default;
 ConditionalDialog.propTypes = {
   onChange: _propTypes.default.func,
   handleClose: _propTypes.default.func,
-  handleOnChange: _propTypes.default.func,
   name: _propTypes.default.string,
   inputType: _propTypes.default.string,
   label: _propTypes.default.string,
