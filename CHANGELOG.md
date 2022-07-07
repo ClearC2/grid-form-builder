@@ -1,3 +1,10 @@
+## [3.75.1](https://github.com/ClearC2/grid-form-builder/compare/v3.75.0...v3.75.1) (2022-07-07)
+
+
+### Bug Fixes
+
+* **dependency:** upgrade c2-dialog version ([22f971c](https://github.com/ClearC2/grid-form-builder/commit/22f971c323b4e3a115102add3696dac0e3e670b2))
+
 # [3.75.0](https://github.com/ClearC2/grid-form-builder/compare/v3.74.0...v3.75.0) (2022-05-04)
 
 
