@@ -1,3 +1,10 @@
+# [3.76.0](https://github.com/ClearC2/grid-form-builder/compare/v3.75.0...v3.76.0) (2022-07-07)
+
+
+### Features
+
+* **select:** prevents close on scroll when the scroll event is the input itself overflowing from text ([6dd772e](https://github.com/ClearC2/grid-form-builder/commit/6dd772e3d2b7d6be6293e4cb87cacee8c5462001))
+
 # [3.75.0](https://github.com/ClearC2/grid-form-builder/compare/v3.74.0...v3.75.0) (2022-05-04)
 
 
