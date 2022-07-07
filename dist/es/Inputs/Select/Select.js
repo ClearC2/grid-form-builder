@@ -172,7 +172,7 @@ var Select = function Select(props) {
     var menuOpenState = false;
 
     if (e && e.target && e.target.classList) {
-      menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name];
+      menuOpenState = (e.target.classList.contains('gfb-input__menu-list') || e.target.classList.contains('gfb-input__control')) && menuIsOpen[name];
     }
 
     updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, menuOpenState)));
