@@ -110,7 +110,13 @@ const Multiselect = props => {
   const closeMenuOnScroll = useCallback(e => {
     let menuOpenState = false
     if (e && e.target && e.target.classList) {
-      menuOpenState = e.target.classList.contains('gfb-input__menu-list') && menuIsOpen[name]
+      menuOpenState = (
+        (
+          e.target.classList.contains('gfb-input__menu-list') ||
+          e.target.classList.contains('gfb-input__control')
+        ) &&
+        menuIsOpen[name]
+      )
     }
     updateIsMenuOpen({...menuIsOpen, [name]: menuOpenState})
   }, [menuIsOpen, name, updateIsMenuOpen])

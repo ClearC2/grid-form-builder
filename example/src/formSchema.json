@@ -816,7 +816,7 @@
       }, {
         "type": "field",
         "dimensions": {
-          "w": 6,
+          "w": 1,
           "h": 1,
           "x": 0,
           "y": 17,
@@ -828,7 +828,7 @@
           "label": "Normal Select",
           "type": "select",
           "required": true,
-          "native": true,
+          "creatable": true,
           "keyword": {
             "category": "TASKS",
             "options": [{
@@ -850,7 +850,7 @@
               "label": "Kick Off Meeting",
               "value": "Kick Off Meeting"
             }, {
-              "label": "Internet Hub",
+              "label": "Internet Hubbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
               "value": "Internet Hub"
             }]
           },
