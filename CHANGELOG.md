@@ -1,3 +1,10 @@
+# [3.77.0](https://github.com/ClearC2/grid-form-builder/compare/v3.76.0...v3.77.0) (2022-07-13)
+
+
+### Features
+
+* **build:** commit with semantic version format ([4bc7ee8](https://github.com/ClearC2/grid-form-builder/commit/4bc7ee8782356d98559b66041d13c71d4e66fe26))
+
 # [3.76.0](https://github.com/ClearC2/grid-form-builder/compare/v3.75.0...v3.76.0) (2022-07-07)
 
 
