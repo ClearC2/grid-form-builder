@@ -7,6 +7,10 @@ presets.common = presets.common.concat(['alias'])
 
 module.exports = (env) => {
   env.presetDir = path.join(__dirname, 'webpack')
-  env.projectDir = path.join(__dirname, 'example')
+  if (env.type === 'demo') {
+    env.projectDir = path.join(__dirname, 'demo')
+  } else {
+    env.projectDir = path.join(__dirname, 'example')
+  }
   return webpackConfig(env)
 }
