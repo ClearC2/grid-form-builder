@@ -70,7 +70,7 @@
     "@clearc2/eslint-config-c2-react": "^2.0.0",
     "axios": "^0.27.2",
     "body-parser": "^1.18.2",
-    "c2-dialog": "file:../c2-dialog",
+    "c2-dialog": "ClearC2/c2-dialog#deps",
     "c2-semantic-release": "ClearC2/c2-semantic-release#^2.0.0",
     "concurrently": "^3.5.1",
     "cors": "^2.8.4",
