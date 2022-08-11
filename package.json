@@ -122,7 +122,7 @@
     "react-select": "^3.0.8",
     "react-sizeme": "^2.6.10",
     "react-toggle-button": "^2.2.0",
-    "react-tooltip": "^3.11.2",
+    "react-tooltip": "^4.2.21",
     "yarn": "1.9.2"
   }
 }
