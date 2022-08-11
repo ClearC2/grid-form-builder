@@ -7,7 +7,7 @@ import Example from './Example'
 import {initFormBuilderAjax} from '../../src/config'
 import ajax from './ajax'
 
-import {HTML5Backend} from 'react-dnd-html5-backend'
+import HTML5Backend from 'react-dnd-html5-backend'
 import {DndProvider} from 'react-dnd'
 
 import 'react-grid-layout/css/styles.css'
