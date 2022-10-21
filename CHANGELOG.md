@@ -1,3 +1,10 @@
+# [3.78.0](https://github.com/ClearC2/grid-form-builder/compare/v3.77.0...v3.78.0) (2022-10-21)
+
+
+### Features
+
+* **conditionalOnChange:** give the fieldSchema back onFilterChange ([8cd54fb](https://github.com/ClearC2/grid-form-builder/commit/8cd54fbdf60bc049b1fc217b2810e2f485c1212a))
+
 # [3.77.0](https://github.com/ClearC2/grid-form-builder/compare/v3.76.0...v3.77.0) (2022-07-13)
 
 
