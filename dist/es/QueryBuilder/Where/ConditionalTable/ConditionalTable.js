@@ -238,12 +238,14 @@ function (_Component) {
 
           if (cond === 'is between') {
             req.query.conditions.push({
+              fieldSchema: _this.props.getFieldSchema(key),
               name: key,
               values: [newValue.get('0', '')],
               comparator: 'is greater than',
               mergeDate: true
             });
             req.query.conditions.push({
+              fieldSchema: _this.props.getFieldSchema(key),
               name: key,
               values: [newValue.get('1', '')],
               comparator: 'is less than',
@@ -251,6 +253,7 @@ function (_Component) {
             });
           } else {
             req.query.conditions.push({
+              fieldSchema: _this.props.getFieldSchema(key),
               name: key,
               label: _this.getLabel(key),
               comparator: cond,
@@ -289,12 +292,14 @@ function (_Component) {
 
               if (_cond === 'is between') {
                 newValues.push({
+                  fieldSchema: _this.props.getFieldSchema(key),
                   name: key,
                   values: [newValue.get('0', '')],
                   comparator: 'is greater than',
                   mergeDate: true
                 });
                 newValues.push({
+                  fieldSchema: _this.props.getFieldSchema(key),
                   name: key,
                   values: [newValue.get('1', '')],
                   comparator: 'is less than',
@@ -302,6 +307,7 @@ function (_Component) {
                 });
               } else {
                 newValues.push({
+                  fieldSchema: _this.props.getFieldSchema(key),
                   name: key,
                   label: _this.getLabel(key),
                   comparator: _cond,
