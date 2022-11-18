@@ -1,3 +1,10 @@
+# [3.79.0](https://github.com/ClearC2/grid-form-builder/compare/v3.78.0...v3.79.0) (2022-11-18)
+
+
+### Features
+
+* **input:** added fiscal year to date for conditions ([16178f8](https://github.com/ClearC2/grid-form-builder/commit/16178f8b4f175e3d77bcdccb198bf6d05df5adb4))
+
 # [3.78.0](https://github.com/ClearC2/grid-form-builder/compare/v3.77.0...v3.78.0) (2022-10-21)
 
 
