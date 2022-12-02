@@ -127,6 +127,11 @@ export const CONDITIONS = {
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
+  'fiscal year': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
   'this quarter': {
     maxFields: 0,
     minFields: 0,
