@@ -1,3 +1,10 @@
+## [3.79.1](https://github.com/ClearC2/grid-form-builder/compare/v3.79.0...v3.79.1) (2022-12-13)
+
+
+### Bug Fixes
+
+* **addFiscal:** add fiscal year to cond year input ([#194](https://github.com/ClearC2/grid-form-builder/issues/194)) ([a13963b](https://github.com/ClearC2/grid-form-builder/commit/a13963b6b325803efee489ab232b694fb60d7c95))
+
 # [3.79.0](https://github.com/ClearC2/grid-form-builder/compare/v3.78.0...v3.79.0) (2022-11-18)
 
 
