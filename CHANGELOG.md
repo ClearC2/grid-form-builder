@@ -1,3 +1,10 @@
+# [3.80.0](https://github.com/ClearC2/grid-form-builder/compare/v3.79.1...v3.80.0) (2022-12-15)
+
+
+### Features
+
+* **multiselect:** removes fuzzy match in favor of strict matching of values and valid options based on the value key alone, rather than any key ([9feed3c](https://github.com/ClearC2/grid-form-builder/commit/9feed3c01ef5e7fc4b7362700dd30950cb220d45))
+
 ## [3.79.1](https://github.com/ClearC2/grid-form-builder/compare/v3.79.0...v3.79.1) (2022-12-13)
 
 
