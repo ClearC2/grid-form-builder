@@ -1,4 +1,3 @@
-import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
@@ -222,15 +221,22 @@ export var convertDelimitedValueIntoLabelValueArray = function convertDelimitedV
             return option[field] === value;
           });
         } else {
-          var _context5;
+          // return Object.keys(value).find(key => {
+          //   if (key.toLowerCase().indexOf('keyword') === -1) {
+          //     return option[key] === value[key]
+          //   }
+          // })
+          // this logic originally tried to match any key (except keyword) from the value object to a corresponding matching key in one of the options object
+          // this caused an issue when the key 'color' was added to the options, cause color would be the same for multiple options
+          // to make this more scalable, we will now enforce that the value object must have a value key, and the options object must have a value key, and only match on those keys
+          // this takes away a vast majority of the fuzzy matching, but it prevents the UI from looking like duplicates are selected - JRA 12/15/2022
+          if (typeof value === 'string') value = {
+            value: value
+          };
 
-          return _findInstanceProperty(_context5 = _Object$keys(value)).call(_context5, function (key) {
-            var _context6;
-
-            if (_indexOfInstanceProperty(_context6 = key.toLowerCase()).call(_context6, 'keyword') === -1) {
-              return option[key] === value[key];
-            }
-          });
+          if (value.value) {
+            return value.value === option.value;
+          }
         }
       });
 

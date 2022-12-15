@@ -199,11 +199,19 @@ export const convertDelimitedValueIntoLabelValueArray = ({delimit, delimiter, va
             return option[field] === value
           })
         } else {
-          return Object.keys(value).find(key => {
-            if (key.toLowerCase().indexOf('keyword') === -1) {
-              return option[key] === value[key]
-            }
-          })
+          // return Object.keys(value).find(key => {
+          //   if (key.toLowerCase().indexOf('keyword') === -1) {
+          //     return option[key] === value[key]
+          //   }
+          // })
+          // this logic originally tried to match any key (except keyword) from the value object to a corresponding matching key in one of the options object
+          // this caused an issue when the key 'color' was added to the options, cause color would be the same for multiple options
+          // to make this more scalable, we will now enforce that the value object must have a value key, and the options object must have a value key, and only match on those keys
+          // this takes away a vast majority of the fuzzy matching, but it prevents the UI from looking like duplicates are selected - JRA 12/15/2022
+          if (typeof value === 'string') value = {value}
+          if (value.value) {
+            return value.value === option.value
+          }
         }
       })
       if (option) optionEquivalents.push(option)
