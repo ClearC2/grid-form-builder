@@ -212,12 +212,14 @@ export default class ConditionalTable extends Component {
         // https://github.com/ClearC2/bleu/issues/4734
         if (cond === 'is between') {
           req.query.conditions.push({
+            fieldSchema: this.props.getFieldSchema(key),
             name: key,
             values: [newValue.get('0', '')],
             comparator: 'is greater than',
             mergeDate: true
           })
           req.query.conditions.push({
+            fieldSchema: this.props.getFieldSchema(key),
             name: key,
             values: [newValue.get('1', '')],
             comparator: 'is less than',
@@ -225,6 +227,7 @@ export default class ConditionalTable extends Component {
           })
         } else {
           req.query.conditions.push({
+            fieldSchema: this.props.getFieldSchema(key),
             name: key,
             label: this.getLabel(key),
             comparator: cond,
@@ -254,12 +257,14 @@ export default class ConditionalTable extends Component {
             // https://github.com/ClearC2/bleu/issues/4734
             if (cond === 'is between') {
               newValues.push({
+                fieldSchema: this.props.getFieldSchema(key),
                 name: key,
                 values: [newValue.get('0', '')],
                 comparator: 'is greater than',
                 mergeDate: true
               })
               newValues.push({
+                fieldSchema: this.props.getFieldSchema(key),
                 name: key,
                 values: [newValue.get('1', '')],
                 comparator: 'is less than',
@@ -267,6 +272,7 @@ export default class ConditionalTable extends Component {
               })
             } else {
               newValues.push({
+                fieldSchema: this.props.getFieldSchema(key),
                 name: key,
                 label: this.getLabel(key),
                 comparator: cond,

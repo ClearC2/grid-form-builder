@@ -10,8 +10,6 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.convertLabelValueArrayIntoDelimitedValue = exports.convertDelimitedValueIntoLabelValueArray = exports.usePrevious = exports.updateLayoutArray = exports.searchForLayoutArray = exports.uppercaseFirstLetter = exports.emailValidator = exports.isMobile = exports.randomId = exports.timeStamp = void 0;
 
-var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
-
 var _find = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/find"));
 
 var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/index-of"));
@@ -265,15 +263,22 @@ var convertDelimitedValueIntoLabelValueArray = function convertDelimitedValueInt
             return option[field] === value;
           });
         } else {
-          var _context5;
+          // return Object.keys(value).find(key => {
+          //   if (key.toLowerCase().indexOf('keyword') === -1) {
+          //     return option[key] === value[key]
+          //   }
+          // })
+          // this logic originally tried to match any key (except keyword) from the value object to a corresponding matching key in one of the options object
+          // this caused an issue when the key 'color' was added to the options, cause color would be the same for multiple options
+          // to make this more scalable, we will now enforce that the value object must have a value key, and the options object must have a value key, and only match on those keys
+          // this takes away a vast majority of the fuzzy matching, but it prevents the UI from looking like duplicates are selected - JRA 12/15/2022
+          if (typeof value === 'string') value = {
+            value: value
+          };
 
-          return (0, _find.default)(_context5 = (0, _keys.default)(value)).call(_context5, function (key) {
-            var _context6;
-
-            if ((0, _indexOf.default)(_context6 = key.toLowerCase()).call(_context6, 'keyword') === -1) {
-              return option[key] === value[key];
-            }
-          });
+          if (value.value) {
+            return value.value === option.value;
+          }
         }
       });
       if (option) optionEquivalents.push(option);

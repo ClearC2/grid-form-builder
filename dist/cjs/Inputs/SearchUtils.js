@@ -152,6 +152,16 @@ var CONDITIONS = {
     minFields: 0,
     invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
   },
+  'fiscal year to date': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
+  },
+  'fiscal year': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
+  },
   'this quarter': {
     maxFields: 0,
     minFields: 0,

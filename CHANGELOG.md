@@ -1,3 +1,45 @@
+## [3.80.2](https://github.com/ClearC2/grid-form-builder/compare/v3.80.1...v3.80.2) (2022-12-19)
+
+
+### Bug Fixes
+
+* **deps:** react and react-dom peer dependencies now include react 17 ([741adb0](https://github.com/ClearC2/grid-form-builder/commit/741adb083446048b02d7ffda41db045895698689))
+
+## [3.80.1](https://github.com/ClearC2/grid-form-builder/compare/v3.80.0...v3.80.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* **version:** bump version ([b7eb857](https://github.com/ClearC2/grid-form-builder/commit/b7eb85758c7b5d33f3a7c2dfcbce859b3e39debf))
+
+# [3.80.0](https://github.com/ClearC2/grid-form-builder/compare/v3.79.1...v3.80.0) (2022-12-15)
+
+
+### Features
+
+* **multiselect:** removes fuzzy match in favor of strict matching of values and valid options based on the value key alone, rather than any key ([9feed3c](https://github.com/ClearC2/grid-form-builder/commit/9feed3c01ef5e7fc4b7362700dd30950cb220d45))
+
+## [3.79.1](https://github.com/ClearC2/grid-form-builder/compare/v3.79.0...v3.79.1) (2022-12-13)
+
+
+### Bug Fixes
+
+* **addFiscal:** add fiscal year to cond year input ([#194](https://github.com/ClearC2/grid-form-builder/issues/194)) ([a13963b](https://github.com/ClearC2/grid-form-builder/commit/a13963b6b325803efee489ab232b694fb60d7c95))
+
+# [3.79.0](https://github.com/ClearC2/grid-form-builder/compare/v3.78.0...v3.79.0) (2022-11-18)
+
+
+### Features
+
+* **input:** added fiscal year to date for conditions ([16178f8](https://github.com/ClearC2/grid-form-builder/commit/16178f8b4f175e3d77bcdccb198bf6d05df5adb4))
+
+# [3.78.0](https://github.com/ClearC2/grid-form-builder/compare/v3.77.0...v3.78.0) (2022-10-21)
+
+
+### Features
+
+* **conditionalOnChange:** give the fieldSchema back onFilterChange ([8cd54fb](https://github.com/ClearC2/grid-form-builder/commit/8cd54fbdf60bc049b1fc217b2810e2f485c1212a))
+
 # [3.77.0](https://github.com/ClearC2/grid-form-builder/compare/v3.76.0...v3.77.0) (2022-07-13)
 
 
