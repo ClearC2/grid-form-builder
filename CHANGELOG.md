@@ -1,3 +1,10 @@
+## [3.80.1](https://github.com/ClearC2/grid-form-builder/compare/v3.80.0...v3.80.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* **version:** bump version ([b7eb857](https://github.com/ClearC2/grid-form-builder/commit/b7eb85758c7b5d33f3a7c2dfcbce859b3e39debf))
+
 # [3.80.0](https://github.com/ClearC2/grid-form-builder/compare/v3.79.1...v3.80.0) (2022-12-15)
 
 
