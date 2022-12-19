@@ -1,3 +1,10 @@
+## [3.80.2](https://github.com/ClearC2/grid-form-builder/compare/v3.80.1...v3.80.2) (2022-12-19)
+
+
+### Bug Fixes
+
+* **deps:** react and react-dom peer dependencies now include react 17 ([741adb0](https://github.com/ClearC2/grid-form-builder/commit/741adb083446048b02d7ffda41db045895698689))
+
 ## [3.80.1](https://github.com/ClearC2/grid-form-builder/compare/v3.80.0...v3.80.1) (2022-12-19)
 
 
