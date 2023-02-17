@@ -13,7 +13,7 @@ export const SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listsel
 * MULTI_FIELD_INPUTS
 * These inputs can have more than one input field, with one value per field
 */
-export const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'email', 'currency', 'time', 'number', 'percent'])// eslint-disable-line
+export const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'month', 'phone', 'email', 'currency', 'time', 'number', 'percent'])// eslint-disable-line
 export const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
 
 export const ALL_BUT_DATES = Set(['input', 'number', 'percent', 'phone', 'email', 'currency', 'time', 'multicheckbox', 'multiselect', 'listselect', 'typeahead', 'textarea', 'checkbox', 'radio'])// eslint-disable-line
