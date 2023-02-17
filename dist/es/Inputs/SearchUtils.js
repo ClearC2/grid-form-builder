@@ -21,7 +21,7 @@ export var SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselec
 * These inputs can have more than one input field, with one value per field
 */
 
-export var MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'phone', 'email', 'currency', 'time', 'number', 'percent']); // eslint-disable-line
+export var MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'month', 'phone', 'email', 'currency', 'time', 'number', 'percent']); // eslint-disable-line
 
 export var ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect']);
 export var ALL_BUT_DATES = Set(['input', 'number', 'percent', 'phone', 'email', 'currency', 'time', 'multicheckbox', 'multiselect', 'listselect', 'typeahead', 'textarea', 'checkbox', 'radio']); // eslint-disable-line

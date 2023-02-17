@@ -1,3 +1,10 @@
+## [3.80.3](https://github.com/ClearC2/grid-form-builder/compare/v3.80.2...v3.80.3) (2023-02-17)
+
+
+### Bug Fixes
+
+* **conditional-predicate:** fix is between for month types ([6c84074](https://github.com/ClearC2/grid-form-builder/commit/6c84074fcb572e289e39ff9a966190491a103320))
+
 ## [3.80.2](https://github.com/ClearC2/grid-form-builder/compare/v3.80.1...v3.80.2) (2022-12-19)
 
 
