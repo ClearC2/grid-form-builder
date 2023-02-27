@@ -1,3 +1,10 @@
+## [3.80.4](https://github.com/ClearC2/grid-form-builder/compare/v3.80.3...v3.80.4) (2023-02-27)
+
+
+### Bug Fixes
+
+* **dependency:** yarn is now only a dev dependency, not a dep ([bd937d3](https://github.com/ClearC2/grid-form-builder/commit/bd937d37ff8a6598c2d19573b46e8706adbd7978))
+
 ## [3.80.3](https://github.com/ClearC2/grid-form-builder/compare/v3.80.2...v3.80.3) (2023-02-17)
 
 
