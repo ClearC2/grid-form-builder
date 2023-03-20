@@ -1,3 +1,10 @@
+# [3.81.0](https://github.com/ClearC2/grid-form-builder/compare/v3.80.4...v3.81.0) (2023-03-20)
+
+
+### Features
+
+* **select:** selects can now use the color property on keyword options to color the background of the input when that option is selected ([0d212db](https://github.com/ClearC2/grid-form-builder/commit/0d212db546e2bc67b63aa3208b8762f2b9411b4b))
+
 ## [3.80.4](https://github.com/ClearC2/grid-form-builder/compare/v3.80.3...v3.80.4) (2023-02-27)
 
 
