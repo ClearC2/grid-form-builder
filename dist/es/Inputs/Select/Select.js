@@ -122,7 +122,8 @@ var Select = function Select(props) {
 
   var _useState13 = useState({
     label: '',
-    value: ''
+    value: '',
+    color: ''
   }),
       _useState14 = _slicedToArray(_useState13, 2),
       selectValue = _useState14[0],
@@ -193,14 +194,21 @@ var Select = function Select(props) {
   }, [updateIsRequiredFlag, required, requiredWarning, value]);
   useEffect(function () {
     var keyMap = _reduceInstanceProperty(options).call(options, function (acc, cv) {
-      acc[cv.value] = cv.label;
+      acc[cv.value] = {
+        label: cv.label,
+        color: cv.color || ''
+      };
       return acc;
     }, {});
 
-    updateSelectValue({
-      label: keyMap[value] || value,
-      value: value
-    });
+    var selectValue = {
+      label: value,
+      value: value,
+      color: ''
+    };
+    if (keyMap[value] && keyMap[value].label) selectValue.label = keyMap[value].label;
+    if (keyMap[value] && keyMap[value].color) selectValue.color = keyMap[value].color;
+    updateSelectValue(selectValue);
   }, [value, updateSelectValue, options]);
   var handleOnKeyDown = useCallback(function () {
     if (!menuIsOpen[name]) openMenu();
@@ -270,7 +278,13 @@ var Select = function Select(props) {
         return _objectSpread({}, base, {}, inputControl, {}, inputControlTheme);
       },
       valueContainer: function valueContainer(base) {
-        return _objectSpread({}, base, {}, _valueContainer, {}, valueContainerTheme);
+        var valueColor = {};
+
+        if (selectValue.color) {
+          valueColor.backgroundColor = selectValue.color;
+        }
+
+        return _objectSpread({}, base, {}, _valueContainer, {}, valueContainerTheme, {}, valueColor);
       },
       indicatorsContainer: function indicatorsContainer(base) {
         return _objectSpread({}, base, {}, indicators, {}, indicatorsTheme);

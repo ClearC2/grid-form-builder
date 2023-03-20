@@ -58,7 +58,7 @@ const Select = props => {
   const [menuIsOpen, updateIsMenuOpen] = useState({})
   const [menuPlacement, updateMenuPlacement] = useState('bottom')
   const [fieldPosition, updateFieldPosition] = useState(0)
-  const [selectValue, updateSelectValue] = useState({label: '', value: ''})
+  const [selectValue, updateSelectValue] = useState({label: '', value: '', color: ''})
   const [isFocused, setIsFocused] = useState(false)
 
   const inputContainer = useRef(null)
@@ -132,10 +132,20 @@ const Select = props => {
 
   useEffect(() => {
     const keyMap = options.reduce((acc, cv) => {
-      acc[cv.value] = cv.label
+      acc[cv.value] = {
+        label: cv.label,
+        color: cv.color || ''
+      }
       return acc
     }, {})
-    updateSelectValue({label: keyMap[value] || value, value})
+    const selectValue = {
+      label: value,
+      value,
+      color: ''
+    }
+    if (keyMap[value] && keyMap[value].label) selectValue.label = keyMap[value].label
+    if (keyMap[value] && keyMap[value].color) selectValue.color = keyMap[value].color
+    updateSelectValue(selectValue)
   }, [value, updateSelectValue, options])
 
   const handleOnKeyDown = useCallback(() => {
@@ -203,7 +213,11 @@ const Select = props => {
             return ({...base, ...inputControl, ...inputControlTheme})
           },
           valueContainer: base => {
-            return ({...base, ...valueContainer, ...valueContainerTheme})
+            const valueColor = {}
+            if (selectValue.color) {
+              valueColor.backgroundColor = selectValue.color
+            }
+            return ({...base, ...valueContainer, ...valueContainerTheme, ...valueColor})
           },
           indicatorsContainer: base => {
             return ({...base, ...indicators, ...indicatorsTheme})
