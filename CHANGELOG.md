@@ -1,3 +1,31 @@
+# [3.82.0](https://github.com/ClearC2/grid-form-builder/compare/v3.81.0...v3.82.0) (2023-03-23)
+
+
+### Features
+
+* **conditional-predicate:** add ability to create vals on certain conditions ([#196](https://github.com/ClearC2/grid-form-builder/issues/196)) ([1646bf4](https://github.com/ClearC2/grid-form-builder/commit/1646bf482017c430d57d0a4b4d49dfcfb3c751af))
+
+# [3.81.0](https://github.com/ClearC2/grid-form-builder/compare/v3.80.4...v3.81.0) (2023-03-20)
+
+
+### Features
+
+* **select:** selects can now use the color property on keyword options to color the background of the input when that option is selected ([0d212db](https://github.com/ClearC2/grid-form-builder/commit/0d212db546e2bc67b63aa3208b8762f2b9411b4b))
+
+## [3.80.4](https://github.com/ClearC2/grid-form-builder/compare/v3.80.3...v3.80.4) (2023-02-27)
+
+
+### Bug Fixes
+
+* **dependency:** yarn is now only a dev dependency, not a dep ([bd937d3](https://github.com/ClearC2/grid-form-builder/commit/bd937d37ff8a6598c2d19573b46e8706adbd7978))
+
+## [3.80.3](https://github.com/ClearC2/grid-form-builder/compare/v3.80.2...v3.80.3) (2023-02-17)
+
+
+### Bug Fixes
+
+* **conditional-predicate:** fix is between for month types ([6c84074](https://github.com/ClearC2/grid-form-builder/commit/6c84074fcb572e289e39ff9a966190491a103320))
+
 ## [3.80.2](https://github.com/ClearC2/grid-form-builder/compare/v3.80.1...v3.80.2) (2022-12-19)
 
 

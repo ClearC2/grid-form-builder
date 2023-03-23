@@ -9,6 +9,18 @@ const ConditionalPredicate = props => {
   if (!propValue) {
     propValue = Map()
   }
+  const defaultCreatedInputOpts = [...props.keyword.options]
+  const propsVals = props.value.get('values').toJS()
+  if (propsVals.length) {
+    if (propsVals.some(val => val.hasOwnProperty('__isNew__'))) {
+      propsVals.forEach(val => {
+        if (val.hasOwnProperty('__isNew__')) {
+          defaultCreatedInputOpts.push(val)
+        }
+      })
+    }
+  }
+  const [createdInputOpts, setCreatedInputOpts] = useState(defaultCreatedInputOpts)
   function convertListToOptions (list) {
     const inputType = props.inputType.toLowerCase()
     if (inputType === 'number' || inputType === 'currency' || inputType === 'decimal') {
@@ -243,6 +255,8 @@ const ConditionalPredicate = props => {
     delete extraFieldProps.values
     delete extraFieldProps.value
     if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
+      const isContains = props.value.getIn(['condition'], '') === 'contains'
+      const isIsOneOf = props.value.getIn(['condition'], '') === 'is one of'
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {x: 1, y: 2, h: calculateFieldHeight(props.inputType.toLowerCase()), w: 8},
@@ -255,6 +269,12 @@ const ConditionalPredicate = props => {
           label: `${props.label}`,
           interactive: true,
           clearable: true,
+          keyword: {
+            category: props.keyword.category,
+            default: '',
+            options: createdInputOpts
+          },
+          allowcreate: isContains || isIsOneOf,
           searchable: true, // I just added this line
           type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),// eslint-disable-line
           handleOnChange: dialogOnChange
@@ -427,6 +447,16 @@ const ConditionalPredicate = props => {
         }
       } else {
         values = fromJS(e.target.value)
+        const valArr = e.target.value
+        const opts = [...createdInputOpts]
+        if (valArr.length) {
+          valArr.forEach(val => {
+            if (val.hasOwnProperty('__isNew__')) {
+              opts.push(val)
+              setCreatedInputOpts(opts)
+            }
+          })
+        }
       }
     }
     if (e.target.name === 'dynamicValues') {

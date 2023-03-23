@@ -42,17 +42,19 @@ var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
-var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
-
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
-
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
-
-var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
 var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
+
+var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
+
+var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
+
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/toConsumableArray"));
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -77,6 +79,26 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
   if (!propValue) {
     propValue = (0, _immutable.Map)();
   }
+
+  var defaultCreatedInputOpts = (0, _toConsumableArray2.default)(props.keyword.options);
+  var propsVals = props.value.get('values').toJS();
+
+  if (propsVals.length) {
+    if ((0, _some.default)(propsVals).call(propsVals, function (val) {
+      return val.hasOwnProperty('__isNew__');
+    })) {
+      (0, _forEach.default)(propsVals).call(propsVals, function (val) {
+        if (val.hasOwnProperty('__isNew__')) {
+          defaultCreatedInputOpts.push(val);
+        }
+      });
+    }
+  }
+
+  var _useState = (0, _react.useState)(defaultCreatedInputOpts),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      createdInputOpts = _useState2[0],
+      setCreatedInputOpts = _useState2[1];
 
   function convertListToOptions(list) {
     var inputType = props.inputType.toLowerCase();
@@ -110,12 +132,12 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     return convertListToOptions(options);
   }
 
-  var _useState = (0, _react.useState)((0, _immutable.Map)({
+  var _useState3 = (0, _react.useState)((0, _immutable.Map)({
     condition: inputTypeOptionsList()[0].value
   })),
-      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-      modalValues = _useState2[0],
-      setModalValues = _useState2[1];
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      modalValues = _useState4[0],
+      setModalValues = _useState4[1];
 
   (0, _react.useEffect)(function () {
     // const v = props.values[props.name]
@@ -409,6 +431,8 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     delete extraFieldProps.value;
 
     if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
+      var isContains = props.value.getIn(['condition'], '') === 'contains';
+      var isIsOneOf = props.value.getIn(['condition'], '') === 'is one of';
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {
@@ -425,6 +449,12 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           label: "".concat(props.label),
           interactive: true,
           clearable: true,
+          keyword: {
+            category: props.keyword.category,
+            default: '',
+            options: createdInputOpts
+          },
+          allowcreate: isContains || isIsOneOf,
           searchable: true,
           // I just added this line
           type: _SearchUtils.NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
@@ -683,6 +713,17 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
         }
       } else {
         values = (0, _immutable.fromJS)(e.target.value);
+        var valArr = e.target.value;
+        var opts = (0, _toConsumableArray2.default)(createdInputOpts);
+
+        if (valArr.length) {
+          (0, _forEach.default)(valArr).call(valArr, function (val) {
+            if (val.hasOwnProperty('__isNew__')) {
+              opts.push(val);
+              setCreatedInputOpts(opts);
+            }
+          });
+        }
       }
     }
 

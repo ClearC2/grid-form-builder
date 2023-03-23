@@ -35,7 +35,7 @@ var SINGLE_FIELD_INPUTS = (0, _immutable.Set)(['multiselect', 'multicheckbox', '
 */
 
 exports.SINGLE_FIELD_INPUTS = SINGLE_FIELD_INPUTS;
-var MULTI_FIELD_INPUTS = (0, _immutable.Set)(['input', 'date', 'datetime', 'phone', 'email', 'currency', 'time', 'number', 'percent']); // eslint-disable-line
+var MULTI_FIELD_INPUTS = (0, _immutable.Set)(['input', 'date', 'datetime', 'month', 'phone', 'email', 'currency', 'time', 'number', 'percent']); // eslint-disable-line
 
 exports.MULTI_FIELD_INPUTS = MULTI_FIELD_INPUTS;
 var ONLY_CATEGORICAL_INPUT = (0, _immutable.Set)(['multicheckbox', 'multiselect', 'listselect']);

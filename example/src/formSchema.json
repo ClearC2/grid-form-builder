@@ -833,25 +833,32 @@
             "category": "TASKS",
             "options": [{
               "label": "Contract Signing",
-              "value": "Contract Signing"
+              "value": "Contract Signing",
+              "color": "red"
             }, {
               "label": "Customer Service",
-              "value": "Customer Service"
+              "value": "Customer Service",
+              "color": ""
             }, {
               "label": "Demonstration",
-              "value": "Demonstration"
+              "value": "Demonstration",
+              "color": ""
             }, {
               "label": "Executive Meeting",
-              "value": "Executive Meeting"
+              "value": "Executive Meeting",
+              "color": "yellow"
             }, {
               "label": "Initial Meeting",
-              "value": "Initial Meeting"
+              "value": "Initial Meeting",
+              "color": ""
             }, {
               "label": "Kick Off Meeting",
-              "value": "Kick Off Meeting"
+              "value": "Kick Off Meeting",
+              "color": ""
             }, {
               "label": "Internet Hubbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-              "value": "Internet Hub"
+              "value": "Internet Hub",
+              "color": "green"
             }]
           },
           "cascade": {
