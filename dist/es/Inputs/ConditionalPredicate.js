@@ -40,8 +40,6 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     propValue = Map();
   }
 
-  console.log(props);
-
   var defaultCreatedInputOpts = _toConsumableArray(props.keyword.options);
 
   var propsVals = props.value.get('values').toJS();
@@ -415,6 +413,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           clearable: true,
           keyword: {
             category: props.keyword.category,
+            default: '',
             options: createdInputOpts
           },
           allowcreate: isContains || isIsOneOf,

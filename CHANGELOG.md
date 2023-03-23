@@ -1,3 +1,10 @@
+# [3.82.0](https://github.com/ClearC2/grid-form-builder/compare/v3.81.0...v3.82.0) (2023-03-23)
+
+
+### Features
+
+* **conditional-predicate:** add ability to create vals on certain conditions ([#196](https://github.com/ClearC2/grid-form-builder/issues/196)) ([1646bf4](https://github.com/ClearC2/grid-form-builder/commit/1646bf482017c430d57d0a4b4d49dfcfb3c751af))
+
 # [3.81.0](https://github.com/ClearC2/grid-form-builder/compare/v3.80.4...v3.81.0) (2023-03-20)
 
 

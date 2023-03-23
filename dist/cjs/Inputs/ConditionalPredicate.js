@@ -80,7 +80,6 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     propValue = (0, _immutable.Map)();
   }
 
-  console.log(props);
   var defaultCreatedInputOpts = (0, _toConsumableArray2.default)(props.keyword.options);
   var propsVals = props.value.get('values').toJS();
 
@@ -452,6 +451,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           clearable: true,
           keyword: {
             category: props.keyword.category,
+            default: '',
             options: createdInputOpts
           },
           allowcreate: isContains || isIsOneOf,
