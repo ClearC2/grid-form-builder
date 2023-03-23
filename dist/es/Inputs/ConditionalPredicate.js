@@ -13,12 +13,13 @@ import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
 import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
-import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
+import _toConsumableArray from "@babel/runtime-corejs3/helpers/esm/toConsumableArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -38,6 +39,29 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
   if (!propValue) {
     propValue = Map();
   }
+
+  console.log(props);
+
+  var defaultCreatedInputOpts = _toConsumableArray(props.keyword.options);
+
+  var propsVals = props.value.get('values').toJS();
+
+  if (propsVals.length) {
+    if (_someInstanceProperty(propsVals).call(propsVals, function (val) {
+      return val.hasOwnProperty('__isNew__');
+    })) {
+      _forEachInstanceProperty(propsVals).call(propsVals, function (val) {
+        if (val.hasOwnProperty('__isNew__')) {
+          defaultCreatedInputOpts.push(val);
+        }
+      });
+    }
+  }
+
+  var _useState = useState(defaultCreatedInputOpts),
+      _useState2 = _slicedToArray(_useState, 2),
+      createdInputOpts = _useState2[0],
+      setCreatedInputOpts = _useState2[1];
 
   function convertListToOptions(list) {
     var inputType = props.inputType.toLowerCase();
@@ -72,12 +96,12 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     return convertListToOptions(options);
   }
 
-  var _useState = useState(Map({
+  var _useState3 = useState(Map({
     condition: inputTypeOptionsList()[0].value
   })),
-      _useState2 = _slicedToArray(_useState, 2),
-      modalValues = _useState2[0],
-      setModalValues = _useState2[1];
+      _useState4 = _slicedToArray(_useState3, 2),
+      modalValues = _useState4[0],
+      setModalValues = _useState4[1];
 
   useEffect(function () {
     // const v = props.values[props.name]
@@ -371,6 +395,8 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     delete extraFieldProps.value;
 
     if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
+      var isContains = props.value.getIn(['condition'], '') === 'contains';
+      var isIsOneOf = props.value.getIn(['condition'], '') === 'is one of';
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {
@@ -387,6 +413,11 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           label: "".concat(props.label),
           interactive: true,
           clearable: true,
+          keyword: {
+            category: props.keyword.category,
+            options: createdInputOpts
+          },
+          allowcreate: isContains || isIsOneOf,
           searchable: true,
           // I just added this line
           type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
@@ -644,6 +675,18 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
         }
       } else {
         values = fromJS(e.target.value);
+        var valArr = e.target.value;
+
+        var opts = _toConsumableArray(createdInputOpts);
+
+        if (valArr.length) {
+          _forEachInstanceProperty(valArr).call(valArr, function (val) {
+            if (val.hasOwnProperty('__isNew__')) {
+              opts.push(val);
+              setCreatedInputOpts(opts);
+            }
+          });
+        }
       }
     }
 
