@@ -3,6 +3,7 @@ import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/obje
 import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
 import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _toConsumableArray from "@babel/runtime-corejs3/helpers/esm/toConsumableArray";
 import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/splice";
 import _parseInt from "@babel/runtime-corejs3/core-js-stable/parse-int";
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
@@ -12,14 +13,13 @@ import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/insta
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
 import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
-import _toConsumableArray from "@babel/runtime-corejs3/helpers/esm/toConsumableArray";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -40,7 +40,11 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     propValue = Map();
   }
 
-  var defaultCreatedInputOpts = _toConsumableArray(props.keyword.options);
+  var defaultCreatedInputOpts = [];
+
+  if (props.keyword && props.keyword.options) {
+    defaultCreatedInputOpts = _concatInstanceProperty(defaultCreatedInputOpts).call(defaultCreatedInputOpts, props.keyword.options);
+  }
 
   var propsVals = props.value.get('values').toJS();
 
@@ -412,7 +416,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           interactive: true,
           clearable: true,
           keyword: {
-            category: props.keyword.category,
+            category: props.keyword && props.keyword.category,
             default: '',
             options: createdInputOpts
           },
