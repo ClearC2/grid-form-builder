@@ -1,6 +1,10 @@
 const path = require('path')
 
 module.exports = (env) => ({
+  devServer: {
+    port: 8777,
+    open: true
+  },
   module: {
     rules: [
       {
@@ -14,8 +18,8 @@ module.exports = (env) => ({
           }
         ],
         include: [
-          path.join(__dirname, 'src'), 
-          path.join(__dirname, '../src'), 
+          path.join(__dirname, 'src'),
+          path.join(__dirname, '../src'),
           path.join(env.projectDir, 'src')]
       }
     ]
