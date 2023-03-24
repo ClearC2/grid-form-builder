@@ -1,40 +1,38 @@
 "use strict";
 
+var _Object$keys = require("@babel/runtime-corejs3/core-js-stable/object/keys");
+
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
+
+var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
-var _Object$defineProperty2 = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
-
-_Object$defineProperty2(exports, "__esModule", {
+_Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
 exports.default = void 0;
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-property"));
-
-var _defineProperties = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-properties"));
-
-var _getOwnPropertyDescriptors = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors"));
-
-var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
-
-var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor"));
-
-var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
-
-var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols"));
-
-var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
-
-var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
-
-var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
 
 var _reduce = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/reduce"));
 
-var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
+var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
@@ -54,9 +52,9 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../../ValidationError
 
 var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
 
-function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context2; (0, _forEach.default)(_context2 = ownKeys(Object(source), true)).call(_context2, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context3; (0, _forEach.default)(_context3 = ownKeys(Object(source))).call(_context3, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var viewPortHeight = document.documentElement.clientHeight;
 
@@ -169,7 +167,7 @@ var Select = function Select(props) {
   var inputContainer = (0, _react.useRef)(null);
   var openMenu = (0, _react.useCallback)(function () {
     if (!readonly && !disabled && !menuIsOpen[name]) {
-      updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, true)));
+      updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, true)));
     }
   }, [readonly, disabled, menuIsOpen, updateIsMenuOpen, name]);
   var setMenuOpenPosition = (0, _react.useCallback)(function () {
@@ -177,7 +175,7 @@ var Select = function Select(props) {
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
   var handleInputBlur = (0, _react.useCallback)(function () {
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, false)));
     setIsFocused(false);
   }, [menuIsOpen, updateIsMenuOpen, name]);
   var setInputFieldPosition = (0, _react.useCallback)(function () {
@@ -207,7 +205,7 @@ var Select = function Select(props) {
       menuOpenState = (e.target.classList.contains('gfb-input__menu-list') || e.target.classList.contains('gfb-input__control')) && menuIsOpen[name];
     }
 
-    updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, menuOpenState)));
+    updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, menuOpenState)));
   }, [menuIsOpen, name, updateIsMenuOpen]);
   (0, _react.useEffect)(function () {
     setOptions(keyword.options);
@@ -251,7 +249,7 @@ var Select = function Select(props) {
         value: e === null ? '' : e.value
       }
     });
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, false)));
   }, [onChange, name, menuIsOpen]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
@@ -302,10 +300,10 @@ var Select = function Select(props) {
     components: components,
     styles: {
       container: function container(base) {
-        return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
       },
       control: function control(base) {
-        return _objectSpread({}, base, {}, inputControl, {}, inputControlTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), inputControl), inputControlTheme);
       },
       valueContainer: function valueContainer(base) {
         var valueColor = {};
@@ -314,25 +312,25 @@ var Select = function Select(props) {
           valueColor.backgroundColor = selectValue.color;
         }
 
-        return _objectSpread({}, base, {}, _valueContainer, {}, valueContainerTheme, {}, valueColor);
+        return _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, base), _valueContainer), valueContainerTheme), valueColor);
       },
       indicatorsContainer: function indicatorsContainer(base) {
-        return _objectSpread({}, base, {}, indicators, {}, indicatorsTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), indicators), indicatorsTheme);
       },
       option: function option(base) {
-        return _objectSpread({}, base, {}, optionsStyle, {}, optionsTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), optionsStyle), optionsTheme);
       },
       singleValue: function singleValue(base) {
         if (!interactive) {
           base.color = 'green';
         }
 
-        return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
       },
       menuPortal: function menuPortal(base) {
         var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
         var zIndex = _maxSafeInteger.default;
-        return _objectSpread({}, base, {
+        return _objectSpread(_objectSpread({}, base), {}, {
           top: top,
           zIndex: zIndex
         });

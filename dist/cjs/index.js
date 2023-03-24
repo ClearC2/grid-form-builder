@@ -1,68 +1,23 @@
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopRequireWildcard");
+var _typeof = require("@babel/runtime-corejs3/helpers/typeof");
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
 
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
 
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
+
 _Object$defineProperty(exports, "__esModule", {
   value: true
-});
-
-_Object$defineProperty(exports, "FormDroppable", {
-  enumerable: true,
-  get: function get() {
-    return _FormDroppable.default;
-  }
-});
-
-_Object$defineProperty(exports, "initFormBuilderAjax", {
-  enumerable: true,
-  get: function get() {
-    return _config.initFormBuilderAjax;
-  }
-});
-
-_Object$defineProperty(exports, "Conditionalinput", {
-  enumerable: true,
-  get: function get() {
-    return _ConditionalInput.default;
-  }
 });
 
 _Object$defineProperty(exports, "CONDITIONS", {
   enumerable: true,
   get: function get() {
     return _SearchUtils.CONDITIONS;
-  }
-});
-
-_Object$defineProperty(exports, "TEXT_INPUTS", {
-  enumerable: true,
-  get: function get() {
-    return _SearchUtils.TEXT_INPUTS;
-  }
-});
-
-_Object$defineProperty(exports, "DATES", {
-  enumerable: true,
-  get: function get() {
-    return _SearchUtils.DATES;
-  }
-});
-
-_Object$defineProperty(exports, "GFBInput", {
-  enumerable: true,
-  get: function get() {
-    return _GFBInput.default;
-  }
-});
-
-_Object$defineProperty(exports, "Typeahead", {
-  enumerable: true,
-  get: function get() {
-    return _Typeahead.default;
   }
 });
 
@@ -73,6 +28,27 @@ _Object$defineProperty(exports, "Checkbox", {
   }
 });
 
+_Object$defineProperty(exports, "Colorpicker", {
+  enumerable: true,
+  get: function get() {
+    return _Colorpicker.default;
+  }
+});
+
+_Object$defineProperty(exports, "ConditionalTable", {
+  enumerable: true,
+  get: function get() {
+    return _ConditionalTableContainer.default;
+  }
+});
+
+_Object$defineProperty(exports, "Conditionalinput", {
+  enumerable: true,
+  get: function get() {
+    return _ConditionalInput.default;
+  }
+});
+
 _Object$defineProperty(exports, "Currency", {
   enumerable: true,
   get: function get() {
@@ -80,10 +56,10 @@ _Object$defineProperty(exports, "Currency", {
   }
 });
 
-_Object$defineProperty(exports, "Colorpicker", {
+_Object$defineProperty(exports, "DATES", {
   enumerable: true,
   get: function get() {
-    return _Colorpicker.default;
+    return _SearchUtils.DATES;
   }
 });
 
@@ -105,6 +81,27 @@ _Object$defineProperty(exports, "Email", {
   enumerable: true,
   get: function get() {
     return _Email.default;
+  }
+});
+
+_Object$defineProperty(exports, "FormBuilder", {
+  enumerable: true,
+  get: function get() {
+    return _FormBuilder.default;
+  }
+});
+
+_Object$defineProperty(exports, "FormDroppable", {
+  enumerable: true,
+  get: function get() {
+    return _FormDroppable.default;
+  }
+});
+
+_Object$defineProperty(exports, "GFBInput", {
+  enumerable: true,
+  get: function get() {
+    return _GFBInput.default;
   }
 });
 
@@ -143,6 +140,13 @@ _Object$defineProperty(exports, "Number", {
   }
 });
 
+_Object$defineProperty(exports, "Percentage", {
+  enumerable: true,
+  get: function get() {
+    return _Percentage.default;
+  }
+});
+
 _Object$defineProperty(exports, "Phone", {
   enumerable: true,
   get: function get() {
@@ -150,10 +154,24 @@ _Object$defineProperty(exports, "Phone", {
   }
 });
 
+_Object$defineProperty(exports, "Portal", {
+  enumerable: true,
+  get: function get() {
+    return _Portal.default;
+  }
+});
+
 _Object$defineProperty(exports, "Radio", {
   enumerable: true,
   get: function get() {
     return _Radio.default;
+  }
+});
+
+_Object$defineProperty(exports, "ReportBuilder", {
+  enumerable: true,
+  get: function get() {
+    return _ReportBuilder.ReportBuilder;
   }
 });
 
@@ -171,6 +189,13 @@ _Object$defineProperty(exports, "Select", {
   }
 });
 
+_Object$defineProperty(exports, "TEXT_INPUTS", {
+  enumerable: true,
+  get: function get() {
+    return _SearchUtils.TEXT_INPUTS;
+  }
+});
+
 _Object$defineProperty(exports, "Textarea", {
   enumerable: true,
   get: function get() {
@@ -185,45 +210,10 @@ _Object$defineProperty(exports, "Time", {
   }
 });
 
-_Object$defineProperty(exports, "Percentage", {
+_Object$defineProperty(exports, "Typeahead", {
   enumerable: true,
   get: function get() {
-    return _Percentage.default;
-  }
-});
-
-_Object$defineProperty(exports, "Portal", {
-  enumerable: true,
-  get: function get() {
-    return _Portal.default;
-  }
-});
-
-_Object$defineProperty(exports, "FormBuilder", {
-  enumerable: true,
-  get: function get() {
-    return _FormBuilder.default;
-  }
-});
-
-_Object$defineProperty(exports, "ConditionalTable", {
-  enumerable: true,
-  get: function get() {
-    return _ConditionalTableContainer.default;
-  }
-});
-
-_Object$defineProperty(exports, "convertQueryToFormValues", {
-  enumerable: true,
-  get: function get() {
-    return _ConditionalTableContainer.convertQueryToFormValues;
-  }
-});
-
-_Object$defineProperty(exports, "ReportBuilder", {
-  enumerable: true,
-  get: function get() {
-    return _ReportBuilder.ReportBuilder;
+    return _Typeahead.default;
   }
 });
 
@@ -241,6 +231,13 @@ _Object$defineProperty(exports, "buildDefaultColumnsFromQuery", {
   }
 });
 
+_Object$defineProperty(exports, "convertQueryToFormValues", {
+  enumerable: true,
+  get: function get() {
+    return _ConditionalTableContainer.convertQueryToFormValues;
+  }
+});
+
 _Object$defineProperty(exports, "initComponentIconLibrary", {
   enumerable: true,
   get: function get() {
@@ -255,7 +252,14 @@ _Object$defineProperty(exports, "initCustomFormComponents", {
   }
 });
 
-exports.reducer = exports.updateFormValues = void 0;
+_Object$defineProperty(exports, "initFormBuilderAjax", {
+  enumerable: true,
+  get: function get() {
+    return _config.initFormBuilderAjax;
+  }
+});
+
+exports.updateFormValues = exports.reducer = void 0;
 
 var _immutable = require("immutable");
 
@@ -318,6 +322,10 @@ var _ReportBuilder = require("./QueryBuilder/ReportBuilder/ReportBuilder");
 var _Icons = require("./Icons");
 
 var _Inputs = require("./Inputs");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 /* eslint-disable max-len */
 // declaring depricated methods below to give implementors time to refactor base code - JRA 12/05/2019

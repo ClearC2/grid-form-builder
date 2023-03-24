@@ -1,8 +1,8 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
-
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
@@ -17,7 +17,7 @@ var _react = _interopRequireDefault(require("react"));
 var _DateInput = _interopRequireDefault(require("./DateInput"));
 
 var DateTime = function DateTime(props) {
-  return _react.default.createElement(_DateInput.default, (0, _extends2.default)({}, props, {
+  return /*#__PURE__*/_react.default.createElement(_DateInput.default, (0, _extends2.default)({}, props, {
     timePicker: true
   }));
 };

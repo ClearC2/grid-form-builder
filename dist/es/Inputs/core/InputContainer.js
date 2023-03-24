@@ -1,24 +1,31 @@
-import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
-import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
-import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
+import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _objectWithoutProperties from "@babel/runtime-corejs3/helpers/esm/objectWithoutProperties";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
-import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
-import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
+import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
 import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
-import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
+var _excluded = ["name", "required", "style", "tooltips"];
 
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context2; _forEachInstanceProperty(_context2 = ownKeys(Object(source), true)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context3; _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
+import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -29,15 +36,15 @@ import PortalTooltip from '../../Tooltip';
 import { randomId } from '../../utils';
 import useTheme from '../../theme/useTheme';
 
-var InputPerformanceOptimizer =
-/*#__PURE__*/
-function (_Component) {
+var InputPerformanceOptimizer = /*#__PURE__*/function (_Component) {
   _inherits(InputPerformanceOptimizer, _Component);
+
+  var _super = _createSuper(InputPerformanceOptimizer);
 
   function InputPerformanceOptimizer() {
     _classCallCheck(this, InputPerformanceOptimizer);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(InputPerformanceOptimizer).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   _createClass(InputPerformanceOptimizer, [{
@@ -57,8 +64,8 @@ function (_Component) {
         if (_indexOfInstanceProperty(_context = ['checkbox', 'colorpicker', 'currency', 'date', 'datetime', 'email', 'header', 'icon', 'input', 'listselect', 'metadata', 'month', 'multicheckbox', 'multiselect', 'number', 'percentage', 'phone', 'radio', 'richtextarea', 'select', 'textarea', 'time', 'conditionalinput']).call(_context, type) > -1 || // let typeaheads update and any custom components update if the entire form values object changes, don't update the components if they are in this list and all that changes is the form values
         config.typeahead && !_filterInstanceProperty(config.typeahead) && !config.typeahead.fieldvalue // if it is a typeahead but doesn't have filters or use a fieldvalue as a key, it doesn't care either
         ) {
-            return false;
-          }
+          return false;
+        }
       }
 
       return true;
@@ -102,7 +109,7 @@ var InputContainer = function InputContainer(props) {
       style = _config$style === void 0 ? {} : _config$style,
       _config$tooltips = config.tooltips,
       tooltips = _config$tooltips === void 0 ? {} : _config$tooltips,
-      other = _objectWithoutProperties(config, ["name", "required", "style", "tooltips"]);
+      other = _objectWithoutProperties(config, _excluded);
 
   var inputTooltip = tooltips.input;
   var _style$cellInput = style.cellInput,
@@ -121,7 +128,7 @@ var InputContainer = function InputContainer(props) {
   }, jsx(PortalTooltip, {
     id: inputId.current,
     message: inputTooltip
-  }), cloneElement(children, _objectSpread({
+  }), /*#__PURE__*/cloneElement(children, _objectSpread(_objectSpread({
     requiredWarning: requiredWarning,
     tabIndex: tabIndex,
     draggable: draggable,
@@ -137,7 +144,7 @@ var InputContainer = function InputContainer(props) {
     interactive: interactive,
     required: required,
     style: style
-  }, other, {
+  }, other), {}, {
     device: device
   })));
 };

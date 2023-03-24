@@ -1,14 +1,16 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
-
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
 exports.default = void 0;
+
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
 
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
@@ -106,7 +108,7 @@ var Number = function Number(props) {
 
       if (input.current) {
         // if we have the ref of the cleave input, let's update its state back to a valid number so the user does not get confused
-        window.setTimeout(function () {
+        (0, _setTimeout2.default)(function () {
           input.current.setState({
             value: newValue
           });

@@ -1,22 +1,22 @@
-import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
-import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
-import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
-import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
-import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; _forEachInstanceProperty(_context = ownKeys(Object(source), true)).call(_context, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context2; _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
+import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
+import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
+import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
+import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ConditionalDialog from './ConditionalDialog';
@@ -84,25 +84,26 @@ var ConditionalInput = function ConditionalInput(props) {
   }, [name, onChange, value]);
   var cond = values.getIn([name, 'condition'], '');
   var vals = values.getIn([name, 'values'], List());
-  var hasValue = vals.size > 0 || _includesInstanceProperty(cond).call(cond, 'blank') || cond === 'today' || cond === 'this month' || cond === 'year to date' || cond === 'fiscal year to date' || cond === 'fiscal year' || cond === 'this quarter' || cond === 'quarter to date' || cond === 'this week' || values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size || values.getIn([name, 'conditions'], List()).size > 0;
-  return React.createElement("div", {
+  var hasValue = vals.size > 0 || _includesInstanceProperty(cond).call(cond, 'blank') || // eslint-disable-next-line max-len
+  cond === 'today' || cond === 'this month' || cond === 'year to date' || cond === 'fiscal year to date' || cond === 'fiscal year' || cond === 'this quarter' || cond === 'quarter to date' || cond === 'this week' || values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size || values.getIn([name, 'conditions'], List()).size > 0;
+  return /*#__PURE__*/React.createElement("div", {
     className: "gfb-input-outer",
     style: inputOuter
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "gfb-input-inner",
     style: inputInner
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: 'gfb-input__control',
     style: inputControl
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "gfb-input__value-container",
     onClick: function onClick() {
       return setShowDialog(true);
     },
-    style: _objectSpread({}, valueContainer, {
+    style: _objectSpread(_objectSpread({}, valueContainer), {}, {
       color: '#36a9e1'
     })
-  }, hasValue ? 'Values...' : ''), showDialog && React.createElement(ConditionalDialog, _extends({
+  }, hasValue ? 'Values...' : ''), showDialog && /*#__PURE__*/React.createElement(ConditionalDialog, _extends({
     handleClose: handleClose
   }, props)))));
 };

@@ -1,21 +1,21 @@
-import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
-import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
-import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
-import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
-import _reduceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/reduce";
-import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _reduceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/reduce";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
+import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context2; _forEachInstanceProperty(_context2 = ownKeys(Object(source), true)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context3; _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -137,7 +137,7 @@ var Select = function Select(props) {
   var inputContainer = useRef(null);
   var openMenu = useCallback(function () {
     if (!readonly && !disabled && !menuIsOpen[name]) {
-      updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, true)));
+      updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, true)));
     }
   }, [readonly, disabled, menuIsOpen, updateIsMenuOpen, name]);
   var setMenuOpenPosition = useCallback(function () {
@@ -145,7 +145,7 @@ var Select = function Select(props) {
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
   var handleInputBlur = useCallback(function () {
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, false)));
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, false)));
     setIsFocused(false);
   }, [menuIsOpen, updateIsMenuOpen, name]);
   var setInputFieldPosition = useCallback(function () {
@@ -176,7 +176,7 @@ var Select = function Select(props) {
       menuOpenState = (e.target.classList.contains('gfb-input__menu-list') || e.target.classList.contains('gfb-input__control')) && menuIsOpen[name];
     }
 
-    updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, menuOpenState)));
+    updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, menuOpenState)));
   }, [menuIsOpen, name, updateIsMenuOpen]);
   useEffect(function () {
     setOptions(keyword.options);
@@ -221,7 +221,7 @@ var Select = function Select(props) {
         value: e === null ? '' : e.value
       }
     });
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, _defineProperty({}, name, false)));
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, false)));
   }, [onChange, name, menuIsOpen]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
@@ -272,10 +272,10 @@ var Select = function Select(props) {
     components: components,
     styles: {
       container: function container(base) {
-        return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
       },
       control: function control(base) {
-        return _objectSpread({}, base, {}, inputControl, {}, inputControlTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), inputControl), inputControlTheme);
       },
       valueContainer: function valueContainer(base) {
         var valueColor = {};
@@ -284,25 +284,25 @@ var Select = function Select(props) {
           valueColor.backgroundColor = selectValue.color;
         }
 
-        return _objectSpread({}, base, {}, _valueContainer, {}, valueContainerTheme, {}, valueColor);
+        return _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, base), _valueContainer), valueContainerTheme), valueColor);
       },
       indicatorsContainer: function indicatorsContainer(base) {
-        return _objectSpread({}, base, {}, indicators, {}, indicatorsTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), indicators), indicatorsTheme);
       },
       option: function option(base) {
-        return _objectSpread({}, base, {}, optionsStyle, {}, optionsTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), optionsStyle), optionsTheme);
       },
       singleValue: function singleValue(base) {
         if (!interactive) {
           base.color = 'green';
         }
 
-        return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
       },
       menuPortal: function menuPortal(base) {
         var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
         var zIndex = _Number$MAX_SAFE_INTEGER;
-        return _objectSpread({}, base, {
+        return _objectSpread(_objectSpread({}, base), {}, {
           top: top,
           zIndex: zIndex
         });

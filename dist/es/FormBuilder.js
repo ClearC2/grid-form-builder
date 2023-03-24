@@ -1,33 +1,40 @@
-import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
-import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
-import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
-import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
-import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
-import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
-import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
+import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
 import _objectWithoutProperties from "@babel/runtime-corejs3/helpers/esm/objectWithoutProperties";
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
+import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
-import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
 import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
-import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/splice";
+import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+var _excluded = ["size"],
+    _excluded2 = ["formValues", "theme"];
 
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context6; _forEachInstanceProperty(_context6 = ownKeys(Object(source), true)).call(_context6, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context7; _forEachInstanceProperty(_context7 = ownKeys(Object(source))).call(_context7, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context6, _context7; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context6 = ownKeys(Object(source), !0)).call(_context6, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context7 = ownKeys(Object(source))).call(_context7, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/splice";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
+import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
+import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
+import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import React, { Component, PureComponent, useState, useEffect, useCallback, useRef, createContext } from 'react';
 import PropTypes from 'prop-types';
 import RGL from 'react-grid-layout';
@@ -40,7 +47,7 @@ import InnerCell from './Inputs';
 import { FaTrash as Trash } from 'react-icons/fa';
 import useTheme, { ThemeProvider } from './theme/useTheme';
 var inputEventListenerDebouncer = null;
-export var FormValueContext = createContext([Map(), function () {}]);
+export var FormValueContext = /*#__PURE__*/createContext([Map(), function () {}]);
 var debug = false;
 
 var debugLog = function debugLog() {
@@ -249,20 +256,20 @@ var FormBuilder = function FormBuilder(props) {
           removeItem(i);
         };
 
-        elements.push(React.createElement("div", {
+        elements.push( /*#__PURE__*/React.createElement("div", {
           key: i + '',
           className: className,
           css: theme.gridItem
-        }, draggable && isActive && React.createElement("div", {
+        }, draggable && isActive && /*#__PURE__*/React.createElement("div", {
           className: "active-gfb-item-action-menu",
           onClick: removeSelf
-        }, React.createElement("div", {
+        }, /*#__PURE__*/React.createElement("div", {
           className: "item-action-button action-button-remove"
-        }, React.createElement(Trash, {
+        }, /*#__PURE__*/React.createElement(Trash, {
           height: 20,
           width: 20,
           color: "white"
-        }))), React.createElement(InnerCell, {
+        }))), /*#__PURE__*/React.createElement(InnerCell, {
           field: field,
           handleOnChange: handleOnChange,
           requiredWarning: requiredWarning,
@@ -396,12 +403,12 @@ var FormBuilder = function FormBuilder(props) {
   }, [formSchema, dropItemConfig, handleOnDimensionChange]);
   debugLog('render');
   dropItemDimensions.i = '-1';
-  return React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     id: id,
     className: "grid-form-builder-parent",
     ref: setContainerRef,
     style: style
-  }, React.createElement(RGL, {
+  }, /*#__PURE__*/React.createElement(RGL, {
     ref: ReactGridLayout,
     autoSize: rglAutoSize,
     style: rglStyle,
@@ -500,13 +507,13 @@ FormBuilder.defaultProps = {
 };
 FormBuilder.count = 1;
 
-var PureFormBuilder =
-/*#__PURE__*/
-function (_PureComponent) {
+var PureFormBuilder = /*#__PURE__*/function (_PureComponent) {
   _inherits(PureFormBuilder, _PureComponent);
 
+  var _super = _createSuper(PureFormBuilder);
+
   function PureFormBuilder() {
-    var _getPrototypeOf2, _context;
+    var _context;
 
     var _this;
 
@@ -516,21 +523,21 @@ function (_PureComponent) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PureFormBuilder)).call.apply(_getPrototypeOf2, _concatInstanceProperty(_context = [this]).call(_context, args)));
+    _this = _super.call.apply(_super, _concatInstanceProperty(_context = [this]).call(_context, args));
 
     _defineProperty(_assertThisInitialized(_this), "render", function () {
-      return React.createElement(FormBuilder, _this.props);
+      return /*#__PURE__*/React.createElement(FormBuilder, _this.props);
     });
 
     return _this;
   }
 
-  return PureFormBuilder;
+  return _createClass(PureFormBuilder);
 }(PureComponent);
 
 var SizeMemoizer = function SizeMemoizer(props) {
   var size = props.size,
-      rest = _objectWithoutProperties(props, ["size"]);
+      rest = _objectWithoutProperties(props, _excluded);
 
   var _useState11 = useState(size.width),
       _useState12 = _slicedToArray(_useState11, 2),
@@ -544,7 +551,7 @@ var SizeMemoizer = function SizeMemoizer(props) {
       setWidth(w);
     }
   }, [size, width]);
-  return React.createElement(PureFormBuilder, _extends({
+  return /*#__PURE__*/React.createElement(PureFormBuilder, _extends({
     width: width
   }, rest));
 };
@@ -556,13 +563,13 @@ var SizeMeHOC = sizeMe({
   refreshRate: 75
 })(SizeMemoizer);
 
-var FormValidator =
-/*#__PURE__*/
-function (_Component) {
+var FormValidator = /*#__PURE__*/function (_Component) {
   _inherits(FormValidator, _Component);
 
+  var _super2 = _createSuper(FormValidator);
+
   function FormValidator() {
-    var _getPrototypeOf3, _context2;
+    var _context2;
 
     var _this2;
 
@@ -572,7 +579,7 @@ function (_Component) {
       args[_key2] = arguments[_key2];
     }
 
-    _this2 = _possibleConstructorReturn(this, (_getPrototypeOf3 = _getPrototypeOf(FormValidator)).call.apply(_getPrototypeOf3, _concatInstanceProperty(_context2 = [this]).call(_context2, args)));
+    _this2 = _super2.call.apply(_super2, _concatInstanceProperty(_context2 = [this]).call(_context2, args));
 
     _defineProperty(_assertThisInitialized(_this2), "state", {
       validate: false,
@@ -749,13 +756,13 @@ function (_Component) {
       var _this$props = this.props,
           values = _this$props.formValues,
           theme = _this$props.theme,
-          rest = _objectWithoutProperties(_this$props, ["formValues", "theme"]);
+          rest = _objectWithoutProperties(_this$props, _excluded2);
 
-      return React.createElement(ThemeProvider, {
+      return /*#__PURE__*/React.createElement(ThemeProvider, {
         theme: theme
-      }, React.createElement(FormValueContext.Provider, {
+      }, /*#__PURE__*/React.createElement(FormValueContext.Provider, {
         value: [formValues, this.updateFormValues]
-      }, React.createElement(SizeMeHOC, _extends({}, rest, {
+      }, /*#__PURE__*/React.createElement(SizeMeHOC, _extends({}, rest, {
         validate: this.props.validate || validate,
         requiredWarning: requiredWarning,
         setContainerRef: this.setContainerRef,

@@ -1,17 +1,23 @@
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
-import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
 import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
+import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
-import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
+import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -181,17 +187,17 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
   return formValues;
 };
 
-var _ConditionalTableContainer =
-/*#__PURE__*/
-function (_Component) {
+var _ConditionalTableContainer = /*#__PURE__*/function (_Component) {
   _inherits(_ConditionalTableContainer, _Component);
+
+  var _super = _createSuper(_ConditionalTableContainer);
 
   function _ConditionalTableContainer(props) {
     var _this;
 
     _classCallCheck(this, _ConditionalTableContainer);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(_ConditionalTableContainer).call(this, props));
+    _this = _super.call(this, props);
 
     _defineProperty(_assertThisInitialized(_this), "convertQueryToFormValues", function (query) {
       var clearExistingValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
@@ -262,7 +268,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return React.createElement(ConditionalTable, _extends({}, this.props, {
+      return /*#__PURE__*/React.createElement(ConditionalTable, _extends({}, this.props, {
         formSchema: this.state.formSchema,
         formValues: fromJS(this.props.formValues).toJS(),
         title: this.props.title || 'Query:',

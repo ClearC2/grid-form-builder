@@ -1,10 +1,16 @@
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopRequireWildcard");
+var _typeof = require("@babel/runtime-corejs3/helpers/typeof");
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
+var _Reflect$construct = require("@babel/runtime-corejs3/core-js-stable/reflect/construct");
+
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
 
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
@@ -18,27 +24,27 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs3/he
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/inherits"));
 
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
+
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
-var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
-
-var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
-
-var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
-
-var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
+var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
 
 var _find = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/find"));
 
-var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
+var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
+
+var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+
+var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
+
+var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -53,6 +59,14 @@ var _ConditionalTable = _interopRequireDefault(require("./ConditionalTable"));
 var _index = require("../../../index");
 
 var _Utils = require("../../Utils");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 var getDefaultCondition = function getDefaultCondition(inputType) {
   var i = 0;
@@ -214,16 +228,16 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
 
 exports.convertQueryToFormValues = convertQueryToFormValues;
 
-var _ConditionalTableContainer =
-/*#__PURE__*/
-function (_Component) {
+var _ConditionalTableContainer = /*#__PURE__*/function (_Component) {
   (0, _inherits2.default)(_ConditionalTableContainer, _Component);
+
+  var _super = _createSuper(_ConditionalTableContainer);
 
   function _ConditionalTableContainer(props) {
     var _this;
 
     (0, _classCallCheck2.default)(this, _ConditionalTableContainer);
-    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(_ConditionalTableContainer).call(this, props));
+    _this = _super.call(this, props);
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "convertQueryToFormValues", function (query) {
       var clearExistingValues = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
       var formValues = _this.props.formValues;
@@ -290,7 +304,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement(_ConditionalTable.default, (0, _extends2.default)({}, this.props, {
+      return /*#__PURE__*/_react.default.createElement(_ConditionalTable.default, (0, _extends2.default)({}, this.props, {
         formSchema: this.state.formSchema,
         formValues: (0, _immutable.fromJS)(this.props.formValues).toJS(),
         title: this.props.title || 'Query:',

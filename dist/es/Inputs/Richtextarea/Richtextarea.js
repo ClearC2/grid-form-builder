@@ -1,7 +1,7 @@
-import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
-import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
+import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';

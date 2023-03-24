@@ -1,5 +1,6 @@
-import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -88,11 +89,12 @@ var Number = function Number(props) {
 
       if (input.current) {
         // if we have the ref of the cleave input, let's update its state back to a valid number so the user does not get confused
-        window.setTimeout(function () {
+        _setTimeout(function () {
           input.current.setState({
             value: newValue
           });
         }, 5); // the package has its own timeout in it which breaks the react lifecycle, so we need to play dirty too - JRA 01/15/2020
+
       }
     }
 

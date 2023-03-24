@@ -1,7 +1,7 @@
-import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
-import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
+import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
 import { uppercaseFirstLetter } from './utils';
 var IconLibrary = {};
 export function initComponentIconLibrary() {

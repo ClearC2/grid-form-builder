@@ -1,8 +1,8 @@
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _toConsumableArray from "@babel/runtime-corejs3/helpers/esm/toConsumableArray";
 
 var _context;
 
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import { Set } from 'immutable';
 /*
   Select Fields are converted to multiselects
@@ -34,7 +34,8 @@ export var DATES = Set(['date', 'datetime']);
 * the input type may change
 */
 
-export var TYPEAHEAD_CONDITIONS = Set(['is equal to', 'is not equal to', 'is one of', 'is not one of']);
+export var TYPEAHEAD_CONDITIONS = Set(['is equal to', 'is not equal to', 'is one of', 'is not one of']); // eslint-disable-next-line max-len
+
 export var NUMERICAL_CONDITIONS = Set(['last (x) days', 'last (x) months', 'next (x) days', 'last (x) weeks', 'next (x) weeks', 'next (x) months', 'is top (x)', 'is bottom (x)', 'is top (%)', 'is bottom (%)']);
 export var TEXT_INPUTS = ['textarea', 'checkbox', 'radio']; // export const LIST_INPUTS = []
 

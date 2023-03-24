@@ -1,64 +1,70 @@
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopRequireWildcard");
+var _typeof3 = require("@babel/runtime-corejs3/helpers/typeof");
+
+var _Object$keys2 = require("@babel/runtime-corejs3/core-js-stable/object/keys");
+
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty2 = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
+
+var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _Reflect$construct = require("@babel/runtime-corejs3/core-js-stable/reflect/construct");
+
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
 
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
-var _Object$defineProperty2 = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
-
-_Object$defineProperty2(exports, "__esModule", {
+_Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
 exports.default = exports.FormValueContext = void 0;
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-property"));
-
-var _defineProperties = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-properties"));
-
-var _getOwnPropertyDescriptors = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors"));
-
-var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor"));
-
-var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
-
-var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols"));
-
-var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
-
-var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
-
-var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
-
-var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/createClass"));
-
 var _extends2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/extends"));
 
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/objectWithoutProperties"));
 
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+
+var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
+
+var _splice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/splice"));
+
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
+var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
+
+var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
+
+var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
+
+var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/createClass"));
+
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/classCallCheck"));
-
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf4 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
 
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/inherits"));
 
-var _splice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/splice"));
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
 
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
-
-var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
-
-var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
@@ -84,12 +90,23 @@ var _fa = require("react-icons/fa");
 
 var _useTheme2 = _interopRequireWildcard(require("./theme/useTheme"));
 
-function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+var _excluded = ["size"],
+    _excluded2 = ["formValues", "theme"];
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context6; (0, _forEach.default)(_context6 = ownKeys(Object(source), true)).call(_context6, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context7; (0, _forEach.default)(_context7 = ownKeys(Object(source))).call(_context7, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context6, _context7; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context6 = ownKeys(Object(source), !0)).call(_context6, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context7 = ownKeys(Object(source))).call(_context7, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var inputEventListenerDebouncer = null;
-var FormValueContext = (0, _react.createContext)([(0, _immutable.Map)(), function () {}]);
+var FormValueContext = /*#__PURE__*/(0, _react.createContext)([(0, _immutable.Map)(), function () {}]);
 exports.FormValueContext = FormValueContext;
 var debug = false;
 
@@ -297,20 +314,20 @@ var FormBuilder = function FormBuilder(props) {
           removeItem(i);
         };
 
-        elements.push(_react.default.createElement("div", {
+        elements.push( /*#__PURE__*/_react.default.createElement("div", {
           key: i + '',
           className: className,
           css: theme.gridItem
-        }, draggable && isActive && _react.default.createElement("div", {
+        }, draggable && isActive && /*#__PURE__*/_react.default.createElement("div", {
           className: "active-gfb-item-action-menu",
           onClick: removeSelf
-        }, _react.default.createElement("div", {
+        }, /*#__PURE__*/_react.default.createElement("div", {
           className: "item-action-button action-button-remove"
-        }, _react.default.createElement(_fa.FaTrash, {
+        }, /*#__PURE__*/_react.default.createElement(_fa.FaTrash, {
           height: 20,
           width: 20,
           color: "white"
-        }))), _react.default.createElement(_Inputs.default, {
+        }))), /*#__PURE__*/_react.default.createElement(_Inputs.default, {
           field: field,
           handleOnChange: handleOnChange,
           requiredWarning: requiredWarning,
@@ -436,12 +453,12 @@ var FormBuilder = function FormBuilder(props) {
   }, [formSchema, dropItemConfig, handleOnDimensionChange]);
   debugLog('render');
   dropItemDimensions.i = '-1';
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     id: id,
     className: "grid-form-builder-parent",
     ref: setContainerRef,
     style: style
-  }, _react.default.createElement(_reactGridLayout.default, {
+  }, /*#__PURE__*/_react.default.createElement(_reactGridLayout.default, {
     ref: ReactGridLayout,
     autoSize: rglAutoSize,
     style: rglStyle,
@@ -540,13 +557,13 @@ FormBuilder.defaultProps = {
 };
 FormBuilder.count = 1;
 
-var PureFormBuilder =
-/*#__PURE__*/
-function (_PureComponent) {
+var PureFormBuilder = /*#__PURE__*/function (_PureComponent) {
   (0, _inherits2.default)(PureFormBuilder, _PureComponent);
 
+  var _super = _createSuper(PureFormBuilder);
+
   function PureFormBuilder() {
-    var _getPrototypeOf2, _context;
+    var _context;
 
     var _this;
 
@@ -556,19 +573,19 @@ function (_PureComponent) {
       args[_key] = arguments[_key];
     }
 
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf4.default)(PureFormBuilder)).call.apply(_getPrototypeOf2, (0, _concat.default)(_context = [this]).call(_context, args)));
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "render", function () {
-      return _react.default.createElement(FormBuilder, _this.props);
+    _this = _super.call.apply(_super, (0, _concat.default)(_context = [this]).call(_context, args));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "render", function () {
+      return /*#__PURE__*/_react.default.createElement(FormBuilder, _this.props);
     });
     return _this;
   }
 
-  return PureFormBuilder;
+  return (0, _createClass2.default)(PureFormBuilder);
 }(_react.PureComponent);
 
 var SizeMemoizer = function SizeMemoizer(props) {
   var size = props.size,
-      rest = (0, _objectWithoutProperties2.default)(props, ["size"]);
+      rest = (0, _objectWithoutProperties2.default)(props, _excluded);
 
   var _useState11 = (0, _react.useState)(size.width),
       _useState12 = (0, _slicedToArray2.default)(_useState11, 2),
@@ -582,7 +599,7 @@ var SizeMemoizer = function SizeMemoizer(props) {
       setWidth(w);
     }
   }, [size, width]);
-  return _react.default.createElement(PureFormBuilder, (0, _extends2.default)({
+  return /*#__PURE__*/_react.default.createElement(PureFormBuilder, (0, _extends2.default)({
     width: width
   }, rest));
 };
@@ -594,13 +611,13 @@ var SizeMeHOC = (0, _reactSizeme.default)({
   refreshRate: 75
 })(SizeMemoizer);
 
-var FormValidator =
-/*#__PURE__*/
-function (_Component) {
+var FormValidator = /*#__PURE__*/function (_Component) {
   (0, _inherits2.default)(FormValidator, _Component);
 
+  var _super2 = _createSuper(FormValidator);
+
   function FormValidator() {
-    var _getPrototypeOf3, _context2;
+    var _context2;
 
     var _this2;
 
@@ -610,13 +627,13 @@ function (_Component) {
       args[_key2] = arguments[_key2];
     }
 
-    _this2 = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf3 = (0, _getPrototypeOf4.default)(FormValidator)).call.apply(_getPrototypeOf3, (0, _concat.default)(_context2 = [this]).call(_context2, args)));
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this2), "state", {
+    _this2 = _super2.call.apply(_super2, (0, _concat.default)(_context2 = [this]).call(_context2, args));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this2), "state", {
       validate: false,
       requiredWarning: false,
       formValues: _this2.props.formValues ? _this2.props.formValues.toJS ? _this2.props.formValues : (0, _immutable.fromJS)(_this2.props.formValues) : (0, _immutable.Map)()
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this2), "onSubmit", function () {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this2), "onSubmit", function () {
       var _this2$props = _this2.props,
           _this2$props$formSche = _this2$props.formSchema,
           formSchema = _this2$props$formSche === void 0 ? (0, _immutable.Map)() : _this2$props$formSche,
@@ -642,7 +659,7 @@ function (_Component) {
         handleSubmit();
       }
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this2), "validate", function () {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this2), "validate", function () {
       var _this2$props2 = _this2.props,
           _this2$props2$formSch = _this2$props2.formSchema,
           formSchema = _this2$props2$formSch === void 0 ? (0, _immutable.Map)() : _this2$props2$formSch,
@@ -690,17 +707,17 @@ function (_Component) {
 
       return reasons;
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this2), "setContainerRef", function (ref) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this2), "setContainerRef", function (ref) {
       _this2.grid = ref;
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this2), "updateFormValues", function (formValues) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this2), "updateFormValues", function (formValues) {
       return _this2.setState(function () {
         return {
           formValues: formValues.toJS ? formValues : (0, _immutable.fromJS)(formValues)
         };
       });
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this2), "handleLinkClick", function (link) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this2), "handleLinkClick", function (link) {
       var formValues = _this2.state.formValues;
       var handleLinkClick = _this2.props.handleLinkClick;
       var values = formValues.toJS ? formValues : (0, _immutable.fromJS)(formValues);
@@ -776,12 +793,12 @@ function (_Component) {
       var _this$props = this.props,
           values = _this$props.formValues,
           theme = _this$props.theme,
-          rest = (0, _objectWithoutProperties2.default)(_this$props, ["formValues", "theme"]);
-      return _react.default.createElement(_useTheme2.ThemeProvider, {
+          rest = (0, _objectWithoutProperties2.default)(_this$props, _excluded2);
+      return /*#__PURE__*/_react.default.createElement(_useTheme2.ThemeProvider, {
         theme: theme
-      }, _react.default.createElement(FormValueContext.Provider, {
+      }, /*#__PURE__*/_react.default.createElement(FormValueContext.Provider, {
         value: [formValues, this.updateFormValues]
-      }, _react.default.createElement(SizeMeHOC, (0, _extends2.default)({}, rest, {
+      }, /*#__PURE__*/_react.default.createElement(SizeMeHOC, (0, _extends2.default)({}, rest, {
         validate: this.props.validate || validate,
         requiredWarning: requiredWarning,
         setContainerRef: this.setContainerRef,
@@ -793,7 +810,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = FormValidator;
-(0, _defineProperty3.default)(FormValidator, "propTypes", {
+(0, _defineProperty2.default)(FormValidator, "propTypes", {
   formSchema: _propTypes.default.object,
   formValues: _propTypes.default.object,
   handleOnChange: _propTypes.default.func,
@@ -824,7 +841,7 @@ exports.default = FormValidator;
   autoComplete: _propTypes.default.string,
   theme: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object])
 });
-(0, _defineProperty3.default)(FormValidator, "defaultProps", {
+(0, _defineProperty2.default)(FormValidator, "defaultProps", {
   handleSubmit: function handleSubmit() {
     console.warn('onSubmit was called but no handleSubmit function was provided.');
   } // eslint-disable-line

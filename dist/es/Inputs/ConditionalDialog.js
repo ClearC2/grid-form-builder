@@ -98,12 +98,12 @@ var ConditionalDialog = function ConditionalDialog(props) {
         });
       }
 
-      conditionElements.push(React.createElement("div", {
+      conditionElements.push( /*#__PURE__*/React.createElement("div", {
         style: {
           borderTop: '1px solid lightgray'
         },
         key: i
-      }, React.createElement(ConditionalPredicate, _extends({}, props, {
+      }, /*#__PURE__*/React.createElement(ConditionalPredicate, _extends({}, props, {
         value: indexedValue,
         onChange: onChange,
         index: i
@@ -145,7 +145,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
     return setConditions(conditions + 1);
   };
 
-  return React.createElement(Dialog, {
+  return /*#__PURE__*/React.createElement(Dialog, {
     size: {
       width: '800px',
       height: "420px"
@@ -164,23 +164,23 @@ var ConditionalDialog = function ConditionalDialog(props) {
     },
     enableResizing: true,
     disableDragging: true
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       width: '100%',
       height: '100%'
     }
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'row',
       padding: '10px',
       height: '54px'
     }
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       width: '90%'
     }
-  }, React.createElement("h4", {
+  }, /*#__PURE__*/React.createElement("h4", {
     style: {
       height: '100%',
       margin: 0,
@@ -188,25 +188,25 @@ var ConditionalDialog = function ConditionalDialog(props) {
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap'
     }
-  }, props.label, " condition:"), conditions > 1 && value && value.get('type') && React.createElement("span", {
+  }, props.label, " condition:"), conditions > 1 && value && value.get('type') && /*#__PURE__*/React.createElement("span", {
     className: "pull-right",
     style: {
       marginTop: '-32px'
     }
-  }, React.createElement(Toggle, {
+  }, /*#__PURE__*/React.createElement(Toggle, {
     value: value.get('type') === 'and',
     onToggle: handleToggleClick,
     activeLabel: "and",
     inactiveLabel: "or"
-  }))), React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '10%'
     }
-  }, React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "close",
     onClick: closeModal
-  }, React.createElement("span", null, "\xD7")))), React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, "\xD7")))), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '100%',
       height: 'calc(100% - 54px)',
@@ -215,7 +215,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
       display: 'flex',
       flexDirection: 'column'
     }
-  }, renderConditions()), React.createElement("button", {
+  }, renderConditions()), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "btn btn-primary",
     style: {
@@ -225,7 +225,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
       right: 90
     },
     onClick: addCondition
-  }, "Add Condition"), React.createElement("button", {
+  }, "Add Condition"), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "btn btn-primary",
     style: {

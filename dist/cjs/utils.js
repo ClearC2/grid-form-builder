@@ -1,38 +1,38 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
-
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.convertLabelValueArrayIntoDelimitedValue = exports.convertDelimitedValueIntoLabelValueArray = exports.usePrevious = exports.updateLayoutArray = exports.searchForLayoutArray = exports.uppercaseFirstLetter = exports.emailValidator = exports.isMobile = exports.randomId = exports.timeStamp = void 0;
-
-var _find = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/find"));
-
-var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/index-of"));
-
-var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
-
-var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+exports.usePrevious = exports.uppercaseFirstLetter = exports.updateLayoutArray = exports.timeStamp = exports.searchForLayoutArray = exports.randomId = exports.isMobile = exports.emailValidator = exports.convertLabelValueArrayIntoDelimitedValue = exports.convertDelimitedValueIntoLabelValueArray = void 0;
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
 
-var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
-
-var _stringify = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/json/stringify"));
-
-var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
-
-var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
-
-var _includes = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/includes"));
+var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
 
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
-var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
+var _includes = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/includes"));
+
+var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
+
+var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
+
+var _stringify = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/json/stringify"));
+
+var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
+
+var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+
+var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
+
+var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/index-of"));
+
+var _find = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/find"));
 
 var _immutable = require("immutable");
 

@@ -1,10 +1,16 @@
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopRequireWildcard");
+var _typeof = require("@babel/runtime-corejs3/helpers/typeof");
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
+var _Reflect$construct = require("@babel/runtime-corejs3/core-js-stable/reflect/construct");
+
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
 
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
@@ -18,17 +24,19 @@ var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime-c
 
 var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
 
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/inherits"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
@@ -50,18 +58,26 @@ var _Util = _interopRequireDefault(require("cleave.js/src/utils/Util"));
 
 var _DefaultProperties = _interopRequireDefault(require("cleave.js/src/common/DefaultProperties"));
 
-// /* eslint-disable */
-// This is a temporary internal fork of cleave.js to remove deprecated react life cycles until cleave.js can be updated - JRA 11/21/2019
-var Cleave =
-/*#__PURE__*/
-function (_Component) {
+var _excluded = ["value", "options", "onKeyDown", "onFocus", "onBlur", "onChange", "onInit", "htmlRef"];
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+var Cleave = /*#__PURE__*/function (_Component) {
   (0, _inherits2.default)(Cleave, _Component);
+
+  var _super = _createSuper(Cleave);
 
   function Cleave(_props) {
     var _this;
 
     (0, _classCallCheck2.default)(this, Cleave);
-    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(Cleave).call(this, _props));
+    _this = _super.call(this, _props);
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "updateRegisteredEvents", function (props) {
       var _this$registeredEvent = _this.registeredEvents,
           onKeyDown = _this$registeredEvent.onKeyDown,
@@ -377,7 +393,7 @@ function (_Component) {
       endPos = _Util.default.getNextCursorPosition(endPos, oldValue, newValue, pps.delimiter, pps.delimiters);
 
       if (_this.isAndroid) {
-        window.setTimeout(function () {
+        (0, _setTimeout2.default)(function () {
           !bypassSetState && _this.setState({
             value: newValue,
             cursorPosition: endPos
@@ -471,8 +487,8 @@ function (_Component) {
           onChange = _this$props2.onChange,
           onInit = _this$props2.onInit,
           htmlRef = _this$props2.htmlRef,
-          propsToTransfer = (0, _objectWithoutProperties2.default)(_this$props2, ["value", "options", "onKeyDown", "onFocus", "onBlur", "onChange", "onInit", "htmlRef"]);
-      return _react.default.createElement("input", (0, _extends2.default)({
+          propsToTransfer = (0, _objectWithoutProperties2.default)(_this$props2, _excluded);
+      return /*#__PURE__*/_react.default.createElement("input", (0, _extends2.default)({
         type: "text",
         ref: function ref(_ref) {
           _this2.element = _ref;

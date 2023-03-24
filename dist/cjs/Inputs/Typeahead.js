@@ -1,72 +1,78 @@
 "use strict";
 
+var _Reflect$construct = require("@babel/runtime-corejs3/core-js-stable/reflect/construct");
+
+var _Object$keys2 = require("@babel/runtime-corejs3/core-js-stable/object/keys");
+
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty2 = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty2 = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
+
+var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
-var _Object$defineProperty2 = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
-
-_Object$defineProperty2(exports, "__esModule", {
+_Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
 exports.default = void 0;
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-property"));
-
-var _defineProperties = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-properties"));
-
-var _getOwnPropertyDescriptors = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors"));
-
-var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor"));
-
-var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols"));
-
-var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
-
-var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
-
-var _promise = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/promise"));
-
-var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
-
-var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
-
-var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
-
-var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
-
-var _stringify = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/json/stringify"));
-
-var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
-
-var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
-
-var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
-
-var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/index-of"));
-
-var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
-
-var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/extends"));
+var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
 
 var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
 
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
+var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
 
-var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
+var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
+
+var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/index-of"));
+
+var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
+
+var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+
+var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
+
+var _stringify = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/json/stringify"));
+
+var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
+
+var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
+
+var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
+
+var _promise = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/promise"));
+
+var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
+
+var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
+
+var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/extends"));
+
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/createClass"));
 
+var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/inherits"));
+
 var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
 
 var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
 
-var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/inherits"));
-
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _core = require("@emotion/core");
 
@@ -88,22 +94,26 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIco
 
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
-function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context15; (0, _forEach.default)(_context15 = ownKeys(Object(source), true)).call(_context15, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context16; (0, _forEach.default)(_context16 = ownKeys(Object(source))).call(_context16, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context15, _context16; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context15 = ownKeys(Object(source), !0)).call(_context15, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context16 = ownKeys(Object(source))).call(_context16, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 var viewPortHeight = document.documentElement.clientHeight;
 var debounce = null;
 var labelCopyTimer = null;
 
-var TypeaheadPerformanceOptimizer =
-/*#__PURE__*/
-function (_PureComponent) {
+var TypeaheadPerformanceOptimizer = /*#__PURE__*/function (_PureComponent) {
   (0, _inherits2.default)(TypeaheadPerformanceOptimizer, _PureComponent);
+
+  var _super = _createSuper(TypeaheadPerformanceOptimizer);
 
   function TypeaheadPerformanceOptimizer() {
     (0, _classCallCheck2.default)(this, TypeaheadPerformanceOptimizer);
-    return (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(TypeaheadPerformanceOptimizer).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   (0, _createClass2.default)(TypeaheadPerformanceOptimizer, [{
@@ -181,7 +191,7 @@ function (_PureComponent) {
   return TypeaheadPerformanceOptimizer;
 }(_react.PureComponent);
 
-(0, _defineProperty3.default)(TypeaheadPerformanceOptimizer, "propTypes", {
+(0, _defineProperty2.default)(TypeaheadPerformanceOptimizer, "propTypes", {
   Typeahead: _propTypes.default.func,
   setRef: _propTypes.default.any,
   className: _propTypes.default.string,
@@ -397,19 +407,19 @@ var Typeahead = function Typeahead(props) {
 
   var _useState29 = (0, _react.useState)({
     container: function container(base) {
-      return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
+      return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
     },
     control: function control(base) {
-      return _objectSpread({}, base, {}, inputControl, {}, inputControlTheme);
+      return _objectSpread(_objectSpread(_objectSpread({}, base), inputControl), inputControlTheme);
     },
     valueContainer: function valueContainer(base) {
-      return _objectSpread({}, base, {}, _valueContainer, {}, valueContainerTheme);
+      return _objectSpread(_objectSpread(_objectSpread({}, base), _valueContainer), valueContainerTheme);
     },
     indicatorsContainer: function indicatorsContainer(base) {
-      return _objectSpread({}, base, {}, indicators, {}, indicatorsTheme);
+      return _objectSpread(_objectSpread(_objectSpread({}, base), indicators), indicatorsTheme);
     },
     option: function option(base) {
-      return _objectSpread({}, base, {}, optionsStyle, {}, optionsTheme);
+      return _objectSpread(_objectSpread(_objectSpread({}, base), optionsStyle), optionsTheme);
     },
     multiValue: function multiValue(base) {
       if (!interactive) {
@@ -419,19 +429,19 @@ var Typeahead = function Typeahead(props) {
         base.backgroundColor = '#8bb7ff91';
       }
 
-      return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
+      return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
     },
     singleValue: function singleValue(base) {
       if (!interactive) {
         base.color = 'green';
       }
 
-      return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
+      return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
     },
     menuPortal: function menuPortal(base) {
       var top = menuPlacement === 'bottom' ? base.top - 8 + (_menuPortal.bottomTopBias || 0) : base.top + 8 + (_menuPortal.topTopBias || 0);
       var zIndex = _maxSafeInteger.default;
-      return _objectSpread({}, base, {
+      return _objectSpread(_objectSpread({}, base), {}, {
         top: top,
         zIndex: zIndex
       }, _menuPortal);
@@ -516,19 +526,19 @@ var Typeahead = function Typeahead(props) {
   (0, _react.useEffect)(function () {
     setReactSelectStyles({
       container: function container(base) {
-        return _objectSpread({}, base, {}, inputInner, {}, inputInnerTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
       },
       control: function control(base) {
-        return _objectSpread({}, base, {}, inputControl, {}, inputControlTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), inputControl), inputControlTheme);
       },
       valueContainer: function valueContainer(base) {
-        return _objectSpread({}, base, {}, _valueContainer, {}, valueContainerTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), _valueContainer), valueContainerTheme);
       },
       indicatorsContainer: function indicatorsContainer(base) {
-        return _objectSpread({}, base, {}, indicators, {}, indicatorsTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), indicators), indicatorsTheme);
       },
       option: function option(base) {
-        return _objectSpread({}, base, {}, optionsStyle, {}, optionsTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), optionsStyle), optionsTheme);
       },
       multiValue: function multiValue(base) {
         if (!interactive) {
@@ -538,19 +548,19 @@ var Typeahead = function Typeahead(props) {
           base.backgroundColor = '#8bb7ff91';
         }
 
-        return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
       },
       singleValue: function singleValue(base) {
         if (!interactive) {
           base.color = 'green';
         }
 
-        return _objectSpread({}, base, {}, valueStyle, {}, valueTheme);
+        return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
       },
       menuPortal: function menuPortal(base) {
         var top = menuPlacement === 'bottom' ? base.top - 8 + (_menuPortal.bottomTopBias || 0) : base.top + 8 + (_menuPortal.topTopBias || 0);
         var zIndex = _maxSafeInteger.default;
-        return _objectSpread({}, base, {
+        return _objectSpread(_objectSpread({}, base), {}, {
           top: top,
           zIndex: zIndex
         }, _menuPortal);
@@ -564,7 +574,7 @@ var Typeahead = function Typeahead(props) {
     if (isRequiredFlag && (0, _trim.default)(_context3 = value + '').call(_context3).length === 0 && !isFocused) {
       if (!components.showValidationError) {
         // if it already is showing validation error, don't needlessly update state, this will cause an infinite loop
-        setComponents(_objectSpread({}, components, {
+        setComponents(_objectSpread(_objectSpread({}, components), {}, {
           DropdownIndicator: function DropdownIndicator() {
             return (0, _core.jsx)(_ValidationErrorIcon.default, {
               message: "This Field is Required"
@@ -574,7 +584,7 @@ var Typeahead = function Typeahead(props) {
         }));
       }
     } else if (components.showValidationError) {
-      setComponents(_objectSpread({}, components, {
+      setComponents(_objectSpread(_objectSpread({}, components), {}, {
         showValidationError: false,
         DropdownIndicator: _reactSelect.components.DropdownIndicator
       }));
@@ -789,13 +799,13 @@ var Typeahead = function Typeahead(props) {
     if (draggable) e.stopPropagation();
   }, [draggable]);
   var handleInputBlur = (0, _react.useCallback)(function () {
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false)));
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, false)));
     setIsFocused(false);
     updateInputValue('');
   }, [menuIsOpen, updateIsMenuOpen, name]);
   var openMenu = (0, _react.useCallback)(function () {
     if (!readonly && !disabled && !menuIsOpen[name]) {
-      updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, true)));
+      updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, true)));
     }
   }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name]);
   var setMenuOpenPosition = (0, _react.useCallback)(function () {
@@ -990,7 +1000,7 @@ var Typeahead = function Typeahead(props) {
       handleSingleValueChange(newValue);
     }
 
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, false))); // closes menu when new option gets selected
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, false))); // closes menu when new option gets selected
 
     updateInputValue('');
   }, [delimit, delimiter, emptyFields, handleSingleValueChange, multi, name, onChange, stringify, typeahead, menuIsOpen]);
@@ -1024,7 +1034,7 @@ var Typeahead = function Typeahead(props) {
       menuOpenState = (e.target.classList.contains('gfb-input__menu-list') || e.target.classList.contains('gfb-input__control')) && menuIsOpen[name];
     }
 
-    updateIsMenuOpen(_objectSpread({}, menuIsOpen, (0, _defineProperty3.default)({}, name, menuOpenState)));
+    updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, menuOpenState)));
   }, [menuIsOpen, name, updateIsMenuOpen]);
   var Typeahead = input.Typeahead;
   var className = 'gfb-input-inner';

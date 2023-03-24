@@ -1,42 +1,48 @@
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopRequireWildcard");
+var _typeof3 = require("@babel/runtime-corejs3/helpers/typeof");
+
+var _Reflect$construct = require("@babel/runtime-corejs3/core-js-stable/reflect/construct");
+
+var _Object$keys2 = require("@babel/runtime-corejs3/core-js-stable/object/keys");
+
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty2 = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
+
+var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
 
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
-var _Object$defineProperty2 = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
-
-_Object$defineProperty2(exports, "__esModule", {
+_Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
 exports.default = void 0;
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-property"));
-
-var _defineProperties = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-properties"));
-
-var _getOwnPropertyDescriptors = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors"));
-
-var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor"));
-
-var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
-
-var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols"));
-
-var _sort = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/sort"));
-
-var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
-
-var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
-
-var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
-
-var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
+var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
 var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
 
-var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
+
+var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
+
+var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
+
+var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
+
+var _sort = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/sort"));
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
 
@@ -44,15 +50,15 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs3/he
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/inherits"));
 
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -64,16 +70,24 @@ var _Toggle = _interopRequireDefault(require("./Toggle"));
 
 var _index = require("../../../index");
 
-function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context21; (0, _forEach.default)(_context21 = ownKeys(Object(source), true)).call(_context21, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context22; (0, _forEach.default)(_context22 = ownKeys(Object(source))).call(_context22, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context21, _context22; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context21 = ownKeys(Object(source), !0)).call(_context21, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context22 = ownKeys(Object(source))).call(_context22, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 var X_ICON_CLASS = 'icon-close pull-right pointer';
 
-var ConditionalTable =
-/*#__PURE__*/
-function (_Component) {
+var ConditionalTable = /*#__PURE__*/function (_Component) {
   (0, _inherits2.default)(ConditionalTable, _Component);
+
+  var _super = _createSuper(ConditionalTable);
 
   function ConditionalTable(props) {
     var _context18;
@@ -81,8 +95,8 @@ function (_Component) {
     var _this;
 
     (0, _classCallCheck2.default)(this, ConditionalTable);
-    _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(ConditionalTable).call(this, props));
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "buildMultiString", function (key, value) {
+    _this = _super.call(this, props);
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildMultiString", function (key, value) {
       var exclude = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       var rawValue = arguments.length > 3 ? arguments[3] : undefined;
       var valString = '';
@@ -137,7 +151,7 @@ function (_Component) {
         return '';
       }
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "getLabel", function (key) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getLabel", function (key) {
       var _this$props$formSchem = _this.props.formSchema,
           formSchema = _this$props$formSchem === void 0 ? {} : _this$props$formSchem;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
@@ -156,7 +170,7 @@ function (_Component) {
         return 'No Key in schema';
       }
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "getFormat", function (key) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getFormat", function (key) {
       var _this$props$formSchem2 = _this.props.formSchema,
           formSchema = _this$props$formSchem2 === void 0 ? {} : _this$props$formSchem2;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
@@ -181,7 +195,7 @@ function (_Component) {
 
       return '';
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "getNewValue", function (value, key) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getNewValue", function (value, key) {
       var rawValues;
       var newValue = (0, _immutable.List)();
 
@@ -232,7 +246,7 @@ function (_Component) {
         rawValues: rawValues
       };
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "buildRequest", function () {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildRequest", function () {
       var _context3;
 
       var formValues = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.props.formValues;
@@ -355,14 +369,14 @@ function (_Component) {
       });
       return req;
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "onNextClick", function () {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "onNextClick", function () {
       var req = _this.buildRequest();
 
       if (_this.props.onNextClick) {
         _this.props.onNextClick(req);
       }
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "handleToggleClick", function (e) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "handleToggleClick", function (e) {
       if (_this.props.enableToggle) {
         if (e) {
           _this.setState({
@@ -383,7 +397,7 @@ function (_Component) {
         }
       }
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "resetForm", function () {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "resetForm", function () {
       var _context5;
 
       var formValues = _this.prop.formValues;
@@ -411,7 +425,7 @@ function (_Component) {
         }
       });
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "handleRemoveConditionClick", function (e, key, predicateIndex) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "handleRemoveConditionClick", function (e, key, predicateIndex) {
       var schema = _this.props.getFieldSchema(key);
 
       if (schema && schema.config && (schema.config.type === 'textarea' || schema.config.type === 'checkbox' || schema.config.type === 'radio')) {
@@ -473,9 +487,9 @@ function (_Component) {
         }
       }
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "renderDeleteIcon", function (key, value, predicateIndex) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "renderDeleteIcon", function (key, value, predicateIndex) {
       if (_this.props.enableDelete) {
-        return _react.default.createElement("i", {
+        return /*#__PURE__*/_react.default.createElement("i", {
           id: 'deleteIcon',
           className: X_ICON_CLASS,
           style: {
@@ -492,14 +506,14 @@ function (_Component) {
         return null;
       }
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "getConditionValue", function (rawValue) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getConditionValue", function (rawValue) {
       if (rawValue && rawValue.condition) {
         return rawValue.condition;
       } else {
         return 'contains';
       }
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "getFieldType", function (fieldName) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getFieldType", function (fieldName) {
       var _context7;
 
       var _this$props$formSchem3 = _this.props.formSchema,
@@ -514,13 +528,13 @@ function (_Component) {
       });
       return type;
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "buildTableRow", function (key, value) {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildTableRow", function (key, value) {
       var predicateIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
       var extraCondRowStyles = {};
       var rowClick;
 
       if (_this.props.conditionRowOnClick) {
-        extraCondRowStyles = _objectSpread({}, extraCondRowStyles, {
+        extraCondRowStyles = _objectSpread(_objectSpread({}, extraCondRowStyles), {}, {
           cursor: 'pointer'
         });
 
@@ -534,16 +548,16 @@ function (_Component) {
       if (value && _this.state.noValueConditions.has(value.condition)) {
         var _context8, _context9;
 
-        return _react.default.createElement("tr", {
+        return /*#__PURE__*/_react.default.createElement("tr", {
           key: (0, _concat.default)(_context8 = "row-".concat(key, "-")).call(_context8, predicateIndex),
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
-        }, _react.default.createElement("td", {
+        }, /*#__PURE__*/_react.default.createElement("td", {
           key: (0, _concat.default)(_context9 = "column-".concat(key, "-")).call(_context9, predicateIndex),
           style: {
             wordWrap: 'break-word'
           }
-        }, _react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key, value, predicateIndex)));
+        }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key, value, predicateIndex)));
       }
 
       if (value && typeof value === 'string') {
@@ -560,28 +574,30 @@ function (_Component) {
           }
         }
 
-        return (// for basic input
+        return (
+          /*#__PURE__*/
+          // for basic input
           _react.default.createElement("tr", {
             key: (0, _concat.default)(_context10 = "row-".concat(key, "-")).call(_context10, predicateIndex),
             style: _objectSpread({}, extraCondRowStyles),
             onClick: rowClick
-          }, _react.default.createElement("td", {
+          }, /*#__PURE__*/_react.default.createElement("td", {
             key: (0, _concat.default)(_context11 = "column-".concat(key, "-")).call(_context11, predicateIndex),
             style: {
               wordWrap: 'break-word'
             }
-          }, _react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value, predicateIndex)))
+          }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value, predicateIndex)))
         );
       } else if (typeof value === 'boolean') {
         var _context12, _context13;
 
-        return _react.default.createElement("tr", {
+        return /*#__PURE__*/_react.default.createElement("tr", {
           key: (0, _concat.default)(_context12 = "row-".concat(key, "-")).call(_context12, predicateIndex),
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
-        }, _react.default.createElement("td", {
+        }, /*#__PURE__*/_react.default.createElement("td", {
           key: (0, _concat.default)(_context13 = "column-".concat(key, "-")).call(_context13, predicateIndex)
-        }, _react.default.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
+        }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
       } else {
         var _context14, _context15, _context16, _context17;
 
@@ -589,13 +605,13 @@ function (_Component) {
           return null;
         }
 
-        return _react.default.createElement("tr", {
+        return /*#__PURE__*/_react.default.createElement("tr", {
           key: (0, _concat.default)(_context14 = "row-".concat(key, "-")).call(_context14, predicateIndex),
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
-        }, _react.default.createElement("td", {
+        }, /*#__PURE__*/_react.default.createElement("td", {
           key: (0, _concat.default)(_context15 = "column-".concat(key, "-")).call(_context15, predicateIndex)
-        }, _react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _concat.default)(_context16 = (0, _values.default)(value)).call(_context16, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, (0, _concat.default)(_context17 = (0, _values.default)(value)).call(_context17, value.dynamicValues || []), predicateIndex)));
+        }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _concat.default)(_context16 = (0, _values.default)(value)).call(_context16, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, (0, _concat.default)(_context17 = (0, _values.default)(value)).call(_context17, value.dynamicValues || []), predicateIndex)));
       }
     });
     var noValueConditions = [];
@@ -657,37 +673,37 @@ function (_Component) {
       var isDisabled = this.buildRequest(this.props.formValues).query.conditions.length === 0;
       var listOpen = this.state.listOpen;
       var extraFooters = this.props.extraFooters ? this.props.extraFooters : [];
-      return _react.default.createElement("div", {
+      return /*#__PURE__*/_react.default.createElement("div", {
         className: "table-responsive",
         style: {
           width: '100%',
           maxHeight: '620px'
         }
-      }, _react.default.createElement("div", {
+      }, /*#__PURE__*/_react.default.createElement("div", {
         style: {
           width: '100%',
           maxHeight: '550px',
           overflowY: 'auto'
         }
-      }, _react.default.createElement("table", {
+      }, /*#__PURE__*/_react.default.createElement("table", {
         className: "table table-bordered table-striped",
         style: {
           width: '100%'
         }
-      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", {
+      }, /*#__PURE__*/_react.default.createElement("thead", null, /*#__PURE__*/_react.default.createElement("tr", null, /*#__PURE__*/_react.default.createElement("th", {
         className: "col-lg-".concat(6, " col-md-", 6, " col-sm-", 6),
         style: {
           display: 'inlineBlock'
         }
-      }, _react.default.createElement("span", null, this.props.title), _react.default.createElement("span", {
+      }, /*#__PURE__*/_react.default.createElement("span", null, this.props.title), /*#__PURE__*/_react.default.createElement("span", {
         className: "pull-right"
-      }, _react.default.createElement(_Toggle.default, {
+      }, /*#__PURE__*/_react.default.createElement(_Toggle.default, {
         ref: "row-toggle",
         value: this.props.toggleValue === 'and',
         onToggle: this.handleToggleClick,
         activeLabel: "and",
         inactiveLabel: "or"
-      }))))), tbody.length && listOpen ? _react.default.createElement("tbody", null, tbody) : null, this.props.enableListToggle && _react.default.createElement("div", {
+      }))))), tbody.length && listOpen ? /*#__PURE__*/_react.default.createElement("tbody", null, tbody) : null, this.props.enableListToggle && /*#__PURE__*/_react.default.createElement("div", {
         style: {
           width: '100%',
           textAlign: 'center',
@@ -702,7 +718,7 @@ function (_Component) {
             };
           });
         }
-      }, "^"), _react.default.createElement("tfoot", null, _react.default.createElement("tr", null, _react.default.createElement("td", null, this.props.enableResetButton || this.props.enableNextButton ? _react.default.createElement("div", {
+      }, "^"), /*#__PURE__*/_react.default.createElement("tfoot", null, /*#__PURE__*/_react.default.createElement("tr", null, /*#__PURE__*/_react.default.createElement("td", null, this.props.enableResetButton || this.props.enableNextButton ? /*#__PURE__*/_react.default.createElement("div", {
         style: {
           marginRight: '10px',
           marginBottom: '10px',
@@ -711,7 +727,7 @@ function (_Component) {
           flexDirection: 'row-reverse',
           width: '100%'
         }
-      }, this.props.enableResetButton && _react.default.createElement("button", {
+      }, this.props.enableResetButton && /*#__PURE__*/_react.default.createElement("button", {
         className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
         style: {
           marginRight: '10px',
@@ -719,7 +735,7 @@ function (_Component) {
         },
         onClick: this.resetForm,
         disabled: isDisabled
-      }, "Reset"), this.props.enableNextButton && _react.default.createElement("button", {
+      }, "Reset"), this.props.enableNextButton && /*#__PURE__*/_react.default.createElement("button", {
         className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
         style: {
           marginRight: '10px',
@@ -734,7 +750,7 @@ function (_Component) {
 }(_react.Component);
 
 exports.default = ConditionalTable;
-(0, _defineProperty3.default)(ConditionalTable, "propTypes", {
+(0, _defineProperty2.default)(ConditionalTable, "propTypes", {
   formValues: _propTypes.default.object.isRequired,
   onNextClick: _propTypes.default.func.isRequired,
   formSchema: _propTypes.default.object,
@@ -755,7 +771,7 @@ exports.default = ConditionalTable;
   getFieldSchema: _propTypes.default.func,
   enableListToggle: _propTypes.default.bool
 });
-(0, _defineProperty3.default)(ConditionalTable, "defaultProps", {
+(0, _defineProperty2.default)(ConditionalTable, "defaultProps", {
   formValues: {},
   enableToggle: true,
   enableDelete: true,
