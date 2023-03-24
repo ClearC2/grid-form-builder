@@ -22,6 +22,8 @@ var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-c
 
 var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols"));
 
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/toConsumableArray"));
+
 var _splice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/splice"));
 
 var _parseInt2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-int"));
@@ -40,8 +42,6 @@ var _includes = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-s
 
 var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
 
-var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
-
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
@@ -54,7 +54,7 @@ var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-st
 
 var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
 
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/toConsumableArray"));
+var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -80,7 +80,12 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     propValue = (0, _immutable.Map)();
   }
 
-  var defaultCreatedInputOpts = (0, _toConsumableArray2.default)(props.keyword.options);
+  var defaultCreatedInputOpts = [];
+
+  if (props.keyword && props.keyword.options) {
+    defaultCreatedInputOpts = (0, _concat.default)(defaultCreatedInputOpts).call(defaultCreatedInputOpts, props.keyword.options);
+  }
+
   var propsVals = props.value.get('values').toJS();
 
   if (propsVals.length) {
@@ -450,7 +455,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           interactive: true,
           clearable: true,
           keyword: {
-            category: props.keyword.category,
+            category: props.keyword && props.keyword.category,
             default: '',
             options: createdInputOpts
           },
