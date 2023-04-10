@@ -77,6 +77,7 @@ var DateInput = function DateInput(props) {
 
   var elementId = useRef(randomId());
   var portalRef = useRef();
+  var inputRef = useRef();
 
   var _useState3 = useState(false),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -309,6 +310,7 @@ var DateInput = function DateInput(props) {
     css: theme.valueContainer
   }, jsx("input", {
     id: elementId.current,
+    ref: inputRef,
     className: className,
     name: name,
     value: valueOverride,
@@ -346,6 +348,7 @@ var DateInput = function DateInput(props) {
   }), showPicker && !canPickDay && jsx(MonthPicker, {
     elementId: elementId.current,
     ref: portalRef,
+    inputRef: inputRef,
     onChange: onChange,
     changeShowPicker: changeShowPicker,
     startDate: startDate,

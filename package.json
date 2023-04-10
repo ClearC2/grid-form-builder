@@ -93,7 +93,7 @@
     "rimraf": "^3.0.1",
     "snazzy": "^7.1.1",
     "standard": "10.0.0",
-    "yarn": "1.9.2"
+    "yarn": "1.22.19"
   },
   "peerDependencies": {
     "c2-dialog": "ClearC2/c2-dialog#^2.0.0",
@@ -119,7 +119,7 @@
     "react-html-id": "^0.1.5",
     "react-icons": "^3.8.0",
     "react-portal": "^4.1.2",
-    "react-quill": "^1.3.3",
+    "react-quill": "^2.0.0",
     "react-select": "^3.0.8",
     "react-sizeme": "^2.6.10",
     "react-toggle-button": "^2.2.0",

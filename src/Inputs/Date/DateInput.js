@@ -55,6 +55,7 @@ const DateInput = props => {
   const [inputValue, changeInputValue] = useState('')
   const elementId = useRef(randomId())
   const portalRef = useRef()
+  const inputRef = useRef()
   const [showPicker, changeShowPicker] = useState(false)
   const [inputFormat, setInputFormat] = useState()
   const [isFocused, setIsFocused] = useState(false)
@@ -221,6 +222,7 @@ const DateInput = props => {
           <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
             <input
               id={elementId.current}
+              ref={inputRef}
               className={className}
               name={name}
               value={valueOverride}
@@ -265,6 +267,7 @@ const DateInput = props => {
               <MonthPicker
                 elementId={elementId.current}
                 ref={portalRef}
+                inputRef={inputRef}
                 onChange={onChange}
                 changeShowPicker={changeShowPicker}
                 startDate={startDate}

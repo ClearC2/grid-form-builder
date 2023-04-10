@@ -971,8 +971,9 @@
         },
         "config": {
           "required": true,
+          "type": "month",
           "name": "inputtest",
-          "label": "Input"
+          "label": "Month"
         }
       }, {
         "type": "field",

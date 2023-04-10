@@ -16,7 +16,8 @@ const MonthPicker = forwardRef((props, ref) => {
     onChange,
     name,
     format,
-    setManualBlurCheck
+    setManualBlurCheck,
+    inputRef
   } = props
 
   const [yearOptions, setYearOptions] = useState([])
@@ -121,8 +122,19 @@ const MonthPicker = forwardRef((props, ref) => {
   if (yearOptions.indexOf(currentYear) === -1) {
     yearOptions.unshift(currentYear)
   }
+
+  let portalTop = 0
+  const inputPosition = inputRef.current?.getBoundingClientRect().y
+  if ((inputPosition + 254) > window.innerHeight) { // if the picker is going to go off screen, move it above the input - JRA 04/10/2023
+    portalTop = -254
+  }
+
   return (
-    <Portal id={elementId} ref={ref}>
+    <Portal
+      id={elementId}
+      ref={ref}
+      style={{portalTop}}
+    >
       <div className='gfb-month-picker-container'>
         <div className='gfb-month-picker-year-header'>
           <div
@@ -306,5 +318,6 @@ MonthPicker.propTypes = {
   futureYears: PropTypes.number,
   showPicker: PropTypes.bool,
   name: PropTypes.string,
-  setManualBlurCheck: PropTypes.func
+  setManualBlurCheck: PropTypes.func,
+  inputRef: PropTypes.object
 }

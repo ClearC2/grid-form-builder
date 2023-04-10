@@ -10,6 +10,8 @@ import moment from 'moment';
 import '../../styles/month-picker.css';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 var MonthPicker = forwardRef(function (props, ref) {
+  var _inputRef$current;
+
   var elementId = props.elementId,
       pastYears = props.pastYears,
       futureYears = props.futureYears,
@@ -19,7 +21,8 @@ var MonthPicker = forwardRef(function (props, ref) {
       onChange = props.onChange,
       name = props.name,
       format = props.format,
-      setManualBlurCheck = props.setManualBlurCheck;
+      setManualBlurCheck = props.setManualBlurCheck,
+      inputRef = props.inputRef;
 
   var _useState = useState([]),
       _useState2 = _slicedToArray(_useState, 2),
@@ -134,9 +137,20 @@ var MonthPicker = forwardRef(function (props, ref) {
     yearOptions.unshift(currentYear);
   }
 
+  var portalTop = 0;
+  var inputPosition = (_inputRef$current = inputRef.current) === null || _inputRef$current === void 0 ? void 0 : _inputRef$current.getBoundingClientRect().y;
+
+  if (inputPosition + 254 > window.innerHeight) {
+    // if the picker is going to go off screen, move it above the input - JRA 04/10/2023
+    portalTop = -254;
+  }
+
   return React.createElement(Portal, {
     id: elementId,
-    ref: ref
+    ref: ref,
+    style: {
+      portalTop: portalTop
+    }
   }, React.createElement("div", {
     className: "gfb-month-picker-container"
   }, React.createElement("div", {
@@ -267,5 +281,6 @@ MonthPicker.propTypes = {
   futureYears: PropTypes.number,
   showPicker: PropTypes.bool,
   name: PropTypes.string,
-  setManualBlurCheck: PropTypes.func
+  setManualBlurCheck: PropTypes.func,
+  inputRef: PropTypes.object
 };
