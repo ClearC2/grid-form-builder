@@ -1,13 +1,21 @@
+import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
 import _objectWithoutProperties from "@babel/runtime-corejs3/helpers/esm/objectWithoutProperties";
-import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
-import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
 import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
+import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
+var _excluded = ["value", "options", "onKeyDown", "onFocus", "onBlur", "onChange", "onInit", "htmlRef"];
+import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 // /* eslint-disable */
 // This is a temporary internal fork of cleave.js to remove deprecated react life cycles until cleave.js can be updated - JRA 11/21/2019
 import PropTypes from 'prop-types';
@@ -20,17 +28,17 @@ import CreditCardDetector from 'cleave.js/src/shortcuts/CreditCardDetector';
 import Util from 'cleave.js/src/utils/Util';
 import DefaultProperties from 'cleave.js/src/common/DefaultProperties';
 
-var Cleave =
-/*#__PURE__*/
-function (_Component) {
+var Cleave = /*#__PURE__*/function (_Component) {
   _inherits(Cleave, _Component);
+
+  var _super = _createSuper(Cleave);
 
   function Cleave(_props) {
     var _this;
 
     _classCallCheck(this, Cleave);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Cleave).call(this, _props));
+    _this = _super.call(this, _props);
 
     _defineProperty(_assertThisInitialized(_this), "updateRegisteredEvents", function (props) {
       var _this$registeredEvent = _this.registeredEvents,
@@ -365,12 +373,13 @@ function (_Component) {
       endPos = Util.getNextCursorPosition(endPos, oldValue, newValue, pps.delimiter, pps.delimiters);
 
       if (_this.isAndroid) {
-        window.setTimeout(function () {
+        _setTimeout(function () {
           !bypassSetState && _this.setState({
             value: newValue,
             cursorPosition: endPos
           });
         }, 1);
+
         return;
       }
 
@@ -458,9 +467,9 @@ function (_Component) {
           onChange = _this$props2.onChange,
           onInit = _this$props2.onInit,
           htmlRef = _this$props2.htmlRef,
-          propsToTransfer = _objectWithoutProperties(_this$props2, ["value", "options", "onKeyDown", "onFocus", "onBlur", "onChange", "onInit", "htmlRef"]);
+          propsToTransfer = _objectWithoutProperties(_this$props2, _excluded);
 
-      return React.createElement("input", _extends({
+      return /*#__PURE__*/React.createElement("input", _extends({
         type: "text",
         ref: function ref(_ref) {
           _this2.element = _ref;

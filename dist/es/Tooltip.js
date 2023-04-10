@@ -6,9 +6,9 @@ import Tooltip from 'react-tooltip';
 var PortalTooltip = function PortalTooltip(props) {
   var message = props.message,
       id = props.id;
-  return message && id ? React.createElement(Portal, null, React.createElement(Tooltip, {
+  return message && id ? /*#__PURE__*/React.createElement(Portal, null, /*#__PURE__*/React.createElement(Tooltip, {
     id: id
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     dangerouslySetInnerHTML: {
       __html: message
     }

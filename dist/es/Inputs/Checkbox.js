@@ -1,5 +1,5 @@
-import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';

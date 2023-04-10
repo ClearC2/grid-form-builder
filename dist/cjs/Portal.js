@@ -1,32 +1,34 @@
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopRequireWildcard");
+var _typeof = require("@babel/runtime-corejs3/helpers/typeof");
+
+var _Reflect$construct = require("@babel/runtime-corejs3/core-js-stable/reflect/construct");
+
+var _Object$keys = require("@babel/runtime-corejs3/core-js-stable/object/keys");
+
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
+
+var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
 
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
-var _Object$defineProperty2 = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
-
-_Object$defineProperty2(exports, "__esModule", {
+_Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
 exports.default = void 0;
-
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-property"));
-
-var _defineProperties = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-properties"));
-
-var _getOwnPropertyDescriptors = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors"));
-
-var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
-
-var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor"));
-
-var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
-
-var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols"));
-
-var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
@@ -34,15 +36,15 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs3/he
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/createClass"));
 
-var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
-
-var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
-
 var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/assertThisInitialized"));
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/inherits"));
 
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/getPrototypeOf"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -50,19 +52,27 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactDom = require("react-dom");
 
-function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context3; (0, _forEach.default)(_context3 = ownKeys(Object(source), true)).call(_context3, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context4; (0, _forEach.default)(_context4 = ownKeys(Object(source))).call(_context4, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context3, _context4; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context3 = ownKeys(Object(source), !0)).call(_context3, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context4 = ownKeys(Object(source))).call(_context4, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 var portal;
 
-var PortalTarget =
-/*#__PURE__*/
-function (_Component) {
+var PortalTarget = /*#__PURE__*/function (_Component) {
   (0, _inherits2.default)(PortalTarget, _Component);
 
+  var _super = _createSuper(PortalTarget);
+
   function PortalTarget() {
-    var _getPrototypeOf2, _context;
+    var _context;
 
     var _this;
 
@@ -72,12 +82,12 @@ function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(PortalTarget)).call.apply(_getPrototypeOf2, (0, _concat.default)(_context = [this]).call(_context, args)));
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "state", {
+    _this = _super.call.apply(_super, (0, _concat.default)(_context = [this]).call(_context, args));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "state", {
       id: ''
     });
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "element", document.createElement('div'));
-    (0, _defineProperty3.default)((0, _assertThisInitialized2.default)(_this), "setStyles", function () {
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "element", document.createElement('div'));
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "setStyles", function () {
       var _this$props$style = _this.props.style,
           style = _this$props$style === void 0 ? {} : _this$props$style;
       var offset = {};
@@ -154,7 +164,7 @@ function (_Component) {
       var _this$props = this.props,
           children = _this$props.children,
           className = _this$props.className;
-      return (0, _reactDom.createPortal)(_react.default.createElement("div", {
+      return /*#__PURE__*/(0, _reactDom.createPortal)( /*#__PURE__*/_react.default.createElement("div", {
         style: _objectSpread({}, this.setStyles()),
         className: className
       }, children), this.element);
@@ -163,14 +173,14 @@ function (_Component) {
   return PortalTarget;
 }(_react.Component);
 
-(0, _defineProperty3.default)(PortalTarget, "propTypes", {
+(0, _defineProperty2.default)(PortalTarget, "propTypes", {
   children: _propTypes.default.any,
   className: _propTypes.default.string,
   id: _propTypes.default.string,
   portalTarget: _propTypes.default.string,
   style: _propTypes.default.oneOfType([_propTypes.default.object, _propTypes.default.func])
 });
-(0, _defineProperty3.default)(PortalTarget, "defaultProps", {
+(0, _defineProperty2.default)(PortalTarget, "defaultProps", {
   id: 'portal',
 
   /*

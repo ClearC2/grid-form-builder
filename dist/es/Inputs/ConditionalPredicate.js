@@ -1,30 +1,29 @@
-import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
-import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
-import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
-import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/splice";
-import _parseInt from "@babel/runtime-corejs3/core-js-stable/parse-int";
-import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
-import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
-import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
-import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
-import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
-import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
-import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _toConsumableArray from "@babel/runtime-corejs3/helpers/esm/toConsumableArray";
+import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
+import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
+import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context13; _forEachInstanceProperty(_context13 = ownKeys(Object(source), true)).call(_context13, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context14; _forEachInstanceProperty(_context14 = ownKeys(Object(source))).call(_context14, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context13, _context14; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context13 = ownKeys(Object(source), !0)).call(_context13, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context14 = ownKeys(Object(source))).call(_context14, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
+import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
+import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
+import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
+import _parseInt from "@babel/runtime-corejs3/core-js-stable/parse-int";
+import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/splice";
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormBuilder } from '../index';
@@ -40,7 +39,11 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     propValue = Map();
   }
 
-  var defaultCreatedInputOpts = _toConsumableArray(props.keyword.options);
+  var defaultCreatedInputOpts = [];
+
+  if (props.keyword && props.keyword.options) {
+    defaultCreatedInputOpts = _concatInstanceProperty(defaultCreatedInputOpts).call(defaultCreatedInputOpts, props.keyword.options);
+  }
 
   var propsVals = props.value.get('values').toJS();
 
@@ -389,7 +392,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     delete extraFieldProps.onChange;
     delete extraFieldProps.handleOnChange;
     delete extraFieldProps.name;
-    delete _valuesInstanceProperty(extraFieldProps);
+    delete extraFieldProps.values;
     delete extraFieldProps.value;
 
     if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
@@ -403,7 +406,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           h: calculateFieldHeight(props.inputType.toLowerCase()),
           w: 8
         },
-        config: _objectSpread({}, extraFieldProps, {
+        config: _objectSpread(_objectSpread({}, extraFieldProps), {}, {
           link: undefined,
           autofocus: true,
           readonly: false,
@@ -412,7 +415,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           interactive: true,
           clearable: true,
           keyword: {
-            category: props.keyword.category,
+            category: props.keyword && props.keyword.category,
             default: '',
             options: createdInputOpts
           },
@@ -449,7 +452,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
             h: calculateFieldHeight(props.inputType.toLowerCase()),
             w: 8
           },
-          config: _objectSpread({}, extraFieldProps, {
+          config: _objectSpread(_objectSpread({}, extraFieldProps), {}, {
             link: undefined,
             readonly: false,
             name: _concatInstanceProperty(_context8 = "".concat(props.name, "-")).call(_context8, fieldCount),
@@ -703,12 +706,12 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     }, props.index);
   };
 
-  return React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     style: {
       width: '100%',
       height: '100%'
     }
-  }, React.createElement(FormBuilder, {
+  }, /*#__PURE__*/React.createElement(FormBuilder, {
     formSchema: getSchema(),
     formValues: modalValues,
     conditionalSearch: false,

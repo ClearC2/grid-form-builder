@@ -12,19 +12,19 @@ var ValidationErrorIcon = function ValidationErrorIcon(props) {
       _props$type = props.type,
       type = _props$type === void 0 ? 'error' : _props$type;
   var id = useRef(randomId());
-  return React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     className: "gfb-input__indicator gfb-validation-error-indicator"
-  }, React.createElement(FaExclamationTriangle, {
+  }, /*#__PURE__*/React.createElement(FaExclamationTriangle, {
     id: id.current,
     "data-tip": true,
     "data-for": id.current,
     color: color
-  }), message && React.createElement(Portal, {
+  }), message && /*#__PURE__*/React.createElement(Portal, {
     id: id.current
-  }, React.createElement(Tooltip, {
+  }, /*#__PURE__*/React.createElement(Tooltip, {
     id: id.current,
     type: type
-  }, React.createElement("span", null, message))));
+  }, /*#__PURE__*/React.createElement("span", null, message))));
 };
 
 ValidationErrorIcon.propTypes = {

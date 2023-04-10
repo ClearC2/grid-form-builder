@@ -1,8 +1,8 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
-
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
@@ -98,6 +98,7 @@ var DateInput = function DateInput(props) {
 
   var elementId = (0, _react.useRef)((0, _utils.randomId)());
   var portalRef = (0, _react.useRef)();
+  var inputRef = (0, _react.useRef)();
 
   var _useState3 = (0, _react.useState)(false),
       _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
@@ -330,6 +331,7 @@ var DateInput = function DateInput(props) {
     css: theme.valueContainer
   }, (0, _core.jsx)("input", {
     id: elementId.current,
+    ref: inputRef,
     className: className,
     name: name,
     value: valueOverride,
@@ -367,6 +369,7 @@ var DateInput = function DateInput(props) {
   }), showPicker && !canPickDay && (0, _core.jsx)(_MonthPicker.default, {
     elementId: elementId.current,
     ref: portalRef,
+    inputRef: inputRef,
     onChange: onChange,
     changeShowPicker: changeShowPicker,
     startDate: startDate,

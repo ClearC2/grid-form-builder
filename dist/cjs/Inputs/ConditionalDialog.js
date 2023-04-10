@@ -1,10 +1,14 @@
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopRequireWildcard");
+var _typeof = require("@babel/runtime-corejs3/helpers/typeof");
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
 
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
@@ -27,6 +31,10 @@ var _immutable = require("immutable");
 var _ConditionalPredicate = _interopRequireDefault(require("./ConditionalPredicate"));
 
 var _Toggle = _interopRequireDefault(require("../QueryBuilder/Where/ConditionalTable/Toggle"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var ConditionalDialog = function ConditionalDialog(props) {
   var value = props.value;
@@ -119,12 +127,12 @@ var ConditionalDialog = function ConditionalDialog(props) {
         });
       }
 
-      conditionElements.push(_react.default.createElement("div", {
+      conditionElements.push( /*#__PURE__*/_react.default.createElement("div", {
         style: {
           borderTop: '1px solid lightgray'
         },
         key: i
-      }, _react.default.createElement(_ConditionalPredicate.default, (0, _extends2.default)({}, props, {
+      }, /*#__PURE__*/_react.default.createElement(_ConditionalPredicate.default, (0, _extends2.default)({}, props, {
         value: indexedValue,
         onChange: onChange,
         index: i
@@ -166,7 +174,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
     return setConditions(conditions + 1);
   };
 
-  return _react.default.createElement(_c2Dialog.Dialog, {
+  return /*#__PURE__*/_react.default.createElement(_c2Dialog.Dialog, {
     size: {
       width: '800px',
       height: "420px"
@@ -185,23 +193,23 @@ var ConditionalDialog = function ConditionalDialog(props) {
     },
     enableResizing: true,
     disableDragging: true
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: '100%',
       height: '100%'
     }
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'row',
       padding: '10px',
       height: '54px'
     }
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: '90%'
     }
-  }, _react.default.createElement("h4", {
+  }, /*#__PURE__*/_react.default.createElement("h4", {
     style: {
       height: '100%',
       margin: 0,
@@ -209,25 +217,25 @@ var ConditionalDialog = function ConditionalDialog(props) {
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap'
     }
-  }, props.label, " condition:"), conditions > 1 && value && value.get('type') && _react.default.createElement("span", {
+  }, props.label, " condition:"), conditions > 1 && value && value.get('type') && /*#__PURE__*/_react.default.createElement("span", {
     className: "pull-right",
     style: {
       marginTop: '-32px'
     }
-  }, _react.default.createElement(_Toggle.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Toggle.default, {
     value: value.get('type') === 'and',
     onToggle: handleToggleClick,
     activeLabel: "and",
     inactiveLabel: "or"
-  }))), _react.default.createElement("div", {
+  }))), /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: '10%'
     }
-  }, _react.default.createElement("button", {
+  }, /*#__PURE__*/_react.default.createElement("button", {
     type: "button",
     className: "close",
     onClick: closeModal
-  }, _react.default.createElement("span", null, "\xD7")))), _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("span", null, "\xD7")))), /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: '100%',
       height: 'calc(100% - 54px)',
@@ -236,7 +244,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
       display: 'flex',
       flexDirection: 'column'
     }
-  }, renderConditions()), _react.default.createElement("button", {
+  }, renderConditions()), /*#__PURE__*/_react.default.createElement("button", {
     type: "button",
     className: "btn btn-primary",
     style: {
@@ -246,7 +254,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
       right: 90
     },
     onClick: addCondition
-  }, "Add Condition"), _react.default.createElement("button", {
+  }, "Add Condition"), /*#__PURE__*/_react.default.createElement("button", {
     type: "button",
     className: "btn btn-primary",
     style: {

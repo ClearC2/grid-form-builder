@@ -1,36 +1,42 @@
+import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
-import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _toConsumableArray from "@babel/runtime-corejs3/helpers/esm/toConsumableArray";
-import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
-import _Object$values from "@babel/runtime-corejs3/core-js-stable/object/values";
-import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/splice";
-import _Object$assign from "@babel/runtime-corejs3/core-js-stable/object/assign";
-import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
-import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
 import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
+import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
+import _Object$assign from "@babel/runtime-corejs3/core-js-stable/object/assign";
+import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/splice";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
+import _Object$values from "@babel/runtime-corejs3/core-js-stable/object/values";
+import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
+import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import $ from 'jquery';
 
 var noop = function noop() {};
 
-var Pane =
-/*#__PURE__*/
-function (_Component) {
+var Pane = /*#__PURE__*/function (_Component) {
   _inherits(Pane, _Component);
 
+  var _super = _createSuper(Pane);
+
   function Pane() {
-    var _getPrototypeOf2, _context;
+    var _context;
 
     var _this;
 
@@ -40,7 +46,7 @@ function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Pane)).call.apply(_getPrototypeOf2, _concatInstanceProperty(_context = [this]).call(_context, args)));
+    _this = _super.call.apply(_super, _concatInstanceProperty(_context = [this]).call(_context, args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       selected: {},
@@ -117,21 +123,21 @@ function (_Component) {
         height: height,
         overflow: height ? 'auto' : null
       };
-      return React.createElement("div", {
+      return /*#__PURE__*/React.createElement("div", {
         ref: function ref(div) {
           return paneRef(div);
         },
         style: boxStyle
-      }, React.createElement("div", {
+      }, /*#__PURE__*/React.createElement("div", {
         className: "row"
-      }, React.createElement("div", {
+      }, /*#__PURE__*/React.createElement("div", {
         className: "col-xs-3 col-md-3"
-      }, paneLabel), React.createElement("div", {
+      }, paneLabel), /*#__PURE__*/React.createElement("div", {
         className: "col-xs-9 col-md-9 text-right"
-      }, React.createElement("a", {
+      }, /*#__PURE__*/React.createElement("a", {
         className: "pointer",
         onClick: this.onFlush
-      }, actionElement), "\xA0\xA0\xA0", React.createElement("span", {
+      }, actionElement), "\xA0\xA0\xA0", /*#__PURE__*/React.createElement("span", {
         className: "red icon-search-1 pointer",
         onClick: function onClick() {
           return _this2.setState({
@@ -139,13 +145,13 @@ function (_Component) {
             searchText: ''
           });
         }
-      }))), React.createElement("hr", {
+      }))), /*#__PURE__*/React.createElement("hr", {
         style: {
           margin: 0
         }
-      }), React.createElement("div", {
+      }), /*#__PURE__*/React.createElement("div", {
         style: innerDivStyle
-      }, this.state.search ? React.createElement("span", null, React.createElement("input", {
+      }, this.state.search ? /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("input", {
         type: "text",
         className: "form-control input-sm",
         placeholder: "Search",
@@ -162,18 +168,18 @@ function (_Component) {
           });
         }
       })) : null, _mapInstanceProperty(items).call(items, function (option) {
-        return React.createElement("span", {
+        return /*#__PURE__*/React.createElement("span", {
           style: {
             cursor: 'pointer'
           },
           key: option[valueKey]
-        }, React.createElement("a", {
+        }, /*#__PURE__*/React.createElement("a", {
           className: "pointer",
           onClick: function onClick() {
             return onAction([option]);
           }
-        }, option[labelKey]), React.createElement("br", null));
-      }), items.length === 0 ? React.createElement("br", null) : null));
+        }, option[labelKey]), /*#__PURE__*/React.createElement("br", null));
+      }), items.length === 0 ? /*#__PURE__*/React.createElement("br", null) : null));
     }
   }]);
 
@@ -204,13 +210,13 @@ _defineProperty(Pane, "defaultProps", {
   resize: noop
 });
 
-var PickList =
-/*#__PURE__*/
-function (_Component2) {
+var PickList = /*#__PURE__*/function (_Component2) {
   _inherits(PickList, _Component2);
 
+  var _super2 = _createSuper(PickList);
+
   function PickList() {
-    var _getPrototypeOf3, _context5;
+    var _context5;
 
     var _this3;
 
@@ -220,7 +226,7 @@ function (_Component2) {
       args[_key2] = arguments[_key2];
     }
 
-    _this3 = _possibleConstructorReturn(this, (_getPrototypeOf3 = _getPrototypeOf(PickList)).call.apply(_getPrototypeOf3, _concatInstanceProperty(_context5 = [this]).call(_context5, args)));
+    _this3 = _super2.call.apply(_super2, _concatInstanceProperty(_context5 = [this]).call(_context5, args));
 
     _defineProperty(_assertThisInitialized(_this3), "adjustHeight", function () {
       if (_this3.props.height) {
@@ -332,11 +338,11 @@ function (_Component2) {
           rightPaneLabel = _this$props3.rightPaneLabel,
           options = _this$props3.options,
           value = _this$props3.value;
-      return React.createElement("div", {
+      return /*#__PURE__*/React.createElement("div", {
         className: "row"
-      }, React.createElement("div", {
+      }, /*#__PURE__*/React.createElement("div", {
         className: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
-      }, React.createElement(Pane, _extends({}, this.props, {
+      }, /*#__PURE__*/React.createElement(Pane, _extends({}, this.props, {
         paneLabel: leftPaneLabel,
         items: options,
         paneRef: function paneRef(div) {
@@ -346,9 +352,9 @@ function (_Component2) {
           return _this4.add(options);
         },
         actionElement: "Add All"
-      }))), React.createElement("div", {
+      }))), /*#__PURE__*/React.createElement("div", {
         className: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
-      }, React.createElement(Pane, _extends({}, this.props, {
+      }, /*#__PURE__*/React.createElement(Pane, _extends({}, this.props, {
         paneLabel: rightPaneLabel,
         items: value,
         paneRef: function paneRef(div) {

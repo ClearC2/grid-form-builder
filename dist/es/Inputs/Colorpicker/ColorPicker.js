@@ -5,7 +5,7 @@ import Portal from '../../Portal';
 import { SketchPicker, CompactPicker } from 'react-color'; // eslint-disable-line
 
 import '../../styles/colorpicker.css';
-var ColorPicker = forwardRef(function (props, ref) {
+var ColorPicker = /*#__PURE__*/forwardRef(function (props, ref) {
   var inputId = props.inputId,
       onChange = props.onChange,
       value = props.value,
@@ -31,17 +31,17 @@ var ColorPicker = forwardRef(function (props, ref) {
     });
   }, [onChange, name]);
   var Picker = picker === 'compact' ? CompactPicker : SketchPicker;
-  return React.createElement(Portal, {
+  return /*#__PURE__*/React.createElement(Portal, {
     id: inputId,
     ref: ref
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "gfb-color-picker-container"
-  }, React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "gfb-color-picker-type-toggle"
-  }, React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("button", {
     className: "btn btn-primary",
     onClick: togglePickerType
-  }, "Toggle Picker Type")), React.createElement(Picker, {
+  }, "Toggle Picker Type")), /*#__PURE__*/React.createElement(Picker, {
     onChangeComplete: onChangeComplete,
     onChange: handleOnChange,
     color: value

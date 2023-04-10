@@ -1,3 +1,24 @@
+## [3.82.1](https://github.com/ClearC2/grid-form-builder/compare/v3.82.0...v3.82.1) (2023-03-24)
+
+
+### Bug Fixes
+
+* **conditionalInput:** prevent undefined error on non select fields, upgrade c2-dialog ([45f4738](https://github.com/ClearC2/grid-form-builder/commit/45f4738ade2b72c8ebbd4ffb75cef49924ca13f8))
+* **deps:** attempt to use dialog branch ([4fcb6ee](https://github.com/ClearC2/grid-form-builder/commit/4fcb6ee94429bf060eb83e71632574935c0b452b))
+* **deps:** change a peer dep ([01c1432](https://github.com/ClearC2/grid-form-builder/commit/01c143204a42f5a3fc019d67845bfdba8d8b0d14))
+* **deps:** change only peer deps ([4e54a96](https://github.com/ClearC2/grid-form-builder/commit/4e54a96e489be86a2b58eaa9ab424a2e0823fb20))
+* **deps:** fix dev server port ([e4feb64](https://github.com/ClearC2/grid-form-builder/commit/e4feb648d82efc9fd8b2be566c0905eae9c6868e))
+* **deps:** link to commit ([4a1b625](https://github.com/ClearC2/grid-form-builder/commit/4a1b6254bb1552acabf61303c8971ad709f01d1e))
+* **deps:** merge with master ([57eb45c](https://github.com/ClearC2/grid-form-builder/commit/57eb45c51a78a35ac925699d4caa4776f9099b83))
+* **deps:** revert to working commit ([b4dfd0e](https://github.com/ClearC2/grid-form-builder/commit/b4dfd0efdbba06354eca6ea610f2a25d06dadae0))
+* **deps:** test updated deps for mobile ([59312e1](https://github.com/ClearC2/grid-form-builder/commit/59312e1ec794dade8a888dbee80a5a0010c1421b))
+* **deps:** update circleci node image ([387d867](https://github.com/ClearC2/grid-form-builder/commit/387d8673818fece149f4f11252686a6467b17d46))
+* **deps:** update dnd packages ([912b177](https://github.com/ClearC2/grid-form-builder/commit/912b17719fc71ec9cd3b3d8994bc71701e1fc89d))
+* **deps:** update react-tooltip ([93a07ec](https://github.com/ClearC2/grid-form-builder/commit/93a07ec116365edaa5ef9e7e091440af73b7b0c8))
+* **deps:** update sizeme package ([2fc05d6](https://github.com/ClearC2/grid-form-builder/commit/2fc05d66d28e45284ff6a2a5e6fd1bd461e00f86))
+* **deps:** update some dependencies for mobile ([b033447](https://github.com/ClearC2/grid-form-builder/commit/b0334471091f997eeaeb30a60296c9911f9611ec))
+* **deps:** upgrade yarn version ([4fa590a](https://github.com/ClearC2/grid-form-builder/commit/4fa590a16470f0a185df9b668bfde9ff52ac648b))
+
 # [3.82.0](https://github.com/ClearC2/grid-form-builder/compare/v3.81.0...v3.82.0) (2023-03-23)
 
 

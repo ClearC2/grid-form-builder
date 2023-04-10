@@ -1,20 +1,20 @@
-import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
-import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
-import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
+import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _Object$assign from "@babel/runtime-corejs3/core-js-stable/object/assign";
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context3, _context4; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context3 = ownKeys(Object(source), !0)).call(_context3, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context4 = ownKeys(Object(source))).call(_context4, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context3; _forEachInstanceProperty(_context3 = ownKeys(Object(source), true)).call(_context3, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context4; _forEachInstanceProperty(_context4 = ownKeys(Object(source))).call(_context4, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
+import _Object$assign from "@babel/runtime-corejs3/core-js-stable/object/assign";
+import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import { Set } from 'immutable';
 var unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea']);
 export var convertFormSchemaToSearch = function convertFormSchemaToSearch() {
@@ -58,7 +58,7 @@ export var convertFieldToSearch = function convertFieldToSearch() {
       var _context2;
 
       if (field.config.conditionalConfig) {
-        field.config = _objectSpread({}, field.config, {}, field.config.conditionalConfig); // overwrite default config if special report config is provided
+        field.config = _objectSpread(_objectSpread({}, field.config), field.config.conditionalConfig); // overwrite default config if special report config is provided
       }
 
       if (field.config.type === 'typeahead') {

@@ -1,5 +1,5 @@
-import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';

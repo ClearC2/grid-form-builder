@@ -1,8 +1,8 @@
-import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
-import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';

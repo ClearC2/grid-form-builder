@@ -1,21 +1,22 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
-
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
+exports.IconLibrary = void 0;
 exports.initComponentIconLibrary = initComponentIconLibrary;
-exports.IconLibrary = exports.mapIcon = void 0;
+exports.mapIcon = void 0;
 
-var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
+var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
 
-var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
 

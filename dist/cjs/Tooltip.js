@@ -1,8 +1,8 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
-
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
@@ -21,9 +21,9 @@ var _reactTooltip = _interopRequireDefault(require("react-tooltip"));
 var PortalTooltip = function PortalTooltip(props) {
   var message = props.message,
       id = props.id;
-  return message && id ? _react.default.createElement(_Portal.default, null, _react.default.createElement(_reactTooltip.default, {
+  return message && id ? /*#__PURE__*/_react.default.createElement(_Portal.default, null, /*#__PURE__*/_react.default.createElement(_reactTooltip.default, {
     id: id
-  }, _react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", {
     dangerouslySetInnerHTML: {
       __html: message
     }

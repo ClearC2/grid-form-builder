@@ -1,60 +1,64 @@
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopRequireWildcard");
+var _typeof3 = require("@babel/runtime-corejs3/helpers/typeof");
+
+var _Object$keys2 = require("@babel/runtime-corejs3/core-js-stable/object/keys");
+
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty2 = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty2 = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
+
+var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
 
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
-var _Object$defineProperty2 = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
-
-_Object$defineProperty2(exports, "__esModule", {
+_Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
 exports.default = void 0;
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-property"));
-
-var _defineProperties = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-properties"));
-
-var _getOwnPropertyDescriptors = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors"));
-
-var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor"));
-
-var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols"));
-
-var _splice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/splice"));
-
-var _parseInt2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-int"));
-
-var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
-
-var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/toConsumableArray"));
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
 
-var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
-
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
-
-var _includes = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/includes"));
-
-var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
-
-var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
-
-var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
-
-var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
-
-var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
-var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
+var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
 var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
 
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/toConsumableArray"));
+var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
+
+var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
+
+var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+
+var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
+
+var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
+
+var _includes = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/includes"));
+
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+
+var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
+
+var _parseInt2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-int"));
+
+var _splice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/splice"));
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -66,9 +70,13 @@ var _immutable = require("immutable");
 
 var _SearchUtils = require("./SearchUtils");
 
-function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context13; (0, _forEach.default)(_context13 = ownKeys(Object(source), true)).call(_context13, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context14; (0, _forEach.default)(_context14 = ownKeys(Object(source))).call(_context14, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context13, _context14; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context13 = ownKeys(Object(source), !0)).call(_context13, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context14 = ownKeys(Object(source))).call(_context14, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 // eslint-disable-line
 var STRING_VALUES = (0, _immutable.Set)(['input', 'number', 'percentage', 'currency', 'datetime']);
@@ -80,7 +88,12 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     propValue = (0, _immutable.Map)();
   }
 
-  var defaultCreatedInputOpts = (0, _toConsumableArray2.default)(props.keyword.options);
+  var defaultCreatedInputOpts = [];
+
+  if (props.keyword && props.keyword.options) {
+    defaultCreatedInputOpts = (0, _concat.default)(defaultCreatedInputOpts).call(defaultCreatedInputOpts, props.keyword.options);
+  }
+
   var propsVals = props.value.get('values').toJS();
 
   if (propsVals.length) {
@@ -427,7 +440,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     delete extraFieldProps.onChange;
     delete extraFieldProps.handleOnChange;
     delete extraFieldProps.name;
-    delete (0, _values.default)(extraFieldProps);
+    delete extraFieldProps.values;
     delete extraFieldProps.value;
 
     if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
@@ -441,7 +454,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           h: calculateFieldHeight(props.inputType.toLowerCase()),
           w: 8
         },
-        config: _objectSpread({}, extraFieldProps, {
+        config: _objectSpread(_objectSpread({}, extraFieldProps), {}, {
           link: undefined,
           autofocus: true,
           readonly: false,
@@ -450,7 +463,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           interactive: true,
           clearable: true,
           keyword: {
-            category: props.keyword.category,
+            category: props.keyword && props.keyword.category,
             default: '',
             options: createdInputOpts
           },
@@ -487,7 +500,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
             h: calculateFieldHeight(props.inputType.toLowerCase()),
             w: 8
           },
-          config: _objectSpread({}, extraFieldProps, {
+          config: _objectSpread(_objectSpread({}, extraFieldProps), {}, {
             link: undefined,
             readonly: false,
             name: (0, _concat.default)(_context8 = "".concat(props.name, "-")).call(_context8, fieldCount),
@@ -741,12 +754,12 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     }, props.index);
   };
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     style: {
       width: '100%',
       height: '100%'
     }
-  }, _react.default.createElement(_index.FormBuilder, {
+  }, /*#__PURE__*/_react.default.createElement(_index.FormBuilder, {
     formSchema: getSchema(),
     formValues: modalValues,
     conditionalSearch: false,

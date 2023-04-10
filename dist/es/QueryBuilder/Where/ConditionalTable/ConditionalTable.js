@@ -1,28 +1,34 @@
-import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
-import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
-import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
-import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
-import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
-import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
 import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
+import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context21; _forEachInstanceProperty(_context21 = ownKeys(Object(source), true)).call(_context21, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context22; _forEachInstanceProperty(_context22 = ownKeys(Object(source))).call(_context22, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context21, _context22; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context21 = ownKeys(Object(source), !0)).call(_context21, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context22 = ownKeys(Object(source))).call(_context22, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
+import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
+import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 import React, { Component } from 'react';
 import { Map, List, Set } from 'immutable';
@@ -31,10 +37,10 @@ import Toggle from './Toggle';
 import { CONDITIONS } from '../../../index';
 var X_ICON_CLASS = 'icon-close pull-right pointer';
 
-var ConditionalTable =
-/*#__PURE__*/
-function (_Component) {
+var ConditionalTable = /*#__PURE__*/function (_Component) {
   _inherits(ConditionalTable, _Component);
+
+  var _super = _createSuper(ConditionalTable);
 
   function ConditionalTable(props) {
     var _context18;
@@ -43,7 +49,7 @@ function (_Component) {
 
     _classCallCheck(this, ConditionalTable);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ConditionalTable).call(this, props));
+    _this = _super.call(this, props);
 
     _defineProperty(_assertThisInitialized(_this), "buildMultiString", function (key, value) {
       var exclude = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
@@ -455,7 +461,7 @@ function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "renderDeleteIcon", function (key, value, predicateIndex) {
       if (_this.props.enableDelete) {
-        return React.createElement("i", {
+        return /*#__PURE__*/React.createElement("i", {
           id: 'deleteIcon',
           className: X_ICON_CLASS,
           style: {
@@ -505,7 +511,7 @@ function (_Component) {
       var rowClick;
 
       if (_this.props.conditionRowOnClick) {
-        extraCondRowStyles = _objectSpread({}, extraCondRowStyles, {
+        extraCondRowStyles = _objectSpread(_objectSpread({}, extraCondRowStyles), {}, {
           cursor: 'pointer'
         });
 
@@ -519,16 +525,16 @@ function (_Component) {
       if (value && _this.state.noValueConditions.has(value.condition)) {
         var _context8, _context9;
 
-        return React.createElement("tr", {
+        return /*#__PURE__*/React.createElement("tr", {
           key: _concatInstanceProperty(_context8 = "row-".concat(key, "-")).call(_context8, predicateIndex),
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
-        }, React.createElement("td", {
+        }, /*#__PURE__*/React.createElement("td", {
           key: _concatInstanceProperty(_context9 = "column-".concat(key, "-")).call(_context9, predicateIndex),
           style: {
             wordWrap: 'break-word'
           }
-        }, React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key, value, predicateIndex)));
+        }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key, value, predicateIndex)));
       }
 
       if (value && typeof value === 'string') {
@@ -545,28 +551,30 @@ function (_Component) {
           }
         }
 
-        return (// for basic input
+        return (
+          /*#__PURE__*/
+          // for basic input
           React.createElement("tr", {
             key: _concatInstanceProperty(_context10 = "row-".concat(key, "-")).call(_context10, predicateIndex),
             style: _objectSpread({}, extraCondRowStyles),
             onClick: rowClick
-          }, React.createElement("td", {
+          }, /*#__PURE__*/React.createElement("td", {
             key: _concatInstanceProperty(_context11 = "column-".concat(key, "-")).call(_context11, predicateIndex),
             style: {
               wordWrap: 'break-word'
             }
-          }, React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value, predicateIndex)))
+          }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value, predicateIndex)))
         );
       } else if (typeof value === 'boolean') {
         var _context12, _context13;
 
-        return React.createElement("tr", {
+        return /*#__PURE__*/React.createElement("tr", {
           key: _concatInstanceProperty(_context12 = "row-".concat(key, "-")).call(_context12, predicateIndex),
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
-        }, React.createElement("td", {
+        }, /*#__PURE__*/React.createElement("td", {
           key: _concatInstanceProperty(_context13 = "column-".concat(key, "-")).call(_context13, predicateIndex)
-        }, React.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
+        }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
       } else {
         var _context14, _context15, _context16, _context17;
 
@@ -574,13 +582,13 @@ function (_Component) {
           return null;
         }
 
-        return React.createElement("tr", {
+        return /*#__PURE__*/React.createElement("tr", {
           key: _concatInstanceProperty(_context14 = "row-".concat(key, "-")).call(_context14, predicateIndex),
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
-        }, React.createElement("td", {
+        }, /*#__PURE__*/React.createElement("td", {
           key: _concatInstanceProperty(_context15 = "column-".concat(key, "-")).call(_context15, predicateIndex)
-        }, React.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, _concatInstanceProperty(_context16 = _valuesInstanceProperty(value)).call(_context16, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, _concatInstanceProperty(_context17 = _valuesInstanceProperty(value)).call(_context17, value.dynamicValues || []), predicateIndex)));
+        }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, _concatInstanceProperty(_context16 = _valuesInstanceProperty(value)).call(_context16, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, _concatInstanceProperty(_context17 = _valuesInstanceProperty(value)).call(_context17, value.dynamicValues || []), predicateIndex)));
       }
     });
 
@@ -649,37 +657,37 @@ function (_Component) {
       var isDisabled = this.buildRequest(this.props.formValues).query.conditions.length === 0;
       var listOpen = this.state.listOpen;
       var extraFooters = this.props.extraFooters ? this.props.extraFooters : [];
-      return React.createElement("div", {
+      return /*#__PURE__*/React.createElement("div", {
         className: "table-responsive",
         style: {
           width: '100%',
           maxHeight: '620px'
         }
-      }, React.createElement("div", {
+      }, /*#__PURE__*/React.createElement("div", {
         style: {
           width: '100%',
           maxHeight: '550px',
           overflowY: 'auto'
         }
-      }, React.createElement("table", {
+      }, /*#__PURE__*/React.createElement("table", {
         className: "table table-bordered table-striped",
         style: {
           width: '100%'
         }
-      }, React.createElement("thead", null, React.createElement("tr", null, React.createElement("th", {
+      }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
         className: "col-lg-".concat(6, " col-md-", 6, " col-sm-", 6),
         style: {
           display: 'inlineBlock'
         }
-      }, React.createElement("span", null, this.props.title), React.createElement("span", {
+      }, /*#__PURE__*/React.createElement("span", null, this.props.title), /*#__PURE__*/React.createElement("span", {
         className: "pull-right"
-      }, React.createElement(Toggle, {
+      }, /*#__PURE__*/React.createElement(Toggle, {
         ref: "row-toggle",
         value: this.props.toggleValue === 'and',
         onToggle: this.handleToggleClick,
         activeLabel: "and",
         inactiveLabel: "or"
-      }))))), tbody.length && listOpen ? React.createElement("tbody", null, tbody) : null, this.props.enableListToggle && React.createElement("div", {
+      }))))), tbody.length && listOpen ? /*#__PURE__*/React.createElement("tbody", null, tbody) : null, this.props.enableListToggle && /*#__PURE__*/React.createElement("div", {
         style: {
           width: '100%',
           textAlign: 'center',
@@ -694,7 +702,7 @@ function (_Component) {
             };
           });
         }
-      }, "^"), React.createElement("tfoot", null, React.createElement("tr", null, React.createElement("td", null, this.props.enableResetButton || this.props.enableNextButton ? React.createElement("div", {
+      }, "^"), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.enableResetButton || this.props.enableNextButton ? /*#__PURE__*/React.createElement("div", {
         style: {
           marginRight: '10px',
           marginBottom: '10px',
@@ -703,7 +711,7 @@ function (_Component) {
           flexDirection: 'row-reverse',
           width: '100%'
         }
-      }, this.props.enableResetButton && React.createElement("button", {
+      }, this.props.enableResetButton && /*#__PURE__*/React.createElement("button", {
         className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
         style: {
           marginRight: '10px',
@@ -711,7 +719,7 @@ function (_Component) {
         },
         onClick: this.resetForm,
         disabled: isDisabled
-      }, "Reset"), this.props.enableNextButton && React.createElement("button", {
+      }, "Reset"), this.props.enableNextButton && /*#__PURE__*/React.createElement("button", {
         className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
         style: {
           marginRight: '10px',

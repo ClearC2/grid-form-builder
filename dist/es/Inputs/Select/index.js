@@ -5,7 +5,7 @@ import NativeSelect from './NativeSelect';
 
 var Container = function Container(props) {
   var native = props.native;
-  return native ? React.createElement(NativeSelect, props) : React.createElement(Select, props);
+  return native ? /*#__PURE__*/React.createElement(NativeSelect, props) : /*#__PURE__*/React.createElement(Select, props);
 };
 
 Container.propTypes = {

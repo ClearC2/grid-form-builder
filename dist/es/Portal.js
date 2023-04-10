@@ -1,36 +1,42 @@
-import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
-import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
-import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
-import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
-import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
+import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
-import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
 import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
+import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
+import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); if (enumerableOnly) symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context3; _forEachInstanceProperty(_context3 = ownKeys(Object(source), true)).call(_context3, function (key) { _defineProperty(target, key, source[key]); }); } else if (_Object$getOwnPropertyDescriptors) { _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)); } else { var _context4; _forEachInstanceProperty(_context4 = ownKeys(Object(source))).call(_context4, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context3, _context4; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context3 = ownKeys(Object(source), !0)).call(_context3, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context4 = ownKeys(Object(source))).call(_context4, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 var portal;
 
-var PortalTarget =
-/*#__PURE__*/
-function (_Component) {
+var PortalTarget = /*#__PURE__*/function (_Component) {
   _inherits(PortalTarget, _Component);
 
+  var _super = _createSuper(PortalTarget);
+
   function PortalTarget() {
-    var _getPrototypeOf2, _context;
+    var _context;
 
     var _this;
 
@@ -40,7 +46,7 @@ function (_Component) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(PortalTarget)).call.apply(_getPrototypeOf2, _concatInstanceProperty(_context = [this]).call(_context, args)));
+    _this = _super.call.apply(_super, _concatInstanceProperty(_context = [this]).call(_context, args));
 
     _defineProperty(_assertThisInitialized(_this), "state", {
       id: ''
@@ -126,7 +132,7 @@ function (_Component) {
       var _this$props = this.props,
           children = _this$props.children,
           className = _this$props.className;
-      return createPortal(React.createElement("div", {
+      return /*#__PURE__*/createPortal( /*#__PURE__*/React.createElement("div", {
         style: _objectSpread({}, this.setStyles()),
         className: className
       }, children), this.element);

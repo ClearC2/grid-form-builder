@@ -1,34 +1,34 @@
 "use strict";
 
-var _interopRequireWildcard = require("@babel/runtime-corejs3/helpers/interopRequireWildcard");
+var _typeof = require("@babel/runtime-corejs3/helpers/typeof");
+
+var _Object$keys = require("@babel/runtime-corejs3/core-js-stable/object/keys");
+
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
+
+var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
 
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
-var _Object$defineProperty2 = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
-
-_Object$defineProperty2(exports, "__esModule", {
+_Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
 exports.default = void 0;
 
-var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-property"));
-
-var _defineProperties = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/define-properties"));
-
-var _getOwnPropertyDescriptors = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors"));
-
-var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
-
-var _getOwnPropertyDescriptor = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor"));
-
-var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
-
-var _getOwnPropertySymbols = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols"));
-
-var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
-
-var _defineProperty3 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
 
@@ -48,9 +48,13 @@ var _Inputs = require("./Inputs");
 
 var _immutable = require("immutable");
 
-function ownKeys(object, enumerableOnly) { var keys = (0, _keys.default)(object); if (_getOwnPropertySymbols.default) { var symbols = (0, _getOwnPropertySymbols.default)(object); if (enumerableOnly) symbols = (0, _filter.default)(symbols).call(symbols, function (sym) { return (0, _getOwnPropertyDescriptor.default)(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { var _context; (0, _forEach.default)(_context = ownKeys(Object(source), true)).call(_context, function (key) { (0, _defineProperty3.default)(target, key, source[key]); }); } else if (_getOwnPropertyDescriptors.default) { (0, _defineProperties.default)(target, (0, _getOwnPropertyDescriptors.default)(source)); } else { var _context2; (0, _forEach.default)(_context2 = ownKeys(Object(source))).call(_context2, function (key) { (0, _defineProperty2.default)(target, key, (0, _getOwnPropertyDescriptor.default)(source, key)); }); } } return target; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var GFBInput = function GFBInput(props) {
   var name = props.name,
@@ -119,7 +123,7 @@ var GFBInput = function GFBInput(props) {
     className = className + ' gfb-inline-cell';
   }
 
-  var config = _objectSpread({}, props, {}, props.config, {
+  var config = _objectSpread(_objectSpread(_objectSpread({}, props), props.config), {}, {
     required: required,
     link: link,
     cascade: cascade,
@@ -131,21 +135,21 @@ var GFBInput = function GFBInput(props) {
     delimiter: delimiter
   });
 
-  return _react.default.createElement("div", {
+  return /*#__PURE__*/_react.default.createElement("div", {
     style: innerCell,
     className: className,
     onClick: onClick,
     "data-tip": true,
     "data-for": cellId.current
-  }, _react.default.createElement(_Tooltip.default, {
+  }, /*#__PURE__*/_react.default.createElement(_Tooltip.default, {
     id: cellId.current,
     message: cellTooltip
-  }), _react.default.createElement(_LabelContainer.default, {
+  }), /*#__PURE__*/_react.default.createElement(_LabelContainer.default, {
     config: config,
     handleLinkClick: link.handleLinkClick,
     handleCascadeKeywordClick: cascade.handleCascadeKeywordClick,
     value: value
-  }), _react.default.createElement(_InputContainer.default, {
+  }), /*#__PURE__*/_react.default.createElement(_InputContainer.default, {
     config: config,
     value: value,
     values: values,
@@ -159,7 +163,7 @@ var GFBInput = function GFBInput(props) {
     handleRTEImageClick: handleRTEImageClick,
     autoComplete: autoComplete,
     interactive: interactive
-  }, _react.default.createElement(Type, null)));
+  }, /*#__PURE__*/_react.default.createElement(Type, null)));
 };
 
 GFBInput.propTypes = {

@@ -9,7 +9,11 @@ const ConditionalPredicate = props => {
   if (!propValue) {
     propValue = Map()
   }
-  const defaultCreatedInputOpts = [...props.keyword.options]
+
+  let defaultCreatedInputOpts = []
+  if (props.keyword && props.keyword.options) {
+    defaultCreatedInputOpts = defaultCreatedInputOpts.concat(props.keyword.options)
+  }
   const propsVals = props.value.get('values').toJS()
   if (propsVals.length) {
     if (propsVals.some(val => val.hasOwnProperty('__isNew__'))) {
@@ -270,7 +274,7 @@ const ConditionalPredicate = props => {
           interactive: true,
           clearable: true,
           keyword: {
-            category: props.keyword.category,
+            category: props.keyword && props.keyword.category,
             default: '',
             options: createdInputOpts
           },

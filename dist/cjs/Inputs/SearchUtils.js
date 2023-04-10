@@ -1,14 +1,14 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
-
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
+
+var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.CONDITIONS = exports.TEXT_INPUTS = exports.NUMERICAL_CONDITIONS = exports.TYPEAHEAD_CONDITIONS = exports.DATES = exports.ALL_BUT_DATES = exports.ONLY_CATEGORICAL_INPUT = exports.MULTI_FIELD_INPUTS = exports.SINGLE_FIELD_INPUTS = void 0;
+exports.TYPEAHEAD_CONDITIONS = exports.TEXT_INPUTS = exports.SINGLE_FIELD_INPUTS = exports.ONLY_CATEGORICAL_INPUT = exports.NUMERICAL_CONDITIONS = exports.MULTI_FIELD_INPUTS = exports.DATES = exports.CONDITIONS = exports.ALL_BUT_DATES = void 0;
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
@@ -52,7 +52,8 @@ var DATES = (0, _immutable.Set)(['date', 'datetime']);
 */
 
 exports.DATES = DATES;
-var TYPEAHEAD_CONDITIONS = (0, _immutable.Set)(['is equal to', 'is not equal to', 'is one of', 'is not one of']);
+var TYPEAHEAD_CONDITIONS = (0, _immutable.Set)(['is equal to', 'is not equal to', 'is one of', 'is not one of']); // eslint-disable-next-line max-len
+
 exports.TYPEAHEAD_CONDITIONS = TYPEAHEAD_CONDITIONS;
 var NUMERICAL_CONDITIONS = (0, _immutable.Set)(['last (x) days', 'last (x) months', 'next (x) days', 'last (x) weeks', 'next (x) weeks', 'next (x) months', 'is top (x)', 'is bottom (x)', 'is top (%)', 'is bottom (%)']);
 exports.NUMERICAL_CONDITIONS = NUMERICAL_CONDITIONS;

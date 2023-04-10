@@ -3,7 +3,7 @@ import React from 'react';
 import DateInput from './DateInput';
 
 var Month = function Month(props) {
-  return React.createElement(DateInput, _extends({}, props, {
+  return /*#__PURE__*/React.createElement(DateInput, _extends({}, props, {
     canPickDay: false
   }));
 };
