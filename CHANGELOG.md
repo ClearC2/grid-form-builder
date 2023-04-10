@@ -1,3 +1,10 @@
+# [3.83.0](https://github.com/ClearC2/grid-form-builder/compare/v3.82.1...v3.83.0) (2023-04-10)
+
+
+### Features
+
+* **date:** month picker will now open upwards if the input is near the bottom of the screen ([30a633c](https://github.com/ClearC2/grid-form-builder/commit/30a633c59d88c690e95b5d57c616f3545b0e0202))
+
 ## [3.82.1](https://github.com/ClearC2/grid-form-builder/compare/v3.82.0...v3.82.1) (2023-03-24)
 
 
