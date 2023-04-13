@@ -162,7 +162,7 @@ const DateInput = props => {
     }
     setManualBlurCheck(true)
     setIsFocused(false)
-  }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name, dateTimeFormat])
+  }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name, dateTimeFormat, inputFormat])
 
   const handleOnCalendarChange = useCallback(e => {
     if (allowCalendarChangeEvent.current) {
@@ -326,5 +326,13 @@ DateInput.propTypes = {
 }
 
 DateInput.defaultProps = {
-  onChangeValidator: () => true
+  onChangeValidator: (e) => {
+    const theDate = moment(e.raw)
+    const diff = Math.abs(theDate.diff(moment(), 'years'))
+    if (diff > 100) {
+      return false
+    } else {
+      return true
+    }
+  }
 }
