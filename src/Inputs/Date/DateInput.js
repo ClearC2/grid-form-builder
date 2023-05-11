@@ -62,6 +62,7 @@ const DateInput = props => {
   const allowCalendarChangeEvent = useRef(true)
   const [manualBlurCheck, setManualBlurCheck] = useState(false)
   const [showMonthFormatted, setShowMonthFormatted] = useState(true)
+  const [validationErrorState, setValidationErrorState] = useState('')
 
   const convertDateToMomentFormat = useMemo(() => {
     return value => {
@@ -186,16 +187,23 @@ const DateInput = props => {
     } else {
       allowCalendarChangeEvent.current = true
     }
+    const momentDate = moment(inputValue)
+    const diff = momentDate.diff(moment(), 'years')
+    if (diff > 100) {
+      setValidationErrorState('Invalid Date Format')
+    } else {
+      setValidationErrorState('')
+    }
   }, [onChangeValidator, inputValue, onChange, name])
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control'
-  let validationError
+
   if (required && requiredWarning && (value + '').trim().length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
-    validationError = 'This Field is Required'
+    setValidationErrorState('This Field is Required')
   }
   let validationWarning
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
@@ -282,10 +290,10 @@ const DateInput = props => {
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
-            {validationWarning && validationError && (
+            {validationWarning && validationErrorState && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
             )}
-            {validationError && <ValidationErrorIcon message={validationError} />}
+            {validationErrorState && <ValidationErrorIcon message={validationErrorState} />}
           </div>
         </div>
       </div>
@@ -326,13 +334,5 @@ DateInput.propTypes = {
 }
 
 DateInput.defaultProps = {
-  onChangeValidator: (e) => {
-    const theDate = moment(e.raw)
-    const diff = Math.abs(theDate.diff(moment(), 'years'))
-    if (diff > 100) {
-      return false
-    } else {
-      return true
-    }
-  }
+  onChangeValidator: () => true
 }
