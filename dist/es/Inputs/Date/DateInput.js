@@ -227,7 +227,8 @@ var DateInput = function DateInput(props) {
 
     setManualBlurCheck(true);
     setIsFocused(false);
-  }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name, dateTimeFormat]);
+  }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name, dateTimeFormat]); // eslint-disable-line
+
   var handleOnCalendarChange = useCallback(function (e) {
     if (allowCalendarChangeEvent.current) {
       setManualBlurCheck(false);
@@ -274,6 +275,10 @@ var DateInput = function DateInput(props) {
 
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
     validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+  }
+
+  if (Math.abs(moment(inputValue).diff(moment(), 'years')) > 100) {
+    validationWarning = 'This date is either invalid or is more than 100 years away.';
   }
 
   var outerClass = 'gfb-input-outer';

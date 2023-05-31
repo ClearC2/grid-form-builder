@@ -162,7 +162,7 @@ const DateInput = props => {
     }
     setManualBlurCheck(true)
     setIsFocused(false)
-  }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name, dateTimeFormat])
+  }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name, dateTimeFormat]) // eslint-disable-line
 
   const handleOnCalendarChange = useCallback(e => {
     if (allowCalendarChangeEvent.current) {
@@ -200,6 +200,9 @@ const DateInput = props => {
   let validationWarning
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
     validationWarning = `Maximum character limit of ${maxlength} reached.`
+  }
+  if (Math.abs(moment(inputValue).diff(moment(), 'years')) > 100) {
+    validationWarning = 'This date is either invalid or is more than 100 years away.'
   }
   let outerClass = 'gfb-input-outer'
   if (isFocused) {
