@@ -1,3 +1,10 @@
+# [3.84.0](https://github.com/ClearC2/grid-form-builder/compare/v3.83.0...v3.84.0) (2023-05-31)
+
+
+### Features
+
+* **date:** dates that are more than 100 years in the past or future are now a validation warning ([c20fa0a](https://github.com/ClearC2/grid-form-builder/commit/c20fa0ac47abcd4243d060c106a166ab0c53bd9a))
+
 # [3.83.0](https://github.com/ClearC2/grid-form-builder/compare/v3.82.1...v3.83.0) (2023-04-10)
 
 
