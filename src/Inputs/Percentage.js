@@ -20,7 +20,7 @@ const Percentage = props => {
     requiredWarning,
     style = {},
     required,
-    allowDecimal = false,
+    toDecimal = 0,
     maxlength = 524288
   } = props
 
@@ -48,16 +48,16 @@ const Percentage = props => {
   const handleOnChange = useCallback(e => {
     let {value: newValue} = e.target
     newValue = (newValue + '').replace('%', '')
-    newValue = !allowDecimal ? +newValue : parseFloat(newValue).toFixed(1)
+    newValue = toDecimal < 0 ? +newValue : parseFloat(newValue).toFixed(toDecimal)
     if (!isNaN(newValue) && newValue >= 0 && newValue <= 100) {
       onChange({
         target: {
-          value: (newValue + ''),
+          value: newValue,
           name
         }
       })
     }
-  }, [onChange, name, allowDecimal])
+  }, [onChange, name, toDecimal])
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
@@ -129,6 +129,6 @@ Percentage.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  allowDecimal: PropTypes.bool,
+  toDecimal: PropTypes.number,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
