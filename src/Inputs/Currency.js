@@ -26,8 +26,8 @@ const Currency = props => {
     style = {},
     required,
     maxlength = 524288,
-    minvalue = 0,
-    maxvalue = Number.MAX_SAFE_INTEGER
+    minimum = Number.MIN_SAFE_INTEGER,
+    maximum = Number.MAX_SAFE_INTEGER
   } = props
 
   const {
@@ -83,11 +83,11 @@ const Currency = props => {
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus'
   }
-  if (minvalue && (value + '').length && parseFloat(value) < parseFloat(minvalue)) {
-    validationError = `Minimum value required: $${minvalue}`
+  if (minimum && (value + '').length && parseFloat(value) < parseFloat(minimum)) {
+    validationError = `Minimum value required: $${minimum}`
   }
-  if (maxvalue && (value + '').length && parseFloat(value) > parseFloat(maxvalue)) {
-    validationError = `Maximum value permitted: $${maxvalue}`
+  if (maximum && (value + '').length && parseFloat(value) > parseFloat(maximum)) {
+    validationError = `Maximum value permitted: $${maximum}`
   }
   const isFirefox = navigator.userAgent.search('Firefox') > -1
   const isDisabled = readonly || disabled || !interactive
@@ -119,8 +119,8 @@ const Currency = props => {
               style={valueStyle}
               css={theme.value}
               maxLength={maxlength + Math.ceil(((value + '').length / 3))}
-              min={minvalue || 0}
-              max={maxvalue || Number.MAX_SAFE_INTEGER}
+              min={minimum || Number.MIN_SAFE_INTEGER}
+              max={maximum || Number.MAX_SAFE_INTEGER}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators}>
@@ -156,6 +156,6 @@ Currency.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  minvalue: PropTypes.number,
-  maxvalue: PropTypes.number
+  minimum: PropTypes.number,
+  maximum: PropTypes.number
 }
