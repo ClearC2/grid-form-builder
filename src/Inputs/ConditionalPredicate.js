@@ -280,7 +280,7 @@ const ConditionalPredicate = props => {
             default: '',
             options: createdInputOpts
           },
-          allowcreate: isContains | isIsOneOf | isNotContains | isNotOneOf,
+          allowcreate: isContains || isIsOneOf || isNotContains || isNotOneOf,
           searchable: true, // I just added this line
           type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),// eslint-disable-line
           handleOnChange: dialogOnChange
