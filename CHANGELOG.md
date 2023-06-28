@@ -1,3 +1,10 @@
+# [3.85.0](https://github.com/ClearC2/grid-form-builder/compare/v3.84.0...v3.85.0) (2023-06-28)
+
+
+### Features
+
+* **searchutils:** add last year, fiscal year to date, this year conditions to date fields ([#200](https://github.com/ClearC2/grid-form-builder/issues/200)) ([42a610b](https://github.com/ClearC2/grid-form-builder/commit/42a610bddfc6d5b8acd0aba2c263a20cc5c4f1d3))
+
 # [3.84.0](https://github.com/ClearC2/grid-form-builder/compare/v3.83.0...v3.84.0) (2023-05-31)
 
 

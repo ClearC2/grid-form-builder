@@ -127,6 +127,16 @@ export var CONDITIONS = {
     minFields: 0,
     invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
   },
+  'this year': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
+  },
+  'last year': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
+  },
   'year to date': {
     maxFields: 0,
     minFields: 0,
@@ -138,6 +148,11 @@ export var CONDITIONS = {
     invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
   },
   'fiscal year': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
+  },
+  'last fiscal year': {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)

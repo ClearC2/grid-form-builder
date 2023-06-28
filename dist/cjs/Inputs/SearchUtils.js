@@ -148,6 +148,16 @@ var CONDITIONS = {
     minFields: 0,
     invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
   },
+  'this year': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
+  },
+  'last year': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
+  },
   'year to date': {
     maxFields: 0,
     minFields: 0,
@@ -159,6 +169,11 @@ var CONDITIONS = {
     invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
   },
   'fiscal year': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
+  },
+  'last fiscal year': {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: (0, _toConsumableArray2.default)(ALL_BUT_DATES)
