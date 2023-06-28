@@ -501,7 +501,7 @@ export default class FormValidator extends Component {
     const reasons = []
     layout.forEach(field => {
       const {config = {}} = field
-      const {required = false, name, label = name, type, minvalue = 0, maxvalue = 0} = config
+      const {required = false, name, label = name, type, minimum = 0, maximum = 0} = config
       if (required && (formValues.get(name, '') + '').trim().length === 0) {
         reasons.push({
           reason: 'required',
@@ -516,19 +516,24 @@ export default class FormValidator extends Component {
           description: `The field ${name} has an invalid email`
         })
       }
-      if (type === 'currency' && minvalue && maxvalue && (formValues.get(name, '') + '').length > 0) {
-        if (parseFloat(formValues.get(name, '')) < minvalue) {
-          reasons.push({
-            reason: 'minimum value not meet',
-            message: `${label} is not within the minimum value`,
-            description: `The field ${name} has an invalid value`
-          })
-        } else if (parseFloat(formValues.get(name, '')) > maxvalue) {
-          reasons.push({
-            reason: 'maximum value exceeded',
-            message: `${label} is beyond the maximum value`,
-            description: `The field ${name} has an invalid value`
-          })
+      if (type === 'currency' && (formValues.get(name, '') + '').length > 0) {
+        if (minimum) {
+          if (parseFloat(formValues.get(name, '')) < minimum) {
+            reasons.push({
+              reason: 'minimum value not meet',
+              message: `${label} is not within the minimum value`,
+              description: `The field ${name} has an invalid value`
+            })
+          }
+        }
+        if (maximum) {
+          if (parseFloat(formValues.get(name, '')) > maximum) {
+            reasons.push({
+              reason: 'maximum value exceeded',
+              message: `${label} is beyond the maximum value`,
+              description: `The field ${name} has an invalid value`
+            })
+          }
         }
       }
     })
