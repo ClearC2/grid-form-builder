@@ -10,8 +10,6 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
-var _parseFloat2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-float"));
-
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
@@ -80,7 +78,8 @@ var Percentage = function Percentage(props) {
   var handleOnChange = (0, _react.useCallback)(function (e) {
     var newValue = e.target.value;
     newValue = (newValue + '').replace('%', '');
-    newValue = decimals < 0 ? +newValue : (0, _parseFloat2.default)(newValue).toFixed(decimals);
+    var placedDecimals = newValue.split('.')[1] || 0;
+    if (decimals && placedDecimals.length > decimals) newValue = newValue.substring(0, newValue.length - 1);
 
     if (!isNaN(newValue) && newValue >= 0 && newValue <= 100) {
       onChange({

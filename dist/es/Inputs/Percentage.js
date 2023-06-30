@@ -1,5 +1,4 @@
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-import _parseFloat from "@babel/runtime-corejs3/core-js-stable/parse-float";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 
 /** @jsx jsx */
@@ -62,7 +61,8 @@ var Percentage = function Percentage(props) {
   var handleOnChange = useCallback(function (e) {
     var newValue = e.target.value;
     newValue = (newValue + '').replace('%', '');
-    newValue = decimals < 0 ? +newValue : _parseFloat(newValue).toFixed(decimals);
+    var placedDecimals = newValue.split('.')[1] || 0;
+    if (decimals && placedDecimals.length > decimals) newValue = newValue.substring(0, newValue.length - 1);
 
     if (!isNaN(newValue) && newValue >= 0 && newValue <= 100) {
       onChange({

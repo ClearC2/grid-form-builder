@@ -1,3 +1,10 @@
+# [3.87.0](https://github.com/ClearC2/grid-form-builder/compare/v3.86.0...v3.87.0) (2023-06-30)
+
+
+### Features
+
+* **percentage:** fix percentage field not allowing free input ([#203](https://github.com/ClearC2/grid-form-builder/issues/203)) ([51f07cc](https://github.com/ClearC2/grid-form-builder/commit/51f07ccbead58b5bfe5b2b3b8a07ff59548fa855))
+
 # [3.86.0](https://github.com/ClearC2/grid-form-builder/compare/v3.85.0...v3.86.0) (2023-06-30)
 
 
