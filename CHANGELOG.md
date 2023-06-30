@@ -1,3 +1,19 @@
+# [3.86.0](https://github.com/ClearC2/grid-form-builder/compare/v3.85.0...v3.86.0) (2023-06-30)
+
+
+### Features
+
+* **conditionalpredicate:** allow create free form text on 'does not contain' and 'is not one of' ([#202](https://github.com/ClearC2/grid-form-builder/issues/202)) ([8cc4770](https://github.com/ClearC2/grid-form-builder/commit/8cc4770ea6bba0591cec178dc4fcdba36df28384))
+* **currency:** add min/max options and validation ([#199](https://github.com/ClearC2/grid-form-builder/issues/199)) ([5887591](https://github.com/ClearC2/grid-form-builder/commit/588759175171f0fbbd7582f02fe37d5eacfb8d30))
+* **percentage:** add support for 1 decimal place in percentage field ([#201](https://github.com/ClearC2/grid-form-builder/issues/201)) ([1f3deee](https://github.com/ClearC2/grid-form-builder/commit/1f3deee8d0586f5255acd031f1be39069da237d0))
+
+# [3.85.0](https://github.com/ClearC2/grid-form-builder/compare/v3.84.0...v3.85.0) (2023-06-28)
+
+
+### Features
+
+* **searchutils:** add last year, fiscal year to date, this year conditions to date fields ([#200](https://github.com/ClearC2/grid-form-builder/issues/200)) ([42a610b](https://github.com/ClearC2/grid-form-builder/commit/42a610bddfc6d5b8acd0aba2c263a20cc5c4f1d3))
+
 # [3.84.0](https://github.com/ClearC2/grid-form-builder/compare/v3.83.0...v3.84.0) (2023-05-31)
 
 

@@ -25,7 +25,9 @@ const Currency = props => {
     requiredWarning,
     style = {},
     required,
-    maxlength = 524288
+    maxlength = 524288,
+    minimum = Number.MIN_SAFE_INTEGER,
+    maximum = Number.MAX_SAFE_INTEGER
   } = props
 
   const {
@@ -81,10 +83,14 @@ const Currency = props => {
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus'
   }
-
+  if (minimum && (value + '').length && parseFloat(value) < parseFloat(minimum)) {
+    validationError = `Minimum value required: $${minimum}`
+  }
+  if (maximum && (value + '').length && parseFloat(value) > parseFloat(maximum)) {
+    validationError = `Maximum value permitted: $${maximum}`
+  }
   const isFirefox = navigator.userAgent.search('Firefox') > -1
   const isDisabled = readonly || disabled || !interactive
-
   return (
     <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
       <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
@@ -113,6 +119,8 @@ const Currency = props => {
               style={valueStyle}
               css={theme.value}
               maxLength={maxlength + Math.ceil(((value + '').length / 3))}
+              min={minimum || Number.MIN_SAFE_INTEGER}
+              max={maximum || Number.MAX_SAFE_INTEGER}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators}>
@@ -147,5 +155,7 @@ Currency.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  minimum: PropTypes.number,
+  maximum: PropTypes.number
 }

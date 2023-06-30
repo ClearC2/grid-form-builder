@@ -1,5 +1,8 @@
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+import _Number$MIN_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/min-safe-integer";
+import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
+import _parseFloat from "@babel/runtime-corejs3/core-js-stable/parse-float";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -37,7 +40,11 @@ var Currency = function Currency(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
+      _props$minimum = props.minimum,
+      minimum = _props$minimum === void 0 ? _Number$MIN_SAFE_INTEGER : _props$minimum,
+      _props$maximum = props.maximum,
+      maximum = _props$maximum === void 0 ? _Number$MAX_SAFE_INTEGER : _props$maximum;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -105,6 +112,14 @@ var Currency = function Currency(props) {
     outerClass = outerClass + ' gfb-has-focus';
   }
 
+  if (minimum && (value + '').length && _parseFloat(value) < _parseFloat(minimum)) {
+    validationError = "Minimum value required: $".concat(minimum);
+  }
+
+  if (maximum && (value + '').length && _parseFloat(value) > _parseFloat(maximum)) {
+    validationError = "Maximum value permitted: $".concat(maximum);
+  }
+
   var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
   return jsx("div", {
@@ -145,7 +160,9 @@ var Currency = function Currency(props) {
     onBlur: handleOnBlur,
     style: valueStyle,
     css: theme.value,
-    maxLength: maxlength + Math.ceil((value + '').length / 3)
+    maxLength: maxlength + Math.ceil((value + '').length / 3),
+    min: minimum || _Number$MIN_SAFE_INTEGER,
+    max: maximum || _Number$MAX_SAFE_INTEGER
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators
@@ -178,5 +195,7 @@ Currency.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  minimum: PropTypes.number,
+  maximum: PropTypes.number
 };
