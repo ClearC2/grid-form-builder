@@ -10,9 +10,15 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
+var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
+
+var _minSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/min-safe-integer"));
+
+var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
+
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
+var _parseFloat2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-float"));
 
 var _core = require("@emotion/core");
 
@@ -55,7 +61,11 @@ var Currency = function Currency(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
+      _props$minimum = props.minimum,
+      minimum = _props$minimum === void 0 ? _minSafeInteger.default : _props$minimum,
+      _props$maximum = props.maximum,
+      maximum = _props$maximum === void 0 ? _maxSafeInteger.default : _props$maximum;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -123,6 +133,14 @@ var Currency = function Currency(props) {
     outerClass = outerClass + ' gfb-has-focus';
   }
 
+  if (minimum && (value + '').length && (0, _parseFloat2.default)(value) < (0, _parseFloat2.default)(minimum)) {
+    validationError = "Minimum value required: $".concat(minimum);
+  }
+
+  if (maximum && (value + '').length && (0, _parseFloat2.default)(value) > (0, _parseFloat2.default)(maximum)) {
+    validationError = "Maximum value permitted: $".concat(maximum);
+  }
+
   var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
   return (0, _core.jsx)("div", {
@@ -163,7 +181,9 @@ var Currency = function Currency(props) {
     onBlur: handleOnBlur,
     style: valueStyle,
     css: theme.value,
-    maxLength: maxlength + Math.ceil((value + '').length / 3)
+    maxLength: maxlength + Math.ceil((value + '').length / 3),
+    min: minimum || _minSafeInteger.default,
+    max: maximum || _maxSafeInteger.default
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators
@@ -197,5 +217,7 @@ Currency.propTypes = {
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
-  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
+  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
+  minimum: _propTypes.default.number,
+  maximum: _propTypes.default.number
 };

@@ -46,6 +46,8 @@ var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stabl
 
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
+var _parseFloat2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-float"));
+
 var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
@@ -678,7 +680,11 @@ var FormValidator = /*#__PURE__*/function (_Component) {
             name = config.name,
             _config$label = config.label,
             label = _config$label === void 0 ? name : _config$label,
-            type = config.type;
+            type = config.type,
+            _config$minimum = config.minimum,
+            minimum = _config$minimum === void 0 ? 0 : _config$minimum,
+            _config$maximum = config.maximum,
+            maximum = _config$maximum === void 0 ? 0 : _config$maximum;
 
         if (required && (0, _trim.default)(_context3 = formValues.get(name, '') + '').call(_context3).length === 0) {
           reasons.push({
@@ -694,6 +700,28 @@ var FormValidator = /*#__PURE__*/function (_Component) {
             message: "".concat(label, " is invalid"),
             description: "The field ".concat(name, " has an invalid email")
           });
+        }
+
+        if (type === 'currency' && (formValues.get(name, '') + '').length > 0) {
+          if (minimum) {
+            if ((0, _parseFloat2.default)(formValues.get(name, '')) < minimum) {
+              reasons.push({
+                reason: 'minimum value not meet',
+                message: "".concat(label, " is not within the minimum value"),
+                description: "The field ".concat(name, " has an invalid value")
+              });
+            }
+          }
+
+          if (maximum) {
+            if ((0, _parseFloat2.default)(formValues.get(name, '')) > maximum) {
+              reasons.push({
+                reason: 'maximum value exceeded',
+                message: "".concat(label, " is beyond the maximum value"),
+                description: "The field ".concat(name, " has an invalid value")
+              });
+            }
+          }
         }
       });
 

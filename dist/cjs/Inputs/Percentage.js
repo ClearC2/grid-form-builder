@@ -10,6 +10,8 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
+var _parseFloat2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-float"));
+
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
@@ -44,6 +46,8 @@ var Percentage = function Percentage(props) {
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
+      _props$decimals = props.decimals,
+      decimals = _props$decimals === void 0 ? 0 : _props$decimals,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
   var _style$value = style.value,
@@ -76,17 +80,17 @@ var Percentage = function Percentage(props) {
   var handleOnChange = (0, _react.useCallback)(function (e) {
     var newValue = e.target.value;
     newValue = (newValue + '').replace('%', '');
-    newValue = +newValue;
+    newValue = decimals < 0 ? +newValue : (0, _parseFloat2.default)(newValue).toFixed(decimals);
 
     if (!isNaN(newValue) && newValue >= 0 && newValue <= 100) {
       onChange({
         target: {
-          value: newValue + '',
+          value: newValue,
           name: name
         }
       });
     }
-  }, [onChange, name]);
+  }, [onChange, name, decimals]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -173,5 +177,6 @@ Percentage.propTypes = {
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
+  decimals: _propTypes.default.number,
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
 };

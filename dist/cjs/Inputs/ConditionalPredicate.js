@@ -446,6 +446,8 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
       var isContains = props.value.getIn(['condition'], '') === 'contains';
       var isIsOneOf = props.value.getIn(['condition'], '') === 'is one of';
+      var isNotContains = props.value.getIn(['condition'], '') === 'does not contain';
+      var isNotOneOf = props.value.getIn(['condition'], '') === 'is not one of';
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {
@@ -467,7 +469,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
             default: '',
             options: createdInputOpts
           },
-          allowcreate: isContains || isIsOneOf,
+          allowcreate: isContains || isIsOneOf || isNotContains || isNotOneOf,
           searchable: true,
           // I just added this line
           type: _SearchUtils.NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),

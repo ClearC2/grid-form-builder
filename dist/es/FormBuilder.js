@@ -33,6 +33,7 @@ import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/insta
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
+import _parseFloat from "@babel/runtime-corejs3/core-js-stable/parse-float";
 import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import React, { Component, PureComponent, useState, useEffect, useCallback, useRef, createContext } from 'react';
@@ -635,7 +636,11 @@ var FormValidator = /*#__PURE__*/function (_Component) {
             name = config.name,
             _config$label = config.label,
             label = _config$label === void 0 ? name : _config$label,
-            type = config.type;
+            type = config.type,
+            _config$minimum = config.minimum,
+            minimum = _config$minimum === void 0 ? 0 : _config$minimum,
+            _config$maximum = config.maximum,
+            maximum = _config$maximum === void 0 ? 0 : _config$maximum;
 
         if (required && _trimInstanceProperty(_context3 = formValues.get(name, '') + '').call(_context3).length === 0) {
           reasons.push({
@@ -651,6 +656,28 @@ var FormValidator = /*#__PURE__*/function (_Component) {
             message: "".concat(label, " is invalid"),
             description: "The field ".concat(name, " has an invalid email")
           });
+        }
+
+        if (type === 'currency' && (formValues.get(name, '') + '').length > 0) {
+          if (minimum) {
+            if (_parseFloat(formValues.get(name, '')) < minimum) {
+              reasons.push({
+                reason: 'minimum value not meet',
+                message: "".concat(label, " is not within the minimum value"),
+                description: "The field ".concat(name, " has an invalid value")
+              });
+            }
+          }
+
+          if (maximum) {
+            if (_parseFloat(formValues.get(name, '')) > maximum) {
+              reasons.push({
+                reason: 'maximum value exceeded',
+                message: "".concat(label, " is beyond the maximum value"),
+                description: "The field ".concat(name, " has an invalid value")
+              });
+            }
+          }
         }
       });
 

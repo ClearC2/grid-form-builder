@@ -1,4 +1,5 @@
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+import _parseFloat from "@babel/runtime-corejs3/core-js-stable/parse-float";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 
 /** @jsx jsx */
@@ -27,6 +28,8 @@ var Percentage = function Percentage(props) {
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
+      _props$decimals = props.decimals,
+      decimals = _props$decimals === void 0 ? 0 : _props$decimals,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
   var _style$value = style.value,
@@ -59,17 +62,17 @@ var Percentage = function Percentage(props) {
   var handleOnChange = useCallback(function (e) {
     var newValue = e.target.value;
     newValue = (newValue + '').replace('%', '');
-    newValue = +newValue;
+    newValue = decimals < 0 ? +newValue : _parseFloat(newValue).toFixed(decimals);
 
     if (!isNaN(newValue) && newValue >= 0 && newValue <= 100) {
       onChange({
         target: {
-          value: newValue + '',
+          value: newValue,
           name: name
         }
       });
     }
-  }, [onChange, name]);
+  }, [onChange, name, decimals]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -155,5 +158,6 @@ Percentage.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
+  decimals: PropTypes.number,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
