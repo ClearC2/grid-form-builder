@@ -1,4 +1,5 @@
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import React, { forwardRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Portal from '../../Portal';
@@ -21,12 +22,20 @@ var ColorPicker = /*#__PURE__*/forwardRef(function (props, ref) {
     var newPicker = picker === 'compact' ? 'stretch' : 'compact';
     setPicker(newPicker);
   }, [picker]);
+
+  var decimalToHex = function decimalToHex(alpha) {
+    return alpha === 0 ? '00' : Math.round(255 * alpha).toString(16);
+  };
+
   var handleOnChange = useCallback(function (e) {
-    var hex = e.hex;
+    var _context;
+
+    var hexCode = _concatInstanceProperty(_context = "".concat(e.hex)).call(_context, decimalToHex(e.rgb.a));
+
     onChange({
       target: {
         name: name,
-        value: hex
+        value: hexCode
       }
     });
   }, [onChange, name]);
