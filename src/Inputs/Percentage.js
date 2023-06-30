@@ -48,7 +48,8 @@ const Percentage = props => {
   const handleOnChange = useCallback(e => {
     let {value: newValue} = e.target
     newValue = (newValue + '').replace('%', '')
-    newValue = decimals < 0 ? +newValue : parseFloat(newValue).toFixed(decimals)
+    const placedDecimals = newValue.split('.')[1] || 0
+    if (decimals && placedDecimals.length > decimals) newValue = newValue.substring(0, newValue.length - 1)
     if (!isNaN(newValue) && newValue >= 0 && newValue <= 100) {
       onChange({
         target: {
