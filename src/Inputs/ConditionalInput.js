@@ -41,6 +41,7 @@ const ConditionalInput = props => {
     // eslint-disable-next-line max-len
     cond === 'today' || cond === 'this month' || cond === 'year to date' || cond === 'fiscal year to date' || cond === 'fiscal year' ||
     cond === 'this quarter' || cond === 'quarter to date' || cond === 'this week' ||
+    cond === 'last year' || cond === 'this year' || cond === 'last fiscal year' ||
     (values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size) ||
     (values.getIn([name, 'conditions'], List()).size > 0)
   return (
