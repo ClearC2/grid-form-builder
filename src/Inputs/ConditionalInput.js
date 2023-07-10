@@ -38,7 +38,7 @@ const ConditionalInput = props => {
   const cond = values.getIn([name, 'condition'], '')
   const vals = values.getIn([name, 'values'], List())
   const hasValue = vals.size > 0 || cond.includes('blank') ||
-    // eslint-disable-next-line max-len
+    /* eslint-disable-next-line max-len */
     cond === 'today' || cond === 'this month' || cond === 'year to date' || cond === 'fiscal year to date' || cond === 'fiscal year' ||
     cond === 'this quarter' || cond === 'quarter to date' || cond === 'this week' ||
     cond === 'last year' || cond === 'this year' || cond === 'last fiscal year' ||
