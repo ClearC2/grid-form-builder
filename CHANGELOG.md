@@ -1,3 +1,10 @@
+# [3.88.0](https://github.com/ClearC2/grid-form-builder/compare/v3.87.0...v3.88.0) (2023-07-10)
+
+
+### Features
+
+* **searchutils:** fix new conditons not showing value on conditional fields ([#206](https://github.com/ClearC2/grid-form-builder/issues/206)) ([9b62516](https://github.com/ClearC2/grid-form-builder/commit/9b625160d1f88ceeff3d7380acc966650d3d8eb4))
+
 # [3.87.0](https://github.com/ClearC2/grid-form-builder/compare/v3.86.0...v3.87.0) (2023-06-30)
 
 
