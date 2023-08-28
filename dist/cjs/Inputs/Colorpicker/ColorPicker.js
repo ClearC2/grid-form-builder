@@ -16,6 +16,8 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
+var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
+
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
 var _react = _interopRequireWildcard(require("react"));
@@ -49,12 +51,19 @@ var ColorPicker = /*#__PURE__*/(0, _react.forwardRef)(function (props, ref) {
     var newPicker = picker === 'compact' ? 'stretch' : 'compact';
     setPicker(newPicker);
   }, [picker]);
+
+  var decimalToHex = function decimalToHex(alpha) {
+    return alpha === 0 ? '00' : Math.round(255 * alpha).toString(16);
+  };
+
   var handleOnChange = (0, _react.useCallback)(function (e) {
-    var hex = e.hex;
+    var _context;
+
+    var hexCode = (0, _concat.default)(_context = "".concat(e.hex)).call(_context, decimalToHex(e.rgb.a));
     onChange({
       target: {
         name: name,
-        value: hex
+        value: hexCode
       }
     });
   }, [onChange, name]);

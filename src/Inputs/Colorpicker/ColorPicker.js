@@ -13,12 +13,14 @@ const ColorPicker = forwardRef((props, ref) => {
     setPicker(newPicker)
   }, [picker])
 
+  const decimalToHex = (alpha) => alpha === 0 ? '00' : Math.round(255 * alpha).toString(16)
+
   const handleOnChange = useCallback(e => {
-    const {hex} = e
+    const hexCode = `${e.hex}${decimalToHex(e.rgb.a)}`
     onChange({
       target: {
         name,
-        value: hex
+        value: hexCode
       }
     })
   }, [onChange, name])
