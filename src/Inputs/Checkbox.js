@@ -21,7 +21,8 @@ const Checkbox = props => {
     interactive = true,
     requiredWarning,
     style = {},
-    required
+    required,
+    warning
   } = props
 
   const {
@@ -142,7 +143,11 @@ const Checkbox = props => {
   }
 
   return (
-    <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
+    <div
+      className='gfb-input-outer'
+      style={{...inputOuter, marginRight: warning ? '0px' : '10px'}}
+      css={theme.inputOuter}
+    >
       <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
         <div className={controlClass} style={inputControl} css={theme.inputControl}>
           <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
@@ -163,6 +168,7 @@ const Checkbox = props => {
             />
           </div>
           <div className='gfb-input__indicators' style={indicators}>
+            {warning && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
@@ -188,5 +194,6 @@ Checkbox.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  warning: PropTypes.string
 }
