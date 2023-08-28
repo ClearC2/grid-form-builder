@@ -27,7 +27,8 @@ const Currency = props => {
     required,
     maxlength = 524288,
     minimum = Number.MIN_SAFE_INTEGER,
-    maximum = Number.MAX_SAFE_INTEGER
+    maximum = Number.MAX_SAFE_INTEGER,
+    warning
   } = props
 
   const {
@@ -124,6 +125,7 @@ const Currency = props => {
             />
           </div>
           <div className='gfb-input__indicators' style={indicators}>
+            {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
@@ -157,5 +159,6 @@ Currency.propTypes = {
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   minimum: PropTypes.number,
-  maximum: PropTypes.number
+  maximum: PropTypes.number,
+  warning: PropTypes.string
 }

@@ -168,7 +168,7 @@ const Checkbox = props => {
             />
           </div>
           <div className='gfb-input__indicators' style={indicators}>
-            {warning && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
+            {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>

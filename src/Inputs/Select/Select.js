@@ -171,7 +171,7 @@ const Select = props => {
 
   let outerClass = 'gfb-input-outer'
   const components = {}
-  if (warning) {
+  if (warning && !isRequiredFlag) {
     components.DropdownIndicator = () => {
       return <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />
     }

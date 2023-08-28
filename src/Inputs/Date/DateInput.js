@@ -36,7 +36,8 @@ const DateInput = props => {
     futureYears = 12,
     minDate,
     maxDate,
-    onChangeValidator
+    onChangeValidator,
+    warning
   } = props
 
   const {
@@ -284,6 +285,7 @@ const DateInput = props => {
             )}
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            {warning && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
@@ -325,7 +327,8 @@ DateInput.propTypes = {
   futureYears: PropTypes.number,
   minDate: PropTypes.string,
   maxDate: PropTypes.string,
-  onChangeValidator: PropTypes.func
+  onChangeValidator: PropTypes.func,
+  warning: PropTypes.string
 }
 
 DateInput.defaultProps = {

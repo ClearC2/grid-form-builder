@@ -15,7 +15,8 @@ const Listselect = props => {
     interactive = true,
     requiredWarning,
     style = {},
-    required
+    required,
+    warning
   } = props
 
   const {
@@ -119,7 +120,9 @@ const Listselect = props => {
             })}
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
-            {validationError && <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
+            {(validationError || warning) &&
+              <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
+            {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
@@ -148,5 +151,6 @@ Listselect.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  warning: PropTypes.string
 }
