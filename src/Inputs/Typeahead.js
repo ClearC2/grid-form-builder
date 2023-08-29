@@ -155,7 +155,8 @@ const Typeahead = props => {
     delimiter,
     isClearable = true,
     createlabel,
-    options: typeaheadOptions
+    options: typeaheadOptions,
+    warning
   } = props
 
   const {
@@ -376,8 +377,15 @@ const Typeahead = props => {
         showValidationError: false,
         DropdownIndicator: ReactSelectBaseComponents.DropdownIndicator
       })
+    } else if (warning) {
+      setComponents({
+        ...components,
+        DropdownIndicator: () => {
+          return <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />
+        }
+      })
     }
-  }, [isRequiredFlag, value, isFocused, components])
+  }, [isRequiredFlag, value, isFocused, components, warning])
 
   useEffect(() => {
     changeInput({Typeahead: allowcreate ? AsyncCreatable : Async})
@@ -863,5 +871,6 @@ Typeahead.propTypes = {
     data: PropTypes.bool,
     useProcedure: PropTypes.bool,
     queryRowCount: PropTypes.bool
-  })
+  }),
+  warning: PropTypes.string
 }
