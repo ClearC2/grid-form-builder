@@ -1,3 +1,16 @@
+# [3.89.0](https://github.com/ClearC2/grid-form-builder/compare/v3.88.0...v3.89.0) (2023-08-29)
+
+
+### Bug Fixes
+
+* **conditionaltable:** fix undefined on multiple empty conditions ([#207](https://github.com/ClearC2/grid-form-builder/issues/207)) ([5d58056](https://github.com/ClearC2/grid-form-builder/commit/5d58056e1cd2c4edb6a65b5bec508f157f457215))
+* **dateinput:** allow dateinput to be blanked ([#208](https://github.com/ClearC2/grid-form-builder/issues/208)) ([755c343](https://github.com/ClearC2/grid-form-builder/commit/755c3433d45cd8045cb80a3f9be19430f3d6efc5))
+
+
+### Features
+
+* **warning:** Add warning icons & messages to inputs when warning prop passed down ([#209](https://github.com/ClearC2/grid-form-builder/issues/209)) ([4752280](https://github.com/ClearC2/grid-form-builder/commit/475228014485708161c89353e2cdb2e1ceea88de))
+
 # [3.88.0](https://github.com/ClearC2/grid-form-builder/compare/v3.87.0...v3.88.0) (2023-07-10)
 
 

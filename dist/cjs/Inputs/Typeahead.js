@@ -261,7 +261,8 @@ var Typeahead = function Typeahead(props) {
       _props$isClearable = props.isClearable,
       isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
       createlabel = props.createlabel,
-      typeaheadOptions = props.options;
+      typeaheadOptions = props.options,
+      warning = props.warning;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -588,8 +589,18 @@ var Typeahead = function Typeahead(props) {
         showValidationError: false,
         DropdownIndicator: _reactSelect.components.DropdownIndicator
       }));
+    } else if (warning) {
+      setComponents(_objectSpread(_objectSpread({}, components), {}, {
+        DropdownIndicator: function DropdownIndicator() {
+          return (0, _core.jsx)(_ValidationErrorIcon.default, {
+            message: warning,
+            color: "#FFCC00",
+            type: "warning"
+          });
+        }
+      }));
     }
-  }, [isRequiredFlag, value, isFocused, components]);
+  }, [isRequiredFlag, value, isFocused, components, warning]);
   (0, _react.useEffect)(function () {
     changeInput({
       Typeahead: allowcreate ? _asyncCreatable.default : _async.default
@@ -1132,5 +1143,6 @@ Typeahead.propTypes = {
     data: _propTypes.default.bool,
     useProcedure: _propTypes.default.bool,
     queryRowCount: _propTypes.default.bool
-  })
+  }),
+  warning: _propTypes.default.string
 };

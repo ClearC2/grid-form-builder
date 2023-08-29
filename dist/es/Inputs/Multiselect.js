@@ -63,7 +63,8 @@ var Multiselect = function Multiselect(props) {
       _props$searchable = props.searchable,
       searchable = _props$searchable === void 0 ? false : _props$searchable,
       _props$closeMenuOnSel = props.closeMenuOnSelect,
-      closeMenuOnSelect = _props$closeMenuOnSel === void 0 ? true : _props$closeMenuOnSel;
+      closeMenuOnSelect = _props$closeMenuOnSel === void 0 ? true : _props$closeMenuOnSel,
+      warning = props.warning;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -282,6 +283,16 @@ var Multiselect = function Multiselect(props) {
     })));
   };
 
+  if (warning && !isRequiredFlag) {
+    components.DropdownIndicator = function () {
+      return jsx(ValidationErrorIcon, {
+        message: warning,
+        color: "#FFCC00",
+        type: "warning"
+      });
+    };
+  }
+
   if (isRequiredFlag && (value.length === 0 || value.size === 0) && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
 
@@ -390,5 +401,6 @@ Multiselect.propTypes = {
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   isClearable: PropTypes.bool,
   searchable: PropTypes.bool,
-  closeMenuOnSelect: PropTypes.bool
+  closeMenuOnSelect: PropTypes.bool,
+  warning: PropTypes.string
 };

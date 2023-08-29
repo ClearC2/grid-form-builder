@@ -71,7 +71,8 @@ var Phone = function Phone(props) {
       regions = props.regions,
       values = (0, _values.default)(props),
       _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -214,7 +215,11 @@ var Phone = function Phone(props) {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationWarning,
     color: "#FFCC00",
     type: "warning"
@@ -246,5 +251,6 @@ Phone.propTypes = {
   regionselect: _propTypes.default.bool,
   regions: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.instanceOf(_immutable.List)]),
   values: _propTypes.default.instanceOf(_immutable.Map),
-  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
+  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
+  warning: _propTypes.default.string
 };

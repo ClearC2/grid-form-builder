@@ -47,7 +47,8 @@ var Percentage = function Percentage(props) {
       _props$decimals = props.decimals,
       decimals = _props$decimals === void 0 ? 0 : _props$decimals,
       _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -149,7 +150,11 @@ var Percentage = function Percentage(props) {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationWarning,
     color: "#FFCC00",
     type: "warning"
@@ -177,5 +182,6 @@ Percentage.propTypes = {
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
   decimals: _propTypes.default.number,
-  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
+  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
+  warning: _propTypes.default.number
 };

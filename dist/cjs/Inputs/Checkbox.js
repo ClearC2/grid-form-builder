@@ -1,5 +1,19 @@
 "use strict";
 
+var _Object$keys = require("@babel/runtime-corejs3/core-js-stable/object/keys");
+
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
+
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
 
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
@@ -9,6 +23,8 @@ _Object$defineProperty(exports, "__esModule", {
 });
 
 exports.default = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/index-of"));
 
@@ -24,7 +40,10 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIco
 
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
-/** @jsx jsx */
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context5, _context6; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context5 = ownKeys(Object(source), !0)).call(_context5, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context6 = ownKeys(Object(source))).call(_context6, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
 var Checkbox = function Checkbox(props) {
   var _context3, _context4;
 
@@ -45,7 +64,8 @@ var Checkbox = function Checkbox(props) {
       requiredWarning = props.requiredWarning,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      required = props.required;
+      required = props.required,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -240,7 +260,9 @@ var Checkbox = function Checkbox(props) {
 
   return (0, _core.jsx)("div", {
     className: "gfb-input-outer",
-    style: inputOuter,
+    style: _objectSpread(_objectSpread({}, inputOuter), {}, {
+      marginRight: warning ? '0px' : '10px'
+    }),
     css: theme.inputOuter
   }, (0, _core.jsx)("div", {
     className: "gfb-input-inner",
@@ -271,7 +293,11 @@ var Checkbox = function Checkbox(props) {
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators
-  }, validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationError
   })))));
 };
@@ -293,5 +319,6 @@ Checkbox.propTypes = {
   interactive: _propTypes.default.bool,
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
-  required: _propTypes.default.bool
+  required: _propTypes.default.bool,
+  warning: _propTypes.default.string
 };

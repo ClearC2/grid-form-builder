@@ -271,7 +271,7 @@ var Checkbox = function Checkbox(props) {
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators
-  }, warning && jsx(ValidationErrorIcon, {
+  }, warning && !validationError && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",
     type: "warning"

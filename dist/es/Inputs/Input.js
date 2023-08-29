@@ -31,7 +31,8 @@ var Input = function Input(props) {
       format = _props$format === void 0 ? 'text' : _props$format,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
-      onBlur = props.onBlur;
+      onBlur = props.onBlur,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -62,7 +63,7 @@ var Input = function Input(props) {
     if (onBlur) {
       onBlur(value);
     }
-  }, [value]);
+  }, [value, onBlur]);
   var handleOnChange = useCallback(function (e) {
     onChange(e);
   }, [onChange]);
@@ -128,7 +129,11 @@ var Input = function Input(props) {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationWarning && jsx(ValidationErrorIcon, {
+  }, warning && !validationError && jsx(ValidationErrorIcon, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && jsx(ValidationErrorIcon, {
     message: validationWarning,
     color: "#FFCC00",
     type: "warning"
@@ -156,5 +161,6 @@ Input.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   format: PropTypes.string,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  warning: PropTypes.string
 };

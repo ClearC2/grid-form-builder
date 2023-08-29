@@ -70,7 +70,8 @@ var DateInput = function DateInput(props) {
       futureYears = _props$futureYears === void 0 ? 12 : _props$futureYears,
       minDate = props.minDate,
       maxDate = props.maxDate,
-      onChangeValidator = props.onChangeValidator;
+      onChangeValidator = props.onChangeValidator,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -126,6 +127,11 @@ var DateInput = function DateInput(props) {
       _useState12 = (0, _slicedToArray2.default)(_useState11, 2),
       showMonthFormatted = _useState12[0],
       setShowMonthFormatted = _useState12[1];
+
+  var _useState13 = (0, _react.useState)(false),
+      _useState14 = (0, _slicedToArray2.default)(_useState13, 2),
+      isBlank = _useState14[0],
+      setIsBlank = _useState14[1];
 
   var convertDateToMomentFormat = (0, _react.useMemo)(function () {
     return function (value) {
@@ -184,18 +190,26 @@ var DateInput = function DateInput(props) {
     if (newValue === '') {
       // if the input was just blanked out, send up a blank value as the new value for this field - JRA 02/07/2020
       // also suppress the calendar's change event so it does not send up what is selected when the calendar closes
+      setIsBlank(true);
+    }
+
+    changeInputValue(newValue);
+    if (!showPicker && type !== 'month') changeShowPicker(true);
+    if (type === 'datetime') setManualBlurCheck(true);
+  }, [showPicker, type]); // Check if the input value is blank and if we should send an OnChange trigger,
+  // added isBlank state to ensure there is no queue between onChanges causing onChange to overwrite one another
+
+  (0, _react.useEffect)(function () {
+    if (name && inputValue === '' && isBlank) {
       onChange({
         target: {
           name: name,
           value: ''
         }
       });
+      setIsBlank(false);
     }
-
-    changeInputValue(newValue);
-    if (!showPicker && type !== 'month') changeShowPicker(true);
-    if (type === 'datetime') setManualBlurCheck(true);
-  }, [showPicker, onChange, name, type]);
+  }, [name, inputValue, isBlank, onChange]);
   var handleOnFocus = (0, _react.useCallback)(function () {
     changeShowPicker(true);
     setIsFocused(true);
@@ -388,7 +402,11 @@ var DateInput = function DateInput(props) {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, warning && (0, _core.jsx)(_ValidationErrorIcon.default, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationWarning,
     color: "#FFCC00",
     type: "warning"
@@ -428,7 +446,8 @@ DateInput.propTypes = {
   futureYears: _propTypes.default.number,
   minDate: _propTypes.default.string,
   maxDate: _propTypes.default.string,
-  onChangeValidator: _propTypes.default.func
+  onChangeValidator: _propTypes.default.func,
+  warning: _propTypes.default.string
 };
 DateInput.defaultProps = {
   onChangeValidator: function onChangeValidator() {

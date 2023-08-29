@@ -230,7 +230,7 @@ var Select = function Select(props) {
   var outerClass = 'gfb-input-outer';
   var components = {};
 
-  if (warning) {
+  if (warning && !isRequiredFlag) {
     components.DropdownIndicator = function () {
       return jsx(ValidationErrorIcon, {
         message: warning,

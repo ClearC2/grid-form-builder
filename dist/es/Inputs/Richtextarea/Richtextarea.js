@@ -38,7 +38,8 @@ var Richtextarea = function Richtextarea(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? _Number$MAX_SAFE_INTEGER : _props$maxlength;
+      maxlength = _props$maxlength === void 0 ? _Number$MAX_SAFE_INTEGER : _props$maxlength,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -99,7 +100,7 @@ var Richtextarea = function Richtextarea(props) {
         });
       }
     }
-  }, [isFocused, onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat]);
+  }, [onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat, value]);
   var previousRTEImageUrl = usePrevious(rteImageUrl);
   useEffect(function () {
     if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && QuillRef.current) {
@@ -181,7 +182,11 @@ var Richtextarea = function Richtextarea(props) {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationWarning && jsx(ValidationErrorIcon, {
+  }, warning && !validationError && jsx(ValidationErrorIcon, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && jsx(ValidationErrorIcon, {
     message: validationWarning,
     color: "#FFCC00",
     type: "warning"
@@ -209,5 +214,6 @@ Richtextarea.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  warning: PropTypes.string
 };
