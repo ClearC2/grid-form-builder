@@ -62,6 +62,7 @@ const DateInput = props => {
   const allowCalendarChangeEvent = useRef(true)
   const [manualBlurCheck, setManualBlurCheck] = useState(false)
   const [showMonthFormatted, setShowMonthFormatted] = useState(true)
+  const [isBlank, setIsBlank] = useState(false)
 
   const convertDateToMomentFormat = useMemo(() => {
     return value => {
@@ -116,17 +117,26 @@ const DateInput = props => {
     if (newValue === '') {
       // if the input was just blanked out, send up a blank value as the new value for this field - JRA 02/07/2020
       // also suppress the calendar's change event so it does not send up what is selected when the calendar closes
+      setIsBlank(true)
+    }
+    changeInputValue(newValue)
+    if (!showPicker && type !== 'month') changeShowPicker(true)
+    if (type === 'datetime') setManualBlurCheck(true)
+  }, [showPicker, type])
+
+  // Check if the input value is blank and if we should send an OnChange trigger,
+  // added isBlank state to ensure there is no queue between onChanges causing onChange to overwrite one another
+  useEffect(() => {
+    if (name && inputValue === '' && isBlank) {
       onChange({
         target: {
           name,
           value: ''
         }
       })
+      setIsBlank(false)
     }
-    changeInputValue(newValue)
-    if (!showPicker && type !== 'month') changeShowPicker(true)
-    if (type === 'datetime') setManualBlurCheck(true)
-  }, [showPicker, onChange, name, type])
+  }, [name, inputValue, isBlank, onChange])
 
   const handleOnFocus = useCallback(() => {
     changeShowPicker(true)
