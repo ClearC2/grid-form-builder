@@ -127,7 +127,7 @@ export const convertQueryToFormValues = (query, clearExistingValues = true, fVal
             newField = newField.set('name', pred)
             conditions = conditions.push(newField)
           })
-          formValues = formValues.set(c.getIn(['conditions', 1, 'name']), fromJS({
+          formValues = formValues.set(c.getIn(['conditions', 0, 'name']), fromJS({
             conditions: conditions,
             type: c.get('type')
           }))
