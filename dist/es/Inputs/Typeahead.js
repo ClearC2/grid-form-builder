@@ -16,7 +16,7 @@ import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context15, _context16; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context15 = ownKeys(Object(source), !0)).call(_context15, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context16 = ownKeys(Object(source))).call(_context16, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context14, _context15; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context14 = ownKeys(Object(source), !0)).call(_context14, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context15 = ownKeys(Object(source))).call(_context15, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
@@ -28,8 +28,8 @@ import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _JSON$stringify from "@babel/runtime-corejs3/core-js-stable/json/stringify";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
@@ -176,7 +176,7 @@ _defineProperty(TypeaheadPerformanceOptimizer, "propTypes", {
 });
 
 var Typeahead = function Typeahead(props) {
-  var _context14;
+  var _context13;
 
   var name = props.name,
       label = props.label,
@@ -646,9 +646,6 @@ var Typeahead = function Typeahead(props) {
       }
 
       if (search.length >= minSearchLength || search === ' ') {
-        var _context4;
-
-        if (typeof search === 'string' && _trimInstanceProperty(search).call(search) !== '') search = "/".concat(encodeURIComponent(search));
         if (setDefault) reactSelect.current.setState(function () {
           return {
             isLoading: true
@@ -658,7 +655,8 @@ var Typeahead = function Typeahead(props) {
         var showQueryCountOption = typeaheadOptions.queryRowCount,
             showDataArrayOption = typeaheadOptions.data,
             useStoredProcedureInSQL = typeaheadOptions.useProcedure;
-        return GFBConfig.ajax.post(_concatInstanceProperty(_context4 = "/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search")).call(_context4, search), {
+        return GFBConfig.ajax.post("/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search"), {
+          term: search,
           filter: {
             conditions: conditions
           },
@@ -676,14 +674,14 @@ var Typeahead = function Typeahead(props) {
           var options = [];
 
           if (_Array$isArray(resp.data.contains) && _Array$isArray(_startsWithInstanceProperty(resp.data))) {
-            var _context5, _context6;
+            var _context4, _context5;
 
             var _resp$data = resp.data,
                 contains = _resp$data.contains,
                 startsWith = _startsWithInstanceProperty(_resp$data);
 
             options.push({
-              label: _concatInstanceProperty(_context5 = "".concat(startsWith.length, " options start with \"")).call(_context5, decodeURIComponent(search.substring(1)), "\" ..."),
+              label: _concatInstanceProperty(_context4 = "".concat(startsWith.length, " options start with \"")).call(_context4, decodeURIComponent(search.substring(1)), "\" ..."),
               isDisabled: true
             });
 
@@ -696,7 +694,7 @@ var Typeahead = function Typeahead(props) {
             });
 
             options.push({
-              label: _concatInstanceProperty(_context6 = "".concat(contains.length, " options contain \"")).call(_context6, decodeURIComponent(search.substring(1)), "\" ..."),
+              label: _concatInstanceProperty(_context5 = "".concat(contains.length, " options contain \"")).call(_context5, decodeURIComponent(search.substring(1)), "\" ..."),
               isDisabled: true,
               className: 'gfb-typeahead-flavor-option'
             });
@@ -709,9 +707,9 @@ var Typeahead = function Typeahead(props) {
               options.push(value);
             });
           } else {
-            var _context7;
+            var _context6;
 
-            _forEachInstanceProperty(_context7 = resp.data.data).call(_context7, function (value) {
+            _forEachInstanceProperty(_context6 = resp.data.data).call(_context6, function (value) {
               if (duplication) {
                 value.duplication = duplication;
               }
@@ -751,9 +749,9 @@ var Typeahead = function Typeahead(props) {
   }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions, typeaheadOptions]);
   var formatCreateLabel = useCallback(function (value) {
     if (typeof createlabel === 'string') {
-      var _context8;
+      var _context7;
 
-      return _concatInstanceProperty(_context8 = "".concat(createlabel, " ")).call(_context8, value);
+      return _concatInstanceProperty(_context7 = "".concat(createlabel, " ")).call(_context7, value);
     }
 
     return "Click or Tab to Create \"".concat(value, "\"");
@@ -837,9 +835,9 @@ var Typeahead = function Typeahead(props) {
     });
   }, []);
   var handleSingleValueChange = useCallback(function (newValue) {
-    var _context9;
+    var _context8;
 
-    _forEachInstanceProperty(_context9 = _Object$keys(newValue)).call(_context9, function (field) {
+    _forEachInstanceProperty(_context8 = _Object$keys(newValue)).call(_context8, function (field) {
       var newVal = newValue[field];
       if (field === 'duplication') newVal = newValue.value;
       var id = null;
@@ -906,10 +904,10 @@ var Typeahead = function Typeahead(props) {
       if (stringify) {
         if (delimiter) {
           if (_delimit && _Array$isArray(_delimit)) {
-            var _context10;
+            var _context9;
 
             // if we were provided field(s) to delimit by, build up a special string with just those values
-            _forEachInstanceProperty(_context10 = target.value).call(_context10, function (option) {
+            _forEachInstanceProperty(_context9 = target.value).call(_context9, function (option) {
               _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
                 if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
                   _value = _value + option[field] + delimiter;
@@ -920,10 +918,10 @@ var Typeahead = function Typeahead(props) {
             _value = _sliceInstanceProperty(_value).call(_value, 0, -1);
             target.value = _value;
           } else {
-            var _context11;
+            var _context10;
 
             // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
-            _forEachInstanceProperty(_context11 = target.value).call(_context11, function (option) {
+            _forEachInstanceProperty(_context10 = target.value).call(_context10, function (option) {
               _value = _value + _JSON$stringify(option) + delimiter;
             });
 
@@ -931,12 +929,12 @@ var Typeahead = function Typeahead(props) {
             target.value = _value;
           }
         } else if (_delimit && !delimiter) {
-          var _context12;
+          var _context11;
 
           // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
           _value = [];
 
-          _forEachInstanceProperty(_context12 = target.value).call(_context12, function (option) {
+          _forEachInstanceProperty(_context11 = target.value).call(_context11, function (option) {
             _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
               if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
                 _value.push(option[field]);
@@ -951,12 +949,12 @@ var Typeahead = function Typeahead(props) {
           target.value = _JSON$stringify(target.value);
         }
       } else if (_delimit && !delimiter) {
-        var _context13;
+        var _context12;
 
         // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as an array
         _value = [];
 
-        _forEachInstanceProperty(_context13 = target.value).call(_context13, function (option) {
+        _forEachInstanceProperty(_context12 = target.value).call(_context12, function (option) {
           _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
             if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
               _value.push(option[field]);
@@ -1015,7 +1013,7 @@ var Typeahead = function Typeahead(props) {
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
 
-  if (isRequiredFlag && _trimInstanceProperty(_context14 = value + '').call(_context14).length === 0 && !isFocused) {
+  if (isRequiredFlag && _trimInstanceProperty(_context13 = value + '').call(_context13).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
   }
 

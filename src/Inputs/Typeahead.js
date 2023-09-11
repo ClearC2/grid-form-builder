@@ -458,7 +458,6 @@ const Typeahead = props => {
       }
 
       if (search.length >= minSearchLength || search === ' ') {
-        if (typeof search === 'string' && search.trim() !== '') search = `/${encodeURIComponent(search)}`
         if (setDefault) reactSelect.current.setState(() => ({isLoading: true}))
         isLoadingOptions.current = true
         const {
@@ -468,8 +467,9 @@ const Typeahead = props => {
         } = typeaheadOptions
 
         return GFBConfig.ajax.post(
-          `/typeahead/name/${encodeURIComponent(dynamicTypeaheadKey)}/search${search}`,
+          `/typeahead/name/${encodeURIComponent(dynamicTypeaheadKey)}/search`,
           {
+            term: search,
             filter: {conditions},
             queryRowCount: showQueryCountOption, /* Will return queryRowCount as 0 to UI, time saver for API */
             data: showDataArrayOption, /* Returns an empty array in the response, time saver for API */
