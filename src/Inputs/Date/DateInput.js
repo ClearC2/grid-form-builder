@@ -221,7 +221,6 @@ const DateInput = props => {
   }
 
   const startDate = convertDateToMomentFormat(inputValue)
-  const isFirefox = navigator.userAgent.search('Firefox') > -1
   const isDisabled = readonly || disabled || !interactive
 
   let valueOverride = inputValue
@@ -241,8 +240,7 @@ const DateInput = props => {
               name={name}
               value={valueOverride}
               onChange={handleOnInputChange}
-              disabled={isFirefox ? false : isDisabled}
-              readOnly={isFirefox && isDisabled}
+              readOnly={isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}
@@ -263,7 +261,7 @@ const DateInput = props => {
                 }
               }
             />
-            {showPicker && canPickDay && (
+            {showPicker && canPickDay && !isDisabled && (
               <DatePicker
                 elementId={elementId.current}
                 handleOnChange={handleOnCalendarChange}
@@ -277,7 +275,7 @@ const DateInput = props => {
                 maxDate={maxDate}
               />
             )}
-            {showPicker && !canPickDay && (
+            {showPicker && !canPickDay && !isDisabled && (
               <MonthPicker
                 elementId={elementId.current}
                 ref={portalRef}

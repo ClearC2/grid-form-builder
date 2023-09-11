@@ -106,6 +106,7 @@ var Number = function Number(props) {
       }
     });
   }, [value, prefix, onChange, name, maximum, minimum]);
+  var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -158,7 +159,7 @@ var Number = function Number(props) {
     name: name,
     value: value,
     onChange: handleOnChange,
-    disabled: readonly || disabled || !interactive,
+    readOnly: isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,

@@ -302,7 +302,6 @@ var DateInput = function DateInput(props) {
   }
 
   var startDate = convertDateToMomentFormat(inputValue);
-  var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
   var valueOverride = inputValue;
 
@@ -334,8 +333,7 @@ var DateInput = function DateInput(props) {
     name: name,
     value: valueOverride,
     onChange: handleOnInputChange,
-    disabled: isFirefox ? false : isDisabled,
-    readOnly: isFirefox && isDisabled,
+    readOnly: isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,
@@ -353,7 +351,7 @@ var DateInput = function DateInput(props) {
         setShowMonthFormatted(false);
       }
     }
-  }), showPicker && canPickDay && jsx(DatePicker, {
+  }), showPicker && canPickDay && !isDisabled && jsx(DatePicker, {
     elementId: elementId.current,
     handleOnChange: handleOnCalendarChange,
     changeShowPicker: changeShowPicker,
@@ -364,7 +362,7 @@ var DateInput = function DateInput(props) {
     format: inputFormat,
     minDate: minDate,
     maxDate: maxDate
-  }), showPicker && !canPickDay && jsx(MonthPicker, {
+  }), showPicker && !canPickDay && !isDisabled && jsx(MonthPicker, {
     elementId: elementId.current,
     ref: portalRef,
     inputRef: inputRef,

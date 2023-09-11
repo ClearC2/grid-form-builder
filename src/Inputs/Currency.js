@@ -90,7 +90,6 @@ const Currency = props => {
   if (maximum && (value + '').length && parseFloat(value) > parseFloat(maximum)) {
     validationError = `Maximum value permitted: $${maximum}`
   }
-  const isFirefox = navigator.userAgent.search('Firefox') > -1
   const isDisabled = readonly || disabled || !interactive
   return (
     <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
@@ -109,8 +108,7 @@ const Currency = props => {
               name={name}
               value={value}
               onChange={handleOnChange}
-              disabled={isFirefox ? false : isDisabled}
-              readOnly={isFirefox && isDisabled}
+              readOnly={isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}

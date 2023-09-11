@@ -54,8 +54,6 @@ const Input = props => {
     onChange(e)
   }, [onChange])
 
-  const isFirefox = navigator.userAgent.search('Firefox') > -1
-
   const isDisabled = readonly || disabled || !interactive
 
   let className = 'gfb-input__single-value gfb-input__input'
@@ -86,8 +84,7 @@ const Input = props => {
               name={name}
               value={value}
               onChange={handleOnChange}
-              disabled={isFirefox ? false : isDisabled}
-              readOnly={isFirefox && isDisabled}
+              readOnly={isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}

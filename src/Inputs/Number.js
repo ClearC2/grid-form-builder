@@ -77,6 +77,8 @@ const Number = props => {
     })
   }, [value, prefix, onChange, name, maximum, minimum])
 
+  const isDisabled = readonly || disabled || !interactive
+
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
@@ -113,7 +115,7 @@ const Number = props => {
               name={name}
               value={value}
               onChange={handleOnChange}
-              disabled={readonly || disabled || !interactive}
+              readOnly={isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}

@@ -100,6 +100,7 @@ const ColorInput = props => {
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
     validationWarning = `Maximum character limit of ${maxlength} reached.`
   }
+  const isDisabled = readonly || disabled || !interactive
   let outerClass = 'gfb-input-outer'
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus'
@@ -116,7 +117,7 @@ const ColorInput = props => {
               name={name}
               value={value}
               onChange={handleOnInputChange}
-              disabled={readonly || disabled || !interactive}
+              readOnly={isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}

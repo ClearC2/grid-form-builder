@@ -117,6 +117,7 @@ var ColorInput = function ColorInput(props) {
     validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
   }
 
+  var isDisabled = readonly || disabled || !interactive;
   var outerClass = 'gfb-input-outer';
 
   if (isFocused) {
@@ -145,7 +146,7 @@ var ColorInput = function ColorInput(props) {
     name: name,
     value: value,
     onChange: handleOnInputChange,
-    disabled: readonly || disabled || !interactive,
+    readOnly: isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,
