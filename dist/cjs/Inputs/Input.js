@@ -84,7 +84,6 @@ var Input = function Input(props) {
   var handleOnChange = (0, _react.useCallback)(function (e) {
     onChange(e);
   }, [onChange]);
-  var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
@@ -130,8 +129,7 @@ var Input = function Input(props) {
     name: name,
     value: value,
     onChange: handleOnChange,
-    disabled: isFirefox ? false : isDisabled,
-    readOnly: isFirefox && isDisabled,
+    readOnly: isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,

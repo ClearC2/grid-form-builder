@@ -74,14 +74,10 @@ var Textarea = function Textarea(props) {
   var handleOnBlur = (0, _react.useCallback)(function () {
     setIsFocused(false);
   }, []);
-  var isFirefox = navigator.userAgent.search('Firefox') > -1;
-  var isDisabled = readonly || disabled || !interactive; // https://github.com/ClearC2/bleu/issues/3104
-
-  var isFirefoxAndDisabled = isFirefox && isDisabled;
+  var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (isDisabled) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
-  if (isFirefoxAndDisabled) className = className + ' firefox-disabled-field';
   var controlClass = 'gfb-input__control';
   var validationError;
 
@@ -123,14 +119,13 @@ var Textarea = function Textarea(props) {
     name: name,
     value: value,
     onChange: onChange,
-    disabled: isFirefoxAndDisabled ? undefined : isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,
     autoComplete: autoComplete,
     onFocus: handleOnFocus,
     onBlur: handleOnBlur,
-    readOnly: isFirefoxAndDisabled ? isDisabled : undefined,
+    readOnly: isDisabled,
     style: valueStyle,
     css: theme.value,
     maxLength: maxlength

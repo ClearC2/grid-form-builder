@@ -1,3 +1,10 @@
+## [3.91.1](https://github.com/ClearC2/grid-form-builder/compare/v3.91.0...v3.91.1) (2023-09-11)
+
+
+### Bug Fixes
+
+* **drag:** removes disabled in favor of readonly so click propogation does not get consumed by disabled fields, especially for drag events ([d56cf16](https://github.com/ClearC2/grid-form-builder/commit/d56cf1628b7fc569d4b77cbb5a1f9f18c9596210))
+
 # [3.91.0](https://github.com/ClearC2/grid-form-builder/compare/v3.90.0...v3.91.0) (2023-09-11)
 
 

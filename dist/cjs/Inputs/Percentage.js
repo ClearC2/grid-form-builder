@@ -91,6 +91,7 @@ var Percentage = function Percentage(props) {
       });
     }
   }, [onChange, name, decimals]);
+  var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -135,7 +136,7 @@ var Percentage = function Percentage(props) {
     name: name,
     value: !isFocused && (value + '').length ? value + '%' : value,
     onChange: handleOnChange,
-    disabled: readonly || disabled || !interactive,
+    readOnly: isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,

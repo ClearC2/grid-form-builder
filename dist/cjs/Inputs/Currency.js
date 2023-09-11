@@ -142,7 +142,6 @@ var Currency = function Currency(props) {
     validationError = "Maximum value permitted: $".concat(maximum);
   }
 
-  var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
   return (0, _core.jsx)("div", {
     className: outerClass,
@@ -172,8 +171,7 @@ var Currency = function Currency(props) {
     name: name,
     value: value,
     onChange: handleOnChange,
-    disabled: isFirefox ? false : isDisabled,
-    readOnly: isFirefox && isDisabled,
+    readOnly: isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,
