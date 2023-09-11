@@ -517,7 +517,8 @@ const Typeahead = props => {
           })
           .catch(err => {
             isLoadingOptions.current = false
-            return Promise.reject(err)
+            console.error('There was an error fetching the options in this typeahead: ', err) // eslint-disable-line
+            return resolve([])
           })
       }
       if (setDefault === true) setDefaultOptions([])
