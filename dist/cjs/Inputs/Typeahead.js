@@ -774,7 +774,9 @@ var Typeahead = function Typeahead(props) {
           return resolve(options);
         }).catch(function (err) {
           isLoadingOptions.current = false;
-          return _promise.default.reject(err);
+          console.error('There was an error fetching the options in this typeahead: ', err); // eslint-disable-line
+
+          return resolve([]);
         });
       }
 

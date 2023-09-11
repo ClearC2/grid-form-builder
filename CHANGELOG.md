@@ -1,3 +1,10 @@
+# [3.90.0](https://github.com/ClearC2/grid-form-builder/compare/v3.89.0...v3.90.0) (2023-09-11)
+
+
+### Features
+
+* **typeahead:** if there is an issue fetching typeahead options the typeahead will now show an empty result set rather than getting hung looking like it is loading ([c8cda07](https://github.com/ClearC2/grid-form-builder/commit/c8cda078cc0c982a7424df9857b2053dd2b94367))
+
 # [3.89.0](https://github.com/ClearC2/grid-form-builder/compare/v3.88.0...v3.89.0) (2023-08-29)
 
 
