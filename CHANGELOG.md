@@ -1,3 +1,10 @@
+# [3.91.0](https://github.com/ClearC2/grid-form-builder/compare/v3.90.0...v3.91.0) (2023-09-11)
+
+
+### Features
+
+* **typeahead:** changes api to use search term in payload instead of url ([d5608ca](https://github.com/ClearC2/grid-form-builder/commit/d5608ca8fdf3d8f6a7cc1a01de15a5a937ec123a))
+
 # [3.90.0](https://github.com/ClearC2/grid-form-builder/compare/v3.89.0...v3.90.0) (2023-09-11)
 
 

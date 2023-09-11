@@ -46,9 +46,9 @@ var _stringify = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-
 
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
-var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
-
 var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
+
+var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
 var _promise = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/promise"));
 
@@ -96,7 +96,7 @@ var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context15, _context16; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context15 = ownKeys(Object(source), !0)).call(_context15, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context16 = ownKeys(Object(source))).call(_context16, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context14, _context15; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context14 = ownKeys(Object(source), !0)).call(_context14, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context15 = ownKeys(Object(source))).call(_context15, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
 
@@ -227,7 +227,7 @@ var TypeaheadPerformanceOptimizer = /*#__PURE__*/function (_PureComponent) {
 });
 
 var Typeahead = function Typeahead(props) {
-  var _context14;
+  var _context13;
 
   var name = props.name,
       label = props.label,
@@ -695,9 +695,6 @@ var Typeahead = function Typeahead(props) {
       }
 
       if (search.length >= minSearchLength || search === ' ') {
-        var _context4;
-
-        if (typeof search === 'string' && (0, _trim.default)(search).call(search) !== '') search = "/".concat(encodeURIComponent(search));
         if (setDefault) reactSelect.current.setState(function () {
           return {
             isLoading: true
@@ -707,7 +704,8 @@ var Typeahead = function Typeahead(props) {
         var showQueryCountOption = typeaheadOptions.queryRowCount,
             showDataArrayOption = typeaheadOptions.data,
             useStoredProcedureInSQL = typeaheadOptions.useProcedure;
-        return _config.default.ajax.post((0, _concat.default)(_context4 = "/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search")).call(_context4, search), {
+        return _config.default.ajax.post("/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search"), {
+          term: search,
           filter: {
             conditions: conditions
           },
@@ -725,13 +723,13 @@ var Typeahead = function Typeahead(props) {
           var options = [];
 
           if ((0, _isArray.default)(resp.data.contains) && (0, _isArray.default)((0, _startsWith.default)(resp.data))) {
-            var _context5, _context6;
+            var _context4, _context5;
 
             var _resp$data = resp.data,
                 contains = _resp$data.contains,
                 startsWith = (0, _startsWith.default)(_resp$data);
             options.push({
-              label: (0, _concat.default)(_context5 = "".concat(startsWith.length, " options start with \"")).call(_context5, decodeURIComponent(search.substring(1)), "\" ..."),
+              label: (0, _concat.default)(_context4 = "".concat(startsWith.length, " options start with \"")).call(_context4, decodeURIComponent(search.substring(1)), "\" ..."),
               isDisabled: true
             });
             (0, _forEach.default)(startsWith).call(startsWith, function (value) {
@@ -742,7 +740,7 @@ var Typeahead = function Typeahead(props) {
               options.push(value);
             });
             options.push({
-              label: (0, _concat.default)(_context6 = "".concat(contains.length, " options contain \"")).call(_context6, decodeURIComponent(search.substring(1)), "\" ..."),
+              label: (0, _concat.default)(_context5 = "".concat(contains.length, " options contain \"")).call(_context5, decodeURIComponent(search.substring(1)), "\" ..."),
               isDisabled: true,
               className: 'gfb-typeahead-flavor-option'
             });
@@ -754,9 +752,9 @@ var Typeahead = function Typeahead(props) {
               options.push(value);
             });
           } else {
-            var _context7;
+            var _context6;
 
-            (0, _forEach.default)(_context7 = resp.data.data).call(_context7, function (value) {
+            (0, _forEach.default)(_context6 = resp.data.data).call(_context6, function (value) {
               if (duplication) {
                 value.duplication = duplication;
               }
@@ -796,9 +794,9 @@ var Typeahead = function Typeahead(props) {
   }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions, typeaheadOptions]);
   var formatCreateLabel = (0, _react.useCallback)(function (value) {
     if (typeof createlabel === 'string') {
-      var _context8;
+      var _context7;
 
-      return (0, _concat.default)(_context8 = "".concat(createlabel, " ")).call(_context8, value);
+      return (0, _concat.default)(_context7 = "".concat(createlabel, " ")).call(_context7, value);
     }
 
     return "Click or Tab to Create \"".concat(value, "\"");
@@ -882,9 +880,9 @@ var Typeahead = function Typeahead(props) {
     });
   }, []);
   var handleSingleValueChange = (0, _react.useCallback)(function (newValue) {
-    var _context9;
+    var _context8;
 
-    (0, _forEach.default)(_context9 = (0, _keys.default)(newValue)).call(_context9, function (field) {
+    (0, _forEach.default)(_context8 = (0, _keys.default)(newValue)).call(_context8, function (field) {
       var newVal = newValue[field];
       if (field === 'duplication') newVal = newValue.value;
       var id = null;
@@ -951,10 +949,10 @@ var Typeahead = function Typeahead(props) {
       if (stringify) {
         if (delimiter) {
           if (_delimit && (0, _isArray.default)(_delimit)) {
-            var _context10;
+            var _context9;
 
             // if we were provided field(s) to delimit by, build up a special string with just those values
-            (0, _forEach.default)(_context10 = target.value).call(_context10, function (option) {
+            (0, _forEach.default)(_context9 = target.value).call(_context9, function (option) {
               (0, _forEach.default)(_delimit).call(_delimit, function (field) {
                 if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
                   _value = _value + option[field] + delimiter;
@@ -964,21 +962,21 @@ var Typeahead = function Typeahead(props) {
             _value = (0, _slice.default)(_value).call(_value, 0, -1);
             target.value = _value;
           } else {
-            var _context11;
+            var _context10;
 
             // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
-            (0, _forEach.default)(_context11 = target.value).call(_context11, function (option) {
+            (0, _forEach.default)(_context10 = target.value).call(_context10, function (option) {
               _value = _value + (0, _stringify.default)(option) + delimiter;
             });
             _value = (0, _slice.default)(_value).call(_value, 0, -1);
             target.value = _value;
           }
         } else if (_delimit && !delimiter) {
-          var _context12;
+          var _context11;
 
           // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
           _value = [];
-          (0, _forEach.default)(_context12 = target.value).call(_context12, function (option) {
+          (0, _forEach.default)(_context11 = target.value).call(_context11, function (option) {
             (0, _forEach.default)(_delimit).call(_delimit, function (field) {
               if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
                 _value.push(option[field]);
@@ -992,11 +990,11 @@ var Typeahead = function Typeahead(props) {
           target.value = (0, _stringify.default)(target.value);
         }
       } else if (_delimit && !delimiter) {
-        var _context13;
+        var _context12;
 
         // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as an array
         _value = [];
-        (0, _forEach.default)(_context13 = target.value).call(_context13, function (option) {
+        (0, _forEach.default)(_context12 = target.value).call(_context12, function (option) {
           (0, _forEach.default)(_delimit).call(_delimit, function (field) {
             if ((0, _indexOf.default)(_value).call(_value, option[field]) === -1) {
               _value.push(option[field]);
@@ -1054,7 +1052,7 @@ var Typeahead = function Typeahead(props) {
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
 
-  if (isRequiredFlag && (0, _trim.default)(_context14 = value + '').call(_context14).length === 0 && !isFocused) {
+  if (isRequiredFlag && (0, _trim.default)(_context13 = value + '').call(_context13).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
   }
 
