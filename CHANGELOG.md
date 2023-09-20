@@ -1,3 +1,10 @@
+## [3.91.2](https://github.com/ClearC2/grid-form-builder/compare/v3.91.1...v3.91.2) (2023-09-20)
+
+
+### Bug Fixes
+
+* **typeahead:** starts with and contains label should no longer cut off the first character of the search term ([6dbb847](https://github.com/ClearC2/grid-form-builder/commit/6dbb8473a2e6c80aa87cf7ea3217d16310f15fd3))
+
 ## [3.91.1](https://github.com/ClearC2/grid-form-builder/compare/v3.91.0...v3.91.1) (2023-09-11)
 
 

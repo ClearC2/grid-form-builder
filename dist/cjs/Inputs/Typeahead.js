@@ -729,7 +729,7 @@ var Typeahead = function Typeahead(props) {
                 contains = _resp$data.contains,
                 startsWith = (0, _startsWith.default)(_resp$data);
             options.push({
-              label: (0, _concat.default)(_context4 = "".concat(startsWith.length, " options start with \"")).call(_context4, decodeURIComponent(search.substring(1)), "\" ..."),
+              label: (0, _concat.default)(_context4 = "".concat(startsWith.length, " options start with \"")).call(_context4, search, "\" ..."),
               isDisabled: true
             });
             (0, _forEach.default)(startsWith).call(startsWith, function (value) {
@@ -740,7 +740,7 @@ var Typeahead = function Typeahead(props) {
               options.push(value);
             });
             options.push({
-              label: (0, _concat.default)(_context5 = "".concat(contains.length, " options contain \"")).call(_context5, decodeURIComponent(search.substring(1)), "\" ..."),
+              label: (0, _concat.default)(_context5 = "".concat(contains.length, " options contain \"")).call(_context5, search, "\" ..."),
               isDisabled: true,
               className: 'gfb-typeahead-flavor-option'
             });

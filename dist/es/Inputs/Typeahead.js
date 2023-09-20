@@ -681,7 +681,7 @@ var Typeahead = function Typeahead(props) {
                 startsWith = _startsWithInstanceProperty(_resp$data);
 
             options.push({
-              label: _concatInstanceProperty(_context4 = "".concat(startsWith.length, " options start with \"")).call(_context4, decodeURIComponent(search.substring(1)), "\" ..."),
+              label: _concatInstanceProperty(_context4 = "".concat(startsWith.length, " options start with \"")).call(_context4, search, "\" ..."),
               isDisabled: true
             });
 
@@ -694,7 +694,7 @@ var Typeahead = function Typeahead(props) {
             });
 
             options.push({
-              label: _concatInstanceProperty(_context5 = "".concat(contains.length, " options contain \"")).call(_context5, decodeURIComponent(search.substring(1)), "\" ..."),
+              label: _concatInstanceProperty(_context5 = "".concat(contains.length, " options contain \"")).call(_context5, search, "\" ..."),
               isDisabled: true,
               className: 'gfb-typeahead-flavor-option'
             });
