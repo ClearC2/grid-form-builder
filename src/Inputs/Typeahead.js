@@ -482,7 +482,7 @@ const Typeahead = props => {
             if (Array.isArray(resp.data.contains) && Array.isArray(resp.data.startsWith)) {
               const {contains, startsWith} = resp.data
               options.push({
-                label: `${startsWith.length} options start with "${decodeURIComponent(search.substring(1))}" ...`,
+                label: `${startsWith.length} options start with "${search}" ...`,
                 isDisabled: true
               })
               startsWith.forEach(value => {
@@ -492,7 +492,7 @@ const Typeahead = props => {
                 options.push(value)
               })
               options.push({
-                label: `${contains.length} options contain "${decodeURIComponent(search.substring(1))}" ...`,
+                label: `${contains.length} options contain "${search}" ...`,
                 isDisabled: true,
                 className: 'gfb-typeahead-flavor-option'
               })
