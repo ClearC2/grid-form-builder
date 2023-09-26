@@ -16,7 +16,7 @@ import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance
 import _Object$assign from "@babel/runtime-corejs3/core-js-stable/object/assign";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import { Set } from 'immutable';
-var unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea']);
+var unconditionalFields = Set(['header', 'conditionalinput', 'checkbox']);
 export var convertFormSchemaToSearch = function convertFormSchemaToSearch() {
   var formSchema = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
