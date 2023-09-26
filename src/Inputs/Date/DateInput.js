@@ -36,7 +36,8 @@ const DateInput = props => {
     futureYears = 12,
     minDate,
     maxDate,
-    onChangeValidator
+    onChangeValidator,
+    warning
   } = props
 
   const {
@@ -62,6 +63,7 @@ const DateInput = props => {
   const allowCalendarChangeEvent = useRef(true)
   const [manualBlurCheck, setManualBlurCheck] = useState(false)
   const [showMonthFormatted, setShowMonthFormatted] = useState(true)
+  const [isBlank, setIsBlank] = useState(false)
 
   const convertDateToMomentFormat = useMemo(() => {
     return value => {
@@ -116,17 +118,26 @@ const DateInput = props => {
     if (newValue === '') {
       // if the input was just blanked out, send up a blank value as the new value for this field - JRA 02/07/2020
       // also suppress the calendar's change event so it does not send up what is selected when the calendar closes
+      setIsBlank(true)
+    }
+    changeInputValue(newValue)
+    if (!showPicker && type !== 'month') changeShowPicker(true)
+    if (type === 'datetime') setManualBlurCheck(true)
+  }, [showPicker, type])
+
+  // Check if the input value is blank and if we should send an OnChange trigger,
+  // added isBlank state to ensure there is no queue between onChanges causing onChange to overwrite one another
+  useEffect(() => {
+    if (name && inputValue === '' && isBlank) {
       onChange({
         target: {
           name,
           value: ''
         }
       })
+      setIsBlank(false)
     }
-    changeInputValue(newValue)
-    if (!showPicker && type !== 'month') changeShowPicker(true)
-    if (type === 'datetime') setManualBlurCheck(true)
-  }, [showPicker, onChange, name, type])
+  }, [name, inputValue, isBlank, onChange])
 
   const handleOnFocus = useCallback(() => {
     changeShowPicker(true)
@@ -210,7 +221,6 @@ const DateInput = props => {
   }
 
   const startDate = convertDateToMomentFormat(inputValue)
-  const isFirefox = navigator.userAgent.search('Firefox') > -1
   const isDisabled = readonly || disabled || !interactive
 
   let valueOverride = inputValue
@@ -230,8 +240,7 @@ const DateInput = props => {
               name={name}
               value={valueOverride}
               onChange={handleOnInputChange}
-              disabled={isFirefox ? false : isDisabled}
-              readOnly={isFirefox && isDisabled}
+              readOnly={isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}
@@ -252,7 +261,7 @@ const DateInput = props => {
                 }
               }
             />
-            {showPicker && canPickDay && (
+            {showPicker && canPickDay && !isDisabled && (
               <DatePicker
                 elementId={elementId.current}
                 handleOnChange={handleOnCalendarChange}
@@ -266,7 +275,7 @@ const DateInput = props => {
                 maxDate={maxDate}
               />
             )}
-            {showPicker && !canPickDay && (
+            {showPicker && !canPickDay && !isDisabled && (
               <MonthPicker
                 elementId={elementId.current}
                 ref={portalRef}
@@ -284,6 +293,7 @@ const DateInput = props => {
             )}
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            {warning && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
@@ -325,7 +335,8 @@ DateInput.propTypes = {
   futureYears: PropTypes.number,
   minDate: PropTypes.string,
   maxDate: PropTypes.string,
-  onChangeValidator: PropTypes.func
+  onChangeValidator: PropTypes.func,
+  warning: PropTypes.string
 }
 
 DateInput.defaultProps = {

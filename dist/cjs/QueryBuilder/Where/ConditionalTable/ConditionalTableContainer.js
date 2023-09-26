@@ -208,7 +208,7 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
             newField = newField.set('name', pred);
             conditions = conditions.push(newField);
           });
-          formValues = formValues.set(c.getIn(['conditions', 1, 'name']), (0, _immutable.fromJS)({
+          formValues = formValues.set(c.getIn(['conditions', 0, 'name']), (0, _immutable.fromJS)({
             conditions: conditions,
             type: c.get('type')
           }));

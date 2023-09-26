@@ -44,7 +44,8 @@ var Currency = function Currency(props) {
       _props$minimum = props.minimum,
       minimum = _props$minimum === void 0 ? _Number$MIN_SAFE_INTEGER : _props$minimum,
       _props$maximum = props.maximum,
-      maximum = _props$maximum === void 0 ? _Number$MAX_SAFE_INTEGER : _props$maximum;
+      maximum = _props$maximum === void 0 ? _Number$MAX_SAFE_INTEGER : _props$maximum,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -120,7 +121,6 @@ var Currency = function Currency(props) {
     validationError = "Maximum value permitted: $".concat(maximum);
   }
 
-  var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
   return jsx("div", {
     className: outerClass,
@@ -150,8 +150,7 @@ var Currency = function Currency(props) {
     name: name,
     value: value,
     onChange: handleOnChange,
-    disabled: isFirefox ? false : isDisabled,
-    readOnly: isFirefox && isDisabled,
+    readOnly: isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,
@@ -166,7 +165,11 @@ var Currency = function Currency(props) {
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators
-  }, validationWarning && jsx(ValidationErrorIcon, {
+  }, warning && !validationError && jsx(ValidationErrorIcon, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && jsx(ValidationErrorIcon, {
     message: validationWarning,
     color: "#FFCC00",
     type: "warning"
@@ -197,5 +200,6 @@ Currency.propTypes = {
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   minimum: PropTypes.number,
-  maximum: PropTypes.number
+  maximum: PropTypes.number,
+  warning: PropTypes.string
 };

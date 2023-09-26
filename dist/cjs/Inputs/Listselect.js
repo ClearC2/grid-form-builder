@@ -62,7 +62,8 @@ var Listselect = function Listselect(props) {
       requiredWarning = props.requiredWarning,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      required = props.required;
+      required = props.required,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -184,8 +185,12 @@ var Listselect = function Listselect(props) {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationError && (0, _core.jsx)("span", {
+  }, (validationError || warning) && (0, _core.jsx)("span", {
     className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
+  }), warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
   }), validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationError
   }))), (0, _core.jsx)("div", {
@@ -211,5 +216,6 @@ Listselect.propTypes = {
   interactive: _propTypes.default.bool,
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
-  required: _propTypes.default.bool
+  required: _propTypes.default.bool,
+  warning: _propTypes.default.string
 };

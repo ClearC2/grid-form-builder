@@ -20,7 +20,8 @@ const Textarea = props => {
     requiredWarning,
     style = {},
     required,
-    maxlength = 524288
+    maxlength = 524288,
+    warning
   } = props
 
   const {
@@ -44,17 +45,11 @@ const Textarea = props => {
     setIsFocused(false)
   }, [])
 
-  const isFirefox = navigator.userAgent.search('Firefox') > -1
-
   const isDisabled = readonly || disabled || !interactive
-
-  // https://github.com/ClearC2/bleu/issues/3104
-  const isFirefoxAndDisabled = isFirefox && isDisabled
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (isDisabled) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
-  if (isFirefoxAndDisabled) className = className + ' firefox-disabled-field'
   let controlClass = 'gfb-input__control'
   let validationError
   if (required && requiredWarning && (value + '').trim().length === 0 && !isFocused) {
@@ -80,20 +75,20 @@ const Textarea = props => {
               name={name}
               value={value}
               onChange={onChange}
-              disabled={isFirefoxAndDisabled ? undefined : isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}
               autoComplete={autoComplete}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
-              readOnly={isFirefoxAndDisabled ? isDisabled : undefined}
+              readOnly={isDisabled}
               style={valueStyle}
               css={theme.value}
               maxLength={maxlength}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
@@ -122,5 +117,6 @@ Textarea.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  warning: PropTypes.string
 }

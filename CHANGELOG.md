@@ -1,3 +1,44 @@
+## [3.91.2](https://github.com/ClearC2/grid-form-builder/compare/v3.91.1...v3.91.2) (2023-09-20)
+
+
+### Bug Fixes
+
+* **typeahead:** starts with and contains label should no longer cut off the first character of the search term ([6dbb847](https://github.com/ClearC2/grid-form-builder/commit/6dbb8473a2e6c80aa87cf7ea3217d16310f15fd3))
+
+## [3.91.1](https://github.com/ClearC2/grid-form-builder/compare/v3.91.0...v3.91.1) (2023-09-11)
+
+
+### Bug Fixes
+
+* **drag:** removes disabled in favor of readonly so click propogation does not get consumed by disabled fields, especially for drag events ([d56cf16](https://github.com/ClearC2/grid-form-builder/commit/d56cf1628b7fc569d4b77cbb5a1f9f18c9596210))
+
+# [3.91.0](https://github.com/ClearC2/grid-form-builder/compare/v3.90.0...v3.91.0) (2023-09-11)
+
+
+### Features
+
+* **typeahead:** changes api to use search term in payload instead of url ([d5608ca](https://github.com/ClearC2/grid-form-builder/commit/d5608ca8fdf3d8f6a7cc1a01de15a5a937ec123a))
+
+# [3.90.0](https://github.com/ClearC2/grid-form-builder/compare/v3.89.0...v3.90.0) (2023-09-11)
+
+
+### Features
+
+* **typeahead:** if there is an issue fetching typeahead options the typeahead will now show an empty result set rather than getting hung looking like it is loading ([c8cda07](https://github.com/ClearC2/grid-form-builder/commit/c8cda078cc0c982a7424df9857b2053dd2b94367))
+
+# [3.89.0](https://github.com/ClearC2/grid-form-builder/compare/v3.88.0...v3.89.0) (2023-08-29)
+
+
+### Bug Fixes
+
+* **conditionaltable:** fix undefined on multiple empty conditions ([#207](https://github.com/ClearC2/grid-form-builder/issues/207)) ([5d58056](https://github.com/ClearC2/grid-form-builder/commit/5d58056e1cd2c4edb6a65b5bec508f157f457215))
+* **dateinput:** allow dateinput to be blanked ([#208](https://github.com/ClearC2/grid-form-builder/issues/208)) ([755c343](https://github.com/ClearC2/grid-form-builder/commit/755c3433d45cd8045cb80a3f9be19430f3d6efc5))
+
+
+### Features
+
+* **warning:** Add warning icons & messages to inputs when warning prop passed down ([#209](https://github.com/ClearC2/grid-form-builder/issues/209)) ([4752280](https://github.com/ClearC2/grid-form-builder/commit/475228014485708161c89353e2cdb2e1ceea88de))
+
 # [3.88.0](https://github.com/ClearC2/grid-form-builder/compare/v3.87.0...v3.88.0) (2023-07-10)
 
 

@@ -21,7 +21,8 @@ const Email = props => {
     requiredWarning,
     style = {},
     required,
-    maxlength = 524288
+    maxlength = 524288,
+    warning
   } = props
 
   const {
@@ -53,7 +54,6 @@ const Email = props => {
     }
   }, [onChange, value, name])
 
-  const isFirefox = navigator.userAgent.search('Firefox') > -1
   const isDisabled = readonly || disabled || !interactive
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
@@ -87,8 +87,7 @@ const Email = props => {
               name={name}
               value={value}
               onChange={onChange}
-              disabled={isFirefox ? false : isDisabled}
-              readOnly={isFirefox && isDisabled}
+              readOnly={isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}
@@ -101,6 +100,7 @@ const Email = props => {
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
@@ -129,5 +129,6 @@ Email.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  warning: PropTypes.string
 }

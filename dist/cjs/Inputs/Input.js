@@ -48,7 +48,8 @@ var Input = function Input(props) {
       format = _props$format === void 0 ? 'text' : _props$format,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
-      onBlur = props.onBlur;
+      onBlur = props.onBlur,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -79,11 +80,10 @@ var Input = function Input(props) {
     if (onBlur) {
       onBlur(value);
     }
-  }, [value]);
+  }, [value, onBlur]);
   var handleOnChange = (0, _react.useCallback)(function (e) {
     onChange(e);
   }, [onChange]);
-  var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
@@ -129,8 +129,7 @@ var Input = function Input(props) {
     name: name,
     value: value,
     onChange: handleOnChange,
-    disabled: isFirefox ? false : isDisabled,
-    readOnly: isFirefox && isDisabled,
+    readOnly: isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,
@@ -145,7 +144,11 @@ var Input = function Input(props) {
     className: "gfb-input__indicators",
     style: indicators,
     css: theme.indicators
-  }, validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationWarning,
     color: "#FFCC00",
     type: "warning"
@@ -174,5 +177,6 @@ Input.propTypes = {
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
   format: _propTypes.default.string,
-  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string])
+  maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
+  warning: _propTypes.default.string
 };

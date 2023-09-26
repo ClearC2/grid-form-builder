@@ -27,7 +27,8 @@ const Currency = props => {
     required,
     maxlength = 524288,
     minimum = Number.MIN_SAFE_INTEGER,
-    maximum = Number.MAX_SAFE_INTEGER
+    maximum = Number.MAX_SAFE_INTEGER,
+    warning
   } = props
 
   const {
@@ -89,7 +90,6 @@ const Currency = props => {
   if (maximum && (value + '').length && parseFloat(value) > parseFloat(maximum)) {
     validationError = `Maximum value permitted: $${maximum}`
   }
-  const isFirefox = navigator.userAgent.search('Firefox') > -1
   const isDisabled = readonly || disabled || !interactive
   return (
     <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
@@ -108,8 +108,7 @@ const Currency = props => {
               name={name}
               value={value}
               onChange={handleOnChange}
-              disabled={isFirefox ? false : isDisabled}
-              readOnly={isFirefox && isDisabled}
+              readOnly={isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}
@@ -124,6 +123,7 @@ const Currency = props => {
             />
           </div>
           <div className='gfb-input__indicators' style={indicators}>
+            {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
@@ -157,5 +157,6 @@ Currency.propTypes = {
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   minimum: PropTypes.number,
-  maximum: PropTypes.number
+  maximum: PropTypes.number,
+  warning: PropTypes.string
 }

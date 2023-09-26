@@ -28,7 +28,8 @@ const Select = props => {
     autoComplete,
     interactive = true,
     style = {},
-    isClearable = true
+    isClearable = true,
+    warning
   } = props
 
   const {
@@ -170,7 +171,11 @@ const Select = props => {
 
   let outerClass = 'gfb-input-outer'
   const components = {}
-
+  if (warning && !isRequiredFlag) {
+    components.DropdownIndicator = () => {
+      return <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />
+    }
+  }
   if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error'
     components.DropdownIndicator = () => {
@@ -180,7 +185,6 @@ const Select = props => {
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus'
   }
-
   return (
     <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
       <Select
@@ -263,5 +267,6 @@ Select.propTypes = {
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   style: PropTypes.object,
-  isClearable: PropTypes.bool
+  isClearable: PropTypes.bool,
+  warning: PropTypes.string
 }

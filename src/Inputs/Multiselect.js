@@ -35,7 +35,8 @@ const Multiselect = props => {
     stringify,
     isClearable = true,
     searchable = false,
-    closeMenuOnSelect = true
+    closeMenuOnSelect = true,
+    warning
   } = props
 
   const {
@@ -206,6 +207,11 @@ const Multiselect = props => {
       </div>
     )
   }
+  if (warning && !isRequiredFlag) {
+    components.DropdownIndicator = () => {
+      return <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />
+    }
+  }
   if (isRequiredFlag && (value.length === 0 || value.size === 0) && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error'
     components.DropdownIndicator = () => {
@@ -311,5 +317,6 @@ Multiselect.propTypes = {
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   isClearable: PropTypes.bool,
   searchable: PropTypes.bool,
-  closeMenuOnSelect: PropTypes.bool
+  closeMenuOnSelect: PropTypes.bool,
+  warning: PropTypes.string
 }

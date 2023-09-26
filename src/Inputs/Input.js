@@ -22,7 +22,8 @@ const Input = props => {
     required,
     format = 'text',
     maxlength = 524288,
-    onBlur
+    onBlur,
+    warning
   } = props
 
   const {
@@ -47,13 +48,11 @@ const Input = props => {
     if (onBlur) {
       onBlur(value)
     }
-  }, [value])
+  }, [value, onBlur])
 
   const handleOnChange = useCallback(e => {
     onChange(e)
   }, [onChange])
-
-  const isFirefox = navigator.userAgent.search('Firefox') > -1
 
   const isDisabled = readonly || disabled || !interactive
 
@@ -85,8 +84,7 @@ const Input = props => {
               name={name}
               value={value}
               onChange={handleOnChange}
-              disabled={isFirefox ? false : isDisabled}
-              readOnly={isFirefox && isDisabled}
+              readOnly={isDisabled}
               autoFocus={autofocus}
               placeholder={placeholder}
               tabIndex={tabIndex}
@@ -100,6 +98,7 @@ const Input = props => {
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
@@ -130,5 +129,6 @@ Input.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   format: PropTypes.string,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  warning: PropTypes.string
 }

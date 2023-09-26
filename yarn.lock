@@ -2994,8 +2994,8 @@ class-utils@^0.3.5:
     static-extend "^0.1.1"
 
 classnames@2.x:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
 
 clean-css@^5.2.2:
   version "5.3.1"

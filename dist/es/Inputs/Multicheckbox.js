@@ -32,7 +32,8 @@ var Multicheckbox = function Multicheckbox(props) {
       delimit = props.delimit,
       _props$delimiter = props.delimiter,
       delimiter = _props$delimiter === void 0 ? '¤' : _props$delimiter,
-      stringify = props.stringify;
+      stringify = props.stringify,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -195,7 +196,11 @@ var Multicheckbox = function Multicheckbox(props) {
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators
-  }, validationError && jsx(ValidationErrorIcon, {
+  }, warning && !validationError && jsx(ValidationErrorIcon, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationError && jsx(ValidationErrorIcon, {
     message: validationError
   })))));
 };
@@ -217,5 +222,6 @@ Multicheckbox.propTypes = {
   required: PropTypes.bool,
   stringify: PropTypes.bool,
   delimiter: PropTypes.string,
-  delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
+  delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  warning: PropTypes.string
 };

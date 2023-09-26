@@ -155,7 +155,8 @@ const Typeahead = props => {
     delimiter,
     isClearable = true,
     createlabel,
-    options: typeaheadOptions
+    options: typeaheadOptions,
+    warning
   } = props
 
   const {
@@ -376,8 +377,15 @@ const Typeahead = props => {
         showValidationError: false,
         DropdownIndicator: ReactSelectBaseComponents.DropdownIndicator
       })
+    } else if (warning) {
+      setComponents({
+        ...components,
+        DropdownIndicator: () => {
+          return <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />
+        }
+      })
     }
-  }, [isRequiredFlag, value, isFocused, components])
+  }, [isRequiredFlag, value, isFocused, components, warning])
 
   useEffect(() => {
     changeInput({Typeahead: allowcreate ? AsyncCreatable : Async})
@@ -450,7 +458,6 @@ const Typeahead = props => {
       }
 
       if (search.length >= minSearchLength || search === ' ') {
-        if (typeof search === 'string' && search.trim() !== '') search = `/${encodeURIComponent(search)}`
         if (setDefault) reactSelect.current.setState(() => ({isLoading: true}))
         isLoadingOptions.current = true
         const {
@@ -460,8 +467,9 @@ const Typeahead = props => {
         } = typeaheadOptions
 
         return GFBConfig.ajax.post(
-          `/typeahead/name/${encodeURIComponent(dynamicTypeaheadKey)}/search${search}`,
+          `/typeahead/name/${encodeURIComponent(dynamicTypeaheadKey)}/search`,
           {
+            term: search,
             filter: {conditions},
             queryRowCount: showQueryCountOption, /* Will return queryRowCount as 0 to UI, time saver for API */
             data: showDataArrayOption, /* Returns an empty array in the response, time saver for API */
@@ -474,7 +482,7 @@ const Typeahead = props => {
             if (Array.isArray(resp.data.contains) && Array.isArray(resp.data.startsWith)) {
               const {contains, startsWith} = resp.data
               options.push({
-                label: `${startsWith.length} options start with "${decodeURIComponent(search.substring(1))}" ...`,
+                label: `${startsWith.length} options start with "${search}" ...`,
                 isDisabled: true
               })
               startsWith.forEach(value => {
@@ -484,7 +492,7 @@ const Typeahead = props => {
                 options.push(value)
               })
               options.push({
-                label: `${contains.length} options contain "${decodeURIComponent(search.substring(1))}" ...`,
+                label: `${contains.length} options contain "${search}" ...`,
                 isDisabled: true,
                 className: 'gfb-typeahead-flavor-option'
               })
@@ -509,7 +517,8 @@ const Typeahead = props => {
           })
           .catch(err => {
             isLoadingOptions.current = false
-            return Promise.reject(err)
+            console.error('There was an error fetching the options in this typeahead: ', err) // eslint-disable-line
+            return resolve([])
           })
       }
       if (setDefault === true) setDefaultOptions([])
@@ -863,5 +872,6 @@ Typeahead.propTypes = {
     data: PropTypes.bool,
     useProcedure: PropTypes.bool,
     queryRowCount: PropTypes.bool
-  })
+  }),
+  warning: PropTypes.string
 }

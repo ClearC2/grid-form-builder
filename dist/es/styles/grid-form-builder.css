@@ -71,6 +71,7 @@ div.gfb-inner-cell.gfb-inline-cell {
 
 div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox {
   flex-direction: row-reverse;
+  display: flex;
   justify-content: flex-end;
 }
 
@@ -79,12 +80,11 @@ div.gfb-inner-cell.gfb-inline-cell > .gfb-inner-cell-input {
 }
 
 div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox > .gfb-inner-cell-input {
-  width: 20px;
   flex: none;
 }
 
 div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox > .gfb-inner-cell-label {
-  margin-left: 10px;
+
 }
 
 div.gfb-inner-cell.gfb-inline-cell.gfb-checkbox.gfb-checkbox-label-with-validation > .gfb-inner-cell-label {
@@ -169,6 +169,7 @@ div.gfb-inner-cell-input {
 
 .gfb-disabled-input {
   background-color: #f2f2f2 !important;
+  cursor: default;
 }
 
 /* You cannot copy text on disabled field in the firefox browser. The readOnly html attribute is used instead and this classname is used to match readOnly styling to the disabled field */

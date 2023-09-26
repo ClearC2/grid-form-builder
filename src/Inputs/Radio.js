@@ -18,7 +18,8 @@ const Radio = props => {
     interactive = true,
     requiredWarning,
     style = {},
-    required
+    required,
+    warning
   } = props
 
   const {
@@ -94,6 +95,7 @@ const Radio = props => {
             })}
           </div>
           <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+            {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
@@ -117,5 +119,6 @@ Radio.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  warning: PropTypes.string
 }

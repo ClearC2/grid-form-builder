@@ -65,7 +65,8 @@ var Currency = function Currency(props) {
       _props$minimum = props.minimum,
       minimum = _props$minimum === void 0 ? _minSafeInteger.default : _props$minimum,
       _props$maximum = props.maximum,
-      maximum = _props$maximum === void 0 ? _maxSafeInteger.default : _props$maximum;
+      maximum = _props$maximum === void 0 ? _maxSafeInteger.default : _props$maximum,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -141,7 +142,6 @@ var Currency = function Currency(props) {
     validationError = "Maximum value permitted: $".concat(maximum);
   }
 
-  var isFirefox = navigator.userAgent.search('Firefox') > -1;
   var isDisabled = readonly || disabled || !interactive;
   return (0, _core.jsx)("div", {
     className: outerClass,
@@ -171,8 +171,7 @@ var Currency = function Currency(props) {
     name: name,
     value: value,
     onChange: handleOnChange,
-    disabled: isFirefox ? false : isDisabled,
-    readOnly: isFirefox && isDisabled,
+    readOnly: isDisabled,
     autoFocus: autofocus,
     placeholder: placeholder,
     tabIndex: tabIndex,
@@ -187,7 +186,11 @@ var Currency = function Currency(props) {
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators
-  }, validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationWarning,
     color: "#FFCC00",
     type: "warning"
@@ -219,5 +222,6 @@ Currency.propTypes = {
   required: _propTypes.default.bool,
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
   minimum: _propTypes.default.number,
-  maximum: _propTypes.default.number
+  maximum: _propTypes.default.number,
+  warning: _propTypes.default.string
 };

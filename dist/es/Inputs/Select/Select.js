@@ -55,7 +55,8 @@ var Select = function Select(props) {
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
       _props$isClearable = props.isClearable,
-      isClearable = _props$isClearable === void 0 ? true : _props$isClearable;
+      isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
+      warning = props.warning;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -229,6 +230,16 @@ var Select = function Select(props) {
   var outerClass = 'gfb-input-outer';
   var components = {};
 
+  if (warning && !isRequiredFlag) {
+    components.DropdownIndicator = function () {
+      return jsx(ValidationErrorIcon, {
+        message: warning,
+        color: "#FFCC00",
+        type: "warning"
+      });
+    };
+  }
+
   if (isRequiredFlag && _trimInstanceProperty(_context = value + '').call(_context).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
 
@@ -331,5 +342,6 @@ Select.propTypes = {
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   style: PropTypes.object,
-  isClearable: PropTypes.bool
+  isClearable: PropTypes.bool,
+  warning: PropTypes.string
 };

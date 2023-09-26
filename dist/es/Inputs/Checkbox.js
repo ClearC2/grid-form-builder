@@ -1,5 +1,19 @@
+import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context5, _context6; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context5 = ownKeys(Object(source), !0)).call(_context5, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context6 = ownKeys(Object(source))).call(_context6, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
+import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
+import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -28,7 +42,8 @@ var Checkbox = function Checkbox(props) {
       requiredWarning = props.requiredWarning,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      required = props.required;
+      required = props.required,
+      warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -223,7 +238,9 @@ var Checkbox = function Checkbox(props) {
 
   return jsx("div", {
     className: "gfb-input-outer",
-    style: inputOuter,
+    style: _objectSpread(_objectSpread({}, inputOuter), {}, {
+      marginRight: warning ? '0px' : '10px'
+    }),
     css: theme.inputOuter
   }, jsx("div", {
     className: "gfb-input-inner",
@@ -254,7 +271,11 @@ var Checkbox = function Checkbox(props) {
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators
-  }, validationError && jsx(ValidationErrorIcon, {
+  }, warning && !validationError && jsx(ValidationErrorIcon, {
+    message: warning,
+    color: "#FFCC00",
+    type: "warning"
+  }), validationError && jsx(ValidationErrorIcon, {
     message: validationError
   })))));
 };
@@ -275,5 +296,6 @@ Checkbox.propTypes = {
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  warning: PropTypes.string
 };

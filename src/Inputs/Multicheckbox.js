@@ -22,7 +22,8 @@ const Multicheckbox = props => {
     required,
     delimit,
     delimiter = '¤',
-    stringify
+    stringify,
+    warning
   } = props
 
   const {
@@ -150,6 +151,7 @@ const Multicheckbox = props => {
             })}
           </div>
           <div className='gfb-input__indicators' style={indicators}>
+            {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
         </div>
@@ -176,5 +178,6 @@ Multicheckbox.propTypes = {
   required: PropTypes.bool,
   stringify: PropTypes.bool,
   delimiter: PropTypes.string,
-  delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
+  delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  warning: PropTypes.string
 }
