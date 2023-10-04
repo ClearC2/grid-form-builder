@@ -1,3 +1,10 @@
+# [3.92.0](https://github.com/ClearC2/grid-form-builder/compare/v3.91.2...v3.92.0) (2023-10-04)
+
+
+### Features
+
+* **queryBuilder:** add conditions dialog to textarea ([#210](https://github.com/ClearC2/grid-form-builder/issues/210)) ([5200504](https://github.com/ClearC2/grid-form-builder/commit/5200504f97de627f89a3cdb334f917590d5732c0))
+
 ## [3.91.2](https://github.com/ClearC2/grid-form-builder/compare/v3.91.1...v3.91.2) (2023-09-20)
 
 
