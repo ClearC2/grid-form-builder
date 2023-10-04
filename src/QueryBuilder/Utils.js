@@ -1,6 +1,6 @@
 import {Set} from 'immutable'
 
-const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox', 'textarea'])
+const unconditionalFields = Set(['header', 'conditionalinput', 'checkbox'])
 
 export const convertFormSchemaToSearch = (formSchema = {}) => {
   if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
