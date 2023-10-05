@@ -66,7 +66,6 @@ var Multiselect = function Multiselect(props) {
       closeMenuOnSelect = _props$closeMenuOnSel === void 0 ? true : _props$closeMenuOnSel,
       warning = props.warning,
       showValidOptions = props.showValidOptions;
-  console.log(delimit);
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -232,7 +231,7 @@ var Multiselect = function Multiselect(props) {
       options: options,
       showValidOptions: showValidOptions
     }));
-  }, [value, updateSelectValue, name, delimit, delimiter, stringify, options]);
+  }, [value, updateSelectValue, name, delimit, delimiter, stringify, options, showValidOptions]);
   var handleChange = useCallback(function (val) {
     onChange({
       target: {
@@ -405,5 +404,6 @@ Multiselect.propTypes = {
   isClearable: PropTypes.bool,
   searchable: PropTypes.bool,
   closeMenuOnSelect: PropTypes.bool,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  showValidOptions: PropTypes.bool
 };
