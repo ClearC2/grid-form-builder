@@ -36,7 +36,8 @@ const Multiselect = props => {
     isClearable = true,
     searchable = false,
     closeMenuOnSelect = true,
-    warning
+    warning,
+    showValidOptions
   } = props
 
   const {
@@ -163,8 +164,8 @@ const Multiselect = props => {
   }, [updateIsRequiredFlag, required, requiredWarning, value])
 
   useEffect(() => {
-    updateSelectValue(convertDelimitedValueIntoLabelValueArray({value, delimit, delimiter, options}))
-  }, [value, updateSelectValue, name, delimit, delimiter, stringify, options])
+    updateSelectValue(convertDelimitedValueIntoLabelValueArray({value, delimit, delimiter, options, showValidOptions}))
+  }, [value, updateSelectValue, name, delimit, delimiter, stringify, options, showValidOptions])
 
   const handleChange = useCallback(val => {
     onChange({
@@ -318,5 +319,6 @@ Multiselect.propTypes = {
   isClearable: PropTypes.bool,
   searchable: PropTypes.bool,
   closeMenuOnSelect: PropTypes.bool,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  showValidOptions: PropTypes.bool
 }
