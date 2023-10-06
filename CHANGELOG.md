@@ -1,3 +1,10 @@
+## [3.92.1](https://github.com/ClearC2/grid-form-builder/compare/v3.92.0...v3.92.1) (2023-10-06)
+
+
+### Bug Fixes
+
+* **filters:** textarea conditions now show '...or' options ([#212](https://github.com/ClearC2/grid-form-builder/issues/212)) ([b729e69](https://github.com/ClearC2/grid-form-builder/commit/b729e6934dbdf45572ad75e76ccf526d4d2508ad))
+
 # [3.92.0](https://github.com/ClearC2/grid-form-builder/compare/v3.91.2...v3.92.0) (2023-10-04)
 
 
