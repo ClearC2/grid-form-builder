@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {FormBuilder} from '../index'
 import {Map, List, fromJS, Set} from 'immutable'
 import {CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, DATES, SINGLE_FIELD_INPUTS} from './SearchUtils'// eslint-disable-line
-const STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime'])
+const STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime', 'textarea'])
 const ConditionalPredicate = props => {
   let propValue = props.value
   if (!propValue) {
