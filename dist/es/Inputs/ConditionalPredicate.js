@@ -30,7 +30,7 @@ import { FormBuilder } from '../index';
 import { Map, List, fromJS, Set } from 'immutable';
 import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, DATES, SINGLE_FIELD_INPUTS } from './SearchUtils'; // eslint-disable-line
 
-var STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime']);
+var STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime', 'textarea']);
 
 var ConditionalPredicate = function ConditionalPredicate(props) {
   var propValue = props.value;

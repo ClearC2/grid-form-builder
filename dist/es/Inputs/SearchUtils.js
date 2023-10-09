@@ -37,7 +37,7 @@ export var DATES = Set(['date', 'datetime']);
 export var TYPEAHEAD_CONDITIONS = Set(['is equal to', 'is not equal to', 'is one of', 'is not one of']); // eslint-disable-next-line max-len
 
 export var NUMERICAL_CONDITIONS = Set(['last (x) days', 'last (x) months', 'next (x) days', 'last (x) weeks', 'next (x) weeks', 'next (x) months', 'is top (x)', 'is bottom (x)', 'is top (%)', 'is bottom (%)']);
-export var TEXT_INPUTS = ['textarea', 'checkbox', 'radio']; // export const LIST_INPUTS = []
+export var TEXT_INPUTS = ['checkbox', 'radio']; // export const LIST_INPUTS = []
 
 export var CONDITIONS = {
   contains: {
