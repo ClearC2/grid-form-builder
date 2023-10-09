@@ -79,7 +79,7 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context13, _context14; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context13 = ownKeys(Object(source), !0)).call(_context13, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context14 = ownKeys(Object(source))).call(_context14, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 // eslint-disable-line
-var STRING_VALUES = (0, _immutable.Set)(['input', 'number', 'percentage', 'currency', 'datetime']);
+var STRING_VALUES = (0, _immutable.Set)(['input', 'number', 'percentage', 'currency', 'datetime', 'textarea']);
 
 var ConditionalPredicate = function ConditionalPredicate(props) {
   var propValue = props.value;

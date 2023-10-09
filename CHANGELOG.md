@@ -1,3 +1,10 @@
+## [3.92.2](https://github.com/ClearC2/grid-form-builder/compare/v3.92.1...v3.92.2) (2023-10-09)
+
+
+### Bug Fixes
+
+* **textarea:** fix issue with multiple filter conditions not being passed through ([#213](https://github.com/ClearC2/grid-form-builder/issues/213)) ([8ca5c15](https://github.com/ClearC2/grid-form-builder/commit/8ca5c15aaf8e95e9120dcec5952a0eeb514e39a1))
+
 ## [3.92.1](https://github.com/ClearC2/grid-form-builder/compare/v3.92.0...v3.92.1) (2023-10-06)
 
 
