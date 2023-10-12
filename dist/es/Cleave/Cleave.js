@@ -161,6 +161,7 @@ var Cleave = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "getRawValue", function () {
       var pps = _this.properties;
+      console.log(pps);
       var rawValue = pps.result;
 
       if (pps.rawValueTrimPrefix) {
@@ -244,6 +245,7 @@ var Cleave = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "onInput", function (value, fromProps, bypassSetState) {
       var pps = _this.properties;
+      console.log(pps);
       var _this$props = _this.props,
           disabled = _this$props.disabled,
           readOnly = _this$props.readOnly; // case 1: delete one more character "4"
@@ -279,7 +281,7 @@ var Cleave = /*#__PURE__*/function (_Component) {
         // This mostly because we need to show user the native input placeholder
         if (pps.prefix && pps.noImmediatePrefix && value.length === 0) {
           pps.result = '';
-        } else if (readOnly || disabled && isNaN(Number(value))) {
+        } else if ((readOnly || disabled) && isNaN(Number(value))) {
           pps.result = value;
           return _this.updateValueState(false);
         } else {
