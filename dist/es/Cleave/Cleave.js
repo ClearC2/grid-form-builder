@@ -161,7 +161,6 @@ var Cleave = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "getRawValue", function () {
       var pps = _this.properties;
-      console.log(pps);
       var rawValue = pps.result;
 
       if (pps.rawValueTrimPrefix) {
@@ -245,7 +244,6 @@ var Cleave = /*#__PURE__*/function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "onInput", function (value, fromProps, bypassSetState) {
       var pps = _this.properties;
-      console.log(pps);
       var _this$props = _this.props,
           disabled = _this$props.disabled,
           readOnly = _this$props.readOnly; // case 1: delete one more character "4"

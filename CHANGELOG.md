@@ -1,3 +1,11 @@
+# [3.93.0](https://github.com/ClearC2/grid-form-builder/compare/v3.92.2...v3.93.0) (2023-10-25)
+
+
+### Features
+
+* **cleave:** modify value isNaN check ([#214](https://github.com/ClearC2/grid-form-builder/issues/214)) ([88c45a1](https://github.com/ClearC2/grid-form-builder/commit/88c45a15ef7da41c0899da519efce0d983a8da48))
+* **multiSelect:** require flag to remove invalid values ([#211](https://github.com/ClearC2/grid-form-builder/issues/211)) ([8e122a1](https://github.com/ClearC2/grid-form-builder/commit/8e122a127e4ae527069a2b0f3bc85e25a01f9cc5))
+
 ## [3.92.2](https://github.com/ClearC2/grid-form-builder/compare/v3.92.1...v3.92.2) (2023-10-09)
 
 
