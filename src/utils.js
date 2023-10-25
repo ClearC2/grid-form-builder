@@ -130,7 +130,7 @@ export const usePrevious = value => {
   return ref.current
 }
 
-export const convertDelimitedValueIntoLabelValueArray = ({delimit, delimiter, value, options}) => {
+export const convertDelimitedValueIntoLabelValueArray = ({delimit, delimiter, value, options, showValidOptions}) => {
   if (!delimit) delimit = []
   if (delimit && typeof delimit === 'string') delimit = [delimit]
   delimit = delimit.length ? delimit : ['label', 'value']
@@ -188,8 +188,9 @@ export const convertDelimitedValueIntoLabelValueArray = ({delimit, delimiter, va
     }
   })
 
-  if (formattedOptions.length) { // if we were provided options we are going to try to match the values up with what options we have available
+  if (formattedOptions.length && showValidOptions) { // if we were provided options we are going to try to match the values up with what options we have available
     // a consequence of doing this is that we will lose any value that is not a valid option - JRA 02/07/2020
+    // Update: showing invalid options as a default, schemas need to specify if they want to show valid options only via showValidOptions in config = AHP 10/5/2023
     const optionEquivalents = []
     values.forEach(value => {
       if (value.toJS) value = value.toJS()

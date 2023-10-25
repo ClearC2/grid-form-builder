@@ -146,7 +146,8 @@ export var convertDelimitedValueIntoLabelValueArray = function convertDelimitedV
   var delimit = _ref.delimit,
       delimiter = _ref.delimiter,
       value = _ref.value,
-      options = _ref.options;
+      options = _ref.options,
+      showValidOptions = _ref.showValidOptions;
   if (!delimit) delimit = [];
   if (delimit && typeof delimit === 'string') delimit = [delimit];
   delimit = delimit.length ? delimit : ['label', 'value'];
@@ -207,9 +208,10 @@ export var convertDelimitedValueIntoLabelValueArray = function convertDelimitedV
     }
   });
 
-  if (formattedOptions.length) {
+  if (formattedOptions.length && showValidOptions) {
     // if we were provided options we are going to try to match the values up with what options we have available
     // a consequence of doing this is that we will lose any value that is not a valid option - JRA 02/07/2020
+    // Update: showing invalid options as a default, schemas need to specify if they want to show valid options only via showValidOptions in config = AHP 10/5/2023
     var optionEquivalents = [];
 
     _forEachInstanceProperty(values).call(values, function (value) {
