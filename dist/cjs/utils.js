@@ -239,7 +239,8 @@ var convertDelimitedValueIntoLabelValueArray = function convertDelimitedValueInt
   var tempValueObject = {};
   (0, _forEach.default)(formattedValue).call(formattedValue, function (value, i) {
     if ((0, _typeof2.default)(value) === 'object') {
-      values.push(value);
+      var valueObject = 'toJS' in value ? value.toJS() : value;
+      values.push(valueObject);
     } else {
       if (i % delimit.length === 0) tempValueObject = {};
       tempValueObject[delimit[i % delimit.length]] = value;

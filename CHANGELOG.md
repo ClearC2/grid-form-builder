@@ -1,3 +1,10 @@
+## [3.93.1](https://github.com/ClearC2/grid-form-builder/compare/v3.93.0...v3.93.1) (2023-11-21)
+
+
+### Bug Fixes
+
+* **multiSelect:** convert values to json if applicable ([#215](https://github.com/ClearC2/grid-form-builder/issues/215)) ([deeaec5](https://github.com/ClearC2/grid-form-builder/commit/deeaec5be2a148b278f2bcb94d66108d269b912c))
+
 # [3.93.0](https://github.com/ClearC2/grid-form-builder/compare/v3.92.2...v3.93.0) (2023-10-25)
 
 
