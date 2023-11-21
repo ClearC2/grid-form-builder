@@ -176,7 +176,8 @@ export const convertDelimitedValueIntoLabelValueArray = ({delimit, delimiter, va
   let tempValueObject = {}
   formattedValue.forEach((value, i) => {
     if (typeof value === 'object') {
-      values.push(value)
+      const valueObject = 'toJS' in value ? value.toJS() : value
+      values.push(valueObject)
     } else {
       if (i % delimit.length === 0) tempValueObject = {}
       tempValueObject[delimit[i % delimit.length]] = value
