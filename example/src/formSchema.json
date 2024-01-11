@@ -354,6 +354,8 @@
           "name": "multiselecttest",
           "label": "Multiselect",
           "type": "multiselect",
+          "allowcreate": true,
+          "searchable": true,
           "keyword": {
             "category": "TASKS",
             "options": [{
