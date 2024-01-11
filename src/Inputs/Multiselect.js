@@ -272,12 +272,15 @@ const Multiselect = props => {
           option: base => {
             return ({...base, ...optionsStyle, ...optionsTheme})
           },
-          multiValue: base => {
+          multiValue: (base, parent) => {
             if (!interactive) {
               base.color = 'green'
               base.backgroundColor = '#a6eca67a'
             } else {
               base.backgroundColor = '#8bb7ff91'
+            }
+            if (window.CSS.supports('color', parent.data.value)) {
+              base.backgroundColor = parent.data.value
             }
             return ({...base, ...valueStyle, ...valueTheme})
           },
