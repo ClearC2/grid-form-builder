@@ -279,8 +279,7 @@ const Multiselect = props => {
             } else {
               base.backgroundColor = '#8bb7ff91'
             }
-            if (window.CSS.supports('color', parent.data.value) &&
-              parent.data.value.match(/#([a-fA-F0-9]{3}|[a-fA-F0-9]{6}|[a-fA-F0-9]{8})\b/)) {
+            if (window.CSS.supports('color', parent.data.value)) {
               base.backgroundColor = parent.data.value
             }
             return ({...base, ...valueStyle, ...valueTheme})
