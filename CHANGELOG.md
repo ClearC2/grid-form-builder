@@ -1,3 +1,10 @@
+# [3.94.0](https://github.com/ClearC2/grid-form-builder/compare/v3.93.1...v3.94.0) (2024-01-11)
+
+
+### Features
+
+* **multiselect:** change background color of multiselect value if va… ([#216](https://github.com/ClearC2/grid-form-builder/issues/216)) ([f20a649](https://github.com/ClearC2/grid-form-builder/commit/f20a64991e7044f0f05b8bbc21bc0162b55bf528))
+
 ## [3.93.1](https://github.com/ClearC2/grid-form-builder/compare/v3.93.0...v3.93.1) (2023-11-21)
 
 

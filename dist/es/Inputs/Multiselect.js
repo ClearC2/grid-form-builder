@@ -356,12 +356,16 @@ var Multiselect = function Multiselect(props) {
       option: function option(base) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), optionsStyle), optionsTheme);
       },
-      multiValue: function multiValue(base) {
+      multiValue: function multiValue(base, parent) {
         if (!interactive) {
           base.color = 'green';
           base.backgroundColor = '#a6eca67a';
         } else {
           base.backgroundColor = '#8bb7ff91';
+        }
+
+        if (window.CSS.supports('color', parent.data.value)) {
+          base.backgroundColor = parent.data.value;
         }
 
         return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
