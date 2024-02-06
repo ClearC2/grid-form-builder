@@ -20,7 +20,7 @@ var _DateInput = _interopRequireDefault(require("./DateInput"));
 
 var Monthday = function Monthday(props) {
   var _props$format = props.format,
-      format = _props$format === void 0 ? 'MM/DD' : _props$format;
+      format = _props$format === void 0 ? 'MM/DD/YYYY' : _props$format;
   return /*#__PURE__*/_react.default.createElement(_DateInput.default, (0, _extends2.default)({}, props, {
     canPickYear: false,
     format: format

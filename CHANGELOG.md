@@ -1,3 +1,10 @@
+## [3.95.1](https://github.com/ClearC2/grid-form-builder/compare/v3.95.0...v3.95.1) (2024-02-06)
+
+
+### Bug Fixes
+
+* **date:** monthday input now stores the current year as the behind the scenes year value ([eff68ea](https://github.com/ClearC2/grid-form-builder/commit/eff68eacd9cfb67325eae66cc04d625434b42d1c))
+
 # [3.95.0](https://github.com/ClearC2/grid-form-builder/compare/v3.94.0...v3.95.0) (2024-02-06)
 
 

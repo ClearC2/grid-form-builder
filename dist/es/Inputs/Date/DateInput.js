@@ -197,8 +197,8 @@ var DateInput = function DateInput(props) {
     setManualBlurCheck(type !== 'month' && type !== 'datetime');
   }, [changeShowPicker, type]);
   var handleOnBlur = useCallback(function (e) {
-    if (type === 'month' && manualBlurCheck) {
-      var formatted = inputValue ? moment(inputValue, 'MM/YYYY').format(inputFormat) : '';
+    if ((type === 'month' || type === 'monthday') && manualBlurCheck) {
+      var formatted = inputValue ? moment(inputValue, type === 'month' ? 'MM/YYYY' : 'MM/DD').format(inputFormat) : '';
       setShowMonthFormatted(true);
       onChange({
         target: {
@@ -310,6 +310,8 @@ var DateInput = function DateInput(props) {
   if (type === 'month' && showMonthFormatted && startDate) {
     // if this is a special input that only shows months, manually overwrite what the display value is - JRA 12/08/2020
     valueOverride = startDate.format('MM/YYYY');
+  } else if (type === 'monthday' && showMonthFormatted && startDate) {
+    valueOverride = startDate.format('MM/DD');
   }
 
   return jsx("div", {
@@ -346,7 +348,7 @@ var DateInput = function DateInput(props) {
     css: theme.value,
     maxLength: maxlength,
     onKeyDown: function onKeyDown(e) {
-      if (type === 'month') {
+      if (type === 'month' || type === 'monthday') {
         if (showPicker) changeInputValue(e.target.value);
         setManualBlurCheck(true);
         changeShowPicker(false);
