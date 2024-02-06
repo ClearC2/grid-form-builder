@@ -93,6 +93,7 @@ var FormComponents = {
   Listselect: _Listselect.default,
   Metadata: _Metadata.default,
   Month: _Date.Month,
+  Monthday: _Date.Monthday,
   Multicheckbox: _Multicheckbox.default,
   Multiselect: _Multiselect.default,
   Number: _Number.default,

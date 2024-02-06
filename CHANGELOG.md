@@ -1,3 +1,10 @@
+# [3.95.0](https://github.com/ClearC2/grid-form-builder/compare/v3.94.0...v3.95.0) (2024-02-06)
+
+
+### Features
+
+* **date:** adds monthday as an input type that only allows users to specify a month and date without a year ([#217](https://github.com/ClearC2/grid-form-builder/issues/217)) ([5b588c3](https://github.com/ClearC2/grid-form-builder/commit/5b588c303c5f62c7084223d6cab9f85c09ada49a))
+
 # [3.94.0](https://github.com/ClearC2/grid-form-builder/compare/v3.93.1...v3.94.0) (2024-01-11)
 
 

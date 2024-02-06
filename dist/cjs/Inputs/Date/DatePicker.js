@@ -34,7 +34,8 @@ var DatePicker = function DatePicker(props) {
       startDate = props.startDate,
       format = props.format,
       minDate = props.minDate,
-      maxDate = props.maxDate;
+      maxDate = props.maxDate,
+      canPickYear = props.canPickYear;
   var valueDidChange = (0, _react.useRef)(false); // JRA 02/07/2020 - selecting the date that is already selected closes the calendar without a change event
   // this is undesirable as the fallback date is today's date, and if the user opens a blank date field and picks today, a change event is not fired
   // in order to get around this issue, this component will check on the calendar hide event if a change had been made or not, and if not, send back the current startDate as a change event
@@ -76,10 +77,14 @@ var DatePicker = function DatePicker(props) {
         }
       });
       $input.on('show.daterangepicker', function () {
-        if (!showCalendar) {
-          var $portal = (0, _jquery.default)('.daterangepicker');
+        var $portal = (0, _jquery.default)('.daterangepicker');
 
-          if ($portal) {
+        if ($portal) {
+          if (!canPickYear) {
+            $portal.addClass('year-picker-hidden');
+          }
+
+          if (!showCalendar) {
             var $calendar = (0, _find.default)($portal).call($portal, '.calendar-table');
 
             if ($calendar) {
@@ -130,5 +135,6 @@ DatePicker.propTypes = {
   name: _propTypes.default.string,
   timePicker: _propTypes.default.bool,
   startDate: _propTypes.default.instanceOf(_moment.default),
-  format: _propTypes.default.string
+  format: _propTypes.default.string,
+  canPickYear: _propTypes.default.bool
 };

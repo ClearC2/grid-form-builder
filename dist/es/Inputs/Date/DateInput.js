@@ -43,6 +43,8 @@ var DateInput = function DateInput(props) {
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
       _props$canPickDay = props.canPickDay,
       canPickDay = _props$canPickDay === void 0 ? true : _props$canPickDay,
+      _props$canPickYear = props.canPickYear,
+      canPickYear = _props$canPickYear === void 0 ? true : _props$canPickYear,
       _props$pastYears = props.pastYears,
       pastYears = _props$pastYears === void 0 ? 12 : _props$pastYears,
       _props$futureYears = props.futureYears,
@@ -361,7 +363,8 @@ var DateInput = function DateInput(props) {
     startDate: startDate,
     format: inputFormat,
     minDate: minDate,
-    maxDate: maxDate
+    maxDate: maxDate,
+    canPickYear: canPickYear
   }), showPicker && !canPickDay && !isDisabled && jsx(MonthPicker, {
     elementId: elementId.current,
     ref: portalRef,
@@ -418,6 +421,7 @@ DateInput.propTypes = {
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   canPickDay: PropTypes.bool,
+  canPickYear: PropTypes.bool,
   pastYears: PropTypes.number,
   futureYears: PropTypes.number,
   minDate: PropTypes.string,
