@@ -147,8 +147,10 @@ const DateInput = props => {
   }, [changeShowPicker, type])
 
   const handleOnBlur = useCallback(e => {
-    if (type === 'month' && manualBlurCheck) {
-      const formatted = inputValue ? moment(inputValue, 'MM/YYYY').format(inputFormat) : ''
+    if ((type === 'month' || type === 'monthday') && manualBlurCheck) {
+      const formatted = inputValue
+        ? moment(inputValue, type === 'month' ? 'MM/YYYY' : 'MM/DD').format(inputFormat)
+        : ''
       setShowMonthFormatted(true)
       onChange({
         target: {name, value: formatted}
@@ -227,6 +229,8 @@ const DateInput = props => {
   let valueOverride = inputValue
   if (type === 'month' && showMonthFormatted && startDate) { // if this is a special input that only shows months, manually overwrite what the display value is - JRA 12/08/2020
     valueOverride = startDate.format('MM/YYYY')
+  } else if (type === 'monthday' && showMonthFormatted && startDate) {
+    valueOverride = startDate.format('MM/DD')
   }
 
   return (
@@ -253,7 +257,7 @@ const DateInput = props => {
               maxLength={maxlength}
               onKeyDown={
                 e => {
-                  if (type === 'month') {
+                  if (type === 'month' || type === 'monthday') {
                     if (showPicker) changeInputValue(e.target.value)
                     setManualBlurCheck(true)
                     changeShowPicker(false)

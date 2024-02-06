@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import DateInput from './DateInput'
 
 const Monthday = props => {
-  const {format = 'MM/DD'} = props
+  const {format = 'MM/DD/YYYY'} = props
   return <DateInput {...props} canPickYear={false} format={format} />
 }
 
