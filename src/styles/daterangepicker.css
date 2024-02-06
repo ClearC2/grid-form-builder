@@ -421,3 +421,7 @@
 .daterangepicker.calendar-hidden > .drp-calendar > .calendar-time {
     padding-right: 8px;
 }
+
+.daterangepicker.year-picker-hidden select.yearselect {
+    display: none;
+}

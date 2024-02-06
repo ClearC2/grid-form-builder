@@ -3,7 +3,7 @@ import {uppercaseFirstLetter} from '../utils'
 import Checkbox from './Checkbox'
 import Colorpicker from './Colorpicker'
 import Currency from './Currency'
-import {Date, Datetime, Time, Month} from './Date'
+import {Date, Datetime, Time, Month, Monthday} from './Date'
 import Email from './Email'
 import Header from './Header'
 import Icon from './Icon'
@@ -35,6 +35,7 @@ let FormComponents = {
   Listselect,
   Metadata,
   Month,
+  Monthday,
   Multicheckbox,
   Multiselect,
   Number,

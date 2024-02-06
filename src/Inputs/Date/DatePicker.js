@@ -16,7 +16,8 @@ const DatePicker = props => {
     startDate,
     format,
     minDate,
-    maxDate
+    maxDate,
+    canPickYear
   } = props
 
   const valueDidChange = useRef(false) // JRA 02/07/2020 - selecting the date that is already selected closes the calendar without a change event
@@ -69,9 +70,12 @@ const DatePicker = props => {
       $input.on(
         'show.daterangepicker',
         () => {
-          if (!showCalendar) {
-            const $portal = $('.daterangepicker')
-            if ($portal) {
+          const $portal = $('.daterangepicker')
+          if ($portal) {
+            if (!canPickYear) {
+              $portal.addClass('year-picker-hidden')
+            }
+            if (!showCalendar) {
               const $calendar = $portal.find('.calendar-table')
               if ($calendar) {
                 $calendar.hide()
@@ -135,5 +139,7 @@ DatePicker.propTypes = {
   name: PropTypes.string,
   timePicker: PropTypes.bool,
   startDate: PropTypes.instanceOf(moment),
-  format: PropTypes.string
+  format: PropTypes.string,
+  canPickYear: PropTypes.bool,
+
 }

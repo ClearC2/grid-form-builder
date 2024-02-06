@@ -36,10 +36,10 @@
           "static": false
         },
         "config": {
-          "required": true,
+          "disabled": true,
           "name": "testerinput",
-          "label": "Input",
-          "type": "richtextareaquill",
+          "label": "Style Input",
+          "type": "input",
           "icon": "facebook",
           "placeholder": "Test Placeholder",
           "cascade": {
@@ -405,12 +405,9 @@
           "static": false
         },
         "config": {
-          "required": true,
-          "name": "is_user_awesome",
-          "label": "Is Awesome",
-          "type": "checkbox",
-          "onValue": "cha",
-          "offValue": "nah bro"
+          "type": "monthday",
+          "name": "monthday",
+          "label": "Month/Day"
         }
       }, {
         "type": "field",
