@@ -62,7 +62,6 @@ const Select = props => {
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [selectValue, updateSelectValue] = useState({label: '', value: '', color: ''})
   const [isFocused, setIsFocused] = useState(false)
-  const [inputValue, updateInputValue] = useState('')
 
   const inputContainer = useRef(null)
 
@@ -77,17 +76,13 @@ const Select = props => {
     updateMenuPlacement(placement)
   }, [fieldPosition, updateMenuPlacement])
 
-  const handleInputChange = (val) => {
-    updateInputValue(val)
-  }
-
-  const handleInputBlur = useCallback(() => {
+  const handleInputBlur = useCallback((e) => {
     if (onBlur) {
-      onBlur({name, value: inputValue})
+      onBlur(e)
     }
     menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     setIsFocused(false)
-  }, [menuIsOpen, updateIsMenuOpen, name, inputValue, onBlur])
+  }, [menuIsOpen, updateIsMenuOpen, name, onBlur])
 
   const setInputFieldPosition = useCallback(() => {
     if (inputContainer.current) {
@@ -211,7 +206,6 @@ const Select = props => {
         onFocus={handleOnFocus}
         onKeyDown={handleOnKeyDown}
         onBlur={handleInputBlur}
-        onInputChange={handleInputChange}
         menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
         menuPlacement={!isMobile ? menuPlacement : undefined}
         value={selectValue}
