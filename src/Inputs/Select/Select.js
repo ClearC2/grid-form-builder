@@ -83,7 +83,7 @@ const Select = props => {
 
   const handleInputBlur = useCallback(() => {
     if (onBlur) {
-      onBlur({name: name, value: inputValue})
+      onBlur({name, value: inputValue})
     }
     menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     setIsFocused(false)
