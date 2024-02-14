@@ -29,7 +29,8 @@ const Select = props => {
     interactive = true,
     style = {},
     isClearable = true,
-    warning
+    warning,
+    onBlur
   } = props
 
   const {
@@ -61,6 +62,7 @@ const Select = props => {
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [selectValue, updateSelectValue] = useState({label: '', value: '', color: ''})
   const [isFocused, setIsFocused] = useState(false)
+  const [inputValue, updateInputValue] = useState('')
 
   const inputContainer = useRef(null)
 
@@ -75,10 +77,17 @@ const Select = props => {
     updateMenuPlacement(placement)
   }, [fieldPosition, updateMenuPlacement])
 
+  const handleInputChange = (val) => {
+    updateInputValue(val)
+  }
+
   const handleInputBlur = useCallback(() => {
+    if (onBlur) {
+      onBlur({name: name, value: inputValue})
+    }
     menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     setIsFocused(false)
-  }, [menuIsOpen, updateIsMenuOpen, name])
+  }, [menuIsOpen, updateIsMenuOpen, name, inputValue, onBlur])
 
   const setInputFieldPosition = useCallback(() => {
     if (inputContainer.current) {
@@ -202,6 +211,7 @@ const Select = props => {
         onFocus={handleOnFocus}
         onKeyDown={handleOnKeyDown}
         onBlur={handleInputBlur}
+        onInputChange={handleInputChange}
         menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
         menuPlacement={!isMobile ? menuPlacement : undefined}
         value={selectValue}
@@ -268,5 +278,6 @@ Select.propTypes = {
   interactive: PropTypes.bool,
   style: PropTypes.object,
   isClearable: PropTypes.bool,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  onBlur: PropTypes.func
 }
