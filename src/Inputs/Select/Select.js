@@ -77,7 +77,7 @@ const Select = props => {
   }, [fieldPosition, updateMenuPlacement])
 
   const handleInputBlur = useCallback((e) => {
-    if (onBlur) {
+    if (typeof onBlur === 'function') {
       onBlur(e)
     }
     menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
