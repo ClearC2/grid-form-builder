@@ -29,7 +29,8 @@ const Select = props => {
     interactive = true,
     style = {},
     isClearable = true,
-    warning
+    warning,
+    onBlur
   } = props
 
   const {
@@ -75,10 +76,13 @@ const Select = props => {
     updateMenuPlacement(placement)
   }, [fieldPosition, updateMenuPlacement])
 
-  const handleInputBlur = useCallback(() => {
+  const handleInputBlur = useCallback((e) => {
+    if (typeof onBlur === 'function') {
+      onBlur(e)
+    }
     menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     setIsFocused(false)
-  }, [menuIsOpen, updateIsMenuOpen, name])
+  }, [menuIsOpen, updateIsMenuOpen, name, onBlur])
 
   const setInputFieldPosition = useCallback(() => {
     if (inputContainer.current) {
@@ -268,5 +272,6 @@ Select.propTypes = {
   interactive: PropTypes.bool,
   style: PropTypes.object,
   isClearable: PropTypes.bool,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  onBlur: PropTypes.func
 }
