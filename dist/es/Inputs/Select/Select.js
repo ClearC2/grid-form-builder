@@ -56,7 +56,8 @@ var Select = function Select(props) {
       style = _props$style === void 0 ? {} : _props$style,
       _props$isClearable = props.isClearable,
       isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
-      warning = props.warning;
+      warning = props.warning,
+      onBlur = props.onBlur;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -145,10 +146,14 @@ var Select = function Select(props) {
     var placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
-  var handleInputBlur = useCallback(function () {
+  var handleInputBlur = useCallback(function (e) {
+    if (typeof onBlur === 'function') {
+      onBlur(e);
+    }
+
     menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, false)));
     setIsFocused(false);
-  }, [menuIsOpen, updateIsMenuOpen, name]);
+  }, [menuIsOpen, updateIsMenuOpen, name, onBlur]);
   var setInputFieldPosition = useCallback(function () {
     if (inputContainer.current) {
       var position = inputContainer.current.getBoundingClientRect().top;
@@ -343,5 +348,6 @@ Select.propTypes = {
   interactive: PropTypes.bool,
   style: PropTypes.object,
   isClearable: PropTypes.bool,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  onBlur: PropTypes.func
 };

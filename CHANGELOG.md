@@ -1,3 +1,10 @@
+# [3.96.0](https://github.com/ClearC2/grid-form-builder/compare/v3.95.1...v3.96.0) (2024-02-14)
+
+
+### Features
+
+* **Select:** add onBlur prop to select input type that returns onBlur event ([#218](https://github.com/ClearC2/grid-form-builder/issues/218)) ([eb380b6](https://github.com/ClearC2/grid-form-builder/commit/eb380b682f09c736a342898bd3d6519e29d5f8ab))
+
 ## [3.95.1](https://github.com/ClearC2/grid-form-builder/compare/v3.95.0...v3.95.1) (2024-02-06)
 
 
