@@ -1,3 +1,10 @@
+# [3.98.0](https://github.com/ClearC2/grid-form-builder/compare/v3.97.0...v3.98.0) (2024-02-15)
+
+
+### Features
+
+* **conditions:** look for nested dynamicValues when more than one condition ([#220](https://github.com/ClearC2/grid-form-builder/issues/220)) ([2f95e18](https://github.com/ClearC2/grid-form-builder/commit/2f95e1847a7cf8c624bb628de3ed3b3e1417f871))
+
 # [3.97.0](https://github.com/ClearC2/grid-form-builder/compare/v3.96.0...v3.97.0) (2024-02-15)
 
 

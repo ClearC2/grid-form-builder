@@ -355,7 +355,7 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
                   label: _this.getLabel(key),
                   comparator: _cond,
                   values: newValue,
-                  dynamicValues: value.dynamicValues,
+                  dynamicValues: v.dynamicValues || value.dynamicValues,
                   rawValues: rawValues,
                   not: v.not || false,
                   format: _this.getFormat(key)
