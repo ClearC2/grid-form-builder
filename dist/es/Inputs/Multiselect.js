@@ -65,7 +65,8 @@ var Multiselect = function Multiselect(props) {
       _props$closeMenuOnSel = props.closeMenuOnSelect,
       closeMenuOnSelect = _props$closeMenuOnSel === void 0 ? true : _props$closeMenuOnSel,
       warning = props.warning,
-      showValidOptions = props.showValidOptions;
+      showValidOptions = props.showValidOptions,
+      onBlur = props.onBlur;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -150,10 +151,14 @@ var Multiselect = function Multiselect(props) {
     var placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
-  var handleInputBlur = useCallback(function () {
+  var handleInputBlur = useCallback(function (e) {
+    if (typeof onBlur === 'function') {
+      onBlur(e);
+    }
+
     menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, false)));
     setIsFocused(false);
-  }, [menuIsOpen, updateIsMenuOpen, name]);
+  }, [menuIsOpen, updateIsMenuOpen, name, onBlur]);
   var setInputFieldPosition = useCallback(function () {
     if (inputContainer.current) {
       var position = inputContainer.current.getBoundingClientRect().top;
@@ -409,5 +414,6 @@ Multiselect.propTypes = {
   searchable: PropTypes.bool,
   closeMenuOnSelect: PropTypes.bool,
   warning: PropTypes.string,
-  showValidOptions: PropTypes.bool
+  showValidOptions: PropTypes.bool,
+  onBlur: PropTypes.func
 };
