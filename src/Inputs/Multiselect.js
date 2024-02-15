@@ -37,7 +37,8 @@ const Multiselect = props => {
     searchable = false,
     closeMenuOnSelect = true,
     warning,
-    showValidOptions
+    showValidOptions,
+    onBlur
   } = props
 
   const {
@@ -83,10 +84,13 @@ const Multiselect = props => {
     updateMenuPlacement(placement)
   }, [fieldPosition, updateMenuPlacement])
 
-  const handleInputBlur = useCallback(() => {
+  const handleInputBlur = useCallback((e) => {
+    if (typeof onBlur === 'function') {
+      onBlur(e)
+    }
     menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     setIsFocused(false)
-  }, [menuIsOpen, updateIsMenuOpen, name])
+  }, [menuIsOpen, updateIsMenuOpen, name, onBlur])
 
   const setInputFieldPosition = useCallback(() => {
     if (inputContainer.current) {
@@ -323,5 +327,6 @@ Multiselect.propTypes = {
   searchable: PropTypes.bool,
   closeMenuOnSelect: PropTypes.bool,
   warning: PropTypes.string,
-  showValidOptions: PropTypes.bool
+  showValidOptions: PropTypes.bool,
+  onBlur: PropTypes.func
 }
