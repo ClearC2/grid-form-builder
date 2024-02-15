@@ -277,7 +277,7 @@ export default class ConditionalTable extends Component {
                 label: this.getLabel(key),
                 comparator: cond,
                 values: newValue,
-                dynamicValues: value.dynamicValues,
+                dynamicValues: v.dynamicValues || value.dynamicValues,
                 rawValues: rawValues,
                 not: v.not || false,
                 format: this.getFormat(key)
