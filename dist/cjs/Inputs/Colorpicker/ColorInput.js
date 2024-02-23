@@ -1,5 +1,19 @@
 "use strict";
 
+var _Object$keys = require("@babel/runtime-corejs3/core-js-stable/object/keys");
+
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
+
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
 
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
@@ -13,6 +27,8 @@ exports.default = void 0;
 var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
 
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
@@ -30,7 +46,10 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../../ValidationError
 
 var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
 
-/** @jsx jsx */
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
 var ColorInput = function ColorInput(props) {
   var _context;
 
@@ -143,22 +162,34 @@ var ColorInput = function ColorInput(props) {
     outerClass = outerClass + ' gfb-has-focus';
   }
 
+  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+
+  var inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
+
+  var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
+
+  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+
+  var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
+
+  var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
+
   return (0, _core.jsx)("div", {
     className: outerClass,
     style: inputOuter,
-    css: theme.inputOuter
+    css: inputOuterCSS
   }, (0, _core.jsx)("div", {
     className: "gfb-input-inner",
     style: inputInner,
-    css: theme.inputInner
+    css: inputInnerCSS
   }, (0, _core.jsx)("div", {
     className: controlClass,
     style: inputControl,
-    css: theme.inputControl
+    css: inputControlCSS
   }, (0, _core.jsx)("div", {
     className: "gfb-input__value-container",
     style: valueContainer,
-    css: theme.valueContainer
+    css: valueContainerCSS
   }, (0, _core.jsx)("input", {
     id: inputId.current,
     className: className,
@@ -173,7 +204,7 @@ var ColorInput = function ColorInput(props) {
     onBlur: handleOnBlur,
     autoComplete: autoComplete,
     style: valueStyle,
-    css: theme.value,
+    css: valueCSS,
     maxLength: maxlength
   }), showPicker && (0, _core.jsx)(_ColorPicker.default, {
     ref: portalRef,
@@ -184,7 +215,7 @@ var ColorInput = function ColorInput(props) {
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: theme.indicators
+    css: indicatorsCSS
   }, validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationWarning,
     color: "#FFCC00",

@@ -1021,11 +1021,14 @@ var Typeahead = function Typeahead(props) {
     outerClass = outerClass + ' gfb-has-focus';
   }
 
+  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+
   return jsx("div", {
     className: outerClass,
     ref: inputContainer,
     onMouseDown: handleOnFocus,
-    style: inputOuter
+    style: inputOuter,
+    css: inputOuterCSS
   }, jsx(TypeaheadPerformanceOptimizer, {
     Typeahead: Typeahead,
     ref: reactSelect,

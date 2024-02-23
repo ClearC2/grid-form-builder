@@ -126,22 +126,34 @@ var Listselect = function Listselect(props) {
     validationError = 'This Field is Required';
   }
 
+  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+
+  var inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
+
+  var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
+
+  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+
+  var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
+
+  var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
+
   return jsx("div", {
     className: "gfb-input-outer",
     style: inputOuter,
-    css: theme.inputOuter
+    css: inputOuterCSS
   }, jsx("div", {
     className: "gfb-input-inner",
     style: inputInner,
-    css: theme.inputInner
+    css: inputInnerCSS
   }, jsx("div", {
     className: controlClass,
     style: inputControl,
-    css: theme.inputControl
+    css: inputControlCSS
   }, jsx("div", {
     className: "gfb-input__value-container gfb-value-multi-input-container",
     style: valueContainer,
-    css: theme.valueContainer
+    css: valueContainerCSS
   }, _mapInstanceProperty(options).call(options, function (option, i) {
     var display = option.label ? option.label : option.value;
     var selected = _indexOfInstanceProperty(value).call(value, option.value) > -1;
@@ -155,12 +167,12 @@ var Listselect = function Listselect(props) {
       onClick: handleOnChange,
       style: _objectSpread(_objectSpread({}, valueStyle), optionsStyle),
       "data-value": option.value,
-      css: theme.value
+      css: valueCSS
     }, display);
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: theme.indicators
+    css: indicatorsCSS
   }, (validationError || warning) && jsx("span", {
     className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
   }), warning && !validationError && jsx(ValidationErrorIcon, {

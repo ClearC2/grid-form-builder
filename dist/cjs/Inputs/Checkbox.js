@@ -258,24 +258,36 @@ var Checkbox = function Checkbox(props) {
     validationError = 'This Field is Required';
   }
 
+  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+
+  var inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
+
+  var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
+
+  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+
+  var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
+
+  var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
+
   return (0, _core.jsx)("div", {
     className: "gfb-input-outer",
     style: _objectSpread(_objectSpread({}, inputOuter), {}, {
       marginRight: warning ? '0px' : '10px'
     }),
-    css: theme.inputOuter
+    css: inputOuterCSS
   }, (0, _core.jsx)("div", {
     className: "gfb-input-inner",
     style: inputInner,
-    css: theme.inputInner
+    css: inputInnerCSS
   }, (0, _core.jsx)("div", {
     className: controlClass,
     style: inputControl,
-    css: theme.inputControl
+    css: inputControlCSS
   }, (0, _core.jsx)("div", {
     className: "gfb-input__value-container",
     style: valueContainer,
-    css: theme.valueContainer
+    css: valueContainerCSS
   }, (0, _core.jsx)("input", {
     className: className,
     name: name,
@@ -289,10 +301,11 @@ var Checkbox = function Checkbox(props) {
     type: "checkbox",
     autoComplete: autoComplete,
     style: valueStyle,
-    css: theme.value
+    css: valueCSS
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
-    style: indicators
+    style: indicators,
+    css: indicatorsCSS
   }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: warning,
     color: "#FFCC00",

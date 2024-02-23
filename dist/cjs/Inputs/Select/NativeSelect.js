@@ -1,5 +1,19 @@
 "use strict";
 
+var _Object$keys = require("@babel/runtime-corejs3/core-js-stable/object/keys");
+
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
+
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
 
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
@@ -11,6 +25,8 @@ _Object$defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
@@ -28,7 +44,10 @@ var _fa = require("react-icons/fa");
 
 require("../../styles/native-select.css");
 
-/** @jsx jsx */
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -64,9 +83,7 @@ var NativeSelect = function NativeSelect(props) {
   var _useTheme = (0, _useTheme2.default)(),
       theme = _useTheme.theme;
 
-  var _theme$value = theme.value,
-      valueTheme = _theme$value === void 0 ? {} : _theme$value,
-      _theme$options = theme.options,
+  var _theme$options = theme.options,
       optionsTheme = _theme$options === void 0 ? {} : _theme$options;
 
   var _useState = (0, _react.useState)(keyword.options || []),
@@ -99,27 +116,40 @@ var NativeSelect = function NativeSelect(props) {
   if (readonly || disabled || !interactive) indicatorClass = indicatorClass + ' gfb-disabled-input';
   var indSeparatorClass = 'gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator';
   if (readonly || disabled || !interactive) indSeparatorClass = indSeparatorClass + ' gfb-disabled-indicator-separator';
+
+  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+
+  var inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
+
+  var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
+
+  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+
+  var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
+
+  var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
+
   return (0, _core.jsx)("div", {
     className: "gfb-input-outer",
     style: inputOuter,
-    css: theme.inputOuter
+    css: inputOuterCSS
   }, (0, _core.jsx)("div", {
     className: "gfb-input-inner",
     style: inputInner,
-    css: theme.inputInner
+    css: inputInnerCSS
   }, (0, _core.jsx)("div", {
     className: controlClass,
     style: inputControl,
-    css: theme.inputControl
+    css: inputControlCSS
   }, (0, _core.jsx)("div", {
     className: valueContainerClassName,
     style: valueContainer,
-    css: theme.valueContainer
+    css: valueContainerCSS
   }, (0, _core.jsx)("select", {
     className: className,
     onChange: handleOnChange,
     style: valueStyle,
-    css: valueTheme,
+    css: valueCSS,
     disabled: readonly || disabled || !interactive,
     tabIndex: tabIndex,
     value: value
@@ -139,7 +169,7 @@ var NativeSelect = function NativeSelect(props) {
   }))), (0, _core.jsx)("div", {
     className: indicatorClass,
     style: indicators,
-    css: theme.indicators
+    css: indicatorsCSS
   }, (0, _core.jsx)("span", {
     className: indSeparatorClass
   }), (0, _core.jsx)(_fa.FaChevronDown, {

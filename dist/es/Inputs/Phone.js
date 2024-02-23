@@ -1,4 +1,18 @@
+import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
+import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
+import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
+import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
+import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
+import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context4, _context5; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context4 = ownKeys(Object(source), !0)).call(_context4, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context5 = ownKeys(Object(source))).call(_context5, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
@@ -137,18 +151,30 @@ var Phone = function Phone(props) {
     outerClass = outerClass + ' gfb-has-focus';
   }
 
+  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+
+  var inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
+
+  var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
+
+  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+
+  var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
+
+  var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
+
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
-    css: theme.inputOuter
+    css: inputOuterCSS
   }, jsx("div", {
     className: "gfb-input-inner",
     style: inputInner,
-    css: theme.inputInner
+    css: inputInnerCSS
   }, jsx("div", {
     className: controlClass,
     style: inputControl,
-    css: theme.inputControl
+    css: inputControlCSS
   }, regionselect && jsx("div", {
     className: "phone-region-select-container"
   }, jsx("select", {
@@ -162,7 +188,7 @@ var Phone = function Phone(props) {
   }))), jsx("div", {
     className: "gfb-input__value-container",
     style: valueContainer,
-    css: theme.valueContainer
+    css: valueContainerCSS
   }, jsx(Cleave, {
     key: countryCode,
     ref: input,
@@ -183,12 +209,12 @@ var Phone = function Phone(props) {
     onFocus: handleOnFocus,
     onBlur: handleOnBlur,
     style: valueStyle,
-    css: theme.value,
+    css: valueCSS,
     maxLength: maxlength + Math.floor((value + '').length / 4)
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: theme.indicators
+    css: indicatorsCSS
   }, warning && !validationError && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",

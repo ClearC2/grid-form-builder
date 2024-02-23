@@ -1,3 +1,10 @@
+# [3.99.0](https://github.com/ClearC2/grid-form-builder/compare/v3.98.0...v3.99.0) (2024-02-23)
+
+
+### Features
+
+* **css:** adds ability to use css pseudo selectors in the json schema ([#221](https://github.com/ClearC2/grid-form-builder/issues/221)) ([e2db1be](https://github.com/ClearC2/grid-form-builder/commit/e2db1be0a5876ed059515929f0236f29fa3605a2))
+
 # [3.98.0](https://github.com/ClearC2/grid-form-builder/compare/v3.97.0...v3.98.0) (2024-02-15)
 
 

@@ -314,12 +314,14 @@ var Multiselect = function Multiselect(props) {
     outerClass = outerClass + ' gfb-has-focus multiselect-focus';
   }
 
+  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+
   return jsx("div", {
     className: outerClass,
     ref: inputContainer,
     onMouseDown: handleOnFocus,
     style: inputOuter,
-    css: theme.inputOuter
+    css: inputOuterCSS
   }, jsx(Select, {
     isSearchable: searchable,
     className: className,
