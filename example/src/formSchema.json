@@ -103,14 +103,19 @@
         },
         "config": {
           "required": true,
-          "maxlength": 10,
           "name": "unique-test-input",
           "label": "Test Input",
           "type": "input",
-          "link": {
-            "type": "c2company",
-            "id": "parentid",
-            "icon": "externallink"
+          "placeholder": "This Field Is Required",
+          "style": {
+            "value": {
+              "::placeholder": {
+                "color": "orange"
+              },
+              ":placeholder-shown": {
+                "background": "orange"
+              }
+            }
           }
         }
       }, {

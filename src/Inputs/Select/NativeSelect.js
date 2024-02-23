@@ -35,10 +35,7 @@ const NativeSelect = props => {
 
   const {theme} = useTheme()
 
-  const {
-    value: valueTheme = {},
-    options: optionsTheme = {}
-  } = theme
+  const {options: optionsTheme = {}} = theme
 
   const [options] = useState(keyword.options || [])
 
@@ -63,16 +60,24 @@ const NativeSelect = props => {
   if (readonly || disabled || !interactive) indicatorClass = indicatorClass + ' gfb-disabled-input'
   let indSeparatorClass = 'gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator'
   if (readonly || disabled || !interactive) indSeparatorClass = indSeparatorClass + ' gfb-disabled-indicator-separator'
+
+  const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
+  const inputInnerCSS = {...theme.inputInner, ...inputInner}
+  const inputControlCSS = {...theme.inputControl, ...inputControl}
+  const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
+  const valueCSS = {...theme.value, ...valueStyle}
+  const indicatorsCSS = {...theme.indicators, ...indicators}
+
   return (
-    <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
-      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
-        <div className={controlClass} style={inputControl} css={theme.inputControl}>
-          <div className={valueContainerClassName} style={valueContainer} css={theme.valueContainer}>
+    <div className='gfb-input-outer' style={inputOuter} css={inputOuterCSS}>
+      <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
+        <div className={controlClass} style={inputControl} css={inputControlCSS}>
+          <div className={valueContainerClassName} style={valueContainer} css={valueContainerCSS}>
             <select
               className={className}
               onChange={handleOnChange}
               style={valueStyle}
-              css={valueTheme}
+              css={valueCSS}
               disabled={readonly || disabled || !interactive}
               tabIndex={tabIndex}
               value={value}
@@ -98,7 +103,7 @@ const NativeSelect = props => {
               })}
             </select>
           </div>
-          <div className={indicatorClass} style={indicators} css={theme.indicators}>
+          <div className={indicatorClass} style={indicators} css={indicatorsCSS}>
             <span className={indSeparatorClass} />
             <FaChevronDown
               className={

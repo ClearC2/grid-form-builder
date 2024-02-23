@@ -142,15 +142,22 @@ const Checkbox = props => {
     validationError = 'This Field is Required'
   }
 
+  const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
+  const inputInnerCSS = {...theme.inputInner, ...inputInner}
+  const inputControlCSS = {...theme.inputControl, ...inputControl}
+  const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
+  const valueCSS = {...theme.value, ...valueStyle}
+  const indicatorsCSS = {...theme.indicators, ...indicators}
+
   return (
     <div
       className='gfb-input-outer'
       style={{...inputOuter, marginRight: warning ? '0px' : '10px'}}
-      css={theme.inputOuter}
+      css={inputOuterCSS}
     >
-      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
-        <div className={controlClass} style={inputControl} css={theme.inputControl}>
-          <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
+      <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
+        <div className={controlClass} style={inputControl} css={inputControlCSS}>
+          <div className='gfb-input__value-container' style={valueContainer} css={valueContainerCSS}>
             <input
               className={className}
               name={name}
@@ -164,10 +171,10 @@ const Checkbox = props => {
               type='checkbox'
               autoComplete={autoComplete}
               style={valueStyle}
-              css={theme.value}
+              css={valueCSS}
             />
           </div>
-          <div className='gfb-input__indicators' style={indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>

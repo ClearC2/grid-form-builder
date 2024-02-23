@@ -89,14 +89,21 @@ const Listselect = props => {
     validationError = 'This Field is Required'
   }
 
+  const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
+  const inputInnerCSS = {...theme.inputInner, ...inputInner}
+  const inputControlCSS = {...theme.inputControl, ...inputControl}
+  const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
+  const valueCSS = {...theme.value, ...valueStyle}
+  const indicatorsCSS = {...theme.indicators, ...indicators}
+
   return (
-    <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
-      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
-        <div className={controlClass} style={inputControl} css={theme.inputControl}>
+    <div className='gfb-input-outer' style={inputOuter} css={inputOuterCSS}>
+      <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
+        <div className={controlClass} style={inputControl} css={inputControlCSS}>
           <div
             className='gfb-input__value-container gfb-value-multi-input-container'
             style={valueContainer}
-            css={theme.valueContainer}
+            css={valueContainerCSS}
           >
             {options.map((option, i) => {
               const display = option.label ? option.label : option.value
@@ -112,14 +119,14 @@ const Listselect = props => {
                   onClick={handleOnChange}
                   style={{...valueStyle, ...optionsStyle}}
                   data-value={option.value}
-                  css={theme.value}
+                  css={valueCSS}
                 >
                   {display}
                 </div>
               )
             })}
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
             {(validationError || warning) &&
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}

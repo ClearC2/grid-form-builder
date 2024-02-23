@@ -791,8 +791,10 @@ const Typeahead = props => {
     outerClass = outerClass + ' gfb-has-focus'
   }
 
+  const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
+
   return (
-    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
+    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter} css={inputOuterCSS}>
       <TypeaheadPerformanceOptimizer
         Typeahead={Typeahead}
         ref={reactSelect}
