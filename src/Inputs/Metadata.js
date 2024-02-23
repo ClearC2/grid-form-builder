@@ -20,14 +20,21 @@ const Metadata = props => {
 
   const {theme} = useTheme()
 
+  const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
+  const inputInnerCSS = {...theme.inputInner, ...inputInner}
+  const inputControlCSS = {...theme.inputControl, ...inputControl}
+  const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
+  const valueCSS = {...theme.value, ...valueStyle}
+  const indicatorsCSS = {...theme.indicators, ...indicators}
+
   return (
-    <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
-      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
-        <div className='gfb-input__control gfb-boxless-input' style={inputControl} css={theme.inputControl}>
-          <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
-            <strong style={valueStyle} css={theme.value}>{value}</strong>
+    <div className='gfb-input-outer' style={inputOuter} css={inputOuterCSS}>
+      <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
+        <div className='gfb-input__control gfb-boxless-input' style={inputControl} css={inputControlCSS}>
+          <div className='gfb-input__value-container' style={valueContainer} css={valueContainerCSS}>
+            <strong style={valueStyle} css={valueCSS}>{value}</strong>
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={theme.indicators} />
+          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS} />
         </div>
       </div>
     </div>

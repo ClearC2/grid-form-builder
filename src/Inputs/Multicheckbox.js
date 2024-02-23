@@ -112,11 +112,18 @@ const Multicheckbox = props => {
     validationError = 'This Field is Required'
   }
 
+  const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
+  const inputInnerCSS = {...theme.inputInner, ...inputInner}
+  const inputControlCSS = {...theme.inputControl, ...inputControl}
+  const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
+  const valueCSS = {...theme.value, ...valueStyle}
+  const indicatorsCSS = {...theme.indicators, ...indicators}
+
   return (
-    <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
-      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
-        <div className={controlClass} style={inputControl} css={theme.inputControl}>
-          <div className={valueContainerClassName} style={valueContainer} css={theme.valueContainer}>
+    <div className='gfb-input-outer' style={inputOuter} css={inputOuterCSS}>
+      <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
+        <div className={controlClass} style={inputControl} css={inputControlCSS}>
+          <div className={valueContainerClassName} style={valueContainer} css={valueContainerCSS}>
             {options.map((option, i) => {
               const checked = value.some(val => {
                 return (val.value === option.value)
@@ -143,14 +150,14 @@ const Multicheckbox = props => {
                     type='checkbox'
                     autoComplete={autoComplete}
                     style={valueStyle}
-                    css={theme.value}
+                    css={valueCSS}
                   />
                   {option.label ? option.label : option.value}
                 </label>
               )
             })}
           </div>
-          <div className='gfb-input__indicators' style={indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>

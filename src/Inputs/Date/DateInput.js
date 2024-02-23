@@ -233,11 +233,18 @@ const DateInput = props => {
     valueOverride = startDate.format('MM/DD')
   }
 
+  const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
+  const inputInnerCSS = {...theme.inputInner, ...inputInner}
+  const inputControlCSS = {...theme.inputControl, ...inputControl}
+  const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
+  const valueCSS = {...theme.value, ...valueStyle}
+  const indicatorsCSS = {...theme.indicators, ...indicators}
+
   return (
-    <div className={outerClass} style={inputOuter} css={theme.inputOuter}>
-      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
-        <div className={controlClass} style={inputControl} css={theme.inputControl}>
-          <div className='gfb-input__value-container' style={valueContainer} css={theme.valueContainer}>
+    <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
+      <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
+        <div className={controlClass} style={inputControl} css={inputControlCSS}>
+          <div className='gfb-input__value-container' style={valueContainer} css={valueContainerCSS}>
             <input
               id={elementId.current}
               ref={inputRef}
@@ -253,7 +260,7 @@ const DateInput = props => {
               onBlur={handleOnBlur}
               autoComplete={autoComplete}
               style={valueStyle}
-              css={theme.value}
+              css={valueCSS}
               maxLength={maxlength}
               onKeyDown={
                 e => {
@@ -298,7 +305,7 @@ const DateInput = props => {
               />
             )}
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
             {warning && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (

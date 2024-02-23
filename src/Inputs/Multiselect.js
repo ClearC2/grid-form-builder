@@ -227,13 +227,15 @@ const Multiselect = props => {
     outerClass = outerClass + ' gfb-has-focus multiselect-focus'
   }
 
+  const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
+
   return (
     <div
       className={outerClass}
       ref={inputContainer}
       onMouseDown={handleOnFocus}
       style={inputOuter}
-      css={theme.inputOuter}
+      css={inputOuterCSS}
     >
       <Select
         isSearchable={searchable}

@@ -58,11 +58,19 @@ const Radio = props => {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
+
+  const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
+  const inputInnerCSS = {...theme.inputInner, ...inputInner}
+  const inputControlCSS = {...theme.inputControl, ...inputControl}
+  const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
+  const valueCSS = {...theme.value, ...valueStyle}
+  const indicatorsCSS = {...theme.indicators, ...indicators}
+
   return (
-    <div className='gfb-input-outer' style={inputOuter} css={theme.inputOuter}>
-      <div className='gfb-input-inner' style={inputInner} css={theme.inputInner}>
-        <div className={controlClass} style={inputControl} css={theme.inputControl}>
-          <div className={valueContainerClassName} style={valueContainer} css={theme.valueContainer}>
+    <div className='gfb-input-outer' style={inputOuter} css={inputOuterCSS}>
+      <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
+        <div className={controlClass} style={inputControl} css={inputControlCSS}>
+          <div className={valueContainerClassName} style={valueContainer} css={valueContainerCSS}>
             {options.map((option, i) => {
               const checked = value && (option.value + '').toLowerCase() === (value + '').toLowerCase() // the option value may be a number but the field have the value as a string
               let className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input'
@@ -87,14 +95,14 @@ const Radio = props => {
                     autoFocus={autofocus}
                     type='radio'
                     autoComplete={autoComplete}
-                    css={theme.value}
+                    css={valueCSS}
                   />
                   {option.label ? option.label : option.value}
                 </label>
               )
             })}
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={theme.indicators}>
+          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>

@@ -189,8 +189,11 @@ const Select = props => {
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus'
   }
+
+  const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
+
   return (
-    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter}>
+    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter} css={inputOuterCSS}>
       <Select
         className={className}
         classNamePrefix='gfb-input'
