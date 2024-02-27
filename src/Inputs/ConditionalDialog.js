@@ -97,7 +97,7 @@ const ConditionalDialog = props => {
       enableResizing
       disableDragging
     >
-      <div style={{width: '100%', height: '100%'}}>
+      <div className='gfb-condition-dialog-content' style={{width: '100%', height: '100%'}}>
 
         <div style={{display: 'flex', flexDirection: 'row', padding: '10px', height: '54px'}}>
           <div style={{width: '90%'}}>
