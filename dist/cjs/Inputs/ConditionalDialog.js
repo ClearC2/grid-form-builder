@@ -194,6 +194,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
     enableResizing: true,
     disableDragging: true
   }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "gfb-condition-dialog-content",
     style: {
       width: '100%',
       height: '100%'

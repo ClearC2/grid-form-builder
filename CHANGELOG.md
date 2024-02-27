@@ -1,3 +1,10 @@
+## [3.99.1](https://github.com/ClearC2/grid-form-builder/compare/v3.99.0...v3.99.1) (2024-02-27)
+
+
+### Bug Fixes
+
+* **build:** empty commit to trigger semantic release bot ([1557804](https://github.com/ClearC2/grid-form-builder/commit/1557804a412f8fabfd9ee6e0ecb6882664d7b954))
+
 # [3.99.0](https://github.com/ClearC2/grid-form-builder/compare/v3.98.0...v3.99.0) (2024-02-23)
 
 
