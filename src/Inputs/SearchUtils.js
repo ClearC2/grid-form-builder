@@ -188,6 +188,16 @@ export const CONDITIONS = {
     minFields: 1,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
+  'match month': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
+  'match date': {
+    maxFields: 1,
+    minFields: 1,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
   'is top (x)': {
     maxFields: 1,
     minFields: 1,
