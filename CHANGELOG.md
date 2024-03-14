@@ -1,3 +1,10 @@
+# [3.100.0](https://github.com/ClearC2/grid-form-builder/compare/v3.99.1...v3.100.0) (2024-03-14)
+
+
+### Features
+
+* **reports:** adds match date conditions to report query builder ([87f0ffd](https://github.com/ClearC2/grid-form-builder/commit/87f0ffd94ee4e55f2c0db3fbaa41dab371f09ca2))
+
 ## [3.99.1](https://github.com/ClearC2/grid-form-builder/compare/v3.99.0...v3.99.1) (2024-02-27)
 
 
