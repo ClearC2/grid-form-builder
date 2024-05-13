@@ -1,3 +1,10 @@
+## [3.100.1](https://github.com/ClearC2/grid-form-builder/compare/v3.100.0...v3.100.1) (2024-05-13)
+
+
+### Bug Fixes
+
+* **typeahead:** multi typeahead should now allow you to clear the last value ([f40fcce](https://github.com/ClearC2/grid-form-builder/commit/f40fcce9995bd42361dbd86bfc99bf17bde7f2c0))
+
 # [3.100.0](https://github.com/ClearC2/grid-form-builder/compare/v3.99.1...v3.100.0) (2024-03-14)
 
 

@@ -939,6 +939,7 @@ var Typeahead = function Typeahead(props) {
       case 'remove-value':
         {
           if (!newValue) newValue = [];
+          if (multi && !target.value) target.value = [];
         }
     }
 
