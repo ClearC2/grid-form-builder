@@ -1,3 +1,10 @@
+# [3.101.0](https://github.com/ClearC2/grid-form-builder/compare/v3.100.1...v3.101.0) (2024-05-23)
+
+
+### Features
+
+* **conditionalpredicate:** remove unnecessary if clause ([#222](https://github.com/ClearC2/grid-form-builder/issues/222)) ([d9c34b7](https://github.com/ClearC2/grid-form-builder/commit/d9c34b75357a59906a33cae41f78e1b7059d01fe))
+
 ## [3.100.1](https://github.com/ClearC2/grid-form-builder/compare/v3.100.0...v3.100.1) (2024-05-13)
 
 

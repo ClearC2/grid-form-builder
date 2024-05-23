@@ -719,12 +719,17 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
               values = deleteIndex(e.target.name, values);
             }
           } else {
-            if (e.target.name) {
-              values = (0, _immutable.fromJS)([e.target.value]);
-            } else {
-              values = values.set(_i, e.target.value);
-            }
-          }
+            values = values.set(_i, e.target.value);
+          } // Leaving this commented out for now. Not sure what the purpose of the e.target.name check is AHP 5/20/24
+          // Will remove comment after code review
+          // else {
+          //   if (e.target.name) {
+          //     values = fromJS([e.target.value])
+          //   } else {
+          //     values = values.set(i, e.target.value)
+          //   }
+          // }
+
         }
       } else {
         values = (0, _immutable.fromJS)(e.target.value);
