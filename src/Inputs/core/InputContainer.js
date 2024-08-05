@@ -37,7 +37,6 @@ class InputPerformanceOptimizer extends Component {
           'multiselect',
           'number',
           'percentage',
-          'phone',
           'radio',
           'richtextarea',
           'select',
