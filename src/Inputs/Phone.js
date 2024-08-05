@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useCallback, useRef, useState} from 'react'
+import {useCallback, useRef, useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 // import Cleave from 'cleave.js/react'
 import Cleave from '../Cleave' // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
@@ -44,6 +44,8 @@ const Phone = props => {
     indicators = {}
   } = style
 
+  const regionPropValue = typeof region === 'string' && region.length === 2 ? region : (values.get(region) || 'US')
+
   const {theme} = useTheme()
 
   const input = useRef()
@@ -52,9 +54,7 @@ const Phone = props => {
 
   const [isFocused, setIsFocused] = useState(false)
 
-  const [countryCode, setCountryCode] = useState(
-    typeof region === 'string' && region.length === 2 ? region : (values.get(region) || 'US')
-  )
+  const [countryCode, setCountryCode] = useState(regionPropValue)
 
   const handleOnRegionChange = useCallback(e => {
     const {value: newValue} = e.target
@@ -68,6 +68,10 @@ const Phone = props => {
     }
     setCountryCode(newValue)
   }, [region, onChange])
+
+  useEffect(() => {
+    setCountryCode(regionPropValue)
+  }, [regionPropValue])
 
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)

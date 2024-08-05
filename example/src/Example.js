@@ -160,7 +160,7 @@ export default class Example extends Component {
 
   render = () => {
     const {formSchema, isInvalidWarning, droppable, activeItem} = this.state
-    console.log(this.state.formValues)
+    // console.log(this.state.formValues)
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is true
       return (
