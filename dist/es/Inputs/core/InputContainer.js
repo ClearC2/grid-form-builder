@@ -61,7 +61,7 @@ var InputPerformanceOptimizer = /*#__PURE__*/function (_Component) {
         var _context;
 
         // if the values object is the thing changing but it isn't the value for this field
-        if (_indexOfInstanceProperty(_context = ['checkbox', 'colorpicker', 'currency', 'date', 'datetime', 'email', 'header', 'icon', 'input', 'listselect', 'metadata', 'month', 'multicheckbox', 'multiselect', 'number', 'percentage', 'phone', 'radio', 'richtextarea', 'select', 'textarea', 'time', 'conditionalinput']).call(_context, type) > -1 || // let typeaheads update and any custom components update if the entire form values object changes, don't update the components if they are in this list and all that changes is the form values
+        if (_indexOfInstanceProperty(_context = ['checkbox', 'colorpicker', 'currency', 'date', 'datetime', 'email', 'header', 'icon', 'input', 'listselect', 'metadata', 'month', 'multicheckbox', 'multiselect', 'number', 'percentage', 'radio', 'richtextarea', 'select', 'textarea', 'time', 'conditionalinput']).call(_context, type) > -1 || // let typeaheads update and any custom components update if the entire form values object changes, don't update the components if they are in this list and all that changes is the form values
         config.typeahead && !_filterInstanceProperty(config.typeahead) && !config.typeahead.fieldvalue // if it is a typeahead but doesn't have filters or use a fieldvalue as a key, it doesn't care either
         ) {
           return false;

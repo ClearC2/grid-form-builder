@@ -102,6 +102,7 @@ var Phone = function Phone(props) {
       valueContainer = _style$valueContainer === void 0 ? {} : _style$valueContainer,
       _style$indicators = style.indicators,
       indicators = _style$indicators === void 0 ? {} : _style$indicators;
+  var regionPropValue = typeof region === 'string' && region.length === 2 ? region : values.get(region) || 'US';
 
   var _useTheme = (0, _useTheme2.default)(),
       theme = _useTheme.theme;
@@ -114,7 +115,7 @@ var Phone = function Phone(props) {
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(typeof region === 'string' && region.length === 2 ? region : values.get(region) || 'US'),
+  var _useState3 = (0, _react.useState)(regionPropValue),
       _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
       countryCode = _useState4[0],
       setCountryCode = _useState4[1];
@@ -134,6 +135,9 @@ var Phone = function Phone(props) {
 
     setCountryCode(newValue);
   }, [region, onChange]);
+  (0, _react.useEffect)(function () {
+    setCountryCode(regionPropValue);
+  }, [regionPropValue]);
   var handleOnFocus = (0, _react.useCallback)(function () {
     setIsFocused(true);
   }, []);

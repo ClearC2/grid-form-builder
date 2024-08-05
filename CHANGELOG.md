@@ -1,3 +1,10 @@
+# [3.102.0](https://github.com/ClearC2/grid-form-builder/compare/v3.101.0...v3.102.0) (2024-08-05)
+
+
+### Features
+
+* **phone:** phone fields will automatically format if it is reading the region from another field on the form and that value updates ([#223](https://github.com/ClearC2/grid-form-builder/issues/223)) ([01e72ef](https://github.com/ClearC2/grid-form-builder/commit/01e72ef881a2382c2f32b78314819f1198de8b4b))
+
 # [3.101.0](https://github.com/ClearC2/grid-form-builder/compare/v3.100.1...v3.101.0) (2024-05-23)
 
 

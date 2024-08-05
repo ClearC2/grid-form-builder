@@ -20,7 +20,7 @@ import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instanc
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types'; // import Cleave from 'cleave.js/react'
 
 import Cleave from '../Cleave'; // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
@@ -75,6 +75,7 @@ var Phone = function Phone(props) {
       valueContainer = _style$valueContainer === void 0 ? {} : _style$valueContainer,
       _style$indicators = style.indicators,
       indicators = _style$indicators === void 0 ? {} : _style$indicators;
+  var regionPropValue = typeof region === 'string' && region.length === 2 ? region : values.get(region) || 'US';
 
   var _useTheme = useTheme(),
       theme = _useTheme.theme;
@@ -87,7 +88,7 @@ var Phone = function Phone(props) {
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
 
-  var _useState3 = useState(typeof region === 'string' && region.length === 2 ? region : values.get(region) || 'US'),
+  var _useState3 = useState(regionPropValue),
       _useState4 = _slicedToArray(_useState3, 2),
       countryCode = _useState4[0],
       setCountryCode = _useState4[1];
@@ -107,6 +108,9 @@ var Phone = function Phone(props) {
 
     setCountryCode(newValue);
   }, [region, onChange]);
+  useEffect(function () {
+    setCountryCode(regionPropValue);
+  }, [regionPropValue]);
   var handleOnFocus = useCallback(function () {
     setIsFocused(true);
   }, []);
