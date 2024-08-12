@@ -1,3 +1,10 @@
+# [3.103.0](https://github.com/ClearC2/grid-form-builder/compare/v3.102.0...v3.103.0) (2024-08-12)
+
+
+### Features
+
+* **percentage:** allow for custom max and min percentage ([#224](https://github.com/ClearC2/grid-form-builder/issues/224)) ([2b601bb](https://github.com/ClearC2/grid-form-builder/commit/2b601bb41b31ebdd7c879c028a413bc72f9989fb))
+
 # [3.102.0](https://github.com/ClearC2/grid-form-builder/compare/v3.101.0...v3.102.0) (2024-08-05)
 
 

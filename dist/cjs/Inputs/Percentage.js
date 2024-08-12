@@ -67,7 +67,11 @@ var Percentage = function Percentage(props) {
       decimals = _props$decimals === void 0 ? 0 : _props$decimals,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
-      warning = props.warning;
+      warning = props.warning,
+      _props$maximum = props.maximum,
+      maximum = _props$maximum === void 0 ? 100 : _props$maximum,
+      _props$minimum = props.minimum,
+      minimum = _props$minimum === void 0 ? 0 : _props$minimum;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -101,7 +105,7 @@ var Percentage = function Percentage(props) {
     var placedDecimals = newValue.split('.')[1] || 0;
     if (decimals && placedDecimals.length > decimals) newValue = newValue.substring(0, newValue.length - 1);
 
-    if (!isNaN(newValue) && newValue >= 0 && newValue <= 100) {
+    if (!isNaN(newValue) && newValue >= minimum && newValue <= maximum) {
       onChange({
         target: {
           value: newValue,
@@ -109,7 +113,7 @@ var Percentage = function Percentage(props) {
         }
       });
     }
-  }, [onChange, name, decimals]);
+  }, [onChange, name, decimals, maximum, minimum]);
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
@@ -215,5 +219,7 @@ Percentage.propTypes = {
   required: _propTypes.default.bool,
   decimals: _propTypes.default.number,
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
-  warning: _propTypes.default.number
+  warning: _propTypes.default.number,
+  maximum: _propTypes.default.number,
+  minimum: _propTypes.default.number
 };
