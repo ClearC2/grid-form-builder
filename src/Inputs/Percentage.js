@@ -22,7 +22,9 @@ const Percentage = props => {
     required,
     decimals = 0,
     maxlength = 524288,
-    warning
+    warning,
+    maximum = 100,
+    minimum = 0
   } = props
 
   const {
@@ -51,7 +53,7 @@ const Percentage = props => {
     newValue = (newValue + '').replace('%', '')
     const placedDecimals = newValue.split('.')[1] || 0
     if (decimals && placedDecimals.length > decimals) newValue = newValue.substring(0, newValue.length - 1)
-    if (!isNaN(newValue) && newValue >= 0 && newValue <= 100) {
+    if (!isNaN(newValue) && newValue >= minimum && newValue <= maximum) {
       onChange({
         target: {
           value: newValue,
@@ -59,7 +61,7 @@ const Percentage = props => {
         }
       })
     }
-  }, [onChange, name, decimals])
+  }, [onChange, name, decimals, maximum, minimum])
 
   const isDisabled = readonly || disabled || !interactive
 
@@ -143,5 +145,7 @@ Percentage.propTypes = {
   required: PropTypes.bool,
   decimals: PropTypes.number,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  warning: PropTypes.number
+  warning: PropTypes.number,
+  maximum: PropTypes.number,
+  minimum: PropTypes.number
 }
