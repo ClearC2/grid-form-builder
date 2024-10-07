@@ -233,7 +233,7 @@ const Multiselect = props => {
     <div
       className={outerClass}
       ref={inputContainer}
-      onMouseDown={handleOnFocus}
+      onMouseDown={setInputFieldPosition}
       style={inputOuter}
       css={inputOuterCSS}
     >
@@ -252,10 +252,10 @@ const Multiselect = props => {
         name={name}
         options={options}
         placeholder={placeholder}
-        onFocus={handleOnFocus}
+        // onFocus={handleOnFocus}
         onKeyDown={handleOnKeyDown}
         onBlur={handleInputBlur}
-        menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+        // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
         menuPlacement={!isMobile ? menuPlacement : undefined}
         value={selectValue}
         defaultValue={selectValue}

@@ -100,7 +100,7 @@ const Select = props => {
     }
   }, [disabled, interactive, readonly, setInputFieldPosition])
 
-  const handleOnFocus = useCallback(() => {
+  const handleOnFocus = useCallback(e => {
     handleInputClick()
     setIsFocused(true)
   }, [handleInputClick])
@@ -193,7 +193,13 @@ const Select = props => {
   const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
 
   return (
-    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter} css={inputOuterCSS}>
+    <div
+      className={outerClass}
+      ref={inputContainer}
+      onMouseDown={setInputFieldPosition}
+      style={inputOuter}
+      css={inputOuterCSS}
+    >
       <Select
         className={className}
         classNamePrefix='gfb-input'
@@ -206,10 +212,10 @@ const Select = props => {
         name={name}
         options={options}
         placeholder={placeholder}
-        onFocus={handleOnFocus}
+        // onFocus={handleOnFocus}
         onKeyDown={handleOnKeyDown}
         onBlur={handleInputBlur}
-        menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+        // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
         menuPlacement={!isMobile ? menuPlacement : undefined}
         value={selectValue}
         defaultValue={selectValue}
