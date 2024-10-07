@@ -171,7 +171,7 @@ var Select = function Select(props) {
       setInputFieldPosition();
     }
   }, [disabled, interactive, readonly, setInputFieldPosition]);
-  var handleOnFocus = useCallback(function () {
+  var handleOnFocus = useCallback(function (e) {
     handleInputClick();
     setIsFocused(true);
   }, [handleInputClick]);
@@ -264,7 +264,7 @@ var Select = function Select(props) {
   return jsx("div", {
     className: outerClass,
     ref: inputContainer,
-    onMouseDown: handleOnFocus,
+    onMouseDown: setInputFieldPosition,
     style: inputOuter,
     css: inputOuterCSS
   }, jsx(Select, {
@@ -278,11 +278,11 @@ var Select = function Select(props) {
     menuPortalTarget: document.body,
     name: name,
     options: options,
-    placeholder: placeholder,
-    onFocus: handleOnFocus,
+    placeholder: placeholder // onFocus={handleOnFocus}
+    ,
     onKeyDown: handleOnKeyDown,
-    onBlur: handleInputBlur,
-    menuIsOpen: !isMobile ? menuIsOpen[name] : undefined,
+    onBlur: handleInputBlur // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+    ,
     menuPlacement: !isMobile ? menuPlacement : undefined,
     value: selectValue,
     defaultValue: selectValue,

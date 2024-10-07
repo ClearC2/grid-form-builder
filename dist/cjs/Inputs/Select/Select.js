@@ -200,7 +200,7 @@ var Select = function Select(props) {
       setInputFieldPosition();
     }
   }, [disabled, interactive, readonly, setInputFieldPosition]);
-  var handleOnFocus = (0, _react.useCallback)(function () {
+  var handleOnFocus = (0, _react.useCallback)(function (e) {
     handleInputClick();
     setIsFocused(true);
   }, [handleInputClick]);
@@ -292,7 +292,7 @@ var Select = function Select(props) {
   return (0, _core.jsx)("div", {
     className: outerClass,
     ref: inputContainer,
-    onMouseDown: handleOnFocus,
+    onMouseDown: setInputFieldPosition,
     style: inputOuter,
     css: inputOuterCSS
   }, (0, _core.jsx)(Select, {
@@ -306,11 +306,11 @@ var Select = function Select(props) {
     menuPortalTarget: document.body,
     name: name,
     options: options,
-    placeholder: placeholder,
-    onFocus: handleOnFocus,
+    placeholder: placeholder // onFocus={handleOnFocus}
+    ,
     onKeyDown: handleOnKeyDown,
-    onBlur: handleInputBlur,
-    menuIsOpen: !_utils.isMobile ? menuIsOpen[name] : undefined,
+    onBlur: handleInputBlur // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+    ,
     menuPlacement: !_utils.isMobile ? menuPlacement : undefined,
     value: selectValue,
     defaultValue: selectValue,

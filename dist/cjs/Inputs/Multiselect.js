@@ -359,7 +359,7 @@ var Multiselect = function Multiselect(props) {
   return (0, _core.jsx)("div", {
     className: outerClass,
     ref: inputContainer,
-    onMouseDown: handleOnFocus,
+    onMouseDown: setInputFieldPosition,
     style: inputOuter,
     css: inputOuterCSS
   }, (0, _core.jsx)(Select, {
@@ -376,11 +376,11 @@ var Multiselect = function Multiselect(props) {
     isMulti: true,
     name: name,
     options: options,
-    placeholder: placeholder,
-    onFocus: handleOnFocus,
+    placeholder: placeholder // onFocus={handleOnFocus}
+    ,
     onKeyDown: handleOnKeyDown,
-    onBlur: handleInputBlur,
-    menuIsOpen: !_utils.isMobile ? menuIsOpen[name] : undefined,
+    onBlur: handleInputBlur // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+    ,
     menuPlacement: !_utils.isMobile ? menuPlacement : undefined,
     value: selectValue,
     defaultValue: selectValue,

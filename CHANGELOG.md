@@ -1,3 +1,10 @@
+# [3.104.0](https://github.com/ClearC2/grid-form-builder/compare/v3.103.0...v3.104.0) (2024-10-07)
+
+
+### Features
+
+* **select:** removing menu open from blur event and letting react select handle opening the menu only on click ([#225](https://github.com/ClearC2/grid-form-builder/issues/225)) ([9eaddbc](https://github.com/ClearC2/grid-form-builder/commit/9eaddbcdc172d5d7671d14bf0bf35b1105a6631d))
+
 # [3.103.0](https://github.com/ClearC2/grid-form-builder/compare/v3.102.0...v3.103.0) (2024-08-12)
 
 
