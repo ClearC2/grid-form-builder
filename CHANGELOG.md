@@ -1,3 +1,10 @@
+# [3.105.0](https://github.com/ClearC2/grid-form-builder/compare/v3.104.0...v3.105.0) (2024-10-30)
+
+
+### Features
+
+* **reports:** add ability to have one field compare itself to another field ([#226](https://github.com/ClearC2/grid-form-builder/issues/226)) ([1378a72](https://github.com/ClearC2/grid-form-builder/commit/1378a72478c3a4ff0b713e7e294c34baee7d6291))
+
 # [3.104.0](https://github.com/ClearC2/grid-form-builder/compare/v3.103.0...v3.104.0) (2024-10-07)
 
 

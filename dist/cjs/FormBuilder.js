@@ -161,7 +161,9 @@ var FormBuilder = function FormBuilder(props) {
     platform: 'browser',
     uuid: 'browser',
     version: 'browser'
-  } : _props$device;
+  } : _props$device,
+      fieldDefinitions = props.fieldDefinitions,
+      c2class = props.c2class;
 
   var _useState = (0, _react.useState)({
     layout: [],
@@ -352,7 +354,9 @@ var FormBuilder = function FormBuilder(props) {
           timeFormat: timeFormat,
           autoComplete: autoComplete,
           device: device,
-          rteImageUrl: rteImageUrl
+          rteImageUrl: rteImageUrl,
+          fieldDefinitions: fieldDefinitions,
+          c2class: c2class
         })));
         layout.push(dimensions);
       }
@@ -514,7 +518,9 @@ FormBuilder.propTypes = {
   timeFormat: _propTypes.default.string,
   autoComplete: _propTypes.default.string,
   style: _propTypes.default.object,
-  device: _propTypes.default.object
+  device: _propTypes.default.object,
+  fieldDefinitions: _propTypes.default.instanceOf(_immutable.Map),
+  c2class: _propTypes.default.string
 };
 FormBuilder.defaultProps = {
   columns: 12,
@@ -555,7 +561,8 @@ FormBuilder.defaultProps = {
   dateTimeFormat: 'MM/DD/YYYY h:mm a',
   timeFormat: 'h:mm a',
   autoComplete: 'ac_off',
-  style: {}
+  style: {},
+  fieldDefinitions: (0, _immutable.Map)()
 };
 FormBuilder.count = 1;
 
@@ -867,7 +874,9 @@ exports.default = FormValidator;
   dateTimeFormat: _propTypes.default.string,
   timeFormat: _propTypes.default.string,
   autoComplete: _propTypes.default.string,
-  theme: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object])
+  theme: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.object]),
+  fieldDefinitions: _propTypes.default.instanceOf(_immutable.Map),
+  c2class: _propTypes.default.string
 });
 (0, _defineProperty2.default)(FormValidator, "defaultProps", {
   handleSubmit: function handleSubmit() {

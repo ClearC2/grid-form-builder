@@ -50,6 +50,8 @@ var _Tooltip = _interopRequireDefault(require("../../Tooltip"));
 
 var _utils = require("../../utils");
 
+var _immutable = require("immutable");
+
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -77,7 +79,9 @@ var InnerCell = function InnerCell(props) {
       timeFormat = props.timeFormat,
       handleRTEImageClick = props.handleRTEImageClick,
       autoComplete = props.autoComplete,
-      device = props.device;
+      device = props.device,
+      fieldDefinitions = props.fieldDefinitions,
+      c2class = props.c2class;
   var _field$config = field.config,
       config = _field$config === void 0 ? {} : _field$config;
 
@@ -186,7 +190,9 @@ var InnerCell = function InnerCell(props) {
     handleRTEImageClick: handleRTEImageClick,
     autoComplete: autoComplete,
     interactive: interactive,
-    device: device
+    device: device,
+    fieldDefinitions: fieldDefinitions,
+    c2class: c2class
   }, (0, _core.jsx)(Type, null))));
 };
 
@@ -227,5 +233,7 @@ InnerCell.propTypes = {
   timeFormat: _propTypes.default.string,
   handleRTEImageClick: _propTypes.default.func,
   autoComplete: _propTypes.default.string,
-  device: _propTypes.default.object
+  device: _propTypes.default.object,
+  fieldDefinitions: _propTypes.default.instanceOf(_immutable.Map),
+  c2class: _propTypes.default.string
 };

@@ -296,7 +296,7 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
               mergeDate: true
             });
           } else {
-            req.query.conditions.push({
+            var query = {
               fieldSchema: _this.props.getFieldSchema(key),
               name: key,
               label: _this.getLabel(key),
@@ -306,7 +306,13 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
               rawValues: rawValues,
               not: value.not || false,
               format: _this.getFormat(key)
-            });
+            };
+
+            if (value.isfield) {
+              query.isfield = value.isfield;
+            }
+
+            req.query.conditions.push(query);
           }
         } else if (value.type) {
           var _context4;

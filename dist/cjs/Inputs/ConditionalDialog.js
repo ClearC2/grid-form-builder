@@ -36,14 +36,27 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "functi
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+var formFieldDefs = function formFieldDefs(fieldDefs, c2class) {
+  if (!c2class) return (0, _immutable.Map)();
+  var classFields = fieldDefs.get(c2class, (0, _immutable.Map)());
+  if (!classFields.size) return (0, _immutable.Map)();
+  return classFields.get('-default-', (0, _immutable.Map)()).merge(classFields.get('uifieldname', (0, _immutable.Map)()));
+};
+
 var ConditionalDialog = function ConditionalDialog(props) {
-  var value = props.value;
+  var value = props.value,
+      c2class = props.c2class,
+      fieldDefinitions = props.fieldDefinitions;
 
   var _useState = (0, _react.useState)(value && value.get ? value.get('conditions', (0, _immutable.List)()).size : 1),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       conditions = _useState2[0],
       setConditions = _useState2[1]; // const [value, setValue] = useState(props.value)
 
+
+  var _useState3 = (0, _react.useState)(formFieldDefs(fieldDefinitions, c2class)),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 1),
+      classFields = _useState4[0];
 
   (0, _react.useEffect)(function () {
     if (value && value.get('type')) {
@@ -135,7 +148,8 @@ var ConditionalDialog = function ConditionalDialog(props) {
       }, /*#__PURE__*/_react.default.createElement(_ConditionalPredicate.default, (0, _extends2.default)({}, props, {
         value: indexedValue,
         onChange: onChange,
-        index: i
+        index: i,
+        classFields: classFields
       }))));
     }
 
@@ -289,5 +303,7 @@ ConditionalDialog.propTypes = {
   style: _propTypes.default.object,
   value: _propTypes.default.object,
   typeahead: _propTypes.default.object,
-  keyword: _propTypes.default.object
+  keyword: _propTypes.default.object,
+  fieldDefinitions: _propTypes.default.instanceOf(_immutable.Map),
+  c2class: _propTypes.default.string
 };
