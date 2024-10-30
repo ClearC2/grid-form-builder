@@ -73,7 +73,9 @@ const InputContainer = props => {
     handleRTEImageClick,
     autoComplete,
     interactive,
-    device
+    device,
+    fieldDefinitions,
+    c2class
   } = props
   const {name, required, style = {}, tooltips = {}, ...other} = config
   const {input: inputTooltip} = tooltips
@@ -100,7 +102,9 @@ const InputContainer = props => {
         required,
         style,
         ...other,
-        device
+        device,
+        fieldDefinitions,
+        c2class
       })}
     </div>
   )
@@ -123,5 +127,7 @@ InputContainer.propTypes = {
   handleRTEImageClick: PropTypes.func,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  device: PropTypes.object
+  device: PropTypes.object,
+  fieldDefinitions: PropTypes.instanceOf(Map),
+  c2class: PropTypes.string
 }

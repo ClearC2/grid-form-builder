@@ -7,14 +7,27 @@ import { Map, List } from 'immutable';
 import ConditionalPredicate from './ConditionalPredicate';
 import Toggle from '../QueryBuilder/Where/ConditionalTable/Toggle';
 
+var formFieldDefs = function formFieldDefs(fieldDefs, c2class) {
+  if (!c2class) return Map();
+  var classFields = fieldDefs.get(c2class, Map());
+  if (!classFields.size) return Map();
+  return classFields.get('-default-', Map()).merge(classFields.get('uifieldname', Map()));
+};
+
 var ConditionalDialog = function ConditionalDialog(props) {
-  var value = props.value;
+  var value = props.value,
+      c2class = props.c2class,
+      fieldDefinitions = props.fieldDefinitions;
 
   var _useState = useState(value && value.get ? value.get('conditions', List()).size : 1),
       _useState2 = _slicedToArray(_useState, 2),
       conditions = _useState2[0],
       setConditions = _useState2[1]; // const [value, setValue] = useState(props.value)
 
+
+  var _useState3 = useState(formFieldDefs(fieldDefinitions, c2class)),
+      _useState4 = _slicedToArray(_useState3, 1),
+      classFields = _useState4[0];
 
   useEffect(function () {
     if (value && value.get('type')) {
@@ -106,7 +119,8 @@ var ConditionalDialog = function ConditionalDialog(props) {
       }, /*#__PURE__*/React.createElement(ConditionalPredicate, _extends({}, props, {
         value: indexedValue,
         onChange: onChange,
-        index: i
+        index: i,
+        classFields: classFields
       }))));
     }
 
@@ -259,5 +273,7 @@ ConditionalDialog.propTypes = {
   style: PropTypes.object,
   value: PropTypes.object,
   typeahead: PropTypes.object,
-  keyword: PropTypes.object
+  keyword: PropTypes.object,
+  fieldDefinitions: PropTypes.instanceOf(Map),
+  c2class: PropTypes.string
 };

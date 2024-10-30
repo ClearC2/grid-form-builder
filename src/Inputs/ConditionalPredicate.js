@@ -77,6 +77,12 @@ const ConditionalPredicate = props => {
       if (props.value.getIn(['relative'])) {
         initialModalValues.relative = props.value.getIn(['relative'])
       }
+      if (props.value.get('not')) {
+        initialModalValues.not = props.value.get('not')
+      }
+      if (props.value.get('isfield')) {
+        initialModalValues.isfield = props.value.get('isfield')
+      }
       dialogOnChange({target: {name: 'condition', value: initCondition}})
       setModalValues(Map(initialModalValues))
     }
@@ -160,6 +166,17 @@ const ConditionalPredicate = props => {
                 onValue: true,
                 offValue: false
               }
+            },
+            {
+              type: 'field',
+              dimensions: {x: 4, y: 1, h: 1, w: 6},
+              config: {
+                name: 'isfield',
+                label: 'Compare Against Another Field',
+                type: 'checkbox',
+                onValue: true,
+                offValue: false
+              }
             }
           ]
         }
@@ -169,6 +186,24 @@ const ConditionalPredicate = props => {
       lastUpdateBy: 'will darden',
       createdDate: '2018-02-26 10:16:14',
       createdBy: 'will darden'
+    }
+
+    if (props.value.get('isfield')) { // the user comparing this field against another field on the record - JRA 10/29/2024
+      schema.form.jsonschema.layout.push(
+        {
+          type: 'field',
+          dimensions: {x: 1, y: 2, h: 1, w: 8},
+          config: {
+            name: `${props.name}-0`,
+            label: props.label,
+            type: 'select',
+            keyword: {
+              options: props.classFields.map(field => ({label: field.get('label'), value: field.get('name')})).toList()
+            }
+          }
+        }
+      )
+      return schema
     }
 
     const relativeConditions = ['is greater than', 'is less than']
@@ -423,6 +458,14 @@ const ConditionalPredicate = props => {
       props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
       return
     }
+    if (e.target.name === 'isfield') { // if they are toggling this, blank out the values and make them start over - JRA 10/30/2024
+      newFieldValue = newFieldValue.set('isfield', e.target.value) // set the value in bleu
+      newFieldValue = newFieldValue.set('values', List()) // blank the values out in bleu
+      const displayValues = modalValues.merge({[`${props.name}-0`]: '', isfield: e.target.value})
+      setModalValues(displayValues) // set the temp values displayed in the UI
+      props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+      return
+    }
     if (STRING_VALUES.has(props.inputType.toLowerCase())) {
       // i have a string. what index?
       const i = parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1])
@@ -477,7 +520,6 @@ const ConditionalPredicate = props => {
     newFieldValue = newFieldValue.set('values', values)
     props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
   }
-
   return (
     <div style={{width: '100%', height: '100%'}}>
       <FormBuilder
@@ -514,5 +556,6 @@ ConditionalPredicate.propTypes = {
   style: PropTypes.object,
   value: PropTypes.object,
   typeahead: PropTypes.object,
-  keyword: PropTypes.object
+  keyword: PropTypes.object,
+  classFields: PropTypes.instanceOf(Map)
 }

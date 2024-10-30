@@ -55,7 +55,9 @@ const FormBuilder = (props) => {
     timeFormat,
     autoComplete,
     style,
-    device = {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'}
+    device = {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'},
+    fieldDefinitions,
+    c2class
   } = props
   const [grid, updateGrid] = useState({layout: [], elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
@@ -206,6 +208,8 @@ const FormBuilder = (props) => {
               autoComplete={autoComplete}
               device={device}
               rteImageUrl={rteImageUrl}
+              fieldDefinitions={fieldDefinitions}
+              c2class={c2class}
             />
           </div>
         )
@@ -365,7 +369,9 @@ FormBuilder.propTypes = {
   timeFormat: PropTypes.string,
   autoComplete: PropTypes.string,
   style: PropTypes.object,
-  device: PropTypes.object
+  device: PropTypes.object,
+  fieldDefinitions: PropTypes.instanceOf(Map),
+  c2class: PropTypes.string
 }
 
 FormBuilder.defaultProps = {
@@ -395,7 +401,8 @@ FormBuilder.defaultProps = {
   dateTimeFormat: 'MM/DD/YYYY h:mm a',
   timeFormat: 'h:mm a',
   autoComplete: 'ac_off',
-  style: {}
+  style: {},
+  fieldDefinitions: Map()
 }
 
 FormBuilder.count = 1
@@ -460,7 +467,9 @@ export default class FormValidator extends Component {
     dateTimeFormat: PropTypes.string,
     timeFormat: PropTypes.string,
     autoComplete: PropTypes.string,
-    theme: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    theme: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    fieldDefinitions: PropTypes.instanceOf(Map),
+    c2class: PropTypes.string
   }
 
   static defaultProps = {

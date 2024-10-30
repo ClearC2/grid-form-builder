@@ -100,7 +100,9 @@ var FormBuilder = function FormBuilder(props) {
     platform: 'browser',
     uuid: 'browser',
     version: 'browser'
-  } : _props$device;
+  } : _props$device,
+      fieldDefinitions = props.fieldDefinitions,
+      c2class = props.c2class;
 
   var _useState = useState({
     layout: [],
@@ -293,7 +295,9 @@ var FormBuilder = function FormBuilder(props) {
           timeFormat: timeFormat,
           autoComplete: autoComplete,
           device: device,
-          rteImageUrl: rteImageUrl
+          rteImageUrl: rteImageUrl,
+          fieldDefinitions: fieldDefinitions,
+          c2class: c2class
         })));
         layout.push(dimensions);
       }
@@ -463,7 +467,9 @@ FormBuilder.propTypes = {
   timeFormat: PropTypes.string,
   autoComplete: PropTypes.string,
   style: PropTypes.object,
-  device: PropTypes.object
+  device: PropTypes.object,
+  fieldDefinitions: PropTypes.instanceOf(Map),
+  c2class: PropTypes.string
 };
 FormBuilder.defaultProps = {
   columns: 12,
@@ -504,7 +510,8 @@ FormBuilder.defaultProps = {
   dateTimeFormat: 'MM/DD/YYYY h:mm a',
   timeFormat: 'h:mm a',
   autoComplete: 'ac_off',
-  style: {}
+  style: {},
+  fieldDefinitions: Map()
 };
 FormBuilder.count = 1;
 
@@ -830,7 +837,9 @@ _defineProperty(FormValidator, "propTypes", {
   dateTimeFormat: PropTypes.string,
   timeFormat: PropTypes.string,
   autoComplete: PropTypes.string,
-  theme: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  theme: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  fieldDefinitions: PropTypes.instanceOf(Map),
+  c2class: PropTypes.string
 });
 
 _defineProperty(FormValidator, "defaultProps", {

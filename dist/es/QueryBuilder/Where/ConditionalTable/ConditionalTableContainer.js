@@ -96,6 +96,7 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
           values: c.get('rawValues', List()),
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
+          isfield: c.get('isfield', false),
           format: c.get('format', '')
         }); // https://github.com/ClearC2/bleu/issues/4734
       } else if (mergeDate) {
@@ -104,6 +105,7 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
           values: List(inBetweenDateValues),
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
+          isfield: c.get('isfield', false),
           format: c.get('format', '')
         });
       } else {
@@ -112,6 +114,7 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
           values: c.get('values', List()),
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
+          isfield: c.get('isfield', false),
           format: c.get('format', '')
         });
       }
