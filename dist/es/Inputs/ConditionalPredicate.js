@@ -10,7 +10,7 @@ import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context13, _context14; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context13 = ownKeys(Object(source), !0)).call(_context13, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context14 = ownKeys(Object(source))).call(_context14, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context14, _context15; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context14 = ownKeys(Object(source), !0)).call(_context14, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context15 = ownKeys(Object(source))).call(_context15, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
@@ -145,6 +145,14 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
         initialModalValues.relative = props.value.getIn(['relative']);
       }
 
+      if (props.value.get('not')) {
+        initialModalValues.not = props.value.get('not');
+      }
+
+      if (props.value.get('isfield')) {
+        initialModalValues.isfield = props.value.get('isfield');
+      }
+
       dialogOnChange({
         target: {
           name: 'condition',
@@ -249,6 +257,21 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
               onValue: true,
               offValue: false
             }
+          }, {
+            type: 'field',
+            dimensions: {
+              x: 4,
+              y: 1,
+              h: 1,
+              w: 6
+            },
+            config: {
+              name: 'isfield',
+              label: 'Compare Against Another Field',
+              type: 'checkbox',
+              onValue: true,
+              offValue: false
+            }
           }]
         }
       },
@@ -258,6 +281,36 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       createdDate: '2018-02-26 10:16:14',
       createdBy: 'will darden'
     };
+
+    if (props.value.get('isfield')) {
+      var _context6;
+
+      // the user comparing this field against another field on the record - JRA 10/29/2024
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {
+          x: 1,
+          y: 2,
+          h: 1,
+          w: 8
+        },
+        config: {
+          name: "".concat(props.name, "-0"),
+          label: props.label,
+          type: 'select',
+          keyword: {
+            options: _mapInstanceProperty(_context6 = props.classFields).call(_context6, function (field) {
+              return {
+                label: field.get('label'),
+                value: field.get('name')
+              };
+            }).toList()
+          }
+        }
+      });
+      return schema;
+    }
+
     var relativeConditions = ['is greater than', 'is less than'];
 
     if (_includesInstanceProperty(relativeConditions).call(relativeConditions, modalValues.get('condition')) && props.inputType === 'date') {
@@ -325,7 +378,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     var fieldCount = 0;
 
     if (maxFieldCount < 3 && maxFieldCount > 0) {
-      var _context6;
+      var _context7;
 
       schema.form.jsonschema.layout.push({
         type: 'field',
@@ -345,13 +398,13 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
               fontSize: '12px'
             }
           },
-          label: _concatInstanceProperty(_context6 = "(".concat(maxFieldCount, " value")).call(_context6, maxFieldCount === 1 ? '' : 's', " allowed)")
+          label: _concatInstanceProperty(_context7 = "(".concat(maxFieldCount, " value")).call(_context7, maxFieldCount === 1 ? '' : 's', " allowed)")
         }
       });
     }
 
     if (hasDynamicValues()) {
-      var _context7;
+      var _context8;
 
       schema.form.jsonschema.layout.push({
         type: 'field',
@@ -371,7 +424,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
               fontSize: '12px'
             }
           },
-          label: _concatInstanceProperty(_context7 = "(".concat(maxFieldCount, " value")).call(_context7, maxFieldCount === 1 ? '' : 's', " allowed)"),
+          label: _concatInstanceProperty(_context8 = "(".concat(maxFieldCount, " value")).call(_context8, maxFieldCount === 1 ? '' : 's', " allowed)"),
           delimit: 'value',
           keyword: {
             category: 'NONE',
@@ -434,7 +487,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
 
     if (MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0 && !modalValues.get('relative')) {
       while (fieldCount < minFieldCount || fieldCount < maxFieldCount && fieldCount < nFieldsWithValues() + 1) {
-        var _context8;
+        var _context9;
 
         var label = CONDITIONS[condition()];
 
@@ -457,7 +510,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           config: _objectSpread(_objectSpread({}, extraFieldProps), {}, {
             link: undefined,
             readonly: false,
-            name: _concatInstanceProperty(_context8 = "".concat(props.name, "-")).call(_context8, fieldCount),
+            name: _concatInstanceProperty(_context9 = "".concat(props.name, "-")).call(_context9, fieldCount),
             label: label,
             interactive: true,
             clearable: true,
@@ -523,9 +576,9 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       var maxFieldValues = CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields;
 
       if (newFieldValue.get('values', List()).size >= maxFieldValues) {
-        var _context9;
+        var _context10;
 
-        newFieldValue = newFieldValue.set('values', _sliceInstanceProperty(_context9 = newFieldValue.get('values', List())).call(_context9, 0, maxFieldValues));
+        newFieldValue = newFieldValue.set('values', _sliceInstanceProperty(_context10 = newFieldValue.get('values', List())).call(_context10, 0, maxFieldValues));
       }
 
       props.onChange({
@@ -550,18 +603,18 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
   }
 
   function deleteIndex(i, values) {
-    var _context12;
+    var _context13;
 
     var stateChanges = modalValues;
 
     for (var x = _parseInt(i); x < values.size - 1; x++) {
-      var _context10, _context11;
+      var _context11, _context12;
 
       var next = x + 1;
-      stateChanges = stateChanges.set(_concatInstanceProperty(_context10 = "".concat(props.name, "-")).call(_context10, x), modalValues.get(_concatInstanceProperty(_context11 = "".concat(props.name, "-")).call(_context11, next), ''));
+      stateChanges = stateChanges.set(_concatInstanceProperty(_context11 = "".concat(props.name, "-")).call(_context11, x), modalValues.get(_concatInstanceProperty(_context12 = "".concat(props.name, "-")).call(_context12, next), ''));
     }
 
-    stateChanges = stateChanges.delete(_concatInstanceProperty(_context12 = "".concat(props.name, "-")).call(_context12, values.size - 1));
+    stateChanges = stateChanges.delete(_concatInstanceProperty(_context13 = "".concat(props.name, "-")).call(_context13, values.size - 1));
 
     if (i === 'relative') {
       stateChanges = stateChanges.delete("".concat(i));
@@ -638,6 +691,26 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
 
     if (e.target.name === 'not') {
       newFieldValue = newFieldValue.set('not', e.target.value);
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      }, props.index);
+      return;
+    }
+
+    if (e.target.name === 'isfield') {
+      var _modalValues$merge;
+
+      // if they are toggling this, blank out the values and make them start over - JRA 10/30/2024
+      newFieldValue = newFieldValue.set('isfield', e.target.value); // set the value in bleu
+
+      newFieldValue = newFieldValue.set('values', List()); // blank the values out in bleu
+
+      var displayValues = modalValues.merge((_modalValues$merge = {}, _defineProperty(_modalValues$merge, "".concat(props.name, "-0"), ''), _defineProperty(_modalValues$merge, "isfield", e.target.value), _modalValues$merge));
+      setModalValues(displayValues); // set the temp values displayed in the UI
+
       props.onChange({
         target: {
           name: props.name,
@@ -749,5 +822,6 @@ ConditionalPredicate.propTypes = {
   style: PropTypes.object,
   value: PropTypes.object,
   typeahead: PropTypes.object,
-  keyword: PropTypes.object
+  keyword: PropTypes.object,
+  classFields: PropTypes.instanceOf(Map)
 };

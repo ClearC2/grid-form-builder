@@ -226,7 +226,7 @@ export default class ConditionalTable extends Component {
             mergeDate: true
           })
         } else {
-          req.query.conditions.push({
+          const query = {
             fieldSchema: this.props.getFieldSchema(key),
             name: key,
             label: this.getLabel(key),
@@ -236,7 +236,11 @@ export default class ConditionalTable extends Component {
             rawValues: rawValues,
             not: value.not || false,
             format: this.getFormat(key)
-          })
+          }
+          if (value.isfield) {
+            query.isfield = value.isfield
+          }
+          req.query.conditions.push(query)
         }
       } else if (value.type) {
         const newValues = []

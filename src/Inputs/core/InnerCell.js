@@ -9,6 +9,7 @@ import {mapInputType} from '../index'
 import {DropTarget} from 'react-dnd'
 import PortalTooltip from '../../Tooltip'
 import {randomId} from '../../utils'
+import {Map} from 'immutable'
 
 const InnerCell = props => {
   const {
@@ -33,7 +34,9 @@ const InnerCell = props => {
     timeFormat,
     handleRTEImageClick,
     autoComplete,
-    device
+    device,
+    fieldDefinitions,
+    c2class
   } = props
 
   const {config = {}} = field
@@ -135,6 +138,8 @@ const InnerCell = props => {
         autoComplete={autoComplete}
         interactive={interactive}
         device={device}
+        fieldDefinitions={fieldDefinitions}
+        c2class={c2class}
       >
         <Type />
       </InputContainer>
@@ -178,5 +183,7 @@ InnerCell.propTypes = {
   timeFormat: PropTypes.string,
   handleRTEImageClick: PropTypes.func,
   autoComplete: PropTypes.string,
-  device: PropTypes.object
+  device: PropTypes.object,
+  fieldDefinitions: PropTypes.instanceOf(Map),
+  c2class: PropTypes.string
 }

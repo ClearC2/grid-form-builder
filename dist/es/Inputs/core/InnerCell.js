@@ -25,6 +25,7 @@ import { mapInputType } from '../index';
 import { DropTarget } from 'react-dnd';
 import PortalTooltip from '../../Tooltip';
 import { randomId } from '../../utils';
+import { Map } from 'immutable';
 
 var InnerCell = function InnerCell(props) {
   var field = props.field,
@@ -49,7 +50,9 @@ var InnerCell = function InnerCell(props) {
       timeFormat = props.timeFormat,
       handleRTEImageClick = props.handleRTEImageClick,
       autoComplete = props.autoComplete,
-      device = props.device;
+      device = props.device,
+      fieldDefinitions = props.fieldDefinitions,
+      c2class = props.c2class;
   var _field$config = field.config,
       config = _field$config === void 0 ? {} : _field$config;
 
@@ -158,7 +161,9 @@ var InnerCell = function InnerCell(props) {
     handleRTEImageClick: handleRTEImageClick,
     autoComplete: autoComplete,
     interactive: interactive,
-    device: device
+    device: device,
+    fieldDefinitions: fieldDefinitions,
+    c2class: c2class
   }, jsx(Type, null))));
 };
 
@@ -196,5 +201,7 @@ InnerCell.propTypes = {
   timeFormat: PropTypes.string,
   handleRTEImageClick: PropTypes.func,
   autoComplete: PropTypes.string,
-  device: PropTypes.object
+  device: PropTypes.object,
+  fieldDefinitions: PropTypes.instanceOf(Map),
+  c2class: PropTypes.string
 };

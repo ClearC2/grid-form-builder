@@ -101,7 +101,9 @@ var InputContainer = function InputContainer(props) {
       handleRTEImageClick = props.handleRTEImageClick,
       autoComplete = props.autoComplete,
       interactive = props.interactive,
-      device = props.device;
+      device = props.device,
+      fieldDefinitions = props.fieldDefinitions,
+      c2class = props.c2class;
 
   var name = config.name,
       required = config.required,
@@ -145,7 +147,9 @@ var InputContainer = function InputContainer(props) {
     required: required,
     style: style
   }, other), {}, {
-    device: device
+    device: device,
+    fieldDefinitions: fieldDefinitions,
+    c2class: c2class
   })));
 };
 
@@ -165,5 +169,7 @@ InputContainer.propTypes = {
   handleRTEImageClick: PropTypes.func,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
-  device: PropTypes.object
+  device: PropTypes.object,
+  fieldDefinitions: PropTypes.instanceOf(Map),
+  c2class: PropTypes.string
 };
