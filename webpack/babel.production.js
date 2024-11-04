@@ -3,7 +3,10 @@ const path = require('path')
 module.exports = (env) => ({
   devServer: {
     port: 8777,
-    open: true
+    open: true,
+    client: {
+      overlay: false
+    }
   },
   module: {
     rules: [
