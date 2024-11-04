@@ -1,3 +1,10 @@
+## [3.105.1](https://github.com/ClearC2/grid-form-builder/compare/v3.105.0...v3.105.1) (2024-11-04)
+
+
+### Bug Fixes
+
+* **phone:** prepend + for non-us numbers to trigger formatting ([#227](https://github.com/ClearC2/grid-form-builder/issues/227)) ([389f13f](https://github.com/ClearC2/grid-form-builder/commit/389f13f6e6be953310f54b1d313f16c9cfde04b5))
+
 # [3.105.0](https://github.com/ClearC2/grid-form-builder/compare/v3.104.0...v3.105.0) (2024-10-30)
 
 
