@@ -14,7 +14,6 @@ import '../styles/phone.css'
 const Phone = props => {
   const {
     name,
-    value = '',
     onChange,
     readonly,
     disabled,
@@ -34,6 +33,8 @@ const Phone = props => {
     maxlength = 524288,
     warning
   } = props
+
+  let {value = ''} = props
 
   const {
     value: valueStyle = {},
@@ -120,6 +121,8 @@ const Phone = props => {
   const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
+
+  value = countryCode && countryCode !== 'US' && !value.startsWith('+') ? `+${value}` : value
 
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
