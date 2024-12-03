@@ -38,6 +38,10 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIco
 
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
+var _Tooltip = _interopRequireDefault(require("../Tooltip"));
+
+var _utils = require("../utils");
+
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -60,7 +64,9 @@ var Radio = function Radio(props) {
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
-      warning = props.warning;
+      warning = props.warning,
+      _props$showOptionTool = props.showOptionTooltips,
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -141,11 +147,14 @@ var Radio = function Radio(props) {
     if (checked) className = className + ' gfb-multi-input-selected';
     if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input';
     if (!interactive) className = className + ' gfb-non-interactive-input';
+    var optionId = (0, _utils.randomId)();
     return (0, _core.jsx)("label", {
       key: i,
       className: 'gfb-multi-input-label-wrapper ' + className,
       style: valueStyle,
-      css: theme.options
+      css: theme.options,
+      "data-tip": true,
+      "data-for": optionId
     }, (0, _core.jsx)("input", {
       className: className,
       name: name,
@@ -159,7 +168,10 @@ var Radio = function Radio(props) {
       type: "radio",
       autoComplete: autoComplete,
       css: valueCSS
-    }), option.label ? option.label : option.value);
+    }), option.label ? option.label : option.value, showOptionTooltips ? (0, _core.jsx)(_Tooltip.default, {
+      id: optionId,
+      message: option === null || option === void 0 ? void 0 : option.tooltip
+    }) : null);
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
@@ -189,5 +201,6 @@ Radio.propTypes = {
   requiredWarning: _propTypes.default.bool,
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
-  warning: _propTypes.default.string
+  warning: _propTypes.default.string,
+  showOptionTooltips: _propTypes.default.bool
 };

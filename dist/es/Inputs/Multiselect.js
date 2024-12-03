@@ -12,7 +12,6 @@ import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
-import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -24,9 +23,10 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ReactSelect, { components as ReactSelectBaseComponents } from 'react-select';
 import Creatable from 'react-select/creatable';
-import { isMobile, convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue } from '../utils';
+import { isMobile, convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue, randomId } from '../utils';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
+import PortalTooltip from '../Tooltip';
 var viewPortHeight = document.documentElement.clientHeight;
 var labelCopyTimer = null;
 
@@ -66,7 +66,8 @@ var Multiselect = function Multiselect(props) {
       closeMenuOnSelect = _props$closeMenuOnSel === void 0 ? true : _props$closeMenuOnSel,
       warning = props.warning,
       showValidOptions = props.showValidOptions,
-      onBlur = props.onBlur;
+      onBlur = props.onBlur,
+      showOptionTooltips = props.showOptionTooltips;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -262,9 +263,9 @@ var Multiselect = function Multiselect(props) {
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
-  var components = {};
+  var customComponents = {};
 
-  components.MultiValue = function (p) {
+  customComponents.MultiValue = function (p) {
     var _p$children = p.children,
         children = _p$children === void 0 ? '' : _p$children;
 
@@ -291,7 +292,7 @@ var Multiselect = function Multiselect(props) {
   };
 
   if (warning && !isRequiredFlag) {
-    components.DropdownIndicator = function () {
+    customComponents.DropdownIndicator = function () {
       return jsx(ValidationErrorIcon, {
         message: warning,
         color: "#FFCC00",
@@ -303,12 +304,29 @@ var Multiselect = function Multiselect(props) {
   if (isRequiredFlag && (value.length === 0 || value.size === 0) && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
 
-    components.DropdownIndicator = function () {
+    customComponents.DropdownIndicator = function () {
       return jsx(ValidationErrorIcon, {
         message: "This Field is Required"
       });
     };
   }
+
+  var Option = function Option(props) {
+    if (!showOptionTooltips) {
+      return jsx(ReactSelectBaseComponents.Option, props);
+    } else {
+      var _props$data;
+
+      var optionId = randomId();
+      return jsx("div", {
+        "data-tip": true,
+        "data-for": optionId
+      }, jsx(PortalTooltip, {
+        id: optionId,
+        message: (_props$data = props.data) === null || _props$data === void 0 ? void 0 : _props$data.tooltip
+      }), jsx(ReactSelectBaseComponents.Option, props));
+    }
+  };
 
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus multiselect-focus';
@@ -346,7 +364,9 @@ var Multiselect = function Multiselect(props) {
     defaultValue: selectValue,
     onChange: handleChange,
     autoComplete: autoComplete,
-    components: components,
+    components: _objectSpread(_objectSpread({}, customComponents), {}, {
+      Option: Option
+    }),
     styles: {
       container: function container(base) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
@@ -379,7 +399,8 @@ var Multiselect = function Multiselect(props) {
       },
       menuPortal: function menuPortal(base) {
         var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
-        var zIndex = _Number$MAX_SAFE_INTEGER;
+        var zIndex = 9999; // this keeps the select menu below the option tooltip portal
+
         return _objectSpread(_objectSpread({}, base), {}, {
           top: top,
           zIndex: zIndex

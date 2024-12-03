@@ -4,7 +4,8 @@ import {useCallback, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
-import {convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue} from '../utils'
+import {convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue, randomId} from '../utils'
+import PortalTooltip from '../Tooltip'
 
 const Multicheckbox = props => {
   const {
@@ -23,7 +24,8 @@ const Multicheckbox = props => {
     delimit,
     delimiter = '¤',
     stringify,
-    warning
+    warning,
+    showOptionTooltips = false // this flag is used to show tooltips for each individual option
   } = props
 
   const {
@@ -132,12 +134,15 @@ const Multicheckbox = props => {
               if (checked) className = className + ' gfb-multi-input-selected'
               if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input'
               if (!interactive) className = className + ' gfb-non-interactive-input'
+              const optionId = randomId()
               return (
                 <label
                   key={i}
                   className={'gfb-multi-input-label-wrapper ' + className}
                   style={optionsStyle}
                   css={theme.options}
+                  data-tip
+                  data-for={optionId}
                 >
                   <input
                     className={className}
@@ -153,6 +158,7 @@ const Multicheckbox = props => {
                     css={valueCSS}
                   />
                   {option.label ? option.label : option.value}
+                  {showOptionTooltips ? <PortalTooltip id={optionId} message={option?.tooltip} /> : null}
                 </label>
               )
             })}
@@ -186,5 +192,6 @@ Multicheckbox.propTypes = {
   stringify: PropTypes.bool,
   delimiter: PropTypes.string,
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  showOptionTooltips: PropTypes.bool
 }

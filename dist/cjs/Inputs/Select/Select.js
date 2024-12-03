@@ -1,5 +1,7 @@
 "use strict";
 
+var _typeof = require("@babel/runtime-corejs3/helpers/typeof");
+
 var _Object$keys = require("@babel/runtime-corejs3/core-js-stable/object/keys");
 
 var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
@@ -16,6 +18,8 @@ var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/ob
 
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
 
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
+
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
 _Object$defineProperty(exports, "__esModule", {
@@ -30,8 +34,6 @@ var _reduce = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-sta
 
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
-var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
-
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
@@ -42,7 +44,7 @@ var _react = require("react");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _reactSelect = _interopRequireDefault(require("react-select"));
+var _reactSelect = _interopRequireWildcard(require("react-select"));
 
 var _creatable = _interopRequireDefault(require("react-select/creatable"));
 
@@ -51,6 +53,12 @@ var _utils = require("../../utils");
 var _ValidationErrorIcon = _interopRequireDefault(require("../../ValidationErrorIcon"));
 
 var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
+
+var _Tooltip = _interopRequireDefault(require("../../Tooltip"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -87,7 +95,9 @@ var Select = function Select(props) {
       _props$isClearable = props.isClearable,
       isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
       warning = props.warning,
-      onBlur = props.onBlur;
+      onBlur = props.onBlur,
+      _props$showOptionTool = props.showOptionTooltips,
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -261,10 +271,10 @@ var Select = function Select(props) {
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
-  var components = {};
+  var customComponents = {};
 
   if (warning && !isRequiredFlag) {
-    components.DropdownIndicator = function () {
+    customComponents.DropdownIndicator = function () {
       return (0, _core.jsx)(_ValidationErrorIcon.default, {
         message: warning,
         color: "#FFCC00",
@@ -276,12 +286,29 @@ var Select = function Select(props) {
   if (isRequiredFlag && (0, _trim.default)(_context = value + '').call(_context).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
 
-    components.DropdownIndicator = function () {
+    customComponents.DropdownIndicator = function () {
       return (0, _core.jsx)(_ValidationErrorIcon.default, {
         message: "This Field is Required"
       });
     };
   }
+
+  var Option = function Option(props) {
+    if (!showOptionTooltips) {
+      return (0, _core.jsx)(_reactSelect.components.Option, props);
+    } else {
+      var _props$data;
+
+      var optionId = (0, _utils.randomId)();
+      return (0, _core.jsx)("div", {
+        "data-tip": true,
+        "data-for": optionId
+      }, (0, _core.jsx)(_Tooltip.default, {
+        id: optionId,
+        message: (_props$data = props.data) === null || _props$data === void 0 ? void 0 : _props$data.tooltip
+      }), (0, _core.jsx)(_reactSelect.components.Option, props));
+    }
+  };
 
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus';
@@ -316,7 +343,9 @@ var Select = function Select(props) {
     defaultValue: selectValue,
     onChange: handleChange,
     autoComplete: autoComplete,
-    components: components,
+    components: _objectSpread(_objectSpread({}, customComponents), {}, {
+      Option: Option
+    }),
     styles: {
       container: function container(base) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
@@ -348,7 +377,8 @@ var Select = function Select(props) {
       },
       menuPortal: function menuPortal(base) {
         var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
-        var zIndex = _maxSafeInteger.default;
+        var zIndex = 9999; // this keeps the select menu below the option tooltip portal
+
         return _objectSpread(_objectSpread({}, base), {}, {
           top: top,
           zIndex: zIndex
@@ -381,5 +411,7 @@ Select.propTypes = {
   style: _propTypes.default.object,
   isClearable: _propTypes.default.bool,
   warning: _propTypes.default.string,
-  onBlur: _propTypes.default.func
+  onBlur: _propTypes.default.func,
+  showOptionTooltips: _propTypes.default.bool,
+  data: _propTypes.default.object
 };

@@ -19,6 +19,8 @@ import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
+import PortalTooltip from '../Tooltip';
+import { randomId } from '../utils';
 
 var Radio = function Radio(props) {
   var name = props.name,
@@ -38,7 +40,8 @@ var Radio = function Radio(props) {
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
-      warning = props.warning;
+      warning = props.warning,
+      showOptionTooltips = props.showOptionTooltips;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -119,11 +122,14 @@ var Radio = function Radio(props) {
     if (checked) className = className + ' gfb-multi-input-selected';
     if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input';
     if (!interactive) className = className + ' gfb-non-interactive-input';
+    var optionId = randomId();
     return jsx("label", {
       key: i,
       className: 'gfb-multi-input-label-wrapper ' + className,
       style: valueStyle,
-      css: theme.options
+      css: theme.options,
+      "data-tip": true,
+      "data-for": optionId
     }, jsx("input", {
       className: className,
       name: name,
@@ -137,7 +143,10 @@ var Radio = function Radio(props) {
       type: "radio",
       autoComplete: autoComplete,
       css: valueCSS
-    }), option.label ? option.label : option.value);
+    }), option.label ? option.label : option.value, showOptionTooltips ? jsx(PortalTooltip, {
+      id: optionId,
+      message: option === null || option === void 0 ? void 0 : option.tooltip
+    }) : null);
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
