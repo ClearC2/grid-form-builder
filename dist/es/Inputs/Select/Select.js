@@ -11,7 +11,6 @@ import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _reduceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/reduce";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
-import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -21,11 +20,12 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 import { jsx } from '@emotion/core';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import ReactSelect from 'react-select';
+import ReactSelect, { components } from 'react-select';
 import Creatable from 'react-select/creatable';
-import { isMobile } from '../../utils';
+import { isMobile, randomId } from '../../utils';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
+import PortalTooltip from '../../Tooltip';
 var viewPortHeight = document.documentElement.clientHeight;
 
 var Select = function Select(props) {
@@ -57,7 +57,8 @@ var Select = function Select(props) {
       _props$isClearable = props.isClearable,
       isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
       warning = props.warning,
-      onBlur = props.onBlur;
+      onBlur = props.onBlur,
+      showOptionTooltips = props.showOptionTooltips;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -233,10 +234,10 @@ var Select = function Select(props) {
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
-  var components = {};
+  var customComponents = {};
 
   if (warning && !isRequiredFlag) {
-    components.DropdownIndicator = function () {
+    customComponents.DropdownIndicator = function () {
       return jsx(ValidationErrorIcon, {
         message: warning,
         color: "#FFCC00",
@@ -248,12 +249,29 @@ var Select = function Select(props) {
   if (isRequiredFlag && _trimInstanceProperty(_context = value + '').call(_context).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
 
-    components.DropdownIndicator = function () {
+    customComponents.DropdownIndicator = function () {
       return jsx(ValidationErrorIcon, {
         message: "This Field is Required"
       });
     };
   }
+
+  var Option = function Option(props) {
+    if (!showOptionTooltips) {
+      return jsx(components.Option, props);
+    } else {
+      var _props$data;
+
+      var optionId = randomId();
+      return jsx("div", {
+        "data-tip": true,
+        "data-for": optionId
+      }, jsx(PortalTooltip, {
+        id: optionId,
+        message: (_props$data = props.data) === null || _props$data === void 0 ? void 0 : _props$data.tooltip
+      }), jsx(components.Option, props));
+    }
+  };
 
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus';
@@ -288,7 +306,9 @@ var Select = function Select(props) {
     defaultValue: selectValue,
     onChange: handleChange,
     autoComplete: autoComplete,
-    components: components,
+    components: _objectSpread(_objectSpread({}, customComponents), {}, {
+      Option: Option
+    }),
     styles: {
       container: function container(base) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
@@ -320,7 +340,8 @@ var Select = function Select(props) {
       },
       menuPortal: function menuPortal(base) {
         var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
-        var zIndex = _Number$MAX_SAFE_INTEGER;
+        var zIndex = 9999; // this keeps the select menu below the option tooltip portal
+
         return _objectSpread(_objectSpread({}, base), {}, {
           top: top,
           zIndex: zIndex

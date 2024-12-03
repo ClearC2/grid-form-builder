@@ -34,8 +34,6 @@ var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-sta
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
-var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
-
 var _extends2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/extends"));
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
@@ -59,6 +57,8 @@ var _utils = require("../utils");
 var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIcon"));
 
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
+
+var _Tooltip = _interopRequireDefault(require("../Tooltip"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -107,7 +107,9 @@ var Multiselect = function Multiselect(props) {
       closeMenuOnSelect = _props$closeMenuOnSel === void 0 ? true : _props$closeMenuOnSel,
       warning = props.warning,
       showValidOptions = props.showValidOptions,
-      onBlur = props.onBlur;
+      onBlur = props.onBlur,
+      _props$showOptionTool = props.showOptionTooltips,
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -302,9 +304,9 @@ var Multiselect = function Multiselect(props) {
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
-  var components = {};
+  var customComponents = {};
 
-  components.MultiValue = function (p) {
+  customComponents.MultiValue = function (p) {
     var _p$children = p.children,
         children = _p$children === void 0 ? '' : _p$children;
 
@@ -331,7 +333,7 @@ var Multiselect = function Multiselect(props) {
   };
 
   if (warning && !isRequiredFlag) {
-    components.DropdownIndicator = function () {
+    customComponents.DropdownIndicator = function () {
       return (0, _core.jsx)(_ValidationErrorIcon.default, {
         message: warning,
         color: "#FFCC00",
@@ -343,12 +345,29 @@ var Multiselect = function Multiselect(props) {
   if (isRequiredFlag && (value.length === 0 || value.size === 0) && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
 
-    components.DropdownIndicator = function () {
+    customComponents.DropdownIndicator = function () {
       return (0, _core.jsx)(_ValidationErrorIcon.default, {
         message: "This Field is Required"
       });
     };
   }
+
+  var Option = function Option(props) {
+    if (!showOptionTooltips) {
+      return (0, _core.jsx)(_reactSelect.components.Option, props);
+    } else {
+      var _props$data;
+
+      var optionId = (0, _utils.randomId)();
+      return (0, _core.jsx)("div", {
+        "data-tip": true,
+        "data-for": optionId
+      }, (0, _core.jsx)(_Tooltip.default, {
+        id: optionId,
+        message: (_props$data = props.data) === null || _props$data === void 0 ? void 0 : _props$data.tooltip
+      }), (0, _core.jsx)(_reactSelect.components.Option, props));
+    }
+  };
 
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus multiselect-focus';
@@ -386,7 +405,9 @@ var Multiselect = function Multiselect(props) {
     defaultValue: selectValue,
     onChange: handleChange,
     autoComplete: autoComplete,
-    components: components,
+    components: _objectSpread(_objectSpread({}, customComponents), {}, {
+      Option: Option
+    }),
     styles: {
       container: function container(base) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
@@ -419,7 +440,8 @@ var Multiselect = function Multiselect(props) {
       },
       menuPortal: function menuPortal(base) {
         var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
-        var zIndex = _maxSafeInteger.default;
+        var zIndex = 9999; // this keeps the select menu below the option tooltip portal
+
         return _objectSpread(_objectSpread({}, base), {}, {
           top: top,
           zIndex: zIndex
@@ -458,5 +480,7 @@ Multiselect.propTypes = {
   closeMenuOnSelect: _propTypes.default.bool,
   warning: _propTypes.default.string,
   showValidOptions: _propTypes.default.bool,
-  onBlur: _propTypes.default.func
+  onBlur: _propTypes.default.func,
+  showOptionTooltips: _propTypes.default.bool,
+  data: _propTypes.default.object
 };
