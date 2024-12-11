@@ -24,7 +24,8 @@ import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
-import { convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue } from '../utils';
+import { convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue, randomId } from '../utils';
+import PortalTooltip from '../Tooltip';
 
 var Multicheckbox = function Multicheckbox(props) {
   var name = props.name,
@@ -46,7 +47,8 @@ var Multicheckbox = function Multicheckbox(props) {
       _props$delimiter = props.delimiter,
       delimiter = _props$delimiter === void 0 ? '¤' : _props$delimiter,
       stringify = props.stringify,
-      warning = props.warning;
+      warning = props.warning,
+      showOptionTooltips = props.showOptionTooltips;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -200,11 +202,14 @@ var Multicheckbox = function Multicheckbox(props) {
     if (checked) className = className + ' gfb-multi-input-selected';
     if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input';
     if (!interactive) className = className + ' gfb-non-interactive-input';
+    var optionId = randomId();
     return jsx("label", {
       key: i,
       className: 'gfb-multi-input-label-wrapper ' + className,
       style: optionsStyle,
-      css: theme.options
+      css: theme.options,
+      "data-tip": true,
+      "data-for": optionId
     }, jsx("input", {
       className: className,
       name: name,
@@ -217,7 +222,10 @@ var Multicheckbox = function Multicheckbox(props) {
       autoComplete: autoComplete,
       style: valueStyle,
       css: valueCSS
-    }), option.label ? option.label : option.value);
+    }), option.label ? option.label : option.value, showOptionTooltips ? jsx(PortalTooltip, {
+      id: optionId,
+      message: option === null || option === void 0 ? void 0 : option.tooltip
+    }) : null);
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,

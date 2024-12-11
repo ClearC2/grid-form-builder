@@ -4,9 +4,15 @@ import {useEffect, useRef, useState, useCallback} from 'react'
 import PropTypes from 'prop-types'
 import ReactSelect, {components as ReactSelectBaseComponents} from 'react-select'
 import Creatable from 'react-select/creatable'
-import {isMobile, convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue} from '../utils'
+import {
+  isMobile,
+  convertDelimitedValueIntoLabelValueArray,
+  convertLabelValueArrayIntoDelimitedValue,
+  randomId
+} from '../utils'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
+import PortalTooltip from '../Tooltip'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -38,7 +44,8 @@ const Multiselect = props => {
     closeMenuOnSelect = true,
     warning,
     showValidOptions,
-    onBlur
+    onBlur,
+    showOptionTooltips = false // this flag is used to show tooltips for each individual option
   } = props
 
   const {
@@ -194,8 +201,8 @@ const Multiselect = props => {
   if (!interactive) className = className + ' gfb-non-interactive-input'
 
   let outerClass = 'gfb-input-outer'
-  const components = {}
-  components.MultiValue = (p) => {
+  const customComponents = {}
+  customComponents.MultiValue = (p) => {
     const {children = ''} = p
     const [label, setLabel] = useState(children) // eslint-disable-line
     const copyValueToClipboard = () => {
@@ -213,16 +220,31 @@ const Multiselect = props => {
     )
   }
   if (warning && !isRequiredFlag) {
-    components.DropdownIndicator = () => {
+    customComponents.DropdownIndicator = () => {
       return <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />
     }
   }
   if (isRequiredFlag && (value.length === 0 || value.size === 0) && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error'
-    components.DropdownIndicator = () => {
+    customComponents.DropdownIndicator = () => {
       return <ValidationErrorIcon message='This Field is Required' />
     }
   }
+
+  const Option = (props) => {
+    if (!showOptionTooltips) {
+      return <ReactSelectBaseComponents.Option {...props} />
+    } else {
+      const optionId = randomId()
+      return (
+        <div data-tip data-for={optionId}>
+          <PortalTooltip id={optionId} message={props.data?.tooltip} />
+          <ReactSelectBaseComponents.Option {...props} />
+        </div>
+      )
+    }
+  }
+
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus multiselect-focus'
   }
@@ -261,7 +283,7 @@ const Multiselect = props => {
         defaultValue={selectValue}
         onChange={handleChange}
         autoComplete={autoComplete}
-        components={components}
+        components={{...customComponents, Option}}
         styles={{
           container: base => {
             return ({...base, ...inputInner, ...inputInnerTheme})
@@ -292,7 +314,7 @@ const Multiselect = props => {
           },
           menuPortal: base => {
             const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
-            const zIndex = Number.MAX_SAFE_INTEGER
+            const zIndex = 9999 // this keeps the select menu below the option tooltip portal
             return ({...base, top, zIndex})
           }
         }}
@@ -330,5 +352,7 @@ Multiselect.propTypes = {
   closeMenuOnSelect: PropTypes.bool,
   warning: PropTypes.string,
   showValidOptions: PropTypes.bool,
-  onBlur: PropTypes.func
+  onBlur: PropTypes.func,
+  showOptionTooltips: PropTypes.bool,
+  data: PropTypes.object
 }
