@@ -20,7 +20,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 import { jsx } from '@emotion/core';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import ReactSelect, { components } from 'react-select';
+import ReactSelect, { components as ReactSelectBaseComponents } from 'react-select';
 import Creatable from 'react-select/creatable';
 import { isMobile, randomId } from '../../utils';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
@@ -58,7 +58,8 @@ var Select = function Select(props) {
       isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
       warning = props.warning,
       onBlur = props.onBlur,
-      showOptionTooltips = props.showOptionTooltips;
+      _props$showOptionTool = props.showOptionTooltips,
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -258,7 +259,7 @@ var Select = function Select(props) {
 
   var Option = function Option(props) {
     if (!showOptionTooltips) {
-      return jsx(components.Option, props);
+      return jsx(ReactSelectBaseComponents.Option, props);
     } else {
       var _props$data;
 
@@ -269,7 +270,7 @@ var Select = function Select(props) {
       }, jsx(PortalTooltip, {
         id: optionId,
         message: (_props$data = props.data) === null || _props$data === void 0 ? void 0 : _props$data.tooltip
-      }), jsx(components.Option, props));
+      }), jsx(ReactSelectBaseComponents.Option, props));
     }
   };
 
@@ -373,5 +374,7 @@ Select.propTypes = {
   style: PropTypes.object,
   isClearable: PropTypes.bool,
   warning: PropTypes.string,
-  onBlur: PropTypes.func
+  onBlur: PropTypes.func,
+  showOptionTooltips: PropTypes.bool,
+  data: PropTypes.object
 };

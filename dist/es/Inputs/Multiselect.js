@@ -67,7 +67,8 @@ var Multiselect = function Multiselect(props) {
       warning = props.warning,
       showValidOptions = props.showValidOptions,
       onBlur = props.onBlur,
-      showOptionTooltips = props.showOptionTooltips;
+      _props$showOptionTool = props.showOptionTooltips,
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -438,5 +439,7 @@ Multiselect.propTypes = {
   closeMenuOnSelect: PropTypes.bool,
   warning: PropTypes.string,
   showValidOptions: PropTypes.bool,
-  onBlur: PropTypes.func
+  onBlur: PropTypes.func,
+  showOptionTooltips: PropTypes.bool,
+  data: PropTypes.object
 };

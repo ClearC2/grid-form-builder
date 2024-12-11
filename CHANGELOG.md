@@ -1,3 +1,10 @@
+# [3.106.0](https://github.com/ClearC2/grid-form-builder/compare/v3.105.1...v3.106.0) (2024-12-11)
+
+
+### Features
+
+* **inputs:** add ability to show tooltips for individual keyword options in keyword powered inputs ([#228](https://github.com/ClearC2/grid-form-builder/issues/228)) ([e19141a](https://github.com/ClearC2/grid-form-builder/commit/e19141aa5a7687f5490c9deccf70d7b1510fc9f0))
+
 ## [3.105.1](https://github.com/ClearC2/grid-form-builder/compare/v3.105.0...v3.105.1) (2024-11-04)
 
 

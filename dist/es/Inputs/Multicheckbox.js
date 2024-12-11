@@ -48,7 +48,8 @@ var Multicheckbox = function Multicheckbox(props) {
       delimiter = _props$delimiter === void 0 ? '¤' : _props$delimiter,
       stringify = props.stringify,
       warning = props.warning,
-      showOptionTooltips = props.showOptionTooltips;
+      _props$showOptionTool = props.showOptionTooltips,
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -257,5 +258,6 @@ Multicheckbox.propTypes = {
   stringify: PropTypes.bool,
   delimiter: PropTypes.string,
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  showOptionTooltips: PropTypes.bool
 };

@@ -40,7 +40,8 @@ var Listselect = function Listselect(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       warning = props.warning,
-      showOptionTooltips = props.showOptionTooltips;
+      _props$showOptionTool = props.showOptionTooltips,
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -213,5 +214,6 @@ Listselect.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  showOptionTooltips: PropTypes.bool
 };
