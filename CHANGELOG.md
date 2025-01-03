@@ -1,3 +1,10 @@
+## [3.106.1](https://github.com/ClearC2/grid-form-builder/compare/v3.106.0...v3.106.1) (2025-01-03)
+
+
+### Bug Fixes
+
+* **readonly:** inputs will rerender if cfd_userisreadonly changes value ([a79f460](https://github.com/ClearC2/grid-form-builder/commit/a79f4607dd1a2f3bbb286085410bda27c883f2f0))
+
 # [3.106.0](https://github.com/ClearC2/grid-form-builder/compare/v3.105.1...v3.106.0) (2024-12-11)
 
 
