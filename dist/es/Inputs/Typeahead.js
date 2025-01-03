@@ -521,37 +521,50 @@ var Typeahead = function Typeahead(props) {
   }, [// eslint-disable-line
   interactive, menuPlacement]);
   useEffect(function () {
-    var _context3;
+    setComponents(function (prevComponents) {
+      var _context3;
 
-    if (isRequiredFlag && _trimInstanceProperty(_context3 = value + '').call(_context3).length === 0 && !isFocused) {
-      if (!components.showValidationError) {
-        // if it already is showing validation error, don't needlessly update state, this will cause an infinite loop
-        setComponents(_objectSpread(_objectSpread({}, components), {}, {
-          DropdownIndicator: function DropdownIndicator() {
-            return jsx(ValidationErrorIcon, {
-              message: "This Field is Required"
-            });
-          },
-          showValidationError: true
-        }));
-      }
-    } else if (components.showValidationError) {
-      setComponents(_objectSpread(_objectSpread({}, components), {}, {
-        showValidationError: false,
-        DropdownIndicator: ReactSelectBaseComponents.DropdownIndicator
-      }));
-    } else if (warning) {
-      setComponents(_objectSpread(_objectSpread({}, components), {}, {
-        DropdownIndicator: function DropdownIndicator() {
-          return jsx(ValidationErrorIcon, {
-            message: warning,
-            color: "#FFCC00",
-            type: "warning"
+      var showValidationError = prevComponents.showValidationError; // Required field validation
+
+      if (isRequiredFlag && _trimInstanceProperty(_context3 = value + '').call(_context3).length === 0 && !isFocused) {
+        if (!showValidationError) {
+          return _objectSpread(_objectSpread({}, prevComponents), {}, {
+            DropdownIndicator: function DropdownIndicator() {
+              return jsx(ValidationErrorIcon, {
+                message: "This Field is Required"
+              });
+            },
+            showValidationError: true
           });
         }
-      }));
-    }
-  }, [isRequiredFlag, value, isFocused, components, warning]);
+
+        return prevComponents; // No change
+      } // Clear validation error
+
+
+      if (showValidationError) {
+        return _objectSpread(_objectSpread({}, prevComponents), {}, {
+          DropdownIndicator: ReactSelectBaseComponents.DropdownIndicator,
+          showValidationError: false
+        });
+      } // Warning message
+
+
+      if (warning) {
+        return _objectSpread(_objectSpread({}, prevComponents), {}, {
+          DropdownIndicator: function DropdownIndicator() {
+            return jsx(ValidationErrorIcon, {
+              message: warning,
+              color: "#FFCC00",
+              type: "warning"
+            });
+          }
+        });
+      }
+
+      return prevComponents; // No change
+    });
+  }, [isRequiredFlag, value, isFocused, warning]);
   useEffect(function () {
     changeInput({
       Typeahead: allowcreate ? AsyncCreatable : Async
