@@ -15,6 +15,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
+import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
 
@@ -36,8 +37,6 @@ var Phone = function Phone(props) {
   var _context, _context2, _context3;
 
   var name = props.name,
-      _props$value = props.value,
-      value = _props$value === void 0 ? '' : _props$value,
       onChange = props.onChange,
       readonly = props.readonly,
       disabled = props.disabled,
@@ -63,6 +62,8 @@ var Phone = function Phone(props) {
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
       warning = props.warning;
 
+  var _props$value = props.value,
+      value = _props$value === void 0 ? '' : _props$value;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -167,6 +168,7 @@ var Phone = function Phone(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
+  value = countryCode && countryCode !== 'US' && !_startsWithInstanceProperty(value).call(value, '+') ? "+".concat(value) : value;
   return jsx("div", {
     className: outerClass,
     style: inputOuter,

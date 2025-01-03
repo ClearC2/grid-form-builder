@@ -4,6 +4,8 @@ import {useState, useCallback, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
+import PortalTooltip from '../Tooltip'
+import {randomId} from '../utils'
 
 const Listselect = props => {
   const {
@@ -16,7 +18,8 @@ const Listselect = props => {
     requiredWarning,
     style = {},
     required,
-    warning
+    warning,
+    showOptionTooltips = false // this flag is used to show tooltips for each individual option
   } = props
 
   const {
@@ -112,6 +115,7 @@ const Listselect = props => {
               if (selected) className = className + ' gfb-multi-input-selected'
               if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input'
               if (!interactive) className = className + ' gfb-non-interactive-input'
+              const optionId = randomId()
               return (
                 <div
                   key={i}
@@ -120,8 +124,11 @@ const Listselect = props => {
                   style={{...valueStyle, ...optionsStyle}}
                   data-value={option.value}
                   css={valueCSS}
+                  data-tip
+                  data-for={optionId}
                 >
                   {display}
+                  {showOptionTooltips ? <PortalTooltip id={optionId} message={option?.tooltip} /> : null}
                 </div>
               )
             })}
@@ -159,5 +166,6 @@ Listselect.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  showOptionTooltips: PropTypes.bool
 }

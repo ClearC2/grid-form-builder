@@ -23,6 +23,8 @@ import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
+import PortalTooltip from '../Tooltip';
+import { randomId } from '../utils';
 
 var Listselect = function Listselect(props) {
   var name = props.name,
@@ -37,7 +39,9 @@ var Listselect = function Listselect(props) {
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
-      warning = props.warning;
+      warning = props.warning,
+      _props$showOptionTool = props.showOptionTooltips,
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -161,14 +165,20 @@ var Listselect = function Listselect(props) {
     if (selected) className = className + ' gfb-multi-input-selected';
     if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input';
     if (!interactive) className = className + ' gfb-non-interactive-input';
+    var optionId = randomId();
     return jsx("div", {
       key: i,
       className: className,
       onClick: handleOnChange,
       style: _objectSpread(_objectSpread({}, valueStyle), optionsStyle),
       "data-value": option.value,
-      css: valueCSS
-    }, display);
+      css: valueCSS,
+      "data-tip": true,
+      "data-for": optionId
+    }, display, showOptionTooltips ? jsx(PortalTooltip, {
+      id: optionId,
+      message: option === null || option === void 0 ? void 0 : option.tooltip
+    }) : null);
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
@@ -204,5 +214,6 @@ Listselect.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  showOptionTooltips: PropTypes.bool
 };

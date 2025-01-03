@@ -32,6 +32,8 @@ var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-sta
 
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
+var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
+
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
 var _sort = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/sort"));
@@ -64,8 +66,6 @@ var Phone = function Phone(props) {
   var _context, _context2, _context3;
 
   var name = props.name,
-      _props$value = props.value,
-      value = _props$value === void 0 ? '' : _props$value,
       onChange = props.onChange,
       readonly = props.readonly,
       disabled = props.disabled,
@@ -90,6 +90,8 @@ var Phone = function Phone(props) {
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
       warning = props.warning;
+  var _props$value = props.value,
+      value = _props$value === void 0 ? '' : _props$value;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -194,6 +196,7 @@ var Phone = function Phone(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
+  value = countryCode && countryCode !== 'US' && !(0, _startsWith.default)(value).call(value, '+') ? "+".concat(value) : value;
   return (0, _core.jsx)("div", {
     className: outerClass,
     style: inputOuter,

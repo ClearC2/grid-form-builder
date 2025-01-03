@@ -4,6 +4,8 @@ import {useCallback} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
+import PortalTooltip from '../Tooltip'
+import {randomId} from '../utils'
 const Radio = props => {
   const {
     name,
@@ -19,7 +21,8 @@ const Radio = props => {
     requiredWarning,
     style = {},
     required,
-    warning
+    warning,
+    showOptionTooltips = false // this flag is used to show tooltips for each individual option
   } = props
 
   const {
@@ -77,12 +80,15 @@ const Radio = props => {
               if (checked) className = className + ' gfb-multi-input-selected'
               if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input'
               if (!interactive) className = className + ' gfb-non-interactive-input'
+              const optionId = randomId()
               return (
                 <label
                   key={i}
                   className={'gfb-multi-input-label-wrapper ' + className}
                   style={valueStyle}
                   css={theme.options}
+                  data-tip
+                  data-for={optionId}
                 >
                   <input
                     className={className}
@@ -98,6 +104,7 @@ const Radio = props => {
                     css={valueCSS}
                   />
                   {option.label ? option.label : option.value}
+                  {showOptionTooltips ? <PortalTooltip id={optionId} message={option?.tooltip} /> : null}
                 </label>
               )
             })}
@@ -128,5 +135,6 @@ Radio.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  showOptionTooltips: PropTypes.bool
 }
