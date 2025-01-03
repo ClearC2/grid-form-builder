@@ -361,31 +361,49 @@ const Typeahead = props => {
   ])
 
   useEffect(() => {
-    if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused) {
-      if (!components.showValidationError) { // if it already is showing validation error, don't needlessly update state, this will cause an infinite loop
-        setComponents({
-          ...components,
-          DropdownIndicator: () => {
-            return <ValidationErrorIcon message='This Field is Required' />
-          },
-          showValidationError: true
-        })
-      }
-    } else if (components.showValidationError) {
-      setComponents({
-        ...components,
-        showValidationError: false,
-        DropdownIndicator: ReactSelectBaseComponents.DropdownIndicator
-      })
-    } else if (warning) {
-      setComponents({
-        ...components,
-        DropdownIndicator: () => {
-          return <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />
+    setComponents((prevComponents) => {
+      const {showValidationError} = prevComponents
+
+      // Required field validation
+      if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused) {
+        if (!showValidationError) {
+          return {
+            ...prevComponents,
+            DropdownIndicator: () => (
+              <ValidationErrorIcon message='This Field is Required' />
+            ),
+            showValidationError: true
+          }
         }
-      })
-    }
-  }, [isRequiredFlag, value, isFocused, components, warning])
+        return prevComponents // No change
+      }
+
+      // Clear validation error
+      if (showValidationError) {
+        return {
+          ...prevComponents,
+          DropdownIndicator: ReactSelectBaseComponents.DropdownIndicator,
+          showValidationError: false
+        }
+      }
+
+      // Warning message
+      if (warning) {
+        return {
+          ...prevComponents,
+          DropdownIndicator: () => (
+            <ValidationErrorIcon
+              message={warning}
+              color='#FFCC00'
+              type='warning'
+            />
+          )
+        }
+      }
+
+      return prevComponents // No change
+    })
+  }, [isRequiredFlag, value, isFocused, warning])
 
   useEffect(() => {
     changeInput({Typeahead: allowcreate ? AsyncCreatable : Async})
