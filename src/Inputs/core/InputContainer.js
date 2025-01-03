@@ -17,7 +17,11 @@ class InputPerformanceOptimizer extends Component {
   shouldComponentUpdate (p) {
     const {config, values, value} = this.props
     const type = (typeof config.type === 'string' && config.type.toLowerCase()) || 'input'
-    if (!values.equals(p.values) && value === p.value) {
+    if (
+      !values.equals(p.values) &&
+      value === p.value &&
+      values.get('cfd_userisreadonly') === p.values.get('cfd_userisreadonly') // if this value is changing, rerender the field in case it needs to change read only status
+    ) {
       // if the values object is the thing changing but it isn't the value for this field
       if (
         ([

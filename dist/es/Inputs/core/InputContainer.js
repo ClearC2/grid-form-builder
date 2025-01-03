@@ -57,7 +57,8 @@ var InputPerformanceOptimizer = /*#__PURE__*/function (_Component) {
 
       var type = typeof config.type === 'string' && config.type.toLowerCase() || 'input';
 
-      if (!values.equals(_valuesInstanceProperty(p)) && value === p.value) {
+      if (!values.equals(_valuesInstanceProperty(p)) && value === p.value && values.get('cfd_userisreadonly') === _valuesInstanceProperty(p).get('cfd_userisreadonly') // if this value is changing, rerender the field in case it needs to change read only status
+      ) {
         var _context;
 
         // if the values object is the thing changing but it isn't the value for this field
