@@ -1,3 +1,11 @@
+# [3.107.0](https://github.com/ClearC2/grid-form-builder/compare/v3.106.1...v3.107.0) (2025-01-06)
+
+
+### Features
+
+* **richtext:** removes react-quill and implements vanilla quill 2.0 ([#230](https://github.com/ClearC2/grid-form-builder/issues/230)) ([d26db12](https://github.com/ClearC2/grid-form-builder/commit/d26db12ee1871942e641c0b9ad36bec78e316aad))
+* **richtext:** removes react-quill and implements vanilla quill 2.0 ([#231](https://github.com/ClearC2/grid-form-builder/issues/231)) ([6d40ede](https://github.com/ClearC2/grid-form-builder/commit/6d40ede14a33fe2233dce2a6cc1efdf20bf4f70e))
+
 ## [3.106.1](https://github.com/ClearC2/grid-form-builder/compare/v3.106.0...v3.106.1) (2025-01-03)
 
 
