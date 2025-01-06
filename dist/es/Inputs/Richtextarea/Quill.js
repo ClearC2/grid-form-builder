@@ -28,10 +28,8 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_R
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Quill from 'quill'; // import QuillBetterTable from 'quill-better-table'
-
-import 'quill/dist/quill.snow.css'; // Quill.register({'modules/better-table': QuillBetterTable}, true)
-
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
 export var ReactQuill = /*#__PURE__*/function (_Component) {
   _inherits(ReactQuill, _Component);
 
