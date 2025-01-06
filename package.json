@@ -9,7 +9,6 @@
   "yarnVersion": "1.9.2",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
-  "type": "module",
   "scripts": {
     "start": "concurrently -k -p \"[{name}]\" -n \"api,ui\" \"npm run api\" \"npm run ui\"",
     "ui": "webpack-dev-server --hot --env development",
