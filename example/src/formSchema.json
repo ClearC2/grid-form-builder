@@ -303,7 +303,6 @@
         },
         "config": {
           "required": true,
-          "maxlength": 10,
           "name": "rich-text-input-1",
           "label": "Rich Text Input",
           "type": "richtextareaquill"

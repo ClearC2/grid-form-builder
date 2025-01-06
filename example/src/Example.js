@@ -12,6 +12,7 @@ export default class Example extends Component {
   state = {
     isInvalidWarning: false,
     formValues: Map({
+      'rich-text-input-1': 'Some Previous String'
       // inputtest: 'Clear C2, Inc.',
       // textareatest: '1234 Main Street',
       // meta_created_date: 'swiggity swoogity here comes the moogity',
@@ -146,7 +147,7 @@ export default class Example extends Component {
     }, 250)
     setTimeout(() => {
       this.setState(s => ({
-        formValues: s.formValues.set('rich-text-input-1', '')
+        formValues: s.formValues.set('rich-text-input-1', '<strong>Dynamic New Value</strong>')
       }))
     }, 2000)
     // setTimeout(() => {
@@ -160,6 +161,7 @@ export default class Example extends Component {
 
   render = () => {
     const {formSchema, isInvalidWarning, droppable, activeItem} = this.state
+    console.log(this.state.formValues)
     // console.log(this.state.formValues)
     if (TEST_SEARCH) {
       // will mode: TEST_SEARCH constant at top is true

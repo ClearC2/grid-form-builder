@@ -40,7 +40,7 @@ var _react = require("react");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _reactQuill = _interopRequireDefault(require("react-quill"));
+var _Quill = _interopRequireDefault(require("./Quill"));
 
 var _utils = require("../../utils");
 
@@ -49,10 +49,6 @@ var _Toolbar = _interopRequireDefault(require("./Toolbar"));
 var _ValidationErrorIcon = _interopRequireDefault(require("../../ValidationErrorIcon"));
 
 require("../../styles/richtext.css");
-
-require("react-quill/dist/quill.snow.css");
-
-require("react-quill/dist/quill.core.css");
 
 var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
 
@@ -123,9 +119,7 @@ var Richtextarea = function Richtextarea(props) {
         insertImage: insertImage
       }
     },
-    clipboard: {
-      matchVisual: false
-    }
+    table: true
   });
   var handleOnChange = (0, _react.useCallback)(function (html) {
     if (!readonly && !disabled) {
@@ -145,6 +139,30 @@ var Richtextarea = function Richtextarea(props) {
       }
     }
   }, [onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat, value]);
+  var addTable = (0, _react.useCallback)(function () {
+    QuillRef.current.editor.getModule('table').insertTable(2, 2);
+  }, [QuillRef]);
+  var removeTable = (0, _react.useCallback)(function () {
+    QuillRef.current.editor.getModule('table').deleteTable();
+  }, [QuillRef]);
+  var insertRowAbove = (0, _react.useCallback)(function () {
+    QuillRef.current.editor.getModule('table').insertRowAbove();
+  }, [QuillRef]);
+  var insertRowBelow = (0, _react.useCallback)(function () {
+    QuillRef.current.editor.getModule('table').insertRowBelow();
+  }, [QuillRef]);
+  var deleteRow = (0, _react.useCallback)(function () {
+    QuillRef.current.editor.getModule('table').deleteRow();
+  }, [QuillRef]);
+  var insertColumnLeft = (0, _react.useCallback)(function () {
+    QuillRef.current.editor.getModule('table').insertColumnLeft();
+  }, [QuillRef]);
+  var insertColumnRight = (0, _react.useCallback)(function () {
+    QuillRef.current.editor.getModule('table').insertColumnRight();
+  }, [QuillRef]);
+  var deleteColumn = (0, _react.useCallback)(function () {
+    QuillRef.current.editor.getModule('table').deleteColumn();
+  }, [QuillRef]);
   var previousRTEImageUrl = (0, _utils.usePrevious)(rteImageUrl);
   (0, _react.useEffect)(function () {
     if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && QuillRef.current) {
@@ -204,9 +222,20 @@ var Richtextarea = function Richtextarea(props) {
     style: inputInner,
     css: inputInnerCSS
   }, (0, _core.jsx)("div", {
-    className: "gfb-input-control-top"
+    className: "gfb-input-control-top",
+    style: {
+      display: 'flex'
+    }
   }, (0, _core.jsx)(_Toolbar.default, {
-    id: elementId.current
+    id: elementId.current,
+    addTable: addTable,
+    removeTable: removeTable,
+    insertRowAbove: insertRowAbove,
+    insertRowBelow: insertRowBelow,
+    deleteRow: deleteRow,
+    insertColumnLeft: insertColumnLeft,
+    insertColumnRight: insertColumnRight,
+    deleteColumn: deleteColumn
   })), (0, _core.jsx)("div", {
     className: controlClass,
     style: inputControl,
@@ -215,9 +244,10 @@ var Richtextarea = function Richtextarea(props) {
     className: "gfb-input__value-container",
     style: valueContainer,
     css: valueContainerCSS
-  }, (0, _core.jsx)(_reactQuill.default, {
+  }, (0, _core.jsx)(_Quill.default, {
+    name: name + tabIndex,
     onChange: handleOnChange,
-    disabled: readonly || disabled || !interactive,
+    readOnly: readonly || disabled || !interactive,
     className: className,
     ref: QuillRef,
     value: value,
@@ -233,7 +263,8 @@ var Richtextarea = function Richtextarea(props) {
     onBlur: handleOnBlur,
     style: valueStyle,
     css: valueCSS,
-    maxLength: maxlength
+    maxLength: maxlength,
+    isFocused: isFocused
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,

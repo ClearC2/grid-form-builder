@@ -2,13 +2,11 @@
 import {jsx} from '@emotion/core'
 import {useCallback, useEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
-import ReactQuill from 'react-quill'
+import Quill from './Quill'
 import {randomId, usePrevious} from '../../utils'
 import Toolbar from './Toolbar'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
 import '../../styles/richtext.css'
-import 'react-quill/dist/quill.snow.css'
-import 'react-quill/dist/quill.core.css'
 import useTheme from '../../theme/useTheme'
 
 const Richtextarea = props => {
@@ -76,9 +74,7 @@ const Richtextarea = props => {
         insertImage
       }
     },
-    clipboard: {
-      matchVisual: false
-    }
+    table: true
   })
 
   const handleOnChange = useCallback(html => {
@@ -108,6 +104,38 @@ const Richtextarea = props => {
       }
     }
   }, [onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat, value])
+
+  const addTable = useCallback(() => {
+    QuillRef.current.editor.getModule('table').insertTable(2, 2)
+  }, [QuillRef])
+
+  const removeTable = useCallback(() => {
+    QuillRef.current.editor.getModule('table').deleteTable()
+  }, [QuillRef])
+
+  const insertRowAbove = useCallback(() => {
+    QuillRef.current.editor.getModule('table').insertRowAbove()
+  }, [QuillRef])
+
+  const insertRowBelow = useCallback(() => {
+    QuillRef.current.editor.getModule('table').insertRowBelow()
+  }, [QuillRef])
+
+  const deleteRow = useCallback(() => {
+    QuillRef.current.editor.getModule('table').deleteRow()
+  }, [QuillRef])
+
+  const insertColumnLeft = useCallback(() => {
+    QuillRef.current.editor.getModule('table').insertColumnLeft()
+  }, [QuillRef])
+
+  const insertColumnRight = useCallback(() => {
+    QuillRef.current.editor.getModule('table').insertColumnRight()
+  }, [QuillRef])
+
+  const deleteColumn = useCallback(() => {
+    QuillRef.current.editor.getModule('table').deleteColumn()
+  }, [QuillRef])
 
   const previousRTEImageUrl = usePrevious(rteImageUrl)
 
@@ -156,14 +184,25 @@ const Richtextarea = props => {
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
-        <div className='gfb-input-control-top'>
-          <Toolbar id={elementId.current} />
+        <div className='gfb-input-control-top' style={{display: 'flex'}} >
+          <Toolbar
+            id={elementId.current}
+            addTable={addTable}
+            removeTable={removeTable}
+            insertRowAbove={insertRowAbove}
+            insertRowBelow={insertRowBelow}
+            deleteRow={deleteRow}
+            insertColumnLeft={insertColumnLeft}
+            insertColumnRight={insertColumnRight}
+            deleteColumn={deleteColumn}
+          />
         </div>
         <div className={controlClass} style={inputControl} css={inputControlCSS}>
           <div className='gfb-input__value-container' style={valueContainer} css={valueContainerCSS}>
-            <ReactQuill
+            <Quill
+              name={name + tabIndex}
               onChange={handleOnChange}
-              disabled={readonly || disabled || !interactive}
+              readOnly={readonly || disabled || !interactive}
               className={className}
               ref={QuillRef}
               value={value}
@@ -180,6 +219,7 @@ const Richtextarea = props => {
               style={valueStyle}
               css={valueCSS}
               maxLength={maxlength}
+              isFocused={isFocused}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
