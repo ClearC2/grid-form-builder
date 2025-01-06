@@ -9,7 +9,8 @@ module.exports = {
     '^react-dnd-html5-backend$': 'react-dnd-html5-backend/dist/cjs',
     '^react-dnd-touch-backend$': 'react-dnd-touch-backend/dist/cjs',
     '^react-dnd-test-backend$': 'react-dnd-test-backend/dist/cjs',
-    '^react-dnd-test-utils$': 'react-dnd-test-utils/dist/cjs'
+    '^react-dnd-test-utils$': 'react-dnd-test-utils/dist/cjs',
+    '^quill$': 'quill/dist/quill.js'
   },
   setupFilesAfterEnv: ['./jest.setup.js'],
   roots: [

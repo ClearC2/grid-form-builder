@@ -68,7 +68,6 @@ function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflec
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
-// Quill.register({'modules/better-table': QuillBetterTable}, true)
 var ReactQuill = /*#__PURE__*/function (_Component) {
   (0, _inherits2.default)(ReactQuill, _Component);
 
