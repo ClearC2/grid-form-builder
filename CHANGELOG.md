@@ -1,3 +1,10 @@
+## [3.107.1](https://github.com/ClearC2/grid-form-builder/compare/v3.107.0...v3.107.1) (2025-01-07)
+
+
+### Bug Fixes
+
+* **typeaheads:** fix infinite loop in typeaheads with warning props ([#229](https://github.com/ClearC2/grid-form-builder/issues/229)) ([a6cd8de](https://github.com/ClearC2/grid-form-builder/commit/a6cd8ded9700c51cd8f3fbdbfb486a26203192de))
+
 # [3.107.0](https://github.com/ClearC2/grid-form-builder/compare/v3.106.1...v3.107.0) (2025-01-06)
 
 
