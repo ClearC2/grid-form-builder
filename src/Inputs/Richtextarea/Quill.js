@@ -28,6 +28,7 @@ export class ReactQuill extends Component {
     const {theme = 'snow', modules = {}, name} = this.props
     this.editor = new Quill(`#${name}`, {
       theme,
+      scrollingContainer: 'div',
       modules
     })
     this.attachEventListeners()
@@ -64,7 +65,10 @@ export class ReactQuill extends Component {
   setCurrentValueInEditor = () => {
     const {value, isFocused} = this.props
     if (!this.editor || typeof value === 'undefined') return
-    const cursor = this.editor.getSelection(true) ? this.editor.getSelection(true).index : 0
+    let cursor = 0
+    if (isFocused && this.editor.getSelection(true)) {
+      cursor = this.editor.getSelection(true).index // do not poll the selection if the input is not focused because it will scroll the element into view when you don't want it to - JRA 01/13/25
+    }
     this.editor.clipboard.dangerouslyPasteHTML(value)
     if (isFocused) {
       this.editor.setSelection(cursor)
