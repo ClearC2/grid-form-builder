@@ -98,6 +98,7 @@ var ReactQuill = /*#__PURE__*/function (_Component) {
           name = _this$props.name;
       _this.editor = new _quill.default("#".concat(name), {
         theme: theme,
+        scrollingContainer: 'div',
         modules: modules
       });
 
@@ -140,7 +141,11 @@ var ReactQuill = /*#__PURE__*/function (_Component) {
           value = _this$props2.value,
           isFocused = _this$props2.isFocused;
       if (!_this.editor || typeof value === 'undefined') return;
-      var cursor = _this.editor.getSelection(true) ? _this.editor.getSelection(true).index : 0;
+      var cursor = 0;
+
+      if (isFocused && _this.editor.getSelection(true)) {
+        cursor = _this.editor.getSelection(true).index; // do not poll the selection if the input is not focused because it will scroll the element into view when you don't want it to - JRA 01/13/25
+      }
 
       _this.editor.clipboard.dangerouslyPasteHTML(value);
 

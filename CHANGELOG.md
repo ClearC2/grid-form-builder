@@ -1,3 +1,10 @@
+## [3.107.2](https://github.com/ClearC2/grid-form-builder/compare/v3.107.1...v3.107.2) (2025-01-13)
+
+
+### Bug Fixes
+
+* **RTE:** fixes an issue where determining the cursor position would cause the RTE to scroll into view even if the input was not focused ([e92464e](https://github.com/ClearC2/grid-form-builder/commit/e92464e3a5d05316e0e032ca525fbabe5cd04beb))
+
 ## [3.107.1](https://github.com/ClearC2/grid-form-builder/compare/v3.107.0...v3.107.1) (2025-01-07)
 
 
