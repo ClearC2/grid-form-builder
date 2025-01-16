@@ -132,7 +132,11 @@ var ReactQuill = /*#__PURE__*/function (_Component) {
       if (source !== 'api') {
         clearTimeout(_this.debounce);
         _this.debounce = (0, _setTimeout2.default)(function () {
-          _this.props.onChange(_this.editor.getSemanticHTML());
+          var _this$editor, _this$editor$root, _this$editor2;
+
+          var html = ((_this$editor = _this.editor) === null || _this$editor === void 0 ? void 0 : (_this$editor$root = _this$editor.root) === null || _this$editor$root === void 0 ? void 0 : _this$editor$root.innerHTML) || ((_this$editor2 = _this.editor) === null || _this$editor2 === void 0 ? void 0 : _this$editor2.getSemanticHTML()) || '';
+
+          _this.props.onChange(html);
         }, 750);
       }
     });

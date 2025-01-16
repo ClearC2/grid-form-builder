@@ -1,3 +1,10 @@
+# [3.108.0](https://github.com/ClearC2/grid-form-builder/compare/v3.107.2...v3.108.0) (2025-01-16)
+
+
+### Features
+
+* **RTE:** changes RTE to use innerHTML instead of the provided method to get the semantic HTML to fix an issue with all spaces being non breaking spaces ([467c67f](https://github.com/ClearC2/grid-form-builder/commit/467c67fa780758ae4d60f86421b91b4a47bdf92e))
+
 ## [3.107.2](https://github.com/ClearC2/grid-form-builder/compare/v3.107.1...v3.107.2) (2025-01-13)
 
 
