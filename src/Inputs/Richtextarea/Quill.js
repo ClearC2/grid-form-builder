@@ -57,7 +57,8 @@ export class ReactQuill extends Component {
     if (source !== 'api') {
       clearTimeout(this.debounce)
       this.debounce = setTimeout(() => {
-        this.props.onChange(this.editor.getSemanticHTML())
+        const html = this.editor?.root?.innerHTML || this.editor?.getSemanticHTML() || ''
+        this.props.onChange(html)
       }, 750)
     }
   }
