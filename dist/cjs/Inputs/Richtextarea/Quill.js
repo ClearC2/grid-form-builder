@@ -34,6 +34,8 @@ var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-sta
 
 var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
 
+var _replaceAll = _interopRequireDefault(require("@babel/runtime-corejs3/core-js/instance/replace-all"));
+
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/classCallCheck"));
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/createClass"));
@@ -141,14 +143,17 @@ var ReactQuill = /*#__PURE__*/function (_Component) {
       }
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "setCurrentValueInEditor", function () {
-      var _this$props2 = _this.props,
-          value = _this$props2.value,
-          isFocused = _this$props2.isFocused;
+      var isFocused = _this.props.isFocused;
+      var value = _this.props.value;
       if (!_this.editor || typeof value === 'undefined') return;
       var cursor = 0;
 
       if (isFocused && _this.editor.getSelection(true)) {
         cursor = _this.editor.getSelection(true).index; // do not poll the selection if the input is not focused because it will scroll the element into view when you don't want it to - JRA 01/13/25
+      }
+
+      if (typeof value === 'string') {
+        value = (0, _replaceAll.default)(value).call(value, ' ', '&nbsp;'); // this fixes an issue where multiple spaces/trailing spaces in the markup are truncated - JRA 01/16/25
       }
 
       _this.editor.clipboard.dangerouslyPasteHTML(value);
@@ -182,14 +187,14 @@ var ReactQuill = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props3 = this.props,
-          name = _this$props3.name,
-          onFocus = _this$props3.onFocus,
-          onBlur = _this$props3.onBlur,
-          _this$props3$css = _this$props3.css,
-          css = _this$props3$css === void 0 ? {} : _this$props3$css,
-          tabIndex = _this$props3.tabIndex,
-          className = _this$props3.className;
+      var _this$props2 = this.props,
+          name = _this$props2.name,
+          onFocus = _this$props2.onFocus,
+          onBlur = _this$props2.onBlur,
+          _this$props2$css = _this$props2.css,
+          css = _this$props2$css === void 0 ? {} : _this$props2$css,
+          tabIndex = _this$props2.tabIndex,
+          className = _this$props2.className;
       return /*#__PURE__*/_react.default.createElement("div", {
         id: name,
         className: className,

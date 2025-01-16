@@ -1,3 +1,10 @@
+# [3.109.0](https://github.com/ClearC2/grid-form-builder/compare/v3.108.0...v3.109.0) (2025-01-16)
+
+
+### Features
+
+* **RTE:** switches spaces with non breaking spaces when setting the value into the UI so quill keeps the correct cursor position ([506c964](https://github.com/ClearC2/grid-form-builder/commit/506c96451e199e7f70f986bd3284f3a47f109e16))
+
 # [3.108.0](https://github.com/ClearC2/grid-form-builder/compare/v3.107.2...v3.108.0) (2025-01-16)
 
 

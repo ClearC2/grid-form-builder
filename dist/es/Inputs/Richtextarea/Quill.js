@@ -21,6 +21,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _replaceAllInstanceProperty from "@babel/runtime-corejs3/core-js/instance/replace-all";
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
 
@@ -112,14 +113,17 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "setCurrentValueInEditor", function () {
-      var _this$props2 = _this.props,
-          value = _this$props2.value,
-          isFocused = _this$props2.isFocused;
+      var isFocused = _this.props.isFocused;
+      var value = _this.props.value;
       if (!_this.editor || typeof value === 'undefined') return;
       var cursor = 0;
 
       if (isFocused && _this.editor.getSelection(true)) {
         cursor = _this.editor.getSelection(true).index; // do not poll the selection if the input is not focused because it will scroll the element into view when you don't want it to - JRA 01/13/25
+      }
+
+      if (typeof value === 'string') {
+        value = _replaceAllInstanceProperty(value).call(value, ' ', '&nbsp;'); // this fixes an issue where multiple spaces/trailing spaces in the markup are truncated - JRA 01/16/25
       }
 
       _this.editor.clipboard.dangerouslyPasteHTML(value);
@@ -154,14 +158,14 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props3 = this.props,
-          name = _this$props3.name,
-          onFocus = _this$props3.onFocus,
-          onBlur = _this$props3.onBlur,
-          _this$props3$css = _this$props3.css,
-          css = _this$props3$css === void 0 ? {} : _this$props3$css,
-          tabIndex = _this$props3.tabIndex,
-          className = _this$props3.className;
+      var _this$props2 = this.props,
+          name = _this$props2.name,
+          onFocus = _this$props2.onFocus,
+          onBlur = _this$props2.onBlur,
+          _this$props2$css = _this$props2.css,
+          css = _this$props2$css === void 0 ? {} : _this$props2$css,
+          tabIndex = _this$props2.tabIndex,
+          className = _this$props2.className;
       return /*#__PURE__*/React.createElement("div", {
         id: name,
         className: className,
