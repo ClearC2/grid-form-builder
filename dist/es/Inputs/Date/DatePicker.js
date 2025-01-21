@@ -1,3 +1,6 @@
+import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
+import _parseInt from "@babel/runtime-corejs3/core-js-stable/parse-int";
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
 import { useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
@@ -38,6 +41,29 @@ var DatePicker = function DatePicker(props) {
   var initializePicker = useMemo(function () {
     return function () {
       var $input = $("#".concat(elementId));
+
+      var calculateDate = function calculateDate(dateVal) {
+        if (dateVal === 'today') {
+          return moment();
+        }
+
+        if (typeof dateVal === 'string' && _startsWithInstanceProperty(dateVal).call(dateVal, 'today +')) {
+          var _context;
+
+          var daysToAdd = _parseInt(_trimInstanceProperty(_context = dateVal.split('+')[1]).call(_context), 10);
+
+          return moment().add(daysToAdd, 'days');
+        }
+
+        if (dateVal === 'this month') {
+          return moment().endOf('month');
+        }
+
+        return dateVal;
+      };
+
+      var calculatedMinDate = calculateDate(minDate);
+      var calculatedMaxDate = calculateDate(maxDate);
       $input.daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
@@ -45,8 +71,8 @@ var DatePicker = function DatePicker(props) {
         timePicker: timePicker,
         drops: determinePickerOpenDirection(),
         startDate: startDate,
-        minDate: minDate,
-        maxDate: maxDate
+        minDate: calculatedMinDate,
+        maxDate: calculatedMaxDate
       }, function (date) {
         if (date && date.isValid && date.isValid()) {
           valueDidChange.current = true;
