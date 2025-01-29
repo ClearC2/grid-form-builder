@@ -42,6 +42,22 @@ const DatePicker = props => {
   const initializePicker = useMemo(() => {
     return () => {
       const $input = $(`#${elementId}`)
+      const calculateDate = (dateVal) => {
+        if (dateVal === 'today') {
+          return moment()
+        }
+        if (typeof dateVal === 'string' && dateVal.startsWith('today +')) {
+          const daysToAdd = parseInt(dateVal.split('+')[1].trim(), 10)
+          return moment().add(daysToAdd, 'days')
+        }
+        if (dateVal === 'this month') {
+          return moment().endOf('month')
+        }
+        return dateVal
+      }
+
+      const calculatedMinDate = calculateDate(minDate)
+      const calculatedMaxDate = calculateDate(maxDate)
 
       $input.daterangepicker(
         {
@@ -51,8 +67,8 @@ const DatePicker = props => {
           timePicker,
           drops: determinePickerOpenDirection(),
           startDate,
-          minDate,
-          maxDate
+          minDate: calculatedMinDate,
+          maxDate: calculatedMaxDate
         },
         date => {
           if (date && date.isValid && date.isValid()) {
@@ -106,16 +122,8 @@ const DatePicker = props => {
         }
       )
     }
-  }, [
-    elementId,
-    timePicker,
-    determinePickerOpenDirection,
-    handleOnChange,
-    name,
-    format,
-    changeShowPicker,
-    showCalendar
-  ])
+  }, [elementId, minDate, maxDate, timePicker, determinePickerOpenDirection, startDate,
+    handleOnChange, name, format, canPickYear, showCalendar, changeShowPicker])
 
   useEffect(() => {
     initializePicker()
@@ -141,5 +149,7 @@ DatePicker.propTypes = {
   startDate: PropTypes.instanceOf(moment),
   format: PropTypes.string,
   canPickYear: PropTypes.bool,
-
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string,
+  showCalendar: PropTypes.bool
 }
