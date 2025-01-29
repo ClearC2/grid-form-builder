@@ -121,7 +121,7 @@ var DatePicker = function DatePicker(props) {
         changeShowPicker(false);
       });
     };
-  }, [elementId, timePicker, determinePickerOpenDirection, handleOnChange, name, format, changeShowPicker, showCalendar]);
+  }, [elementId, minDate, maxDate, timePicker, determinePickerOpenDirection, startDate, handleOnChange, name, format, canPickYear, showCalendar, changeShowPicker]);
   useEffect(function () {
     initializePicker();
     return function () {
@@ -143,5 +143,8 @@ DatePicker.propTypes = {
   timePicker: PropTypes.bool,
   startDate: PropTypes.instanceOf(moment),
   format: PropTypes.string,
-  canPickYear: PropTypes.bool
+  canPickYear: PropTypes.bool,
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string,
+  showCalendar: PropTypes.bool
 };

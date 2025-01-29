@@ -1,3 +1,10 @@
+## [3.109.1](https://github.com/ClearC2/grid-form-builder/compare/v3.109.0...v3.109.1) (2025-01-29)
+
+
+### Bug Fixes
+
+* **dependencies:** add missing dependencies to useMemo ([#232](https://github.com/ClearC2/grid-form-builder/issues/232)) ([52f706c](https://github.com/ClearC2/grid-form-builder/commit/52f706cbb9d873b69dc233d73055c7b58d222393))
+
 # [3.109.0](https://github.com/ClearC2/grid-form-builder/compare/v3.108.0...v3.109.0) (2025-01-16)
 
 

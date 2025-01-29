@@ -10,6 +10,12 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
+var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/starts-with"));
+
+var _parseInt2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-int"));
+
+var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
+
 var _find = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/find"));
 
 var _react = require("react");
@@ -56,6 +62,28 @@ var DatePicker = function DatePicker(props) {
   var initializePicker = (0, _react.useMemo)(function () {
     return function () {
       var $input = (0, _jquery.default)("#".concat(elementId));
+
+      var calculateDate = function calculateDate(dateVal) {
+        if (dateVal === 'today') {
+          return (0, _moment.default)();
+        }
+
+        if (typeof dateVal === 'string' && (0, _startsWith.default)(dateVal).call(dateVal, 'today +')) {
+          var _context;
+
+          var daysToAdd = (0, _parseInt2.default)((0, _trim.default)(_context = dateVal.split('+')[1]).call(_context), 10);
+          return (0, _moment.default)().add(daysToAdd, 'days');
+        }
+
+        if (dateVal === 'this month') {
+          return (0, _moment.default)().endOf('month');
+        }
+
+        return dateVal;
+      };
+
+      var calculatedMinDate = calculateDate(minDate);
+      var calculatedMaxDate = calculateDate(maxDate);
       $input.daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
@@ -63,8 +91,8 @@ var DatePicker = function DatePicker(props) {
         timePicker: timePicker,
         drops: determinePickerOpenDirection(),
         startDate: startDate,
-        minDate: minDate,
-        maxDate: maxDate
+        minDate: calculatedMinDate,
+        maxDate: calculatedMaxDate
       }, function (date) {
         if (date && date.isValid && date.isValid()) {
           valueDidChange.current = true;
@@ -113,7 +141,7 @@ var DatePicker = function DatePicker(props) {
         changeShowPicker(false);
       });
     };
-  }, [elementId, timePicker, determinePickerOpenDirection, handleOnChange, name, format, changeShowPicker, showCalendar]);
+  }, [elementId, minDate, maxDate, timePicker, determinePickerOpenDirection, startDate, handleOnChange, name, format, canPickYear, showCalendar, changeShowPicker]);
   (0, _react.useEffect)(function () {
     initializePicker();
     return function () {
@@ -136,5 +164,8 @@ DatePicker.propTypes = {
   timePicker: _propTypes.default.bool,
   startDate: _propTypes.default.instanceOf(_moment.default),
   format: _propTypes.default.string,
-  canPickYear: _propTypes.default.bool
+  canPickYear: _propTypes.default.bool,
+  minDate: _propTypes.default.string,
+  maxDate: _propTypes.default.string,
+  showCalendar: _propTypes.default.bool
 };
