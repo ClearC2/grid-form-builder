@@ -1,3 +1,10 @@
+# [3.110.0](https://github.com/ClearC2/grid-form-builder/compare/v3.109.1...v3.110.0) (2025-01-31)
+
+
+### Features
+
+* **quill:** changes string replace to not blindly replace every space because it was messing up inline styles ([857c424](https://github.com/ClearC2/grid-form-builder/commit/857c424dc6c3968cab2cd5b596d2106b296aa604))
+
 ## [3.109.1](https://github.com/ClearC2/grid-form-builder/compare/v3.109.0...v3.109.1) (2025-01-29)
 
 
