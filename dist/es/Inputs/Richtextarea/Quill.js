@@ -64,7 +64,6 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
           name = _this$props.name;
       _this.editor = new Quill("#".concat(name), {
         theme: theme,
-        scrollingContainer: 'div',
         modules: modules
       });
 
@@ -116,14 +115,11 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
       var isFocused = _this.props.isFocused;
       var value = _this.props.value;
       if (!_this.editor || typeof value === 'undefined') return;
-      var cursor = 0;
-
-      if (isFocused && _this.editor.getSelection(true)) {
-        cursor = _this.editor.getSelection(true).index; // do not poll the selection if the input is not focused because it will scroll the element into view when you don't want it to - JRA 01/13/25
-      }
+      var cursor = _this.editor.getSelection(true) ? _this.editor.getSelection(true).index : 0;
 
       if (typeof value === 'string') {
-        value = _replaceAllInstanceProperty(value).call(value, ' ', '&nbsp;'); // this fixes an issue where multiple spaces/trailing spaces in the markup are truncated - JRA 01/16/25
+        value = _replaceAllInstanceProperty(value).call(value, ' <', '&nbsp;<');
+        value = _replaceAllInstanceProperty(value).call(value, '  ', '&nbsp;&nbsp;'); // this fixes an issue where multiple spaces/trailing spaces in the markup are truncated - JRA 01/16/25
       }
 
       _this.editor.clipboard.dangerouslyPasteHTML(value);
