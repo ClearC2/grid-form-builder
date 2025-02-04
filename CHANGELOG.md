@@ -1,3 +1,10 @@
+## [3.110.1](https://github.com/ClearC2/grid-form-builder/compare/v3.110.0...v3.110.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* **datepicker:** fix unnecessary dependency array ([#233](https://github.com/ClearC2/grid-form-builder/issues/233)) ([a313045](https://github.com/ClearC2/grid-form-builder/commit/a3130455a92449109455ae03a9c53cfca80f0e62))
+
 # [3.110.0](https://github.com/ClearC2/grid-form-builder/compare/v3.109.1...v3.110.0) (2025-01-31)
 
 

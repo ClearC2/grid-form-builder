@@ -141,7 +141,7 @@ var DatePicker = function DatePicker(props) {
         changeShowPicker(false);
       });
     };
-  }, [elementId, minDate, maxDate, timePicker, determinePickerOpenDirection, startDate, handleOnChange, name, format, canPickYear, showCalendar, changeShowPicker]);
+  }, [elementId, timePicker, determinePickerOpenDirection, handleOnChange, name, format, changeShowPicker, showCalendar, canPickYear, minDate, maxDate]);
   (0, _react.useEffect)(function () {
     initializePicker();
     return function () {
