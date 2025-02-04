@@ -122,8 +122,17 @@ const DatePicker = props => {
         }
       )
     }
-  }, [elementId, minDate, maxDate, timePicker, determinePickerOpenDirection, startDate,
-    handleOnChange, name, format, canPickYear, showCalendar, changeShowPicker])
+  }, [elementId,
+    timePicker,
+    determinePickerOpenDirection,
+    handleOnChange,
+    name,
+    format,
+    changeShowPicker,
+    showCalendar,
+    canPickYear,
+    minDate,
+    maxDate])
 
   useEffect(() => {
     initializePicker()
