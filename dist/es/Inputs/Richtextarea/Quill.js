@@ -116,6 +116,11 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
       var isFocused = _this.props.isFocused;
       var value = _this.props.value;
       if (!_this.editor || typeof value === 'undefined') return;
+      var cursor = 0;
+
+      if (isFocused) {
+        cursor = _this.editor.getSelection(true) ? _this.editor.getSelection(true).index : 0;
+      }
 
       if (typeof value === 'string') {
         value = _replaceAllInstanceProperty(value).call(value, ' <', '&nbsp;<');
@@ -141,8 +146,6 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
       _this.editor.clipboard.dangerouslyPasteHTML(value);
 
       if (isFocused) {
-        var cursor = _this.editor.getSelection(true) ? _this.editor.getSelection(true).index : 0;
-
         _this.editor.setSelection(cursor);
       } else {
         _this.editor.blur();

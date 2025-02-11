@@ -66,6 +66,10 @@ export class ReactQuill extends Component {
     const {isFocused} = this.props
     let {value} = this.props
     if (!this.editor || typeof value === 'undefined') return
+    let cursor = 0
+    if (isFocused) {
+      cursor = this.editor.getSelection(true) ? this.editor.getSelection(true).index : 0
+    }
     if (typeof value === 'string') {
       value = value.replaceAll(' <', '&nbsp;<')
       value = value.replaceAll('  ', '&nbsp;&nbsp;') // this fixes an issue where multiple spaces/trailing spaces in the markup are truncated - JRA 01/16/25
@@ -84,7 +88,6 @@ export class ReactQuill extends Component {
     }
     this.editor.clipboard.dangerouslyPasteHTML(value)
     if (isFocused) {
-      const cursor = this.editor.getSelection(true) ? this.editor.getSelection(true).index : 0
       this.editor.setSelection(cursor)
     } else {
       this.editor.blur()

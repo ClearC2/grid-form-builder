@@ -1,3 +1,10 @@
+## [3.111.1](https://github.com/ClearC2/grid-form-builder/compare/v3.111.0...v3.111.1) (2025-02-11)
+
+
+### Bug Fixes
+
+* **rte:** cursor should maintain position when the element is focused ([5b590c7](https://github.com/ClearC2/grid-form-builder/commit/5b590c77a82231da27762be93806a0fa2f960df0))
+
 # [3.111.0](https://github.com/ClearC2/grid-form-builder/compare/v3.110.1...v3.111.0) (2025-02-11)
 
 
