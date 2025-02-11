@@ -184,21 +184,6 @@ var Richtextarea = function Richtextarea(props) {
     style: inputInner,
     css: inputInnerCSS
   }, jsx("div", {
-    className: "gfb-input-control-top",
-    style: {
-      display: 'flex'
-    }
-  }, jsx(Toolbar, {
-    id: elementId.current,
-    addTable: addTable,
-    removeTable: removeTable,
-    insertRowAbove: insertRowAbove,
-    insertRowBelow: insertRowBelow,
-    deleteRow: deleteRow,
-    insertColumnLeft: insertColumnLeft,
-    insertColumnRight: insertColumnRight,
-    deleteColumn: deleteColumn
-  })), jsx("div", {
     className: controlClass,
     style: inputControl,
     css: inputControlCSS
