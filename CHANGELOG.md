@@ -1,3 +1,15 @@
+# [3.111.0](https://github.com/ClearC2/grid-form-builder/compare/v3.110.1...v3.111.0) (2025-02-11)
+
+
+### Bug Fixes
+
+* **rte:** removes tables not created by quill and does not query selection if editor isn't focused ([31acf28](https://github.com/ClearC2/grid-form-builder/commit/31acf28c89dc053c33c114c8232599745c106cc9))
+
+
+### Features
+
+* **rte:** removes table elements from existing markup, which breaks the original functionality we were going for, but fixes an issue where most tables looked horrible ([436642e](https://github.com/ClearC2/grid-form-builder/commit/436642e7d88df85cf94deabd14f440d7760b56b0))
+
 ## [3.110.1](https://github.com/ClearC2/grid-form-builder/compare/v3.110.0...v3.110.1) (2025-02-04)
 
 
