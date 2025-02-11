@@ -875,6 +875,12 @@
     core-js-pure "^3.20.2"
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.12.5":
+  version "7.26.7"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.26.7.tgz#f4e7fe527cd710f8dc0618610b61b4b060c3c341"
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@babel/runtime@^7.15.4", "@babel/runtime@^7.17.2", "@babel/runtime@^7.4.2", "@babel/runtime@^7.4.3", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.18.9"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.9.tgz#b4fcfce55db3d2e5e080d2490f608a3b9f407f4a"
@@ -1301,6 +1307,188 @@
 "@leichtgewicht/ip-codec@^2.0.1":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
+
+"@lexical/clipboard@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/clipboard/-/clipboard-0.24.0.tgz#15dea8ae16612b34024b9260f2b549abf65792b2"
+  dependencies:
+    "@lexical/html" "0.24.0"
+    "@lexical/list" "0.24.0"
+    "@lexical/selection" "0.24.0"
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/code@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/code/-/code-0.24.0.tgz#b775975764887ad5155cb7103d659094b63523b7"
+  dependencies:
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+    prismjs "^1.27.0"
+
+"@lexical/devtools-core@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/devtools-core/-/devtools-core-0.24.0.tgz#98604921140f99eafcbc2713524bf7e249b26d78"
+  dependencies:
+    "@lexical/html" "0.24.0"
+    "@lexical/link" "0.24.0"
+    "@lexical/mark" "0.24.0"
+    "@lexical/table" "0.24.0"
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/dragon@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/dragon/-/dragon-0.24.0.tgz#b7bae46a368b5cac8bed1355fda26c600d2f88db"
+  dependencies:
+    lexical "0.24.0"
+
+"@lexical/hashtag@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/hashtag/-/hashtag-0.24.0.tgz#069393251b6f22ee56ef2a71165f3e6d8d5f1335"
+  dependencies:
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/history@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/history/-/history-0.24.0.tgz#d16f9599db246329f66b6ca7d5af77fac680527b"
+  dependencies:
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/html@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/html/-/html-0.24.0.tgz#5c8fc02ed3045314869e7b88055ccb73e6966514"
+  dependencies:
+    "@lexical/selection" "0.24.0"
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/link@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/link/-/link-0.24.0.tgz#5e9105babfd88dffd62cde9b6f778c195411633e"
+  dependencies:
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/list@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/list/-/list-0.24.0.tgz#787d8121f0660438a01f8a4a8c15dcd1ccc5ef55"
+  dependencies:
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/mark@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/mark/-/mark-0.24.0.tgz#09426d5748d343947ccebe6a6b947da17fcc0833"
+  dependencies:
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/markdown@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/markdown/-/markdown-0.24.0.tgz#96e4974c1fd283aaf20fdbc937ebe01a33e464d2"
+  dependencies:
+    "@lexical/code" "0.24.0"
+    "@lexical/link" "0.24.0"
+    "@lexical/list" "0.24.0"
+    "@lexical/rich-text" "0.24.0"
+    "@lexical/text" "0.24.0"
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/offset@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/offset/-/offset-0.24.0.tgz#e3e5766b896fbd7191b3b19139adffb98a4e22ec"
+  dependencies:
+    lexical "0.24.0"
+
+"@lexical/overflow@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/overflow/-/overflow-0.24.0.tgz#b04d2dc44c12c8af4568296c2cc7730f1c17465c"
+  dependencies:
+    lexical "0.24.0"
+
+"@lexical/plain-text@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/plain-text/-/plain-text-0.24.0.tgz#94aff34d773c4954f9d266df1712e7cea917aa95"
+  dependencies:
+    "@lexical/clipboard" "0.24.0"
+    "@lexical/selection" "0.24.0"
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/react@^0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/react/-/react-0.24.0.tgz#72f8aa8d86768308e198d0aa173c559ebb5aafc9"
+  dependencies:
+    "@lexical/clipboard" "0.24.0"
+    "@lexical/code" "0.24.0"
+    "@lexical/devtools-core" "0.24.0"
+    "@lexical/dragon" "0.24.0"
+    "@lexical/hashtag" "0.24.0"
+    "@lexical/history" "0.24.0"
+    "@lexical/link" "0.24.0"
+    "@lexical/list" "0.24.0"
+    "@lexical/mark" "0.24.0"
+    "@lexical/markdown" "0.24.0"
+    "@lexical/overflow" "0.24.0"
+    "@lexical/plain-text" "0.24.0"
+    "@lexical/rich-text" "0.24.0"
+    "@lexical/selection" "0.24.0"
+    "@lexical/table" "0.24.0"
+    "@lexical/text" "0.24.0"
+    "@lexical/utils" "0.24.0"
+    "@lexical/yjs" "0.24.0"
+    lexical "0.24.0"
+    react-error-boundary "^3.1.4"
+
+"@lexical/rich-text@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/rich-text/-/rich-text-0.24.0.tgz#bc1a2b6cc5fc47416843659b81ce6c98e87626b6"
+  dependencies:
+    "@lexical/clipboard" "0.24.0"
+    "@lexical/selection" "0.24.0"
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/selection@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/selection/-/selection-0.24.0.tgz#6aa212ddc070941c68ac087fbb52813cc14f6087"
+  dependencies:
+    lexical "0.24.0"
+
+"@lexical/table@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/table/-/table-0.24.0.tgz#b0e1b085a8abf544a3b9b710d4c197f1fdac4cf4"
+  dependencies:
+    "@lexical/clipboard" "0.24.0"
+    "@lexical/utils" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/text@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/text/-/text-0.24.0.tgz#b3edfc3db0b47d6417497b2f656f47ade8121e9f"
+  dependencies:
+    lexical "0.24.0"
+
+"@lexical/utils@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/utils/-/utils-0.24.0.tgz#69aedb58645639c701d57517bc36d07a17bbe26e"
+  dependencies:
+    "@lexical/list" "0.24.0"
+    "@lexical/selection" "0.24.0"
+    "@lexical/table" "0.24.0"
+    lexical "0.24.0"
+
+"@lexical/yjs@0.24.0":
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/@lexical/yjs/-/yjs-0.24.0.tgz#6d98de16e3bbc9c1d51957f3c8e4f3d50d1d8283"
+  dependencies:
+    "@lexical/offset" "0.24.0"
+    "@lexical/selection" "0.24.0"
+    lexical "0.24.0"
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
@@ -7072,6 +7260,10 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+lexical@0.24.0, lexical@^0.24.0:
+  version "0.24.0"
+  resolved "https://registry.yarnpkg.com/lexical/-/lexical-0.24.0.tgz#74d64c6c746b78474dc540e928d65011085d3b51"
+
 libcipm@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/libcipm/-/libcipm-4.0.8.tgz#dcea4919e10dfbce420327e63901613b9141bc89"
@@ -9488,6 +9680,10 @@ pretty-format@^25.5.0:
     ansi-styles "^4.0.0"
     react-is "^16.12.0"
 
+prismjs@^1.27.0:
+  version "1.29.0"
+  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.29.0.tgz#f113555a8fa9b57c35e637bba27509dcf802dd12"
+
 process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
@@ -9742,6 +9938,12 @@ react-draggable@^4.0.0, react-draggable@^4.0.3:
   dependencies:
     clsx "^1.1.1"
     prop-types "^15.8.1"
+
+react-error-boundary@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-3.1.4.tgz#255db92b23197108757a888b01e5b729919abde0"
+  dependencies:
+    "@babel/runtime" "^7.12.5"
 
 react-grid-layout@^0.17.1:
   version "0.17.1"
@@ -10096,6 +10298,10 @@ regenerate@^1.4.2:
 regenerator-runtime@^0.13.4:
   version "0.13.9"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
+
+regenerator-runtime@^0.14.0:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz#356ade10263f685dda125100cd862c1db895327f"
 
 regenerator-transform@^0.15.0:
   version "0.15.0"

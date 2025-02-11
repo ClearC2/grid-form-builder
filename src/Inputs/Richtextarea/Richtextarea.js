@@ -2,7 +2,7 @@
 import {jsx} from '@emotion/core'
 import {useCallback, useEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
-import Quill from './Quill'
+import Lexical from './Lexical'
 import {randomId, usePrevious} from '../../utils'
 import Toolbar from './Toolbar'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
@@ -12,7 +12,7 @@ import useTheme from '../../theme/useTheme'
 const Richtextarea = props => {
   const {
     name,
-    value = '<p>&nbsp;</p>',
+    value = '',
     onChange,
     readonly,
     disabled,
@@ -44,38 +44,11 @@ const Richtextarea = props => {
   const [hasBlockedAutoFormat, setHasBlockedAutoFormat] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const elementId = useRef('gfb-' + randomId())
-  const QuillRef = useRef()
-  const formats = useRef([
-    'header',
-    'font',
-    'size',
-    'bold',
-    'italic',
-    'underline',
-    'strike',
-    'blockquote',
-    'list',
-    'bullet',
-    'indent',
-    'link',
-    'image',
-    'color',
-    'background'
-  ])
+  const RTERef = useRef()
 
   const insertImage = useCallback(() => {
     handleRTEImageClick(name)
   }, [handleRTEImageClick, name])
-
-  const modules = useRef({
-    toolbar: {
-      container: `#${elementId.current}`,
-      handlers: {
-        insertImage
-      }
-    },
-    table: true
-  })
 
   const handleOnChange = useCallback(html => {
     if (!readonly && !disabled) {
@@ -106,42 +79,42 @@ const Richtextarea = props => {
   }, [onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat, value])
 
   const addTable = useCallback(() => {
-    QuillRef.current.editor.getModule('table').insertTable(2, 2)
-  }, [QuillRef])
+    RTERef.current.editor.getModule('table').insertTable(2, 2)
+  }, [RTERef])
 
   const removeTable = useCallback(() => {
-    QuillRef.current.editor.getModule('table').deleteTable()
-  }, [QuillRef])
+    RTERef.current.editor.getModule('table').deleteTable()
+  }, [RTERef])
 
   const insertRowAbove = useCallback(() => {
-    QuillRef.current.editor.getModule('table').insertRowAbove()
-  }, [QuillRef])
+    RTERef.current.editor.getModule('table').insertRowAbove()
+  }, [RTERef])
 
   const insertRowBelow = useCallback(() => {
-    QuillRef.current.editor.getModule('table').insertRowBelow()
-  }, [QuillRef])
+    RTERef.current.editor.getModule('table').insertRowBelow()
+  }, [RTERef])
 
   const deleteRow = useCallback(() => {
-    QuillRef.current.editor.getModule('table').deleteRow()
-  }, [QuillRef])
+    RTERef.current.editor.getModule('table').deleteRow()
+  }, [RTERef])
 
   const insertColumnLeft = useCallback(() => {
-    QuillRef.current.editor.getModule('table').insertColumnLeft()
-  }, [QuillRef])
+    RTERef.current.editor.getModule('table').insertColumnLeft()
+  }, [RTERef])
 
   const insertColumnRight = useCallback(() => {
-    QuillRef.current.editor.getModule('table').insertColumnRight()
-  }, [QuillRef])
+    RTERef.current.editor.getModule('table').insertColumnRight()
+  }, [RTERef])
 
   const deleteColumn = useCallback(() => {
-    QuillRef.current.editor.getModule('table').deleteColumn()
-  }, [QuillRef])
+    RTERef.current.editor.getModule('table').deleteColumn()
+  }, [RTERef])
 
   const previousRTEImageUrl = usePrevious(rteImageUrl)
 
   useEffect(() => {
-    if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && QuillRef.current) {
-      const input = QuillRef.current.getEditor()
+    if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && RTERef.current) {
+      const input = RTERef.current.getEditor()
       const cursor = input.getSelection(true) ? input.getSelection(true).index : 0
       input.insertEmbed(cursor, 'image', rteImageUrl)
       input.setSelection(cursor + 1)
@@ -199,20 +172,16 @@ const Richtextarea = props => {
         </div>
         <div className={controlClass} style={inputControl} css={inputControlCSS}>
           <div className='gfb-input__value-container' style={valueContainer} css={valueContainerCSS}>
-            <Quill
+            <Lexical
               name={name + tabIndex}
               onChange={handleOnChange}
               readOnly={readonly || disabled || !interactive}
               className={className}
-              ref={QuillRef}
+              ref={RTERef}
               value={value}
               placeholder={placeholder}
-              modules={modules.current}
-              formats={formats.current}
               autofocus={autofocus}
               tabIndex={tabIndex}
-              scrollingContainer='scrolling-container'
-              theme='snow'
               autoComplete={autoComplete}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
