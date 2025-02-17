@@ -153,6 +153,11 @@ export const CONDITIONS = {
     minFields: 0,
     invalidInputTypes: [...ALL_BUT_DATES]
   },
+  'last quarter': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: [...ALL_BUT_DATES]
+  },
   'quarter to date': {
     maxFields: 0,
     minFields: 0,
