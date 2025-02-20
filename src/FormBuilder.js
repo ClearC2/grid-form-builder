@@ -20,34 +20,43 @@ const debugLog = (...args) => {
   if (debug) console.log(...args) //eslint-disable-line
 }
 
+const defaults = {
+  object: {},
+  map: Map(),
+  nullFunction: () => null,
+  dropItemDimensions: {
+    h: 1,
+    w: 6
+  },
+  dropItemConfig: {
+    name: 'new-input',
+    label: 'New Field',
+    type: 'input'
+  },
+  device: {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'}
+}
+
 const FormBuilder = (props) => {
   const {
     rowHeight,
     columns = 12,
-    formSchema = {},
+    formSchema = defaults.object,
     width,
     handleOnDimensionChange,
-    dropItemDimensions = {
-      h: 1,
-      w: 6
-    },
-    dropItemConfig = {
-      name: 'new-input',
-      label: 'New Field',
-      type: 'input'
-    },
+    dropItemDimensions = defaults.dropItemDimensions,
+    dropItemConfig = defaults.dropItemConfig,
     validate,
     requiredFlag,
     setContainerRef,
-    onClick = () => null,
-    handleOnDrop = () => null,
-    handleCascade = () => null,
-    handleRTEImageClick: onRTEImageClick = () => null,
-    handleLinkClick = () => null,
+    onClick = defaults.nullFunction,
+    handleOnDrop = defaults.nullFunction,
+    handleCascade = defaults.nullFunction,
+    handleRTEImageClick: onRTEImageClick = defaults.nullFunction,
+    handleLinkClick = defaults.nullFunction,
     conditionalFieldValues,
     conditionalSearch,
     inline,
-    handleOnChange = () => null,
+    handleOnChange = defaults.nullFunction,
     interactive = true,
     draggable = false,
     readonly,
@@ -62,8 +71,8 @@ const FormBuilder = (props) => {
     timeFormat = 'h:mm a',
     autoComplete = 'ac_off',
     style = {},
-    device = {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'},
-    fieldDefinitions = Map(),
+    device = defaults.device,
+    fieldDefinitions = defaults.map,
     c2class
   } = props
   const [grid, updateGrid] = useState({layout: [], elements: []})

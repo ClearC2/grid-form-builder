@@ -9,6 +9,10 @@ import {randomId} from '../../utils'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
 import useTheme from '../../theme/useTheme'
 
+const defaults = {
+  trueFunction: () => true
+}
+
 const DateInput = props => {
   const {
     name,
@@ -37,7 +41,7 @@ const DateInput = props => {
     futureYears = 12,
     minDate,
     maxDate,
-    onChangeValidator = () => true,
+    onChangeValidator = defaults.trueFunction,
     warning
   } = props
 
