@@ -4,7 +4,7 @@ import ConditionalDialog from './ConditionalDialog'
 import {Map, List, fromJS} from 'immutable'
 
 const ConditionalInput = props => {
-  const {style, name, value, values, onChange} = props
+  const {style = {}, name = '', value = Map(), values = Map(), onChange = () => null} = props
 
   const {value: valueStyle = {}, inputOuter = {}, inputInner = {}, inputControl = {}, valueContainer = {}, indicators = {}} = style// eslint-disable-line
 
@@ -55,7 +55,17 @@ const ConditionalInput = props => {
           >
             {hasValue ? 'Values...' : ''}
           </div>
-          {showDialog && <ConditionalDialog handleClose={handleClose} {...props} />}
+          {showDialog && (
+            <ConditionalDialog
+              handleClose={handleClose}
+              {...props}
+              style={style}
+              name={name}
+              value={value}
+              values={values}
+              onChange={onChange}
+            />
+          )}
         </div>
       </div>
     </div>
@@ -63,14 +73,6 @@ const ConditionalInput = props => {
 }
 
 export default ConditionalInput
-
-ConditionalInput.defaultProps = {
-  style: {},
-  name: '',
-  value: Map(),
-  values: Map(),
-  onChange: () => {}
-}
 
 ConditionalInput.propTypes = {
   onChange: PropTypes.func,

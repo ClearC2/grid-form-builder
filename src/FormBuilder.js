@@ -23,26 +23,33 @@ const debugLog = (...args) => {
 const FormBuilder = (props) => {
   const {
     rowHeight,
-    columns,
-    formSchema,
+    columns = 12,
+    formSchema = {},
     width,
     handleOnDimensionChange,
-    dropItemDimensions,
-    dropItemConfig,
+    dropItemDimensions = {
+      h: 1,
+      w: 6
+    },
+    dropItemConfig = {
+      name: 'new-input',
+      label: 'New Field',
+      type: 'input'
+    },
     validate,
     requiredFlag,
     setContainerRef,
-    onClick,
-    handleOnDrop,
-    handleCascade,
-    handleRTEImageClick: onRTEImageClick,
-    handleLinkClick,
+    onClick = () => null,
+    handleOnDrop = () => null,
+    handleCascade = () => null,
+    handleRTEImageClick: onRTEImageClick = () => null,
+    handleLinkClick = () => null,
     conditionalFieldValues,
     conditionalSearch,
     inline,
-    handleOnChange,
-    interactive,
-    draggable,
+    handleOnChange = () => null,
+    interactive = true,
+    draggable = false,
     readonly,
     droppable,
     activeItem,
@@ -50,13 +57,13 @@ const FormBuilder = (props) => {
     rglStyle,
     verticalCompact = false,
     compactType,
-    dateFormat,
-    dateTimeFormat,
-    timeFormat,
-    autoComplete,
-    style,
+    dateFormat = 'MM/DD/YYYY',
+    dateTimeFormat = 'MM/DD/YYYY h:mm a',
+    timeFormat = 'h:mm a',
+    autoComplete = 'ac_off',
+    style = {},
     device = {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'},
-    fieldDefinitions,
+    fieldDefinitions = Map(),
     c2class
   } = props
   const [grid, updateGrid] = useState({layout: [], elements: []})
@@ -372,37 +379,6 @@ FormBuilder.propTypes = {
   device: PropTypes.object,
   fieldDefinitions: PropTypes.instanceOf(Map),
   c2class: PropTypes.string
-}
-
-FormBuilder.defaultProps = {
-  columns: 12,
-  formSchema: {},
-  dropItemDimensions: {
-    h: 1,
-    w: 6
-  },
-  dropItemConfig: {
-    name: 'new-input',
-    label: 'New Field',
-    type: 'input'
-  },
-  handleSubmit: () => {
-    console.warn('onSubmit was called but no handleSubmit function was provided.') // eslint-disable-line
-  },
-  handleOnChange: () => null,
-  onClick: () => null,
-  handleOnDrop: () => null,
-  handleCascade: () => null,
-  handleRTEImageClick: () => null,
-  handleLinkClick: () => null,
-  draggable: false,
-  interactive: true,
-  dateFormat: 'MM/DD/YYYY',
-  dateTimeFormat: 'MM/DD/YYYY h:mm a',
-  timeFormat: 'h:mm a',
-  autoComplete: 'ac_off',
-  style: {},
-  fieldDefinitions: Map()
 }
 
 FormBuilder.count = 1

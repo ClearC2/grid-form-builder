@@ -37,7 +37,7 @@ const DateInput = props => {
     futureYears = 12,
     minDate,
     maxDate,
-    onChangeValidator,
+    onChangeValidator = () => true,
     warning
   } = props
 
@@ -351,8 +351,4 @@ DateInput.propTypes = {
   maxDate: PropTypes.string,
   onChangeValidator: PropTypes.func,
   warning: PropTypes.string
-}
-
-DateInput.defaultProps = {
-  onChangeValidator: () => true
 }
