@@ -25,6 +25,11 @@ import moment from 'moment';
 import { randomId } from '../../utils';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
+var defaults = {
+  trueFunction: function trueFunction() {
+    return true;
+  }
+};
 
 var DateInput = function DateInput(props) {
   var _context;
@@ -65,7 +70,8 @@ var DateInput = function DateInput(props) {
       futureYears = _props$futureYears === void 0 ? 12 : _props$futureYears,
       minDate = props.minDate,
       maxDate = props.maxDate,
-      onChangeValidator = props.onChangeValidator,
+      _props$onChangeValida = props.onChangeValidator,
+      onChangeValidator = _props$onChangeValida === void 0 ? defaults.trueFunction : _props$onChangeValida,
       warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -456,9 +462,4 @@ DateInput.propTypes = {
   maxDate: PropTypes.string,
   onChangeValidator: PropTypes.func,
   warning: PropTypes.string
-};
-DateInput.defaultProps = {
-  onChangeValidator: function onChangeValidator() {
-    return true;
-  }
 };

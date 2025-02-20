@@ -34,6 +34,8 @@ var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/he
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
 
+var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
+
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
 
 var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
@@ -56,12 +58,26 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
+var defaults = {
+  object: {},
+  map: (0, _immutable.Map)(),
+  nullFunction: function nullFunction() {
+    return null;
+  }
+};
+
 var ConditionalInput = function ConditionalInput(props) {
-  var style = props.style,
-      name = props.name,
-      value = props.value,
-      values = (0, _values.default)(props),
-      onChange = props.onChange;
+  var _props$style = props.style,
+      style = _props$style === void 0 ? defaults.object : _props$style,
+      _props$name = props.name,
+      name = _props$name === void 0 ? '' : _props$name,
+      _props$value = props.value,
+      value = _props$value === void 0 ? (0, _map.default)(defaults) : _props$value,
+      _props$values = (0, _values.default)(props),
+      values = _props$values === void 0 ? (0, _map.default)(defaults) : _props$values,
+      _props$onChange = props.onChange,
+      onChange = _props$onChange === void 0 ? defaults.nullFunction : _props$onChange;
+
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -92,25 +108,25 @@ var ConditionalInput = function ConditionalInput(props) {
     }
 
     if (name && setDefaults) {
-      var defaults = (0, _immutable.Map)({
+      var _defaults = (0, _immutable.Map)({
         condition: 'contains',
         values: (0, _immutable.List)()
       });
 
       if (typeof value === 'string') {
         if (value !== '') {
-          defaults = defaults.set('values', (0, _immutable.List)([value]));
+          _defaults = _defaults.set('values', (0, _immutable.List)([value]));
         } else {
-          defaults = defaults.set('values', (0, _immutable.List)());
+          _defaults = _defaults.set('values', (0, _immutable.List)());
         }
       } else if (value instanceof _immutable.List || (0, _isArray.default)(value)) {
-        defaults = defaults.set('values', (0, _immutable.fromJS)(value));
+        _defaults = _defaults.set('values', (0, _immutable.fromJS)(value));
       }
 
       onChange({
         target: {
           name: name,
-          value: defaults
+          value: _defaults
         }
       });
     }
@@ -139,18 +155,17 @@ var ConditionalInput = function ConditionalInput(props) {
     })
   }, hasValue ? 'Values...' : ''), showDialog && /*#__PURE__*/_react.default.createElement(_ConditionalDialog.default, (0, _extends2.default)({
     handleClose: handleClose
-  }, props)))));
+  }, props, {
+    style: style,
+    name: name,
+    value: value,
+    values: values,
+    onChange: onChange
+  })))));
 };
 
 var _default = ConditionalInput;
 exports.default = _default;
-ConditionalInput.defaultProps = {
-  style: {},
-  name: '',
-  value: (0, _immutable.Map)(),
-  values: (0, _immutable.Map)(),
-  onChange: function onChange() {}
-};
 ConditionalInput.propTypes = {
   onChange: _propTypes.default.func,
   name: _propTypes.default.string,

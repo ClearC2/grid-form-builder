@@ -88,7 +88,10 @@ var TypeaheadPerformanceOptimizer = /*#__PURE__*/function (_PureComponent) {
           inputValue = _this$props.inputValue,
           menuIsOpen = _this$props.menuIsOpen,
           menuPlacement = _this$props.menuPlacement,
-          onKeyDown = _this$props.onKeyDown,
+          _this$props$onKeyDown = _this$props.onKeyDown,
+          onKeyDown = _this$props$onKeyDown === void 0 ? function () {
+        return null;
+      } : _this$props$onKeyDown,
           onMouseDown = _this$props.onMouseDown,
           onFocus = _this$props.onFocus,
           onBlur = _this$props.onBlur,
@@ -175,6 +178,13 @@ _defineProperty(TypeaheadPerformanceOptimizer, "propTypes", {
   styles: PropTypes.object
 });
 
+var defaults = {
+  nullFunction: function nullFunction() {
+    return null;
+  },
+  object: {}
+};
+
 var Typeahead = function Typeahead(props) {
   var _context13;
 
@@ -193,24 +203,28 @@ var Typeahead = function Typeahead(props) {
       requiredWarning = props.requiredWarning,
       required = props.required,
       tabIndex = props.tabIndex,
-      onKeyDown = props.onKeyDown,
+      _props$onKeyDown = props.onKeyDown,
+      onKeyDown = _props$onKeyDown === void 0 ? defaults.nullFunction : _props$onKeyDown,
       draggable = props.draggable,
       _props$persist = props.persist,
       persist = _props$persist === void 0 ? true : _props$persist,
-      typeahead = props.typeahead,
+      _props$typeahead = props.typeahead,
+      typeahead = _props$typeahead === void 0 ? defaults.object : _props$typeahead,
       _props$minChars = props.minChars,
       minChars = _props$minChars === void 0 ? 1 : _props$minChars,
       stringify = props.stringify,
       autoComplete = props.autoComplete,
       _props$interactive = props.interactive,
       interactive = _props$interactive === void 0 ? true : _props$interactive,
-      style = props.style,
+      _props$style = props.style,
+      style = _props$style === void 0 ? {} : _props$style,
       delimit = props.delimit,
       delimiter = props.delimiter,
       _props$isClearable = props.isClearable,
       isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
       createlabel = props.createlabel,
-      typeaheadOptions = props.options,
+      _props$options = props.options,
+      typeaheadOptions = _props$options === void 0 ? defaults.object : _props$options,
       warning = props.warning;
 
   var _style$value = style.value,
@@ -1080,14 +1094,6 @@ var Typeahead = function Typeahead(props) {
 };
 
 export default Typeahead;
-Typeahead.defaultProps = {
-  onKeyDown: function onKeyDown() {
-    return null;
-  },
-  typeahead: {},
-  style: {},
-  options: {}
-};
 Typeahead.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
