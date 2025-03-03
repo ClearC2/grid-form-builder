@@ -27,6 +27,7 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context6, _context7; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context6 = ownKeys(Object(source), !0)).call(_context6, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context7 = ownKeys(Object(source))).call(_context7, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
 import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/splice";
@@ -57,28 +58,64 @@ var debugLog = function debugLog() {
   if (debug) (_console = console).log.apply(_console, arguments); //eslint-disable-line
 };
 
+var defaults = {
+  object: {},
+  map: Map(),
+  nullFunction: function nullFunction() {
+    return null;
+  },
+  dropItemDimensions: {
+    h: 1,
+    w: 6
+  },
+  dropItemConfig: {
+    name: 'new-input',
+    label: 'New Field',
+    type: 'input'
+  },
+  device: {
+    cordova: false,
+    model: 'browser',
+    platform: 'browser',
+    uuid: 'browser',
+    version: 'browser'
+  }
+};
+
 var FormBuilder = function FormBuilder(props) {
   var rowHeight = props.rowHeight,
-      columns = props.columns,
-      formSchema = props.formSchema,
+      _props$columns = props.columns,
+      columns = _props$columns === void 0 ? 12 : _props$columns,
+      _props$formSchema = props.formSchema,
+      formSchema = _props$formSchema === void 0 ? defaults.object : _props$formSchema,
       width = props.width,
       handleOnDimensionChange = props.handleOnDimensionChange,
-      dropItemDimensions = props.dropItemDimensions,
-      dropItemConfig = props.dropItemConfig,
+      _props$dropItemDimens = props.dropItemDimensions,
+      dropItemDimensions = _props$dropItemDimens === void 0 ? defaults.dropItemDimensions : _props$dropItemDimens,
+      _props$dropItemConfig = props.dropItemConfig,
+      dropItemConfig = _props$dropItemConfig === void 0 ? defaults.dropItemConfig : _props$dropItemConfig,
       validate = props.validate,
       requiredFlag = props.requiredFlag,
       setContainerRef = props.setContainerRef,
-      onClick = props.onClick,
-      handleOnDrop = props.handleOnDrop,
-      handleCascade = props.handleCascade,
-      onRTEImageClick = props.handleRTEImageClick,
-      handleLinkClick = props.handleLinkClick,
+      _props$onClick = props.onClick,
+      onClick = _props$onClick === void 0 ? defaults.nullFunction : _props$onClick,
+      _props$handleOnDrop = props.handleOnDrop,
+      handleOnDrop = _props$handleOnDrop === void 0 ? defaults.nullFunction : _props$handleOnDrop,
+      _props$handleCascade = props.handleCascade,
+      handleCascade = _props$handleCascade === void 0 ? defaults.nullFunction : _props$handleCascade,
+      _props$handleRTEImage = props.handleRTEImageClick,
+      onRTEImageClick = _props$handleRTEImage === void 0 ? defaults.nullFunction : _props$handleRTEImage,
+      _props$handleLinkClic = props.handleLinkClick,
+      handleLinkClick = _props$handleLinkClic === void 0 ? defaults.nullFunction : _props$handleLinkClic,
       conditionalFieldValues = props.conditionalFieldValues,
       conditionalSearch = props.conditionalSearch,
       inline = props.inline,
-      handleOnChange = props.handleOnChange,
-      interactive = props.interactive,
-      draggable = props.draggable,
+      _props$handleOnChange = props.handleOnChange,
+      handleOnChange = _props$handleOnChange === void 0 ? defaults.nullFunction : _props$handleOnChange,
+      _props$interactive = props.interactive,
+      interactive = _props$interactive === void 0 ? true : _props$interactive,
+      _props$draggable = props.draggable,
+      draggable = _props$draggable === void 0 ? false : _props$draggable,
       readonly = props.readonly,
       droppable = props.droppable,
       activeItem = props.activeItem,
@@ -88,20 +125,20 @@ var FormBuilder = function FormBuilder(props) {
       _props$verticalCompac = props.verticalCompact,
       verticalCompact = _props$verticalCompac === void 0 ? false : _props$verticalCompac,
       compactType = props.compactType,
-      dateFormat = props.dateFormat,
-      dateTimeFormat = props.dateTimeFormat,
-      timeFormat = props.timeFormat,
-      autoComplete = props.autoComplete,
-      style = props.style,
+      _props$dateFormat = props.dateFormat,
+      dateFormat = _props$dateFormat === void 0 ? 'MM/DD/YYYY' : _props$dateFormat,
+      _props$dateTimeFormat = props.dateTimeFormat,
+      dateTimeFormat = _props$dateTimeFormat === void 0 ? 'MM/DD/YYYY h:mm a' : _props$dateTimeFormat,
+      _props$timeFormat = props.timeFormat,
+      timeFormat = _props$timeFormat === void 0 ? 'h:mm a' : _props$timeFormat,
+      _props$autoComplete = props.autoComplete,
+      autoComplete = _props$autoComplete === void 0 ? 'ac_off' : _props$autoComplete,
+      _props$style = props.style,
+      style = _props$style === void 0 ? {} : _props$style,
       _props$device = props.device,
-      device = _props$device === void 0 ? {
-    cordova: false,
-    model: 'browser',
-    platform: 'browser',
-    uuid: 'browser',
-    version: 'browser'
-  } : _props$device,
-      fieldDefinitions = props.fieldDefinitions,
+      device = _props$device === void 0 ? defaults.device : _props$device,
+      _props$fieldDefinitio = props.fieldDefinitions,
+      fieldDefinitions = _props$fieldDefinitio === void 0 ? _mapInstanceProperty(defaults) : _props$fieldDefinitio,
       c2class = props.c2class;
 
   var _useState = useState({
@@ -470,48 +507,6 @@ FormBuilder.propTypes = {
   device: PropTypes.object,
   fieldDefinitions: PropTypes.instanceOf(Map),
   c2class: PropTypes.string
-};
-FormBuilder.defaultProps = {
-  columns: 12,
-  formSchema: {},
-  dropItemDimensions: {
-    h: 1,
-    w: 6
-  },
-  dropItemConfig: {
-    name: 'new-input',
-    label: 'New Field',
-    type: 'input'
-  },
-  handleSubmit: function handleSubmit() {
-    console.warn('onSubmit was called but no handleSubmit function was provided.'); // eslint-disable-line
-  },
-  handleOnChange: function handleOnChange() {
-    return null;
-  },
-  onClick: function onClick() {
-    return null;
-  },
-  handleOnDrop: function handleOnDrop() {
-    return null;
-  },
-  handleCascade: function handleCascade() {
-    return null;
-  },
-  handleRTEImageClick: function handleRTEImageClick() {
-    return null;
-  },
-  handleLinkClick: function handleLinkClick() {
-    return null;
-  },
-  draggable: false,
-  interactive: true,
-  dateFormat: 'MM/DD/YYYY',
-  dateTimeFormat: 'MM/DD/YYYY h:mm a',
-  timeFormat: 'h:mm a',
-  autoComplete: 'ac_off',
-  style: {},
-  fieldDefinitions: Map()
 };
 FormBuilder.count = 1;
 

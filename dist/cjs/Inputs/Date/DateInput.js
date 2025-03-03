@@ -52,6 +52,12 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
+var defaults = {
+  trueFunction: function trueFunction() {
+    return true;
+  }
+};
+
 var DateInput = function DateInput(props) {
   var _context;
 
@@ -91,7 +97,8 @@ var DateInput = function DateInput(props) {
       futureYears = _props$futureYears === void 0 ? 12 : _props$futureYears,
       minDate = props.minDate,
       maxDate = props.maxDate,
-      onChangeValidator = props.onChangeValidator,
+      _props$onChangeValida = props.onChangeValidator,
+      onChangeValidator = _props$onChangeValida === void 0 ? defaults.trueFunction : _props$onChangeValida,
       warning = props.warning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -483,9 +490,4 @@ DateInput.propTypes = {
   maxDate: _propTypes.default.string,
   onChangeValidator: _propTypes.default.func,
   warning: _propTypes.default.string
-};
-DateInput.defaultProps = {
-  onChangeValidator: function onChangeValidator() {
-    return true;
-  }
 };

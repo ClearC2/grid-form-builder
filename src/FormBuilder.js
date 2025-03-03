@@ -20,29 +20,45 @@ const debugLog = (...args) => {
   if (debug) console.log(...args) //eslint-disable-line
 }
 
+const defaults = {
+  object: {},
+  map: Map(),
+  nullFunction: () => null,
+  dropItemDimensions: {
+    h: 1,
+    w: 6
+  },
+  dropItemConfig: {
+    name: 'new-input',
+    label: 'New Field',
+    type: 'input'
+  },
+  device: {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'}
+}
+
 const FormBuilder = (props) => {
   const {
     rowHeight,
-    columns,
-    formSchema,
+    columns = 12,
+    formSchema = defaults.object,
     width,
     handleOnDimensionChange,
-    dropItemDimensions,
-    dropItemConfig,
+    dropItemDimensions = defaults.dropItemDimensions,
+    dropItemConfig = defaults.dropItemConfig,
     validate,
     requiredFlag,
     setContainerRef,
-    onClick,
-    handleOnDrop,
-    handleCascade,
-    handleRTEImageClick: onRTEImageClick,
-    handleLinkClick,
+    onClick = defaults.nullFunction,
+    handleOnDrop = defaults.nullFunction,
+    handleCascade = defaults.nullFunction,
+    handleRTEImageClick: onRTEImageClick = defaults.nullFunction,
+    handleLinkClick = defaults.nullFunction,
     conditionalFieldValues,
     conditionalSearch,
     inline,
-    handleOnChange,
-    interactive,
-    draggable,
+    handleOnChange = defaults.nullFunction,
+    interactive = true,
+    draggable = false,
     readonly,
     droppable,
     activeItem,
@@ -50,13 +66,13 @@ const FormBuilder = (props) => {
     rglStyle,
     verticalCompact = false,
     compactType,
-    dateFormat,
-    dateTimeFormat,
-    timeFormat,
-    autoComplete,
-    style,
-    device = {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'},
-    fieldDefinitions,
+    dateFormat = 'MM/DD/YYYY',
+    dateTimeFormat = 'MM/DD/YYYY h:mm a',
+    timeFormat = 'h:mm a',
+    autoComplete = 'ac_off',
+    style = {},
+    device = defaults.device,
+    fieldDefinitions = defaults.map,
     c2class
   } = props
   const [grid, updateGrid] = useState({layout: [], elements: []})
@@ -372,37 +388,6 @@ FormBuilder.propTypes = {
   device: PropTypes.object,
   fieldDefinitions: PropTypes.instanceOf(Map),
   c2class: PropTypes.string
-}
-
-FormBuilder.defaultProps = {
-  columns: 12,
-  formSchema: {},
-  dropItemDimensions: {
-    h: 1,
-    w: 6
-  },
-  dropItemConfig: {
-    name: 'new-input',
-    label: 'New Field',
-    type: 'input'
-  },
-  handleSubmit: () => {
-    console.warn('onSubmit was called but no handleSubmit function was provided.') // eslint-disable-line
-  },
-  handleOnChange: () => null,
-  onClick: () => null,
-  handleOnDrop: () => null,
-  handleCascade: () => null,
-  handleRTEImageClick: () => null,
-  handleLinkClick: () => null,
-  draggable: false,
-  interactive: true,
-  dateFormat: 'MM/DD/YYYY',
-  dateTimeFormat: 'MM/DD/YYYY h:mm a',
-  timeFormat: 'h:mm a',
-  autoComplete: 'ac_off',
-  style: {},
-  fieldDefinitions: Map()
 }
 
 FormBuilder.count = 1

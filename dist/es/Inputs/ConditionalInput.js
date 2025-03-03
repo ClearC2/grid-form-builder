@@ -6,6 +6,7 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
@@ -21,13 +22,25 @@ import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ConditionalDialog from './ConditionalDialog';
 import { Map, List, fromJS } from 'immutable';
+var defaults = {
+  object: {},
+  map: Map(),
+  nullFunction: function nullFunction() {
+    return null;
+  }
+};
 
 var ConditionalInput = function ConditionalInput(props) {
-  var style = props.style,
-      name = props.name,
-      value = props.value,
-      values = _valuesInstanceProperty(props),
-      onChange = props.onChange;
+  var _props$style = props.style,
+      style = _props$style === void 0 ? defaults.object : _props$style,
+      _props$name = props.name,
+      name = _props$name === void 0 ? '' : _props$name,
+      _props$value = props.value,
+      value = _props$value === void 0 ? _mapInstanceProperty(defaults) : _props$value,
+      _props$values = _valuesInstanceProperty(props),
+      values = _props$values === void 0 ? _mapInstanceProperty(defaults) : _props$values,
+      _props$onChange = props.onChange,
+      onChange = _props$onChange === void 0 ? defaults.nullFunction : _props$onChange;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -59,25 +72,25 @@ var ConditionalInput = function ConditionalInput(props) {
     }
 
     if (name && setDefaults) {
-      var defaults = Map({
+      var _defaults = Map({
         condition: 'contains',
         values: List()
       });
 
       if (typeof value === 'string') {
         if (value !== '') {
-          defaults = defaults.set('values', List([value]));
+          _defaults = _defaults.set('values', List([value]));
         } else {
-          defaults = defaults.set('values', List());
+          _defaults = _defaults.set('values', List());
         }
       } else if (value instanceof List || _Array$isArray(value)) {
-        defaults = defaults.set('values', fromJS(value));
+        _defaults = _defaults.set('values', fromJS(value));
       }
 
       onChange({
         target: {
           name: name,
-          value: defaults
+          value: _defaults
         }
       });
     }
@@ -106,17 +119,16 @@ var ConditionalInput = function ConditionalInput(props) {
     })
   }, hasValue ? 'Values...' : ''), showDialog && /*#__PURE__*/React.createElement(ConditionalDialog, _extends({
     handleClose: handleClose
-  }, props)))));
+  }, props, {
+    style: style,
+    name: name,
+    value: value,
+    values: values,
+    onChange: onChange
+  })))));
 };
 
 export default ConditionalInput;
-ConditionalInput.defaultProps = {
-  style: {},
-  name: '',
-  value: Map(),
-  values: Map(),
-  onChange: function onChange() {}
-};
 ConditionalInput.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,

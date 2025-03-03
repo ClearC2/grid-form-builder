@@ -74,7 +74,7 @@ class TypeaheadPerformanceOptimizer extends PureComponent {
       inputValue,
       menuIsOpen,
       menuPlacement,
-      onKeyDown,
+      onKeyDown = () => null,
       onMouseDown,
       onFocus,
       onBlur,
@@ -126,6 +126,11 @@ class TypeaheadPerformanceOptimizer extends PureComponent {
   }
 }
 
+const defaults = {
+  nullFunction: () => null,
+  object: {}
+}
+
 const Typeahead = props => {
   const {
     name,
@@ -142,20 +147,20 @@ const Typeahead = props => {
     requiredWarning,
     required,
     tabIndex,
-    onKeyDown,
+    onKeyDown = defaults.nullFunction,
     draggable,
     persist = true,
-    typeahead,
+    typeahead = defaults.object,
     minChars = 1,
     stringify,
     autoComplete,
     interactive = true,
-    style,
+    style = {},
     delimit,
     delimiter,
     isClearable = true,
     createlabel,
-    options: typeaheadOptions,
+    options: typeaheadOptions = defaults.object,
     warning
   } = props
 
@@ -853,13 +858,6 @@ const Typeahead = props => {
 }
 
 export default Typeahead
-
-Typeahead.defaultProps = {
-  onKeyDown: () => null,
-  typeahead: {},
-  style: {},
-  options: {}
-}
 
 Typeahead.propTypes = {
   onChange: PropTypes.func,

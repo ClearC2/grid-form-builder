@@ -1,3 +1,27 @@
+# [3.113.0](https://github.com/ClearC2/grid-form-builder/compare/v3.112.0...v3.113.0) (2025-02-20)
+
+
+### Bug Fixes
+
+* **react:** pre-defined defaults to prevent infinite loops ([824086b](https://github.com/ClearC2/grid-form-builder/commit/824086bae3a8d157bdf35225845add419dfe3d63))
+
+
+### Features
+
+* **react:** removes default prop declarations for react 18+ support ([f0aef3a](https://github.com/ClearC2/grid-form-builder/commit/f0aef3a1910351f797dac6a754d2829250983e8d))
+
+# [3.112.0](https://github.com/ClearC2/grid-form-builder/compare/v3.111.1...v3.112.0) (2025-02-17)
+
+
+### Bug Fixes
+
+* **native-select-indicator:** increase the margin in native select indicator ([#234](https://github.com/ClearC2/grid-form-builder/issues/234)) ([7c28b67](https://github.com/ClearC2/grid-form-builder/commit/7c28b673b46a70514520d2bca3315c0f28bf22ac))
+
+
+### Features
+
+* **reporting:** last quarter ([#235](https://github.com/ClearC2/grid-form-builder/issues/235)) ([c53a5ed](https://github.com/ClearC2/grid-form-builder/commit/c53a5ed1e97d3884ab044f3f18456ff9e4889afd))
+
 ## [3.111.1](https://github.com/ClearC2/grid-form-builder/compare/v3.111.0...v3.111.1) (2025-02-11)
 
 
