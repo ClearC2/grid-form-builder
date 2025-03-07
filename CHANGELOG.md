@@ -1,3 +1,10 @@
+# [3.114.0](https://github.com/ClearC2/grid-form-builder/compare/v3.113.0...v3.114.0) (2025-03-07)
+
+
+### Features
+
+* **html:** adds html input type to render raw markup, usually for displaying full emails from corlogs ([0d5efed](https://github.com/ClearC2/grid-form-builder/commit/0d5efedc746f92d0b471948f524fb5855edf04aa))
+
 # [3.113.0](https://github.com/ClearC2/grid-form-builder/compare/v3.112.0...v3.113.0) (2025-02-20)
 
 
