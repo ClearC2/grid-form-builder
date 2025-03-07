@@ -105,6 +105,7 @@
           "required": true,
           "name": "unique-test-input",
           "label": "Test Input",
+          "autofocus": true,
           "type": "input",
           "placeholder": "This Field Is Required",
           "style": {

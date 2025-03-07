@@ -101,30 +101,6 @@ var Richtextarea = function Richtextarea(props) {
       }
     }
   }, [onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat, value]);
-  var addTable = useCallback(function () {
-    RTERef.current.editor.getModule('table').insertTable(2, 2);
-  }, [RTERef]);
-  var removeTable = useCallback(function () {
-    RTERef.current.editor.getModule('table').deleteTable();
-  }, [RTERef]);
-  var insertRowAbove = useCallback(function () {
-    RTERef.current.editor.getModule('table').insertRowAbove();
-  }, [RTERef]);
-  var insertRowBelow = useCallback(function () {
-    RTERef.current.editor.getModule('table').insertRowBelow();
-  }, [RTERef]);
-  var deleteRow = useCallback(function () {
-    RTERef.current.editor.getModule('table').deleteRow();
-  }, [RTERef]);
-  var insertColumnLeft = useCallback(function () {
-    RTERef.current.editor.getModule('table').insertColumnLeft();
-  }, [RTERef]);
-  var insertColumnRight = useCallback(function () {
-    RTERef.current.editor.getModule('table').insertColumnRight();
-  }, [RTERef]);
-  var deleteColumn = useCallback(function () {
-    RTERef.current.editor.getModule('table').deleteColumn();
-  }, [RTERef]);
   var previousRTEImageUrl = usePrevious(rteImageUrl);
   useEffect(function () {
     if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && RTERef.current) {
@@ -169,7 +145,9 @@ var Richtextarea = function Richtextarea(props) {
 
   var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
 
-  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+  var valueContainerCSS = _objectSpread(_objectSpread(_objectSpread({}, theme.valueContainer), valueContainer), {}, {
+    flexDirection: 'column'
+  });
 
   var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
 

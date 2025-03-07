@@ -78,38 +78,6 @@ const Richtextarea = props => {
     }
   }, [onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat, value])
 
-  const addTable = useCallback(() => {
-    RTERef.current.editor.getModule('table').insertTable(2, 2)
-  }, [RTERef])
-
-  const removeTable = useCallback(() => {
-    RTERef.current.editor.getModule('table').deleteTable()
-  }, [RTERef])
-
-  const insertRowAbove = useCallback(() => {
-    RTERef.current.editor.getModule('table').insertRowAbove()
-  }, [RTERef])
-
-  const insertRowBelow = useCallback(() => {
-    RTERef.current.editor.getModule('table').insertRowBelow()
-  }, [RTERef])
-
-  const deleteRow = useCallback(() => {
-    RTERef.current.editor.getModule('table').deleteRow()
-  }, [RTERef])
-
-  const insertColumnLeft = useCallback(() => {
-    RTERef.current.editor.getModule('table').insertColumnLeft()
-  }, [RTERef])
-
-  const insertColumnRight = useCallback(() => {
-    RTERef.current.editor.getModule('table').insertColumnRight()
-  }, [RTERef])
-
-  const deleteColumn = useCallback(() => {
-    RTERef.current.editor.getModule('table').deleteColumn()
-  }, [RTERef])
-
   const previousRTEImageUrl = usePrevious(rteImageUrl)
 
   useEffect(() => {
@@ -150,7 +118,7 @@ const Richtextarea = props => {
   const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
   const inputInnerCSS = {...theme.inputInner, ...inputInner}
   const inputControlCSS = {...theme.inputControl, ...inputControl}
-  const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
+  const valueContainerCSS = {...theme.valueContainer, ...valueContainer, flexDirection: 'column'}
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
 

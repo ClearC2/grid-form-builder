@@ -40,7 +40,7 @@ var _react = require("react");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _Quill = _interopRequireDefault(require("./Quill"));
+var _Lexical = _interopRequireDefault(require("./Lexical"));
 
 var _utils = require("../../utils");
 
@@ -61,7 +61,7 @@ var Richtextarea = function Richtextarea(props) {
 
   var name = props.name,
       _props$value = props.value,
-      value = _props$value === void 0 ? '<p>&nbsp;</p>' : _props$value,
+      value = _props$value === void 0 ? '' : _props$value,
       onChange = props.onChange,
       readonly = props.readonly,
       disabled = props.disabled,
@@ -107,20 +107,10 @@ var Richtextarea = function Richtextarea(props) {
       setIsFocused = _useState4[1];
 
   var elementId = (0, _react.useRef)('gfb-' + (0, _utils.randomId)());
-  var QuillRef = (0, _react.useRef)();
-  var formats = (0, _react.useRef)(['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'color', 'background']);
+  var RTERef = (0, _react.useRef)();
   var insertImage = (0, _react.useCallback)(function () {
     handleRTEImageClick(name);
   }, [handleRTEImageClick, name]);
-  var modules = (0, _react.useRef)({
-    toolbar: {
-      container: "#".concat(elementId.current),
-      handlers: {
-        insertImage: insertImage
-      }
-    },
-    table: true
-  });
   var handleOnChange = (0, _react.useCallback)(function (html) {
     if (!readonly && !disabled) {
       /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
@@ -139,34 +129,10 @@ var Richtextarea = function Richtextarea(props) {
       }
     }
   }, [onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat, value]);
-  var addTable = (0, _react.useCallback)(function () {
-    QuillRef.current.editor.getModule('table').insertTable(2, 2);
-  }, [QuillRef]);
-  var removeTable = (0, _react.useCallback)(function () {
-    QuillRef.current.editor.getModule('table').deleteTable();
-  }, [QuillRef]);
-  var insertRowAbove = (0, _react.useCallback)(function () {
-    QuillRef.current.editor.getModule('table').insertRowAbove();
-  }, [QuillRef]);
-  var insertRowBelow = (0, _react.useCallback)(function () {
-    QuillRef.current.editor.getModule('table').insertRowBelow();
-  }, [QuillRef]);
-  var deleteRow = (0, _react.useCallback)(function () {
-    QuillRef.current.editor.getModule('table').deleteRow();
-  }, [QuillRef]);
-  var insertColumnLeft = (0, _react.useCallback)(function () {
-    QuillRef.current.editor.getModule('table').insertColumnLeft();
-  }, [QuillRef]);
-  var insertColumnRight = (0, _react.useCallback)(function () {
-    QuillRef.current.editor.getModule('table').insertColumnRight();
-  }, [QuillRef]);
-  var deleteColumn = (0, _react.useCallback)(function () {
-    QuillRef.current.editor.getModule('table').deleteColumn();
-  }, [QuillRef]);
   var previousRTEImageUrl = (0, _utils.usePrevious)(rteImageUrl);
   (0, _react.useEffect)(function () {
-    if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && QuillRef.current) {
-      var input = QuillRef.current.getEditor();
+    if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && RTERef.current) {
+      var input = RTERef.current.getEditor();
       var cursor = input.getSelection(true) ? input.getSelection(true).index : 0;
       input.insertEmbed(cursor, 'image', rteImageUrl);
       input.setSelection(cursor + 1);
@@ -207,7 +173,9 @@ var Richtextarea = function Richtextarea(props) {
 
   var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
 
-  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+  var valueContainerCSS = _objectSpread(_objectSpread(_objectSpread({}, theme.valueContainer), valueContainer), {}, {
+    flexDirection: 'column'
+  });
 
   var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
 
@@ -222,21 +190,6 @@ var Richtextarea = function Richtextarea(props) {
     style: inputInner,
     css: inputInnerCSS
   }, (0, _core.jsx)("div", {
-    className: "gfb-input-control-top",
-    style: {
-      display: 'flex'
-    }
-  }, (0, _core.jsx)(_Toolbar.default, {
-    id: elementId.current,
-    addTable: addTable,
-    removeTable: removeTable,
-    insertRowAbove: insertRowAbove,
-    insertRowBelow: insertRowBelow,
-    deleteRow: deleteRow,
-    insertColumnLeft: insertColumnLeft,
-    insertColumnRight: insertColumnRight,
-    deleteColumn: deleteColumn
-  })), (0, _core.jsx)("div", {
     className: controlClass,
     style: inputControl,
     css: inputControlCSS
@@ -244,20 +197,16 @@ var Richtextarea = function Richtextarea(props) {
     className: "gfb-input__value-container",
     style: valueContainer,
     css: valueContainerCSS
-  }, (0, _core.jsx)(_Quill.default, {
+  }, (0, _core.jsx)(_Lexical.default, {
     name: name + tabIndex,
     onChange: handleOnChange,
     readOnly: readonly || disabled || !interactive,
     className: className,
-    ref: QuillRef,
+    ref: RTERef,
     value: value,
     placeholder: placeholder,
-    modules: modules.current,
-    formats: formats.current,
     autofocus: autofocus,
     tabIndex: tabIndex,
-    scrollingContainer: "scrolling-container",
-    theme: "snow",
     autoComplete: autoComplete,
     onFocus: handleOnFocus,
     onBlur: handleOnBlur,
