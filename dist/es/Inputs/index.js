@@ -21,6 +21,7 @@ import Currency from './Currency';
 import { Date, Datetime, Time, Month, Monthday } from './Date';
 import Email from './Email';
 import Header from './Header';
+import Html from './HTML';
 import Icon from './Icon';
 import Input from './Input';
 import Listselect from './Listselect';
@@ -44,6 +45,7 @@ var FormComponents = {
   Datetime: Datetime,
   Email: Email,
   Header: Header,
+  Html: Html,
   Icon: Icon,
   Input: Input,
   Listselect: Listselect,

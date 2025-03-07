@@ -46,6 +46,8 @@ var _Email = _interopRequireDefault(require("./Email"));
 
 var _Header = _interopRequireDefault(require("./Header"));
 
+var _HTML = _interopRequireDefault(require("./HTML"));
+
 var _Icon = _interopRequireDefault(require("./Icon"));
 
 var _Input = _interopRequireDefault(require("./Input"));
@@ -88,6 +90,7 @@ var FormComponents = {
   Datetime: _Date.Datetime,
   Email: _Email.default,
   Header: _Header.default,
+  Html: _HTML.default,
   Icon: _Icon.default,
   Input: _Input.default,
   Listselect: _Listselect.default,

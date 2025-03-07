@@ -295,23 +295,38 @@
         "type": "field",
         "dimensions": {
           "w": 6,
-          "h": 5,
+          "h": 8,
           "x": 0,
           "y": 18,
           "moved": false,
           "static": false
         },
         "config": {
-          "required": true,
-          "name": "rich-text-input-1",
-          "label": "Rich Text Input",
-          "type": "richtextareaquill"
+          "name": "html-input-1",
+          "label": "Static Rich Text Input 1",
+          "type": "html"
         }
       }, {
         "type": "field",
         "dimensions": {
           "w": 6,
-          "h": 11,
+          "h": 8,
+          "x": 0,
+          "y": 18,
+          "moved": false,
+          "static": false
+        },
+        "config": {
+          "name": "html-input-2",
+          "label": "Static Rich Text Input 2",
+          "type": "html",
+          "disabled": false
+        }
+      }, {
+        "type": "field",
+        "dimensions": {
+          "w": 6,
+          "h": 4,
           "x": 0,
           "y": 23,
           "moved": false,

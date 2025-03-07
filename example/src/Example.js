@@ -4,7 +4,8 @@ import {ConditionalTable} from '../../src/index'
 import DragUnit from './TestDraggableUnit'
 import FormBuilder from '../../src/FormBuilder'
 import schema from './formSchema'
-import GFBInput from '../../src/GFBInput'
+import stringHtmlValueWithTableFormatting from './string-html-value-with-table-formatting'
+import stringHtmlWithTableData from './string-html-with-table-data'
 
 const TEST_SEARCH = false // for conditional search forms
 
@@ -146,9 +147,13 @@ export default class Example extends Component {
       }))
     }, 250)
     setTimeout(() => {
-      this.setState(s => ({
-        formValues: s.formValues.set('rich-text-input-1', '<strong>Dynamic New Value</strong>')
-      }))
+      this.setState(s => {
+        let values = s.formValues.set('html-input-1', stringHtmlValueWithTableFormatting)
+        values = values.set('html-input-2', stringHtmlWithTableData)
+        return ({
+          formValues: values
+        })
+      })
     }, 2000)
     // setTimeout(() => {
     //   debugger
