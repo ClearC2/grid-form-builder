@@ -58,7 +58,7 @@ export class ReactQuill extends Component {
       this.debounce = setTimeout(() => {
         const html = this.editor?.root?.innerHTML || this.editor?.getSemanticHTML() || ''
         this.props.onChange(html)
-      }, 750)
+      }, 1250)
     }
   }
 
@@ -66,9 +66,9 @@ export class ReactQuill extends Component {
     const {isFocused} = this.props
     let {value} = this.props
     if (!this.editor || typeof value === 'undefined') return
-    let cursor = 0
+    let cursor = {index: 0, length: 0}
     if (isFocused) {
-      cursor = this.editor.getSelection(true) ? this.editor.getSelection(true).index : 0
+      cursor = this.editor.getSelection() ? this.editor.getSelection() : {index: 0, length: 0}
     }
     if (typeof value === 'string') {
       value = value.replaceAll(' <', '&nbsp;<')
@@ -88,7 +88,7 @@ export class ReactQuill extends Component {
     }
     this.editor.clipboard.dangerouslyPasteHTML(value)
     if (isFocused) {
-      this.editor.setSelection(cursor)
+      this.editor.setSelection(cursor.index, cursor.length)
     } else {
       this.editor.blur()
     }

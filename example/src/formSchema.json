@@ -334,7 +334,7 @@
         },
         "config": {
           "required": true,
-          "name": "rich-text-input-2",
+          "name": "rich-text-input-1",
           "label": "Rich Text Input",
           "type": "richtextareaquill"
         }
