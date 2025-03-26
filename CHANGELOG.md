@@ -1,3 +1,10 @@
+# [3.115.0](https://github.com/ClearC2/grid-form-builder/compare/v3.114.0...v3.115.0) (2025-03-26)
+
+
+### Features
+
+* **RTE:** changes cursor position to selection range for remembering where the user is when making a controlled input update ([236467f](https://github.com/ClearC2/grid-form-builder/commit/236467f17c9f79ff711ea1b7a100e5bfcea09a1c))
+
 # [3.114.0](https://github.com/ClearC2/grid-form-builder/compare/v3.113.0...v3.114.0) (2025-03-07)
 
 

@@ -108,7 +108,7 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
           var html = ((_this$editor = _this.editor) === null || _this$editor === void 0 ? void 0 : (_this$editor$root = _this$editor.root) === null || _this$editor$root === void 0 ? void 0 : _this$editor$root.innerHTML) || ((_this$editor2 = _this.editor) === null || _this$editor2 === void 0 ? void 0 : _this$editor2.getSemanticHTML()) || '';
 
           _this.props.onChange(html);
-        }, 750);
+        }, 1250);
       }
     });
 
@@ -116,10 +116,16 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
       var isFocused = _this.props.isFocused;
       var value = _this.props.value;
       if (!_this.editor || typeof value === 'undefined') return;
-      var cursor = 0;
+      var cursor = {
+        index: 0,
+        length: 0
+      };
 
       if (isFocused) {
-        cursor = _this.editor.getSelection(true) ? _this.editor.getSelection(true).index : 0;
+        cursor = _this.editor.getSelection() ? _this.editor.getSelection() : {
+          index: 0,
+          length: 0
+        };
       }
 
       if (typeof value === 'string') {
@@ -146,7 +152,7 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
       _this.editor.clipboard.dangerouslyPasteHTML(value);
 
       if (isFocused) {
-        _this.editor.setSelection(cursor);
+        _this.editor.setSelection(cursor.index, cursor.length);
       } else {
         _this.editor.blur();
       }
