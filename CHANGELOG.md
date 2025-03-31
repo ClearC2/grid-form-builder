@@ -1,3 +1,10 @@
+## [3.116.1](https://github.com/ClearC2/grid-form-builder/compare/v3.116.0...v3.116.1) (2025-03-31)
+
+
+### Bug Fixes
+
+* **reporting:** is between date filters ([#236](https://github.com/ClearC2/grid-form-builder/issues/236)) ([55d4d22](https://github.com/ClearC2/grid-form-builder/commit/55d4d225717fb49c0da9713d4cd91898a71204ba))
+
 # [3.116.0](https://github.com/ClearC2/grid-form-builder/compare/v3.115.0...v3.116.0) (2025-03-31)
 
 
