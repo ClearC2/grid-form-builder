@@ -42,7 +42,8 @@ const DateInput = props => {
     minDate,
     maxDate,
     onChangeValidator = defaults.trueFunction,
-    warning
+    warning,
+    autoApply = false
   } = props
 
   const {
@@ -290,6 +291,7 @@ const DateInput = props => {
                 minDate={minDate}
                 maxDate={maxDate}
                 canPickYear={canPickYear}
+                autoApply={autoApply}
               />
             )}
             {showPicker && !canPickDay && !isDisabled && (
@@ -354,5 +356,6 @@ DateInput.propTypes = {
   minDate: PropTypes.string,
   maxDate: PropTypes.string,
   onChangeValidator: PropTypes.func,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  autoApply: PropTypes.bool
 }
