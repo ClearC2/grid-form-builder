@@ -41,7 +41,9 @@ var DatePicker = function DatePicker(props) {
       format = props.format,
       minDate = props.minDate,
       maxDate = props.maxDate,
-      canPickYear = props.canPickYear;
+      canPickYear = props.canPickYear,
+      _props$autoApply = props.autoApply,
+      autoApply = _props$autoApply === void 0 ? false : _props$autoApply;
   var valueDidChange = (0, _react.useRef)(false); // JRA 02/07/2020 - selecting the date that is already selected closes the calendar without a change event
   // this is undesirable as the fallback date is today's date, and if the user opens a blank date field and picks today, a change event is not fired
   // in order to get around this issue, this component will check on the calendar hide event if a change had been made or not, and if not, send back the current startDate as a change event
@@ -92,7 +94,8 @@ var DatePicker = function DatePicker(props) {
         drops: determinePickerOpenDirection(),
         startDate: startDate,
         minDate: calculatedMinDate,
-        maxDate: calculatedMaxDate
+        maxDate: calculatedMaxDate,
+        autoApply: autoApply
       }, function (date) {
         if (date && date.isValid && date.isValid()) {
           valueDidChange.current = true;
@@ -141,7 +144,7 @@ var DatePicker = function DatePicker(props) {
         changeShowPicker(false);
       });
     };
-  }, [elementId, timePicker, determinePickerOpenDirection, handleOnChange, name, format, changeShowPicker, showCalendar, canPickYear, minDate, maxDate]);
+  }, [elementId, timePicker, determinePickerOpenDirection, handleOnChange, name, format, changeShowPicker, showCalendar, canPickYear, minDate, maxDate, autoApply]);
   (0, _react.useEffect)(function () {
     initializePicker();
     return function () {
@@ -167,5 +170,6 @@ DatePicker.propTypes = {
   canPickYear: _propTypes.default.bool,
   minDate: _propTypes.default.string,
   maxDate: _propTypes.default.string,
-  showCalendar: _propTypes.default.bool
+  showCalendar: _propTypes.default.bool,
+  autoApply: _propTypes.default.bool
 };

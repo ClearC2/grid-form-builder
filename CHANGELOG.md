@@ -1,3 +1,10 @@
+# [3.116.0](https://github.com/ClearC2/grid-form-builder/compare/v3.115.0...v3.116.0) (2025-03-31)
+
+
+### Features
+
+* **date:** adds autoApply to normal date pickers ([c86ee69](https://github.com/ClearC2/grid-form-builder/commit/c86ee698ea2c5c97df632c888ad2d3c7de443866))
+
 # [3.115.0](https://github.com/ClearC2/grid-form-builder/compare/v3.114.0...v3.115.0) (2025-03-26)
 
 
