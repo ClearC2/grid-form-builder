@@ -32,7 +32,8 @@ const Select = props => {
     isClearable = true,
     warning,
     onBlur,
-    showOptionTooltips = false // this flag is used to show tooltips for each individual option
+    showOptionTooltips = false, // this flag is used to show tooltips for each individual option
+    createOptionPosition = 'last'
   } = props
 
   const {
@@ -238,6 +239,7 @@ const Select = props => {
         defaultValue={selectValue}
         onChange={handleChange}
         autoComplete={autoComplete}
+        createOptionPosition={createOptionPosition}
         components={{...customComponents, Option}}
         styles={{
           container: base => {
@@ -301,5 +303,6 @@ Select.propTypes = {
   warning: PropTypes.string,
   onBlur: PropTypes.func,
   showOptionTooltips: PropTypes.bool,
-  data: PropTypes.object
+  data: PropTypes.object,
+  createOptionPosition: PropTypes.string
 }

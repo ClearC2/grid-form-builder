@@ -845,8 +845,8 @@
           "name": "selecttest",
           "label": "Normal Select",
           "type": "select",
-          "required": true,
-          "creatable": true,
+          "allowcreate": true,
+          "createOptionPosition": "first",
           "keyword": {
             "category": "TASKS",
             "options": [{
