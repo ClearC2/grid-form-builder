@@ -42,6 +42,8 @@ var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-sta
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
+var _includes = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/includes"));
+
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
 
 var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
@@ -114,11 +116,18 @@ var getFieldSchema = function getFieldSchema(key, formSchema) {
 };
 
 var getBetweenDatesValues = function getBetweenDatesValues(query) {
-  var _context2;
+  var _context2, _context3;
 
-  return (0, _filter.default)(_context2 = (0, _map.default)(query).call(query, function (q) {
+  return (0, _filter.default)(_context2 = (0, _map.default)(_context3 = (0, _filter.default)(query).call(query, function (q) {
+    var _context4;
+
+    return (0, _includes.default)(_context4 = q.name).call(_context4, 'date');
+  })).call(_context3, function (q) {
     if ((0, _values.default)(q) && (0, _values.default)(q).length) {
-      return (0, _values.default)(q)[0];
+      return {
+        field: q.name,
+        value: (0, _values.default)(q)[0]
+      };
     }
   })).call(_context2, Boolean);
 };
@@ -142,9 +151,16 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
           format: c.get('format', '')
         }); // https://github.com/ClearC2/bleu/issues/4734
       } else if (mergeDate) {
+        var _context5;
+
+        var values = (0, _map.default)(_context5 = (0, _filter.default)(inBetweenDateValues).call(inBetweenDateValues, function (v) {
+          return v.field === c.get('name');
+        })).call(_context5, function (v) {
+          return v.value;
+        });
         newFormValue = (0, _immutable.Map)({
           condition: 'is between',
-          values: (0, _immutable.List)(inBetweenDateValues),
+          values: (0, _immutable.List)(values),
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
           isfield: c.get('isfield', false),
@@ -198,15 +214,15 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
     }
 
     if (query.conditions) {
-      var _context3;
+      var _context6;
 
       var inBetweenDateValues = getBetweenDatesValues(query.conditions);
-      (0, _forEach.default)(_context3 = (0, _immutable.fromJS)(query.conditions)).call(_context3, function (c) {
+      (0, _forEach.default)(_context6 = (0, _immutable.fromJS)(query.conditions)).call(_context6, function (c) {
         if (c.get('conditions')) {
-          var _context4;
+          var _context7;
 
           var conditions = (0, _immutable.List)();
-          (0, _forEach.default)(_context4 = c.get('conditions')).call(_context4, function (pred) {
+          (0, _forEach.default)(_context7 = c.get('conditions')).call(_context7, function (pred) {
             var newField = convertSingleField(pred, formSchema, inBetweenDateValues);
             newField = newField.set('name', pred);
             conditions = conditions.push(newField);
@@ -268,9 +284,9 @@ var _ConditionalTableContainer = /*#__PURE__*/function (_Component) {
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-        var _context5;
+        var _context8;
 
-        return (0, _find.default)(_context5 = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context5, function (row) {
+        return (0, _find.default)(_context8 = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context8, function (row) {
           return row.config.name === key;
         });
       } else {

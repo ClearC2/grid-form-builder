@@ -41,9 +41,13 @@ const getFieldSchema = (key, formSchema) => {
 
 const getBetweenDatesValues = (query) => {
   return query
+    .filter(q => q.name.includes('date'))
     .map(q => {
       if (q.values && q.values.length) {
-        return q.values[0]
+        return {
+          field: q.name,
+          value: q.values[0]
+        }
       }
     })
     .filter(Boolean)
@@ -73,9 +77,10 @@ const convertSingleField = (c, formSchema, inBetweenDateValues) => {
         })
         // https://github.com/ClearC2/bleu/issues/4734
       } else if (mergeDate) {
+        const values = inBetweenDateValues.filter(v => v.field === c.get('name')).map(v => v.value)
         newFormValue = Map({
           condition: 'is between',
-          values: List(inBetweenDateValues),
+          values: List(values),
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
           isfield: c.get('isfield', false),

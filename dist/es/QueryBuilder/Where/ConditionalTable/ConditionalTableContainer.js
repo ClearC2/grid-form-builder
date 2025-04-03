@@ -15,6 +15,7 @@ import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
 import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
@@ -72,11 +73,18 @@ var getFieldSchema = function getFieldSchema(key, formSchema) {
 };
 
 var getBetweenDatesValues = function getBetweenDatesValues(query) {
-  var _context2;
+  var _context2, _context3;
 
-  return _filterInstanceProperty(_context2 = _mapInstanceProperty(query).call(query, function (q) {
+  return _filterInstanceProperty(_context2 = _mapInstanceProperty(_context3 = _filterInstanceProperty(query).call(query, function (q) {
+    var _context4;
+
+    return _includesInstanceProperty(_context4 = q.name).call(_context4, 'date');
+  })).call(_context3, function (q) {
     if (_valuesInstanceProperty(q) && _valuesInstanceProperty(q).length) {
-      return _valuesInstanceProperty(q)[0];
+      return {
+        field: q.name,
+        value: _valuesInstanceProperty(q)[0]
+      };
     }
   })).call(_context2, Boolean);
 };
@@ -100,9 +108,17 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
           format: c.get('format', '')
         }); // https://github.com/ClearC2/bleu/issues/4734
       } else if (mergeDate) {
+        var _context5;
+
+        var values = _mapInstanceProperty(_context5 = _filterInstanceProperty(inBetweenDateValues).call(inBetweenDateValues, function (v) {
+          return v.field === c.get('name');
+        })).call(_context5, function (v) {
+          return v.value;
+        });
+
         newFormValue = Map({
           condition: 'is between',
-          values: List(inBetweenDateValues),
+          values: List(values),
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
           isfield: c.get('isfield', false),
@@ -156,17 +172,17 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
     }
 
     if (query.conditions) {
-      var _context3;
+      var _context6;
 
       var inBetweenDateValues = getBetweenDatesValues(query.conditions);
 
-      _forEachInstanceProperty(_context3 = fromJS(query.conditions)).call(_context3, function (c) {
+      _forEachInstanceProperty(_context6 = fromJS(query.conditions)).call(_context6, function (c) {
         if (c.get('conditions')) {
-          var _context4;
+          var _context7;
 
           var conditions = List();
 
-          _forEachInstanceProperty(_context4 = c.get('conditions')).call(_context4, function (pred) {
+          _forEachInstanceProperty(_context7 = c.get('conditions')).call(_context7, function (pred) {
             var newField = convertSingleField(pred, formSchema, inBetweenDateValues);
             newField = newField.set('name', pred);
             conditions = conditions.push(newField);
@@ -231,9 +247,9 @@ var _ConditionalTableContainer = /*#__PURE__*/function (_Component) {
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-        var _context5;
+        var _context8;
 
-        return _findInstanceProperty(_context5 = List(formSchema.jsonschema.layout)).call(_context5, function (row) {
+        return _findInstanceProperty(_context8 = List(formSchema.jsonschema.layout)).call(_context8, function (row) {
           return row.config.name === key;
         });
       } else {
