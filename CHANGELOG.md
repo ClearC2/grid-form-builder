@@ -1,3 +1,10 @@
+# [3.117.0](https://github.com/ClearC2/grid-form-builder/compare/v3.116.1...v3.117.0) (2025-04-03)
+
+
+### Features
+
+* **select:** adds create option position to creatable selects ([3ea6b34](https://github.com/ClearC2/grid-form-builder/commit/3ea6b34cc356a93f742edc5c327747b488cde6dd))
+
 ## [3.116.1](https://github.com/ClearC2/grid-form-builder/compare/v3.116.0...v3.116.1) (2025-03-31)
 
 

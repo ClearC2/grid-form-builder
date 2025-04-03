@@ -97,7 +97,9 @@ var Select = function Select(props) {
       warning = props.warning,
       onBlur = props.onBlur,
       _props$showOptionTool = props.showOptionTooltips,
-      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
+      _props$createOptionPo = props.createOptionPosition,
+      createOptionPosition = _props$createOptionPo === void 0 ? 'last' : _props$createOptionPo;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -343,6 +345,7 @@ var Select = function Select(props) {
     defaultValue: selectValue,
     onChange: handleChange,
     autoComplete: autoComplete,
+    createOptionPosition: createOptionPosition,
     components: _objectSpread(_objectSpread({}, customComponents), {}, {
       Option: Option
     }),
@@ -413,5 +416,6 @@ Select.propTypes = {
   warning: _propTypes.default.string,
   onBlur: _propTypes.default.func,
   showOptionTooltips: _propTypes.default.bool,
-  data: _propTypes.default.object
+  data: _propTypes.default.object,
+  createOptionPosition: _propTypes.default.string
 };
