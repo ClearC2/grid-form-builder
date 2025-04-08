@@ -41,7 +41,7 @@ const getFieldSchema = (key, formSchema) => {
 
 const getBetweenDatesValues = (query) => {
   return query
-    .filter(q => q.name.includes('date'))
+    .filter(q => String(q.name).includes('date'))
     .map(q => {
       if (q.values && q.values.length) {
         return {
