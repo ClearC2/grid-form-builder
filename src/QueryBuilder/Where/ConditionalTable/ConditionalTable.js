@@ -193,7 +193,7 @@ export default class ConditionalTable extends Component {
         conditions: []
       }
     }
-    Map(formValues).forEach((value, key) => {
+    Map(formValues).filter((val) => !!val).forEach((value, key) => {
       let newValue
       let rawValues
       if (!value.type) {
