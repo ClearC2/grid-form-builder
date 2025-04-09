@@ -1,3 +1,10 @@
+## [3.117.1](https://github.com/ClearC2/grid-form-builder/compare/v3.117.0...v3.117.1) (2025-04-09)
+
+
+### Bug Fixes
+
+* **reporting:** query bug ([#237](https://github.com/ClearC2/grid-form-builder/issues/237)) ([762c021](https://github.com/ClearC2/grid-form-builder/commit/762c0217f5fc3face724155125e0eea324fcd779))
+
 # [3.117.0](https://github.com/ClearC2/grid-form-builder/compare/v3.116.1...v3.117.0) (2025-04-03)
 
 

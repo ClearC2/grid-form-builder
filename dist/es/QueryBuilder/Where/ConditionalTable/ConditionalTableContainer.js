@@ -78,7 +78,7 @@ var getBetweenDatesValues = function getBetweenDatesValues(query) {
   return _filterInstanceProperty(_context2 = _mapInstanceProperty(_context3 = _filterInstanceProperty(query).call(query, function (q) {
     var _context4;
 
-    return _includesInstanceProperty(_context4 = q.name).call(_context4, 'date');
+    return _includesInstanceProperty(_context4 = String(q.name)).call(_context4, 'date');
   })).call(_context3, function (q) {
     if (_valuesInstanceProperty(q) && _valuesInstanceProperty(q).length) {
       return {

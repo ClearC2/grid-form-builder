@@ -121,7 +121,7 @@ var getBetweenDatesValues = function getBetweenDatesValues(query) {
   return (0, _filter.default)(_context2 = (0, _map.default)(_context3 = (0, _filter.default)(query).call(query, function (q) {
     var _context4;
 
-    return (0, _includes.default)(_context4 = q.name).call(_context4, 'date');
+    return (0, _includes.default)(_context4 = String(q.name)).call(_context4, 'date');
   })).call(_context3, function (q) {
     if ((0, _values.default)(q) && (0, _values.default)(q).length) {
       return {
