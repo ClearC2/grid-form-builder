@@ -378,33 +378,32 @@
             "category": "TASKS",
             "options": [{
               "label": "Contract Signing",
-              "value": "contractsigning",
-              "keyword": "TASKS"
+              "value": "Contract Signing",
+              "color": "red"
             }, {
               "label": "Customer Service",
-              "value": "customerservice",
-              "keyword": "TASKS"
+              "value": "Customer Service",
+              "color": ""
             }, {
               "label": "Demonstration",
-              "value": "demonstration",
-              "keyword": "TASKS"
+              "value": "Demonstration",
+              "color": ""
             }, {
               "label": "Executive Meeting",
-              "value": "executivemeeting",
-              "keyword": "TASKS"
+              "value": "Executive Meeting",
+              "color": "yellow"
             }, {
               "label": "Initial Meeting",
-              "value": "initialmeeting",
-              "keyword": "TASKS"
-            },
-            {
-              "label": "Kick Off Meeting",
-              "value": "kickoffmeeting",
-              "keyword": "TASKS"
+              "value": "Initial Meeting",
+              "color": ""
             }, {
-              "label": "Internet Hub",
-              "value": "internethub",
-              "keyword": "TASKS"
+              "label": "Kick Off Meeting",
+              "value": "Kick Off Meeting",
+              "color": ""
+            }, {
+              "label": "Internet Hubbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+              "value": "Internet Hub",
+              "color": "green"
             }]
           },
           "cascade": {

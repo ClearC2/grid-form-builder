@@ -13,7 +13,8 @@ export default class Example extends Component {
   state = {
     isInvalidWarning: false,
     formValues: Map({
-      'rich-text-input-1': 'Some Previous String'
+      'rich-text-input-1': 'Some Previous String',
+      multiselecttest: 'Internet Hub'
       // inputtest: 'Clear C2, Inc.',
       // textareatest: '1234 Main Street',
       // meta_created_date: 'swiggity swoogity here comes the moogity',

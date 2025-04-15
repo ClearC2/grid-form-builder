@@ -307,6 +307,9 @@ const Multiselect = props => {
             } else {
               base.backgroundColor = '#8bb7ff91'
             }
+            if (parent?.data?.color) {
+              base.backgroundColor = parent.data.color
+            }
             if (window.CSS.supports('color', parent.data.value)) {
               base.backgroundColor = parent.data.value
             }

@@ -189,6 +189,18 @@ export const convertDelimitedValueIntoLabelValueArray = ({delimit, delimiter, va
     }
   })
 
+  // add labels and colors if there are any - JRA 04/15/2025
+  values = values.map(value => {
+    const matchingOption = formattedOptions.find(option => {
+      return option.value === value.value
+    })
+    if (matchingOption) {
+      if (matchingOption.label) value.label = matchingOption.label
+      if (matchingOption.color) value.color = matchingOption.color
+    }
+    return value
+  })
+
   if (formattedOptions.length && showValidOptions) { // if we were provided options we are going to try to match the values up with what options we have available
     // a consequence of doing this is that we will lose any value that is not a valid option - JRA 02/07/2020
     // Update: showing invalid options as a default, schemas need to specify if they want to show valid options only via showValidOptions in config = AHP 10/5/2023
