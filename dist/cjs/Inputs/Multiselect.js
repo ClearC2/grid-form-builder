@@ -425,11 +425,17 @@ var Multiselect = function Multiselect(props) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), optionsStyle), optionsTheme);
       },
       multiValue: function multiValue(base, parent) {
+        var _parent$data;
+
         if (!interactive) {
           base.color = 'green';
           base.backgroundColor = '#a6eca67a';
         } else {
           base.backgroundColor = '#8bb7ff91';
+        }
+
+        if (parent !== null && parent !== void 0 && (_parent$data = parent.data) !== null && _parent$data !== void 0 && _parent$data.color) {
+          base.backgroundColor = parent.data.color;
         }
 
         if (window.CSS.supports('color', parent.data.value)) {

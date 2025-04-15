@@ -1,3 +1,10 @@
+# [3.118.0](https://github.com/ClearC2/grid-form-builder/compare/v3.117.1...v3.118.0) (2025-04-15)
+
+
+### Features
+
+* **multiselect:** selected options should now honor background coloring if a color is provided in the option object ([f1b3d6b](https://github.com/ClearC2/grid-form-builder/commit/f1b3d6b8c477d61c5b9051cd43eefc3ad081e30a))
+
 ## [3.117.1](https://github.com/ClearC2/grid-form-builder/compare/v3.117.0...v3.117.1) (2025-04-09)
 
 

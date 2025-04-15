@@ -251,6 +251,19 @@ var convertDelimitedValueIntoLabelValueArray = function convertDelimitedValueInt
         values.push(tempValueObject);
       }
     }
+  }); // add labels and colors if there are any - JRA 04/15/2025
+
+  values = (0, _map.default)(values).call(values, function (value) {
+    var matchingOption = (0, _find.default)(formattedOptions).call(formattedOptions, function (option) {
+      return option.value === value.value;
+    });
+
+    if (matchingOption) {
+      if (matchingOption.label) value.label = matchingOption.label;
+      if (matchingOption.color) value.color = matchingOption.color;
+    }
+
+    return value;
   });
 
   if (formattedOptions.length && showValidOptions) {
