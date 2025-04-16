@@ -132,6 +132,11 @@ export var CONDITIONS = {
     minFields: 0,
     invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
   },
+  'next year': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
+  },
   'last year': {
     maxFields: 0,
     minFields: 0,
@@ -152,12 +157,22 @@ export var CONDITIONS = {
     minFields: 0,
     invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
   },
+  'next fiscal year': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
+  },
   'last fiscal year': {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
   },
   'this quarter': {
+    maxFields: 0,
+    minFields: 0,
+    invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
+  },
+  'next quarter': {
     maxFields: 0,
     minFields: 0,
     invalidInputTypes: _toConsumableArray(ALL_BUT_DATES)
