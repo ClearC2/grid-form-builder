@@ -38,7 +38,14 @@ const Percentage = props => {
 
   const {theme} = useTheme()
 
+  const formatValue = (val) => {
+    const num = parseFloat(val)
+    if (isNaN(num)) return ''
+    return num.toFixed(decimals)
+  }
+
   const [isFocused, setIsFocused] = useState(false)
+  const [formattedValue, setFormattedValue] = useState(formatValue(value))
 
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)
@@ -46,22 +53,32 @@ const Percentage = props => {
 
   const handleOnBlur = useCallback(() => {
     setIsFocused(false)
-  }, [])
 
-  const handleOnChange = useCallback(e => {
-    let {value: newValue} = e.target
-    newValue = (newValue + '').replace('%', '')
-    const placedDecimals = newValue.split('.')[1] || 0
-    if (decimals && placedDecimals.length > decimals) newValue = newValue.substring(0, newValue.length - 1)
-    if (!isNaN(newValue) && newValue >= minimum && newValue <= maximum) {
-      onChange({
-        target: {
-          value: newValue,
-          name
-        }
-      })
+    const num = parseFloat(formattedValue)
+    if (!isNaN(num)) {
+      const formatted = num.toFixed(decimals)
+      setFormattedValue(formatted)
+      onChange({target: {value: formatted, name}})
     }
-  }, [onChange, name, decimals, maximum, minimum])
+  }, [formattedValue, decimals, name, onChange])
+
+  const handleOnChange = useCallback(
+    (e) => {
+      const newValue = e.target.value.replace('%', '').trim()
+      const parts = newValue.split('.')
+      const decimalPart = parts[1] || ''
+
+      if (decimals && decimalPart.length > decimals) return
+
+      setFormattedValue(newValue)
+
+      const num = parseFloat(newValue)
+      if (!isNaN(num) && num >= minimum && num <= maximum) {
+        onChange({target: {value: newValue, name}})
+      }
+    },
+    [decimals, name, onChange, minimum, maximum]
+  )
 
   const isDisabled = readonly || disabled || !interactive
 
@@ -70,13 +87,16 @@ const Percentage = props => {
   if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control'
   let validationError
-  if (required && requiredWarning && (value + '').trim().length === 0 && !isFocused) {
+  if (required && requiredWarning && (formattedValue + '').trim().length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
   let validationWarning
-  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+  if (maxlength && (formattedValue + '').length && (formattedValue + '').length >= maxlength) {
     validationWarning = `Maximum character limit of ${maxlength} reached.`
+  }
+  if (maximum && (formattedValue + '').length && (formattedValue + '').length >= maximum) {
+    validationError = `Maximum character limit of ${maximum} reached.`
   }
   let outerClass = 'gfb-input-outer'
   if (isFocused) {
@@ -98,7 +118,7 @@ const Percentage = props => {
             <input
               className={className}
               name={name}
-              value={!isFocused && (value + '').length ? value + '%' : value}
+              value={!isFocused && (value + '').length ? formattedValue + '%' : formattedValue}
               onChange={handleOnChange}
               readOnly={isDisabled}
               autoFocus={autofocus}

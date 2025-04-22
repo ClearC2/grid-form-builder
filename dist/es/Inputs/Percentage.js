@@ -3,8 +3,9 @@ import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context3, _context4; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context3 = ownKeys(Object(source), !0)).call(_context3, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context4 = ownKeys(Object(source))).call(_context4, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
+import _parseFloat from "@babel/runtime-corejs3/core-js-stable/parse-float";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
@@ -17,13 +18,13 @@ import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 
 var Percentage = function Percentage(props) {
-  var _context;
+  var _context2;
 
   var name = props.name,
       _props$value = props.value,
@@ -66,24 +67,55 @@ var Percentage = function Percentage(props) {
   var _useTheme = useTheme(),
       theme = _useTheme.theme;
 
+  var formatValue = function formatValue(val) {
+    var num = _parseFloat(val);
+
+    if (isNaN(num)) return '';
+    return num.toFixed(decimals);
+  };
+
   var _useState = useState(false),
       _useState2 = _slicedToArray(_useState, 2),
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
+
+  var _useState3 = useState(formatValue(value)),
+      _useState4 = _slicedToArray(_useState3, 2),
+      formattedValue = _useState4[0],
+      setFormattedValue = _useState4[1];
 
   var handleOnFocus = useCallback(function () {
     setIsFocused(true);
   }, []);
   var handleOnBlur = useCallback(function () {
     setIsFocused(false);
-  }, []);
-  var handleOnChange = useCallback(function (e) {
-    var newValue = e.target.value;
-    newValue = (newValue + '').replace('%', '');
-    var placedDecimals = newValue.split('.')[1] || 0;
-    if (decimals && placedDecimals.length > decimals) newValue = newValue.substring(0, newValue.length - 1);
 
-    if (!isNaN(newValue) && newValue >= minimum && newValue <= maximum) {
+    var num = _parseFloat(formattedValue);
+
+    if (!isNaN(num)) {
+      var formatted = num.toFixed(decimals);
+      setFormattedValue(formatted);
+      onChange({
+        target: {
+          value: formatted,
+          name: name
+        }
+      });
+    }
+  }, [formattedValue, decimals, minimum, maximum, name, onChange]);
+  var handleOnChange = useCallback(function (e) {
+    var _context;
+
+    var newValue = _trimInstanceProperty(_context = e.target.value.replace('%', '')).call(_context);
+
+    var parts = newValue.split('.');
+    var decimalPart = parts[1] || '';
+    if (decimals && decimalPart.length > decimals) return;
+    setFormattedValue(newValue);
+
+    var num = _parseFloat(newValue);
+
+    if (!isNaN(num) && num >= minimum && num <= maximum) {
       onChange({
         target: {
           value: newValue,
@@ -91,7 +123,7 @@ var Percentage = function Percentage(props) {
         }
       });
     }
-  }, [onChange, name, decimals, maximum, minimum]);
+  }, [decimals, name, onChange, minimum, maximum]);
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
@@ -99,15 +131,19 @@ var Percentage = function Percentage(props) {
   var controlClass = 'gfb-input__control';
   var validationError;
 
-  if (required && requiredWarning && _trimInstanceProperty(_context = value + '').call(_context).length === 0 && !isFocused) {
+  if (required && requiredWarning && _trimInstanceProperty(_context2 = formattedValue + '').call(_context2).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }
 
   var validationWarning;
 
-  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+  if (maxlength && (formattedValue + '').length && (formattedValue + '').length >= maxlength) {
     validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+  }
+
+  if (maximum && (formattedValue + '').length && (formattedValue + '').length >= maximum) {
+    validationError = "Maximum character limit of ".concat(maximum, " reached.");
   }
 
   var outerClass = 'gfb-input-outer';
@@ -147,7 +183,7 @@ var Percentage = function Percentage(props) {
   }, jsx("input", {
     className: className,
     name: name,
-    value: !isFocused && (value + '').length ? value + '%' : value,
+    value: !isFocused && (value + '').length ? formattedValue + '%' : formattedValue,
     onChange: handleOnChange,
     readOnly: isDisabled,
     autoFocus: autofocus,
