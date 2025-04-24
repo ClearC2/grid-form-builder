@@ -84,6 +84,12 @@ var Percentage = function Percentage(props) {
       formattedValue = _useState4[0],
       setFormattedValue = _useState4[1];
 
+  useEffect(function () {
+    if (!isFocused) {
+      setFormattedValue(formatValue(value));
+    }
+  }, [value, decimals, isFocused]); //eslint-disable-line
+
   var handleOnFocus = useCallback(function () {
     setIsFocused(true);
   }, []);
@@ -102,7 +108,7 @@ var Percentage = function Percentage(props) {
         }
       });
     }
-  }, [formattedValue, decimals, minimum, maximum, name, onChange]);
+  }, [formattedValue, decimals, name, onChange]);
   var handleOnChange = useCallback(function (e) {
     var _context;
 
@@ -111,18 +117,31 @@ var Percentage = function Percentage(props) {
     var parts = newValue.split('.');
     var decimalPart = parts[1] || '';
     if (decimals && decimalPart.length > decimals) return;
-    setFormattedValue(newValue);
 
     var num = _parseFloat(newValue);
 
-    if (!isNaN(num) && num >= minimum && num <= maximum) {
+    if (newValue === '' || newValue === '.' || isNaN(num)) {
+      setFormattedValue(newValue);
       onChange({
         target: {
-          value: newValue,
+          value: '',
           name: name
         }
       });
+      return;
     }
+
+    if (num < minimum || num > maximum) {
+      return;
+    }
+
+    setFormattedValue(newValue);
+    onChange({
+      target: {
+        value: newValue,
+        name: name
+      }
+    });
   }, [decimals, name, onChange, minimum, maximum]);
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
@@ -142,8 +161,8 @@ var Percentage = function Percentage(props) {
     validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
   }
 
-  if (maximum && (formattedValue + '').length && (formattedValue + '').length >= maximum) {
-    validationError = "Maximum character limit of ".concat(maximum, " reached.");
+  if (maximum && _parseFloat(formattedValue) && _parseFloat(formattedValue) > maximum) {
+    validationError = "Maximum value of ".concat(maximum, " reached.");
   }
 
   var outerClass = 'gfb-input-outer';
@@ -183,7 +202,7 @@ var Percentage = function Percentage(props) {
   }, jsx("input", {
     className: className,
     name: name,
-    value: !isFocused && (value + '').length ? formattedValue + '%' : formattedValue,
+    value: !isFocused && (formattedValue + '').length ? formattedValue + '%' : formattedValue,
     onChange: handleOnChange,
     readOnly: isDisabled,
     autoFocus: autofocus,

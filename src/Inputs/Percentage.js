@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useCallback, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
@@ -47,6 +47,12 @@ const Percentage = props => {
   const [isFocused, setIsFocused] = useState(false)
   const [formattedValue, setFormattedValue] = useState(formatValue(value))
 
+  useEffect(() => {
+    if (!isFocused) {
+      setFormattedValue(formatValue(value))
+    }
+  }, [value, decimals, isFocused]) //eslint-disable-line
+
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)
   }, [])
@@ -70,12 +76,18 @@ const Percentage = props => {
 
       if (decimals && decimalPart.length > decimals) return
 
-      setFormattedValue(newValue)
-
       const num = parseFloat(newValue)
-      if (!isNaN(num) && num >= minimum && num <= maximum) {
-        onChange({target: {value: newValue, name}})
+      if (newValue === '' || newValue === '.' || isNaN(num)) {
+        setFormattedValue(newValue)
+        onChange({target: {value: '', name}})
+        return
       }
+
+      if (num < minimum || num > maximum) {
+        return
+      }
+      setFormattedValue(newValue)
+      onChange({target: {value: newValue, name}})
     },
     [decimals, name, onChange, minimum, maximum]
   )
@@ -95,8 +107,8 @@ const Percentage = props => {
   if (maxlength && (formattedValue + '').length && (formattedValue + '').length >= maxlength) {
     validationWarning = `Maximum character limit of ${maxlength} reached.`
   }
-  if (maximum && (formattedValue + '').length && (formattedValue + '').length >= maximum) {
-    validationError = `Maximum character limit of ${maximum} reached.`
+  if (maximum && parseFloat(formattedValue) && parseFloat(formattedValue) > maximum) {
+    validationError = `Maximum value of ${maximum} reached.`
   }
   let outerClass = 'gfb-input-outer'
   if (isFocused) {
@@ -109,7 +121,6 @@ const Percentage = props => {
   const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
-
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
@@ -118,7 +129,7 @@ const Percentage = props => {
             <input
               className={className}
               name={name}
-              value={!isFocused && (value + '').length ? formattedValue + '%' : formattedValue}
+              value={!isFocused && (formattedValue + '').length ? formattedValue + '%' : formattedValue}
               onChange={handleOnChange}
               readOnly={isDisabled}
               autoFocus={autofocus}
