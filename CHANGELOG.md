@@ -1,3 +1,10 @@
+## [3.119.1](https://github.com/ClearC2/grid-form-builder/compare/v3.119.0...v3.119.1) (2025-04-28)
+
+
+### Bug Fixes
+
+* **percentage:** format value for percentage input with decimal prop ([#239](https://github.com/ClearC2/grid-form-builder/issues/239)) ([91eedbe](https://github.com/ClearC2/grid-form-builder/commit/91eedbe2849ad5a6b68fa6f876b66896b27aa62c))
+
 # [3.119.0](https://github.com/ClearC2/grid-form-builder/compare/v3.118.0...v3.119.0) (2025-04-16)
 
 

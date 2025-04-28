@@ -24,11 +24,13 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
-var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
-
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
+
+var _parseFloat2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-float"));
+
+var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
 var _core = require("@emotion/core");
 
@@ -42,10 +44,10 @@ var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context3, _context4; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context3 = ownKeys(Object(source), !0)).call(_context3, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context4 = ownKeys(Object(source))).call(_context4, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var Percentage = function Percentage(props) {
-  var _context;
+  var _context2;
 
   var name = props.name,
       _props$value = props.value,
@@ -88,32 +90,78 @@ var Percentage = function Percentage(props) {
   var _useTheme = (0, _useTheme2.default)(),
       theme = _useTheme.theme;
 
+  var formatValue = function formatValue(val) {
+    var num = (0, _parseFloat2.default)(val);
+    if (isNaN(num)) return '';
+    return num.toFixed(decimals);
+  };
+
   var _useState = (0, _react.useState)(false),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(formatValue(value)),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      formattedValue = _useState4[0],
+      setFormattedValue = _useState4[1];
+
+  (0, _react.useEffect)(function () {
+    if (!isFocused) {
+      setFormattedValue(formatValue(value));
+    }
+  }, [value, decimals, isFocused]); //eslint-disable-line
 
   var handleOnFocus = (0, _react.useCallback)(function () {
     setIsFocused(true);
   }, []);
   var handleOnBlur = (0, _react.useCallback)(function () {
     setIsFocused(false);
-  }, []);
-  var handleOnChange = (0, _react.useCallback)(function (e) {
-    var newValue = e.target.value;
-    newValue = (newValue + '').replace('%', '');
-    var placedDecimals = newValue.split('.')[1] || 0;
-    if (decimals && placedDecimals.length > decimals) newValue = newValue.substring(0, newValue.length - 1);
+    var num = (0, _parseFloat2.default)(formattedValue);
 
-    if (!isNaN(newValue) && newValue >= minimum && newValue <= maximum) {
+    if (!isNaN(num)) {
+      var formatted = num.toFixed(decimals);
+      setFormattedValue(formatted);
       onChange({
         target: {
-          value: newValue,
+          value: formatted,
           name: name
         }
       });
     }
-  }, [onChange, name, decimals, maximum, minimum]);
+  }, [formattedValue, decimals, name, onChange]);
+  var handleOnChange = (0, _react.useCallback)(function (e) {
+    var _context;
+
+    var newValue = (0, _trim.default)(_context = e.target.value.replace('%', '')).call(_context);
+    var parts = newValue.split('.');
+    var decimalPart = parts[1] || '';
+    if (decimals && decimalPart.length > decimals) return;
+    var num = (0, _parseFloat2.default)(newValue);
+
+    if (newValue === '' || newValue === '.' || isNaN(num)) {
+      setFormattedValue(newValue);
+      onChange({
+        target: {
+          value: '',
+          name: name
+        }
+      });
+      return;
+    }
+
+    if (num < minimum || num > maximum) {
+      return;
+    }
+
+    setFormattedValue(newValue);
+    onChange({
+      target: {
+        value: newValue,
+        name: name
+      }
+    });
+  }, [decimals, name, onChange, minimum, maximum]);
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
@@ -121,15 +169,19 @@ var Percentage = function Percentage(props) {
   var controlClass = 'gfb-input__control';
   var validationError;
 
-  if (required && requiredWarning && (0, _trim.default)(_context = value + '').call(_context).length === 0 && !isFocused) {
+  if (required && requiredWarning && (0, _trim.default)(_context2 = formattedValue + '').call(_context2).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }
 
   var validationWarning;
 
-  if (maxlength && (value + '').length && (value + '').length >= maxlength) {
+  if (maxlength && (formattedValue + '').length && (formattedValue + '').length >= maxlength) {
     validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+  }
+
+  if (maximum && (0, _parseFloat2.default)(formattedValue) && (0, _parseFloat2.default)(formattedValue) > maximum) {
+    validationError = "Maximum value of ".concat(maximum, " reached.");
   }
 
   var outerClass = 'gfb-input-outer';
@@ -169,7 +221,7 @@ var Percentage = function Percentage(props) {
   }, (0, _core.jsx)("input", {
     className: className,
     name: name,
-    value: !isFocused && (value + '').length ? value + '%' : value,
+    value: !isFocused && (formattedValue + '').length ? formattedValue + '%' : formattedValue,
     onChange: handleOnChange,
     readOnly: isDisabled,
     autoFocus: autofocus,
