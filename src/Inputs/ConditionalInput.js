@@ -54,6 +54,7 @@ const ConditionalInput = props => {
     cond === 'today' || cond === 'this month' || cond === 'year to date' || cond === 'fiscal year to date' || cond === 'fiscal year' ||
     cond === 'this quarter' || cond === 'quarter to date' || cond === 'this week' ||
     cond === 'last year' || cond === 'this year' || cond === 'last fiscal year' ||
+    cond === 'next year' || cond === 'next fiscal year' || cond === 'next quarter' ||
     (values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size) ||
     (values.getIn([name, 'conditions'], List()).size > 0)
   return (
