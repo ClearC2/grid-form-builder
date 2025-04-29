@@ -135,7 +135,7 @@ var ConditionalInput = function ConditionalInput(props) {
   var vals = values.getIn([name, 'values'], (0, _immutable.List)());
   var hasValue = vals.size > 0 || (0, _includes.default)(cond).call(cond, 'blank') ||
   /* eslint-disable-next-line max-len */
-  cond === 'today' || cond === 'this month' || cond === 'year to date' || cond === 'fiscal year to date' || cond === 'fiscal year' || cond === 'this quarter' || cond === 'quarter to date' || cond === 'this week' || cond === 'last year' || cond === 'this year' || cond === 'last fiscal year' || values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size || values.getIn([name, 'conditions'], (0, _immutable.List)()).size > 0;
+  cond === 'today' || cond === 'this month' || cond === 'year to date' || cond === 'fiscal year to date' || cond === 'fiscal year' || cond === 'this quarter' || cond === 'quarter to date' || cond === 'this week' || cond === 'last year' || cond === 'this year' || cond === 'last fiscal year' || cond === 'next year' || cond === 'next fiscal year' || cond === 'next quarter' || values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size || values.getIn([name, 'conditions'], (0, _immutable.List)()).size > 0;
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "gfb-input-outer",
     style: inputOuter
