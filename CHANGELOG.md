@@ -1,3 +1,10 @@
+# [3.120.0](https://github.com/ClearC2/grid-form-builder/compare/v3.119.2...v3.120.0) (2025-05-08)
+
+
+### Features
+
+* **regex-pattern:** test field for regex pattern on validate ([#241](https://github.com/ClearC2/grid-form-builder/issues/241)) ([c0c1d07](https://github.com/ClearC2/grid-form-builder/commit/c0c1d071280d9face61ac9e29f773168029b6184))
+
 ## [3.119.2](https://github.com/ClearC2/grid-form-builder/compare/v3.119.1...v3.119.2) (2025-04-29)
 
 

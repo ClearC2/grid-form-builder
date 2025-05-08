@@ -25,7 +25,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_R
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context6, _context7; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context6 = ownKeys(Object(source), !0)).call(_context6, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context7 = ownKeys(Object(source))).call(_context7, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context7, _context8; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context7 = ownKeys(Object(source), !0)).call(_context7, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context8 = ownKeys(Object(source))).call(_context8, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
@@ -629,7 +629,7 @@ var FormValidator = /*#__PURE__*/function (_Component) {
       var reasons = [];
 
       _forEachInstanceProperty(layout).call(layout, function (field) {
-        var _context3;
+        var _context4;
 
         var _field$config3 = field.config,
             config = _field$config3 === void 0 ? {} : _field$config3;
@@ -642,9 +642,27 @@ var FormValidator = /*#__PURE__*/function (_Component) {
             _config$minimum = config.minimum,
             minimum = _config$minimum === void 0 ? 0 : _config$minimum,
             _config$maximum = config.maximum,
-            maximum = _config$maximum === void 0 ? 0 : _config$maximum;
+            maximum = _config$maximum === void 0 ? 0 : _config$maximum,
+            _config$pattern = config.pattern,
+            pattern = _config$pattern === void 0 ? null : _config$pattern,
+            _config$message = config.message,
+            message = _config$message === void 0 ? '' : _config$message;
 
-        if (required && _trimInstanceProperty(_context3 = formValues.get(name, '') + '').call(_context3).length === 0) {
+        if (pattern) {
+          var regex = new RegExp(pattern);
+
+          if (regex.test(formValues.get(name, ''))) {
+            var _context3;
+
+            reasons.push({
+              reason: 'invalid characters',
+              message: _concatInstanceProperty(_context3 = "".concat(label, " ")).call(_context3, message),
+              description: "The field ".concat(name, " has invalid characters.")
+            });
+          }
+        }
+
+        if (required && _trimInstanceProperty(_context4 = formValues.get(name, '') + '').call(_context4).length === 0) {
           reasons.push({
             reason: 'required',
             message: "".concat(label, " cannot be blank."),
@@ -751,9 +769,9 @@ var FormValidator = /*#__PURE__*/function (_Component) {
   _createClass(FormValidator, [{
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(p, s) {
-      var _context4,
+      var _context5,
           _this3 = this,
-          _context5;
+          _context6;
 
       if (p.formValues !== this.props.formValues) {
         this.updateFormValues(p.formValues); // this kills the extra render from values updating, the context updating will render - JRA 11/07/2019
@@ -761,7 +779,7 @@ var FormValidator = /*#__PURE__*/function (_Component) {
         return false;
       }
 
-      var update = _someInstanceProperty(_context4 = _Object$keys(this.props)).call(_context4, function (prop) {
+      var update = _someInstanceProperty(_context5 = _Object$keys(this.props)).call(_context5, function (prop) {
         if (_this3.props[prop] && p[prop] && typeof _this3.props[prop].toJS === 'function' && typeof p[prop].toJS === 'function') {
           return !_this3.props[prop].equals(p[prop]);
         } else {
@@ -769,7 +787,7 @@ var FormValidator = /*#__PURE__*/function (_Component) {
         }
       });
 
-      if (!update) update = _someInstanceProperty(_context5 = _Object$keys(this.state)).call(_context5, function (state) {
+      if (!update) update = _someInstanceProperty(_context6 = _Object$keys(this.state)).call(_context6, function (state) {
         return _this3.state[state] !== s[state];
       });
       return update;
