@@ -495,7 +495,26 @@ export default class FormValidator extends Component {
     const reasons = []
     layout.forEach(field => {
       const {config = {}} = field
-      const {required = false, name, label = name, type, minimum = 0, maximum = 0} = config
+      const {
+        required = false,
+        name,
+        label = name,
+        type,
+        minimum = 0,
+        maximum = 0,
+        pattern = null,
+        message = ''
+      } = config
+      if (pattern) {
+        const regex = new RegExp(pattern)
+        if (regex.test(formValues.get(name, ''))) {
+          reasons.push({
+            reason: 'invalid characters',
+            message: `${label} ${message}`,
+            description: `The field ${name} has invalid characters.`
+          })
+        }
+      }
       if (required && (formValues.get(name, '') + '').trim().length === 0) {
         reasons.push({
           reason: 'required',
