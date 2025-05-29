@@ -9,6 +9,7 @@ import {convertFieldToSearch} from './QueryBuilder/Utils'
 import InnerCell from './Inputs'
 import {FaTrash as Trash} from 'react-icons/fa'
 import useTheme, {ThemeProvider} from './theme/useTheme'
+import {useGlobalTooltipHelper} from './useGlobalTooltipHelper'
 
 let inputEventListenerDebouncer = null
 
@@ -75,6 +76,7 @@ const FormBuilder = (props) => {
     fieldDefinitions = defaults.map,
     c2class
   } = props
+  useGlobalTooltipHelper()
   const [grid, updateGrid] = useState({layout: [], elements: []})
   const [requiredWarning, updateRequiredWarning] = useState(!!validate)
   const [compact, updateCompact] = useState(
