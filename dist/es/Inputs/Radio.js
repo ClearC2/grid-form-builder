@@ -15,7 +15,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
@@ -41,6 +41,7 @@ var Radio = function Radio(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       warning = props.warning,
+      tabIndex = props.tabIndex,
       _props$showOptionTool = props.showOptionTooltips,
       showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
   var _style$value = style.value,
@@ -132,6 +133,7 @@ var Radio = function Radio(props) {
       "data-tip": true,
       "data-for": optionId
     }, jsx("input", {
+      tabIndex: tabIndex,
       className: className,
       name: name,
       value: option.value,
@@ -140,7 +142,9 @@ var Radio = function Radio(props) {
       ,
       onChange: handleOnChange,
       disabled: readonly || disabled || !interactive,
-      autoFocus: autofocus,
+      autoFocus: autofocus // onFocus={handleOnFocus}
+      // onBlur={handleOnBlur}
+      ,
       type: "radio",
       autoComplete: autoComplete,
       css: valueCSS
@@ -171,6 +175,7 @@ Radio.propTypes = {
   autofocus: PropTypes.bool,
   keyword: PropTypes.object,
   inline: PropTypes.bool,
+  tabIndex: PropTypes.number,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
