@@ -1,7 +1,7 @@
 import React, {useRef} from 'react'
 import PropTypes from 'prop-types'
 import Portal from './Portal'
-import {Tooltip} from 'react-tooltip'
+import Tooltip from 'react-tooltip'
 import {FaExclamationTriangle} from 'react-icons/fa'
 import {randomId} from './utils'
 

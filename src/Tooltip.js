@@ -4,23 +4,29 @@ import Portal from './Portal'
 import {Tooltip} from 'react-tooltip'
 import {trackActiveTooltip} from './tooltipController'
 
-const PortalTooltip = props => {
+const PortalTooltip = (props) => {
   const {message, id} = props
   const tooltipRef = useRef(null)
+  // eslint-disable-next-line no-console
+  console.log({tooltipRef})
 
-  return (
-    (message && id) ? (
-      <Portal>
-        <Tooltip id={id} ref={tooltipRef} onShow={() => {
+  return message && id ? (
+    <Portal>
+      <Tooltip
+        id={id}
+        ref={tooltipRef}
+        onShow={() => {
+          // eslint-disable-next-line no-console
+          console.log('on show?')
           if (tooltipRef.current) {
             trackActiveTooltip(tooltipRef.current)
           }
-        }}>
-          <div dangerouslySetInnerHTML={{__html: message}} />
-        </Tooltip>
-      </Portal>
-    ) : null
-  )
+        }}
+      >
+        <div dangerouslySetInnerHTML={{__html: message}} />
+      </Tooltip>
+    </Portal>
+  ) : null
 }
 
 PortalTooltip.propTypes = {
