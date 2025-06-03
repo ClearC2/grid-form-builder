@@ -56,11 +56,10 @@ const getBetweenDatesValues = (query) => {
 const convertSingleField = (c, formSchema, inBetweenDateValues) => {
   let newFormValue
   const schema = getFieldSchema(c.get('name'), formSchema)
+  const type = schema.config && typeof schema.config.type === 'string' ? schema.config.type.toLowerCase() : 'input'
   const mergeDate = c.get('mergeDate', false)
   if (schema) {
-    if (schema.config &&
-        schema.config.type &&
-        Set(TEXT_INPUTS).has(schema.config.type.toLowerCase()) &&
+    if (Set(TEXT_INPUTS).has(type) &&
         c.get('comparator') !== 'is blank' &&
         c.get('comparator') !== 'is not blank'
     ) {
