@@ -22,6 +22,7 @@ const Radio = props => {
     style = {},
     required,
     warning,
+    tabIndex,
     showOptionTooltips = false // this flag is used to show tooltips for each individual option
   } = props
 
@@ -91,6 +92,7 @@ const Radio = props => {
                   data-for={optionId}
                 >
                   <input
+                    tabIndex={tabIndex}
                     className={className}
                     name={name}
                     value={option.value}
@@ -99,6 +101,8 @@ const Radio = props => {
                     onChange={handleOnChange}
                     disabled={readonly || disabled || !interactive}
                     autoFocus={autofocus}
+                    // onFocus={handleOnFocus}
+                    // onBlur={handleOnBlur}
                     type='radio'
                     autoComplete={autoComplete}
                     css={valueCSS}
@@ -130,6 +134,7 @@ Radio.propTypes = {
   autofocus: PropTypes.bool,
   keyword: PropTypes.object,
   inline: PropTypes.bool,
+  tabIndex: PropTypes.number,
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
