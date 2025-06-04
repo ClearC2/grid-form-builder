@@ -1,22 +1,11 @@
-import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
 import _objectWithoutProperties from "@babel/runtime-corejs3/helpers/esm/objectWithoutProperties";
-import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
-import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
-import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
-import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
-import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-var _excluded = ["value", "options", "onKeyDown", "onFocus", "onBlur", "onChange", "onInit", "htmlRef"];
+const _excluded = ["value", "options", "onKeyDown", "onFocus", "onBlur", "onChange", "onInit", "htmlRef"];
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 // /* eslint-disable */
+
 // This is a temporary internal fork of cleave.js to remove deprecated react life cycles until cleave.js can be updated - JRA 11/21/2019
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -27,126 +16,94 @@ import PhoneFormatter from 'cleave.js/src/shortcuts/PhoneFormatter';
 import CreditCardDetector from 'cleave.js/src/shortcuts/CreditCardDetector';
 import Util from 'cleave.js/src/utils/Util';
 import DefaultProperties from 'cleave.js/src/common/DefaultProperties';
-
-var Cleave = /*#__PURE__*/function (_Component) {
-  _inherits(Cleave, _Component);
-
-  var _super = _createSuper(Cleave);
-
-  function Cleave(_props) {
-    var _this;
-
-    _classCallCheck(this, Cleave);
-
-    _this = _super.call(this, _props);
-
-    _defineProperty(_assertThisInitialized(_this), "updateRegisteredEvents", function (props) {
-      var _this$registeredEvent = _this.registeredEvents,
-          onKeyDown = _this$registeredEvent.onKeyDown,
-          onChange = _this$registeredEvent.onChange,
-          onFocus = _this$registeredEvent.onFocus,
-          onBlur = _this$registeredEvent.onBlur,
-          onInit = _this$registeredEvent.onInit;
-      if (props.onInit && props.onInit !== onInit) _this.registeredEvents.onInit = props.onInit;
-      if (props.onChange && props.onChange !== onChange) _this.registeredEvents.onChange = props.onChange;
-      if (props.onFocus && props.onFocus !== onFocus) _this.registeredEvents.onFocus = props.onFocus;
-      if (props.onBlur && props.onBlur !== onBlur) _this.registeredEvents.onBlur = props.onBlur;
-      if (props.onKeyDown && props.onKeyDown !== onKeyDown) _this.registeredEvents.onKeyDown = props.onKeyDown;
+export default class Cleave extends Component {
+  constructor(_props) {
+    super(_props);
+    _defineProperty(this, "updateRegisteredEvents", props => {
+      let {
+        onKeyDown,
+        onChange,
+        onFocus,
+        onBlur,
+        onInit
+      } = this.registeredEvents;
+      if (props.onInit && props.onInit !== onInit) this.registeredEvents.onInit = props.onInit;
+      if (props.onChange && props.onChange !== onChange) this.registeredEvents.onChange = props.onChange;
+      if (props.onFocus && props.onFocus !== onFocus) this.registeredEvents.onFocus = props.onFocus;
+      if (props.onBlur && props.onBlur !== onBlur) this.registeredEvents.onBlur = props.onBlur;
+      if (props.onKeyDown && props.onKeyDown !== onKeyDown) this.registeredEvents.onKeyDown = props.onKeyDown;
     });
+    _defineProperty(this, "init", () => {
+      let pps = this.properties;
 
-    _defineProperty(_assertThisInitialized(_this), "init", function () {
-      var pps = _this.properties; // so no need for this lib at all
-
+      // so no need for this lib at all
       if (!pps.numeral && !pps.phone && !pps.creditCard && !pps.time && !pps.date && pps.blocksLength === 0 && !pps.prefix) {
-        _this.onInput(pps.initValue);
-
-        _this.registeredEvents.onInit(_assertThisInitialized(_this));
-
+        this.onInput(pps.initValue);
+        this.registeredEvents.onInit(this);
         return;
       }
-
       pps.maxLength = Util.getMaxLength(pps.blocks);
-      _this.isAndroid = Util.isAndroid();
+      this.isAndroid = Util.isAndroid();
+      this.initPhoneFormatter();
+      this.initDateFormatter();
+      this.initTimeFormatter();
+      this.initNumeralFormatter();
 
-      _this.initPhoneFormatter();
-
-      _this.initDateFormatter();
-
-      _this.initTimeFormatter();
-
-      _this.initNumeralFormatter(); // avoid touch input field if value is null
+      // avoid touch input field if value is null
       // otherwise Firefox will add red box-shadow for <input required />
-
-
       if (pps.initValue || pps.prefix && !pps.noImmediatePrefix) {
-        _this.onInput(pps.initValue);
+        this.onInput(pps.initValue);
       }
-
-      _this.registeredEvents.onInit(_assertThisInitialized(_this));
+      this.registeredEvents.onInit(this);
     });
-
-    _defineProperty(_assertThisInitialized(_this), "initNumeralFormatter", function () {
-      var pps = _this.properties;
-
+    _defineProperty(this, "initNumeralFormatter", () => {
+      let pps = this.properties;
       if (!pps.numeral) {
         return;
       }
-
       pps.numeralFormatter = new NumeralFormatter(pps.numeralDecimalMark, pps.numeralIntegerScale, pps.numeralDecimalScale, pps.numeralThousandsGroupStyle, pps.numeralPositiveOnly, pps.stripLeadingZeroes, pps.prefix, pps.signBeforePrefix, pps.delimiter);
     });
-
-    _defineProperty(_assertThisInitialized(_this), "initTimeFormatter", function () {
-      var pps = _this.properties;
-
+    _defineProperty(this, "initTimeFormatter", () => {
+      let pps = this.properties;
       if (!pps.time) {
         return;
       }
-
       pps.timeFormatter = new TimeFormatter(pps.timePattern, pps.timeFormat);
       pps.blocks = pps.timeFormatter.getBlocks();
       pps.blocksLength = pps.blocks.length;
       pps.maxLength = Util.getMaxLength(pps.blocks);
     });
-
-    _defineProperty(_assertThisInitialized(_this), "initDateFormatter", function () {
-      var pps = _this.properties;
-
+    _defineProperty(this, "initDateFormatter", () => {
+      let pps = this.properties;
       if (!pps.date) {
         return;
       }
-
       pps.dateFormatter = new DateFormatter(pps.datePattern, pps.dateMin, pps.dateMax);
       pps.blocks = pps.dateFormatter.getBlocks();
       pps.blocksLength = pps.blocks.length;
       pps.maxLength = Util.getMaxLength(pps.blocks);
     });
-
-    _defineProperty(_assertThisInitialized(_this), "initPhoneFormatter", function () {
-      var pps = _this.properties;
-
+    _defineProperty(this, "initPhoneFormatter", () => {
+      let pps = this.properties;
       if (!pps.phone) {
         return;
-      } // Cleave.AsYouTypeFormatter should be provided by
+      }
+
+      // Cleave.AsYouTypeFormatter should be provided by
       // external google closure lib
-
-
       try {
         pps.phoneFormatter = new PhoneFormatter(new pps.root.Cleave.AsYouTypeFormatter(pps.phoneRegionCode), pps.delimiter);
       } catch (ex) {
         throw new Error('Please include phone-type-formatter.{country}.js lib');
       }
     });
-
-    _defineProperty(_assertThisInitialized(_this), "setRawValue", function (value) {
-      var owner = _assertThisInitialized(_this);
-
-      var pps = owner.properties;
+    _defineProperty(this, "setRawValue", value => {
+      let owner = this;
+      let pps = owner.properties;
       value = value !== undefined && value !== null ? value.toString() : '';
-
       if (pps.numeral) {
         value = value.replace('.', pps.numeralDecimalMark);
       }
-
       pps.postDelimiterBackspace = false;
       owner.onChange({
         target: {
@@ -158,122 +115,101 @@ var Cleave = /*#__PURE__*/function (_Component) {
         persist: Util.noop
       });
     });
-
-    _defineProperty(_assertThisInitialized(_this), "getRawValue", function () {
-      var pps = _this.properties;
-      var rawValue = pps.result;
-
+    _defineProperty(this, "getRawValue", () => {
+      let pps = this.properties;
+      let rawValue = pps.result;
       if (pps.rawValueTrimPrefix) {
         rawValue = Util.getPrefixStrippedValue(rawValue, pps.prefix, pps.prefixLength, pps.result, pps.delimiter, pps.delimiters);
       }
-
       if (pps.numeral) {
         rawValue = pps.numeralFormatter ? pps.numeralFormatter.getRawValue(rawValue) : '';
       } else {
         rawValue = Util.stripDelimiters(rawValue, pps.delimiter, pps.delimiters);
       }
-
       return rawValue;
     });
-
-    _defineProperty(_assertThisInitialized(_this), "getISOFormatDate", function () {
-      var pps = _this.properties;
+    _defineProperty(this, "getISOFormatDate", () => {
+      let pps = this.properties;
       return pps.date ? pps.dateFormatter.getISOFormatDate() : '';
     });
-
-    _defineProperty(_assertThisInitialized(_this), "getISOFormatTime", function () {
-      var pps = _this.properties;
+    _defineProperty(this, "getISOFormatTime", () => {
+      let pps = this.properties;
       return pps.time ? pps.timeFormatter.getISOFormatTime() : '';
     });
-
-    _defineProperty(_assertThisInitialized(_this), "onInit", function (owner) {
+    _defineProperty(this, "onInit", owner => {
       return owner;
     });
+    _defineProperty(this, "onKeyDown", event => {
+      let pps = this.properties;
+      let charCode = event.which || event.keyCode;
 
-    _defineProperty(_assertThisInitialized(_this), "onKeyDown", function (event) {
-      var pps = _this.properties;
-      var charCode = event.which || event.keyCode; // if we got any charCode === 8, this means, that this device correctly
+      // if we got any charCode === 8, this means, that this device correctly
       // sends backspace keys in event, so we do not need to apply any hacks
-
-      _this.hasBackspaceSupport = _this.hasBackspaceSupport || charCode === 8;
-
-      if (!_this.hasBackspaceSupport && Util.isAndroidBackspaceKeydown(_this.lastInputValue, pps.result)) {
+      this.hasBackspaceSupport = this.hasBackspaceSupport || charCode === 8;
+      if (!this.hasBackspaceSupport && Util.isAndroidBackspaceKeydown(this.lastInputValue, pps.result)) {
         charCode = 8;
-      } // hit backspace when last character is delimiter
+      }
 
-
+      // hit backspace when last character is delimiter
       var postDelimiter = Util.getPostDelimiter(pps.result, pps.delimiter, pps.delimiters);
-
       if (charCode === 8 && postDelimiter) {
         pps.postDelimiterBackspace = postDelimiter;
       } else {
         pps.postDelimiterBackspace = false;
       }
-
-      _this.registeredEvents.onKeyDown(event);
+      this.registeredEvents.onKeyDown(event);
     });
-
-    _defineProperty(_assertThisInitialized(_this), "onFocus", function (event) {
-      var pps = _this.properties;
-      event.target.rawValue = _this.getRawValue();
+    _defineProperty(this, "onFocus", event => {
+      let pps = this.properties;
+      event.target.rawValue = this.getRawValue();
       event.target.value = pps.result;
-
-      _this.registeredEvents.onFocus(event);
-
-      Util.fixPrefixCursor(_this.element, pps.prefix, pps.delimiter, pps.delimiters);
+      this.registeredEvents.onFocus(event);
+      Util.fixPrefixCursor(this.element, pps.prefix, pps.delimiter, pps.delimiters);
     });
-
-    _defineProperty(_assertThisInitialized(_this), "onBlur", function (event) {
-      var pps = _this.properties;
-      event.target.rawValue = _this.getRawValue();
+    _defineProperty(this, "onBlur", event => {
+      let pps = this.properties;
+      event.target.rawValue = this.getRawValue();
       event.target.value = pps.result;
-
-      _this.registeredEvents.onBlur(event);
+      this.registeredEvents.onBlur(event);
     });
-
-    _defineProperty(_assertThisInitialized(_this), "onChange", function (event) {
-      var pps = _this.properties;
-
-      _this.onInput(event.target.value);
-
-      event.target.rawValue = _this.getRawValue();
+    _defineProperty(this, "onChange", event => {
+      let pps = this.properties;
+      this.onInput(event.target.value);
+      event.target.rawValue = this.getRawValue();
       event.target.value = pps.result;
-
-      _this.registeredEvents.onChange(event);
+      this.registeredEvents.onChange(event);
     });
+    _defineProperty(this, "onInput", (value, fromProps, bypassSetState) => {
+      const pps = this.properties;
+      const {
+        disabled,
+        readOnly
+      } = this.props;
 
-    _defineProperty(_assertThisInitialized(_this), "onInput", function (value, fromProps, bypassSetState) {
-      var pps = _this.properties;
-      var _this$props = _this.props,
-          disabled = _this$props.disabled,
-          readOnly = _this$props.readOnly; // case 1: delete one more character "4"
+      // case 1: delete one more character "4"
       // 1234*| -> hit backspace -> 123|
       // case 2: last character is not delimiter which is:
       // 12|34* -> hit backspace -> 1|34*
-
       var postDelimiterAfter = Util.getPostDelimiter(value, pps.delimiter, pps.delimiters);
-
       if (!fromProps && !pps.numeral && pps.postDelimiterBackspace && !postDelimiterAfter) {
         value = Util.headStr(value, value.length - pps.postDelimiterBackspace.length);
-      } // phone formatter
+      }
 
-
+      // phone formatter
       if (pps.phone) {
         if (pps.prefix && (!pps.noImmediatePrefix || value.length)) {
           var _context;
-
           pps.result = pps.prefix + _sliceInstanceProperty(_context = pps.phoneFormatter.format(value)).call(_context, pps.prefix.length);
         } else if ((disabled || readOnly) && !pps.phoneFormatter.format(value)) {
           pps.result = value;
-          return _this.updateValueState(false);
+          return this.updateValueState(false);
         } else {
           pps.result = pps.phoneFormatter.format(value);
         }
+        return this.updateValueState(bypassSetState);
+      }
 
-        return _this.updateValueState(bypassSetState);
-      } // numeral formatter
-
-
+      // numeral formatter
       if (pps.numeral) {
         // Do not show prefix when noImmediatePrefix is specified
         // This mostly because we need to show user the native input placeholder
@@ -281,217 +217,197 @@ var Cleave = /*#__PURE__*/function (_Component) {
           pps.result = '';
         } else if ((readOnly || disabled) && isNaN(Number(value))) {
           pps.result = value;
-          return _this.updateValueState(false);
+          return this.updateValueState(false);
         } else {
           pps.result = pps.numeralFormatter.format(value);
         }
+        return this.updateValueState(bypassSetState);
+      }
 
-        return _this.updateValueState(bypassSetState);
-      } // date
-
-
+      // date
       if (pps.date) {
         value = pps.dateFormatter.getValidatedDate(value);
-      } // time
+      }
 
-
+      // time
       if (pps.time) {
         value = pps.timeFormatter.getValidatedTime(value);
-      } // strip delimiters
+      }
 
+      // strip delimiters
+      value = Util.stripDelimiters(value, pps.delimiter, pps.delimiters);
 
-      value = Util.stripDelimiters(value, pps.delimiter, pps.delimiters); // strip prefix
+      // strip prefix
+      value = Util.getPrefixStrippedValue(value, pps.prefix, pps.prefixLength, pps.result, pps.delimiter, pps.delimiters, pps.noImmediatePrefix);
 
-      value = Util.getPrefixStrippedValue(value, pps.prefix, pps.prefixLength, pps.result, pps.delimiter, pps.delimiters, pps.noImmediatePrefix); // strip non-numeric characters
+      // strip non-numeric characters
+      value = pps.numericOnly ? Util.strip(value, /[^\d]/g) : value;
 
-      value = pps.numericOnly ? Util.strip(value, /[^\d]/g) : value; // convert case
-
+      // convert case
       value = pps.uppercase ? value.toUpperCase() : value;
-      value = pps.lowercase ? value.toLowerCase() : value; // prevent from showing prefix when no immediate option enabled with empty input value
+      value = pps.lowercase ? value.toLowerCase() : value;
 
+      // prevent from showing prefix when no immediate option enabled with empty input value
       if (pps.prefix && (!pps.noImmediatePrefix || value.length)) {
-        value = pps.prefix + value; // no blocks specified, no need to do formatting
+        value = pps.prefix + value;
 
+        // no blocks specified, no need to do formatting
         if (pps.blocksLength === 0) {
           pps.result = value;
-          return _this.updateValueState(bypassSetState);
+          return this.updateValueState(bypassSetState);
         }
-      } // update credit card props
+      }
 
-
+      // update credit card props
       if (pps.creditCard) {
-        _this.updateCreditCardPropsByValue(value);
-      } // strip over length characters
+        this.updateCreditCardPropsByValue(value);
+      }
 
+      // strip over length characters
+      value = pps.maxLength > 0 ? Util.headStr(value, pps.maxLength) : value;
 
-      value = pps.maxLength > 0 ? Util.headStr(value, pps.maxLength) : value; // apply blocks
-
+      // apply blocks
       pps.result = Util.getFormattedValue(value, pps.blocks, pps.blocksLength, pps.delimiter, pps.delimiters, pps.delimiterLazyShow);
-      return _this.updateValueState(bypassSetState);
+      return this.updateValueState(bypassSetState);
     });
+    _defineProperty(this, "updateCreditCardPropsByValue", value => {
+      let pps = this.properties;
+      let creditCardInfo;
 
-    _defineProperty(_assertThisInitialized(_this), "updateCreditCardPropsByValue", function (value) {
-      var pps = _this.properties;
-      var creditCardInfo; // At least one of the first 4 characters has changed
-
+      // At least one of the first 4 characters has changed
       if (Util.headStr(pps.result, 4) === Util.headStr(value, 4)) {
         return;
       }
-
       creditCardInfo = CreditCardDetector.getInfo(value, pps.creditCardStrictMode);
       pps.blocks = creditCardInfo.blocks;
       pps.blocksLength = pps.blocks.length;
-      pps.maxLength = Util.getMaxLength(pps.blocks); // credit card type changed
+      pps.maxLength = Util.getMaxLength(pps.blocks);
 
+      // credit card type changed
       if (pps.creditCardType !== creditCardInfo.type) {
         pps.creditCardType = creditCardInfo.type;
-        pps.onCreditCardTypeChanged.call(_assertThisInitialized(_this), pps.creditCardType);
+        pps.onCreditCardTypeChanged.call(this, pps.creditCardType);
       }
     });
-
-    _defineProperty(_assertThisInitialized(_this), "updateValueState", function (bypassSetState) {
-      var pps = _this.properties;
-
-      if (!_this.element) {
+    _defineProperty(this, "updateValueState", bypassSetState => {
+      let pps = this.properties;
+      if (!this.element) {
         if (bypassSetState) {
           return {
             value: pps.result
           };
         } else {
-          _this.setState({
+          this.setState({
             value: pps.result
           });
         }
-
         return;
       }
-
-      var endPos = _this.element.selectionEnd;
-      var oldValue = _this.element.value;
+      var endPos = this.element.selectionEnd;
+      var oldValue = this.element.value;
       var newValue = pps.result;
-      _this.lastInputValue = newValue;
+      this.lastInputValue = newValue;
       endPos = Util.getNextCursorPosition(endPos, oldValue, newValue, pps.delimiter, pps.delimiters);
-
-      if (_this.isAndroid) {
-        _setTimeout(function () {
-          !bypassSetState && _this.setState({
+      if (this.isAndroid) {
+        _setTimeout(() => {
+          !bypassSetState && this.setState({
             value: newValue,
             cursorPosition: endPos
           });
         }, 1);
-
         return;
       }
-
       if (bypassSetState) {
         return {
           value: newValue,
           cursorPosition: endPos
         };
       } else {
-        _this.setState({
+        this.setState({
           value: newValue,
           cursorPosition: endPos
         });
       }
     });
-
-    var _value = _props.value,
-        options = _props.options,
-        _onKeyDown = _props.onKeyDown,
-        _onChange = _props.onChange,
-        _onFocus = _props.onFocus,
-        _onBlur = _props.onBlur,
-        _onInit = _props.onInit;
-    _this.registeredEvents = {
+    let {
+      value: _value,
+      options,
+      onKeyDown: _onKeyDown,
+      onChange: _onChange,
+      onFocus: _onFocus,
+      onBlur: _onBlur,
+      onInit: _onInit
+    } = _props;
+    this.registeredEvents = {
       onInit: _onInit || Util.noop,
       onChange: _onChange || Util.noop,
       onFocus: _onFocus || Util.noop,
       onBlur: _onBlur || Util.noop,
       onKeyDown: _onKeyDown || Util.noop
     };
-
     if (!options) {
       options = {};
     }
-
     options.initValue = _value;
-    _this.properties = DefaultProperties.assign({}, options);
-    _this.state = {
-      value: _this.properties.result,
+    this.properties = DefaultProperties.assign({}, options);
+    this.state = {
+      value: this.properties.result,
       cursorPosition: 0
     };
-    return _this;
   }
-
-  _createClass(Cleave, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.init();
+  componentDidMount() {
+    this.init();
+  }
+  componentDidUpdate(props) {
+    const pps = this.properties;
+    Util.setSelection(this.element, this.state.cursorPosition, pps.document);
+    this.updateRegisteredEvents(this.props);
+    let newValue = this.props.value;
+    if (newValue !== undefined) {
+      newValue = newValue.toString();
+      if (newValue !== this.properties.initValue) {
+        this.properties.initValue = newValue;
+        this.onInput(newValue, true);
+      }
     }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(props) {
-      var pps = this.properties;
-      Util.setSelection(this.element, this.state.cursorPosition, pps.document);
-      this.updateRegisteredEvents(this.props);
-      var newValue = this.props.value;
 
-      if (newValue !== undefined) {
-        newValue = newValue.toString();
-
-        if (newValue !== this.properties.initValue) {
-          this.properties.initValue = newValue;
-          this.onInput(newValue, true);
+    // update phone region code - // not supporting changing region after mount for now, this will almost certainly blow up in an in - JRA 11/21/2019
+    // if (phoneRegionCode && phoneRegionCode !== this.properties.phoneRegionCode) {
+    //   this.properties.phoneRegionCode = phoneRegionCode
+    //   this.initPhoneFormatter()
+    //   this.onInput(this.properties.result)
+    // }
+  }
+  render() {
+    let _this$props = this.props,
+      {
+        value,
+        options,
+        onKeyDown,
+        onFocus,
+        onBlur,
+        onChange,
+        onInit,
+        htmlRef
+      } = _this$props,
+      propsToTransfer = _objectWithoutProperties(_this$props, _excluded);
+    return /*#__PURE__*/React.createElement("input", _extends({
+      type: "text",
+      ref: ref => {
+        this.element = ref;
+        if (!htmlRef) {
+          return;
         }
-      } // update phone region code - // not supporting changing region after mount for now, this will almost certainly blow up in an in - JRA 11/21/2019
-      // if (phoneRegionCode && phoneRegionCode !== this.properties.phoneRegionCode) {
-      //   this.properties.phoneRegionCode = phoneRegionCode
-      //   this.initPhoneFormatter()
-      //   this.onInput(this.properties.result)
-      // }
-
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _arguments = arguments,
-          _this2 = this;
-
-      var _this$props2 = this.props,
-          value = _this$props2.value,
-          options = _this$props2.options,
-          onKeyDown = _this$props2.onKeyDown,
-          onFocus = _this$props2.onFocus,
-          onBlur = _this$props2.onBlur,
-          onChange = _this$props2.onChange,
-          onInit = _this$props2.onInit,
-          htmlRef = _this$props2.htmlRef,
-          propsToTransfer = _objectWithoutProperties(_this$props2, _excluded);
-
-      return /*#__PURE__*/React.createElement("input", _extends({
-        type: "text",
-        ref: function ref(_ref) {
-          _this2.element = _ref;
-
-          if (!htmlRef) {
-            return;
-          }
-
-          htmlRef.apply(_this2, _arguments);
-        },
-        value: this.state.value,
-        onKeyDown: this.onKeyDown,
-        onChange: this.onChange,
-        onFocus: this.onFocus,
-        onBlur: this.onBlur
-      }, propsToTransfer));
-    }
-  }]);
-
-  return Cleave;
-}(Component);
-
+        htmlRef.apply(this, arguments);
+      },
+      value: this.state.value,
+      onKeyDown: this.onKeyDown,
+      onChange: this.onChange,
+      onFocus: this.onFocus,
+      onBlur: this.onBlur
+    }, propsToTransfer));
+  }
+}
 _defineProperty(Cleave, "propTypes", {
   options: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string]),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
@@ -504,5 +420,3 @@ _defineProperty(Cleave, "propTypes", {
   disabled: PropTypes.bool,
   readOnly: PropTypes.bool
 });
-
-export { Cleave as default };

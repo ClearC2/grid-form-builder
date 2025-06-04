@@ -1,9 +1,6 @@
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context5, _context6; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context5 = ownKeys(Object(source), !0)).call(_context5, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context6 = ownKeys(Object(source))).call(_context6, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context5, _context6; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context5 = ownKeys(Object(t), !0)).call(_context5, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context6 = ownKeys(Object(t))).call(_context6, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
@@ -14,208 +11,163 @@ import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/inst
 import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
-
-var Checkbox = function Checkbox(props) {
+const Checkbox = props => {
   var _context3, _context4;
-
-  var name = props.name,
-      _props$value = props.value,
-      value = _props$value === void 0 ? '' : _props$value,
-      onChange = props.onChange,
-      readonly = props.readonly,
-      disabled = props.disabled,
-      autofocus = props.autofocus,
-      placeholder = props.placeholder,
-      tabIndex = props.tabIndex,
-      onValue = props.onValue,
-      offValue = props.offValue,
-      autoComplete = props.autoComplete,
-      _props$interactive = props.interactive,
-      interactive = _props$interactive === void 0 ? true : _props$interactive,
-      requiredWarning = props.requiredWarning,
-      _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
-      required = props.required,
-      warning = props.warning;
-  var _style$value = style.value,
-      valueStyle = _style$value === void 0 ? {} : _style$value,
-      _style$inputOuter = style.inputOuter,
-      inputOuter = _style$inputOuter === void 0 ? {} : _style$inputOuter,
-      _style$inputInner = style.inputInner,
-      inputInner = _style$inputInner === void 0 ? {} : _style$inputInner,
-      _style$inputControl = style.inputControl,
-      inputControl = _style$inputControl === void 0 ? {} : _style$inputControl,
-      _style$valueContainer = style.valueContainer,
-      valueContainer = _style$valueContainer === void 0 ? {} : _style$valueContainer,
-      _style$indicators = style.indicators,
-      indicators = _style$indicators === void 0 ? {} : _style$indicators;
-
-  var _useTheme = useTheme(),
-      theme = _useTheme.theme;
-
-  var truthy = useRef([true, 1, '1', 't', 'T', 'true', 'True', 'TRUE', 'y', 'Y', 'Yes', 'YES', 'yes', 'on', 'On', 'ON', onValue || name]);
-  var falsey = useRef([// eslint-disable-line
+  const {
+    name,
+    value = '',
+    onChange,
+    readonly,
+    disabled,
+    autofocus,
+    placeholder,
+    tabIndex,
+    onValue,
+    offValue,
+    autoComplete,
+    interactive = true,
+    requiredWarning,
+    style = {},
+    required,
+    warning
+  } = props;
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {}
+  } = style;
+  const {
+    theme
+  } = useTheme();
+  const truthy = useRef([true, 1, '1', 't', 'T', 'true', 'True', 'TRUE', 'y', 'Y', 'Yes', 'YES', 'yes', 'on', 'On', 'ON', onValue || name]);
+  const falsey = useRef([
+  // eslint-disable-line
   false, 0, '0', 'f', 'F', 'false', 'False', 'FALSE', 'n', 'N', 'No', 'NO', 'no', 'off', 'Off', 'OFF', offValue || '']);
-  var handleOnChange = useCallback(function (e) {
-    var oppositeOfCurrentValue = null;
-
+  const handleOnChange = useCallback(e => {
+    let oppositeOfCurrentValue = null;
     if (typeof offValue !== 'undefined' && typeof onValue !== 'undefined') {
       if (value === offValue) oppositeOfCurrentValue = onValue;else if (value === onValue) oppositeOfCurrentValue = offValue;else oppositeOfCurrentValue = onValue; // could be dangerous, this says if you provided an on and off value but the current value isn't either one of them, make the action set this to the true value
     } else if (onValue) {
       var _context;
-
       if (_indexOfInstanceProperty(_context = falsey.current).call(_context, value) > -1) oppositeOfCurrentValue = onValue;else oppositeOfCurrentValue = ''; // put this weird check in to default off value to blank if only an onValue was provided
     } else if (offValue) {
       var _context2;
-
       if (_indexOfInstanceProperty(_context2 = truthy.current).call(_context2, value) > -1) oppositeOfCurrentValue = offValue;else oppositeOfCurrentValue = '1'; // put this weird check in to default on value to 1 if only an offValue was provided
     } else {
       switch (value) {
         case true:
           oppositeOfCurrentValue = false;
           break;
-
         case false:
           oppositeOfCurrentValue = true;
           break;
-
         case 0:
           oppositeOfCurrentValue = 1;
           break;
-
         case 1:
           oppositeOfCurrentValue = 0;
           break;
-
         case '0':
           oppositeOfCurrentValue = '1';
           break;
-
         case '1':
           oppositeOfCurrentValue = '0';
           break;
-
         case 'true':
           oppositeOfCurrentValue = 'false';
           break;
-
         case 'false':
           oppositeOfCurrentValue = 'true';
           break;
-
         case 'True':
           oppositeOfCurrentValue = 'False';
           break;
-
         case 'False':
           oppositeOfCurrentValue = 'True';
           break;
-
         case 'TRUE':
           oppositeOfCurrentValue = 'FALSE';
           break;
-
         case 'FALSE':
           oppositeOfCurrentValue = 'TRUE';
           break;
-
         case 't':
           oppositeOfCurrentValue = 'f';
           break;
-
         case 'f':
           oppositeOfCurrentValue = 't';
           break;
-
         case 'T':
           oppositeOfCurrentValue = 'F';
           break;
-
         case 'F':
           oppositeOfCurrentValue = 'T';
           break;
-
         case 'y':
           oppositeOfCurrentValue = 'n';
           break;
-
         case 'n':
           oppositeOfCurrentValue = 'y';
           break;
-
         case 'Y':
           oppositeOfCurrentValue = 'N';
           break;
-
         case 'N':
           oppositeOfCurrentValue = 'Y';
           break;
-
         case 'Yes':
           oppositeOfCurrentValue = 'No';
           break;
-
         case 'No':
           oppositeOfCurrentValue = 'Yes';
           break;
-
         case 'YES':
           oppositeOfCurrentValue = 'NO';
           break;
-
         case 'NO':
           oppositeOfCurrentValue = 'YES';
           break;
-
         case 'yes':
           oppositeOfCurrentValue = 'no';
           break;
-
         case 'no':
           oppositeOfCurrentValue = 'yes';
           break;
-
         case 'On':
           oppositeOfCurrentValue = 'Off';
           break;
-
         case 'Off':
           oppositeOfCurrentValue = 'On';
           break;
-
         case 'ON':
           oppositeOfCurrentValue = 'OFF';
           break;
-
         case 'OFF':
           oppositeOfCurrentValue = 'ON';
           break;
-
         case 'on':
           oppositeOfCurrentValue = 'off';
           break;
-
         case 'off':
           oppositeOfCurrentValue = 'on';
           break;
-
         case '':
           oppositeOfCurrentValue = '1';
           break;
         // default the opposite of blank as '1'
-
         default:
           oppositeOfCurrentValue = !!e.target.value;
       }
     }
-
     onChange({
       target: {
         name: e.target.name,
@@ -223,31 +175,23 @@ var Checkbox = function Checkbox(props) {
       }
     });
   }, [offValue, onChange, onValue, value]);
-  var checked = false;
+  let checked = false;
   if (_indexOfInstanceProperty(_context3 = truthy.current).call(_context3, value) > -1) checked = true;
-  var className = 'gfb-input__single-value gfb-input__input';
+  let className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
-  var controlClass = 'gfb-input__control gfb-boxless-input';
-  var validationError;
-
+  let controlClass = 'gfb-input__control gfb-boxless-input';
+  let validationError;
   if (required && requiredWarning && _trimInstanceProperty(_context4 = value + '').call(_context4).length === 0) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }
-
-  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
-
-  var inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
-
-  var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
-
-  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
-
-  var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
-
-  var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
-
+  const inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+  const inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
+  const inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
+  const valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+  const valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
+  const indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
   return jsx("div", {
     className: "gfb-input-outer",
     style: _objectSpread(_objectSpread({}, inputOuter), {}, {
@@ -292,7 +236,6 @@ var Checkbox = function Checkbox(props) {
     message: validationError
   })))));
 };
-
 export default Checkbox;
 Checkbox.propTypes = {
   onChange: PropTypes.func,

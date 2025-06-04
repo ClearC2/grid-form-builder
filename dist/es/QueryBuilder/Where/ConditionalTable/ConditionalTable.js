@@ -1,22 +1,11 @@
-import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
 import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
-import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
-import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
-import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
-import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
-import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context22, _context23; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context22 = ownKeys(Object(source), !0)).call(_context22, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context23 = ownKeys(Object(source))).call(_context23, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context12, _context13; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context12 = ownKeys(Object(t), !0)).call(_context12, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context13 = ownKeys(Object(t))).call(_context13, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
@@ -25,173 +14,128 @@ import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/insta
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 import React, { Component } from 'react';
 import { Map, List, Set } from 'immutable';
 import PropTypes from 'prop-types';
 import Toggle from './Toggle';
 import { CONDITIONS } from '../../../index';
-var X_ICON_CLASS = 'icon-close pull-right pointer';
-
-var ConditionalTable = /*#__PURE__*/function (_Component) {
-  _inherits(ConditionalTable, _Component);
-
-  var _super = _createSuper(ConditionalTable);
-
-  function ConditionalTable(props) {
-    var _context19;
-
-    var _this;
-
-    _classCallCheck(this, ConditionalTable);
-
-    _this = _super.call(this, props);
-
-    _defineProperty(_assertThisInitialized(_this), "buildMultiString", function (key, value) {
-      var exclude = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-      var rawValue = arguments.length > 3 ? arguments[3] : undefined;
-      var valString = '';
-
+const X_ICON_CLASS = 'icon-close pull-right pointer';
+export default class ConditionalTable extends Component {
+  constructor(props) {
+    var _this, _context1;
+    super(props);
+    _this = this;
+    _defineProperty(this, "buildMultiString", function (key, value) {
+      let exclude = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      let rawValue = arguments.length > 3 ? arguments[3] : undefined;
+      let valString = '';
       if (value) {
         if (typeof value === 'string') {
-          var splitVal = value.split('¤');
-
+          const splitVal = value.split('¤');
           if (splitVal.length > 1) {
             value = splitVal;
           } else {
             value = [value];
           }
-        } else if (_typeof(value) === 'object') {
+        } else if (typeof value === 'object') {
           if (typeof value[0] === 'string' && value[0].split('¤').length > 1) {
             value = value[0].split('¤');
           } else {
-            value = _mapInstanceProperty(value).call(value, function (v) {
-              return v ? v.label || v : '';
-            });
+            value = _mapInstanceProperty(value).call(value, v => v ? v.label || v : '');
           }
         }
-
-        var i = value.length;
-        var cond = _this.getConditionValue(rawValue) || 'contains';
-
+        let i = value.length;
+        const cond = _this.getConditionValue(rawValue) || 'contains';
         if (i > CONDITIONS[cond].maxFields) {
           var _context;
-
           value = _sliceInstanceProperty(_context = List(value)).call(_context, 0, CONDITIONS[cond].maxFields).toJS();
         }
-
         i = value.length;
-
         if (value && _forEachInstanceProperty(value)) {
-          _forEachInstanceProperty(value).call(value, function (val) {
-            if (_typeof(val) === 'object') {
+          _forEachInstanceProperty(value).call(value, val => {
+            if (typeof val === 'object') {
               if (_valuesInstanceProperty(val)) {
                 val = _valuesInstanceProperty(val);
               } else {
                 val = val.label || val;
               }
             }
-
             valString = valString + val + (i > 1 ? ', ' : '');
             i--;
           });
         }
-
-        return "".concat(exclude ? ' (exclude) ' : '') + ' ' + _this.getConditionValue(rawValue) + ' ' + valString;
+        return `${exclude ? ' (exclude) ' : ''}` + ' ' + _this.getConditionValue(rawValue) + ' ' + valString;
       } else {
         return '';
       }
     });
-
-    _defineProperty(_assertThisInitialized(_this), "getLabel", function (key) {
-      var _this$props$formSchem = _this.props.formSchema,
-          formSchema = _this$props$formSchem === void 0 ? {} : _this$props$formSchem;
+    _defineProperty(this, "getLabel", key => {
+      let {
+        formSchema = {}
+      } = this.props;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
-
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-        var fieldSchema = _this.props.getFieldSchema(key);
-
-        var name = '';
-
+        const fieldSchema = this.props.getFieldSchema(key);
+        let name = '';
         if (fieldSchema) {
           name = fieldSchema.config.label || fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.label;
         }
-
         return name || '';
       } else {
         return 'No Key in schema';
       }
     });
-
-    _defineProperty(_assertThisInitialized(_this), "getFormat", function (key) {
-      var _this$props$formSchem2 = _this.props.formSchema,
-          formSchema = _this$props$formSchem2 === void 0 ? {} : _this$props$formSchem2;
+    _defineProperty(this, "getFormat", key => {
+      let {
+        formSchema = {}
+      } = this.props;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
-
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-        var fieldSchema = _this.props.getFieldSchema(key);
-
-        var format = '';
-        var type = '';
-
+        const fieldSchema = this.props.getFieldSchema(key);
+        let format = '';
+        let type = '';
         if (fieldSchema) {
           format = fieldSchema.config.format || fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.format;
           type = fieldSchema.config.type || fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.type;
-
           if (!format && (type === 'date' || type === 'datetime')) {
             format = type;
           }
         }
-
         return format || '';
       }
-
       return '';
     });
-
-    _defineProperty(_assertThisInitialized(_this), "getNewValue", function (value, key) {
-      var rawValues;
-      var newValue = List();
-
+    _defineProperty(this, "getNewValue", (value, key) => {
+      let rawValues;
+      let newValue = List();
       if (typeof value === 'string') {
         if (value !== '') {
-          var splitVal = value.split('¤');
-
+          const splitVal = value.split('¤');
           if (splitVal.length > 1) {
             newValue = List(splitVal);
           } else {
             newValue = List([value]);
           }
         }
-      } else if (_typeof(value) === 'object' && value.condition === undefined) {
+      } else if (typeof value === 'object' && value.condition === undefined) {
         if (!value.type && !_valuesInstanceProperty(value)) {
           newValue = List(value);
         } else {
           newValue = List(_valuesInstanceProperty(value));
         }
       } else {
-        if (_typeof(_valuesInstanceProperty(value)[0]) === 'object') {
+        if (typeof _valuesInstanceProperty(value)[0] === 'object') {
           var _context2;
-
           // for typeaheads
           rawValues = _valuesInstanceProperty(value);
-
-          var ids = _mapInstanceProperty(_context2 = _valuesInstanceProperty(value)).call(_context2, function (obj) {
-            return obj.value;
-          });
-
+          const ids = _mapInstanceProperty(_context2 = _valuesInstanceProperty(value)).call(_context2, obj => obj.value);
           newValue = List(ids);
         } else if (typeof _valuesInstanceProperty(value)[0] === 'string') {
           // inputs
           if (typeof _valuesInstanceProperty(value) === 'string') {
-            var _splitVal = _valuesInstanceProperty(value).split('¤');
-
-            if (_splitVal.length > 1) {
-              newValue = List(_splitVal);
+            const splitVal = _valuesInstanceProperty(value).split('¤');
+            if (splitVal.length > 1) {
+              newValue = List(splitVal);
             } else {
               newValue = List(_valuesInstanceProperty(value));
             }
@@ -200,50 +144,38 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
           }
         }
       }
-
       return {
         newValue: newValue,
         rawValues: rawValues
       };
     });
-
-    _defineProperty(_assertThisInitialized(_this), "buildRequest", function () {
+    _defineProperty(this, "buildRequest", function () {
       var _context3, _context4;
-
-      var formValues = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.props.formValues;
+      let formValues = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.props.formValues;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
-      var req = {
+      const req = {
         query: {
           type: _this.state.conditionType,
           conditions: []
         }
       };
-
-      _forEachInstanceProperty(_context3 = _filterInstanceProperty(_context4 = Map(formValues)).call(_context4, function (val) {
-        return !!val;
-      })).call(_context3, function (value, key) {
-        var newValue;
-        var rawValues;
-
+      _forEachInstanceProperty(_context3 = _filterInstanceProperty(_context4 = Map(formValues)).call(_context4, val => !!val)).call(_context3, (value, key) => {
+        let newValue;
+        let rawValues;
         if (!value.type) {
-          var resp = _this.getNewValue(value, key);
-
+          const resp = _this.getNewValue(value, key);
           newValue = resp.newValue;
           rawValues = resp.rawValues;
         }
-
         if (newValue && (newValue.size > 0 || _this.state.noValueConditions.has(value.condition) || value.dynamicValues)) {
-          var cond = 'contains';
-
+          let cond = 'contains';
           if (formValues[key] && formValues[key].condition) {
             cond = formValues[key].condition;
           }
-
           if (newValue.size > CONDITIONS[cond].maxFields) {
             newValue = _sliceInstanceProperty(newValue).call(newValue, 0, CONDITIONS[cond].maxFields);
-          } // https://github.com/ClearC2/bleu/issues/4734
-
-
+          }
+          // https://github.com/ClearC2/bleu/issues/4734
           if (cond === 'is between') {
             req.query.conditions.push({
               fieldSchema: _this.props.getFieldSchema(key),
@@ -260,7 +192,7 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
               mergeDate: true
             });
           } else {
-            var query = {
+            const query = {
               fieldSchema: _this.props.getFieldSchema(key),
               name: key,
               label: _this.getLabel(key),
@@ -271,40 +203,32 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
               not: value.not || false,
               format: _this.getFormat(key)
             };
-
             if (value.isfield) {
               query.isfield = value.isfield;
             }
-
             req.query.conditions.push(query);
           }
         } else if (value.type) {
           var _context5;
-
-          var newValues = [];
-
-          _forEachInstanceProperty(_context5 = value.conditions).call(_context5, function (v) {
-            var _this$getNewValue = _this.getNewValue(v, key),
-                newValue = _this$getNewValue.newValue,
-                rawValues = _this$getNewValue.rawValues;
-
+          const newValues = [];
+          _forEachInstanceProperty(_context5 = value.conditions).call(_context5, v => {
+            let {
+              newValue,
+              rawValues
+            } = _this.getNewValue(v, key);
             if (newValue.size > 0 || _this.state.noValueConditions.has(v.condition) || v.dynamicValues || _this.state.noValueConditions.has(v.comparator)) {
-              var _cond = 'contains';
-
+              let cond = 'contains';
               if (v && v.condition) {
-                _cond = v.condition;
+                cond = v.condition;
               }
-
               if (v && v.comparator) {
-                _cond = v.comparator;
+                cond = v.comparator;
               }
-
-              if (newValue.size > CONDITIONS[_cond].maxFields) {
-                newValue = _sliceInstanceProperty(newValue).call(newValue, 0, CONDITIONS[_cond].maxFields);
-              } // https://github.com/ClearC2/bleu/issues/4734
-
-
-              if (_cond === 'is between') {
+              if (newValue.size > CONDITIONS[cond].maxFields) {
+                newValue = _sliceInstanceProperty(newValue).call(newValue, 0, CONDITIONS[cond].maxFields);
+              }
+              // https://github.com/ClearC2/bleu/issues/4734
+              if (cond === 'is between') {
                 newValues.push({
                   fieldSchema: _this.props.getFieldSchema(key),
                   name: key,
@@ -324,7 +248,7 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
                   fieldSchema: _this.props.getFieldSchema(key),
                   name: key,
                   label: _this.getLabel(key),
-                  comparator: _cond,
+                  comparator: cond,
                   values: newValue,
                   dynamicValues: v.dynamicValues || value.dynamicValues,
                   rawValues: rawValues,
@@ -334,67 +258,58 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
               }
             }
           });
-
           value.conditions = newValues;
           req.query.conditions.push(value);
         }
       });
-
       return req;
     });
-
-    _defineProperty(_assertThisInitialized(_this), "onNextClick", function () {
-      var req = _this.buildRequest();
-
-      if (_this.props.onNextClick) {
-        _this.props.onNextClick(req);
+    _defineProperty(this, "onNextClick", () => {
+      const req = this.buildRequest();
+      if (this.props.onNextClick) {
+        this.props.onNextClick(req);
       }
     });
-
-    _defineProperty(_assertThisInitialized(_this), "handleToggleClick", function (e) {
-      if (_this.props.enableToggle) {
+    _defineProperty(this, "handleToggleClick", e => {
+      if (this.props.enableToggle) {
         if (e) {
-          _this.setState({
+          this.setState({
             conditionType: 'or'
           });
-
-          if (_this.props.onToggleChange) {
-            _this.props.onToggleChange('or');
+          if (this.props.onToggleChange) {
+            this.props.onToggleChange('or');
           }
         } else {
-          _this.setState({
+          this.setState({
             conditionType: 'and'
           });
-
-          if (_this.props.onToggleChange) {
-            _this.props.onToggleChange('and');
+          if (this.props.onToggleChange) {
+            this.props.onToggleChange('and');
           }
         }
       }
     });
-
-    _defineProperty(_assertThisInitialized(_this), "resetForm", function () {
+    _defineProperty(this, "resetForm", () => {
       var _context6;
-
-      var formValues = _this.prop.formValues;
+      let {
+        formValues
+      } = this.prop;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
-
-      _mapInstanceProperty(_context6 = _Object$keys(formValues)).call(_context6, function (key) {
-        var schema = _this.props.getFieldSchema(key);
-
+      _mapInstanceProperty(_context6 = _Object$keys(formValues)).call(_context6, key => {
+        const schema = this.props.getFieldSchema(key);
         if (schema && schema.config && (schema.config.type === 'textarea' || schema.config.type === 'checkbox' || schema.config.type === 'radio')) {
-          _this.props.handleOnChange({
+          this.props.handleOnChange({
             target: {
               name: key,
               value: ''
             }
           });
         } else {
-          _this.props.handleOnChange({
+          this.props.handleOnChange({
             target: {
               name: key,
               value: Map({
-                condition: _this.props.getDefaultCondition(schema.config.type),
+                condition: this.props.getDefaultCondition(schema.config.type),
                 values: List()
               })
             }
@@ -402,12 +317,10 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
         }
       });
     });
-
-    _defineProperty(_assertThisInitialized(_this), "handleRemoveConditionClick", function (e, key, predicateIndex) {
-      var schema = _this.props.getFieldSchema(key);
-
+    _defineProperty(this, "handleRemoveConditionClick", (e, key, predicateIndex) => {
+      const schema = this.props.getFieldSchema(key);
       if (schema && schema.config && (schema.config.type === 'textarea' || schema.config.type === 'checkbox' || schema.config.type === 'radio')) {
-        _this.props.handleOnChange({
+        this.props.handleOnChange({
           target: {
             name: key,
             value: ''
@@ -416,28 +329,25 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       } else {
         if (predicateIndex >= 0) {
           var _context7;
-
-          var predicate = _this.props.formValues[key];
-          var newConditions = [];
-
-          _forEachInstanceProperty(_context7 = predicate.conditions).call(_context7, function (c, i) {
+          const predicate = this.props.formValues[key];
+          const newConditions = [];
+          _forEachInstanceProperty(_context7 = predicate.conditions).call(_context7, (c, i) => {
             if (i !== predicateIndex) {
               newConditions.push(c);
             }
           });
-
           if (newConditions.length === 0) {
-            _this.props.handleOnChange({
+            this.props.handleOnChange({
               target: {
                 name: key,
                 value: Map({
-                  condition: _this.props.getDefaultCondition(schema.config.type),
+                  condition: this.props.getDefaultCondition(schema.config.type),
                   values: List()
                 })
               }
             });
           } else if (newConditions.length === 1) {
-            _this.props.handleOnChange({
+            this.props.handleOnChange({
               target: {
                 name: key,
                 value: predicate.conditions[0]
@@ -445,8 +355,7 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
             });
           } else {
             predicate.conditions = newConditions;
-
-            _this.props.handleOnChange({
+            this.props.handleOnChange({
               target: {
                 name: key,
                 value: predicate
@@ -454,11 +363,11 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
             });
           }
         } else {
-          _this.props.handleOnChange({
+          this.props.handleOnChange({
             target: {
               name: key,
               value: Map({
-                condition: _this.props.getDefaultCondition(schema.config.type),
+                condition: this.props.getDefaultCondition(schema.config.type),
                 values: List()
               })
             }
@@ -466,9 +375,8 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
         }
       }
     });
-
-    _defineProperty(_assertThisInitialized(_this), "renderDeleteIcon", function (key, value, predicateIndex) {
-      if (_this.props.enableDelete) {
+    _defineProperty(this, "renderDeleteIcon", (key, value, predicateIndex) => {
+      if (this.props.enableDelete) {
         return /*#__PURE__*/React.createElement("i", {
           id: 'deleteIcon',
           className: X_ICON_CLASS,
@@ -476,9 +384,8 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
             color: '#8c0000',
             marginTop: '3px'
           },
-          onClick: function onClick(e) {
-            _this.handleRemoveConditionClick(e, key, predicateIndex);
-
+          onClick: e => {
+            this.handleRemoveConditionClick(e, key, predicateIndex);
             e.preventDefault();
           }
         });
@@ -486,71 +393,57 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
         return null;
       }
     });
-
-    _defineProperty(_assertThisInitialized(_this), "getConditionValue", function (rawValue) {
+    _defineProperty(this, "getConditionValue", rawValue => {
       if (rawValue && rawValue.condition) {
         return rawValue.condition;
       } else {
         return 'contains';
       }
     });
-
-    _defineProperty(_assertThisInitialized(_this), "getFieldType", function (fieldName) {
+    _defineProperty(this, "getFieldType", fieldName => {
       var _context8;
-
-      var _this$props$formSchem3 = _this.props.formSchema,
-          formSchema = _this$props$formSchem3 === void 0 ? {} : _this$props$formSchem3;
+      let {
+        formSchema = {}
+      } = this.props;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
-      var type = '';
-
-      _forEachInstanceProperty(_context8 = formSchema.jsonschema.layout).call(_context8, function (field) {
+      let type = '';
+      _forEachInstanceProperty(_context8 = formSchema.jsonschema.layout).call(_context8, field => {
         if (field.config.name === fieldName) {
           type = field.config.type;
           return true;
         }
       });
-
       return type;
     });
-
-    _defineProperty(_assertThisInitialized(_this), "buildTableRow", function (key, value) {
-      var predicateIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
-      var extraCondRowStyles = {};
-      var rowClick;
-
+    _defineProperty(this, "buildTableRow", function (key, value) {
+      let predicateIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : -1;
+      let extraCondRowStyles = {};
+      let rowClick;
       if (_this.props.conditionRowOnClick) {
         extraCondRowStyles = _objectSpread(_objectSpread({}, extraCondRowStyles), {}, {
           cursor: 'pointer'
         });
-
-        rowClick = function rowClick(e) {
+        rowClick = e => {
           if (e.target.id !== 'deleteIcon') {
             _this.props.conditionRowOnClick(key, value);
           }
         };
       }
-
       if (value && _this.state.noValueConditions.has(value.condition)) {
-        var _context9, _context10;
-
         return /*#__PURE__*/React.createElement("tr", {
-          key: _concatInstanceProperty(_context9 = "row-".concat(key, "-")).call(_context9, predicateIndex),
+          key: `row-${key}-${predicateIndex}`,
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
         }, /*#__PURE__*/React.createElement("td", {
-          key: _concatInstanceProperty(_context10 = "column-".concat(key, "-")).call(_context10, predicateIndex),
+          key: `column-${key}-${predicateIndex}`,
           style: {
             wordWrap: 'break-word'
           }
         }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key, value, predicateIndex)));
       }
-
       if (value && typeof value === 'string') {
-        var _context11, _context12;
-
         // raw inputs
-        var val = value;
-
+        let val = value;
         if (_this.getFieldType(key) === 'checkbox') {
           if (val === '0' || val === 0) {
             val = 'false';
@@ -558,190 +451,163 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
             val = 'true';
           }
         }
-
         return (
           /*#__PURE__*/
           // for basic input
           React.createElement("tr", {
-            key: _concatInstanceProperty(_context11 = "row-".concat(key, "-")).call(_context11, predicateIndex),
+            key: `row-${key}-${predicateIndex}`,
             style: _objectSpread({}, extraCondRowStyles),
             onClick: rowClick
           }, /*#__PURE__*/React.createElement("td", {
-            key: _concatInstanceProperty(_context12 = "column-".concat(key, "-")).call(_context12, predicateIndex),
+            key: `column-${key}-${predicateIndex}`,
             style: {
               wordWrap: 'break-word'
             }
           }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value, predicateIndex)))
         );
       } else if (typeof value === 'boolean') {
-        var _context13, _context14;
-
         return /*#__PURE__*/React.createElement("tr", {
-          key: _concatInstanceProperty(_context13 = "row-".concat(key, "-")).call(_context13, predicateIndex),
+          key: `row-${key}-${predicateIndex}`,
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
         }, /*#__PURE__*/React.createElement("td", {
-          key: _concatInstanceProperty(_context14 = "column-".concat(key, "-")).call(_context14, predicateIndex)
+          key: `column-${key}-${predicateIndex}`
         }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
       } else {
-        var _context15, _context16, _context17, _context18;
-
+        var _context9, _context0;
         if (_valuesInstanceProperty(value) && _valuesInstanceProperty(value).length === 0 && (!value.dynamicValues || value.dynamicValues && value.dynamicValues.length === 0)) {
           return null;
         }
-
         return /*#__PURE__*/React.createElement("tr", {
-          key: _concatInstanceProperty(_context15 = "row-".concat(key, "-")).call(_context15, predicateIndex),
+          key: `row-${key}-${predicateIndex}`,
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
         }, /*#__PURE__*/React.createElement("td", {
-          key: _concatInstanceProperty(_context16 = "column-".concat(key, "-")).call(_context16, predicateIndex)
-        }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, _concatInstanceProperty(_context17 = _valuesInstanceProperty(value)).call(_context17, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, _concatInstanceProperty(_context18 = _valuesInstanceProperty(value)).call(_context18, value.dynamicValues || []), predicateIndex)));
+          key: `column-${key}-${predicateIndex}`
+        }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, _concatInstanceProperty(_context9 = _valuesInstanceProperty(value)).call(_context9, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, _concatInstanceProperty(_context0 = _valuesInstanceProperty(value)).call(_context0, value.dynamicValues || []), predicateIndex)));
       }
     });
-
-    var noValueConditions = [];
-
-    _forEachInstanceProperty(_context19 = _Object$keys(CONDITIONS)).call(_context19, function (k) {
+    const noValueConditions = [];
+    _forEachInstanceProperty(_context1 = _Object$keys(CONDITIONS)).call(_context1, k => {
       if (CONDITIONS[k].maxFields === 0) {
         noValueConditions.push(k);
       }
     });
-
-    _this.state = {
+    this.state = {
       conditionType: props.initToggleValue || 'and',
       noValueConditions: Set(noValueConditions),
       showEditReportFieldsModal: false,
       listOpen: true
     };
-    return _this;
   }
-
-  _createClass(ConditionalTable, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(props) {
-      // eslint-disable-line
-      if (this.props.formValues !== props.formValues) {
-        if (this.props.onQueryChange) {
-          var query = this.buildRequest(this.props.formValues);
-          this.props.onQueryChange(query);
-        }
+  componentDidUpdate(props) {
+    // eslint-disable-line
+    if (this.props.formValues !== props.formValues) {
+      if (this.props.onQueryChange) {
+        const query = this.buildRequest(this.props.formValues);
+        this.props.onQueryChange(query);
       }
     }
-  }, {
-    key: "render",
-    value: function render() {
-      var _context20,
-          _this2 = this;
-
-      var _this$props$formValue = this.props.formValues,
-          formValues = _this$props$formValue === void 0 ? {} : _this$props$formValue;
-      if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
-
-      var singleRows = _sortInstanceProperty(_context20 = _Object$keys(formValues)).call(_context20, function (a, b) {
-        if (_this2.getLabel(a) === undefined || _this2.getLabel(b) === undefined) {
-          return 0;
-        }
-
-        return _this2.getLabel(a).localeCompare(_this2.getLabel(b));
-      });
-
-      var tbody = [];
-
-      _forEachInstanceProperty(singleRows).call(singleRows, function (key) {
-        if (_this2.props.formValues[key]) {
-          if (_this2.props.formValues[key].type) {
-            var _context21;
-
-            _forEachInstanceProperty(_context21 = _this2.props.formValues[key].conditions).call(_context21, function (v, predicateIndex) {
-              tbody.push(_this2.buildTableRow(key, v, predicateIndex));
-            });
-          } else {
-            tbody.push(_this2.buildTableRow(key, _this2.props.formValues[key]));
-          }
-        }
-      });
-
-      var isDisabled = this.buildRequest(this.props.formValues).query.conditions.length === 0;
-      var listOpen = this.state.listOpen;
-      var extraFooters = this.props.extraFooters ? this.props.extraFooters : [];
-      return /*#__PURE__*/React.createElement("div", {
-        className: "table-responsive",
-        style: {
-          width: '100%',
-          maxHeight: '620px'
-        }
-      }, /*#__PURE__*/React.createElement("div", {
-        style: {
-          width: '100%',
-          maxHeight: '550px',
-          overflowY: 'auto'
-        }
-      }, /*#__PURE__*/React.createElement("table", {
-        className: "table table-bordered table-striped",
-        style: {
-          width: '100%'
-        }
-      }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
-        className: "col-lg-".concat(6, " col-md-", 6, " col-sm-", 6),
-        style: {
-          display: 'inlineBlock'
-        }
-      }, /*#__PURE__*/React.createElement("span", null, this.props.title), /*#__PURE__*/React.createElement("span", {
-        className: "pull-right"
-      }, /*#__PURE__*/React.createElement(Toggle, {
-        ref: "row-toggle",
-        value: this.props.toggleValue === 'and',
-        onToggle: this.handleToggleClick,
-        activeLabel: "and",
-        inactiveLabel: "or"
-      }))))), tbody.length && listOpen ? /*#__PURE__*/React.createElement("tbody", null, tbody) : null, this.props.enableListToggle && /*#__PURE__*/React.createElement("div", {
-        style: {
-          width: '100%',
-          textAlign: 'center',
-          transform: "scale(1, ".concat(listOpen ? '' : '-', "1)"),
-          userSelect: 'none'
-        },
-        className: "cursor-hand",
-        onClick: function onClick() {
-          return _this2.setState(function () {
-            return {
-              listOpen: !listOpen
-            };
+  }
+  render() {
+    var _context10;
+    let {
+      formValues = {}
+    } = this.props;
+    if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
+    const singleRows = _sortInstanceProperty(_context10 = _Object$keys(formValues)).call(_context10, (a, b) => {
+      if (this.getLabel(a) === undefined || this.getLabel(b) === undefined) {
+        return 0;
+      }
+      return this.getLabel(a).localeCompare(this.getLabel(b));
+    });
+    const tbody = [];
+    _forEachInstanceProperty(singleRows).call(singleRows, key => {
+      if (this.props.formValues[key]) {
+        if (this.props.formValues[key].type) {
+          var _context11;
+          _forEachInstanceProperty(_context11 = this.props.formValues[key].conditions).call(_context11, (v, predicateIndex) => {
+            tbody.push(this.buildTableRow(key, v, predicateIndex));
           });
+        } else {
+          tbody.push(this.buildTableRow(key, this.props.formValues[key]));
         }
-      }, "^"), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.enableResetButton || this.props.enableNextButton ? /*#__PURE__*/React.createElement("div", {
-        style: {
-          marginRight: '10px',
-          marginBottom: '10px',
-          marginTop: '10px',
-          display: 'flex',
-          flexDirection: 'row-reverse',
-          width: '100%'
-        }
-      }, this.props.enableResetButton && /*#__PURE__*/React.createElement("button", {
-        className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
-        style: {
-          marginRight: '10px',
-          marginBottom: '10px'
-        },
-        onClick: this.resetForm,
-        disabled: isDisabled
-      }, "Reset"), this.props.enableNextButton && /*#__PURE__*/React.createElement("button", {
-        className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
-        style: {
-          marginRight: '10px',
-          marginBottom: '10px'
-        },
-        onClick: this.onNextClick,
-        disabled: isDisabled
-      }, "Next"), extraFooters) : null))))));
-    }
-  }]);
-
-  return ConditionalTable;
-}(Component);
-
+      }
+    });
+    const isDisabled = this.buildRequest(this.props.formValues).query.conditions.length === 0;
+    const {
+      listOpen
+    } = this.state;
+    const extraFooters = this.props.extraFooters ? this.props.extraFooters : [];
+    return /*#__PURE__*/React.createElement("div", {
+      className: "table-responsive",
+      style: {
+        width: '100%',
+        maxHeight: '620px'
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: '100%',
+        maxHeight: '550px',
+        overflowY: 'auto'
+      }
+    }, /*#__PURE__*/React.createElement("table", {
+      className: "table table-bordered table-striped",
+      style: {
+        width: '100%'
+      }
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+      className: `col-lg-${6} col-md-${6} col-sm-${6}`,
+      style: {
+        display: 'inlineBlock'
+      }
+    }, /*#__PURE__*/React.createElement("span", null, this.props.title), /*#__PURE__*/React.createElement("span", {
+      className: "pull-right"
+    }, /*#__PURE__*/React.createElement(Toggle, {
+      ref: "row-toggle",
+      value: this.props.toggleValue === 'and',
+      onToggle: this.handleToggleClick,
+      activeLabel: "and",
+      inactiveLabel: "or"
+    }))))), tbody.length && listOpen ? /*#__PURE__*/React.createElement("tbody", null, tbody) : null, this.props.enableListToggle && /*#__PURE__*/React.createElement("div", {
+      style: {
+        width: '100%',
+        textAlign: 'center',
+        transform: `scale(1, ${listOpen ? '' : '-'}1)`,
+        userSelect: 'none'
+      },
+      className: "cursor-hand",
+      onClick: () => this.setState(() => ({
+        listOpen: !listOpen
+      }))
+    }, "^"), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.enableResetButton || this.props.enableNextButton ? /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginRight: '10px',
+        marginBottom: '10px',
+        marginTop: '10px',
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        width: '100%'
+      }
+    }, this.props.enableResetButton && /*#__PURE__*/React.createElement("button", {
+      className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
+      style: {
+        marginRight: '10px',
+        marginBottom: '10px'
+      },
+      onClick: this.resetForm,
+      disabled: isDisabled
+    }, "Reset"), this.props.enableNextButton && /*#__PURE__*/React.createElement("button", {
+      className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
+      style: {
+        marginRight: '10px',
+        marginBottom: '10px'
+      },
+      onClick: this.onNextClick,
+      disabled: isDisabled
+    }, "Next"), extraFooters) : null))))));
+  }
+}
 _defineProperty(ConditionalTable, "propTypes", {
   formValues: PropTypes.object.isRequired,
   onNextClick: PropTypes.func.isRequired,
@@ -763,7 +629,6 @@ _defineProperty(ConditionalTable, "propTypes", {
   getFieldSchema: PropTypes.func,
   enableListToggle: PropTypes.bool
 });
-
 _defineProperty(ConditionalTable, "defaultProps", {
   formValues: {},
   enableToggle: true,
@@ -771,5 +636,3 @@ _defineProperty(ConditionalTable, "defaultProps", {
   toggleValue: 'and',
   enableListToggle: false
 });
-
-export { ConditionalTable as default };

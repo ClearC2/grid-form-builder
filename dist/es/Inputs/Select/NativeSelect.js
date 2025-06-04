@@ -7,13 +7,9 @@ import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-st
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context, _context2; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(t), !0)).call(_context, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context2 = ownKeys(Object(t))).call(_context2, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import PropTypes from 'prop-types';
@@ -22,88 +18,69 @@ import useTheme from '../../theme/useTheme';
 import { useCallback, useState } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 import '../../styles/native-select.css';
-
-var NativeSelect = function NativeSelect(props) {
-  var _props$value = props.value,
-      value = _props$value === void 0 ? '' : _props$value,
-      tabIndex = props.tabIndex,
-      disabled = props.disabled,
-      readonly = props.readonly,
-      name = props.name,
-      _props$keyword = props.keyword,
-      keyword = _props$keyword === void 0 ? {} : _props$keyword,
-      requiredWarning = props.requiredWarning,
-      required = props.required,
-      onChange = props.onChange,
-      _props$interactive = props.interactive,
-      interactive = _props$interactive === void 0 ? true : _props$interactive,
-      _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
-      device = props.device;
-  var _style$value = style.value,
-      valueStyle = _style$value === void 0 ? {} : _style$value,
-      _style$inputOuter = style.inputOuter,
-      inputOuter = _style$inputOuter === void 0 ? {} : _style$inputOuter,
-      _style$inputInner = style.inputInner,
-      inputInner = _style$inputInner === void 0 ? {} : _style$inputInner,
-      _style$inputControl = style.inputControl,
-      inputControl = _style$inputControl === void 0 ? {} : _style$inputControl,
-      _style$valueContainer = style.valueContainer,
-      valueContainer = _style$valueContainer === void 0 ? {} : _style$valueContainer,
-      _style$indicators = style.indicators,
-      indicators = _style$indicators === void 0 ? {} : _style$indicators,
-      _style$options = style.options,
-      optionsStyle = _style$options === void 0 ? {} : _style$options;
-
-  var _useTheme = useTheme(),
-      theme = _useTheme.theme;
-
-  var _theme$options = theme.options,
-      optionsTheme = _theme$options === void 0 ? {} : _theme$options;
-
-  var _useState = useState(keyword.options || []),
-      _useState2 = _slicedToArray(_useState, 1),
-      options = _useState2[0];
-
-  var platform = device.platform.toLowerCase();
-  var handleOnChange = useCallback(function (e) {
-    var value = e.target.value;
+const NativeSelect = props => {
+  const {
+    value = '',
+    tabIndex,
+    disabled,
+    readonly,
+    name,
+    keyword = {},
+    requiredWarning,
+    required,
+    onChange,
+    interactive = true,
+    style = {},
+    device
+  } = props;
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {},
+    options: optionsStyle = {}
+  } = style;
+  const {
+    theme
+  } = useTheme();
+  const {
+    options: optionsTheme = {}
+  } = theme;
+  const [options] = useState(keyword.options || []);
+  const platform = device.platform.toLowerCase();
+  const handleOnChange = useCallback(e => {
+    const {
+      value
+    } = e.target;
     onChange({
       target: {
-        value: value,
-        name: name
+        value,
+        name
       }
     });
   }, [onChange, name]);
-  var className = 'gfb-input__single-value gfb-input__input gfb-select-webkit-none';
+  let className = 'gfb-input__single-value gfb-input__input gfb-select-webkit-none';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
-  var valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container';
-  var controlClass = 'gfb-input__control';
-  var validationError;
-
+  const valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container';
+  let controlClass = 'gfb-input__control';
+  let validationError;
   if (required && requiredWarning && value.length === 0) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }
-
-  var indicatorClass = 'gfb-input__indicators';
+  let indicatorClass = 'gfb-input__indicators';
   if (readonly || disabled || !interactive) indicatorClass = indicatorClass + ' gfb-disabled-input';
-  var indSeparatorClass = 'gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator';
+  let indSeparatorClass = 'gfb-input__indicator-separator css-1okebmr-indicatorSeparator gfb-nat-select-separator';
   if (readonly || disabled || !interactive) indSeparatorClass = indSeparatorClass + ' gfb-disabled-indicator-separator';
-
-  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
-
-  var inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
-
-  var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
-
-  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
-
-  var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
-
-  var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
-
+  const inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+  const inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
+  const inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
+  const valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+  const valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
+  const indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
   return jsx("div", {
     className: "gfb-input-outer",
     style: inputOuter,
@@ -133,7 +110,7 @@ var NativeSelect = function NativeSelect(props) {
     value: "",
     style: optionsStyle,
     css: optionsTheme
-  }), _mapInstanceProperty(options).call(options, function (option, i) {
+  }), _mapInstanceProperty(options).call(options, (option, i) => {
     return jsx("option", {
       key: i,
       name: name,
@@ -153,7 +130,6 @@ var NativeSelect = function NativeSelect(props) {
     message: validationError
   })))));
 };
-
 NativeSelect.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,

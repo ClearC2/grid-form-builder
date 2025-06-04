@@ -6,18 +6,12 @@ import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-st
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context, _context2; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(t), !0)).call(_context, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context2 = ownKeys(Object(t))).call(_context2, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
-
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useCallback, useEffect, useState } from 'react';
@@ -26,77 +20,59 @@ import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 import { convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue, randomId } from '../utils';
 import PortalTooltip from '../Tooltip';
-
-var Multicheckbox = function Multicheckbox(props) {
-  var name = props.name,
-      onChange = props.onChange,
-      readonly = props.readonly,
-      disabled = props.disabled,
-      autofocus = props.autofocus,
-      _props$keyword = props.keyword,
-      keyword = _props$keyword === void 0 ? {} : _props$keyword,
-      inline = props.inline,
-      autoComplete = props.autoComplete,
-      _props$interactive = props.interactive,
-      interactive = _props$interactive === void 0 ? true : _props$interactive,
-      requiredWarning = props.requiredWarning,
-      _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
-      required = props.required,
-      delimit = props.delimit,
-      _props$delimiter = props.delimiter,
-      delimiter = _props$delimiter === void 0 ? '¤' : _props$delimiter,
-      stringify = props.stringify,
-      warning = props.warning,
-      _props$showOptionTool = props.showOptionTooltips,
-      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
-  var _style$value = style.value,
-      valueStyle = _style$value === void 0 ? {} : _style$value,
-      _style$inputOuter = style.inputOuter,
-      inputOuter = _style$inputOuter === void 0 ? {} : _style$inputOuter,
-      _style$inputInner = style.inputInner,
-      inputInner = _style$inputInner === void 0 ? {} : _style$inputInner,
-      _style$inputControl = style.inputControl,
-      inputControl = _style$inputControl === void 0 ? {} : _style$inputControl,
-      _style$valueContainer = style.valueContainer,
-      valueContainer = _style$valueContainer === void 0 ? {} : _style$valueContainer,
-      _style$indicators = style.indicators,
-      indicators = _style$indicators === void 0 ? {} : _style$indicators,
-      _style$options = style.options,
-      optionsStyle = _style$options === void 0 ? {} : _style$options;
-
-  var _useTheme = useTheme(),
-      theme = _useTheme.theme;
-
-  var _useState = useState([]),
-      _useState2 = _slicedToArray(_useState, 2),
-      options = _useState2[0],
-      updateSelectOptions = _useState2[1];
-
-  var _useState3 = useState([]),
-      _useState4 = _slicedToArray(_useState3, 2),
-      value = _useState4[0],
-      updateValue = _useState4[1];
-
-  useEffect(function () {
-    var formattedOptions = keyword.options || [];
+const Multicheckbox = props => {
+  const {
+    name,
+    onChange,
+    readonly,
+    disabled,
+    autofocus,
+    keyword = {},
+    inline,
+    autoComplete,
+    interactive = true,
+    requiredWarning,
+    style = {},
+    required,
+    delimit,
+    delimiter = '¤',
+    stringify,
+    warning,
+    showOptionTooltips = false // this flag is used to show tooltips for each individual option
+  } = props;
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {},
+    options: optionsStyle = {}
+  } = style;
+  const {
+    theme
+  } = useTheme();
+  const [options, updateSelectOptions] = useState([]);
+  const [value, updateValue] = useState([]);
+  useEffect(() => {
+    let formattedOptions = keyword.options || [];
     if (!formattedOptions) formattedOptions = [];
     if (typeof formattedOptions === 'string') formattedOptions = formattedOptions.split(delimiter);
     if (formattedOptions.toJS) formattedOptions = formattedOptions.toJS();
-    var duplicate = {}; // get rid of duplicates
-
-    formattedOptions = _filterInstanceProperty(formattedOptions).call(formattedOptions, function (option) {
+    const duplicate = {};
+    // get rid of duplicates
+    formattedOptions = _filterInstanceProperty(formattedOptions).call(formattedOptions, option => {
       if (!option) return false;
       if (typeof option === 'string') return true;
-      if (_typeof(option) === 'object' && !option.value) option.value = option.label;
-
+      if (typeof option === 'object' && !option.value) option.value = option.label;
       if (option.value && !duplicate[option.value]) {
         duplicate[option.value] = true;
         return true;
       }
-    }); // format into an array of {label, value} objects
+    });
 
-    formattedOptions = _mapInstanceProperty(formattedOptions).call(formattedOptions, function (option) {
+    // format into an array of {label, value} objects
+    formattedOptions = _mapInstanceProperty(formattedOptions).call(formattedOptions, option => {
       if (typeof option === 'string') option = {
         label: option,
         value: option
@@ -106,78 +82,64 @@ var Multicheckbox = function Multicheckbox(props) {
     });
     updateSelectOptions(formattedOptions);
   }, [delimiter, keyword.options]);
-  useEffect(function () {
-    var formattedValue = convertDelimitedValueIntoLabelValueArray({
+  useEffect(() => {
+    const formattedValue = convertDelimitedValueIntoLabelValueArray({
       value: props.value,
-      delimit: delimit,
-      delimiter: delimiter,
-      options: options
+      delimit,
+      delimiter,
+      options
     });
     updateValue(formattedValue);
   }, [props.value, updateValue, name, delimit, delimiter, stringify, options]);
-  var handleOnChange = useCallback(function (e) {
+  const handleOnChange = useCallback(e => {
     if (!disabled && !readonly && interactive) {
-      var clickedValue = e.target.value;
-
-      var clickedOption = _findInstanceProperty(options).call(options, function (option) {
+      const {
+        value: clickedValue
+      } = e.target;
+      const clickedOption = _findInstanceProperty(options).call(options, option => {
         return option.value === clickedValue || option.value === +clickedValue;
       });
-
-      var found = false;
-
-      var newValue = _filterInstanceProperty(value).call(value, function (val) {
+      let found = false;
+      let newValue = _filterInstanceProperty(value).call(value, val => {
         if (val.value === clickedOption.value) {
           found = true;
           return false;
         }
-
         return true;
       });
-
       if (!found) {
         newValue.push(clickedOption);
       }
-
       newValue = convertLabelValueArrayIntoDelimitedValue({
         value: newValue,
-        delimiter: delimiter,
-        delimit: delimit,
-        stringify: stringify
+        delimiter,
+        delimit,
+        stringify
       });
       onChange({
         target: {
-          name: name,
+          name,
           value: newValue
         }
       });
     }
   }, [disabled, readonly, interactive, value, delimiter, delimit, stringify, onChange, name, options]);
-  var valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container';
-
+  let valueContainerClassName = 'gfb-input__value-container gfb-value-multi-input-container';
   if (inline) {
     valueContainerClassName = valueContainerClassName + ' gfb-inline-values-container';
   }
-
-  var controlClass = 'gfb-input__control gfb-boxless-input';
-  var validationError;
-
+  let controlClass = 'gfb-input__control gfb-boxless-input';
+  let validationError;
   if (required && requiredWarning && value.length === 0) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }
-
-  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
-
-  var inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
-
-  var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
-
-  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
-
-  var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
-
-  var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
-
+  const inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+  const inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
+  const inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
+  const valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+  const valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
+  const indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
   return jsx("div", {
     className: "gfb-input-outer",
     style: inputOuter,
@@ -194,16 +156,15 @@ var Multicheckbox = function Multicheckbox(props) {
     className: valueContainerClassName,
     style: valueContainer,
     css: valueContainerCSS
-  }, _mapInstanceProperty(options).call(options, function (option, i) {
-    var checked = _someInstanceProperty(value).call(value, function (val) {
+  }, _mapInstanceProperty(options).call(options, (option, i) => {
+    const checked = _someInstanceProperty(value).call(value, val => {
       return val.value === option.value;
     });
-
-    var className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input';
+    let className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input';
     if (checked) className = className + ' gfb-multi-input-selected';
     if (disabled || readonly || !interactive) className = className + ' gfb-disabled-input';
     if (!interactive) className = className + ' gfb-non-interactive-input';
-    var optionId = randomId();
+    const optionId = randomId();
     return jsx("label", {
       key: i,
       className: 'gfb-multi-input-label-wrapper ' + className,
@@ -225,7 +186,7 @@ var Multicheckbox = function Multicheckbox(props) {
       css: valueCSS
     }), option.label ? option.label : option.value, showOptionTooltips ? jsx(PortalTooltip, {
       id: optionId,
-      message: option === null || option === void 0 ? void 0 : option.tooltip
+      message: option?.tooltip
     }) : null);
   })), jsx("div", {
     className: "gfb-input__indicators",
@@ -239,7 +200,6 @@ var Multicheckbox = function Multicheckbox(props) {
     message: validationError
   })))));
 };
-
 export default Multicheckbox;
 Multicheckbox.propTypes = {
   onChange: PropTypes.func,

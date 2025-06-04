@@ -7,13 +7,8 @@ import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-st
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context, _context2; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(t), !0)).call(_context, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context2 = ownKeys(Object(t))).call(_context2, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useContext, useCallback, useEffect, useRef } from 'react';
@@ -26,113 +21,107 @@ import { DropTarget } from 'react-dnd';
 import PortalTooltip from '../../Tooltip';
 import { randomId } from '../../utils';
 import { Map } from 'immutable';
+const InnerCell = props => {
+  const {
+    field,
+    handleAnywhereClick,
+    index,
+    interactive,
+    draggable,
+    readonly,
+    didDrop,
+    isOver,
+    connectDropTarget,
+    handleDragDropOnInput,
+    droppedItem = null,
+    handleLinkClick,
+    handleCascadeKeywordClick,
+    handleOnChange,
+    requiredWarning,
+    tabIndex,
+    dateFormat,
+    dateTimeFormat,
+    timeFormat,
+    handleRTEImageClick,
+    autoComplete,
+    device,
+    fieldDefinitions,
+    c2class
+  } = props;
+  const {
+    config = {}
+  } = field;
+  const [formValues] = useContext(FormValueContext);
+  const cellId = useRef(randomId());
 
-var InnerCell = function InnerCell(props) {
-  var field = props.field,
-      handleAnywhereClick = props.handleAnywhereClick,
-      index = props.index,
-      interactive = props.interactive,
-      draggable = props.draggable,
-      readonly = props.readonly,
-      didDrop = props.didDrop,
-      isOver = props.isOver,
-      connectDropTarget = props.connectDropTarget,
-      handleDragDropOnInput = props.handleDragDropOnInput,
-      _props$droppedItem = props.droppedItem,
-      droppedItem = _props$droppedItem === void 0 ? null : _props$droppedItem,
-      handleLinkClick = props.handleLinkClick,
-      handleCascadeKeywordClick = props.handleCascadeKeywordClick,
-      handleOnChange = props.handleOnChange,
-      requiredWarning = props.requiredWarning,
-      tabIndex = props.tabIndex,
-      dateFormat = props.dateFormat,
-      dateTimeFormat = props.dateTimeFormat,
-      timeFormat = props.timeFormat,
-      handleRTEImageClick = props.handleRTEImageClick,
-      autoComplete = props.autoComplete,
-      device = props.device,
-      fieldDefinitions = props.fieldDefinitions,
-      c2class = props.c2class;
-  var _field$config = field.config,
-      config = _field$config === void 0 ? {} : _field$config;
-
-  var _useContext = useContext(FormValueContext),
-      _useContext2 = _slicedToArray(_useContext, 1),
-      formValues = _useContext2[0];
-
-  var cellId = useRef(randomId()); // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
+  // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
   // we will come up with a way to do this without modifying the schema - JRA 12/10/2019
-
   if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) {
     config.readonly = true;
   }
-
-  var Type = mapInputType(config.type);
-  var value = formValues.get(config.name, '');
-  useEffect(function () {
+  const Type = mapInputType(config.type);
+  const value = formValues.get(config.name, '');
+  useEffect(() => {
     if (didDrop && !previousDrop.current.didDrop && !isOver && previousDrop.current.isOver) {
       // clone these objects before we send them up, we don't want them mutating them and causing unexpected behavior down here - JRA 12/05/2019
-      var source = _typeof(droppedItem) === 'object' && _typeof(droppedItem.widget) === 'object' ? _objectSpread({}, droppedItem.widget) : null;
-      var target = _typeof(field) === 'object' && _typeof(field.config) === 'object' ? _objectSpread({}, field.config) : null;
+      const source = typeof droppedItem === 'object' && typeof droppedItem.widget === 'object' ? _objectSpread({}, droppedItem.widget) : null;
+      const target = typeof field === 'object' && typeof field.config === 'object' ? _objectSpread({}, field.config) : null;
       handleDragDropOnInput({
-        source: source,
-        target: target
+        source,
+        target
       });
     }
   }, [didDrop, isOver, handleDragDropOnInput, field, droppedItem]);
-  var previousDrop = useRef({
+  const previousDrop = useRef({
     didDrop: false,
     isOver: false
   });
-  useEffect(function () {
+  useEffect(() => {
     previousDrop.current = {
-      didDrop: didDrop,
-      isOver: isOver
+      didDrop,
+      isOver
     };
   }, [didDrop, isOver]);
-  var onGridElementClick = useCallback(function (e) {
-    var config = _typeof(field) === 'object' && _typeof(field.config) === 'object' ? _objectSpread({}, field.config) : {};
+  const onGridElementClick = useCallback(e => {
+    const config = typeof field === 'object' && typeof field.config === 'object' ? _objectSpread({}, field.config) : {};
     config.index = index;
-
-    if (draggable) {// if the user clicks into a field that is draggable, the input loses focus
+    if (draggable) {
+      // if the user clicks into a field that is draggable, the input loses focus
       // do we want to figure out a way to refocus the field here so they can edit the value even though the whole cell is draggable? - JRA 12/06/2019
       // e.stopPropagation()
     }
-
     handleAnywhereClick(config, e);
   }, [handleAnywhereClick, index, field, draggable]);
-  var onChange = useCallback(function (e) {
-    if (_typeof(e) !== 'object') e = {};
-    if (_typeof(e.target) !== 'object') e.target = {};
+  const onChange = useCallback(e => {
+    if (typeof e !== 'object') e = {};
+    if (typeof e.target !== 'object') e.target = {};
     if (!e.target.name) e.target.name = config.name;
     if (!e.target.value) e.target.value = '';
     handleOnChange(e);
   }, [handleOnChange, config.name]);
-  var className = 'gfb-inner-cell';
-
+  let className = 'gfb-inner-cell';
   if (typeof config.type === 'string') {
-    var type = config.type.toLowerCase();
-
+    const type = config.type.toLowerCase();
     if (type === 'checkbox') {
       className = className + ' gfb-inline-cell gfb-checkbox';
-
       if (config.required && requiredWarning && (value + '').length === 0) {
         className = className + ' gfb-checkbox-label-with-validation';
       }
     }
-
     if (type === 'metadata') {
       className = className + ' gfb-inline-cell';
     }
   }
-
-  var _config$style = config.style,
-      style = _config$style === void 0 ? {} : _config$style,
-      _config$tooltips = config.tooltips,
-      tooltips = _config$tooltips === void 0 ? {} : _config$tooltips;
-  var _style$innerCell = style.innerCell,
-      innerCell = _style$innerCell === void 0 ? {} : _style$innerCell;
-  var cellTooltip = tooltips.cell;
+  const {
+    style = {},
+    tooltips = {}
+  } = config;
+  const {
+    innerCell = {}
+  } = style;
+  const {
+    cell: cellTooltip
+  } = tooltips;
   return connectDropTarget(jsx("div", {
     style: innerCell,
     className: className,
@@ -166,7 +155,6 @@ var InnerCell = function InnerCell(props) {
     c2class: c2class
   }, jsx(Type, null))));
 };
-
 function collect(connect, monitor) {
   return {
     connectDropTarget: connect.dropTarget(),
@@ -175,9 +163,8 @@ function collect(connect, monitor) {
     isOver: monitor.isOver()
   };
 }
-
-var boxTarget = {
-  drop: function drop(props, monitor) {
+const boxTarget = {
+  drop(props, monitor) {
     return {
       widget: monitor.getItem()
     };

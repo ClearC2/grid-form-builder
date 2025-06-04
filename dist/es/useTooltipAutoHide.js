@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { attachGlobalTooltipListeners, detachGlobalTooltipListeners } from './tooltipController';
-export var useTooltipAutoHide = function useTooltipAutoHide() {
-  useEffect(function () {
+export const useTooltipAutoHide = () => {
+  useEffect(() => {
+    // eslint-disable-next-line no-console
     console.log('use effect!!!');
     attachGlobalTooltipListeners();
-    return function () {
+    return () => {
       detachGlobalTooltipListeners();
     };
   }, []);

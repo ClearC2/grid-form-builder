@@ -1,11 +1,3 @@
-import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context3, _context4; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context3 = ownKeys(Object(source), !0)).call(_context3, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context4 = ownKeys(Object(source))).call(_context4, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
@@ -14,7 +6,10 @@ import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/inst
 import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-
+import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context3, _context4; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context3 = ownKeys(Object(t), !0)).call(_context3, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context4 = ownKeys(Object(t))).call(_context4, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
+import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useCallback, useState } from 'react';
@@ -22,108 +17,80 @@ import PropTypes from 'prop-types';
 import { emailValidator } from '../utils';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
-
-var Email = function Email(props) {
+const Email = props => {
   var _context2;
-
-  var name = props.name,
-      _props$value = props.value,
-      value = _props$value === void 0 ? '' : _props$value,
-      onChange = props.onChange,
-      readonly = props.readonly,
-      disabled = props.disabled,
-      autofocus = props.autofocus,
-      placeholder = props.placeholder,
-      tabIndex = props.tabIndex,
-      autoComplete = props.autoComplete,
-      _props$interactive = props.interactive,
-      interactive = _props$interactive === void 0 ? true : _props$interactive,
-      requiredWarning = props.requiredWarning,
-      _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
-      required = props.required,
-      _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
-      warning = props.warning;
-  var _style$value = style.value,
-      valueStyle = _style$value === void 0 ? {} : _style$value,
-      _style$inputOuter = style.inputOuter,
-      inputOuter = _style$inputOuter === void 0 ? {} : _style$inputOuter,
-      _style$inputInner = style.inputInner,
-      inputInner = _style$inputInner === void 0 ? {} : _style$inputInner,
-      _style$inputControl = style.inputControl,
-      inputControl = _style$inputControl === void 0 ? {} : _style$inputControl,
-      _style$valueContainer = style.valueContainer,
-      valueContainer = _style$valueContainer === void 0 ? {} : _style$valueContainer,
-      _style$indicators = style.indicators,
-      indicators = _style$indicators === void 0 ? {} : _style$indicators;
-
-  var _useTheme = useTheme(),
-      theme = _useTheme.theme;
-
-  var _useState = useState(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      isFocused = _useState2[0],
-      setIsFocused = _useState2[1];
-
-  var handleOnFocus = useCallback(function () {
+  const {
+    name,
+    value = '',
+    onChange,
+    readonly,
+    disabled,
+    autofocus,
+    placeholder,
+    tabIndex,
+    autoComplete,
+    interactive = true,
+    requiredWarning,
+    style = {},
+    required,
+    maxlength = 524288,
+    warning
+  } = props;
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {}
+  } = style;
+  const {
+    theme
+  } = useTheme();
+  const [isFocused, setIsFocused] = useState(false);
+  const handleOnFocus = useCallback(() => {
     setIsFocused(true);
   }, []);
-  var handleOnBlur = useCallback(function () {
+  const handleOnBlur = useCallback(() => {
     setIsFocused(false);
-
     if (value) {
       var _context;
-
       onChange({
         target: {
-          name: name,
+          name,
           value: _trimInstanceProperty(_context = value + '').call(_context)
         }
       });
     }
   }, [onChange, value, name]);
-  var isDisabled = readonly || disabled || !interactive;
-  var className = 'gfb-input__single-value gfb-input__input';
+  const isDisabled = readonly || disabled || !interactive;
+  let className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
-  var controlClass = 'gfb-input__control';
-  var validationError = false;
-
+  let controlClass = 'gfb-input__control';
+  let validationError = false;
   if (value && !emailValidator(value) && !isFocused && interactive) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'Invalid Email Format';
   }
-
   if (required && requiredWarning && _trimInstanceProperty(_context2 = value + '').call(_context2).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }
-
-  var validationWarning;
-
+  let validationWarning;
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
-    validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+    validationWarning = `Maximum character limit of ${maxlength} reached.`;
   }
-
-  var outerClass = 'gfb-input-outer';
-
+  let outerClass = 'gfb-input-outer';
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus';
   }
-
-  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
-
-  var inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
-
-  var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
-
-  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
-
-  var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
-
-  var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
-
+  const inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+  const inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
+  const inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
+  const valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+  const valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
+  const indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -173,7 +140,6 @@ var Email = function Email(props) {
     message: validationError
   })))));
 };
-
 export default Email;
 Email.propTypes = {
   onChange: PropTypes.func,

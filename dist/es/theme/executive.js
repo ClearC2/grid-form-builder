@@ -1,4 +1,4 @@
-var theme = {
+const theme = {
   gridItem: {},
   cellLabel: {},
   label: {},

@@ -1,10 +1,6 @@
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context2, _context3; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(t), !0)).call(_context2, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context3 = ownKeys(Object(t))).call(_context3, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
@@ -16,7 +12,6 @@ import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/inst
 import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -27,73 +22,56 @@ import Toolbar from './Toolbar';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
 import '../../styles/richtext.css';
 import useTheme from '../../theme/useTheme';
-
-var Richtextarea = function Richtextarea(props) {
+const Richtextarea = props => {
   var _context;
-
-  var name = props.name,
-      _props$value = props.value,
-      value = _props$value === void 0 ? '<p>&nbsp;</p>' : _props$value,
-      onChange = props.onChange,
-      readonly = props.readonly,
-      disabled = props.disabled,
-      autofocus = props.autofocus,
-      placeholder = props.placeholder,
-      tabIndex = props.tabIndex,
-      handleRTEImageClick = props.handleRTEImageClick,
-      rteImageUrl = props.rteImageUrl,
-      autoComplete = props.autoComplete,
-      _props$interactive = props.interactive,
-      interactive = _props$interactive === void 0 ? true : _props$interactive,
-      requiredWarning = props.requiredWarning,
-      _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
-      required = props.required,
-      _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? _Number$MAX_SAFE_INTEGER : _props$maxlength,
-      warning = props.warning;
-  var _style$value = style.value,
-      valueStyle = _style$value === void 0 ? {} : _style$value,
-      _style$inputOuter = style.inputOuter,
-      inputOuter = _style$inputOuter === void 0 ? {} : _style$inputOuter,
-      _style$inputInner = style.inputInner,
-      inputInner = _style$inputInner === void 0 ? {} : _style$inputInner,
-      _style$inputControl = style.inputControl,
-      inputControl = _style$inputControl === void 0 ? {} : _style$inputControl,
-      _style$valueContainer = style.valueContainer,
-      valueContainer = _style$valueContainer === void 0 ? {} : _style$valueContainer,
-      _style$indicators = style.indicators,
-      indicators = _style$indicators === void 0 ? {} : _style$indicators;
-
-  var _useTheme = useTheme(),
-      theme = _useTheme.theme;
-
-  var _useState = useState(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      hasBlockedAutoFormat = _useState2[0],
-      setHasBlockedAutoFormat = _useState2[1];
-
-  var _useState3 = useState(false),
-      _useState4 = _slicedToArray(_useState3, 2),
-      isFocused = _useState4[0],
-      setIsFocused = _useState4[1];
-
-  var elementId = useRef('gfb-' + randomId());
-  var QuillRef = useRef();
-  var formats = useRef(['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'color', 'background']);
-  var insertImage = useCallback(function () {
+  const {
+    name,
+    value = '<p>&nbsp;</p>',
+    onChange,
+    readonly,
+    disabled,
+    autofocus,
+    placeholder,
+    tabIndex,
+    handleRTEImageClick,
+    rteImageUrl,
+    autoComplete,
+    interactive = true,
+    requiredWarning,
+    style = {},
+    required,
+    maxlength = _Number$MAX_SAFE_INTEGER,
+    warning
+  } = props;
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {}
+  } = style;
+  const {
+    theme
+  } = useTheme();
+  const [hasBlockedAutoFormat, setHasBlockedAutoFormat] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const elementId = useRef('gfb-' + randomId());
+  const QuillRef = useRef();
+  const formats = useRef(['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'color', 'background']);
+  const insertImage = useCallback(() => {
     handleRTEImageClick(name);
   }, [handleRTEImageClick, name]);
-  var modules = useRef({
+  const modules = useRef({
     toolbar: {
-      container: "#".concat(elementId.current),
+      container: `#${elementId.current}`,
       handlers: {
-        insertImage: insertImage
+        insertImage
       }
     },
     table: true
   });
-  var handleOnChange = useCallback(function (html) {
+  const handleOnChange = useCallback(html => {
     if (!readonly && !disabled) {
       /* If the html formatting is not consistent with Quill's formatting then Quill will auto-format on mount.
       This is undesirable because it will register the onDirty to be true when no user change has
@@ -104,87 +82,75 @@ var Richtextarea = function Richtextarea(props) {
         if (html.length > maxlength) html = html.substring(0, maxlength);
         onChange({
           target: {
-            name: name,
+            name,
             value: html
           }
         });
       }
     }
   }, [onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat, value]);
-  var addTable = useCallback(function () {
+  const addTable = useCallback(() => {
     QuillRef.current.editor.getModule('table').insertTable(2, 2);
   }, [QuillRef]);
-  var removeTable = useCallback(function () {
+  const removeTable = useCallback(() => {
     QuillRef.current.editor.getModule('table').deleteTable();
   }, [QuillRef]);
-  var insertRowAbove = useCallback(function () {
+  const insertRowAbove = useCallback(() => {
     QuillRef.current.editor.getModule('table').insertRowAbove();
   }, [QuillRef]);
-  var insertRowBelow = useCallback(function () {
+  const insertRowBelow = useCallback(() => {
     QuillRef.current.editor.getModule('table').insertRowBelow();
   }, [QuillRef]);
-  var deleteRow = useCallback(function () {
+  const deleteRow = useCallback(() => {
     QuillRef.current.editor.getModule('table').deleteRow();
   }, [QuillRef]);
-  var insertColumnLeft = useCallback(function () {
+  const insertColumnLeft = useCallback(() => {
     QuillRef.current.editor.getModule('table').insertColumnLeft();
   }, [QuillRef]);
-  var insertColumnRight = useCallback(function () {
+  const insertColumnRight = useCallback(() => {
     QuillRef.current.editor.getModule('table').insertColumnRight();
   }, [QuillRef]);
-  var deleteColumn = useCallback(function () {
+  const deleteColumn = useCallback(() => {
     QuillRef.current.editor.getModule('table').deleteColumn();
   }, [QuillRef]);
-  var previousRTEImageUrl = usePrevious(rteImageUrl);
-  useEffect(function () {
+  const previousRTEImageUrl = usePrevious(rteImageUrl);
+  useEffect(() => {
     if (rteImageUrl && previousRTEImageUrl !== rteImageUrl && QuillRef.current) {
-      var input = QuillRef.current.getEditor();
-      var cursor = input.getSelection(true) ? input.getSelection(true).index : 0;
+      const input = QuillRef.current.getEditor();
+      const cursor = input.getSelection(true) ? input.getSelection(true).index : 0;
       input.insertEmbed(cursor, 'image', rteImageUrl);
       input.setSelection(cursor + 1);
     }
   }, [rteImageUrl, previousRTEImageUrl, name]);
-  var handleOnFocus = useCallback(function () {
+  const handleOnFocus = useCallback(() => {
     setIsFocused(true);
   }, []);
-  var handleOnBlur = useCallback(function () {
+  const handleOnBlur = useCallback(() => {
     setIsFocused(false);
   }, []);
-  var className = 'gfb-input__single-value gfb-input__input';
+  let className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
-  var controlClass = 'gfb-input__control';
-  var validationError;
-
+  let controlClass = 'gfb-input__control';
+  let validationError;
   if (required && requiredWarning && _trimInstanceProperty(_context = value + '').call(_context).length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error';
     validationError = 'This Field is Required';
   }
-
-  var validationWarning;
-
+  let validationWarning;
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
-    validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+    validationWarning = `Maximum character limit of ${maxlength} reached.`;
   }
-
-  var outerClass = 'gfb-input-outer';
-
+  let outerClass = 'gfb-input-outer';
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus';
   }
-
-  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
-
-  var inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
-
-  var inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
-
-  var valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
-
-  var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
-
-  var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
-
+  const inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
+  const inputInnerCSS = _objectSpread(_objectSpread({}, theme.inputInner), inputInner);
+  const inputControlCSS = _objectSpread(_objectSpread({}, theme.inputControl), inputControl);
+  const valueContainerCSS = _objectSpread(_objectSpread({}, theme.valueContainer), valueContainer);
+  const valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
+  const indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -255,7 +221,6 @@ var Richtextarea = function Richtextarea(props) {
     message: validationError
   })))));
 };
-
 export default Richtextarea;
 Richtextarea.propTypes = {
   onChange: PropTypes.func,

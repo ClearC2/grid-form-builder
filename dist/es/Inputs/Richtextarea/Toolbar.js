@@ -1,5 +1,3 @@
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import PropTypes from 'prop-types';
@@ -7,24 +5,20 @@ import { FaImage as Image, FaTable as Table, FaArrowUp as Up, FaArrowDown as Dow
 import { useRef, useState } from 'react';
 import { randomId } from '../../utils';
 import PortalTooltip from '../../Tooltip';
-
-var Toolbar = function Toolbar(_ref) {
-  var id = _ref.id,
-      addTable = _ref.addTable,
-      removeTable = _ref.removeTable,
-      insertRowAbove = _ref.insertRowAbove,
-      insertRowBelow = _ref.insertRowBelow,
-      deleteRow = _ref.deleteRow,
-      insertColumnLeft = _ref.insertColumnLeft,
-      insertColumnRight = _ref.insertColumnRight,
-      deleteColumn = _ref.deleteColumn;
-  var tooltipId = useRef('gfb-' + randomId());
-
-  var _useState = useState('Table Controls'),
-      _useState2 = _slicedToArray(_useState, 2),
-      message = _useState2[0],
-      setMessage = _useState2[1];
-
+const Toolbar = _ref => {
+  let {
+    id,
+    addTable,
+    removeTable,
+    insertRowAbove,
+    insertRowBelow,
+    deleteRow,
+    insertColumnLeft,
+    insertColumnRight,
+    deleteColumn
+  } = _ref;
+  const tooltipId = useRef('gfb-' + randomId());
+  const [message, setMessage] = useState('Table Controls');
   return jsx("div", {
     id: id,
     style: {
@@ -37,9 +31,7 @@ var Toolbar = function Toolbar(_ref) {
   }), jsx("select", {
     className: "ql-header",
     defaultValue: 'normal',
-    onChange: function onChange(e) {
-      return e.persist();
-    }
+    onChange: e => e.persist()
   }, jsx("option", {
     value: "1"
   }), jsx("option", {
@@ -76,61 +68,44 @@ var Toolbar = function Toolbar(_ref) {
     onClick: addTable,
     "data-tip": true,
     "data-for": tooltipId.current,
-    onMouseOver: function onMouseOver() {
-      return setMessage('Add Table');
-    }
+    onMouseOver: () => setMessage('Add Table')
   }, jsx(Table, null)), jsx("button", {
     onClick: insertRowAbove,
     "data-tip": true,
     "data-for": tooltipId.current,
-    onMouseOver: function onMouseOver() {
-      return setMessage('Insert Row Above Cursor');
-    }
+    onMouseOver: () => setMessage('Insert Row Above Cursor')
   }, jsx(Up, null)), jsx("button", {
     onClick: insertRowBelow,
     "data-tip": true,
     "data-for": tooltipId.current,
-    onMouseOver: function onMouseOver() {
-      return setMessage('Insert Row Below Cursor');
-    }
+    onMouseOver: () => setMessage('Insert Row Below Cursor')
   }, jsx(Down, null)), jsx("button", {
     onClick: insertColumnLeft,
     "data-tip": true,
     "data-for": tooltipId.current,
-    onMouseOver: function onMouseOver() {
-      return setMessage('Insert Column Left Of Cursor');
-    }
+    onMouseOver: () => setMessage('Insert Column Left Of Cursor')
   }, jsx(Left, null)), jsx("button", {
     onClick: insertColumnRight,
     "data-tip": true,
     "data-for": tooltipId.current,
-    onMouseOver: function onMouseOver() {
-      return setMessage('Insert Column Right Of Cursor');
-    }
+    onMouseOver: () => setMessage('Insert Column Right Of Cursor')
   }, jsx(Right, null)), jsx("button", {
     onClick: removeTable,
     "data-tip": true,
     "data-for": tooltipId.current,
-    onMouseOver: function onMouseOver() {
-      return setMessage('Delete Table');
-    }
+    onMouseOver: () => setMessage('Delete Table')
   }, jsx(Delete, null)), jsx("button", {
     onClick: deleteRow,
     "data-tip": true,
     "data-for": tooltipId.current,
-    onMouseOver: function onMouseOver() {
-      return setMessage('Delete Row');
-    }
+    onMouseOver: () => setMessage('Delete Row')
   }, jsx(DeleteRow, null)), jsx("button", {
     onClick: deleteColumn,
     "data-tip": true,
     "data-for": tooltipId.current,
-    onMouseOver: function onMouseOver() {
-      return setMessage('Delete Column');
-    }
+    onMouseOver: () => setMessage('Delete Column')
   }, jsx(DeleteColumn, null)));
 };
-
 export default Toolbar;
 Toolbar.propTypes = {
   id: PropTypes.string,

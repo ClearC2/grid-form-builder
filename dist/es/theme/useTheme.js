@@ -7,35 +7,25 @@ import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-st
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context, _context2; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(t), !0)).call(_context, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context2 = ownKeys(Object(t))).call(_context2, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 import React, { createContext, useContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import defaultTheme from './default';
 import executiveTheme from './executive';
-var ThemeContext = /*#__PURE__*/createContext({
+const ThemeContext = /*#__PURE__*/createContext({
   theme: {},
-  setTheme: function setTheme() {},
-  setThemeValue: function setThemeValue() {}
+  setTheme: () => {},
+  setThemeValue: () => {}
 });
-
-var ThemeProvider = function ThemeProvider(_ref) {
-  var children = _ref.children,
-      themeOverride = _ref.theme;
-
-  var _useState = useState(defaultTheme),
-      _useState2 = _slicedToArray(_useState, 2),
-      theme = _useState2[0],
-      setTheme = _useState2[1];
-
-  var value = useMemo(function () {
-    var newTheme;
-
+const ThemeProvider = _ref => {
+  let {
+    children,
+    theme: themeOverride
+  } = _ref;
+  const [theme, setTheme] = useState(defaultTheme);
+  const value = useMemo(() => {
+    let newTheme;
     if (typeof themeOverride === 'string') {
       switch (themeOverride.toLowerCase()) {
         case 'classic':
@@ -44,28 +34,24 @@ var ThemeProvider = function ThemeProvider(_ref) {
             newTheme = defaultTheme;
             break;
           }
-
         case 'executive':
           {
             newTheme = executiveTheme;
             break;
           }
-
         default:
           newTheme = defaultTheme;
       }
-    } else if (_typeof(themeOverride) === 'object') {
+    } else if (typeof themeOverride === 'object') {
       newTheme = themeOverride;
     } else {
       newTheme = theme;
     }
-
     return {
       theme: newTheme,
-      setTheme: setTheme,
-      setThemeValue: function setThemeValue(key, value) {
-        var updated = _objectSpread({}, theme);
-
+      setTheme,
+      setThemeValue: (key, value) => {
+        const updated = _objectSpread({}, theme);
         updated[key] = value;
         setTheme(updated);
       }
@@ -75,15 +61,10 @@ var ThemeProvider = function ThemeProvider(_ref) {
     value: value
   }, children);
 };
-
 ThemeProvider.propTypes = {
   children: PropTypes.node,
   theme: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 };
-
-var useTheme = function useTheme() {
-  return useContext(ThemeContext);
-};
-
+const useTheme = () => useContext(ThemeContext);
 export { ThemeContext, ThemeProvider };
 export default useTheme;

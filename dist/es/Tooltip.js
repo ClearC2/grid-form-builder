@@ -3,20 +3,22 @@ import PropTypes from 'prop-types';
 import Portal from './Portal';
 import { Tooltip } from 'react-tooltip';
 import { trackActiveTooltip } from './tooltipController';
-
-var PortalTooltip = function PortalTooltip(props) {
-  var message = props.message,
-      id = props.id;
-  var tooltipRef = useRef(null);
+const PortalTooltip = props => {
+  const {
+    message,
+    id
+  } = props;
+  const tooltipRef = useRef(null);
+  // eslint-disable-next-line no-console
   console.log({
-    tooltipRef: tooltipRef
+    tooltipRef
   });
   return message && id ? /*#__PURE__*/React.createElement(Portal, null, /*#__PURE__*/React.createElement(Tooltip, {
     id: id,
     ref: tooltipRef,
-    onShow: function onShow() {
+    onShow: () => {
+      // eslint-disable-next-line no-console
       console.log('on show?');
-
       if (tooltipRef.current) {
         trackActiveTooltip(tooltipRef.current);
       }
@@ -27,7 +29,6 @@ var PortalTooltip = function PortalTooltip(props) {
     }
   }))) : null;
 };
-
 PortalTooltip.propTypes = {
   message: PropTypes.string,
   id: PropTypes.string

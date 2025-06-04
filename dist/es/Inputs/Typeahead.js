@@ -1,43 +1,26 @@
-import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
 import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
-import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
-import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
-import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context14, _context15; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context14 = ownKeys(Object(source), !0)).call(_context14, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context15 = ownKeys(Object(source))).call(_context15, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context1, _context10; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context1 = ownKeys(Object(t), !0)).call(_context1, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context10 = ownKeys(Object(t))).call(_context10, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _JSON$stringify from "@babel/runtime-corejs3/core-js-stable/json/stringify";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useState, useEffect, useCallback, useRef, PureComponent } from 'react';
@@ -49,100 +32,81 @@ import { isMobile } from '../utils';
 import GFBConfig from '../config';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
-var viewPortHeight = document.documentElement.clientHeight;
-var debounce = null;
-var labelCopyTimer = null;
-
-var TypeaheadPerformanceOptimizer = /*#__PURE__*/function (_PureComponent) {
-  _inherits(TypeaheadPerformanceOptimizer, _PureComponent);
-
-  var _super = _createSuper(TypeaheadPerformanceOptimizer);
-
-  function TypeaheadPerformanceOptimizer() {
-    _classCallCheck(this, TypeaheadPerformanceOptimizer);
-
-    return _super.apply(this, arguments);
+const viewPortHeight = document.documentElement.clientHeight;
+let debounce = null;
+let labelCopyTimer = null;
+class TypeaheadPerformanceOptimizer extends PureComponent {
+  render() {
+    const {
+      Typeahead,
+      setRef,
+      className,
+      classNamePrefix,
+      closeMenuOnScroll,
+      tabIndex,
+      autoFocus,
+      blurInputOnSelect,
+      isClearable,
+      createOptionPosition,
+      formatCreateLabel,
+      isMulti,
+      isDisabled,
+      menuPortalTarget,
+      name,
+      noOptionsMessage,
+      placeholder,
+      inputValue,
+      menuIsOpen,
+      menuPlacement,
+      onKeyDown = () => null,
+      onMouseDown,
+      onFocus,
+      onBlur,
+      onInputChange,
+      loadOptions,
+      onChange,
+      value,
+      autoComplete,
+      components,
+      defaultOptions,
+      styles
+    } = this.props;
+    return jsx(Typeahead, {
+      ref: setRef,
+      className: className,
+      classNamePrefix: classNamePrefix,
+      closeMenuOnScroll: closeMenuOnScroll,
+      tabIndex: tabIndex,
+      autoFocus: autoFocus,
+      blurInputOnSelect: blurInputOnSelect,
+      isClearable: isClearable,
+      createOptionPosition: createOptionPosition,
+      formatCreateLabel: formatCreateLabel,
+      isMulti: isMulti,
+      isDisabled: isDisabled,
+      menuPortalTarget: menuPortalTarget,
+      name: name,
+      noOptionsMessage: noOptionsMessage,
+      placeholder: placeholder,
+      inputValue: inputValue,
+      menuIsOpen: menuIsOpen,
+      menuPlacement: menuPlacement,
+      onKeyDown: onKeyDown,
+      onMouseDown: onMouseDown,
+      onFocus: onFocus,
+      onBlur: onBlur,
+      onInputChange: onInputChange,
+      loadOptions: loadOptions,
+      onChange: onChange,
+      value: value,
+      autoComplete: autoComplete,
+      components: components,
+      defaultOptions: defaultOptions,
+      styles: styles,
+      openMenuOnClick: false
+    });
   }
-
-  _createClass(TypeaheadPerformanceOptimizer, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          Typeahead = _this$props.Typeahead,
-          setRef = _this$props.setRef,
-          className = _this$props.className,
-          classNamePrefix = _this$props.classNamePrefix,
-          closeMenuOnScroll = _this$props.closeMenuOnScroll,
-          tabIndex = _this$props.tabIndex,
-          autoFocus = _this$props.autoFocus,
-          blurInputOnSelect = _this$props.blurInputOnSelect,
-          isClearable = _this$props.isClearable,
-          createOptionPosition = _this$props.createOptionPosition,
-          formatCreateLabel = _this$props.formatCreateLabel,
-          isMulti = _this$props.isMulti,
-          isDisabled = _this$props.isDisabled,
-          menuPortalTarget = _this$props.menuPortalTarget,
-          name = _this$props.name,
-          noOptionsMessage = _this$props.noOptionsMessage,
-          placeholder = _this$props.placeholder,
-          inputValue = _this$props.inputValue,
-          menuIsOpen = _this$props.menuIsOpen,
-          menuPlacement = _this$props.menuPlacement,
-          _this$props$onKeyDown = _this$props.onKeyDown,
-          onKeyDown = _this$props$onKeyDown === void 0 ? function () {
-        return null;
-      } : _this$props$onKeyDown,
-          onMouseDown = _this$props.onMouseDown,
-          onFocus = _this$props.onFocus,
-          onBlur = _this$props.onBlur,
-          onInputChange = _this$props.onInputChange,
-          loadOptions = _this$props.loadOptions,
-          onChange = _this$props.onChange,
-          value = _this$props.value,
-          autoComplete = _this$props.autoComplete,
-          components = _this$props.components,
-          defaultOptions = _this$props.defaultOptions,
-          styles = _this$props.styles;
-      return jsx(Typeahead, {
-        ref: setRef,
-        className: className,
-        classNamePrefix: classNamePrefix,
-        closeMenuOnScroll: closeMenuOnScroll,
-        tabIndex: tabIndex,
-        autoFocus: autoFocus,
-        blurInputOnSelect: blurInputOnSelect,
-        isClearable: isClearable,
-        createOptionPosition: createOptionPosition,
-        formatCreateLabel: formatCreateLabel,
-        isMulti: isMulti,
-        isDisabled: isDisabled,
-        menuPortalTarget: menuPortalTarget,
-        name: name,
-        noOptionsMessage: noOptionsMessage,
-        placeholder: placeholder,
-        inputValue: inputValue,
-        menuIsOpen: menuIsOpen,
-        menuPlacement: menuPlacement,
-        onKeyDown: onKeyDown,
-        onMouseDown: onMouseDown,
-        onFocus: onFocus,
-        onBlur: onBlur,
-        onInputChange: onInputChange,
-        loadOptions: loadOptions,
-        onChange: onChange,
-        value: value,
-        autoComplete: autoComplete,
-        components: components,
-        defaultOptions: defaultOptions,
-        styles: styles,
-        openMenuOnClick: false
-      });
-    }
-  }]);
-
-  return TypeaheadPerformanceOptimizer;
-}(PureComponent);
-
+}
 _defineProperty(TypeaheadPerformanceOptimizer, "propTypes", {
   Typeahead: PropTypes.func,
   setRef: PropTypes.any,
@@ -177,146 +141,81 @@ _defineProperty(TypeaheadPerformanceOptimizer, "propTypes", {
   defaultOptions: PropTypes.any,
   styles: PropTypes.object
 });
-
-var defaults = {
-  nullFunction: function nullFunction() {
-    return null;
-  },
+const defaults = {
+  nullFunction: () => null,
   object: {}
 };
-
-var Typeahead = function Typeahead(props) {
-  var _context13;
-
-  var name = props.name,
-      label = props.label,
-      _props$value = props.value,
-      value = _props$value === void 0 ? '' : _props$value,
-      values = _valuesInstanceProperty(props),
-      onChange = props.onChange,
-      allowcreate = props.allowcreate,
-      autofocus = props.autofocus,
-      multi = props.multi,
-      disabled = props.disabled,
-      readonly = props.readonly,
-      placeholder = props.placeholder,
-      requiredWarning = props.requiredWarning,
-      required = props.required,
-      tabIndex = props.tabIndex,
-      _props$onKeyDown = props.onKeyDown,
-      onKeyDown = _props$onKeyDown === void 0 ? defaults.nullFunction : _props$onKeyDown,
-      draggable = props.draggable,
-      _props$persist = props.persist,
-      persist = _props$persist === void 0 ? true : _props$persist,
-      _props$typeahead = props.typeahead,
-      typeahead = _props$typeahead === void 0 ? defaults.object : _props$typeahead,
-      _props$minChars = props.minChars,
-      minChars = _props$minChars === void 0 ? 1 : _props$minChars,
-      stringify = props.stringify,
-      autoComplete = props.autoComplete,
-      _props$interactive = props.interactive,
-      interactive = _props$interactive === void 0 ? true : _props$interactive,
-      _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
-      delimit = props.delimit,
-      delimiter = props.delimiter,
-      _props$isClearable = props.isClearable,
-      isClearable = _props$isClearable === void 0 ? true : _props$isClearable,
-      createlabel = props.createlabel,
-      _props$options = props.options,
-      typeaheadOptions = _props$options === void 0 ? defaults.object : _props$options,
-      warning = props.warning;
-
-  var _style$value = style.value,
-      valueStyle = _style$value === void 0 ? {} : _style$value,
-      _style$inputOuter = style.inputOuter,
-      inputOuter = _style$inputOuter === void 0 ? {} : _style$inputOuter,
-      _style$inputInner = style.inputInner,
-      inputInner = _style$inputInner === void 0 ? {} : _style$inputInner,
-      _style$inputControl = style.inputControl,
-      inputControl = _style$inputControl === void 0 ? {} : _style$inputControl,
-      _style$valueContainer = style.valueContainer,
-      _valueContainer = _style$valueContainer === void 0 ? {} : _style$valueContainer,
-      _style$indicators = style.indicators,
-      indicators = _style$indicators === void 0 ? {} : _style$indicators,
-      _style$options = style.options,
-      optionsStyle = _style$options === void 0 ? {} : _style$options,
-      _style$menuPortal = style.menuPortal,
-      _menuPortal = _style$menuPortal === void 0 ? {} : _style$menuPortal;
-
-  var _useTheme = useTheme(),
-      theme = _useTheme.theme;
-
-  var _theme$value = theme.value,
-      valueTheme = _theme$value === void 0 ? {} : _theme$value,
-      _theme$inputInner = theme.inputInner,
-      inputInnerTheme = _theme$inputInner === void 0 ? {} : _theme$inputInner,
-      _theme$inputControl = theme.inputControl,
-      inputControlTheme = _theme$inputControl === void 0 ? {} : _theme$inputControl,
-      _theme$valueContainer = theme.valueContainer,
-      valueContainerTheme = _theme$valueContainer === void 0 ? {} : _theme$valueContainer,
-      _theme$indicators = theme.indicators,
-      indicatorsTheme = _theme$indicators === void 0 ? {} : _theme$indicators,
-      _theme$options = theme.options,
-      optionsTheme = _theme$options === void 0 ? {} : _theme$options;
-
-  var _useState = useState({
+const Typeahead = props => {
+  var _context0;
+  const {
+    name,
+    label,
+    value = '',
+    values,
+    onChange,
+    allowcreate,
+    autofocus,
+    multi,
+    disabled,
+    readonly,
+    placeholder,
+    requiredWarning,
+    required,
+    tabIndex,
+    onKeyDown = defaults.nullFunction,
+    draggable,
+    persist = true,
+    typeahead = defaults.object,
+    minChars = 1,
+    stringify,
+    autoComplete,
+    interactive = true,
+    style = {},
+    delimit,
+    delimiter,
+    isClearable = true,
+    createlabel,
+    options: typeaheadOptions = defaults.object,
+    warning
+  } = props;
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {},
+    options: optionsStyle = {},
+    menuPortal = {}
+  } = style;
+  const {
+    theme
+  } = useTheme();
+  const {
+    value: valueTheme = {},
+    inputInner: inputInnerTheme = {},
+    inputControl: inputControlTheme = {},
+    valueContainer: valueContainerTheme = {},
+    indicators: indicatorsTheme = {},
+    options: optionsTheme = {}
+  } = theme;
+  const [input, changeInput] = useState({
     Typeahead: allowcreate ? AsyncCreatable : Async
-  }),
-      _useState2 = _slicedToArray(_useState, 2),
-      input = _useState2[0],
-      changeInput = _useState2[1];
-
-  var _useState3 = useState(''),
-      _useState4 = _slicedToArray(_useState3, 2),
-      inputValue = _useState4[0],
-      updateInputValue = _useState4[1];
-
-  var _useState5 = useState(multi ? [] : {
+  });
+  const [inputValue, updateInputValue] = useState('');
+  const [selectValue, updateSelectValue] = useState(multi ? [] : {
     label: '',
     value: ''
-  }),
-      _useState6 = _slicedToArray(_useState5, 2),
-      selectValue = _useState6[0],
-      updateSelectValue = _useState6[1];
-
-  var _useState7 = useState((label === 'papostalcode' || label === 'Zip Code') && inputValue.length <= 2),
-      _useState8 = _slicedToArray(_useState7, 2),
-      isZipCode = _useState8[0],
-      updateIsZip = _useState8[1];
-
-  var _useState9 = useState(required && requiredWarning && !value.length),
-      _useState10 = _slicedToArray(_useState9, 2),
-      isRequiredFlag = _useState10[0],
-      updateIsRequiredFlag = _useState10[1];
-
-  var _useState11 = useState({}),
-      _useState12 = _slicedToArray(_useState11, 2),
-      menuIsOpen = _useState12[0],
-      updateIsMenuOpen = _useState12[1];
-
-  var _useState13 = useState('bottom'),
-      _useState14 = _slicedToArray(_useState13, 2),
-      menuPlacement = _useState14[0],
-      updateMenuPlacement = _useState14[1];
-
-  var _useState15 = useState(0),
-      _useState16 = _slicedToArray(_useState15, 2),
-      fieldPosition = _useState16[0],
-      updateFieldPosition = _useState16[1];
-
-  var _useState17 = useState(false),
-      _useState18 = _slicedToArray(_useState17, 2),
-      isFocused = _useState18[0],
-      setIsFocused = _useState18[1];
-
-  var _useState19 = useState([]),
-      _useState20 = _slicedToArray(_useState19, 2),
-      defaultOptions = _useState20[0],
-      setDefaultOptions = _useState20[1];
-
-  var _useState21 = useState({
-    Option: function Option(base) {
+  });
+  const [isZipCode, updateIsZip] = useState((label === 'papostalcode' || label === 'Zip Code') && inputValue.length <= 2);
+  const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length);
+  const [menuIsOpen, updateIsMenuOpen] = useState({});
+  const [menuPlacement, updateMenuPlacement] = useState('bottom');
+  const [fieldPosition, updateFieldPosition] = useState(0);
+  const [isFocused, setIsFocused] = useState(false);
+  const [defaultOptions, setDefaultOptions] = useState([]);
+  const [components, setComponents] = useState({
+    Option: base => {
       if (base.isDisabled) {
         base.innerProps.style = {
           height: 20,
@@ -326,287 +225,238 @@ var Typeahead = function Typeahead(props) {
           paddingTop: 0
         };
       }
-
       return jsx(ReactSelectBaseComponents.Option, base);
     },
-    MultiValue: function MultiValue(base) {
-      var _base$children = base.children,
-          children = _base$children === void 0 ? '' : _base$children;
-
-      var _useState23 = useState(children),
-          _useState24 = _slicedToArray(_useState23, 2),
-          label = _useState24[0],
-          setLabel = _useState24[1]; // eslint-disable-line
-
-
-      var copyValueToClipboard = function copyValueToClipboard() {
+    MultiValue: base => {
+      const {
+        children = ''
+      } = base;
+      const [label, setLabel] = useState(children); // eslint-disable-line
+      const copyValueToClipboard = () => {
         navigator.clipboard.writeText(children);
         clearTimeout(labelCopyTimer);
         setLabel(' -- copied -- ');
-        labelCopyTimer = _setTimeout(function () {
+        labelCopyTimer = _setTimeout(() => {
           setLabel(children);
         }, 750);
       };
-
       return jsx("div", {
         onClick: copyValueToClipboard
       }, jsx(ReactSelectBaseComponents.MultiValue, _extends({}, base, {
         children: label
       })));
     }
-  }),
-      _useState22 = _slicedToArray(_useState21, 2),
-      components = _useState22[0],
-      setComponents = _useState22[1];
-
-  var _useState25 = useState(null),
-      _useState26 = _slicedToArray(_useState25, 2),
-      dynamicTypeaheadKey = _useState26[0],
-      setDynamicTypeaheadKey = _useState26[1];
-
-  var _useState27 = useState({}),
-      _useState28 = _slicedToArray(_useState27, 2),
-      conditions = _useState28[0],
-      setConditions = _useState28[1];
-
-  var _useState29 = useState({
-    container: function container(base) {
+  });
+  const [dynamicTypeaheadKey, setDynamicTypeaheadKey] = useState(null);
+  const [conditions, setConditions] = useState({});
+  const [reactSelectStyles, setReactSelectStyles] = useState({
+    container: base => {
       return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
     },
-    control: function control(base) {
+    control: base => {
       return _objectSpread(_objectSpread(_objectSpread({}, base), inputControl), inputControlTheme);
     },
-    valueContainer: function valueContainer(base) {
-      return _objectSpread(_objectSpread(_objectSpread({}, base), _valueContainer), valueContainerTheme);
+    valueContainer: base => {
+      return _objectSpread(_objectSpread(_objectSpread({}, base), valueContainer), valueContainerTheme);
     },
-    indicatorsContainer: function indicatorsContainer(base) {
+    indicatorsContainer: base => {
       return _objectSpread(_objectSpread(_objectSpread({}, base), indicators), indicatorsTheme);
     },
-    option: function option(base) {
+    option: base => {
       return _objectSpread(_objectSpread(_objectSpread({}, base), optionsStyle), optionsTheme);
     },
-    multiValue: function multiValue(base) {
+    multiValue: base => {
       if (!interactive) {
         base.color = 'green';
         base.backgroundColor = '#a6eca67a';
       } else {
         base.backgroundColor = '#8bb7ff91';
       }
-
       return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
     },
-    singleValue: function singleValue(base) {
+    singleValue: base => {
       if (!interactive) {
         base.color = 'green';
       }
-
       return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
     },
-    menuPortal: function menuPortal(base) {
-      var top = menuPlacement === 'bottom' ? base.top - 8 + (_menuPortal.bottomTopBias || 0) : base.top + 8 + (_menuPortal.topTopBias || 0);
-      var zIndex = _Number$MAX_SAFE_INTEGER;
+    menuPortal: base => {
+      const top = menuPlacement === 'bottom' ? base.top - 8 + (menuPortal.bottomTopBias || 0) : base.top + 8 + (menuPortal.topTopBias || 0);
+      const zIndex = _Number$MAX_SAFE_INTEGER;
       return _objectSpread(_objectSpread({}, base), {}, {
-        top: top,
-        zIndex: zIndex
-      }, _menuPortal);
+        top,
+        zIndex
+      }, menuPortal);
     }
-  }),
-      _useState30 = _slicedToArray(_useState29, 2),
-      reactSelectStyles = _useState30[0],
-      setReactSelectStyles = _useState30[1];
+  });
+  const inputContainer = useRef(null);
+  const reactSelect = useRef(null);
+  const isLoadingOptions = useRef(false); // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
 
-  var inputContainer = useRef(null);
-  var reactSelect = useRef(null);
-  var isLoadingOptions = useRef(false); // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
-
-  useEffect(function () {
-    var populateConditionObject = function populateConditionObject() {
+  useEffect(() => {
+    const populateConditionObject = function () {
       var _context;
-
-      var condition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+      let condition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         name: null,
         comparator: null,
         values: []
       };
       if (!condition.hasOwnProperty('values')) condition.values = []; //eslint-disable-line
-
-      var pluggedInValues = [];
-
-      _forEachInstanceProperty(_context = _valuesInstanceProperty(condition)).call(_context, function (value) {
-        var formValueForThisValueName = values.get(value, '');
-
+      const pluggedInValues = [];
+      _forEachInstanceProperty(_context = _valuesInstanceProperty(condition)).call(_context, value => {
+        const formValueForThisValueName = values.get(value, '');
         if (formValueForThisValueName && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, formValueForThisValueName) === -1) {
           pluggedInValues.push(formValueForThisValueName);
         } else {
           pluggedInValues.push(value);
         }
       });
-
-      var value = values.get(condition.name, '');
-
+      const value = values.get(condition.name, '');
       if (!pluggedInValues.length && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, value) === -1) {
         pluggedInValues.push(value);
       }
-
       condition.values = pluggedInValues;
       return condition;
     };
-
-    var populateFilterBody = function populateFilterBody() {
-      var filter = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
+    const populateFilterBody = function () {
+      let filter = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       // eslint-disable-next-line
       if (filter.hasOwnProperty('name')) {
-        populateConditionObject(filter); // eslint-disable-next-line
+        populateConditionObject(filter);
+        // eslint-disable-next-line
       } else if (filter.hasOwnProperty('conditions') && _Array$isArray(filter.conditions)) {
         var _context2;
-
-        _mapInstanceProperty(_context2 = filter.conditions).call(_context2, function (condition) {
-          return populateFilterBody(condition);
-        });
+        _mapInstanceProperty(_context2 = filter.conditions).call(_context2, condition => populateFilterBody(condition));
       }
-
       return filter;
     };
-
-    var _typeahead$filter = _filterInstanceProperty(typeahead),
-        filter = _typeahead$filter === void 0 ? {} : _typeahead$filter;
-
+    let {
+      filter = {}
+    } = typeahead;
     if (typeof filter === 'function') filter = filter();
     filter = JSON.parse(_JSON$stringify(filter)); // deep clone the object as to not mutate the definition
-
     filter = populateFilterBody(filter);
-
     if (_JSON$stringify(filter) !== _JSON$stringify(conditions)) {
       setConditions(filter);
     }
   }, [values, typeahead, conditions]);
-  useEffect(function () {
-    var _typeahead$key = typeahead.key,
-        key = _typeahead$key === void 0 ? null : _typeahead$key,
-        _typeahead$fieldvalue = typeahead.fieldvalue,
-        fieldvalue = _typeahead$fieldvalue === void 0 ? null : _typeahead$fieldvalue;
+  useEffect(() => {
+    let {
+      key = null,
+      fieldvalue = null
+    } = typeahead;
     if (values.get(fieldvalue, '')) key = values.get(fieldvalue, '');
     setDynamicTypeaheadKey(key);
   }, [typeahead, values]);
-  useEffect(function () {
+  useEffect(() => {
     setReactSelectStyles({
-      container: function container(base) {
+      container: base => {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
       },
-      control: function control(base) {
+      control: base => {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputControl), inputControlTheme);
       },
-      valueContainer: function valueContainer(base) {
-        return _objectSpread(_objectSpread(_objectSpread({}, base), _valueContainer), valueContainerTheme);
+      valueContainer: base => {
+        return _objectSpread(_objectSpread(_objectSpread({}, base), valueContainer), valueContainerTheme);
       },
-      indicatorsContainer: function indicatorsContainer(base) {
+      indicatorsContainer: base => {
         return _objectSpread(_objectSpread(_objectSpread({}, base), indicators), indicatorsTheme);
       },
-      option: function option(base) {
+      option: base => {
         return _objectSpread(_objectSpread(_objectSpread({}, base), optionsStyle), optionsTheme);
       },
-      multiValue: function multiValue(base) {
+      multiValue: base => {
         if (!interactive) {
           base.color = 'green';
           base.backgroundColor = '#a6eca67a';
         } else {
           base.backgroundColor = '#8bb7ff91';
         }
-
         return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
       },
-      singleValue: function singleValue(base) {
+      singleValue: base => {
         if (!interactive) {
           base.color = 'green';
         }
-
         return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
       },
-      menuPortal: function menuPortal(base) {
-        var top = menuPlacement === 'bottom' ? base.top - 8 + (_menuPortal.bottomTopBias || 0) : base.top + 8 + (_menuPortal.topTopBias || 0);
-        var zIndex = _Number$MAX_SAFE_INTEGER;
+      menuPortal: base => {
+        const top = menuPlacement === 'bottom' ? base.top - 8 + (menuPortal.bottomTopBias || 0) : base.top + 8 + (menuPortal.topTopBias || 0);
+        const zIndex = _Number$MAX_SAFE_INTEGER;
         return _objectSpread(_objectSpread({}, base), {}, {
-          top: top,
-          zIndex: zIndex
-        }, _menuPortal);
+          top,
+          zIndex
+        }, menuPortal);
       }
     }); // going to ignore dynamic style changes for the time being - JRA 07/31/2020
-  }, [// eslint-disable-line
+  }, [
+  // eslint-disable-line
   interactive, menuPlacement]);
-  useEffect(function () {
-    setComponents(function (prevComponents) {
+  useEffect(() => {
+    setComponents(prevComponents => {
       var _context3;
+      const {
+        showValidationError
+      } = prevComponents;
 
-      var showValidationError = prevComponents.showValidationError; // Required field validation
-
+      // Required field validation
       if (isRequiredFlag && _trimInstanceProperty(_context3 = value + '').call(_context3).length === 0 && !isFocused) {
         if (!showValidationError) {
           return _objectSpread(_objectSpread({}, prevComponents), {}, {
-            DropdownIndicator: function DropdownIndicator() {
-              return jsx(ValidationErrorIcon, {
-                message: "This Field is Required"
-              });
-            },
+            DropdownIndicator: () => jsx(ValidationErrorIcon, {
+              message: "This Field is Required"
+            }),
             showValidationError: true
           });
         }
-
         return prevComponents; // No change
-      } // Clear validation error
+      }
 
-
+      // Clear validation error
       if (showValidationError) {
         return _objectSpread(_objectSpread({}, prevComponents), {}, {
           DropdownIndicator: ReactSelectBaseComponents.DropdownIndicator,
           showValidationError: false
         });
-      } // Warning message
-
-
-      if (warning) {
-        return _objectSpread(_objectSpread({}, prevComponents), {}, {
-          DropdownIndicator: function DropdownIndicator() {
-            return jsx(ValidationErrorIcon, {
-              message: warning,
-              color: "#FFCC00",
-              type: "warning"
-            });
-          }
-        });
       }
 
+      // Warning message
+      if (warning) {
+        return _objectSpread(_objectSpread({}, prevComponents), {}, {
+          DropdownIndicator: () => jsx(ValidationErrorIcon, {
+            message: warning,
+            color: "#FFCC00",
+            type: "warning"
+          })
+        });
+      }
       return prevComponents; // No change
     });
   }, [isRequiredFlag, value, isFocused, warning]);
-  useEffect(function () {
+  useEffect(() => {
     changeInput({
       Typeahead: allowcreate ? AsyncCreatable : Async
     });
   }, [allowcreate, changeInput]);
-  useEffect(function () {
+  useEffect(() => {
     updateIsZip((label === 'papostalcode' || label === 'Zip Code') && inputValue.length <= 2);
   }, [label, inputValue, updateIsZip]);
-  useEffect(function () {
+  useEffect(() => {
     updateIsRequiredFlag(required && requiredWarning && !value.length);
   }, [updateIsRequiredFlag, required, requiredWarning, value]);
-  var convertValueStringToValueArrayIfNeeded = useCallback(function (value) {
+  const convertValueStringToValueArrayIfNeeded = useCallback(value => {
     if (typeof value === 'number' && !isNaN(value)) value = value + '';
-
-    var attemptConvertStringObjectToObject = function attemptConvertStringObjectToObject(string) {
+    const attemptConvertStringObjectToObject = string => {
       try {
         return JSON.parse(string);
       } catch (e) {
         return string;
       }
     };
-
     if (multi && stringify && value && typeof value === 'string') {
       if (delimiter) {
         value = value.split(delimiter);
-        value = _mapInstanceProperty(value).call(value, function (option) {
-          return attemptConvertStringObjectToObject(option);
-        });
+        value = _mapInstanceProperty(value).call(value, option => attemptConvertStringObjectToObject(option));
       } else {
         try {
           value = JSON.parse(value);
@@ -617,198 +467,166 @@ var Typeahead = function Typeahead(props) {
         }
       }
     }
-
     return value;
   }, [name, multi, stringify, delimiter]);
-  useEffect(function () {
-    var parsedValue = value && typeof value.toJS === 'function' ? value.toJS() : value;
+  useEffect(() => {
+    let parsedValue = value && typeof value.toJS === 'function' ? value.toJS() : value;
     parsedValue = convertValueStringToValueArrayIfNeeded(parsedValue);
-
     if (_Array$isArray(parsedValue) && parsedValue.length > 0) {
-      parsedValue = _mapInstanceProperty(parsedValue).call(parsedValue, function (v) {
-        if (_typeof(v) === 'object') return v;
+      parsedValue = _mapInstanceProperty(parsedValue).call(parsedValue, v => {
+        if (typeof v === 'object') return v;
         if (typeof v === 'string' || typeof v === 'number') return {
           value: v,
           label: v
         };
       });
     }
-
     if ((typeof parsedValue === 'string' || typeof parsedValue === 'number') && parsedValue.length > 0) {
       parsedValue = {
         value: parsedValue,
         label: parsedValue
       };
     }
-
     if (parsedValue === '') {
       if (multi) parsedValue = [];else parsedValue = {
         label: '',
         value: ''
       };
     }
-
     updateInputValue('');
     updateSelectValue(parsedValue);
   }, [value, convertValueStringToValueArrayIfNeeded, multi]);
-  var loadOptions = useCallback(function (search) {
-    var setDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-    var fetchResults = function fetchResults(resolve) {
-      var _typeahead$key2 = typeahead.key,
-          key = _typeahead$key2 === void 0 ? null : _typeahead$key2,
-          _typeahead$duplicatio = typeahead.duplication,
-          duplication = _typeahead$duplicatio === void 0 ? false : _typeahead$duplicatio,
-          _typeahead$fieldvalue2 = typeahead.fieldvalue,
-          fieldvalue = _typeahead$fieldvalue2 === void 0 ? null : _typeahead$fieldvalue2;
-      var minSearchLength = isZipCode ? 3 : minChars;
-
+  const loadOptions = useCallback(function (search) {
+    let setDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    const fetchResults = resolve => {
+      const {
+        key = null,
+        duplication = false,
+        fieldvalue = null
+      } = typeahead;
+      const minSearchLength = isZipCode ? 3 : minChars;
       if (!key && !fieldvalue) {
         // eslint-disable-next-line
-        console.error("The JSON schema representation for ".concat(name, " does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}"));
+        console.error(`The JSON schema representation for ${name} does not have a typeahead key or a fieldvalue. A typeahead.key is required for this field type to search for results. This can either be specified directly as config.typeahead.key or it can equal the value of another field by specifying config.typeahead.{name of field}`);
         if (setDefault === true) setDefaultOptions([]);
         return resolve({
           options: []
         });
       }
-
       if (search.length >= minSearchLength || search === ' ') {
-        if (setDefault) reactSelect.current.setState(function () {
-          return {
-            isLoading: true
-          };
-        });
+        if (setDefault) reactSelect.current.setState(() => ({
+          isLoading: true
+        }));
         isLoadingOptions.current = true;
-        var showQueryCountOption = typeaheadOptions.queryRowCount,
-            showDataArrayOption = typeaheadOptions.data,
-            useStoredProcedureInSQL = typeaheadOptions.useProcedure;
-        return GFBConfig.ajax.post("/typeahead/name/".concat(encodeURIComponent(dynamicTypeaheadKey), "/search"), {
+        const {
+          queryRowCount: showQueryCountOption,
+          data: showDataArrayOption,
+          useProcedure: useStoredProcedureInSQL
+        } = typeaheadOptions;
+        return GFBConfig.ajax.post(`/typeahead/name/${encodeURIComponent(dynamicTypeaheadKey)}/search`, {
           term: search,
           filter: {
-            conditions: conditions
+            conditions
           },
           queryRowCount: showQueryCountOption,
-
           /* Will return queryRowCount as 0 to UI, time saver for API */
           data: showDataArrayOption,
-
           /* Returns an empty array in the response, time saver for API */
-          useProcedure: useStoredProcedureInSQL
-          /* Uses Stored Procedure in backend for search */
-
-        }).then(function (resp) {
+          useProcedure: useStoredProcedureInSQL /* Uses Stored Procedure in backend for search */
+        }).then(resp => {
           isLoadingOptions.current = false;
-          var options = [];
-
+          const options = [];
           if (_Array$isArray(resp.data.contains) && _Array$isArray(_startsWithInstanceProperty(resp.data))) {
-            var _context4, _context5;
-
-            var _resp$data = resp.data,
-                contains = _resp$data.contains,
-                startsWith = _startsWithInstanceProperty(_resp$data);
-
+            const {
+              contains,
+              startsWith
+            } = resp.data;
             options.push({
-              label: _concatInstanceProperty(_context4 = "".concat(startsWith.length, " options start with \"")).call(_context4, search, "\" ..."),
+              label: `${startsWith.length} options start with "${search}" ...`,
               isDisabled: true
             });
-
-            _forEachInstanceProperty(startsWith).call(startsWith, function (value) {
+            _forEachInstanceProperty(startsWith).call(startsWith, value => {
               if (duplication) {
                 value.duplication = duplication;
               }
-
               options.push(value);
             });
-
             options.push({
-              label: _concatInstanceProperty(_context5 = "".concat(contains.length, " options contain \"")).call(_context5, search, "\" ..."),
+              label: `${contains.length} options contain "${search}" ...`,
               isDisabled: true,
               className: 'gfb-typeahead-flavor-option'
             });
-
-            _forEachInstanceProperty(contains).call(contains, function (value) {
+            _forEachInstanceProperty(contains).call(contains, value => {
               if (duplication) {
                 value.duplication = duplication;
               }
-
               options.push(value);
             });
           } else {
-            var _context6;
-
-            _forEachInstanceProperty(_context6 = resp.data.data).call(_context6, function (value) {
+            var _context4;
+            _forEachInstanceProperty(_context4 = resp.data.data).call(_context4, value => {
               if (duplication) {
                 value.duplication = duplication;
               }
-
               options.push(value);
             });
           }
-
           if (setDefault === true) setDefaultOptions(options);else setDefaultOptions([]);
-          if (setDefault) reactSelect.current.setState(function () {
-            return {
-              isLoading: false
-            };
-          });
+          if (setDefault) reactSelect.current.setState(() => ({
+            isLoading: false
+          }));
           return resolve(options);
-        }).catch(function (err) {
+        }).catch(err => {
           isLoadingOptions.current = false;
           console.error('There was an error fetching the options in this typeahead: ', err); // eslint-disable-line
-
           return resolve([]);
         });
       }
-
       if (setDefault === true) setDefaultOptions([]);
       return resolve([]);
     };
-
-    return new _Promise(function (resolve) {
+    return new _Promise(resolve => {
       clearTimeout(debounce);
-      var delay = typeof search === 'string' && search.length && _trimInstanceProperty(search).call(search) === '' ? 0 : 500; // if they are sending in white space as the search query, don't debounce it, just do a global generic search - JRA 03/31/2020
-
-      debounce = _setTimeout(function () {
-        return fetchResults(resolve);
-      }, delay);
+      const delay = typeof search === 'string' && search.length && _trimInstanceProperty(search).call(search) === '' ? 0 : 500; // if they are sending in white space as the search query, don't debounce it, just do a global generic search - JRA 03/31/2020
+      debounce = _setTimeout(() => fetchResults(resolve), delay);
       return debounce;
     });
   }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions, typeaheadOptions]);
-  var formatCreateLabel = useCallback(function (value) {
+  const formatCreateLabel = useCallback(value => {
     if (typeof createlabel === 'string') {
-      var _context7;
-
-      return _concatInstanceProperty(_context7 = "".concat(createlabel, " ")).call(_context7, value);
+      return `${createlabel} ${value}`;
     }
-
-    return "Click or Tab to Create \"".concat(value, "\"");
+    return `Click or Tab to Create "${value}"`;
   }, [createlabel]);
-  var noOptionsMessage = useCallback(function () {
+  const noOptionsMessage = useCallback(() => {
     if (isZipCode) {
       return '3 Digits Required';
     }
   }, [isZipCode]);
-  var handleOnMouseDown = useCallback(function (e) {
+  const handleOnMouseDown = useCallback(e => {
     if (draggable) e.stopPropagation();
   }, [draggable]);
-  var handleInputBlur = useCallback(function () {
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, false)));
+  const handleInputBlur = useCallback(() => {
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, {
+      [name]: false
+    }));
     setIsFocused(false);
     updateInputValue('');
   }, [menuIsOpen, updateIsMenuOpen, name]);
-  var openMenu = useCallback(function () {
+  const openMenu = useCallback(() => {
     if (!readonly && !disabled && !menuIsOpen[name]) {
-      updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, true)));
+      updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, {
+        [name]: true
+      }));
     }
   }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name]);
-  var setMenuOpenPosition = useCallback(function () {
-    var placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
+  const setMenuOpenPosition = useCallback(() => {
+    const placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
     updateMenuPlacement(placement);
   }, [fieldPosition, updateMenuPlacement]);
-  var setInputFieldPosition = useCallback(function () {
+  const setInputFieldPosition = useCallback(() => {
     if (inputContainer.current) {
-      var position = inputContainer.current.getBoundingClientRect().top;
-
+      const position = inputContainer.current.getBoundingClientRect().top;
       if (fieldPosition !== position) {
         updateFieldPosition(position);
       } else {
@@ -816,31 +634,28 @@ var Typeahead = function Typeahead(props) {
       }
     }
   }, [setMenuOpenPosition, fieldPosition]);
-  var handleInputClick = useCallback(function () {
+  const handleInputClick = useCallback(() => {
     if (!disabled && !readonly && interactive) {
       setInputFieldPosition();
     }
   }, [disabled, interactive, readonly, setInputFieldPosition]);
-  var handleOnFocus = useCallback(function () {
+  const handleOnFocus = useCallback(() => {
     setIsFocused(true);
-    var simpleValue = typeof value.toJS === 'function' ? value.toJS() : value;
-    simpleValue = _typeof(simpleValue) === 'object' ? simpleValue.value || simpleValue.label || '' : simpleValue;
-
+    let simpleValue = typeof value.toJS === 'function' ? value.toJS() : value;
+    simpleValue = typeof simpleValue === 'object' ? simpleValue.value || simpleValue.label || '' : simpleValue;
     if (persist && !multi) {
       // this sets the input value equal to the current value so the user can keep editing it instead of creating a new value, MP HATES the default react-select behavior - JRA 12/09/2019
       updateInputValue(simpleValue);
     }
-
     handleInputClick();
   }, [value, persist, multi, updateInputValue, handleInputClick]);
-  useEffect(function () {
+  useEffect(() => {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);
-  var handleOnInputChange = useCallback(function (val, e) {
+  const handleOnInputChange = useCallback((val, e) => {
     if (e.action === 'input-change') {
       !menuIsOpen[name] && openMenu();
       updateInputValue(val);
-
       if (typeof val === 'string' && _trimInstanceProperty(val).call(val) === '') {
         loadOptions(' ', true);
       }
@@ -850,9 +665,9 @@ var Typeahead = function Typeahead(props) {
       }
     }
   }, [multi, menuIsOpen, name, openMenu, loadOptions, value]);
-  var emptyFields = useCallback(function (fields, changeHandler) {
-    _forEachInstanceProperty(fields).call(fields, function (field) {
-      var e = {
+  const emptyFields = useCallback((fields, changeHandler) => {
+    _forEachInstanceProperty(fields).call(fields, field => {
+      const e = {
         target: {
           name: field,
           value: ''
@@ -861,150 +676,135 @@ var Typeahead = function Typeahead(props) {
       changeHandler(e);
     });
   }, []);
-  var handleSingleValueChange = useCallback(function (newValue) {
-    var _context8;
-
-    _forEachInstanceProperty(_context8 = _Object$keys(newValue)).call(_context8, function (field) {
-      var newVal = newValue[field];
+  const handleSingleValueChange = useCallback(newValue => {
+    var _context5;
+    _forEachInstanceProperty(_context5 = _Object$keys(newValue)).call(_context5, field => {
+      let newVal = newValue[field];
       if (field === 'duplication') newVal = newValue.value;
-      var id = null;
-      var e = {
+      const id = null;
+      const e = {
         target: {
           name: field,
           value: newVal,
-          id: id
+          id
         }
       };
-
       if (field !== 'className' && field !== 'value' && field !== 'label') {
         onChange(e);
       }
     });
   }, [onChange]);
-  var handleChange = useCallback(function (newValue, _ref) {
-    var action = _ref.action;
-    var _delimit = delimit;
+  const handleChange = useCallback((newValue, _ref) => {
+    let {
+      action
+    } = _ref;
+    let _delimit = delimit;
     if (typeof _delimit === 'string') _delimit = [_delimit];
-    var _typeahead$fields = typeahead.fields,
-        fields = _typeahead$fields === void 0 ? [] : _typeahead$fields;
-    var target = {
+    const {
+      fields = []
+    } = typeahead;
+    const target = {
       name: name,
       value: action === 'create-option' && !multi ? newValue.value : newValue
     };
-
     switch (action) {
       case 'select-option':
         {
           updateInputValue('');
           break;
         }
-
       case 'create-option':
         emptyFields(fields, onChange);
         onChange({
-          target: target
+          target
         });
         return;
-
       case 'clear':
         {
           emptyFields(fields, onChange);
           onChange({
             target: {
-              name: name,
+              name,
               value: ''
             }
           });
           return;
         }
-
       case 'remove-value':
         {
           if (!newValue) newValue = [];
           if (multi && !target.value) target.value = [];
         }
     }
-
     if (_Array$isArray(newValue)) {
-      var _value = ''; // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
+      let value = '';
+      // it is way too complicated to try to figure out what you want to do with a multiselect typeahead
       // so I'll give it back to the developer raw and let them figure it out -- JRA 7/5/2018
-
       if (stringify) {
         if (delimiter) {
           if (_delimit && _Array$isArray(_delimit)) {
-            var _context9;
-
+            var _context6;
             // if we were provided field(s) to delimit by, build up a special string with just those values
-            _forEachInstanceProperty(_context9 = target.value).call(_context9, function (option) {
-              _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
-                if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
-                  _value = _value + option[field] + delimiter;
+            _forEachInstanceProperty(_context6 = target.value).call(_context6, option => {
+              _forEachInstanceProperty(_delimit).call(_delimit, field => {
+                if (_indexOfInstanceProperty(value).call(value, option[field]) === -1) {
+                  value = value + option[field] + delimiter;
                 }
               });
             });
-
-            _value = _sliceInstanceProperty(_value).call(_value, 0, -1);
-            target.value = _value;
+            value = _sliceInstanceProperty(value).call(value, 0, -1);
+            target.value = value;
           } else {
-            var _context10;
-
+            var _context7;
             // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
-            _forEachInstanceProperty(_context10 = target.value).call(_context10, function (option) {
-              _value = _value + _JSON$stringify(option) + delimiter;
+            _forEachInstanceProperty(_context7 = target.value).call(_context7, option => {
+              value = value + _JSON$stringify(option) + delimiter;
             });
-
-            _value = _sliceInstanceProperty(_value).call(_value, 0, -1);
-            target.value = _value;
+            value = _sliceInstanceProperty(value).call(value, 0, -1);
+            target.value = value;
           }
         } else if (_delimit && !delimiter) {
-          var _context11;
-
+          var _context8;
           // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
-          _value = [];
-
-          _forEachInstanceProperty(_context11 = target.value).call(_context11, function (option) {
-            _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
-              if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
-                _value.push(option[field]);
+          value = [];
+          _forEachInstanceProperty(_context8 = target.value).call(_context8, option => {
+            _forEachInstanceProperty(_delimit).call(_delimit, field => {
+              if (_indexOfInstanceProperty(value).call(value, option[field]) === -1) {
+                value.push(option[field]);
               }
             });
           });
-
-          _value = _JSON$stringify(_value);
-          target.value = _value;
+          value = _JSON$stringify(value);
+          target.value = value;
         } else {
           // if all we want to do is stringify the value, send it back up unmodified but stringified
           target.value = _JSON$stringify(target.value);
         }
       } else if (_delimit && !delimiter) {
-        var _context12;
-
+        var _context9;
         // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as an array
-        _value = [];
-
-        _forEachInstanceProperty(_context12 = target.value).call(_context12, function (option) {
-          _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
-            if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
-              _value.push(option[field]);
+        value = [];
+        _forEachInstanceProperty(_context9 = target.value).call(_context9, option => {
+          _forEachInstanceProperty(_delimit).call(_delimit, field => {
+            if (_indexOfInstanceProperty(value).call(value, option[field]) === -1) {
+              value.push(option[field]);
             }
           });
         });
-
-        target.value = _value;
+        target.value = value;
       }
-
       onChange({
-        target: target
+        target
       });
     } else {
       handleSingleValueChange(newValue);
     }
-
-    menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, false))); // closes menu when new option gets selected
-
+    menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, {
+      [name]: false
+    })); // closes menu when new option gets selected
     updateInputValue('');
   }, [delimit, delimiter, emptyFields, handleSingleValueChange, multi, name, onChange, stringify, typeahead, menuIsOpen]);
-  var handleOnKeyDown = useCallback(function (e) {
+  const handleOnKeyDown = useCallback(e => {
     // if the user presses tab before the loaded options come back the default behavior is to tab to the next field and do nothing
     // this will capture that tab event and treat it like a create-option was selected - JRA 02/13/2020
     if (e.keyCode === 9 && allowcreate && inputValue) {
@@ -1016,7 +816,6 @@ var Typeahead = function Typeahead(props) {
         });
       }
     }
-
     if (e.keyCode === 32) {
       // if key is spacebar, prevent what react select is trying to do with it and just let them enter a whitespace - JRA 02/05/2020
       e.preventDefault();
@@ -1024,33 +823,30 @@ var Typeahead = function Typeahead(props) {
         action: 'input-change'
       });
     }
-
     onKeyDown();
   }, [onKeyDown, handleChange, allowcreate, inputValue, handleOnInputChange]);
-  var closeMenuOnScroll = useCallback(function (e) {
-    var menuOpenState = false;
-
+  const closeMenuOnScroll = useCallback(e => {
+    let menuOpenState = false;
     if (e && e.target && e.target.classList) {
       menuOpenState = (e.target.classList.contains('gfb-input__menu-list') || e.target.classList.contains('gfb-input__control')) && menuIsOpen[name];
     }
-
-    updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, menuOpenState)));
+    updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, {
+      [name]: menuOpenState
+    }));
   }, [menuIsOpen, name, updateIsMenuOpen]);
-  var Typeahead = input.Typeahead;
-  var className = 'gfb-input-inner';
+  const {
+    Typeahead
+  } = input;
+  let className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
-  var outerClass = 'gfb-input-outer';
-
-  if (isRequiredFlag && _trimInstanceProperty(_context13 = value + '').call(_context13).length === 0 && !isFocused) {
+  let outerClass = 'gfb-input-outer';
+  if (isRequiredFlag && _trimInstanceProperty(_context0 = value + '').call(_context0).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
   }
-
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus';
   }
-
-  var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
-
+  const inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
   return jsx("div", {
     className: outerClass,
     ref: inputContainer,
@@ -1092,7 +888,6 @@ var Typeahead = function Typeahead(props) {
     styles: reactSelectStyles
   }));
 };
-
 export default Typeahead;
 Typeahead.propTypes = {
   onChange: PropTypes.func,

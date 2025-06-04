@@ -1,17 +1,16 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import Portal from './Portal';
-import Tooltip from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 import { FaExclamationTriangle } from 'react-icons/fa';
 import { randomId } from './utils';
-
-var ValidationErrorIcon = function ValidationErrorIcon(props) {
-  var message = props.message,
-      _props$color = props.color,
-      color = _props$color === void 0 ? 'red' : _props$color,
-      _props$type = props.type,
-      type = _props$type === void 0 ? 'error' : _props$type;
-  var id = useRef(randomId());
+const ValidationErrorIcon = props => {
+  const {
+    message,
+    color = 'red',
+    type = 'error'
+  } = props;
+  const id = useRef(randomId());
   return /*#__PURE__*/React.createElement("div", {
     className: "gfb-input__indicator gfb-validation-error-indicator"
   }, /*#__PURE__*/React.createElement(FaExclamationTriangle, {
@@ -26,7 +25,6 @@ var ValidationErrorIcon = function ValidationErrorIcon(props) {
     type: type
   }, /*#__PURE__*/React.createElement("span", null, message))));
 };
-
 ValidationErrorIcon.propTypes = {
   message: PropTypes.string,
   color: PropTypes.string,

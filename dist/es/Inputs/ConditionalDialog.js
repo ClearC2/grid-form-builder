@@ -1,58 +1,46 @@
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Dialog } from 'c2-dialog';
 import { Map, List } from 'immutable';
 import ConditionalPredicate from './ConditionalPredicate';
 import Toggle from '../QueryBuilder/Where/ConditionalTable/Toggle';
-
-var formFieldDefs = function formFieldDefs(fieldDefs, c2class) {
+const formFieldDefs = (fieldDefs, c2class) => {
   if (!c2class) return Map();
-  var classFields = fieldDefs.get(c2class, Map());
+  const classFields = fieldDefs.get(c2class, Map());
   if (!classFields.size) return Map();
   return classFields.get('-default-', Map()).merge(classFields.get('uifieldname', Map()));
 };
-
-var ConditionalDialog = function ConditionalDialog(props) {
-  var value = props.value,
-      c2class = props.c2class,
-      fieldDefinitions = props.fieldDefinitions;
-
-  var _useState = useState(value && value.get ? value.get('conditions', List()).size : 1),
-      _useState2 = _slicedToArray(_useState, 2),
-      conditions = _useState2[0],
-      setConditions = _useState2[1]; // const [value, setValue] = useState(props.value)
-
-
-  var _useState3 = useState(formFieldDefs(fieldDefinitions, c2class)),
-      _useState4 = _slicedToArray(_useState3, 1),
-      classFields = _useState4[0];
-
-  useEffect(function () {
+const ConditionalDialog = props => {
+  const {
+    value,
+    c2class,
+    fieldDefinitions
+  } = props;
+  const [conditions, setConditions] = useState(value && value.get ? value.get('conditions', List()).size : 1);
+  // const [value, setValue] = useState(props.value)
+  const [classFields] = useState(formFieldDefs(fieldDefinitions, c2class));
+  useEffect(() => {
     if (value && value.get('type')) {
       setConditions(value.get('conditions').size);
     } else {
       setConditions(1);
     }
   }, [value]);
-
-  var onChange = function onChange(e, i) {
+  const onChange = (e, i) => {
     if (conditions > 1) {
       if (value && !value.get('type')) {
-        var filter = Map({
+        let filter = Map({
           type: 'and',
           conditions: List([value])
         });
         e.target.value = e.target.value.set('name', e.target.name);
-        var newValues = filter.get('conditions', List());
-
+        let newValues = filter.get('conditions', List());
         if (!filter.getIn(['conditions', i])) {
           newValues = newValues.push(e.target.value);
         } else {
           newValues = newValues.set(i, e.target.value);
         }
-
         filter = filter.set('conditions', newValues);
         props.onChange({
           target: {
@@ -61,21 +49,18 @@ var ConditionalDialog = function ConditionalDialog(props) {
           }
         });
       } else {
-        var _filter = value;
-
-        var _newValues = _filter.get('conditions', List());
-
-        if (!_filter.getIn(['conditions', i])) {
-          _newValues = _newValues.push(e.target.value);
+        let filter = value;
+        let newValues = filter.get('conditions', List());
+        if (!filter.getIn(['conditions', i])) {
+          newValues = newValues.push(e.target.value);
         } else {
-          _newValues = _newValues.set(i, e.target.value);
+          newValues = newValues.set(i, e.target.value);
         }
-
-        _filter = _filter.set('conditions', _newValues);
+        filter = filter.set('conditions', newValues);
         props.onChange({
           target: {
             name: e.target.name,
-            value: _filter
+            value: filter
           }
         });
       }
@@ -83,13 +68,10 @@ var ConditionalDialog = function ConditionalDialog(props) {
       props.onChange(e);
     }
   };
-
-  var renderConditions = function renderConditions() {
-    var conditionElements = [];
-
-    for (var i = 0; i < conditions; i++) {
-      var indexedValue = value;
-
+  const renderConditions = () => {
+    const conditionElements = [];
+    for (let i = 0; i < conditions; i++) {
+      let indexedValue = value;
       if (value && value.get('type')) {
         indexedValue = value.getIn(['conditions', i], Map({
           condition: 'contains',
@@ -102,7 +84,6 @@ var ConditionalDialog = function ConditionalDialog(props) {
           values: List()
         });
       }
-
       if (typeof indexedValue === 'string') {
         indexedValue = Map({
           name: props.name,
@@ -110,8 +91,7 @@ var ConditionalDialog = function ConditionalDialog(props) {
           values: List()
         });
       }
-
-      conditionElements.push( /*#__PURE__*/React.createElement("div", {
+      conditionElements.push(/*#__PURE__*/React.createElement("div", {
         style: {
           borderTop: '1px solid lightgray'
         },
@@ -123,14 +103,12 @@ var ConditionalDialog = function ConditionalDialog(props) {
         classFields: classFields
       }))));
     }
-
     return conditionElements;
   };
-
-  var handleToggleClick = function handleToggleClick(e) {
+  const handleToggleClick = e => {
     if (e) {
       // switch to or
-      var filter = value;
+      let filter = value;
       filter = filter.set('type', 'or');
       props.onChange({
         target: {
@@ -140,29 +118,22 @@ var ConditionalDialog = function ConditionalDialog(props) {
       });
     } else {
       // switch to and
-      var _filter2 = value;
-      _filter2 = _filter2.set('type', 'and');
+      let filter = value;
+      filter = filter.set('type', 'and');
       props.onChange({
         target: {
           name: props.name,
-          value: _filter2
+          value: filter
         }
       });
     }
   };
-
-  var closeModal = function closeModal() {
-    return props.handleClose(false);
-  };
-
-  var addCondition = function addCondition() {
-    return setConditions(conditions + 1);
-  };
-
+  const closeModal = () => props.handleClose(false);
+  const addCondition = () => setConditions(conditions + 1);
   return /*#__PURE__*/React.createElement(Dialog, {
     size: {
       width: '800px',
-      height: "420px"
+      height: `420px`
     },
     default: {
       y: window.innerHeight / 2 - 250 + window.scrollY,
@@ -252,7 +223,6 @@ var ConditionalDialog = function ConditionalDialog(props) {
     onClick: closeModal
   }, "Ok")));
 };
-
 export default ConditionalDialog;
 ConditionalDialog.propTypes = {
   onChange: PropTypes.func,

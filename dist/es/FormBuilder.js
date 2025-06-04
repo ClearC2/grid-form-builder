@@ -4,34 +4,17 @@ import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-sta
 import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
-import _Reflect$construct from "@babel/runtime-corejs3/core-js-stable/reflect/construct";
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
 import _objectWithoutProperties from "@babel/runtime-corejs3/helpers/esm/objectWithoutProperties";
-import _createClass from "@babel/runtime-corejs3/helpers/esm/createClass";
-import _classCallCheck from "@babel/runtime-corejs3/helpers/esm/classCallCheck";
-import _assertThisInitialized from "@babel/runtime-corejs3/helpers/esm/assertThisInitialized";
-import _inherits from "@babel/runtime-corejs3/helpers/esm/inherits";
-import _possibleConstructorReturn from "@babel/runtime-corejs3/helpers/esm/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime-corejs3/helpers/esm/getPrototypeOf";
-import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-var _excluded = ["size"],
-    _excluded2 = ["formValues", "theme"];
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context7, _context8; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context7 = ownKeys(Object(source), !0)).call(_context7, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context8 = ownKeys(Object(source))).call(_context8, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
+const _excluded = ["size"],
+  _excluded2 = ["formValues", "theme"];
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context4, _context5; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context4 = ownKeys(Object(t), !0)).call(_context4, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context5 = ownKeys(Object(t))).call(_context5, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
 import _spliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/splice";
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _parseFloat from "@babel/runtime-corejs3/core-js-stable/parse-float";
@@ -49,22 +32,16 @@ import InnerCell from './Inputs';
 import { FaTrash as Trash } from 'react-icons/fa';
 import useTheme, { ThemeProvider } from './theme/useTheme';
 import { useTooltipAutoHide } from './useTooltipAutoHide';
-var inputEventListenerDebouncer = null;
-export var FormValueContext = /*#__PURE__*/createContext([Map(), function () {}]);
-var debug = false;
-
-var debugLog = function debugLog() {
-  var _console;
-
-  if (debug) (_console = console).log.apply(_console, arguments); //eslint-disable-line
+let inputEventListenerDebouncer = null;
+export const FormValueContext = /*#__PURE__*/createContext([Map(), () => {}]);
+const debug = false;
+const debugLog = function () {
+  if (debug) console.log(...arguments); //eslint-disable-line
 };
-
-var defaults = {
+const defaults = {
   object: {},
   map: Map(),
-  nullFunction: function nullFunction() {
-    return null;
-  },
+  nullFunction: () => null,
   dropItemDimensions: {
     h: 1,
     w: 6
@@ -82,194 +59,153 @@ var defaults = {
     version: 'browser'
   }
 };
-
-var FormBuilder = function FormBuilder(props) {
-  var rowHeight = props.rowHeight,
-      _props$columns = props.columns,
-      columns = _props$columns === void 0 ? 12 : _props$columns,
-      _props$formSchema = props.formSchema,
-      formSchema = _props$formSchema === void 0 ? defaults.object : _props$formSchema,
-      width = props.width,
-      handleOnDimensionChange = props.handleOnDimensionChange,
-      _props$dropItemDimens = props.dropItemDimensions,
-      dropItemDimensions = _props$dropItemDimens === void 0 ? defaults.dropItemDimensions : _props$dropItemDimens,
-      _props$dropItemConfig = props.dropItemConfig,
-      dropItemConfig = _props$dropItemConfig === void 0 ? defaults.dropItemConfig : _props$dropItemConfig,
-      validate = props.validate,
-      requiredFlag = props.requiredFlag,
-      setContainerRef = props.setContainerRef,
-      _props$onClick = props.onClick,
-      onClick = _props$onClick === void 0 ? defaults.nullFunction : _props$onClick,
-      _props$handleOnDrop = props.handleOnDrop,
-      handleOnDrop = _props$handleOnDrop === void 0 ? defaults.nullFunction : _props$handleOnDrop,
-      _props$handleCascade = props.handleCascade,
-      handleCascade = _props$handleCascade === void 0 ? defaults.nullFunction : _props$handleCascade,
-      _props$handleRTEImage = props.handleRTEImageClick,
-      onRTEImageClick = _props$handleRTEImage === void 0 ? defaults.nullFunction : _props$handleRTEImage,
-      _props$handleLinkClic = props.handleLinkClick,
-      handleLinkClick = _props$handleLinkClic === void 0 ? defaults.nullFunction : _props$handleLinkClic,
-      conditionalFieldValues = props.conditionalFieldValues,
-      conditionalSearch = props.conditionalSearch,
-      inline = props.inline,
-      _props$handleOnChange = props.handleOnChange,
-      handleOnChange = _props$handleOnChange === void 0 ? defaults.nullFunction : _props$handleOnChange,
-      _props$interactive = props.interactive,
-      interactive = _props$interactive === void 0 ? true : _props$interactive,
-      _props$draggable = props.draggable,
-      draggable = _props$draggable === void 0 ? false : _props$draggable,
-      readonly = props.readonly,
-      droppable = props.droppable,
-      activeItem = props.activeItem,
-      _props$rglAutoSize = props.rglAutoSize,
-      rglAutoSize = _props$rglAutoSize === void 0 ? true : _props$rglAutoSize,
-      rglStyle = props.rglStyle,
-      _props$verticalCompac = props.verticalCompact,
-      verticalCompact = _props$verticalCompac === void 0 ? false : _props$verticalCompac,
-      compactType = props.compactType,
-      _props$dateFormat = props.dateFormat,
-      dateFormat = _props$dateFormat === void 0 ? 'MM/DD/YYYY' : _props$dateFormat,
-      _props$dateTimeFormat = props.dateTimeFormat,
-      dateTimeFormat = _props$dateTimeFormat === void 0 ? 'MM/DD/YYYY h:mm a' : _props$dateTimeFormat,
-      _props$timeFormat = props.timeFormat,
-      timeFormat = _props$timeFormat === void 0 ? 'h:mm a' : _props$timeFormat,
-      _props$autoComplete = props.autoComplete,
-      autoComplete = _props$autoComplete === void 0 ? 'ac_off' : _props$autoComplete,
-      _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style,
-      _props$device = props.device,
-      device = _props$device === void 0 ? defaults.device : _props$device,
-      _props$fieldDefinitio = props.fieldDefinitions,
-      fieldDefinitions = _props$fieldDefinitio === void 0 ? _mapInstanceProperty(defaults) : _props$fieldDefinitio,
-      c2class = props.c2class;
+const FormBuilder = props => {
+  const {
+    rowHeight,
+    columns = 12,
+    formSchema = defaults.object,
+    width,
+    handleOnDimensionChange,
+    dropItemDimensions = defaults.dropItemDimensions,
+    dropItemConfig = defaults.dropItemConfig,
+    validate,
+    requiredFlag,
+    setContainerRef,
+    onClick = defaults.nullFunction,
+    handleOnDrop = defaults.nullFunction,
+    handleCascade = defaults.nullFunction,
+    handleRTEImageClick: onRTEImageClick = defaults.nullFunction,
+    handleLinkClick = defaults.nullFunction,
+    conditionalFieldValues,
+    conditionalSearch,
+    inline,
+    handleOnChange = defaults.nullFunction,
+    interactive = true,
+    draggable = false,
+    readonly,
+    droppable,
+    activeItem,
+    rglAutoSize = true,
+    rglStyle,
+    verticalCompact = false,
+    compactType,
+    dateFormat = 'MM/DD/YYYY',
+    dateTimeFormat = 'MM/DD/YYYY h:mm a',
+    timeFormat = 'h:mm a',
+    autoComplete = 'ac_off',
+    style = {},
+    device = defaults.device,
+    fieldDefinitions = _mapInstanceProperty(defaults),
+    c2class
+  } = props;
   useTooltipAutoHide();
-
-  var _useState = useState({
+  const [grid, updateGrid] = useState({
     layout: [],
     elements: []
-  }),
-      _useState2 = _slicedToArray(_useState, 2),
-      grid = _useState2[0],
-      updateGrid = _useState2[1];
-
-  var _useState3 = useState(!!validate),
-      _useState4 = _slicedToArray(_useState3, 2),
-      requiredWarning = _useState4[0],
-      updateRequiredWarning = _useState4[1];
-
-  var _useState5 = useState(verticalCompact ? 'vertical' : typeof compactType === 'undefined' ? null : compactType),
-      _useState6 = _slicedToArray(_useState5, 2),
-      compact = _useState6[0],
-      updateCompact = _useState6[1];
-
-  var _useState7 = useState(FormBuilder.count),
-      _useState8 = _slicedToArray(_useState7, 1),
-      myOffset = _useState8[0];
-
-  var _useState9 = useState("gfb-".concat(Math.floor(Math.random() * 10000) + 1)),
-      _useState10 = _slicedToArray(_useState9, 1),
-      id = _useState10[0]; // creates a unique id for this grid for the screen scraper
-
-
-  var ReactGridLayout = useRef(null);
-
-  var _useTheme = useTheme(),
-      theme = _useTheme.theme;
-
-  var handleAnywhereClick = useCallback(function (config, e) {
+  });
+  const [requiredWarning, updateRequiredWarning] = useState(!!validate);
+  const [compact, updateCompact] = useState(verticalCompact ? 'vertical' : typeof compactType === 'undefined' ? null : compactType);
+  const [myOffset] = useState(FormBuilder.count);
+  const [id] = useState(`gfb-${Math.floor(Math.random() * 10000) + 1}`); // creates a unique id for this grid for the screen scraper
+  const ReactGridLayout = useRef(null);
+  const {
+    theme
+  } = useTheme();
+  const handleAnywhereClick = useCallback((config, e) => {
     debugLog('handleAnywhereClick');
     onClick(config, e);
   }, [onClick]);
-  var handleDragDropOnInput = useCallback(function (_ref) {
-    var source = _ref.source,
-        target = _ref.target;
+  const handleDragDropOnInput = useCallback(_ref => {
+    let {
+      source,
+      target
+    } = _ref;
     debugLog('handleDragDropOnInput');
     handleOnDrop({
-      source: source,
-      target: target
+      source,
+      target
     });
   }, [handleOnDrop]);
-  var handleCascadeKeywordClick = useCallback(function (e) {
+  const handleCascadeKeywordClick = useCallback(e => {
     debugLog('handleCascadeKeywordClick');
     handleCascade(e);
   }, [handleCascade]);
-  var handleRTEImageClick = useCallback(function (name) {
+  const handleRTEImageClick = useCallback(name => {
     debugLog('handleRTEImageClick');
     onRTEImageClick(name);
   }, [onRTEImageClick]);
-  useEffect(function () {
+  useEffect(() => {
     debugLog('updateCompact');
     updateCompact(verticalCompact ? 'vertical' : typeof compactType === 'undefined' ? null : compactType);
   }, [verticalCompact, compactType]);
-  useEffect(function () {
+  useEffect(() => {
     debugLog('updateRequiredWarning 2');
     updateRequiredWarning(requiredFlag);
   }, [requiredFlag]);
-  useEffect(function () {
+  useEffect(() => {
     debugLog('updateRequiredWarning');
     updateRequiredWarning(validate);
   }, [validate]);
-  useEffect(function () {
-    debugLog('FormBuilder.count'); // this count is used to set myOffset, which serves as a starting point for tab indexing
-
+  useEffect(() => {
+    debugLog('FormBuilder.count');
+    // this count is used to set myOffset, which serves as a starting point for tab indexing
     FormBuilder.count++;
   }, []);
-  useEffect(function () {
-    debugLog('inputEventListenerDebouncer'); // this is used to attach css classes for browsers that do not support :focus-within
+  useEffect(() => {
+    debugLog('inputEventListenerDebouncer');
+    // this is used to attach css classes for browsers that do not support :focus-within
     // this is not best practice, you should always try to avoid screen scraping the dom in react
-
     clearTimeout(inputEventListenerDebouncer);
-    inputEventListenerDebouncer = _setTimeout(function () {
-      var inputs = $("#".concat(id, " :input"));
+    inputEventListenerDebouncer = _setTimeout(() => {
+      const inputs = $(`#${id} :input`);
       inputs.off('focus');
       inputs.off('blur');
-      inputs.on('focus', function (e) {
+      inputs.on('focus', e => {
         $(e.target).parents('.react-grid-item').addClass('react-grid-item-focus-within');
       });
-      inputs.on('blur', function (e) {
+      inputs.on('blur', e => {
         $(e.target).parents('.react-grid-item').removeClass('react-grid-item-focus-within');
       });
     }, 750);
-    return function () {
-      var inputs = $("#".concat(id, " :input"));
+    return () => {
+      const inputs = $(`#${id} :input`);
       inputs.off('focus');
       inputs.off('blur');
-    }; // this is expensive, only do this on mount
+    };
+    // this is expensive, only do this on mount
   }, []); // eslint-disable-line
 
-  useEffect(function () {
+  useEffect(() => {
     debugLog('rebuilding all grid elements (expensive)');
-    var schema = searchForLayoutArray(formSchema);
-    var layout = [];
-    var elements = [];
-    var specifiedTabs = Set(); // this is for building up unique tab indices
-
-    _forEachInstanceProperty(schema).call(schema, function (field) {
-      var _field$config = field.config,
-          config = _field$config === void 0 ? {} : _field$config;
+    const schema = searchForLayoutArray(formSchema);
+    const layout = [];
+    const elements = [];
+    let specifiedTabs = Set(); // this is for building up unique tab indices
+    _forEachInstanceProperty(schema).call(schema, field => {
+      const {
+        config = {}
+      } = field;
       if (config.tabindex) specifiedTabs = specifiedTabs.add(config.tabindex);
     });
-
-    var tabNumber = 1;
-
-    _forEachInstanceProperty(schema).call(schema, function (field, i) {
+    let tabNumber = 1;
+    _forEachInstanceProperty(schema).call(schema, (field, i) => {
       if (conditionalSearch) {
         field = convertFieldToSearch(field);
       }
-
-      var _field = field,
-          _field$dimensions = _field.dimensions,
-          dimensions = _field$dimensions === void 0 ? {
-        x: 0,
-        y: i,
-        w: 12,
-        h: 1
-      } : _field$dimensions;
-      var config = _objectSpread({}, field.config) || {}; // prevent mutation of the original config
-
-      if (_typeof(dimensions) === 'object') {
+      const {
+        dimensions = {
+          x: 0,
+          y: i,
+          w: 12,
+          h: 1
+        }
+      } = field;
+      const config = _objectSpread({}, field.config) || {}; // prevent mutation of the original config
+      if (typeof dimensions === 'object') {
         dimensions.i = i + '';
-        var tabindex = config.tabindex;
-
+        let {
+          tabindex
+        } = config;
         if (!tabindex) {
           // if a tab index wasn't specified, lets start assigning tab indicies based on what is available
           // at this point we are just going to find the next available index and assign it to this input
@@ -277,28 +213,25 @@ var FormBuilder = function FormBuilder(props) {
           while (specifiedTabs.has(tabNumber)) {
             tabNumber++;
           }
-
           tabindex = myOffset + '' + tabNumber;
           specifiedTabs = specifiedTabs.add(tabNumber);
           tabNumber++;
         } else {
           tabindex = myOffset + '' + tabindex;
         }
-
-        var _config$rteImageUrl = config.rteImageUrl,
-            rteImageUrl = _config$rteImageUrl === void 0 ? '' : _config$rteImageUrl;
-        var isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i;
-        var className = isActive ? 'drag-item-active' : '';
+        const {
+          rteImageUrl = ''
+        } = config;
+        const isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i;
+        let className = isActive ? 'drag-item-active' : '';
         if (config.tooltip) className = className + ' gfb-has-tooltip';
-
-        var removeSelf = function removeSelf(e) {
+        const removeSelf = e => {
           onClick({
             index: null
           }, e);
           removeItem(i);
         };
-
-        elements.push( /*#__PURE__*/React.createElement("div", {
+        elements.push(/*#__PURE__*/React.createElement("div", {
           key: i + '',
           className: className,
           css: theme.gridItem
@@ -341,105 +274,84 @@ var FormBuilder = function FormBuilder(props) {
         layout.push(dimensions);
       }
     });
-
     updateGrid({
-      layout: layout,
-      elements: elements
+      layout,
+      elements
     });
-  }, [// eslint-disable-line
+  }, [
+  // eslint-disable-line
   conditionalFieldValues, conditionalSearch, formSchema, handleAnywhereClick, handleCascadeKeywordClick, handleDragDropOnInput, handleRTEImageClick, requiredWarning, rowHeight, handleOnChange, interactive, draggable, readonly, myOffset, activeItem, handleLinkClick, autoComplete]);
-  var removeItem = useCallback(function (i) {
+  const removeItem = useCallback(i => {
     if (typeof handleOnDimensionChange === 'function') {
-      var schema = searchForLayoutArray(formSchema);
-
+      const schema = searchForLayoutArray(formSchema);
       _spliceInstanceProperty(schema).call(schema, i, 1);
-
-      var newFormSchema = updateLayoutArray(formSchema, schema);
+      const newFormSchema = updateLayoutArray(formSchema, schema);
       updateGrid({
         layout: [],
         elements: []
       }); // clearing these out first so nothing funky happens with the indexes - JRA 11/13/2019
-
       handleOnDimensionChange(newFormSchema);
     } else {
       // this is a hack to break react's internal batching - clear the dashboard and reset it - JRA 11/06/2019
       console.warn('A grid item attempted to remove itself but no handleOnDimensionChange callback was provided to update the schema.'); // eslint-disable-line
-
       updateGrid({
         layout: [],
         elements: []
       });
-
-      _setTimeout(function () {
-        return updateGrid({
-          layout: grid.layout,
-          elements: grid.elements
-        });
-      });
+      _setTimeout(() => updateGrid({
+        layout: grid.layout,
+        elements: grid.elements
+      }));
     }
   }, [formSchema, updateGrid, handleOnDimensionChange, grid]);
-  var onItemLayoutUpdate = useCallback(function (newLayout) {
+  const onItemLayoutUpdate = useCallback(newLayout => {
     debugLog('onItemLayoutUpdate');
-
     if (typeof handleOnDimensionChange === 'function') {
-      var schema = searchForLayoutArray(formSchema);
-
-      _forEachInstanceProperty(newLayout).call(newLayout, function (item) {
-        var dimensions = _objectSpread({}, item);
-
-        var index = +dimensions.i;
+      const schema = searchForLayoutArray(formSchema);
+      _forEachInstanceProperty(newLayout).call(newLayout, item => {
+        const dimensions = _objectSpread({}, item);
+        const index = +dimensions.i;
         delete dimensions.i;
         schema[index].dimensions = dimensions;
       });
-
-      var newFormSchema = updateLayoutArray(formSchema, schema);
+      const newFormSchema = updateLayoutArray(formSchema, schema);
       handleOnDimensionChange(newFormSchema);
     } else {
       // this is a hack to break react's internal batching - clear the dashboard and reset it - JRA 11/06/2019
       console.warn('A change was detected to the layout but no handleOnDimensionChange callback was provided to update the schema.'); // eslint-disable-line
-
       updateGrid({
         layout: [],
         elements: []
       });
-
-      _setTimeout(function () {
-        return updateGrid({
-          layout: grid.layout,
-          elements: grid.elements
-        });
-      });
+      _setTimeout(() => updateGrid({
+        layout: grid.layout,
+        elements: grid.elements
+      }));
     }
   }, [grid, updateGrid, handleOnDimensionChange, formSchema]);
-  var onDrop = useCallback(function (dimensions) {
+  const onDrop = useCallback(dimensions => {
     debugLog('onDrop');
-
     if (typeof handleOnDimensionChange === 'function') {
-      var config = _objectSpread({}, dropItemConfig);
-
-      var schema = searchForLayoutArray(formSchema);
-
+      const config = _objectSpread({}, dropItemConfig);
+      const schema = searchForLayoutArray(formSchema);
       if (ReactGridLayout.current) {
         // dropping a new item most likely caused collisions, so lets ref up the layout and update everything that got moved if we can - JRA 11/07/2019
-        var newLayout = ReactGridLayout.current.state.layout;
-
-        _forEachInstanceProperty(newLayout).call(newLayout, function (item) {
+        const newLayout = ReactGridLayout.current.state.layout;
+        _forEachInstanceProperty(newLayout).call(newLayout, item => {
           if (+item.i >= 0) {
-            var _dimensions = _objectSpread({}, item);
-
-            var index = +_dimensions.i;
-            delete _dimensions.i;
-            schema[index].dimensions = _dimensions;
+            const dimensions = _objectSpread({}, item);
+            const index = +dimensions.i;
+            delete dimensions.i;
+            schema[index].dimensions = dimensions;
           }
         });
       }
-
-      var newItem = {
-        dimensions: dimensions,
-        config: config
+      const newItem = {
+        dimensions,
+        config
       };
       schema.push(newItem);
-      var newFormSchema = updateLayoutArray(formSchema, schema);
+      const newFormSchema = updateLayoutArray(formSchema, schema);
       handleOnDimensionChange(newFormSchema);
     } else {
       console.warn('A new item was dropped into the current layout but no handleOnDimensionChange callback was provided to update the schema.'); // eslint-disable-line
@@ -470,7 +382,6 @@ var FormBuilder = function FormBuilder(props) {
     compactType: compact
   }, grid.elements));
 };
-
 FormBuilder.propTypes = {
   formSchema: PropTypes.object,
   formValues: PropTypes.object,
@@ -511,47 +422,20 @@ FormBuilder.propTypes = {
   c2class: PropTypes.string
 };
 FormBuilder.count = 1;
-
-var PureFormBuilder = /*#__PURE__*/function (_PureComponent) {
-  _inherits(PureFormBuilder, _PureComponent);
-
-  var _super = _createSuper(PureFormBuilder);
-
-  function PureFormBuilder() {
-    var _context;
-
-    var _this;
-
-    _classCallCheck(this, PureFormBuilder);
-
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _super.call.apply(_super, _concatInstanceProperty(_context = [this]).call(_context, args));
-
-    _defineProperty(_assertThisInitialized(_this), "render", function () {
-      return /*#__PURE__*/React.createElement(FormBuilder, _this.props);
-    });
-
-    return _this;
+class PureFormBuilder extends PureComponent {
+  constructor() {
+    super(...arguments);
+    _defineProperty(this, "render", () => /*#__PURE__*/React.createElement(FormBuilder, this.props));
   }
-
-  return _createClass(PureFormBuilder);
-}(PureComponent);
-
-var SizeMemoizer = function SizeMemoizer(props) {
-  var size = props.size,
-      rest = _objectWithoutProperties(props, _excluded);
-
-  var _useState11 = useState(size.width),
-      _useState12 = _slicedToArray(_useState11, 2),
-      width = _useState12[0],
-      setWidth = _useState12[1];
-
-  useEffect(function () {
-    var w = Math.ceil(size.width);
-
+}
+const SizeMemoizer = props => {
+  const {
+      size
+    } = props,
+    rest = _objectWithoutProperties(props, _excluded);
+  const [width, setWidth] = useState(size.width);
+  useEffect(() => {
+    const w = Math.ceil(size.width);
     if (w !== width) {
       setWidth(w);
     }
@@ -560,269 +444,210 @@ var SizeMemoizer = function SizeMemoizer(props) {
     width: width
   }, rest));
 };
-
 SizeMemoizer.propTypes = {
   size: PropTypes.object
 };
-var SizeMeHOC = sizeMe({
+const SizeMeHOC = sizeMe({
   refreshRate: 75
 })(SizeMemoizer);
-
-var FormValidator = /*#__PURE__*/function (_Component) {
-  _inherits(FormValidator, _Component);
-
-  var _super2 = _createSuper(FormValidator);
-
-  function FormValidator() {
-    var _context2;
-
-    var _this2;
-
-    _classCallCheck(this, FormValidator);
-
-    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
-
-    _this2 = _super2.call.apply(_super2, _concatInstanceProperty(_context2 = [this]).call(_context2, args));
-
-    _defineProperty(_assertThisInitialized(_this2), "state", {
+export default class FormValidator extends Component {
+  constructor() {
+    super(...arguments);
+    _defineProperty(this, "state", {
       validate: false,
       requiredWarning: false,
-      formValues: _this2.props.formValues ? _this2.props.formValues.toJS ? _this2.props.formValues : fromJS(_this2.props.formValues) : Map()
+      formValues: this.props.formValues ? this.props.formValues.toJS ? this.props.formValues : fromJS(this.props.formValues) : Map()
     });
-
-    _defineProperty(_assertThisInitialized(_this2), "onSubmit", function () {
-      var _this2$props = _this2.props,
-          _this2$props$formSche = _this2$props.formSchema,
-          formSchema = _this2$props$formSche === void 0 ? Map() : _this2$props$formSche,
-          _this2$props$formValu = _this2$props.formValues,
-          formValues = _this2$props$formValu === void 0 ? Map() : _this2$props$formValu,
-          handleSubmit = _this2$props.handleSubmit;
+    _defineProperty(this, "onSubmit", () => {
+      let {
+        formSchema = Map(),
+        formValues = Map(),
+        handleSubmit
+      } = this.props;
       formValues = formValues.toJS ? formValues : fromJS(formValues);
-      var layout = searchForLayoutArray(formSchema);
-
-      var formIncomplete = _someInstanceProperty(layout).call(layout, function (field) {
-        var _field$config2 = field.config,
-            config = _field$config2 === void 0 ? {} : _field$config2;
-        var _config$required = config.required,
-            required = _config$required === void 0 ? false : _config$required;
+      const layout = searchForLayoutArray(formSchema);
+      const formIncomplete = _someInstanceProperty(layout).call(layout, field => {
+        const {
+          config = {}
+        } = field;
+        const {
+          required = false
+        } = config;
         if (!required) return false;
         if (required && formValues.get(field.name, '').length === 0) return true;
       });
-
       if (formIncomplete) {
-        _this2.setState({
+        this.setState({
           requiredWarning: true
         });
       } else {
         handleSubmit();
       }
     });
-
-    _defineProperty(_assertThisInitialized(_this2), "validate", function () {
-      var _this2$props2 = _this2.props,
-          _this2$props2$formSch = _this2$props2.formSchema,
-          formSchema = _this2$props2$formSch === void 0 ? Map() : _this2$props2$formSch,
-          _this2$props2$formVal = _this2$props2.formValues,
-          formValues = _this2$props2$formVal === void 0 ? Map() : _this2$props2$formVal;
+    _defineProperty(this, "validate", () => {
+      let {
+        formSchema = Map(),
+        formValues = Map()
+      } = this.props;
       formValues = formValues.toJS ? formValues : fromJS(formValues);
-      var layout = searchForLayoutArray(formSchema);
-      var reasons = [];
-
-      _forEachInstanceProperty(layout).call(layout, function (field) {
-        var _context4;
-
-        var _field$config3 = field.config,
-            config = _field$config3 === void 0 ? {} : _field$config3;
-        var _config$required2 = config.required,
-            required = _config$required2 === void 0 ? false : _config$required2,
-            name = config.name,
-            _config$label = config.label,
-            label = _config$label === void 0 ? name : _config$label,
-            type = config.type,
-            _config$minimum = config.minimum,
-            minimum = _config$minimum === void 0 ? 0 : _config$minimum,
-            _config$maximum = config.maximum,
-            maximum = _config$maximum === void 0 ? 0 : _config$maximum,
-            _config$pattern = config.pattern,
-            pattern = _config$pattern === void 0 ? null : _config$pattern,
-            _config$message = config.message,
-            message = _config$message === void 0 ? '' : _config$message;
-
+      const layout = searchForLayoutArray(formSchema);
+      const reasons = [];
+      _forEachInstanceProperty(layout).call(layout, field => {
+        var _context;
+        const {
+          config = {}
+        } = field;
+        const {
+          required = false,
+          name,
+          label = name,
+          type,
+          minimum = 0,
+          maximum = 0,
+          pattern = null,
+          message = ''
+        } = config;
         if (pattern) {
-          var regex = new RegExp(pattern);
-
+          const regex = new RegExp(pattern);
           if (regex.test(formValues.get(name, ''))) {
-            var _context3;
-
             reasons.push({
               reason: 'invalid characters',
-              message: _concatInstanceProperty(_context3 = "".concat(label, " ")).call(_context3, message),
-              description: "The field ".concat(name, " has invalid characters.")
+              message: `${label} ${message}`,
+              description: `The field ${name} has invalid characters.`
             });
           }
         }
-
-        if (required && _trimInstanceProperty(_context4 = formValues.get(name, '') + '').call(_context4).length === 0) {
+        if (required && _trimInstanceProperty(_context = formValues.get(name, '') + '').call(_context).length === 0) {
           reasons.push({
             reason: 'required',
-            message: "".concat(label, " cannot be blank."),
-            description: "The field ".concat(name, " is marked as required, but its value is empty.")
+            message: `${label} cannot be blank.`,
+            description: `The field ${name} is marked as required, but its value is empty.`
           });
         }
-
         if (type === 'email' && (formValues.get(name, '') + '').length > 0 && !emailValidator(formValues.get(name, ''))) {
           reasons.push({
             reason: 'incorrect format',
-            message: "".concat(label, " is invalid"),
-            description: "The field ".concat(name, " has an invalid email")
+            message: `${label} is invalid`,
+            description: `The field ${name} has an invalid email`
           });
         }
-
         if (type === 'currency' && (formValues.get(name, '') + '').length > 0) {
           if (minimum) {
             if (_parseFloat(formValues.get(name, '')) < minimum) {
               reasons.push({
                 reason: 'minimum value not meet',
-                message: "".concat(label, " is not within the minimum value"),
-                description: "The field ".concat(name, " has an invalid value")
+                message: `${label} is not within the minimum value`,
+                description: `The field ${name} has an invalid value`
               });
             }
           }
-
           if (maximum) {
             if (_parseFloat(formValues.get(name, '')) > maximum) {
               reasons.push({
                 reason: 'maximum value exceeded',
-                message: "".concat(label, " is beyond the maximum value"),
-                description: "The field ".concat(name, " has an invalid value")
+                message: `${label} is beyond the maximum value`,
+                description: `The field ${name} has an invalid value`
               });
             }
           }
         }
       });
-
       if (reasons.length > 0) {
-        _this2.setState({
+        this.setState({
           requiredWarning: true,
           validate: true
-        }, function () {// this.grid && this.grid.scrollIntoView() // this breaks c2 cards for some very strange reason. The header bar of dialogs overflows outside of the dialog container for no apparent reason - JRA 12/13/2019
+        }, () => {
+          // this.grid && this.grid.scrollIntoView() // this breaks c2 cards for some very strange reason. The header bar of dialogs overflows outside of the dialog container for no apparent reason - JRA 12/13/2019
         });
       }
-
       return reasons;
     });
-
-    _defineProperty(_assertThisInitialized(_this2), "setContainerRef", function (ref) {
-      _this2.grid = ref;
+    _defineProperty(this, "setContainerRef", ref => {
+      this.grid = ref;
     });
-
-    _defineProperty(_assertThisInitialized(_this2), "updateFormValues", function (formValues) {
-      return _this2.setState(function () {
-        return {
-          formValues: formValues.toJS ? formValues : fromJS(formValues)
-        };
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this2), "handleLinkClick", function (link) {
-      var formValues = _this2.state.formValues;
-      var handleLinkClick = _this2.props.handleLinkClick;
-      var values = formValues.toJS ? formValues : fromJS(formValues);
-      var _link$type = link.type,
-          type = _link$type === void 0 ? '' : _link$type;
-      var _link$id = link.id,
-          id = _link$id === void 0 ? null : _link$id;
-
+    _defineProperty(this, "updateFormValues", formValues => this.setState(() => ({
+      formValues: formValues.toJS ? formValues : fromJS(formValues)
+    })));
+    _defineProperty(this, "handleLinkClick", link => {
+      const {
+        formValues
+      } = this.state;
+      const {
+        handleLinkClick
+      } = this.props;
+      const values = formValues.toJS ? formValues : fromJS(formValues);
+      const {
+        type = ''
+      } = link;
+      let {
+        id = null
+      } = link;
       if (typeof id === 'string') {
         id = [id];
       }
-
-      var value = '';
-
+      let value = '';
       if (_Array$isArray(id)) {
-        _forEachInstanceProperty(id).call(id, function (string) {
+        _forEachInstanceProperty(id).call(id, string => {
           if (typeof string === 'string' || typeof string === 'number') {
-            var val = values.get(string);
-
+            const val = values.get(string);
             if (typeof link.id === 'string' && !val) {
               value = null;
             } else {
-              var _val = values.get(string, string);
-
-              if (typeof _val === 'string' || typeof _val === 'number') {
-                value = value + _val;
+              const val = values.get(string, string);
+              if (typeof val === 'string' || typeof val === 'number') {
+                value = value + val;
               }
             }
           }
         });
       }
-
       handleLinkClick({
-        type: type,
+        type,
         id: value
       });
     });
-
-    return _this2;
   }
-
-  _createClass(FormValidator, [{
-    key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate(p, s) {
-      var _context5,
-          _this3 = this,
-          _context6;
-
-      if (p.formValues !== this.props.formValues) {
-        this.updateFormValues(p.formValues); // this kills the extra render from values updating, the context updating will render - JRA 11/07/2019
-
-        return false;
+  shouldComponentUpdate(p, s) {
+    var _context2, _context3;
+    if (p.formValues !== this.props.formValues) {
+      this.updateFormValues(p.formValues); // this kills the extra render from values updating, the context updating will render - JRA 11/07/2019
+      return false;
+    }
+    let update = _someInstanceProperty(_context2 = _Object$keys(this.props)).call(_context2, prop => {
+      if (this.props[prop] && p[prop] && typeof this.props[prop].toJS === 'function' && typeof p[prop].toJS === 'function') {
+        return !this.props[prop].equals(p[prop]);
+      } else {
+        return this.props[prop] !== p[prop];
       }
-
-      var update = _someInstanceProperty(_context5 = _Object$keys(this.props)).call(_context5, function (prop) {
-        if (_this3.props[prop] && p[prop] && typeof _this3.props[prop].toJS === 'function' && typeof p[prop].toJS === 'function') {
-          return !_this3.props[prop].equals(p[prop]);
-        } else {
-          return _this3.props[prop] !== p[prop];
-        }
-      });
-
-      if (!update) update = _someInstanceProperty(_context6 = _Object$keys(this.state)).call(_context6, function (state) {
-        return _this3.state[state] !== s[state];
-      });
-      return update;
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this$state = this.state,
-          requiredWarning = _this$state.requiredWarning,
-          formValues = _this$state.formValues,
-          validate = _this$state.validate;
-
-      var _this$props = this.props,
-          values = _this$props.formValues,
-          theme = _this$props.theme,
-          rest = _objectWithoutProperties(_this$props, _excluded2);
-
-      return /*#__PURE__*/React.createElement(ThemeProvider, {
-        theme: theme
-      }, /*#__PURE__*/React.createElement(FormValueContext.Provider, {
-        value: [formValues, this.updateFormValues]
-      }, /*#__PURE__*/React.createElement(SizeMeHOC, _extends({}, rest, {
-        validate: this.props.validate || validate,
-        requiredWarning: requiredWarning,
-        setContainerRef: this.setContainerRef,
-        handleLinkClick: this.handleLinkClick
-      }))));
-    }
-  }]);
-
-  return FormValidator;
-}(Component);
-
+    });
+    if (!update) update = _someInstanceProperty(_context3 = _Object$keys(this.state)).call(_context3, state => this.state[state] !== s[state]);
+    return update;
+  }
+  render() {
+    const {
+      requiredWarning,
+      formValues,
+      validate
+    } = this.state;
+    const _this$props = this.props,
+      {
+        formValues: values,
+        theme
+      } = _this$props,
+      rest = _objectWithoutProperties(_this$props, _excluded2);
+    return /*#__PURE__*/React.createElement(ThemeProvider, {
+      theme: theme
+    }, /*#__PURE__*/React.createElement(FormValueContext.Provider, {
+      value: [formValues, this.updateFormValues]
+    }, /*#__PURE__*/React.createElement(SizeMeHOC, _extends({}, rest, {
+      validate: this.props.validate || validate,
+      requiredWarning: requiredWarning,
+      setContainerRef: this.setContainerRef,
+      handleLinkClick: this.handleLinkClick
+    }))));
+  }
+}
+// this class provides the necessary class methods that were previously being used in ref's to make this backwards compatible
 _defineProperty(FormValidator, "propTypes", {
   formSchema: PropTypes.object,
   formValues: PropTypes.object,
@@ -856,12 +681,8 @@ _defineProperty(FormValidator, "propTypes", {
   fieldDefinitions: PropTypes.instanceOf(Map),
   c2class: PropTypes.string
 });
-
 _defineProperty(FormValidator, "defaultProps", {
-  handleSubmit: function handleSubmit() {
+  handleSubmit: () => {
     console.warn('onSubmit was called but no handleSubmit function was provided.');
   } // eslint-disable-line
-
 });
-
-export { FormValidator as default };

@@ -1,6 +1,5 @@
 import { Map } from 'immutable';
 /* eslint-disable max-len */
-
 export { default as FormDroppable } from './FormDroppable';
 export { initFormBuilderAjax } from './config';
 export { default as Conditionalinput } from './Inputs/ConditionalInput';
@@ -30,19 +29,15 @@ export { default as FormBuilder } from './FormBuilder';
 export { default as ConditionalTable, convertQueryToFormValues } from './QueryBuilder/Where/ConditionalTable/ConditionalTableContainer';
 export { ReportBuilder, buildAvailableColumnsFromFieldDefs, buildDefaultColumnsFromQuery } from './QueryBuilder/ReportBuilder/ReportBuilder';
 export { initComponentIconLibrary } from './Icons';
-export { initCustomFormComponents } from './Inputs'; // declaring depricated methods below to give implementors time to refactor base code - JRA 12/05/2019
+export { initCustomFormComponents } from './Inputs';
 
-var updateFormValues = function updateFormValues() {
-  return console.error('updateFormValues is depricated and has been removed. You must handle your own form values.');
-}; //eslint-disable-line
+// declaring depricated methods below to give implementors time to refactor base code - JRA 12/05/2019
+const updateFormValues = () => console.error('updateFormValues is depricated and has been removed. You must handle your own form values.'); //eslint-disable-line
 
-
-var reducer = function reducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Map();
+const reducer = function () {
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : Map();
   console.warn('grid-form-builder no longer uses redux. Remove the grid-form-builder reducer from your combine reducers.'); //eslint-disable-line
-
   return state;
 };
-
 reducer.key = 'form-layouts';
 export { updateFormValues, reducer };

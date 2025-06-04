@@ -8,11 +8,8 @@ import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/obje
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
+function ownKeys(e, r) { var t = _Object$keys(e); if (_Object$getOwnPropertySymbols) { var o = _Object$getOwnPropertySymbols(e); r && (o = _filterInstanceProperty(o).call(o, function (r) { return _Object$getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var _context, _context2; var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(t), !0)).call(_context, function (r) { _defineProperty(e, r, t[r]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(e, _Object$getOwnPropertyDescriptors(t)) : _forEachInstanceProperty(_context2 = ownKeys(Object(t))).call(_context2, function (r) { _Object$defineProperty(e, r, _Object$getOwnPropertyDescriptor(t, r)); }); } return e; }
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useCallback, useRef } from 'react';
@@ -21,81 +18,78 @@ import { mapIcon } from '../../Icons';
 import PortalTooltip from '../../Tooltip';
 import { randomId } from '../../utils';
 import useTheme from '../../theme/useTheme';
-
-var LabelContainer = function LabelContainer(props) {
-  var config = props.config,
-      handleLinkClick = props.handleLinkClick,
-      handleCascadeKeywordClick = props.handleCascadeKeywordClick,
-      value = props.value;
-  var _config$icon = config.icon,
-      Icon = _config$icon === void 0 ? '' : _config$icon,
-      _config$cascade = config.cascade,
-      cascade = _config$cascade === void 0 ? {} : _config$cascade,
-      _config$link = config.link,
-      link = _config$link === void 0 ? {} : _config$link,
-      _config$type = config.type,
-      type = _config$type === void 0 ? '' : _config$type;
-  var required = config.required,
-      _config$style = config.style,
-      style = _config$style === void 0 ? {} : _config$style,
-      _config$tooltips = config.tooltips,
-      tooltips = _config$tooltips === void 0 ? {} : _config$tooltips;
+const LabelContainer = props => {
+  const {
+    config,
+    handleLinkClick,
+    handleCascadeKeywordClick,
+    value
+  } = props;
+  let {
+    icon: Icon = '',
+    cascade = {},
+    link = {},
+    type = ''
+  } = config;
+  const {
+    required,
+    style = {},
+    tooltips = {}
+  } = config;
   type = type.toLowerCase();
-  var _cascade$icon = cascade.icon,
-      CascadeIcon = _cascade$icon === void 0 ? '' : _cascade$icon,
-      cascadeTooltip = cascade.tooltip;
-  var _link$icon = link.icon,
-      LinkIcon = _link$icon === void 0 ? '' : _link$icon,
-      linkTooltip = link.tooltip;
-  var iconTooltip = tooltips.icon,
-      labelTooltip = tooltips.label;
+  let {
+    icon: CascadeIcon = '',
+    tooltip: cascadeTooltip
+  } = cascade;
+  let {
+    icon: LinkIcon = '',
+    tooltip: linkTooltip
+  } = link;
+  const {
+    icon: iconTooltip,
+    label: labelTooltip
+  } = tooltips;
   Icon = mapIcon(Icon);
   LinkIcon = mapIcon(LinkIcon);
   CascadeIcon = mapIcon(CascadeIcon);
-  var name = config.name,
-      _config$label = config.label,
-      label = _config$label === void 0 ? name : _config$label;
-  var iconId = useRef(randomId());
-  var linkId = useRef(randomId());
-  var cascadeId = useRef(randomId());
-  var labelId = useRef(randomId());
-
-  var _useTheme = useTheme(),
-      theme = _useTheme.theme;
-
-  var onLinkClick = useCallback(function () {
+  const {
+    name,
+    label = name
+  } = config;
+  const iconId = useRef(randomId());
+  const linkId = useRef(randomId());
+  const cascadeId = useRef(randomId());
+  const labelId = useRef(randomId());
+  const {
+    theme
+  } = useTheme();
+  const onLinkClick = useCallback(() => {
     handleLinkClick(config.link);
   }, [handleLinkClick, config.link]);
-  var onCascadeKeywordClick = useCallback(function () {
+  const onCascadeKeywordClick = useCallback(() => {
     handleCascadeKeywordClick(_objectSpread({
       currentValue: value
     }, config));
   }, [handleCascadeKeywordClick, value, config]);
-  var onLabelTextClick = useCallback(function () {
+  const onLabelTextClick = useCallback(() => {
     if (LinkIcon) onLinkClick();
     if (CascadeIcon) onCascadeKeywordClick();
   }, [LinkIcon, onLinkClick, CascadeIcon, onCascadeKeywordClick]);
-  var className = 'gfb-inner-cell-label';
-
+  let className = 'gfb-inner-cell-label';
   if (type === 'icon' || type === 'header') {
     className = className + ' gfb-full-cell-label';
   }
-
   if (type === 'metadata') {
     className = className + ' gfb-small';
   }
-
-  var size = _indexOfInstanceProperty(className).call(className, 'full-cell-label') > -1 ? 40 : 15;
-  var _style$label = style.label,
-      labelStyle = _style$label === void 0 ? {} : _style$label,
-      _style$icon = style.icon,
-      iconStyle = _style$icon === void 0 ? {} : _style$icon,
-      _style$link = style.link,
-      linkStyle = _style$link === void 0 ? {} : _style$link,
-      _style$cascade = style.cascade,
-      cascadeStyle = _style$cascade === void 0 ? {} : _style$cascade,
-      _style$cellLabel = style.cellLabel,
-      cellStyle = _style$cellLabel === void 0 ? {} : _style$cellLabel;
+  const size = _indexOfInstanceProperty(className).call(className, 'full-cell-label') > -1 ? 40 : 15;
+  const {
+    label: labelStyle = {},
+    icon: iconStyle = {},
+    link: linkStyle = {},
+    cascade: cascadeStyle = {},
+    cellLabel: cellStyle = {}
+  } = style;
   return jsx("div", {
     className: className,
     style: cellStyle,
@@ -150,7 +144,6 @@ var LabelContainer = function LabelContainer(props) {
     css: theme.cascade
   }));
 };
-
 export default LabelContainer;
 LabelContainer.propTypes = {
   config: PropTypes.object,
