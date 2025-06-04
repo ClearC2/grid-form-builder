@@ -10,6 +10,7 @@ import InnerCell from './Inputs'
 import {FaTrash as Trash} from 'react-icons/fa'
 import useTheme, {ThemeProvider} from './theme/useTheme'
 import {useAutoHideTooltip} from './useAutoHideTooltip'
+import {TooltipDismissalProvider} from './HideTooltipProvider'
 
 let inputEventListenerDebouncer = null
 
@@ -625,15 +626,17 @@ export default class FormValidator extends Component {
     const {formValues: values, theme, ...rest} = this.props
     return (
       <ThemeProvider theme={theme}>
-        <FormValueContext.Provider value={[formValues, this.updateFormValues]}>
-          <SizeMeHOC
-            {...rest}
-            validate={this.props.validate || validate}
-            requiredWarning={requiredWarning}
-            setContainerRef={this.setContainerRef}
-            handleLinkClick={this.handleLinkClick}
-          />
-        </FormValueContext.Provider>
+        <TooltipDismissalProvider>
+          <FormValueContext.Provider value={[formValues, this.updateFormValues]}>
+            <SizeMeHOC
+              {...rest}
+              validate={this.props.validate || validate}
+              requiredWarning={requiredWarning}
+              setContainerRef={this.setContainerRef}
+              handleLinkClick={this.handleLinkClick}
+            />
+          </FormValueContext.Provider>
+        </TooltipDismissalProvider>
       </ThemeProvider>
     )
   }
