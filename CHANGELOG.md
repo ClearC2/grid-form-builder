@@ -1,3 +1,11 @@
+## [3.120.1](https://github.com/ClearC2/grid-form-builder/compare/v3.120.0...v3.120.1) (2025-06-04)
+
+
+### Bug Fixes
+
+* **querybuilder:** default type to input if none provided ([#243](https://github.com/ClearC2/grid-form-builder/issues/243)) ([b64a07e](https://github.com/ClearC2/grid-form-builder/commit/b64a07e57997d060c0dc6e2824ed319499bdde33))
+* **radio:** add tabindex to radio buttons ([#244](https://github.com/ClearC2/grid-form-builder/issues/244)) ([54ee216](https://github.com/ClearC2/grid-form-builder/commit/54ee216b43ac83ab72b0ad6566684a340389f55b))
+
 # [3.120.0](https://github.com/ClearC2/grid-form-builder/compare/v3.119.2...v3.120.0) (2025-05-08)
 
 

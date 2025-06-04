@@ -15,7 +15,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';

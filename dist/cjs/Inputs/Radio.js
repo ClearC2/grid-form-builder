@@ -65,6 +65,7 @@ var Radio = function Radio(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       warning = props.warning,
+      tabIndex = props.tabIndex,
       _props$showOptionTool = props.showOptionTooltips,
       showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
   var _style$value = style.value,
@@ -156,6 +157,7 @@ var Radio = function Radio(props) {
       "data-tip": true,
       "data-for": optionId
     }, (0, _core.jsx)("input", {
+      tabIndex: tabIndex,
       className: className,
       name: name,
       value: option.value,
@@ -164,7 +166,9 @@ var Radio = function Radio(props) {
       ,
       onChange: handleOnChange,
       disabled: readonly || disabled || !interactive,
-      autoFocus: autofocus,
+      autoFocus: autofocus // onFocus={handleOnFocus}
+      // onBlur={handleOnBlur}
+      ,
       type: "radio",
       autoComplete: autoComplete,
       css: valueCSS
@@ -196,6 +200,7 @@ Radio.propTypes = {
   autofocus: _propTypes.default.bool,
   keyword: _propTypes.default.object,
   inline: _propTypes.default.bool,
+  tabIndex: _propTypes.default.number,
   autoComplete: _propTypes.default.string,
   interactive: _propTypes.default.bool,
   requiredWarning: _propTypes.default.bool,

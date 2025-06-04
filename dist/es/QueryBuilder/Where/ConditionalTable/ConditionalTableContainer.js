@@ -92,10 +92,11 @@ var getBetweenDatesValues = function getBetweenDatesValues(query) {
 var convertSingleField = function convertSingleField(c, formSchema, inBetweenDateValues) {
   var newFormValue;
   var schema = getFieldSchema(c.get('name'), formSchema);
+  var type = schema.config && typeof schema.config.type === 'string' ? schema.config.type.toLowerCase() : 'input';
   var mergeDate = c.get('mergeDate', false);
 
   if (schema) {
-    if (schema.config && schema.config.type && Set(TEXT_INPUTS).has(schema.config.type.toLowerCase()) && c.get('comparator') !== 'is blank' && c.get('comparator') !== 'is not blank') {
+    if (Set(TEXT_INPUTS).has(type) && c.get('comparator') !== 'is blank' && c.get('comparator') !== 'is not blank') {
       newFormValue = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '');
     } else {
       if (c.get('rawValues') !== undefined && !mergeDate) {
