@@ -94,6 +94,8 @@ var _fa = require("react-icons/fa");
 
 var _useTheme2 = _interopRequireWildcard(require("./theme/useTheme"));
 
+var _useAutoHideTooltip = require("./useAutoHideTooltip");
+
 var _excluded = ["size"],
     _excluded2 = ["formValues", "theme"];
 
@@ -202,6 +204,7 @@ var FormBuilder = function FormBuilder(props) {
       _props$fieldDefinitio = props.fieldDefinitions,
       fieldDefinitions = _props$fieldDefinitio === void 0 ? (0, _map.default)(defaults) : _props$fieldDefinitio,
       c2class = props.c2class;
+  (0, _useAutoHideTooltip.useAutoHideTooltip)();
 
   var _useState = (0, _react.useState)({
     layout: [],

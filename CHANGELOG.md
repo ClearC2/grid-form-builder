@@ -1,3 +1,10 @@
+## [3.120.2](https://github.com/ClearC2/grid-form-builder/compare/v3.120.1...v3.120.2) (2025-06-05)
+
+
+### Bug Fixes
+
+* **hide-tooltip:** hide tooltip when typing or scrolling ([#245](https://github.com/ClearC2/grid-form-builder/issues/245)) ([045a5bc](https://github.com/ClearC2/grid-form-builder/commit/045a5bc6cc6c5ede25d5fed7fb4eda81286ac4cd))
+
 ## [3.120.1](https://github.com/ClearC2/grid-form-builder/compare/v3.120.0...v3.120.1) (2025-06-04)
 
 

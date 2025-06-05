@@ -48,6 +48,7 @@ import { convertFieldToSearch } from './QueryBuilder/Utils';
 import InnerCell from './Inputs';
 import { FaTrash as Trash } from 'react-icons/fa';
 import useTheme, { ThemeProvider } from './theme/useTheme';
+import { useAutoHideTooltip } from './useAutoHideTooltip';
 var inputEventListenerDebouncer = null;
 export var FormValueContext = /*#__PURE__*/createContext([Map(), function () {}]);
 var debug = false;
@@ -140,6 +141,7 @@ var FormBuilder = function FormBuilder(props) {
       _props$fieldDefinitio = props.fieldDefinitions,
       fieldDefinitions = _props$fieldDefinitio === void 0 ? _mapInstanceProperty(defaults) : _props$fieldDefinitio,
       c2class = props.c2class;
+  useAutoHideTooltip();
 
   var _useState = useState({
     layout: [],
