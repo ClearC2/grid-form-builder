@@ -18,8 +18,6 @@ import PortalTooltip from '../Tooltip'
 
 const viewPortHeight = document.documentElement.clientHeight
 
-const LARGE_DATASET_THRESHOLD = 500 // Switch to async mode when options exceed this
-
 let labelCopyTimer = null
 
 const Multiselect = props => {
@@ -50,6 +48,7 @@ const Multiselect = props => {
     showValidOptions,
     onBlur,
     showOptionTooltips = false, // this flag is used to show tooltips for each individual option
+    largeDatasetThreshold = 500, // Switch to async mode when options exceed this
     searchPlaceholder = 'Type to search...'
   } = props
 
@@ -96,7 +95,7 @@ const Multiselect = props => {
 
       // If no search term, return options up to large dataset threshold
       if (!searchTerm) {
-        resolve(fullOptions.slice(0, LARGE_DATASET_THRESHOLD))
+        resolve(fullOptions.slice(0, largeDatasetThreshold))
         return
       }
 
@@ -109,7 +108,7 @@ const Multiselect = props => {
 
         // Process this chunk
         for (let i = index; i < endIndex; i++) {
-          if (filtered.length >= LARGE_DATASET_THRESHOLD) break
+          if (filtered.length >= largeDatasetThreshold) break
 
           const option = fullOptions[i]
           if (!option) continue
@@ -126,7 +125,7 @@ const Multiselect = props => {
         index = endIndex
 
         // If we have enough results or finished, return
-        if (filtered.length >= LARGE_DATASET_THRESHOLD || index >= fullOptions.length) {
+        if (filtered.length >= largeDatasetThreshold || index >= fullOptions.length) {
           resolve(filtered)
         } else {
           // Continue with next chunk asynchronously
@@ -136,10 +135,10 @@ const Multiselect = props => {
 
       processChunk()
     })
-  }, [fullOptions])
+  }, [fullOptions, largeDatasetThreshold])
 
   // Determine which Select component to use
-  const isLargeDataset = fullOptions.length > LARGE_DATASET_THRESHOLD
+  const isLargeDataset = fullOptions.length > largeDatasetThreshold
 
   const SelectComponent = useMemo(() => {
     if (!interactive) {
@@ -164,12 +163,12 @@ const Multiselect = props => {
         const filtered = fullOptions.filter(option =>
           option.label?.toLowerCase().includes(lowercaseSearch) ||
           option.value?.toString().toLowerCase().includes(lowercaseSearch)
-        ).slice(0, LARGE_DATASET_THRESHOLD)
+        ).slice(0, largeDatasetThreshold)
         setDisplayOptions(filtered)
       }
     }
     return newValue
-  }, [fullOptions, isLargeDataset])
+  }, [fullOptions, isLargeDataset, largeDatasetThreshold])
 
   const openMenu = useCallback(() => {
     if (!readonly && !disabled && !menuIsOpen[name]) {
@@ -255,9 +254,9 @@ const Multiselect = props => {
     setFullOptions(formattedOptions)
     updateSelectOptions(formattedOptions)
 
-    const initial = formattedOptions.slice(0, LARGE_DATASET_THRESHOLD)
+    const initial = formattedOptions.slice(0, largeDatasetThreshold)
     setDisplayOptions(initial)
-  }, [delimiter, keyword.options])
+  }, [delimiter, keyword.options, largeDatasetThreshold])
 
   useEffect(() => {
     setMenuOpenPosition()
@@ -463,5 +462,6 @@ Multiselect.propTypes = {
   onBlur: PropTypes.func,
   showOptionTooltips: PropTypes.bool,
   data: PropTypes.object,
+  largeDatasetThreshold: PropTypes.number,
   searchPlaceholder: PropTypes.string
 }
