@@ -30,7 +30,7 @@ const Select = props => {
     placeholder,
     requiredWarning,
     required,
-    onKeyDown = () => null,
+    onKeyDown = () => null, // sometimes provided in the config object
     onChange,
     autoComplete,
     interactive = true,
@@ -38,7 +38,7 @@ const Select = props => {
     isClearable = true,
     warning,
     onBlur,
-    showOptionTooltips = false,
+    showOptionTooltips = false, // this flag is used to show tooltips for each individual option
     createOptionPosition = 'last',
     initialDisplayLimit = INITIAL_DISPLAY_LIMIT
   } = props
