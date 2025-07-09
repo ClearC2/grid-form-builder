@@ -11,7 +11,7 @@ import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context7, _context8; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context7 = ownKeys(Object(source), !0)).call(_context7, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context8 = ownKeys(Object(source))).call(_context8, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context8, _context9; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context8 = ownKeys(Object(source), !0)).call(_context8, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context9 = ownKeys(Object(source))).call(_context9, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
@@ -20,6 +20,7 @@ import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _reduceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/reduce";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -40,7 +41,7 @@ var INITIAL_DISPLAY_LIMIT = 100; // Initial options to show and max search resul
 var LARGE_DATASET_THRESHOLD = 500; // Switch to async mode when options exceed this
 
 var Select = function Select(props) {
-  var _context6;
+  var _context6, _context7;
 
   var allowcreate = props.allowcreate,
       _props$value = props.value,
@@ -74,7 +75,9 @@ var Select = function Select(props) {
       _props$createOptionPo = props.createOptionPosition,
       createOptionPosition = _props$createOptionPo === void 0 ? 'last' : _props$createOptionPo,
       _props$initialDisplay = props.initialDisplayLimit,
-      initialDisplayLimit = _props$initialDisplay === void 0 ? INITIAL_DISPLAY_LIMIT : _props$initialDisplay;
+      initialDisplayLimit = _props$initialDisplay === void 0 ? INITIAL_DISPLAY_LIMIT : _props$initialDisplay,
+      _props$searchPlacehol = props.searchPlaceholder,
+      searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -416,7 +419,6 @@ var Select = function Select(props) {
     }),
     onInputChange: handleInputChange,
     inputValue: inputValue,
-    placeholder: placeholder,
     styles: {
       container: function container(base) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
@@ -465,9 +467,11 @@ var Select = function Select(props) {
   }, isLargeDataset ? jsx(Select, _extends({}, baseSelectProps, {
     loadOptions: loadOptions,
     defaultOptions: true,
-    cacheOptions: true
+    cacheOptions: true,
+    placeholder: _concatInstanceProperty(_context7 = "".concat(searchPlaceholder, " (")).call(_context7, fullOptions.length, " options)")
   })) : jsx(Select, _extends({}, baseSelectProps, {
     options: displayOptions,
+    placeholder: placeholder,
     filterOption: null
   })));
 };
@@ -498,5 +502,6 @@ Select.propTypes = {
   showOptionTooltips: PropTypes.bool,
   data: PropTypes.object,
   createOptionPosition: PropTypes.string,
-  initialDisplayLimit: PropTypes.number
+  initialDisplayLimit: PropTypes.number,
+  searchPlaceholder: PropTypes.string
 };

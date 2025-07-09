@@ -132,9 +132,7 @@ var Multiselect = function Multiselect(props) {
       _props$initialDisplay = props.initialDisplayLimit,
       initialDisplayLimit = _props$initialDisplay === void 0 ? INITIAL_DISPLAY_LIMIT : _props$initialDisplay,
       _props$searchPlacehol = props.searchPlaceholder,
-      searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol,
-      _props$noOptionsMessa = props.noOptionsMessage,
-      _noOptionsMessage = _props$noOptionsMessa === void 0 ? 'No options found' : _props$noOptionsMessa;
+      searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -526,9 +524,6 @@ var Multiselect = function Multiselect(props) {
     }),
     onInputChange: handleInputChange,
     inputValue: inputValue,
-    noOptionsMessage: function noOptionsMessage() {
-      return _noOptionsMessage;
-    },
     styles: {
       container: function container(base) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
@@ -626,6 +621,5 @@ Multiselect.propTypes = {
   showOptionTooltips: _propTypes.default.bool,
   data: _propTypes.default.object,
   initialDisplayLimit: _propTypes.default.number,
-  searchPlaceholder: _propTypes.default.string,
-  noOptionsMessage: _propTypes.default.string
+  searchPlaceholder: _propTypes.default.string
 };

@@ -53,8 +53,7 @@ const Multiselect = props => {
     onBlur,
     showOptionTooltips = false, // this flag is used to show tooltips for each individual option
     initialDisplayLimit = INITIAL_DISPLAY_LIMIT,
-    searchPlaceholder = 'Type to search...',
-    noOptionsMessage = 'No options found'
+    searchPlaceholder = 'Type to search...'
   } = props
 
   const {
@@ -376,7 +375,6 @@ const Multiselect = props => {
     components: {...customComponents, Option},
     onInputChange: handleInputChange,
     inputValue: inputValue,
-    noOptionsMessage: () => noOptionsMessage,
     styles: {
       container: base => ({...base, ...inputInner, ...inputInnerTheme}),
       control: base => ({...base, ...inputControl, ...inputControlTheme}),
@@ -467,6 +465,5 @@ Multiselect.propTypes = {
   showOptionTooltips: PropTypes.bool,
   data: PropTypes.object,
   initialDisplayLimit: PropTypes.number,
-  searchPlaceholder: PropTypes.string,
-  noOptionsMessage: PropTypes.string
+  searchPlaceholder: PropTypes.string
 }

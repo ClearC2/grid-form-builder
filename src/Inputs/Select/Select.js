@@ -40,7 +40,8 @@ const Select = props => {
     onBlur,
     showOptionTooltips = false, // this flag is used to show tooltips for each individual option
     createOptionPosition = 'last',
-    initialDisplayLimit = INITIAL_DISPLAY_LIMIT
+    initialDisplayLimit = INITIAL_DISPLAY_LIMIT,
+    searchPlaceholder = 'Type to search...'
   } = props
 
   const {
@@ -331,7 +332,6 @@ const Select = props => {
     components: {...customComponents, Option},
     onInputChange: handleInputChange,
     inputValue: inputValue,
-    placeholder: placeholder,
     styles: {
       container: base => ({...base, ...inputInner, ...inputInnerTheme}),
       control: base => ({...base, ...inputControl, ...inputControlTheme}),
@@ -372,11 +372,13 @@ const Select = props => {
           loadOptions={loadOptions}
           defaultOptions
           cacheOptions
+          placeholder={`${searchPlaceholder} (${fullOptions.length} options)`}
         />
       ) : (
         <Select
           {...baseSelectProps}
           options={displayOptions}
+          placeholder={placeholder}
           filterOption={null}
         />
       )}
@@ -411,5 +413,6 @@ Select.propTypes = {
   showOptionTooltips: PropTypes.bool,
   data: PropTypes.object,
   createOptionPosition: PropTypes.string,
-  initialDisplayLimit: PropTypes.number
+  initialDisplayLimit: PropTypes.number,
+  searchPlaceholder: PropTypes.string
 }
