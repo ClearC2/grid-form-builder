@@ -353,28 +353,28 @@ const Multiselect = props => {
   const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
 
   const baseSelectProps = {
-    isSearchable: searchable,
+    autoComplete,
+    autoFocus: autofocus,
     className,
     classNamePrefix: 'gfb-input',
-    tabIndex,
-    autoFocus: autofocus,
     closeMenuOnScroll: !isMobile ? closeMenuOnScroll : undefined,
     closeMenuOnSelect,
+    components: {...customComponents, Option},
+    defaultValue: selectValue,
+    inputValue,
     isClearable,
     isDisabled: disabled || readonly || !interactive,
-    menuPortalTarget: document.body,
     isMulti: true,
-    name,
-    onKeyDown: handleOnKeyDown,
-    onBlur: handleInputBlur,
+    isSearchable: searchable,
+    // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
     menuPlacement: !isMobile ? menuPlacement : undefined,
-    value: selectValue,
-    defaultValue: selectValue,
+    menuPortalTarget: document.body,
+    name,
+    onBlur: handleInputBlur,
     onChange: handleChange,
-    autoComplete,
-    components: {...customComponents, Option},
+    // onFocus={handleOnFocus}
     onInputChange: handleInputChange,
-    inputValue: inputValue,
+    onKeyDown: handleOnKeyDown,
     styles: {
       container: base => ({...base, ...inputInner, ...inputInnerTheme}),
       control: base => ({...base, ...inputControl, ...inputControlTheme}),
@@ -398,34 +398,36 @@ const Multiselect = props => {
       },
       menuPortal: base => {
         const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
-        const zIndex = 9999
+        const zIndex = 9999 // this keeps the select menu below the option tooltip portal
         return ({...base, top, zIndex})
       }
-    }
+    },
+    tabIndex,
+    value: selectValue
   }
 
   return (
     <div
       className={outerClass}
-      ref={inputContainer}
-      onMouseDown={setInputFieldPosition}
-      style={inputOuter}
       css={inputOuterCSS}
+      onMouseDown={setInputFieldPosition}
+      ref={inputContainer}
+      style={inputOuter}
     >
       {isLargeDataset ? (
         <Select
           {...baseSelectProps}
-          loadOptions={loadOptions}
-          defaultOptions
           cacheOptions
+          defaultOptions
+          loadOptions={loadOptions}
           placeholder={`${searchPlaceholder} (${fullOptions.length} options)`}
         />
       ) : (
         <Select
           {...baseSelectProps}
+          filterOption={null}
           options={displayOptions}
           placeholder={placeholder}
-          filterOption={null}
         />
       )}
     </div>

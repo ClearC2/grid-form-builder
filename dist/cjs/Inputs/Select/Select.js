@@ -437,28 +437,28 @@ var Select = function Select(props) {
   var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
 
   var baseSelectProps = {
+    autoComplete: autoComplete,
+    autoFocus: autofocus,
     className: className,
     classNamePrefix: 'gfb-input',
-    tabIndex: tabIndex,
-    autoFocus: autofocus,
     closeMenuOnScroll: !_utils.isMobile ? closeMenuOnScroll : undefined,
-    isClearable: isClearable,
-    isDisabled: disabled || readonly,
-    menuPortalTarget: document.body,
-    name: name,
-    onKeyDown: handleOnKeyDown,
-    onBlur: handleInputBlur,
-    menuPlacement: !_utils.isMobile ? menuPlacement : undefined,
-    value: selectValue,
-    defaultValue: selectValue,
-    onChange: handleChange,
-    autoComplete: autoComplete,
-    createOptionPosition: createOptionPosition,
     components: _objectSpread(_objectSpread({}, customComponents), {}, {
       Option: Option
     }),
-    onInputChange: handleInputChange,
+    createOptionPosition: createOptionPosition,
+    defaultValue: selectValue,
     inputValue: inputValue,
+    isClearable: isClearable,
+    isDisabled: disabled || readonly,
+    // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+    menuPlacement: !_utils.isMobile ? menuPlacement : undefined,
+    menuPortalTarget: document.body,
+    name: name,
+    onBlur: handleInputBlur,
+    onChange: handleChange,
+    // onFocus={handleOnFocus}
+    onInputChange: handleInputChange,
+    onKeyDown: handleOnKeyDown,
     styles: {
       container: function container(base) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
@@ -490,29 +490,32 @@ var Select = function Select(props) {
       },
       menuPortal: function menuPortal(base) {
         var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
-        var zIndex = 9999;
+        var zIndex = 9999; // this keeps the select menu below the option tooltip portal
+
         return _objectSpread(_objectSpread({}, base), {}, {
           top: top,
           zIndex: zIndex
         });
       }
-    }
+    },
+    tabIndex: tabIndex,
+    value: selectValue
   };
   return (0, _core.jsx)("div", {
     className: outerClass,
-    ref: inputContainer,
+    css: inputOuterCSS,
     onMouseDown: setInputFieldPosition,
-    style: inputOuter,
-    css: inputOuterCSS
+    ref: inputContainer,
+    style: inputOuter
   }, isLargeDataset ? (0, _core.jsx)(Select, (0, _extends2.default)({}, baseSelectProps, {
-    loadOptions: loadOptions,
-    defaultOptions: true,
     cacheOptions: true,
+    defaultOptions: true,
+    loadOptions: loadOptions,
     placeholder: (0, _concat.default)(_context7 = "".concat(searchPlaceholder, " (")).call(_context7, fullOptions.length, " options)")
   })) : (0, _core.jsx)(Select, (0, _extends2.default)({}, baseSelectProps, {
+    filterOption: null,
     options: displayOptions,
-    placeholder: placeholder,
-    filterOption: null
+    placeholder: placeholder
   })));
 };
 

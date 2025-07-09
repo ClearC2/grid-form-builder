@@ -277,13 +277,11 @@ const Select = props => {
 
   let outerClass = 'gfb-input-outer'
   const customComponents = {}
-
   if (warning && !isRequiredFlag) {
     customComponents.DropdownIndicator = () => {
       return <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />
     }
   }
-
   if (isRequiredFlag && (value + '').trim().length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error'
     customComponents.DropdownIndicator = () => {
@@ -312,26 +310,26 @@ const Select = props => {
   const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
 
   const baseSelectProps = {
+    autoComplete,
+    autoFocus: autofocus,
     className,
     classNamePrefix: 'gfb-input',
-    tabIndex,
-    autoFocus: autofocus,
     closeMenuOnScroll: !isMobile ? closeMenuOnScroll : undefined,
+    components: {...customComponents, Option},
+    createOptionPosition,
+    defaultValue: selectValue,
+    inputValue,
     isClearable,
     isDisabled: disabled || readonly,
+    // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+    menuPlacement: !isMobile ? menuPlacement : undefined,
     menuPortalTarget: document.body,
     name,
-    onKeyDown: handleOnKeyDown,
     onBlur: handleInputBlur,
-    menuPlacement: !isMobile ? menuPlacement : undefined,
-    value: selectValue,
-    defaultValue: selectValue,
     onChange: handleChange,
-    autoComplete,
-    createOptionPosition,
-    components: {...customComponents, Option},
+    // onFocus={handleOnFocus}
     onInputChange: handleInputChange,
-    inputValue: inputValue,
+    onKeyDown: handleOnKeyDown,
     styles: {
       container: base => ({...base, ...inputInner, ...inputInnerTheme}),
       control: base => ({...base, ...inputControl, ...inputControlTheme}),
@@ -352,34 +350,36 @@ const Select = props => {
       },
       menuPortal: base => {
         const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
-        const zIndex = 9999
+        const zIndex = 9999 // this keeps the select menu below the option tooltip portal
         return ({...base, top, zIndex})
       }
-    }
+    },
+    tabIndex,
+    value: selectValue
   }
 
   return (
     <div
       className={outerClass}
-      ref={inputContainer}
-      onMouseDown={setInputFieldPosition}
-      style={inputOuter}
       css={inputOuterCSS}
+      onMouseDown={setInputFieldPosition}
+      ref={inputContainer}
+      style={inputOuter}
     >
       {isLargeDataset ? (
         <Select
           {...baseSelectProps}
-          loadOptions={loadOptions}
-          defaultOptions
           cacheOptions
+          defaultOptions
+          loadOptions={loadOptions}
           placeholder={`${searchPlaceholder} (${fullOptions.length} options)`}
         />
       ) : (
         <Select
           {...baseSelectProps}
+          filterOption={null}
           options={displayOptions}
           placeholder={placeholder}
-          filterOption={null}
         />
       )}
     </div>

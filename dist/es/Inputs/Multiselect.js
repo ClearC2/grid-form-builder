@@ -459,30 +459,30 @@ var Multiselect = function Multiselect(props) {
   var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
 
   var baseSelectProps = {
-    isSearchable: searchable,
+    autoComplete: autoComplete,
+    autoFocus: autofocus,
     className: className,
     classNamePrefix: 'gfb-input',
-    tabIndex: tabIndex,
-    autoFocus: autofocus,
     closeMenuOnScroll: !isMobile ? closeMenuOnScroll : undefined,
     closeMenuOnSelect: closeMenuOnSelect,
-    isClearable: isClearable,
-    isDisabled: disabled || readonly || !interactive,
-    menuPortalTarget: document.body,
-    isMulti: true,
-    name: name,
-    onKeyDown: handleOnKeyDown,
-    onBlur: handleInputBlur,
-    menuPlacement: !isMobile ? menuPlacement : undefined,
-    value: selectValue,
-    defaultValue: selectValue,
-    onChange: handleChange,
-    autoComplete: autoComplete,
     components: _objectSpread(_objectSpread({}, customComponents), {}, {
       Option: Option
     }),
-    onInputChange: handleInputChange,
+    defaultValue: selectValue,
     inputValue: inputValue,
+    isClearable: isClearable,
+    isDisabled: disabled || readonly || !interactive,
+    isMulti: true,
+    isSearchable: searchable,
+    // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+    menuPlacement: !isMobile ? menuPlacement : undefined,
+    menuPortalTarget: document.body,
+    name: name,
+    onBlur: handleInputBlur,
+    onChange: handleChange,
+    // onFocus={handleOnFocus}
+    onInputChange: handleInputChange,
+    onKeyDown: handleOnKeyDown,
     styles: {
       container: function container(base) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
@@ -521,29 +521,32 @@ var Multiselect = function Multiselect(props) {
       },
       menuPortal: function menuPortal(base) {
         var top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8;
-        var zIndex = 9999;
+        var zIndex = 9999; // this keeps the select menu below the option tooltip portal
+
         return _objectSpread(_objectSpread({}, base), {}, {
           top: top,
           zIndex: zIndex
         });
       }
-    }
+    },
+    tabIndex: tabIndex,
+    value: selectValue
   };
   return jsx("div", {
     className: outerClass,
-    ref: inputContainer,
+    css: inputOuterCSS,
     onMouseDown: setInputFieldPosition,
-    style: inputOuter,
-    css: inputOuterCSS
+    ref: inputContainer,
+    style: inputOuter
   }, isLargeDataset ? jsx(Select, _extends({}, baseSelectProps, {
-    loadOptions: loadOptions,
-    defaultOptions: true,
     cacheOptions: true,
+    defaultOptions: true,
+    loadOptions: loadOptions,
     placeholder: _concatInstanceProperty(_context6 = "".concat(searchPlaceholder, " (")).call(_context6, fullOptions.length, " options)")
   })) : jsx(Select, _extends({}, baseSelectProps, {
+    filterOption: null,
     options: displayOptions,
-    placeholder: placeholder,
-    filterOption: null
+    placeholder: placeholder
   })));
 };
 
