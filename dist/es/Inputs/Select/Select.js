@@ -34,10 +34,7 @@ import { isMobile, randomId } from '../../utils';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
 import PortalTooltip from '../../Tooltip';
-var viewPortHeight = document.documentElement.clientHeight; // Configuration for large dataset handling
-
-var INITIAL_DISPLAY_LIMIT = 100; // Initial options to show and max search results
-
+var viewPortHeight = document.documentElement.clientHeight;
 var LARGE_DATASET_THRESHOLD = 500; // Switch to async mode when options exceed this
 
 var Select = function Select(props) {
@@ -74,8 +71,6 @@ var Select = function Select(props) {
       showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
       _props$createOptionPo = props.createOptionPosition,
       createOptionPosition = _props$createOptionPo === void 0 ? 'last' : _props$createOptionPo,
-      _props$initialDisplay = props.initialDisplayLimit,
-      initialDisplayLimit = _props$initialDisplay === void 0 ? INITIAL_DISPLAY_LIMIT : _props$initialDisplay,
       _props$searchPlacehol = props.searchPlaceholder,
       searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol;
 
@@ -171,10 +166,10 @@ var Select = function Select(props) {
   var loadOptions = useCallback(function (inputValue) {
     return new _Promise(function (resolve) {
       var searchTerm = inputValue || '';
-      var lowercaseSearch = searchTerm.toLowerCase(); // If no search term, return first 100 options
+      var lowercaseSearch = searchTerm.toLowerCase(); // If no search term, return options up to large dataset threshold
 
       if (!searchTerm) {
-        resolve(_sliceInstanceProperty(fullOptions).call(fullOptions, 0, initialDisplayLimit));
+        resolve(_sliceInstanceProperty(fullOptions).call(fullOptions, 0, LARGE_DATASET_THRESHOLD));
         return;
       }
 
@@ -188,7 +183,7 @@ var Select = function Select(props) {
         for (var i = index; i < endIndex; i++) {
           var _context, _context2;
 
-          if (filtered.length >= initialDisplayLimit) break;
+          if (filtered.length >= LARGE_DATASET_THRESHOLD) break;
           var option = fullOptions[i];
           if (!option) continue;
           var label = option.label || '';
@@ -202,7 +197,7 @@ var Select = function Select(props) {
 
         index = endIndex; // If we have enough results or have finished, return
 
-        if (filtered.length >= initialDisplayLimit || index >= fullOptions.length) {
+        if (filtered.length >= LARGE_DATASET_THRESHOLD || index >= fullOptions.length) {
           resolve(filtered);
         } else {
           // Continue with next chunk asynchronously
@@ -212,7 +207,7 @@ var Select = function Select(props) {
 
       processChunk();
     });
-  }, [fullOptions, initialDisplayLimit]); // Determine which Select component to use
+  }, [fullOptions]); // Determine which Select component to use
 
   var isLargeDataset = fullOptions.length > LARGE_DATASET_THRESHOLD;
   var SelectComponent = useMemo(function () {
@@ -240,14 +235,14 @@ var Select = function Select(props) {
           var _option$label, _context4, _option$value, _context5;
 
           return ((_option$label = option.label) === null || _option$label === void 0 ? void 0 : _includesInstanceProperty(_context4 = _option$label.toLowerCase()).call(_context4, lowercaseSearch)) || ((_option$value = option.value) === null || _option$value === void 0 ? void 0 : _includesInstanceProperty(_context5 = _option$value.toString().toLowerCase()).call(_context5, lowercaseSearch));
-        })).call(_context3, 0, initialDisplayLimit);
+        })).call(_context3, 0, LARGE_DATASET_THRESHOLD);
 
         setDisplayOptions(filtered);
       }
     }
 
     return newValue;
-  }, [fullOptions, isLargeDataset, initialDisplayLimit]);
+  }, [fullOptions, isLargeDataset]);
   var openMenu = useCallback(function () {
     if (!readonly && !disabled && !menuIsOpen[name]) {
       updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, true)));
@@ -300,10 +295,10 @@ var Select = function Select(props) {
     var newOptions = keyword.options || [];
     setFullOptions(newOptions);
 
-    var initial = _sliceInstanceProperty(newOptions).call(newOptions, 0, initialDisplayLimit);
+    var initial = _sliceInstanceProperty(newOptions).call(newOptions, 0, LARGE_DATASET_THRESHOLD);
 
     setDisplayOptions(initial);
-  }, [keyword.options, initialDisplayLimit]);
+  }, [keyword.options]);
   useEffect(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);
@@ -505,6 +500,5 @@ Select.propTypes = {
   showOptionTooltips: PropTypes.bool,
   data: PropTypes.object,
   createOptionPosition: PropTypes.string,
-  initialDisplayLimit: PropTypes.number,
   searchPlaceholder: PropTypes.string
 };

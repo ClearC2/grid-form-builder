@@ -13,8 +13,6 @@ import PortalTooltip from '../../Tooltip'
 
 const viewPortHeight = document.documentElement.clientHeight
 
-// Configuration for large dataset handling
-const INITIAL_DISPLAY_LIMIT = 100 // Initial options to show and max search results
 const LARGE_DATASET_THRESHOLD = 500 // Switch to async mode when options exceed this
 
 const Select = props => {
@@ -40,7 +38,6 @@ const Select = props => {
     onBlur,
     showOptionTooltips = false, // this flag is used to show tooltips for each individual option
     createOptionPosition = 'last',
-    initialDisplayLimit = INITIAL_DISPLAY_LIMIT,
     searchPlaceholder = 'Type to search...'
   } = props
 
@@ -84,9 +81,9 @@ const Select = props => {
       const searchTerm = inputValue || ''
       const lowercaseSearch = searchTerm.toLowerCase()
 
-      // If no search term, return first 100 options
+      // If no search term, return options up to large dataset threshold
       if (!searchTerm) {
-        resolve(fullOptions.slice(0, initialDisplayLimit))
+        resolve(fullOptions.slice(0, LARGE_DATASET_THRESHOLD))
         return
       }
 
@@ -99,7 +96,7 @@ const Select = props => {
 
         // Process this chunk
         for (let i = index; i < endIndex; i++) {
-          if (filtered.length >= initialDisplayLimit) break
+          if (filtered.length >= LARGE_DATASET_THRESHOLD) break
 
           const option = fullOptions[i]
           if (!option) continue
@@ -116,7 +113,7 @@ const Select = props => {
         index = endIndex
 
         // If we have enough results or have finished, return
-        if (filtered.length >= initialDisplayLimit || index >= fullOptions.length) {
+        if (filtered.length >= LARGE_DATASET_THRESHOLD || index >= fullOptions.length) {
           resolve(filtered)
         } else {
           // Continue with next chunk asynchronously
@@ -126,7 +123,7 @@ const Select = props => {
 
       processChunk()
     })
-  }, [fullOptions, initialDisplayLimit])
+  }, [fullOptions])
 
   // Determine which Select component to use
   const isLargeDataset = fullOptions.length > LARGE_DATASET_THRESHOLD
@@ -154,12 +151,12 @@ const Select = props => {
         const filtered = fullOptions.filter(option =>
           option.label?.toLowerCase().includes(lowercaseSearch) ||
           option.value?.toString().toLowerCase().includes(lowercaseSearch)
-        ).slice(0, initialDisplayLimit)
+        ).slice(0, LARGE_DATASET_THRESHOLD)
         setDisplayOptions(filtered)
       }
     }
     return newValue
-  }, [fullOptions, isLargeDataset, initialDisplayLimit])
+  }, [fullOptions, isLargeDataset])
 
   const openMenu = useCallback(() => {
     if (!readonly && !disabled && !menuIsOpen[name]) {
@@ -220,9 +217,9 @@ const Select = props => {
     const newOptions = keyword.options || []
     setFullOptions(newOptions)
 
-    const initial = newOptions.slice(0, initialDisplayLimit)
+    const initial = newOptions.slice(0, LARGE_DATASET_THRESHOLD)
     setDisplayOptions(initial)
-  }, [keyword.options, initialDisplayLimit])
+  }, [keyword.options])
 
   useEffect(() => {
     setMenuOpenPosition()
@@ -413,6 +410,5 @@ Select.propTypes = {
   showOptionTooltips: PropTypes.bool,
   data: PropTypes.object,
   createOptionPosition: PropTypes.string,
-  initialDisplayLimit: PropTypes.number,
   searchPlaceholder: PropTypes.string
 }

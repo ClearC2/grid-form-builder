@@ -80,10 +80,7 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context7, _context8; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context7 = ownKeys(Object(source), !0)).call(_context7, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context8 = ownKeys(Object(source))).call(_context8, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
-var viewPortHeight = document.documentElement.clientHeight; // Configuration for large dataset handling
-
-var INITIAL_DISPLAY_LIMIT = 100; // Initial options to show and max search results
-
+var viewPortHeight = document.documentElement.clientHeight;
 var LARGE_DATASET_THRESHOLD = 500; // Switch to async mode when options exceed this
 
 var labelCopyTimer = null;
@@ -129,8 +126,6 @@ var Multiselect = function Multiselect(props) {
       onBlur = props.onBlur,
       _props$showOptionTool = props.showOptionTooltips,
       showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
-      _props$initialDisplay = props.initialDisplayLimit,
-      initialDisplayLimit = _props$initialDisplay === void 0 ? INITIAL_DISPLAY_LIMIT : _props$initialDisplay,
       _props$searchPlacehol = props.searchPlaceholder,
       searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol;
 
@@ -227,10 +222,10 @@ var Multiselect = function Multiselect(props) {
   var loadOptions = (0, _react.useCallback)(function (inputValue) {
     return new _promise.default(function (resolve) {
       var searchTerm = inputValue || '';
-      var lowercaseSearch = searchTerm.toLowerCase(); // If no search term, return first 100 options
+      var lowercaseSearch = searchTerm.toLowerCase(); // If no search term, return options up to large dataset threshold
 
       if (!searchTerm) {
-        resolve((0, _slice.default)(fullOptions).call(fullOptions, 0, initialDisplayLimit));
+        resolve((0, _slice.default)(fullOptions).call(fullOptions, 0, LARGE_DATASET_THRESHOLD));
         return;
       }
 
@@ -244,7 +239,7 @@ var Multiselect = function Multiselect(props) {
         for (var i = index; i < endIndex; i++) {
           var _context, _context2;
 
-          if (filtered.length >= initialDisplayLimit) break;
+          if (filtered.length >= LARGE_DATASET_THRESHOLD) break;
           var option = fullOptions[i];
           if (!option) continue;
           var label = option.label || '';
@@ -258,7 +253,7 @@ var Multiselect = function Multiselect(props) {
 
         index = endIndex; // If we have enough results or finished, return
 
-        if (filtered.length >= initialDisplayLimit || index >= fullOptions.length) {
+        if (filtered.length >= LARGE_DATASET_THRESHOLD || index >= fullOptions.length) {
           resolve(filtered);
         } else {
           // Continue with next chunk asynchronously
@@ -268,7 +263,7 @@ var Multiselect = function Multiselect(props) {
 
       processChunk();
     });
-  }, [fullOptions, initialDisplayLimit]); // Determine which Select component to use
+  }, [fullOptions]); // Determine which Select component to use
 
   var isLargeDataset = fullOptions.length > LARGE_DATASET_THRESHOLD;
   var SelectComponent = (0, _react.useMemo)(function () {
@@ -295,13 +290,13 @@ var Multiselect = function Multiselect(props) {
           var _option$label, _context4, _option$value, _context5;
 
           return ((_option$label = option.label) === null || _option$label === void 0 ? void 0 : (0, _includes.default)(_context4 = _option$label.toLowerCase()).call(_context4, lowercaseSearch)) || ((_option$value = option.value) === null || _option$value === void 0 ? void 0 : (0, _includes.default)(_context5 = _option$value.toString().toLowerCase()).call(_context5, lowercaseSearch));
-        })).call(_context3, 0, initialDisplayLimit);
+        })).call(_context3, 0, LARGE_DATASET_THRESHOLD);
         setDisplayOptions(filtered);
       }
     }
 
     return newValue;
-  }, [fullOptions, isLargeDataset, initialDisplayLimit]);
+  }, [fullOptions, isLargeDataset]);
   var openMenu = (0, _react.useCallback)(function () {
     if (!readonly && !disabled && !menuIsOpen[name]) {
       updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, true)));
@@ -378,9 +373,9 @@ var Multiselect = function Multiselect(props) {
 
     setFullOptions(formattedOptions);
     updateSelectOptions(formattedOptions);
-    var initial = (0, _slice.default)(formattedOptions).call(formattedOptions, 0, initialDisplayLimit);
+    var initial = (0, _slice.default)(formattedOptions).call(formattedOptions, 0, LARGE_DATASET_THRESHOLD);
     setDisplayOptions(initial);
-  }, [delimiter, keyword.options, initialDisplayLimit]);
+  }, [delimiter, keyword.options]);
   (0, _react.useEffect)(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);
@@ -623,6 +618,5 @@ Multiselect.propTypes = {
   onBlur: _propTypes.default.func,
   showOptionTooltips: _propTypes.default.bool,
   data: _propTypes.default.object,
-  initialDisplayLimit: _propTypes.default.number,
   searchPlaceholder: _propTypes.default.string
 };
