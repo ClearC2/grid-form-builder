@@ -35,7 +35,6 @@ import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
 import PortalTooltip from '../../Tooltip';
 var viewPortHeight = document.documentElement.clientHeight;
-var LARGE_DATASET_THRESHOLD = 500; // Switch to async mode when options exceed this
 
 var Select = function Select(props) {
   var _context6, _context7;
@@ -71,6 +70,8 @@ var Select = function Select(props) {
       showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
       _props$createOptionPo = props.createOptionPosition,
       createOptionPosition = _props$createOptionPo === void 0 ? 'last' : _props$createOptionPo,
+      _props$largeDatasetTh = props.largeDatasetThreshold,
+      largeDatasetThreshold = _props$largeDatasetTh === void 0 ? 500 : _props$largeDatasetTh,
       _props$searchPlacehol = props.searchPlaceholder,
       searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol;
 
@@ -169,7 +170,7 @@ var Select = function Select(props) {
       var lowercaseSearch = searchTerm.toLowerCase(); // If no search term, return options up to large dataset threshold
 
       if (!searchTerm) {
-        resolve(_sliceInstanceProperty(fullOptions).call(fullOptions, 0, LARGE_DATASET_THRESHOLD));
+        resolve(_sliceInstanceProperty(fullOptions).call(fullOptions, 0, largeDatasetThreshold));
         return;
       }
 
@@ -183,7 +184,7 @@ var Select = function Select(props) {
         for (var i = index; i < endIndex; i++) {
           var _context, _context2;
 
-          if (filtered.length >= LARGE_DATASET_THRESHOLD) break;
+          if (filtered.length >= largeDatasetThreshold) break;
           var option = fullOptions[i];
           if (!option) continue;
           var label = option.label || '';
@@ -197,7 +198,7 @@ var Select = function Select(props) {
 
         index = endIndex; // If we have enough results or have finished, return
 
-        if (filtered.length >= LARGE_DATASET_THRESHOLD || index >= fullOptions.length) {
+        if (filtered.length >= largeDatasetThreshold || index >= fullOptions.length) {
           resolve(filtered);
         } else {
           // Continue with next chunk asynchronously
@@ -207,9 +208,9 @@ var Select = function Select(props) {
 
       processChunk();
     });
-  }, [fullOptions]); // Determine which Select component to use
+  }, [fullOptions, largeDatasetThreshold]); // Determine which Select component to use
 
-  var isLargeDataset = fullOptions.length > LARGE_DATASET_THRESHOLD;
+  var isLargeDataset = fullOptions.length > largeDatasetThreshold;
   var SelectComponent = useMemo(function () {
     if (!interactive) {
       return allowcreate ? Creatable : ReactSelect;
@@ -235,14 +236,14 @@ var Select = function Select(props) {
           var _option$label, _context4, _option$value, _context5;
 
           return ((_option$label = option.label) === null || _option$label === void 0 ? void 0 : _includesInstanceProperty(_context4 = _option$label.toLowerCase()).call(_context4, lowercaseSearch)) || ((_option$value = option.value) === null || _option$value === void 0 ? void 0 : _includesInstanceProperty(_context5 = _option$value.toString().toLowerCase()).call(_context5, lowercaseSearch));
-        })).call(_context3, 0, LARGE_DATASET_THRESHOLD);
+        })).call(_context3, 0, largeDatasetThreshold);
 
         setDisplayOptions(filtered);
       }
     }
 
     return newValue;
-  }, [fullOptions, isLargeDataset]);
+  }, [fullOptions, isLargeDataset, largeDatasetThreshold]);
   var openMenu = useCallback(function () {
     if (!readonly && !disabled && !menuIsOpen[name]) {
       updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, true)));
@@ -295,10 +296,10 @@ var Select = function Select(props) {
     var newOptions = keyword.options || [];
     setFullOptions(newOptions);
 
-    var initial = _sliceInstanceProperty(newOptions).call(newOptions, 0, LARGE_DATASET_THRESHOLD);
+    var initial = _sliceInstanceProperty(newOptions).call(newOptions, 0, largeDatasetThreshold);
 
     setDisplayOptions(initial);
-  }, [keyword.options]);
+  }, [keyword.options, largeDatasetThreshold]);
   useEffect(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);
@@ -500,5 +501,6 @@ Select.propTypes = {
   showOptionTooltips: PropTypes.bool,
   data: PropTypes.object,
   createOptionPosition: PropTypes.string,
+  largeDatasetThreshold: PropTypes.number,
   searchPlaceholder: PropTypes.string
 };
