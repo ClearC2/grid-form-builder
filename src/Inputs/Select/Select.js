@@ -11,7 +11,7 @@ import PortalTooltip from '../../Tooltip'
 
 const viewPortHeight = document.documentElement.clientHeight
 
-const Select = props => {
+const Select = (props) => {
   const {
     allowcreate,
     value = '',
@@ -33,7 +33,8 @@ const Select = props => {
     warning,
     onBlur,
     showOptionTooltips = false, // this flag is used to show tooltips for each individual option
-    createOptionPosition = 'last'
+    createOptionPosition = 'last',
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -190,15 +191,22 @@ const Select = props => {
     }
   }
 
-  const Option = (props) => {
+  const Option = (optionProps) => {
+    const newProps = {
+      ...optionProps,
+      innerProps: {
+        ...optionProps?.innerProps,
+        'data-testid': `${testId}-${optionProps.data.value}`
+      }
+    }
     if (!showOptionTooltips) {
-      return <ReactSelectBaseComponents.Option {...props} />
+      return <ReactSelectBaseComponents.Option {...newProps} />
     } else {
       const optionId = randomId()
       return (
         <div data-tip data-for={optionId}>
-          <PortalTooltip id={optionId} message={props.data?.tooltip} />
-          <ReactSelectBaseComponents.Option {...props} />
+          <PortalTooltip id={optionId} message={newProps.data?.tooltip} />
+          <ReactSelectBaseComponents.Option {...newProps} />
         </div>
       )
     }
@@ -217,6 +225,7 @@ const Select = props => {
       onMouseDown={setInputFieldPosition}
       style={inputOuter}
       css={inputOuterCSS}
+      data-testid={testId}
     >
       <Select
         className={className}
@@ -304,5 +313,6 @@ Select.propTypes = {
   onBlur: PropTypes.func,
   showOptionTooltips: PropTypes.bool,
   data: PropTypes.object,
-  createOptionPosition: PropTypes.string
+  createOptionPosition: PropTypes.string,
+  'data-testid': PropTypes.string
 }

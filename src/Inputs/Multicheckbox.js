@@ -7,7 +7,7 @@ import useTheme from '../theme/useTheme'
 import {convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue, randomId} from '../utils'
 import PortalTooltip from '../Tooltip'
 
-const Multicheckbox = props => {
+const Multicheckbox = (props) => {
   const {
     name,
     onChange,
@@ -25,7 +25,8 @@ const Multicheckbox = props => {
     delimiter = '¤',
     stringify,
     warning,
-    showOptionTooltips = false // this flag is used to show tooltips for each individual option
+    showOptionTooltips = false, // this flag is used to show tooltips for each individual option
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -145,6 +146,7 @@ const Multicheckbox = props => {
                   data-for={optionId}
                 >
                   <input
+                    data-testid={`${testId}-${option.value}`}
                     className={className}
                     name={name}
                     value={option.value}
@@ -193,5 +195,6 @@ Multicheckbox.propTypes = {
   delimiter: PropTypes.string,
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   warning: PropTypes.string,
-  showOptionTooltips: PropTypes.bool
+  showOptionTooltips: PropTypes.bool,
+  'data-testid': PropTypes.string
 }

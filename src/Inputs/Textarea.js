@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
 
-const Textarea = props => {
+const Textarea = (props) => {
   const {
     name,
     value = '',
@@ -21,7 +21,8 @@ const Textarea = props => {
     style = {},
     required,
     maxlength = 524288,
-    warning
+    warning,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -92,6 +93,7 @@ const Textarea = props => {
               style={valueStyle}
               css={valueCSS}
               maxLength={maxlength}
+              data-testid={testId}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
@@ -125,5 +127,6 @@ Textarea.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 }

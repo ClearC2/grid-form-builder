@@ -7,7 +7,7 @@ import Cleave from '../Cleave' // switch this back to cleave.js package as soon 
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
 
-const Number = props => {
+const Number = (props) => {
   const {
     name,
     value = '',
@@ -29,7 +29,8 @@ const Number = props => {
     style = {},
     required,
     maxlength = 524288,
-    warning
+    warning,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -132,6 +133,7 @@ const Number = props => {
               style={valueStyle}
               css={valueCSS}
               maxLength={maxlength}
+              data-testid={testId}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
@@ -171,5 +173,6 @@ Number.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 }
