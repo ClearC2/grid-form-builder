@@ -1,3 +1,10 @@
+## [3.120.3](https://github.com/ClearC2/grid-form-builder/compare/v3.120.2...v3.120.3) (2025-07-10)
+
+
+### Bug Fixes
+
+* **select/multiselect inputs:** switch select and multiselect inputs to async for large datasets ([#246](https://github.com/ClearC2/grid-form-builder/issues/246)) ([ed4a008](https://github.com/ClearC2/grid-form-builder/commit/ed4a008b9d9e30c127452ec70e31fcf47175871a))
+
 ## [3.120.2](https://github.com/ClearC2/grid-form-builder/compare/v3.120.1...v3.120.2) (2025-06-05)
 
 

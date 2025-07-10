@@ -9,20 +9,27 @@ import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
 import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context7, _context8; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context7 = ownKeys(Object(source), !0)).call(_context7, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context8 = ownKeys(Object(source))).call(_context8, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
+import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
+import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import ReactSelect, { components as ReactSelectBaseComponents } from 'react-select';
+import AsyncSelect from 'react-select/async';
 import Creatable from 'react-select/creatable';
+import AsyncCreatable from 'react-select/async-creatable';
 import { isMobile, convertDelimitedValueIntoLabelValueArray, convertLabelValueArrayIntoDelimitedValue, randomId } from '../utils';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
@@ -31,6 +38,8 @@ var viewPortHeight = document.documentElement.clientHeight;
 var labelCopyTimer = null;
 
 var Multiselect = function Multiselect(props) {
+  var _context6;
+
   var allowcreate = props.allowcreate,
       _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
@@ -68,7 +77,11 @@ var Multiselect = function Multiselect(props) {
       showValidOptions = props.showValidOptions,
       onBlur = props.onBlur,
       _props$showOptionTool = props.showOptionTooltips,
-      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
+      _props$largeDatasetTh = props.largeDatasetThreshold,
+      largeDatasetThreshold = _props$largeDatasetTh === void 0 ? 500 : _props$largeDatasetTh,
+      _props$searchPlacehol = props.searchPlaceholder,
+      searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -101,49 +114,145 @@ var Multiselect = function Multiselect(props) {
       _theme$options = theme.options,
       optionsTheme = _theme$options === void 0 ? {} : _theme$options;
 
-  var _useState = useState({
+  var _useState = useState([]),
+      _useState2 = _slicedToArray(_useState, 2),
+      fullOptions = _useState2[0],
+      setFullOptions = _useState2[1];
+
+  var _useState3 = useState([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      displayOptions = _useState4[0],
+      setDisplayOptions = _useState4[1];
+
+  var _useState5 = useState(''),
+      _useState6 = _slicedToArray(_useState5, 2),
+      inputValue = _useState6[0],
+      setInputValue = _useState6[1];
+
+  var _useState7 = useState({
     Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect
   }),
-      _useState2 = _slicedToArray(_useState, 2),
-      input = _useState2[0],
-      changeInput = _useState2[1];
-
-  var _useState3 = useState(required && requiredWarning && !value.length),
-      _useState4 = _slicedToArray(_useState3, 2),
-      isRequiredFlag = _useState4[0],
-      updateIsRequiredFlag = _useState4[1];
-
-  var _useState5 = useState({}),
-      _useState6 = _slicedToArray(_useState5, 2),
-      menuIsOpen = _useState6[0],
-      updateIsMenuOpen = _useState6[1];
-
-  var _useState7 = useState('bottom'),
       _useState8 = _slicedToArray(_useState7, 2),
-      menuPlacement = _useState8[0],
-      updateMenuPlacement = _useState8[1];
+      input = _useState8[0],
+      changeInput = _useState8[1];
 
-  var _useState9 = useState(0),
+  var _useState9 = useState(required && requiredWarning && !value.length),
       _useState10 = _slicedToArray(_useState9, 2),
-      fieldPosition = _useState10[0],
-      updateFieldPosition = _useState10[1];
+      isRequiredFlag = _useState10[0],
+      updateIsRequiredFlag = _useState10[1];
 
-  var _useState11 = useState([]),
+  var _useState11 = useState({}),
       _useState12 = _slicedToArray(_useState11, 2),
-      selectValue = _useState12[0],
-      updateSelectValue = _useState12[1];
+      menuIsOpen = _useState12[0],
+      updateIsMenuOpen = _useState12[1];
 
-  var _useState13 = useState([]),
+  var _useState13 = useState('bottom'),
       _useState14 = _slicedToArray(_useState13, 2),
-      options = _useState14[0],
-      updateSelectOptions = _useState14[1];
+      menuPlacement = _useState14[0],
+      updateMenuPlacement = _useState14[1];
 
-  var _useState15 = useState(false),
+  var _useState15 = useState(0),
       _useState16 = _slicedToArray(_useState15, 2),
-      isFocused = _useState16[0],
-      setIsFocused = _useState16[1];
+      fieldPosition = _useState16[0],
+      updateFieldPosition = _useState16[1];
 
-  var inputContainer = useRef(null);
+  var _useState17 = useState([]),
+      _useState18 = _slicedToArray(_useState17, 2),
+      selectValue = _useState18[0],
+      updateSelectValue = _useState18[1];
+
+  var _useState19 = useState([]),
+      _useState20 = _slicedToArray(_useState19, 2),
+      options = _useState20[0],
+      updateSelectOptions = _useState20[1];
+
+  var _useState21 = useState(false),
+      _useState22 = _slicedToArray(_useState21, 2),
+      isFocused = _useState22[0],
+      setIsFocused = _useState22[1];
+
+  var inputContainer = useRef(null); // AsyncSelect implementation for large datasets
+
+  var loadOptions = useCallback(function (inputValue) {
+    return new _Promise(function (resolve) {
+      var searchTerm = inputValue || '';
+      var lowercaseSearch = searchTerm.toLowerCase(); // If no search term, return options up to large dataset threshold
+
+      if (!searchTerm) {
+        resolve(_sliceInstanceProperty(fullOptions).call(fullOptions, 0, largeDatasetThreshold));
+        return;
+      }
+
+      var filtered = [];
+      var index = 0;
+      var chunkSize = 2000; // Process 2000 items per chunk
+
+      var processChunk = function processChunk() {
+        var endIndex = Math.min(index + chunkSize, fullOptions.length); // Process this chunk
+
+        for (var i = index; i < endIndex; i++) {
+          var _context, _context2;
+
+          if (filtered.length >= largeDatasetThreshold) break;
+          var option = fullOptions[i];
+          if (!option) continue;
+          var label = option.label || '';
+
+          var _value = option.value || '';
+
+          if (_includesInstanceProperty(_context = label.toLowerCase()).call(_context, lowercaseSearch) || _includesInstanceProperty(_context2 = _value.toString().toLowerCase()).call(_context2, lowercaseSearch)) {
+            filtered.push(option);
+          }
+        }
+
+        index = endIndex; // If we have enough results or finished, return
+
+        if (filtered.length >= largeDatasetThreshold || index >= fullOptions.length) {
+          resolve(filtered);
+        } else {
+          // Continue with next chunk asynchronously
+          _setTimeout(processChunk, 0);
+        }
+      };
+
+      processChunk();
+    });
+  }, [fullOptions, largeDatasetThreshold]); // Determine which Select component to use
+
+  var isLargeDataset = fullOptions.length > largeDatasetThreshold;
+  var SelectComponent = useMemo(function () {
+    if (!interactive) {
+      return allowcreate ? Creatable : ReactSelect;
+    }
+
+    if (allowcreate) {
+      return isLargeDataset ? AsyncCreatable : Creatable;
+    }
+
+    return isLargeDataset ? AsyncSelect : ReactSelect;
+  }, [interactive, allowcreate, isLargeDataset]); // For small datasets, handle search normally
+
+  var handleInputChange = useCallback(function (newValue, actionMeta) {
+    if (actionMeta.action === 'input-change') {
+      setInputValue(newValue); // Only filter for small datasets - let AsyncSelect handle large ones
+
+      if (!isLargeDataset) {
+        var _context3;
+
+        var lowercaseSearch = newValue.toLowerCase();
+
+        var filtered = _sliceInstanceProperty(_context3 = _filterInstanceProperty(fullOptions).call(fullOptions, function (option) {
+          var _option$label, _context4, _option$value, _context5;
+
+          return ((_option$label = option.label) === null || _option$label === void 0 ? void 0 : _includesInstanceProperty(_context4 = _option$label.toLowerCase()).call(_context4, lowercaseSearch)) || ((_option$value = option.value) === null || _option$value === void 0 ? void 0 : _includesInstanceProperty(_context5 = _option$value.toString().toLowerCase()).call(_context5, lowercaseSearch));
+        })).call(_context3, 0, largeDatasetThreshold);
+
+        setDisplayOptions(filtered);
+      }
+    }
+
+    return newValue;
+  }, [fullOptions, isLargeDataset, largeDatasetThreshold]);
   var openMenu = useCallback(function () {
     if (!readonly && !disabled && !menuIsOpen[name]) {
       updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, true)));
@@ -160,6 +269,7 @@ var Multiselect = function Multiselect(props) {
 
     menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, false)));
     setIsFocused(false);
+    setInputValue(''); // Clear search on blur
   }, [menuIsOpen, updateIsMenuOpen, name, onBlur]);
   var setInputFieldPosition = useCallback(function () {
     if (inputContainer.current) {
@@ -216,17 +326,23 @@ var Multiselect = function Multiselect(props) {
       };
       if (!option.value) option.value = option.label;
       return option;
-    });
+    }); // Store full options and show initial set
+
+    setFullOptions(formattedOptions);
     updateSelectOptions(formattedOptions);
-  }, [delimiter, keyword.options]);
+
+    var initial = _sliceInstanceProperty(formattedOptions).call(formattedOptions, 0, largeDatasetThreshold);
+
+    setDisplayOptions(initial);
+  }, [delimiter, keyword.options, largeDatasetThreshold]);
   useEffect(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);
   useEffect(function () {
     changeInput({
-      Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect
+      Select: SelectComponent
     });
-  }, [allowcreate, changeInput, interactive]);
+  }, [SelectComponent]);
   useEffect(function () {
     updateIsRequiredFlag(required && requiredWarning && !value.length);
   }, [updateIsRequiredFlag, required, requiredWarning, value]);
@@ -255,6 +371,8 @@ var Multiselect = function Multiselect(props) {
     if (closeMenuOnSelect) {
       menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, false)));
     }
+
+    setInputValue(''); // Clear search after selection
   }, [closeMenuOnSelect, onChange, name, delimiter, delimit, stringify, menuIsOpen]);
   var handleOnKeyDown = useCallback(function () {
     if (!menuIsOpen[name]) openMenu();
@@ -270,10 +388,10 @@ var Multiselect = function Multiselect(props) {
     var _p$children = p.children,
         children = _p$children === void 0 ? '' : _p$children;
 
-    var _useState17 = useState(children),
-        _useState18 = _slicedToArray(_useState17, 2),
-        label = _useState18[0],
-        setLabel = _useState18[1]; // eslint-disable-line
+    var _useState23 = useState(children),
+        _useState24 = _slicedToArray(_useState23, 2),
+        label = _useState24[0],
+        setLabel = _useState24[1]; // eslint-disable-line
 
 
     var copyValueToClipboard = function copyValueToClipboard() {
@@ -335,39 +453,31 @@ var Multiselect = function Multiselect(props) {
 
   var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
 
-  return jsx("div", {
-    className: outerClass,
-    ref: inputContainer,
-    onMouseDown: setInputFieldPosition,
-    style: inputOuter,
-    css: inputOuterCSS
-  }, jsx(Select, {
-    isSearchable: searchable,
-    className: className,
-    classNamePrefix: "gfb-input",
-    tabIndex: tabIndex,
+  var baseSelectProps = {
+    autoComplete: autoComplete,
     autoFocus: autofocus,
+    className: className,
+    classNamePrefix: 'gfb-input',
     closeMenuOnScroll: !isMobile ? closeMenuOnScroll : undefined,
     closeMenuOnSelect: closeMenuOnSelect,
-    isClearable: isClearable,
-    isDisabled: disabled || readonly || !interactive,
-    menuPortalTarget: document.body,
-    isMulti: true,
-    name: name,
-    options: options,
-    placeholder: placeholder // onFocus={handleOnFocus}
-    ,
-    onKeyDown: handleOnKeyDown,
-    onBlur: handleInputBlur // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
-    ,
-    menuPlacement: !isMobile ? menuPlacement : undefined,
-    value: selectValue,
-    defaultValue: selectValue,
-    onChange: handleChange,
-    autoComplete: autoComplete,
     components: _objectSpread(_objectSpread({}, customComponents), {}, {
       Option: Option
     }),
+    defaultValue: selectValue,
+    inputValue: inputValue,
+    isClearable: isClearable,
+    isDisabled: disabled || readonly || !interactive,
+    isMulti: true,
+    isSearchable: searchable,
+    // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+    menuPlacement: !isMobile ? menuPlacement : undefined,
+    menuPortalTarget: document.body,
+    name: name,
+    onBlur: handleInputBlur,
+    onChange: handleChange,
+    // onFocus={handleOnFocus}
+    onInputChange: handleInputChange,
+    onKeyDown: handleOnKeyDown,
     styles: {
       container: function container(base) {
         return _objectSpread(_objectSpread(_objectSpread({}, base), inputInner), inputInnerTheme);
@@ -413,8 +523,26 @@ var Multiselect = function Multiselect(props) {
           zIndex: zIndex
         });
       }
-    }
-  }));
+    },
+    tabIndex: tabIndex,
+    value: selectValue
+  };
+  return jsx("div", {
+    className: outerClass,
+    css: inputOuterCSS,
+    onMouseDown: setInputFieldPosition,
+    ref: inputContainer,
+    style: inputOuter
+  }, isLargeDataset ? jsx(Select, _extends({}, baseSelectProps, {
+    cacheOptions: true,
+    defaultOptions: true,
+    loadOptions: loadOptions,
+    placeholder: _concatInstanceProperty(_context6 = "".concat(searchPlaceholder, " (")).call(_context6, fullOptions.length, " options)")
+  })) : jsx(Select, _extends({}, baseSelectProps, {
+    filterOption: null,
+    options: displayOptions,
+    placeholder: placeholder
+  })));
 };
 
 export default Multiselect;
@@ -447,5 +575,7 @@ Multiselect.propTypes = {
   showValidOptions: PropTypes.bool,
   onBlur: PropTypes.func,
   showOptionTooltips: PropTypes.bool,
-  data: PropTypes.object
+  data: PropTypes.object,
+  largeDatasetThreshold: PropTypes.number,
+  searchPlaceholder: PropTypes.string
 };
