@@ -89,7 +89,9 @@ var Phone = function Phone(props) {
       values = (0, _values.default)(props),
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
-      warning = props.warning;
+      warning = props.warning,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value;
   var _style$value = style.value,
@@ -244,7 +246,8 @@ var Phone = function Phone(props) {
     onBlur: handleOnBlur,
     style: valueStyle,
     css: valueCSS,
-    maxLength: maxlength + Math.floor((value + '').length / 4)
+    maxLength: maxlength + Math.floor((value + '').length / 4),
+    "data-testid": testId
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
@@ -286,5 +289,6 @@ Phone.propTypes = {
   regions: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.instanceOf(_immutable.List)]),
   values: _propTypes.default.instanceOf(_immutable.Map),
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
-  warning: _propTypes.default.string
+  warning: _propTypes.default.string,
+  'data-testid': _propTypes.default.string
 };

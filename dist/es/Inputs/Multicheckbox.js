@@ -11,12 +11,13 @@ import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -49,7 +50,9 @@ var Multicheckbox = function Multicheckbox(props) {
       stringify = props.stringify,
       warning = props.warning,
       _props$showOptionTool = props.showOptionTooltips,
-      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -195,6 +198,8 @@ var Multicheckbox = function Multicheckbox(props) {
     style: valueContainer,
     css: valueContainerCSS
   }, _mapInstanceProperty(options).call(options, function (option, i) {
+    var _context;
+
     var checked = _someInstanceProperty(value).call(value, function (val) {
       return val.value === option.value;
     });
@@ -212,6 +217,7 @@ var Multicheckbox = function Multicheckbox(props) {
       "data-tip": true,
       "data-for": optionId
     }, jsx("input", {
+      "data-testid": _concatInstanceProperty(_context = "".concat(testId, "-")).call(_context, option.value),
       className: className,
       name: name,
       value: option.value,
@@ -259,5 +265,6 @@ Multicheckbox.propTypes = {
   delimiter: PropTypes.string,
   delimit: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   warning: PropTypes.string,
-  showOptionTooltips: PropTypes.bool
+  showOptionTooltips: PropTypes.bool,
+  'data-testid': PropTypes.string
 };

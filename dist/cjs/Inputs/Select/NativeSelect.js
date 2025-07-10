@@ -26,6 +26,8 @@ exports.default = void 0;
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
+var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
+
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
@@ -46,7 +48,7 @@ require("../../styles/native-select.css");
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var NativeSelect = function NativeSelect(props) {
   var _props$value = props.value,
@@ -64,7 +66,9 @@ var NativeSelect = function NativeSelect(props) {
       interactive = _props$interactive === void 0 ? true : _props$interactive,
       _props$style = props.style,
       style = _props$style === void 0 ? {} : _props$style,
-      device = props.device;
+      device = props.device,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -152,19 +156,24 @@ var NativeSelect = function NativeSelect(props) {
     css: valueCSS,
     disabled: readonly || disabled || !interactive,
     tabIndex: tabIndex,
-    value: value
+    value: value,
+    "data-testid": testId
   }, (0, _core.jsx)("option", {
     name: name,
     value: "",
     style: optionsStyle,
-    css: optionsTheme
+    css: optionsTheme,
+    "data-testid": "".concat(testId, "-")
   }), (0, _map.default)(options).call(options, function (option, i) {
+    var _context;
+
     return (0, _core.jsx)("option", {
       key: i,
       name: name,
       value: option.value,
       style: optionsStyle,
-      css: optionsTheme
+      css: optionsTheme,
+      "data-testid": (0, _concat.default)(_context = "".concat(testId, "-")).call(_context, (option === null || option === void 0 ? void 0 : option.value) || (option === null || option === void 0 ? void 0 : option.label))
     }, option.label ? option.label : option.value);
   }))), (0, _core.jsx)("div", {
     className: indicatorClass,
@@ -199,7 +208,8 @@ NativeSelect.propTypes = {
   interactive: _propTypes.default.bool,
   style: _propTypes.default.object,
   isClearable: _propTypes.default.bool,
-  device: _propTypes.default.object
+  device: _propTypes.default.object,
+  'data-testid': _propTypes.default.string
 };
 var _default = NativeSelect;
 exports.default = _default;

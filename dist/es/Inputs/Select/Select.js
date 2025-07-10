@@ -11,7 +11,7 @@ import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context8, _context9; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context8 = ownKeys(Object(source), !0)).call(_context8, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context9 = ownKeys(Object(source))).call(_context9, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context9, _context10; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context9 = ownKeys(Object(source), !0)).call(_context9, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context10 = ownKeys(Object(source))).call(_context10, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
@@ -37,7 +37,7 @@ import PortalTooltip from '../../Tooltip';
 var viewPortHeight = document.documentElement.clientHeight;
 
 var Select = function Select(props) {
-  var _context6, _context7;
+  var _context6, _context8;
 
   var allowcreate = props.allowcreate,
       _props$value = props.value,
@@ -70,6 +70,8 @@ var Select = function Select(props) {
       showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
       _props$createOptionPo = props.createOptionPosition,
       createOptionPosition = _props$createOptionPo === void 0 ? 'last' : _props$createOptionPo,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid,
       _props$largeDatasetTh = props.largeDatasetThreshold,
       largeDatasetThreshold = _props$largeDatasetTh === void 0 ? 500 : _props$largeDatasetTh,
       _props$searchPlacehol = props.searchPlaceholder,
@@ -369,11 +371,19 @@ var Select = function Select(props) {
     };
   }
 
-  var Option = function Option(props) {
+  var Option = function Option(optionProps) {
+    var _context7;
+
+    var newProps = _objectSpread(_objectSpread({}, optionProps), {}, {
+      innerProps: _objectSpread(_objectSpread({}, optionProps === null || optionProps === void 0 ? void 0 : optionProps.innerProps), {}, {
+        'data-testid': _concatInstanceProperty(_context7 = "".concat(testId, "-")).call(_context7, optionProps.data.value)
+      })
+    });
+
     if (!showOptionTooltips) {
-      return jsx(ReactSelectBaseComponents.Option, props);
+      return jsx(ReactSelectBaseComponents.Option, newProps);
     } else {
-      var _props$data;
+      var _newProps$data;
 
       var optionId = randomId();
       return jsx("div", {
@@ -381,8 +391,8 @@ var Select = function Select(props) {
         "data-for": optionId
       }, jsx(PortalTooltip, {
         id: optionId,
-        message: (_props$data = props.data) === null || _props$data === void 0 ? void 0 : _props$data.tooltip
-      }), jsx(ReactSelectBaseComponents.Option, props));
+        message: (_newProps$data = newProps.data) === null || _newProps$data === void 0 ? void 0 : _newProps$data.tooltip
+      }), jsx(ReactSelectBaseComponents.Option, newProps));
     }
   };
 
@@ -462,12 +472,13 @@ var Select = function Select(props) {
     css: inputOuterCSS,
     onMouseDown: setInputFieldPosition,
     ref: inputContainer,
-    style: inputOuter
+    style: inputOuter,
+    "data-testid": testId
   }, isLargeDataset ? jsx(Select, _extends({}, baseSelectProps, {
     cacheOptions: true,
     defaultOptions: true,
     loadOptions: loadOptions,
-    placeholder: _concatInstanceProperty(_context7 = "".concat(searchPlaceholder, " (")).call(_context7, fullOptions.length, " options)")
+    placeholder: _concatInstanceProperty(_context8 = "".concat(searchPlaceholder, " (")).call(_context8, fullOptions.length, " options)")
   })) : jsx(Select, _extends({}, baseSelectProps, {
     filterOption: null,
     options: displayOptions,
@@ -502,5 +513,6 @@ Select.propTypes = {
   data: PropTypes.object,
   createOptionPosition: PropTypes.string,
   largeDatasetThreshold: PropTypes.number,
-  searchPlaceholder: PropTypes.string
+  searchPlaceholder: PropTypes.string,
+  'data-testid': PropTypes.string
 };

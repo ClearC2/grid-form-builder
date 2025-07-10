@@ -1,3 +1,10 @@
+# [3.121.0](https://github.com/ClearC2/grid-form-builder/compare/v3.120.3...v3.121.0) (2025-07-10)
+
+
+### Features
+
+* **data-testid:** add data-testid support to major components for easier testing ([#247](https://github.com/ClearC2/grid-form-builder/issues/247)) ([2ec5d40](https://github.com/ClearC2/grid-form-builder/commit/2ec5d40b4684da08afdb352f135009862a8d0b7b))
+
 ## [3.120.3](https://github.com/ClearC2/grid-form-builder/compare/v3.120.2...v3.120.3) (2025-07-10)
 
 

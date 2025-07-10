@@ -50,7 +50,9 @@ var Percentage = function Percentage(props) {
       _props$maximum = props.maximum,
       maximum = _props$maximum === void 0 ? 100 : _props$maximum,
       _props$minimum = props.minimum,
-      minimum = _props$minimum === void 0 ? 0 : _props$minimum;
+      minimum = _props$minimum === void 0 ? 0 : _props$minimum,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -214,7 +216,8 @@ var Percentage = function Percentage(props) {
     type: "text",
     style: valueStyle,
     css: valueCSS,
-    maxLength: maxlength
+    maxLength: maxlength,
+    "data-testid": testId
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
@@ -253,5 +256,6 @@ Percentage.propTypes = {
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.number,
   maximum: PropTypes.number,
-  minimum: PropTypes.number
+  minimum: PropTypes.number,
+  'data-testid': PropTypes.string
 };

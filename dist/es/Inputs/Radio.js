@@ -43,7 +43,9 @@ var Radio = function Radio(props) {
       warning = props.warning,
       tabIndex = props.tabIndex,
       _props$showOptionTool = props.showOptionTooltips,
-      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -147,7 +149,8 @@ var Radio = function Radio(props) {
       ,
       type: "radio",
       autoComplete: autoComplete,
-      css: valueCSS
+      css: valueCSS,
+      "data-testid": testId
     }), option.label ? option.label : option.value, showOptionTooltips ? jsx(PortalTooltip, {
       id: optionId,
       message: option === null || option === void 0 ? void 0 : option.tooltip
@@ -182,5 +185,6 @@ Radio.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   warning: PropTypes.string,
-  showOptionTooltips: PropTypes.bool
+  showOptionTooltips: PropTypes.bool,
+  'data-testid': PropTypes.string
 };

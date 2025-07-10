@@ -32,6 +32,8 @@ var _find = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stabl
 
 var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
 
+var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
+
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
@@ -54,7 +56,7 @@ var _Tooltip = _interopRequireDefault(require("../Tooltip"));
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var Multicheckbox = function Multicheckbox(props) {
   var name = props.name,
@@ -78,7 +80,9 @@ var Multicheckbox = function Multicheckbox(props) {
       stringify = props.stringify,
       warning = props.warning,
       _props$showOptionTool = props.showOptionTooltips,
-      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -221,6 +225,8 @@ var Multicheckbox = function Multicheckbox(props) {
     style: valueContainer,
     css: valueContainerCSS
   }, (0, _map.default)(options).call(options, function (option, i) {
+    var _context;
+
     var checked = (0, _some.default)(value).call(value, function (val) {
       return val.value === option.value;
     });
@@ -237,6 +243,7 @@ var Multicheckbox = function Multicheckbox(props) {
       "data-tip": true,
       "data-for": optionId
     }, (0, _core.jsx)("input", {
+      "data-testid": (0, _concat.default)(_context = "".concat(testId, "-")).call(_context, option.value),
       className: className,
       name: name,
       value: option.value,
@@ -285,5 +292,6 @@ Multicheckbox.propTypes = {
   delimiter: _propTypes.default.string,
   delimit: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.array]),
   warning: _propTypes.default.string,
-  showOptionTooltips: _propTypes.default.bool
+  showOptionTooltips: _propTypes.default.bool,
+  'data-testid': _propTypes.default.string
 };

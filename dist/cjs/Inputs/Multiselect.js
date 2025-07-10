@@ -78,13 +78,13 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context7, _context8; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context7 = ownKeys(Object(source), !0)).call(_context7, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context8 = ownKeys(Object(source))).call(_context8, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context8, _context9; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context8 = ownKeys(Object(source), !0)).call(_context8, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context9 = ownKeys(Object(source))).call(_context9, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var viewPortHeight = document.documentElement.clientHeight;
 var labelCopyTimer = null;
 
 var Multiselect = function Multiselect(props) {
-  var _context6;
+  var _context7;
 
   var allowcreate = props.allowcreate,
       _props$value = props.value,
@@ -124,6 +124,8 @@ var Multiselect = function Multiselect(props) {
       onBlur = props.onBlur,
       _props$showOptionTool = props.showOptionTooltips,
       showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid,
       _props$largeDatasetTh = props.largeDatasetThreshold,
       largeDatasetThreshold = _props$largeDatasetTh === void 0 ? 500 : _props$largeDatasetTh,
       _props$searchPlacehol = props.searchPlaceholder,
@@ -471,11 +473,19 @@ var Multiselect = function Multiselect(props) {
     };
   }
 
-  var Option = function Option(props) {
+  var Option = function Option(optionProps) {
+    var _context6;
+
+    var newProps = _objectSpread(_objectSpread({}, optionProps), {}, {
+      innerProps: _objectSpread(_objectSpread({}, optionProps === null || optionProps === void 0 ? void 0 : optionProps.innerProps), {}, {
+        'data-testid': (0, _concat.default)(_context6 = "".concat(testId, "-")).call(_context6, optionProps.data.value)
+      })
+    });
+
     if (!showOptionTooltips) {
-      return (0, _core.jsx)(_reactSelect.components.Option, props);
+      return (0, _core.jsx)(_reactSelect.components.Option, newProps);
     } else {
-      var _props$data;
+      var _newProps$data;
 
       var optionId = (0, _utils.randomId)();
       return (0, _core.jsx)("div", {
@@ -483,8 +493,8 @@ var Multiselect = function Multiselect(props) {
         "data-for": optionId
       }, (0, _core.jsx)(_Tooltip.default, {
         id: optionId,
-        message: (_props$data = props.data) === null || _props$data === void 0 ? void 0 : _props$data.tooltip
-      }), (0, _core.jsx)(_reactSelect.components.Option, props));
+        message: (_newProps$data = newProps.data) === null || _newProps$data === void 0 ? void 0 : _newProps$data.tooltip
+      }), (0, _core.jsx)(_reactSelect.components.Option, newProps));
     }
   };
 
@@ -573,12 +583,13 @@ var Multiselect = function Multiselect(props) {
     css: inputOuterCSS,
     onMouseDown: setInputFieldPosition,
     ref: inputContainer,
-    style: inputOuter
+    style: inputOuter,
+    "data-testid": testId
   }, isLargeDataset ? (0, _core.jsx)(Select, (0, _extends2.default)({}, baseSelectProps, {
     cacheOptions: true,
     defaultOptions: true,
     loadOptions: loadOptions,
-    placeholder: (0, _concat.default)(_context6 = "".concat(searchPlaceholder, " (")).call(_context6, fullOptions.length, " options)")
+    placeholder: (0, _concat.default)(_context7 = "".concat(searchPlaceholder, " (")).call(_context7, fullOptions.length, " options)")
   })) : (0, _core.jsx)(Select, (0, _extends2.default)({}, baseSelectProps, {
     filterOption: null,
     options: displayOptions,
@@ -619,5 +630,6 @@ Multiselect.propTypes = {
   showOptionTooltips: _propTypes.default.bool,
   data: _propTypes.default.object,
   largeDatasetThreshold: _propTypes.default.number,
-  searchPlaceholder: _propTypes.default.string
+  searchPlaceholder: _propTypes.default.string,
+  'data-testid': _propTypes.default.string
 };
