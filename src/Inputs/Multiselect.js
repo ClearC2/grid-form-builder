@@ -1,9 +1,11 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useEffect, useRef, useState, useCallback} from 'react'
+import {useEffect, useRef, useState, useCallback, useMemo} from 'react'
 import PropTypes from 'prop-types'
 import ReactSelect, {components as ReactSelectBaseComponents} from 'react-select'
+import AsyncSelect from 'react-select/async'
 import Creatable from 'react-select/creatable'
+import AsyncCreatable from 'react-select/async-creatable'
 import {
   isMobile,
   convertDelimitedValueIntoLabelValueArray,
@@ -45,7 +47,9 @@ const Multiselect = props => {
     warning,
     showValidOptions,
     onBlur,
-    showOptionTooltips = false // this flag is used to show tooltips for each individual option
+    showOptionTooltips = false, // this flag is used to show tooltips for each individual option
+    largeDatasetThreshold = 500, // Switch to async mode when options exceed this
+    searchPlaceholder = 'Type to search...'
   } = props
 
   const {
@@ -69,6 +73,9 @@ const Multiselect = props => {
     options: optionsTheme = {}
   } = theme
 
+  const [fullOptions, setFullOptions] = useState([])
+  const [displayOptions, setDisplayOptions] = useState([])
+  const [inputValue, setInputValue] = useState('')
   const [input, changeInput] = useState({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
   const [menuIsOpen, updateIsMenuOpen] = useState({})
@@ -79,6 +86,89 @@ const Multiselect = props => {
   const [isFocused, setIsFocused] = useState(false)
 
   const inputContainer = useRef(null)
+
+  // AsyncSelect implementation for large datasets
+  const loadOptions = useCallback((inputValue) => {
+    return new Promise((resolve) => {
+      const searchTerm = inputValue || ''
+      const lowercaseSearch = searchTerm.toLowerCase()
+
+      // If no search term, return options up to large dataset threshold
+      if (!searchTerm) {
+        resolve(fullOptions.slice(0, largeDatasetThreshold))
+        return
+      }
+
+      const filtered = []
+      let index = 0
+      const chunkSize = 2000 // Process 2000 items per chunk
+
+      const processChunk = () => {
+        const endIndex = Math.min(index + chunkSize, fullOptions.length)
+
+        // Process this chunk
+        for (let i = index; i < endIndex; i++) {
+          if (filtered.length >= largeDatasetThreshold) break
+
+          const option = fullOptions[i]
+          if (!option) continue
+
+          const label = option.label || ''
+          const value = option.value || ''
+
+          if (label.toLowerCase().includes(lowercaseSearch) ||
+            value.toString().toLowerCase().includes(lowercaseSearch)) {
+            filtered.push(option)
+          }
+        }
+
+        index = endIndex
+
+        // If we have enough results or finished, return
+        if (filtered.length >= largeDatasetThreshold || index >= fullOptions.length) {
+          resolve(filtered)
+        } else {
+          // Continue with next chunk asynchronously
+          setTimeout(processChunk, 0)
+        }
+      }
+
+      processChunk()
+    })
+  }, [fullOptions, largeDatasetThreshold])
+
+  // Determine which Select component to use
+  const isLargeDataset = fullOptions.length > largeDatasetThreshold
+
+  const SelectComponent = useMemo(() => {
+    if (!interactive) {
+      return allowcreate ? Creatable : ReactSelect
+    }
+
+    if (allowcreate) {
+      return isLargeDataset ? AsyncCreatable : Creatable
+    }
+
+    return isLargeDataset ? AsyncSelect : ReactSelect
+  }, [interactive, allowcreate, isLargeDataset])
+
+  // For small datasets, handle search normally
+  const handleInputChange = useCallback((newValue, actionMeta) => {
+    if (actionMeta.action === 'input-change') {
+      setInputValue(newValue)
+
+      // Only filter for small datasets - let AsyncSelect handle large ones
+      if (!isLargeDataset) {
+        const lowercaseSearch = newValue.toLowerCase()
+        const filtered = fullOptions.filter(option =>
+          option.label?.toLowerCase().includes(lowercaseSearch) ||
+          option.value?.toString().toLowerCase().includes(lowercaseSearch)
+        ).slice(0, largeDatasetThreshold)
+        setDisplayOptions(filtered)
+      }
+    }
+    return newValue
+  }, [fullOptions, isLargeDataset, largeDatasetThreshold])
 
   const openMenu = useCallback(() => {
     if (!readonly && !disabled && !menuIsOpen[name]) {
@@ -97,6 +187,7 @@ const Multiselect = props => {
     }
     menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     setIsFocused(false)
+    setInputValue('') // Clear search on blur
   }, [menuIsOpen, updateIsMenuOpen, name, onBlur])
 
   const setInputFieldPosition = useCallback(() => {
@@ -159,16 +250,21 @@ const Multiselect = props => {
       return option
     })
 
+    // Store full options and show initial set
+    setFullOptions(formattedOptions)
     updateSelectOptions(formattedOptions)
-  }, [delimiter, keyword.options])
+
+    const initial = formattedOptions.slice(0, largeDatasetThreshold)
+    setDisplayOptions(initial)
+  }, [delimiter, keyword.options, largeDatasetThreshold])
 
   useEffect(() => {
     setMenuOpenPosition()
   }, [fieldPosition, setMenuOpenPosition])
 
   useEffect(() => {
-    changeInput({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
-  }, [allowcreate, changeInput, interactive])
+    changeInput({Select: SelectComponent})
+  }, [SelectComponent])
 
   useEffect(() => {
     updateIsRequiredFlag(required && requiredWarning && !value.length)
@@ -188,6 +284,7 @@ const Multiselect = props => {
     if (closeMenuOnSelect) {
       menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
     }
+    setInputValue('') // Clear search after selection
   }, [closeMenuOnSelect, onChange, name, delimiter, delimit, stringify, menuIsOpen])
 
   const handleOnKeyDown = useCallback(() => {
@@ -251,77 +348,84 @@ const Multiselect = props => {
 
   const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
 
+  const baseSelectProps = {
+    autoComplete,
+    autoFocus: autofocus,
+    className,
+    classNamePrefix: 'gfb-input',
+    closeMenuOnScroll: !isMobile ? closeMenuOnScroll : undefined,
+    closeMenuOnSelect,
+    components: {...customComponents, Option},
+    defaultValue: selectValue,
+    inputValue,
+    isClearable,
+    isDisabled: disabled || readonly || !interactive,
+    isMulti: true,
+    isSearchable: searchable,
+    // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+    menuPlacement: !isMobile ? menuPlacement : undefined,
+    menuPortalTarget: document.body,
+    name,
+    onBlur: handleInputBlur,
+    onChange: handleChange,
+    // onFocus={handleOnFocus}
+    onInputChange: handleInputChange,
+    onKeyDown: handleOnKeyDown,
+    styles: {
+      container: base => ({...base, ...inputInner, ...inputInnerTheme}),
+      control: base => ({...base, ...inputControl, ...inputControlTheme}),
+      valueContainer: base => ({...base, ...valueContainer, ...valueContainerTheme}),
+      indicatorsContainer: base => ({...base, ...indicators, ...indicatorsTheme}),
+      option: base => ({...base, ...optionsStyle, ...optionsTheme}),
+      multiValue: (base, parent) => {
+        if (!interactive) {
+          base.color = 'green'
+          base.backgroundColor = '#a6eca67a'
+        } else {
+          base.backgroundColor = '#8bb7ff91'
+        }
+        if (parent?.data?.color) {
+          base.backgroundColor = parent.data.color
+        }
+        if (window.CSS.supports('color', parent.data.value)) {
+          base.backgroundColor = parent.data.value
+        }
+        return ({...base, ...valueStyle, ...valueTheme})
+      },
+      menuPortal: base => {
+        const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
+        const zIndex = 9999 // this keeps the select menu below the option tooltip portal
+        return ({...base, top, zIndex})
+      }
+    },
+    tabIndex,
+    value: selectValue
+  }
+
   return (
     <div
       className={outerClass}
-      ref={inputContainer}
-      onMouseDown={setInputFieldPosition}
-      style={inputOuter}
       css={inputOuterCSS}
+      onMouseDown={setInputFieldPosition}
+      ref={inputContainer}
+      style={inputOuter}
     >
-      <Select
-        isSearchable={searchable}
-        className={className}
-        classNamePrefix='gfb-input'
-        tabIndex={tabIndex}
-        autoFocus={autofocus}
-        closeMenuOnScroll={!isMobile ? closeMenuOnScroll : undefined}
-        closeMenuOnSelect={closeMenuOnSelect}
-        isClearable={isClearable}
-        isDisabled={disabled || readonly || !interactive}
-        menuPortalTarget={document.body}
-        isMulti
-        name={name}
-        options={options}
-        placeholder={placeholder}
-        // onFocus={handleOnFocus}
-        onKeyDown={handleOnKeyDown}
-        onBlur={handleInputBlur}
-        // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
-        menuPlacement={!isMobile ? menuPlacement : undefined}
-        value={selectValue}
-        defaultValue={selectValue}
-        onChange={handleChange}
-        autoComplete={autoComplete}
-        components={{...customComponents, Option}}
-        styles={{
-          container: base => {
-            return ({...base, ...inputInner, ...inputInnerTheme})
-          },
-          control: base => {
-            return ({...base, ...inputControl, ...inputControlTheme})
-          },
-          valueContainer: base => {
-            return ({...base, ...valueContainer, ...valueContainerTheme})
-          },
-          indicatorsContainer: base => {
-            return ({...base, ...indicators, ...indicatorsTheme})
-          },
-          option: base => {
-            return ({...base, ...optionsStyle, ...optionsTheme})
-          },
-          multiValue: (base, parent) => {
-            if (!interactive) {
-              base.color = 'green'
-              base.backgroundColor = '#a6eca67a'
-            } else {
-              base.backgroundColor = '#8bb7ff91'
-            }
-            if (parent?.data?.color) {
-              base.backgroundColor = parent.data.color
-            }
-            if (window.CSS.supports('color', parent.data.value)) {
-              base.backgroundColor = parent.data.value
-            }
-            return ({...base, ...valueStyle, ...valueTheme})
-          },
-          menuPortal: base => {
-            const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
-            const zIndex = 9999 // this keeps the select menu below the option tooltip portal
-            return ({...base, top, zIndex})
-          }
-        }}
-      />
+      {isLargeDataset ? (
+        <Select
+          {...baseSelectProps}
+          cacheOptions
+          defaultOptions
+          loadOptions={loadOptions}
+          placeholder={`${searchPlaceholder} (${fullOptions.length} options)`}
+        />
+      ) : (
+        <Select
+          {...baseSelectProps}
+          filterOption={null}
+          options={displayOptions}
+          placeholder={placeholder}
+        />
+      )}
     </div>
   )
 }
@@ -357,5 +461,7 @@ Multiselect.propTypes = {
   showValidOptions: PropTypes.bool,
   onBlur: PropTypes.func,
   showOptionTooltips: PropTypes.bool,
-  data: PropTypes.object
+  data: PropTypes.object,
+  largeDatasetThreshold: PropTypes.number,
+  searchPlaceholder: PropTypes.string
 }
