@@ -22,7 +22,8 @@ const Checkbox = props => {
     requiredWarning,
     style = {},
     required,
-    warning
+    warning,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -159,6 +160,7 @@ const Checkbox = props => {
         <div className={controlClass} style={inputControl} css={inputControlCSS}>
           <div className='gfb-input__value-container' style={valueContainer} css={valueContainerCSS}>
             <input
+              data-testid={testId}
               className={className}
               name={name}
               value={value}
@@ -202,5 +204,6 @@ Checkbox.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 }

@@ -11,7 +11,7 @@ import countryCodes from '../countryCodes'
 import {List, Map} from 'immutable'
 import '../styles/phone.css'
 
-const Phone = props => {
+const Phone = (props) => {
   const {
     name,
     onChange,
@@ -31,7 +31,8 @@ const Phone = props => {
     regions,
     values,
     maxlength = 524288,
-    warning
+    warning,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   let {value = ''} = props
@@ -163,7 +164,8 @@ const Phone = props => {
               onBlur={handleOnBlur}
               style={valueStyle}
               css={valueCSS}
-              maxLength={maxlength + Math.floor(((value + '').length / 4))}
+              maxLength={maxlength + Math.floor((value + '').length / 4)}
+              data-testid={testId}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
@@ -202,5 +204,6 @@ Phone.propTypes = {
   regions: PropTypes.oneOfType([PropTypes.array, PropTypes.instanceOf(List)]),
   values: PropTypes.instanceOf(Map),
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 }

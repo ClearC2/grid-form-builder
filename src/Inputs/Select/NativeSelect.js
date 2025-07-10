@@ -7,7 +7,7 @@ import {useCallback, useState} from 'react'
 import {FaChevronDown} from 'react-icons/fa'
 import '../../styles/native-select.css'
 
-const NativeSelect = props => {
+const NativeSelect = (props) => {
   const {
     value = '',
     tabIndex,
@@ -20,7 +20,8 @@ const NativeSelect = props => {
     onChange,
     interactive = true,
     style = {},
-    device
+    device,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -81,13 +82,9 @@ const NativeSelect = props => {
               disabled={readonly || disabled || !interactive}
               tabIndex={tabIndex}
               value={value}
+              data-testid={testId}
             >
-              <option
-                name={name}
-                value=''
-                style={optionsStyle}
-                css={optionsTheme}
-              />
+              <option name={name} value='' style={optionsStyle} css={optionsTheme} data-testid={`${testId}-`} />
               {options.map((option, i) => {
                 return (
                   <option
@@ -96,6 +93,7 @@ const NativeSelect = props => {
                     value={option.value}
                     style={optionsStyle}
                     css={optionsTheme}
+                    data-testid={`${testId}-${option?.value || option?.label}`}
                   >
                     {option.label ? option.label : option.value}
                   </option>
@@ -144,7 +142,9 @@ NativeSelect.propTypes = {
   interactive: PropTypes.bool,
   style: PropTypes.object,
   isClearable: PropTypes.bool,
-  device: PropTypes.object
+  device: PropTypes.object,
+  'data-testid': PropTypes.string
+
 }
 
 export default NativeSelect

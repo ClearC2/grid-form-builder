@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
 
-const Percentage = props => {
+const Percentage = (props) => {
   const {
     name,
     value = '',
@@ -24,7 +24,8 @@ const Percentage = props => {
     maxlength = 524288,
     warning,
     maximum = 100,
-    minimum = 0
+    minimum = 0,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -142,6 +143,7 @@ const Percentage = props => {
               style={valueStyle}
               css={valueCSS}
               maxLength={maxlength}
+              data-testid={testId}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
@@ -178,5 +180,6 @@ Percentage.propTypes = {
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.number,
   maximum: PropTypes.number,
-  minimum: PropTypes.number
+  minimum: PropTypes.number,
+  'data-testid': PropTypes.string
 }

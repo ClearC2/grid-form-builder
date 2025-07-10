@@ -20,7 +20,7 @@ const viewPortHeight = document.documentElement.clientHeight
 
 let labelCopyTimer = null
 
-const Multiselect = props => {
+const Multiselect = (props) => {
   const {
     allowcreate,
     value = '',
@@ -48,6 +48,7 @@ const Multiselect = props => {
     showValidOptions,
     onBlur,
     showOptionTooltips = false, // this flag is used to show tooltips for each individual option
+    'data-testid': testId = props?.['data-testid'] || props?.name,
     largeDatasetThreshold = 500, // Switch to async mode when options exceed this
     searchPlaceholder = 'Type to search...'
   } = props
@@ -88,54 +89,59 @@ const Multiselect = props => {
   const inputContainer = useRef(null)
 
   // AsyncSelect implementation for large datasets
-  const loadOptions = useCallback((inputValue) => {
-    return new Promise((resolve) => {
-      const searchTerm = inputValue || ''
-      const lowercaseSearch = searchTerm.toLowerCase()
+  const loadOptions = useCallback(
+    (inputValue) => {
+      return new Promise((resolve) => {
+        const searchTerm = inputValue || ''
+        const lowercaseSearch = searchTerm.toLowerCase()
 
-      // If no search term, return options up to large dataset threshold
-      if (!searchTerm) {
-        resolve(fullOptions.slice(0, largeDatasetThreshold))
-        return
-      }
+        // If no search term, return options up to large dataset threshold
+        if (!searchTerm) {
+          resolve(fullOptions.slice(0, largeDatasetThreshold))
+          return
+        }
 
-      const filtered = []
-      let index = 0
-      const chunkSize = 2000 // Process 2000 items per chunk
+        const filtered = []
+        let index = 0
+        const chunkSize = 2000 // Process 2000 items per chunk
 
-      const processChunk = () => {
-        const endIndex = Math.min(index + chunkSize, fullOptions.length)
+        const processChunk = () => {
+          const endIndex = Math.min(index + chunkSize, fullOptions.length)
 
-        // Process this chunk
-        for (let i = index; i < endIndex; i++) {
-          if (filtered.length >= largeDatasetThreshold) break
+          // Process this chunk
+          for (let i = index; i < endIndex; i++) {
+            if (filtered.length >= largeDatasetThreshold) break
 
-          const option = fullOptions[i]
-          if (!option) continue
+            const option = fullOptions[i]
+            if (!option) continue
 
-          const label = option.label || ''
-          const value = option.value || ''
+            const label = option.label || ''
+            const value = option.value || ''
 
-          if (label.toLowerCase().includes(lowercaseSearch) ||
-            value.toString().toLowerCase().includes(lowercaseSearch)) {
-            filtered.push(option)
+            if (
+              label.toLowerCase().includes(lowercaseSearch) ||
+              value.toString().toLowerCase().includes(lowercaseSearch)
+            ) {
+              filtered.push(option)
+            }
+          }
+
+          index = endIndex
+
+          // If we have enough results or finished, return
+          if (filtered.length >= largeDatasetThreshold || index >= fullOptions.length) {
+            resolve(filtered)
+          } else {
+            // Continue with next chunk asynchronously
+            setTimeout(processChunk, 0)
           }
         }
 
-        index = endIndex
-
-        // If we have enough results or finished, return
-        if (filtered.length >= largeDatasetThreshold || index >= fullOptions.length) {
-          resolve(filtered)
-        } else {
-          // Continue with next chunk asynchronously
-          setTimeout(processChunk, 0)
-        }
-      }
-
-      processChunk()
-    })
-  }, [fullOptions, largeDatasetThreshold])
+        processChunk()
+      })
+    },
+    [fullOptions, largeDatasetThreshold]
+  )
 
   // Determine which Select component to use
   const isLargeDataset = fullOptions.length > largeDatasetThreshold
@@ -153,22 +159,28 @@ const Multiselect = props => {
   }, [interactive, allowcreate, isLargeDataset])
 
   // For small datasets, handle search normally
-  const handleInputChange = useCallback((newValue, actionMeta) => {
-    if (actionMeta.action === 'input-change') {
-      setInputValue(newValue)
+  const handleInputChange = useCallback(
+    (newValue, actionMeta) => {
+      if (actionMeta.action === 'input-change') {
+        setInputValue(newValue)
 
-      // Only filter for small datasets - let AsyncSelect handle large ones
-      if (!isLargeDataset) {
-        const lowercaseSearch = newValue.toLowerCase()
-        const filtered = fullOptions.filter(option =>
-          option.label?.toLowerCase().includes(lowercaseSearch) ||
-          option.value?.toString().toLowerCase().includes(lowercaseSearch)
-        ).slice(0, largeDatasetThreshold)
-        setDisplayOptions(filtered)
+        // Only filter for small datasets - let AsyncSelect handle large ones
+        if (!isLargeDataset) {
+          const lowercaseSearch = newValue.toLowerCase()
+          const filtered = fullOptions
+            .filter(
+              (option) =>
+                option.label?.toLowerCase().includes(lowercaseSearch) ||
+                option.value?.toString().toLowerCase().includes(lowercaseSearch)
+            )
+            .slice(0, largeDatasetThreshold)
+          setDisplayOptions(filtered)
+        }
       }
-    }
-    return newValue
-  }, [fullOptions, isLargeDataset, largeDatasetThreshold])
+      return newValue
+    },
+    [fullOptions, isLargeDataset, largeDatasetThreshold]
+  )
 
   const openMenu = useCallback(() => {
     if (!readonly && !disabled && !menuIsOpen[name]) {
@@ -177,18 +189,21 @@ const Multiselect = props => {
   }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name])
 
   const setMenuOpenPosition = useCallback(() => {
-    const placement = fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
+    const placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top'
     updateMenuPlacement(placement)
   }, [fieldPosition, updateMenuPlacement])
 
-  const handleInputBlur = useCallback((e) => {
-    if (typeof onBlur === 'function') {
-      onBlur(e)
-    }
-    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
-    setIsFocused(false)
-    setInputValue('') // Clear search on blur
-  }, [menuIsOpen, updateIsMenuOpen, name, onBlur])
+  const handleInputBlur = useCallback(
+    (e) => {
+      if (typeof onBlur === 'function') {
+        onBlur(e)
+      }
+      menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
+      setIsFocused(false)
+      setInputValue('') // Clear search on blur
+    },
+    [menuIsOpen, updateIsMenuOpen, name, onBlur]
+  )
 
   const setInputFieldPosition = useCallback(() => {
     if (inputContainer.current) {
@@ -211,19 +226,18 @@ const Multiselect = props => {
     setIsFocused(true)
   }, [handleInputClick])
 
-  const closeMenuOnScroll = useCallback(e => {
-    let menuOpenState = false
-    if (e && e.target && e.target.classList) {
-      menuOpenState = (
-        (
-          e.target.classList.contains('gfb-input__menu-list') ||
-          e.target.classList.contains('gfb-input__control')
-        ) &&
-        menuIsOpen[name]
-      )
-    }
-    updateIsMenuOpen({...menuIsOpen, [name]: menuOpenState})
-  }, [menuIsOpen, name, updateIsMenuOpen])
+  const closeMenuOnScroll = useCallback(
+    (e) => {
+      let menuOpenState = false
+      if (e && e.target && e.target.classList) {
+        menuOpenState =
+          (e.target.classList.contains('gfb-input__menu-list') || e.target.classList.contains('gfb-input__control')) &&
+          menuIsOpen[name]
+      }
+      updateIsMenuOpen({...menuIsOpen, [name]: menuOpenState})
+    },
+    [menuIsOpen, name, updateIsMenuOpen]
+  )
 
   useEffect(() => {
     let formattedOptions = keyword.options || []
@@ -233,7 +247,7 @@ const Multiselect = props => {
 
     const duplicate = {}
     // get rid of duplicates
-    formattedOptions = formattedOptions.filter(option => {
+    formattedOptions = formattedOptions.filter((option) => {
       if (!option) return false
       if (typeof option === 'string') return true
       if (typeof option === 'object' && !option.value) option.value = option.label
@@ -244,7 +258,7 @@ const Multiselect = props => {
     })
 
     // format into an array of {label, value} objects
-    formattedOptions = formattedOptions.map(option => {
+    formattedOptions = formattedOptions.map((option) => {
       if (typeof option === 'string') option = {label: option, value: option}
       if (!option.value) option.value = option.label
       return option
@@ -274,18 +288,21 @@ const Multiselect = props => {
     updateSelectValue(convertDelimitedValueIntoLabelValueArray({value, delimit, delimiter, options, showValidOptions}))
   }, [value, updateSelectValue, name, delimit, delimiter, stringify, options, showValidOptions])
 
-  const handleChange = useCallback(val => {
-    onChange({
-      target: {
-        name,
-        value: convertLabelValueArrayIntoDelimitedValue({value: val, delimiter, delimit, stringify})
+  const handleChange = useCallback(
+    (val) => {
+      onChange({
+        target: {
+          name,
+          value: convertLabelValueArrayIntoDelimitedValue({value: val, delimiter, delimit, stringify})
+        }
+      })
+      if (closeMenuOnSelect) {
+        menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
       }
-    })
-    if (closeMenuOnSelect) {
-      menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
-    }
-    setInputValue('') // Clear search after selection
-  }, [closeMenuOnSelect, onChange, name, delimiter, delimit, stringify, menuIsOpen])
+      setInputValue('') // Clear search after selection
+    },
+    [closeMenuOnSelect, onChange, name, delimiter, delimit, stringify, menuIsOpen]
+  )
 
   const handleOnKeyDown = useCallback(() => {
     if (!menuIsOpen[name]) openMenu()
@@ -328,15 +345,22 @@ const Multiselect = props => {
     }
   }
 
-  const Option = (props) => {
+  const Option = (optionProps) => {
+    const newProps = {
+      ...optionProps,
+      innerProps: {
+        ...optionProps?.innerProps,
+        'data-testid': `${testId}-${optionProps.data.value}`
+      }
+    }
     if (!showOptionTooltips) {
-      return <ReactSelectBaseComponents.Option {...props} />
+      return <ReactSelectBaseComponents.Option {...newProps} />
     } else {
       const optionId = randomId()
       return (
         <div data-tip data-for={optionId}>
-          <PortalTooltip id={optionId} message={props.data?.tooltip} />
-          <ReactSelectBaseComponents.Option {...props} />
+          <PortalTooltip id={optionId} message={newProps.data?.tooltip} />
+          <ReactSelectBaseComponents.Option {...newProps} />
         </div>
       )
     }
@@ -372,11 +396,11 @@ const Multiselect = props => {
     onInputChange: handleInputChange,
     onKeyDown: handleOnKeyDown,
     styles: {
-      container: base => ({...base, ...inputInner, ...inputInnerTheme}),
-      control: base => ({...base, ...inputControl, ...inputControlTheme}),
-      valueContainer: base => ({...base, ...valueContainer, ...valueContainerTheme}),
-      indicatorsContainer: base => ({...base, ...indicators, ...indicatorsTheme}),
-      option: base => ({...base, ...optionsStyle, ...optionsTheme}),
+      container: (base) => ({...base, ...inputInner, ...inputInnerTheme}),
+      control: (base) => ({...base, ...inputControl, ...inputControlTheme}),
+      valueContainer: (base) => ({...base, ...valueContainer, ...valueContainerTheme}),
+      indicatorsContainer: (base) => ({...base, ...indicators, ...indicatorsTheme}),
+      option: (base) => ({...base, ...optionsStyle, ...optionsTheme}),
       multiValue: (base, parent) => {
         if (!interactive) {
           base.color = 'green'
@@ -390,12 +414,12 @@ const Multiselect = props => {
         if (window.CSS.supports('color', parent.data.value)) {
           base.backgroundColor = parent.data.value
         }
-        return ({...base, ...valueStyle, ...valueTheme})
+        return {...base, ...valueStyle, ...valueTheme}
       },
-      menuPortal: base => {
+      menuPortal: (base) => {
         const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
         const zIndex = 9999 // this keeps the select menu below the option tooltip portal
-        return ({...base, top, zIndex})
+        return {...base, top, zIndex}
       }
     },
     tabIndex,
@@ -409,6 +433,7 @@ const Multiselect = props => {
       onMouseDown={setInputFieldPosition}
       ref={inputContainer}
       style={inputOuter}
+      data-testid={testId}
     >
       {isLargeDataset ? (
         <Select
@@ -419,12 +444,7 @@ const Multiselect = props => {
           placeholder={`${searchPlaceholder} (${fullOptions.length} options)`}
         />
       ) : (
-        <Select
-          {...baseSelectProps}
-          filterOption={null}
-          options={displayOptions}
-          placeholder={placeholder}
-        />
+        <Select {...baseSelectProps} filterOption={null} options={displayOptions} placeholder={placeholder} />
       )}
     </div>
   )
@@ -463,5 +483,6 @@ Multiselect.propTypes = {
   showOptionTooltips: PropTypes.bool,
   data: PropTypes.object,
   largeDatasetThreshold: PropTypes.number,
-  searchPlaceholder: PropTypes.string
+  searchPlaceholder: PropTypes.string,
+  'data-testid': PropTypes.string
 }

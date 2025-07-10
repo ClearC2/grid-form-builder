@@ -13,7 +13,7 @@ import PortalTooltip from '../../Tooltip'
 
 const viewPortHeight = document.documentElement.clientHeight
 
-const Select = props => {
+const Select = (props) => {
   const {
     allowcreate,
     value = '',
@@ -36,6 +36,7 @@ const Select = props => {
     onBlur,
     showOptionTooltips = false, // this flag is used to show tooltips for each individual option
     createOptionPosition = 'last',
+    'data-testid': testId = props?.['data-testid'] || props?.name,
     largeDatasetThreshold = 500, // Switch to async mode when options exceed this
     searchPlaceholder = 'Type to search...'
   } = props
@@ -75,54 +76,59 @@ const Select = props => {
   const inputContainer = useRef(null)
 
   // AsyncSelect implementation for large datasets
-  const loadOptions = useCallback((inputValue) => {
-    return new Promise((resolve) => {
-      const searchTerm = inputValue || ''
-      const lowercaseSearch = searchTerm.toLowerCase()
+  const loadOptions = useCallback(
+    (inputValue) => {
+      return new Promise((resolve) => {
+        const searchTerm = inputValue || ''
+        const lowercaseSearch = searchTerm.toLowerCase()
 
-      // If no search term, return options up to large dataset threshold
-      if (!searchTerm) {
-        resolve(fullOptions.slice(0, largeDatasetThreshold))
-        return
-      }
+        // If no search term, return options up to large dataset threshold
+        if (!searchTerm) {
+          resolve(fullOptions.slice(0, largeDatasetThreshold))
+          return
+        }
 
-      const filtered = []
-      let index = 0
-      const chunkSize = 2000 // Process 2000 items per chunk
+        const filtered = []
+        let index = 0
+        const chunkSize = 2000 // Process 2000 items per chunk
 
-      const processChunk = () => {
-        const endIndex = Math.min(index + chunkSize, fullOptions.length)
+        const processChunk = () => {
+          const endIndex = Math.min(index + chunkSize, fullOptions.length)
 
-        // Process this chunk
-        for (let i = index; i < endIndex; i++) {
-          if (filtered.length >= largeDatasetThreshold) break
+          // Process this chunk
+          for (let i = index; i < endIndex; i++) {
+            if (filtered.length >= largeDatasetThreshold) break
 
-          const option = fullOptions[i]
-          if (!option) continue
+            const option = fullOptions[i]
+            if (!option) continue
 
-          const label = option.label || ''
-          const value = option.value || ''
+            const label = option.label || ''
+            const value = option.value || ''
 
-          if (label.toLowerCase().includes(lowercaseSearch) ||
-            value.toString().toLowerCase().includes(lowercaseSearch)) {
-            filtered.push(option)
+            if (
+              label.toLowerCase().includes(lowercaseSearch) ||
+              value.toString().toLowerCase().includes(lowercaseSearch)
+            ) {
+              filtered.push(option)
+            }
+          }
+
+          index = endIndex
+
+          // If we have enough results or have finished, return
+          if (filtered.length >= largeDatasetThreshold || index >= fullOptions.length) {
+            resolve(filtered)
+          } else {
+            // Continue with next chunk asynchronously
+            setTimeout(processChunk, 0)
           }
         }
 
-        index = endIndex
-
-        // If we have enough results or have finished, return
-        if (filtered.length >= largeDatasetThreshold || index >= fullOptions.length) {
-          resolve(filtered)
-        } else {
-          // Continue with next chunk asynchronously
-          setTimeout(processChunk, 0)
-        }
-      }
-
-      processChunk()
-    })
-  }, [fullOptions, largeDatasetThreshold])
+        processChunk()
+      })
+    },
+    [fullOptions, largeDatasetThreshold]
+  )
 
   // Determine which Select component to use
   const isLargeDataset = fullOptions.length > largeDatasetThreshold
@@ -140,22 +146,28 @@ const Select = props => {
   }, [interactive, allowcreate, isLargeDataset])
 
   // For small datasets, handle search normally
-  const handleInputChange = useCallback((newValue, actionMeta) => {
-    if (actionMeta.action === 'input-change') {
-      setInputValue(newValue)
+  const handleInputChange = useCallback(
+    (newValue, actionMeta) => {
+      if (actionMeta.action === 'input-change') {
+        setInputValue(newValue)
 
-      // Only filter for small datasets - let AsyncSelect handle large ones
-      if (!isLargeDataset) {
-        const lowercaseSearch = newValue.toLowerCase()
-        const filtered = fullOptions.filter(option =>
-          option.label?.toLowerCase().includes(lowercaseSearch) ||
-          option.value?.toString().toLowerCase().includes(lowercaseSearch)
-        ).slice(0, largeDatasetThreshold)
-        setDisplayOptions(filtered)
+        // Only filter for small datasets - let AsyncSelect handle large ones
+        if (!isLargeDataset) {
+          const lowercaseSearch = newValue.toLowerCase()
+          const filtered = fullOptions
+            .filter(
+              (option) =>
+                option.label?.toLowerCase().includes(lowercaseSearch) ||
+                option.value?.toString().toLowerCase().includes(lowercaseSearch)
+            )
+            .slice(0, largeDatasetThreshold)
+          setDisplayOptions(filtered)
+        }
       }
-    }
-    return newValue
-  }, [fullOptions, isLargeDataset, largeDatasetThreshold])
+      return newValue
+    },
+    [fullOptions, isLargeDataset, largeDatasetThreshold]
+  )
 
   const openMenu = useCallback(() => {
     if (!readonly && !disabled && !menuIsOpen[name]) {
@@ -164,18 +176,21 @@ const Select = props => {
   }, [readonly, disabled, menuIsOpen, updateIsMenuOpen, name])
 
   const setMenuOpenPosition = useCallback(() => {
-    const placement = fieldPosition < (viewPortHeight / 2) ? 'bottom' : 'top'
+    const placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top'
     updateMenuPlacement(placement)
   }, [fieldPosition, updateMenuPlacement])
 
-  const handleInputBlur = useCallback((e) => {
-    if (typeof onBlur === 'function') {
-      onBlur(e)
-    }
-    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
-    setIsFocused(false)
-    setInputValue('') // Clear search on blur
-  }, [menuIsOpen, updateIsMenuOpen, name, onBlur])
+  const handleInputBlur = useCallback(
+    (e) => {
+      if (typeof onBlur === 'function') {
+        onBlur(e)
+      }
+      menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
+      setIsFocused(false)
+      setInputValue('') // Clear search on blur
+    },
+    [menuIsOpen, updateIsMenuOpen, name, onBlur]
+  )
 
   const setInputFieldPosition = useCallback(() => {
     if (inputContainer.current) {
@@ -193,24 +208,26 @@ const Select = props => {
     }
   }, [disabled, interactive, readonly, setInputFieldPosition])
 
-  const handleOnFocus = useCallback(e => {
-    handleInputClick()
-    setIsFocused(true)
-  }, [handleInputClick])
+  const handleOnFocus = useCallback(
+    (e) => {
+      handleInputClick()
+      setIsFocused(true)
+    },
+    [handleInputClick]
+  )
 
-  const closeMenuOnScroll = useCallback(e => {
-    let menuOpenState = false
-    if (e && e.target && e.target.classList) {
-      menuOpenState = (
-        (
-          e.target.classList.contains('gfb-input__menu-list') ||
-          e.target.classList.contains('gfb-input__control')
-        ) &&
-        menuIsOpen[name]
-      )
-    }
-    updateIsMenuOpen({...menuIsOpen, [name]: menuOpenState})
-  }, [menuIsOpen, name, updateIsMenuOpen])
+  const closeMenuOnScroll = useCallback(
+    (e) => {
+      let menuOpenState = false
+      if (e && e.target && e.target.classList) {
+        menuOpenState =
+          (e.target.classList.contains('gfb-input__menu-list') || e.target.classList.contains('gfb-input__control')) &&
+          menuIsOpen[name]
+      }
+      updateIsMenuOpen({...menuIsOpen, [name]: menuOpenState})
+    },
+    [menuIsOpen, name, updateIsMenuOpen]
+  )
 
   useEffect(() => {
     const newOptions = keyword.options || []
@@ -255,16 +272,19 @@ const Select = props => {
     onKeyDown()
   }, [onKeyDown, menuIsOpen, openMenu, name])
 
-  const handleChange = useCallback(e => {
-    onChange({
-      target: {
-        name,
-        value: e === null ? '' : e.value
-      }
-    })
-    menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
-    setInputValue('') // Clear search after selection
-  }, [onChange, name, menuIsOpen])
+  const handleChange = useCallback(
+    (e) => {
+      onChange({
+        target: {
+          name,
+          value: e === null ? '' : e.value
+        }
+      })
+      menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
+      setInputValue('') // Clear search after selection
+    },
+    [onChange, name, menuIsOpen]
+  )
 
   const {Select} = input
 
@@ -285,15 +305,22 @@ const Select = props => {
     }
   }
 
-  const Option = (props) => {
+  const Option = (optionProps) => {
+    const newProps = {
+      ...optionProps,
+      innerProps: {
+        ...optionProps?.innerProps,
+        'data-testid': `${testId}-${optionProps.data.value}`
+      }
+    }
     if (!showOptionTooltips) {
-      return <ReactSelectBaseComponents.Option {...props} />
+      return <ReactSelectBaseComponents.Option {...newProps} />
     } else {
       const optionId = randomId()
       return (
         <div data-tip data-for={optionId}>
-          <PortalTooltip id={optionId} message={props.data?.tooltip} />
-          <ReactSelectBaseComponents.Option {...props} />
+          <PortalTooltip id={optionId} message={newProps.data?.tooltip} />
+          <ReactSelectBaseComponents.Option {...newProps} />
         </div>
       )
     }
@@ -327,27 +354,27 @@ const Select = props => {
     onInputChange: handleInputChange,
     onKeyDown: handleOnKeyDown,
     styles: {
-      container: base => ({...base, ...inputInner, ...inputInnerTheme}),
-      control: base => ({...base, ...inputControl, ...inputControlTheme}),
-      valueContainer: base => {
+      container: (base) => ({...base, ...inputInner, ...inputInnerTheme}),
+      control: (base) => ({...base, ...inputControl, ...inputControlTheme}),
+      valueContainer: (base) => {
         const valueColor = {}
         if (selectValue.color) {
           valueColor.backgroundColor = selectValue.color
         }
-        return ({...base, ...valueContainer, ...valueContainerTheme, ...valueColor})
+        return {...base, ...valueContainer, ...valueContainerTheme, ...valueColor}
       },
-      indicatorsContainer: base => ({...base, ...indicators, ...indicatorsTheme}),
-      option: base => ({...base, ...optionsStyle, ...optionsTheme}),
-      singleValue: base => {
+      indicatorsContainer: (base) => ({...base, ...indicators, ...indicatorsTheme}),
+      option: (base) => ({...base, ...optionsStyle, ...optionsTheme}),
+      singleValue: (base) => {
         if (!interactive) {
           base.color = 'green'
         }
-        return ({...base, ...valueStyle, ...valueTheme})
+        return {...base, ...valueStyle, ...valueTheme}
       },
-      menuPortal: base => {
+      menuPortal: (base) => {
         const top = menuPlacement === 'bottom' ? base.top - 8 : base.top + 8
         const zIndex = 9999 // this keeps the select menu below the option tooltip portal
-        return ({...base, top, zIndex})
+        return {...base, top, zIndex}
       }
     },
     tabIndex,
@@ -361,6 +388,7 @@ const Select = props => {
       onMouseDown={setInputFieldPosition}
       ref={inputContainer}
       style={inputOuter}
+      data-testid={testId}
     >
       {isLargeDataset ? (
         <Select
@@ -371,12 +399,7 @@ const Select = props => {
           placeholder={`${searchPlaceholder} (${fullOptions.length} options)`}
         />
       ) : (
-        <Select
-          {...baseSelectProps}
-          filterOption={null}
-          options={displayOptions}
-          placeholder={placeholder}
-        />
+        <Select {...baseSelectProps} filterOption={null} options={displayOptions} placeholder={placeholder} />
       )}
     </div>
   )
@@ -410,5 +433,6 @@ Select.propTypes = {
   data: PropTypes.object,
   createOptionPosition: PropTypes.string,
   largeDatasetThreshold: PropTypes.number,
-  searchPlaceholder: PropTypes.string
+  searchPlaceholder: PropTypes.string,
+  'data-testid': PropTypes.string
 }

@@ -6,7 +6,7 @@ import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
 import PortalTooltip from '../Tooltip'
 import {randomId} from '../utils'
-const Radio = props => {
+const Radio = (props) => {
   const {
     name,
     onChange,
@@ -23,7 +23,8 @@ const Radio = props => {
     required,
     warning,
     tabIndex,
-    showOptionTooltips = false // this flag is used to show tooltips for each individual option
+    showOptionTooltips = false, // this flag is used to show tooltips for each individual option
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -106,6 +107,7 @@ const Radio = props => {
                     type='radio'
                     autoComplete={autoComplete}
                     css={valueCSS}
+                    data-testid={testId}
                   />
                   {option.label ? option.label : option.value}
                   {showOptionTooltips ? <PortalTooltip id={optionId} message={option?.tooltip} /> : null}
@@ -141,5 +143,6 @@ Radio.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   warning: PropTypes.string,
-  showOptionTooltips: PropTypes.bool
+  showOptionTooltips: PropTypes.bool,
+  'data-testid': PropTypes.string
 }
