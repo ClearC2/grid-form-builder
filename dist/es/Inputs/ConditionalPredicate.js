@@ -434,6 +434,9 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
             }, {
               label: '{Reports to Logged on User}',
               value: '{Reports to Logged on User}'
+            }, {
+              label: '{Full Reports to Logged on User}',
+              value: '{Full Reports to Logged on User'
             }]
           }
         }
