@@ -281,7 +281,8 @@ const ConditionalPredicate = props => {
             category: 'NONE',
             options: [
               {label: '{Logged on User}', value: '{Logged on User}'},
-              {label: '{Reports to Logged on User}', value: '{Reports to Logged on User}'}
+              {label: '{Reports to Logged on User}', value: '{Reports to Logged on User}'},
+              {label: '{Full Reports to Logged on User}', value: '{Full Reports to Logged on User'}
             ]
           }
         }
