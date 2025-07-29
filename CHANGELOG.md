@@ -1,3 +1,10 @@
+# [3.122.0](https://github.com/ClearC2/grid-form-builder/compare/v3.121.0...v3.122.0) (2025-07-29)
+
+
+### Features
+
+* **reports:** add new is one of option ([#248](https://github.com/ClearC2/grid-form-builder/issues/248)) ([c42e048](https://github.com/ClearC2/grid-form-builder/commit/c42e0480448a1c4b5a8200e4339328e75bb1fbec))
+
 # [3.121.0](https://github.com/ClearC2/grid-form-builder/compare/v3.120.3...v3.121.0) (2025-07-10)
 
 
