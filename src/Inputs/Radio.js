@@ -107,7 +107,7 @@ const Radio = (props) => {
                     type='radio'
                     autoComplete={autoComplete}
                     css={valueCSS}
-                    data-testid={testId}
+                    data-testid={`${testId}-${option.value}`}
                   />
                   {option.label ? option.label : option.value}
                   {showOptionTooltips ? <PortalTooltip id={optionId} message={option?.tooltip} /> : null}
@@ -115,7 +115,12 @@ const Radio = (props) => {
               )
             })}
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
+          <div
+            className='gfb-input__indicators'
+            style={indicators}
+            css={indicatorsCSS}
+            data-testid={`${testId}-errors`}
+          >
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>

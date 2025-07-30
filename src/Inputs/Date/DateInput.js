@@ -43,7 +43,8 @@ const DateInput = props => {
     maxDate,
     onChangeValidator = defaults.trueFunction,
     warning,
-    autoApply = false
+    autoApply = false,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -266,6 +267,7 @@ const DateInput = props => {
               autoComplete={autoComplete}
               style={valueStyle}
               css={valueCSS}
+              data-testid={testId}
               maxLength={maxlength}
               onKeyDown={
                 e => {
@@ -311,7 +313,12 @@ const DateInput = props => {
               />
             )}
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
+          <div
+            className='gfb-input__indicators'
+            style={indicators}
+            css={indicatorsCSS}
+            data-testid={`${testId}-errors`}
+          >
             {warning && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
@@ -357,5 +364,6 @@ DateInput.propTypes = {
   maxDate: PropTypes.string,
   onChangeValidator: PropTypes.func,
   warning: PropTypes.string,
-  autoApply: PropTypes.bool
+  autoApply: PropTypes.bool,
+  'data-testid': PropTypes.string
 }

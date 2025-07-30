@@ -28,7 +28,8 @@ const Currency = props => {
     maxlength = 524288,
     minimum = Number.MIN_SAFE_INTEGER,
     maximum = Number.MAX_SAFE_INTEGER,
-    warning
+    warning,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -128,9 +129,15 @@ const Currency = props => {
               maxLength={maxlength + Math.ceil(((value + '').length / 3))}
               min={minimum || Number.MIN_SAFE_INTEGER}
               max={maximum || Number.MAX_SAFE_INTEGER}
+              data-testid={testId}
             />
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
+          <div
+            className='gfb-input__indicators'
+            style={indicators}
+            css={indicatorsCSS}
+            data-testid={`${testId}-errors`}
+          >
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
@@ -166,5 +173,6 @@ Currency.propTypes = {
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   minimum: PropTypes.number,
   maximum: PropTypes.number,
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 }

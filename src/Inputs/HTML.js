@@ -9,7 +9,8 @@ const HTML = props => {
     value = '',
     style = {},
     disabled = true,
-    readonly = true
+    readonly = true,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const contentEditable = readonly === false || disabled === false
@@ -49,6 +50,7 @@ const HTML = props => {
                 className='gfb-html-display-container'
                 dangerouslySetInnerHTML={{__html: value}}
                 style={{...valueStyle}}
+                data-testid={testId}
               />
             </div>
           </div>
@@ -66,5 +68,6 @@ HTML.propTypes = {
   placeholder: PropTypes.string,
   style: PropTypes.object,
   readonly: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  'data-testid': PropTypes.string
 }

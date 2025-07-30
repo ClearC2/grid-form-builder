@@ -17,7 +17,8 @@ export class ReactQuill extends Component {
     onBlur: PropTypes.func,
     css: PropTypes.object,
     tabIndex: PropTypes.number,
-    className: PropTypes.string
+    className: PropTypes.string,
+    'data-testid': PropTypes.string
   }
 
   editor = null
@@ -109,7 +110,15 @@ export class ReactQuill extends Component {
   }
 
   render () {
-    const {name, onFocus, onBlur, css = {}, tabIndex, className} = this.props
+    const {
+      name,
+      onFocus,
+      onBlur,
+      css = {},
+      tabIndex,
+      className,
+      'data-testid': testId = this.props?.['data-testid'] || this.props?.name
+    } = this.props
     return (
       <div
         id={name}
@@ -118,6 +127,7 @@ export class ReactQuill extends Component {
         onFocus={onFocus}
         onBlur={onBlur}
         tabIndex={tabIndex}
+        data-testid={testId}
       />
     )
   }

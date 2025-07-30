@@ -22,7 +22,8 @@ const ColorInput = props => {
     requiredWarning,
     style = {},
     required,
-    maxlength = 524288
+    maxlength = 524288,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -134,6 +135,7 @@ const ColorInput = props => {
               style={valueStyle}
               css={valueCSS}
               maxLength={maxlength}
+              data-testid={testId}
             />
             {showPicker && (
               <ColorPicker
@@ -142,10 +144,16 @@ const ColorInput = props => {
                 value={value}
                 onChange={handleOnInputChange}
                 name={name}
+                data-testid={`${testId}-color-picker`}
               />
             )}
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
+          <div
+            className='gfb-input__indicators'
+            style={indicators}
+            css={indicatorsCSS}
+            data-testid={`${testId}-errors`}
+          >
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
@@ -182,5 +190,6 @@ ColorInput.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  'data-testid': PropTypes.string
 }
