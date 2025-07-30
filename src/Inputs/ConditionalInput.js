@@ -15,7 +15,8 @@ const ConditionalInput = props => {
     name = '',
     value = defaults.map,
     values = defaults.map,
-    onChange = defaults.nullFunction
+    onChange = defaults.nullFunction,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {value: valueStyle = {}, inputOuter = {}, inputInner = {}, inputControl = {}, valueContainer = {}, indicators = {}} = style// eslint-disable-line
@@ -65,6 +66,7 @@ const ConditionalInput = props => {
             className='gfb-input__value-container'
             onClick={() => setShowDialog(true)}
             style={{...valueContainer, color: '#36a9e1'}}
+            data-testid={testId}
           >
             {hasValue ? 'Values...' : ''}
           </div>
@@ -100,5 +102,6 @@ ConditionalInput.propTypes = {
   autoComplete: PropTypes.string,
   interactive: PropTypes.bool,
   requiredWarning: PropTypes.bool,
-  style: PropTypes.object
+  style: PropTypes.object,
+  'data-testid': PropTypes.string
 }

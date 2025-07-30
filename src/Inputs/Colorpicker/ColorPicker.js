@@ -5,7 +5,14 @@ import {SketchPicker, CompactPicker} from 'react-color' // eslint-disable-line
 import '../../styles/colorpicker.css'
 
 const ColorPicker = forwardRef((props, ref) => {
-  const {inputId, onChange, value, name, onChangeComplete} = props
+  const {
+    inputId,
+    onChange,
+    value,
+    name,
+    onChangeComplete,
+    'data-testid': testId = props?.['data-testid'] || props?.name
+  } = props
   const [picker, setPicker] = useState('compact')
 
   const togglePickerType = useCallback(() => {
@@ -30,15 +37,11 @@ const ColorPicker = forwardRef((props, ref) => {
     <Portal id={inputId} ref={ref}>
       <div className='gfb-color-picker-container'>
         <div className='gfb-color-picker-type-toggle'>
-          <button className='btn btn-primary' onClick={togglePickerType}>
+          <button className='btn btn-primary' onClick={togglePickerType} data-testid={`${testId}-picker-type`}>
             Toggle Picker Type
           </button>
         </div>
-        <Picker
-          onChangeComplete={onChangeComplete}
-          onChange={handleOnChange}
-          color={value}
-        />
+        <Picker onChangeComplete={onChangeComplete} onChange={handleOnChange} color={value} data-testid={testId} />
       </div>
     </Portal>
   )
@@ -52,5 +55,6 @@ ColorPicker.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
   onChange: PropTypes.func,
   onChangeComplete: PropTypes.func,
-  name: PropTypes.string
+  name: PropTypes.string,
+  'data-testid': PropTypes.string
 }

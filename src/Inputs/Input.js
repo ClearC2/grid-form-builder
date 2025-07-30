@@ -23,7 +23,8 @@ const Input = props => {
     format = 'text',
     maxlength = 524288,
     onBlur,
-    warning
+    warning,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -102,6 +103,7 @@ const Input = props => {
               css={valueCSS}
               type={format}
               maxLength={maxlength}
+              data-testid={testId}
             />
           </div>
           <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
@@ -137,5 +139,6 @@ Input.propTypes = {
   required: PropTypes.bool,
   format: PropTypes.string,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 }

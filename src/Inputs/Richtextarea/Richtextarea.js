@@ -27,7 +27,8 @@ const Richtextarea = props => {
     style = {},
     required,
     maxlength = Number.MAX_SAFE_INTEGER,
-    warning
+    warning,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -184,7 +185,7 @@ const Richtextarea = props => {
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
-        <div className='gfb-input-control-top' style={{display: 'flex'}} >
+        <div className='gfb-input-control-top' style={{display: 'flex'}} data-testid={`${testId}-toolbar`}>
           <Toolbar
             id={elementId.current}
             addTable={addTable}
@@ -198,7 +199,12 @@ const Richtextarea = props => {
           />
         </div>
         <div className={controlClass} style={inputControl} css={inputControlCSS}>
-          <div className='gfb-input__value-container' style={valueContainer} css={valueContainerCSS}>
+          <div
+            className='gfb-input__value-container'
+            style={valueContainer}
+            css={valueContainerCSS}
+            data-testid={testId}
+          >
             <Quill
               name={name + tabIndex}
               onChange={handleOnChange}
@@ -255,5 +261,6 @@ Richtextarea.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 }

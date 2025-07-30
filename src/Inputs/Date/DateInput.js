@@ -43,7 +43,8 @@ const DateInput = props => {
     maxDate,
     onChangeValidator = defaults.trueFunction,
     warning,
-    autoApply = false
+    autoApply = false,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -266,6 +267,7 @@ const DateInput = props => {
               autoComplete={autoComplete}
               style={valueStyle}
               css={valueCSS}
+              data-testid={testId}
               maxLength={maxlength}
               onKeyDown={
                 e => {
@@ -357,5 +359,6 @@ DateInput.propTypes = {
   maxDate: PropTypes.string,
   onChangeValidator: PropTypes.func,
   warning: PropTypes.string,
-  autoApply: PropTypes.bool
+  autoApply: PropTypes.bool,
+  'data-testid': PropTypes.string
 }

@@ -161,7 +161,8 @@ const Typeahead = props => {
     isClearable = true,
     createlabel,
     options: typeaheadOptions = defaults.object,
-    warning
+    warning,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -199,7 +200,7 @@ const Typeahead = props => {
   const [isFocused, setIsFocused] = useState(false)
   const [defaultOptions, setDefaultOptions] = useState([])
   const [components, setComponents] = useState({
-    Option: base => {
+    Option: (base) => {
       if (base.isDisabled) {
         base.innerProps.style = {
           height: 20,
@@ -209,9 +210,14 @@ const Typeahead = props => {
           paddingTop: 0
         }
       }
-      return (
-        <ReactSelectBaseComponents.Option {...base} />
-      )
+      const newProps = {
+        ...base,
+        innerProps: {
+          ...base?.innerProps,
+          'data-testid': `${testId}-${base.data.value}`
+        }
+      }
+      return <ReactSelectBaseComponents.Option {...newProps} />
     },
     MultiValue: (base) => {
       const {children = ''} = base
@@ -224,9 +230,16 @@ const Typeahead = props => {
           setLabel(children)
         }, 750)
       }
+      const newProps = {
+        ...base,
+        innerProps: {
+          ...base?.innerProps,
+          'data-testid': `${testId}-${base.data.value}`
+        }
+      }
       return (
         <div onClick={copyValueToClipboard}>
-          <ReactSelectBaseComponents.MultiValue {...base} children={label} />
+          <ReactSelectBaseComponents.MultiValue {...newProps} children={label} />
         </div>
       )
     }
@@ -818,7 +831,14 @@ const Typeahead = props => {
   const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
 
   return (
-    <div className={outerClass} ref={inputContainer} onMouseDown={handleOnFocus} style={inputOuter} css={inputOuterCSS}>
+    <div
+      className={outerClass}
+      ref={inputContainer}
+      onMouseDown={handleOnFocus}
+      style={inputOuter}
+      css={inputOuterCSS}
+      data-testid={testId}
+    >
       <TypeaheadPerformanceOptimizer
         Typeahead={Typeahead}
         ref={reactSelect}
@@ -892,5 +912,6 @@ Typeahead.propTypes = {
     useProcedure: PropTypes.bool,
     queryRowCount: PropTypes.bool
   }),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 }

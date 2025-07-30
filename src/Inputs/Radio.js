@@ -107,7 +107,7 @@ const Radio = (props) => {
                     type='radio'
                     autoComplete={autoComplete}
                     css={valueCSS}
-                    data-testid={testId}
+                    data-testid={`${testId}-${option.value}`}
                   />
                   {option.label ? option.label : option.value}
                   {showOptionTooltips ? <PortalTooltip id={optionId} message={option?.tooltip} /> : null}

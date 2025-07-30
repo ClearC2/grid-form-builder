@@ -19,7 +19,8 @@ const Listselect = props => {
     style = {},
     required,
     warning,
-    showOptionTooltips = false // this flag is used to show tooltips for each individual option
+    showOptionTooltips = false, // this flag is used to show tooltips for each individual option
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -126,6 +127,7 @@ const Listselect = props => {
                   css={valueCSS}
                   data-tip
                   data-for={optionId}
+                  data-testid={`${testId}-${option.value}`}
                 >
                   {display}
                   {showOptionTooltips ? <PortalTooltip id={optionId} message={option?.tooltip} /> : null}
@@ -141,10 +143,10 @@ const Listselect = props => {
           </div>
         </div>
         <div className='gfb-input-control-bottom'>
-          <span className='gfb-action-link' onClick={handleSelectAll}>
+          <span className='gfb-action-link' onClick={handleSelectAll} data-testid={`${testId}-select-all`}>
             Select All
           </span>
-          <span className='gfb-action-link' onClick={handleDeselectAll}>
+          <span className='gfb-action-link' onClick={handleDeselectAll} data-testid={`${testId}-deselect-all`}>
             Deselect All
           </span>
         </div>
@@ -167,5 +169,6 @@ Listselect.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   warning: PropTypes.string,
-  showOptionTooltips: PropTypes.bool
+  showOptionTooltips: PropTypes.bool,
+  'data-testid': PropTypes.string
 }

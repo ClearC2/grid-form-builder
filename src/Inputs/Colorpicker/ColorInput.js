@@ -22,7 +22,8 @@ const ColorInput = props => {
     requiredWarning,
     style = {},
     required,
-    maxlength = 524288
+    maxlength = 524288,
+    'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
   const {
@@ -134,6 +135,7 @@ const ColorInput = props => {
               style={valueStyle}
               css={valueCSS}
               maxLength={maxlength}
+              data-testid={testId}
             />
             {showPicker && (
               <ColorPicker
@@ -142,6 +144,7 @@ const ColorInput = props => {
                 value={value}
                 onChange={handleOnInputChange}
                 name={name}
+                data-testid={`${testId}-color-picker`}
               />
             )}
           </div>
@@ -182,5 +185,6 @@ ColorInput.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  'data-testid': PropTypes.string
 }
