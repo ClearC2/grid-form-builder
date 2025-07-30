@@ -214,7 +214,7 @@ const Typeahead = props => {
         ...base,
         innerProps: {
           ...base?.innerProps,
-          'data-testid': `${testId}-${base.data.value}`
+          'data-testid': `${testId}-${base?.data?.value}`
         }
       }
       return <ReactSelectBaseComponents.Option {...newProps} />
@@ -234,7 +234,7 @@ const Typeahead = props => {
         ...base,
         innerProps: {
           ...base?.innerProps,
-          'data-testid': `${testId}-${base.data.value}`
+          'data-testid': `${testId}-${base?.data?.value}`
         }
       }
       return (
