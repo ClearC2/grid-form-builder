@@ -135,7 +135,12 @@ const Listselect = props => {
               )
             })}
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
+          <div
+            className='gfb-input__indicators'
+            style={indicators}
+            css={indicatorsCSS}
+            data-testid={`${testId}-errors`}
+          >
             {(validationError || warning) &&
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />}
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}

@@ -148,7 +148,12 @@ const ColorInput = props => {
               />
             )}
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
+          <div
+            className='gfb-input__indicators'
+            style={indicators}
+            css={indicatorsCSS}
+            data-testid={`${testId}-errors`}
+          >
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />

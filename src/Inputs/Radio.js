@@ -115,7 +115,12 @@ const Radio = (props) => {
               )
             })}
           </div>
-          <div className='gfb-input__indicators' style={indicators} css={indicatorsCSS}>
+          <div
+            className='gfb-input__indicators'
+            style={indicators}
+            css={indicatorsCSS}
+            data-testid={`${testId}-errors`}
+          >
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationError && <ValidationErrorIcon message={validationError} />}
           </div>
