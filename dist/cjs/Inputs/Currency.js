@@ -83,7 +83,9 @@ var Currency = function Currency(props) {
       minimum = _props$minimum === void 0 ? _minSafeInteger.default : _props$minimum,
       _props$maximum = props.maximum,
       maximum = _props$maximum === void 0 ? _maxSafeInteger.default : _props$maximum,
-      warning = props.warning;
+      warning = props.warning,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -212,11 +214,13 @@ var Currency = function Currency(props) {
     css: valueCSS,
     maxLength: maxlength + Math.ceil((value + '').length / 3),
     min: minimum || _minSafeInteger.default,
-    max: maximum || _maxSafeInteger.default
+    max: maximum || _maxSafeInteger.default,
+    "data-testid": testId
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: indicatorsCSS
+    css: indicatorsCSS,
+    "data-testid": "".concat(testId, "-errors")
   }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: warning,
     color: "#FFCC00",
@@ -254,5 +258,6 @@ Currency.propTypes = {
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
   minimum: _propTypes.default.number,
   maximum: _propTypes.default.number,
-  warning: _propTypes.default.string
+  warning: _propTypes.default.string,
+  'data-testid': _propTypes.default.string
 };

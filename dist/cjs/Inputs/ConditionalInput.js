@@ -76,7 +76,9 @@ var ConditionalInput = function ConditionalInput(props) {
       _props$values = (0, _values.default)(props),
       values = _props$values === void 0 ? (0, _map.default)(defaults) : _props$values,
       _props$onChange = props.onChange,
-      onChange = _props$onChange === void 0 ? defaults.nullFunction : _props$onChange;
+      onChange = _props$onChange === void 0 ? defaults.nullFunction : _props$onChange,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -152,7 +154,8 @@ var ConditionalInput = function ConditionalInput(props) {
     },
     style: _objectSpread(_objectSpread({}, valueContainer), {}, {
       color: '#36a9e1'
-    })
+    }),
+    "data-testid": testId
   }, hasValue ? 'Values...' : ''), showDialog && /*#__PURE__*/_react.default.createElement(_ConditionalDialog.default, (0, _extends2.default)({
     handleClose: handleClose
   }, props, {
@@ -179,5 +182,6 @@ ConditionalInput.propTypes = {
   autoComplete: _propTypes.default.string,
   interactive: _propTypes.default.bool,
   requiredWarning: _propTypes.default.bool,
-  style: _propTypes.default.object
+  style: _propTypes.default.object,
+  'data-testid': _propTypes.default.string
 };

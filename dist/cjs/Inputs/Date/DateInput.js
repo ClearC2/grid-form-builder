@@ -101,7 +101,9 @@ var DateInput = function DateInput(props) {
       onChangeValidator = _props$onChangeValida === void 0 ? defaults.trueFunction : _props$onChangeValida,
       warning = props.warning,
       _props$autoApply = props.autoApply,
-      autoApply = _props$autoApply === void 0 ? false : _props$autoApply;
+      autoApply = _props$autoApply === void 0 ? false : _props$autoApply,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -407,6 +409,7 @@ var DateInput = function DateInput(props) {
     autoComplete: autoComplete,
     style: valueStyle,
     css: valueCSS,
+    "data-testid": testId,
     maxLength: maxlength,
     onKeyDown: function onKeyDown(e) {
       if (type === 'month' || type === 'monthday') {
@@ -445,7 +448,8 @@ var DateInput = function DateInput(props) {
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: indicatorsCSS
+    css: indicatorsCSS,
+    "data-testid": "".concat(testId, "-errors")
   }, warning && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: warning,
     color: "#FFCC00",
@@ -493,5 +497,6 @@ DateInput.propTypes = {
   maxDate: _propTypes.default.string,
   onChangeValidator: _propTypes.default.func,
   warning: _propTypes.default.string,
-  autoApply: _propTypes.default.bool
+  autoApply: _propTypes.default.bool,
+  'data-testid': _propTypes.default.string
 };

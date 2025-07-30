@@ -240,7 +240,8 @@ var Percentage = function Percentage(props) {
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: indicatorsCSS
+    css: indicatorsCSS,
+    "data-testid": "".concat(testId, "-errors")
   }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: warning,
     color: "#FFCC00",

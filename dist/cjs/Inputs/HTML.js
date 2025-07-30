@@ -46,7 +46,9 @@ var HTML = function HTML(props) {
       _props$disabled = props.disabled,
       disabled = _props$disabled === void 0 ? true : _props$disabled,
       _props$readonly = props.readonly,
-      readonly = _props$readonly === void 0 ? true : _props$readonly;
+      readonly = _props$readonly === void 0 ? true : _props$readonly,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var contentEditable = readonly === false || disabled === false;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -103,7 +105,8 @@ var HTML = function HTML(props) {
     dangerouslySetInnerHTML: {
       __html: value
     },
-    style: _objectSpread({}, valueStyle)
+    style: _objectSpread({}, valueStyle),
+    "data-testid": testId
   }))))));
 };
 
@@ -115,5 +118,6 @@ HTML.propTypes = {
   placeholder: _propTypes.default.string,
   style: _propTypes.default.object,
   readonly: _propTypes.default.bool,
-  disabled: _propTypes.default.bool
+  disabled: _propTypes.default.bool,
+  'data-testid': _propTypes.default.string
 };

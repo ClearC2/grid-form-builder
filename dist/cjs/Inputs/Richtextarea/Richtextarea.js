@@ -79,7 +79,9 @@ var Richtextarea = function Richtextarea(props) {
       required = props.required,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? _maxSafeInteger.default : _props$maxlength,
-      warning = props.warning;
+      warning = props.warning,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -225,7 +227,8 @@ var Richtextarea = function Richtextarea(props) {
     className: "gfb-input-control-top",
     style: {
       display: 'flex'
-    }
+    },
+    "data-testid": "".concat(testId, "-toolbar")
   }, (0, _core.jsx)(_Toolbar.default, {
     id: elementId.current,
     addTable: addTable,
@@ -243,7 +246,8 @@ var Richtextarea = function Richtextarea(props) {
   }, (0, _core.jsx)("div", {
     className: "gfb-input__value-container",
     style: valueContainer,
-    css: valueContainerCSS
+    css: valueContainerCSS,
+    "data-testid": testId
   }, (0, _core.jsx)(_Quill.default, {
     name: name + tabIndex,
     onChange: handleOnChange,
@@ -268,7 +272,8 @@ var Richtextarea = function Richtextarea(props) {
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: indicatorsCSS
+    css: indicatorsCSS,
+    "data-testid": "".concat(testId, "-errors")
   }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: warning,
     color: "#FFCC00",
@@ -303,5 +308,6 @@ Richtextarea.propTypes = {
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
-  warning: _propTypes.default.string
+  warning: _propTypes.default.string,
+  'data-testid': _propTypes.default.string
 };

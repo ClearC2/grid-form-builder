@@ -1,3 +1,10 @@
+# [3.123.0](https://github.com/ClearC2/grid-form-builder/compare/v3.122.0...v3.123.0) (2025-07-30)
+
+
+### Features
+
+* **data-testid:** add data-testid to missing types of inputs ([#249](https://github.com/ClearC2/grid-form-builder/issues/249)) ([8bac1f6](https://github.com/ClearC2/grid-form-builder/commit/8bac1f6fd6ae5cfd6056eb02573baaa9966df657))
+
 # [3.122.0](https://github.com/ClearC2/grid-form-builder/compare/v3.121.0...v3.122.0) (2025-07-29)
 
 

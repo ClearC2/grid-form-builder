@@ -45,7 +45,9 @@ var ColorInput = function ColorInput(props) {
       style = _props$style === void 0 ? {} : _props$style,
       required = props.required,
       _props$maxlength = props.maxlength,
-      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength;
+      maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -181,17 +183,20 @@ var ColorInput = function ColorInput(props) {
     autoComplete: autoComplete,
     style: valueStyle,
     css: valueCSS,
-    maxLength: maxlength
+    maxLength: maxlength,
+    "data-testid": testId
   }), showPicker && jsx(ColorPicker, {
     ref: portalRef,
     inputId: inputId.current,
     value: value,
     onChange: handleOnInputChange,
-    name: name
+    name: name,
+    "data-testid": "".concat(testId, "-color-picker")
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: indicatorsCSS
+    css: indicatorsCSS,
+    "data-testid": "".concat(testId, "-errors")
   }, validationWarning && jsx(ValidationErrorIcon, {
     message: validationWarning,
     color: "#FFCC00",
@@ -226,5 +231,6 @@ ColorInput.propTypes = {
   requiredWarning: PropTypes.bool,
   style: PropTypes.object,
   required: PropTypes.bool,
-  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  'data-testid': PropTypes.string
 };

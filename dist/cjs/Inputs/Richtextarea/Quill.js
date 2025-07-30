@@ -211,6 +211,8 @@ var ReactQuill = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$props3, _this$props4;
+
       var _this$props2 = this.props,
           name = _this$props2.name,
           onFocus = _this$props2.onFocus,
@@ -218,7 +220,9 @@ var ReactQuill = /*#__PURE__*/function (_Component) {
           _this$props2$css = _this$props2.css,
           css = _this$props2$css === void 0 ? {} : _this$props2$css,
           tabIndex = _this$props2.tabIndex,
-          className = _this$props2.className;
+          className = _this$props2.className,
+          _this$props2$dataTes = _this$props2['data-testid'],
+          testId = _this$props2$dataTes === void 0 ? ((_this$props3 = this.props) === null || _this$props3 === void 0 ? void 0 : _this$props3['data-testid']) || ((_this$props4 = this.props) === null || _this$props4 === void 0 ? void 0 : _this$props4.name) : _this$props2$dataTes;
       return /*#__PURE__*/_react.default.createElement("div", {
         id: name,
         className: className,
@@ -227,7 +231,8 @@ var ReactQuill = /*#__PURE__*/function (_Component) {
         }, css),
         onFocus: onFocus,
         onBlur: onBlur,
-        tabIndex: tabIndex
+        tabIndex: tabIndex,
+        "data-testid": testId
       });
     }
   }]);
@@ -248,7 +253,8 @@ exports.ReactQuill = ReactQuill;
   onBlur: _propTypes.default.func,
   css: _propTypes.default.object,
   tabIndex: _propTypes.default.number,
-  className: _propTypes.default.string
+  className: _propTypes.default.string,
+  'data-testid': _propTypes.default.string
 });
 var _default = ReactQuill;
 exports.default = _default;

@@ -40,7 +40,9 @@ var ColorPicker = /*#__PURE__*/(0, _react.forwardRef)(function (props, ref) {
       onChange = props.onChange,
       value = props.value,
       name = props.name,
-      onChangeComplete = props.onChangeComplete;
+      onChangeComplete = props.onChangeComplete,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
 
   var _useState = (0, _react.useState)('compact'),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
@@ -77,11 +79,13 @@ var ColorPicker = /*#__PURE__*/(0, _react.forwardRef)(function (props, ref) {
     className: "gfb-color-picker-type-toggle"
   }, /*#__PURE__*/_react.default.createElement("button", {
     className: "btn btn-primary",
-    onClick: togglePickerType
+    onClick: togglePickerType,
+    "data-testid": "".concat(testId, "-picker-type")
   }, "Toggle Picker Type")), /*#__PURE__*/_react.default.createElement(Picker, {
     onChangeComplete: onChangeComplete,
     onChange: handleOnChange,
-    color: value
+    color: value,
+    "data-testid": testId
   })));
 });
 var _default = ColorPicker;
@@ -92,5 +96,6 @@ ColorPicker.propTypes = {
   value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
   onChange: _propTypes.default.func,
   onChangeComplete: _propTypes.default.func,
-  name: _propTypes.default.string
+  name: _propTypes.default.string,
+  'data-testid': _propTypes.default.string
 };

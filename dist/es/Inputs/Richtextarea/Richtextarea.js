@@ -51,7 +51,9 @@ var Richtextarea = function Richtextarea(props) {
       required = props.required,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? _Number$MAX_SAFE_INTEGER : _props$maxlength,
-      warning = props.warning;
+      warning = props.warning,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -197,7 +199,8 @@ var Richtextarea = function Richtextarea(props) {
     className: "gfb-input-control-top",
     style: {
       display: 'flex'
-    }
+    },
+    "data-testid": "".concat(testId, "-toolbar")
   }, jsx(Toolbar, {
     id: elementId.current,
     addTable: addTable,
@@ -215,7 +218,8 @@ var Richtextarea = function Richtextarea(props) {
   }, jsx("div", {
     className: "gfb-input__value-container",
     style: valueContainer,
-    css: valueContainerCSS
+    css: valueContainerCSS,
+    "data-testid": testId
   }, jsx(Quill, {
     name: name + tabIndex,
     onChange: handleOnChange,
@@ -240,7 +244,8 @@ var Richtextarea = function Richtextarea(props) {
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: indicatorsCSS
+    css: indicatorsCSS,
+    "data-testid": "".concat(testId, "-errors")
   }, warning && !validationError && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",
@@ -274,5 +279,6 @@ Richtextarea.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 };

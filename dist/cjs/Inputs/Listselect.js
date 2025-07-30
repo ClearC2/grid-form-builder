@@ -30,6 +30,8 @@ var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-st
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
+var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
+
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
 var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/toConsumableArray"));
@@ -52,7 +54,7 @@ var _utils = require("../utils");
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var Listselect = function Listselect(props) {
   var name = props.name,
@@ -69,7 +71,9 @@ var Listselect = function Listselect(props) {
       required = props.required,
       warning = props.warning,
       _props$showOptionTool = props.showOptionTooltips,
-      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -185,6 +189,8 @@ var Listselect = function Listselect(props) {
     style: valueContainer,
     css: valueContainerCSS
   }, (0, _map.default)(options).call(options, function (option, i) {
+    var _context;
+
     var display = option.label ? option.label : option.value;
     var selected = (0, _indexOf.default)(value).call(value, option.value) > -1;
     var className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input';
@@ -200,7 +206,8 @@ var Listselect = function Listselect(props) {
       "data-value": option.value,
       css: valueCSS,
       "data-tip": true,
-      "data-for": optionId
+      "data-for": optionId,
+      "data-testid": (0, _concat.default)(_context = "".concat(testId, "-")).call(_context, option.value)
     }, display, showOptionTooltips ? (0, _core.jsx)(_Tooltip.default, {
       id: optionId,
       message: option === null || option === void 0 ? void 0 : option.tooltip
@@ -208,7 +215,8 @@ var Listselect = function Listselect(props) {
   })), (0, _core.jsx)("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: indicatorsCSS
+    css: indicatorsCSS,
+    "data-testid": "".concat(testId, "-errors")
   }, (validationError || warning) && (0, _core.jsx)("span", {
     className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
   }), warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
@@ -221,10 +229,12 @@ var Listselect = function Listselect(props) {
     className: "gfb-input-control-bottom"
   }, (0, _core.jsx)("span", {
     className: "gfb-action-link",
-    onClick: handleSelectAll
+    onClick: handleSelectAll,
+    "data-testid": "".concat(testId, "-select-all")
   }, "Select All"), (0, _core.jsx)("span", {
     className: "gfb-action-link",
-    onClick: handleDeselectAll
+    onClick: handleDeselectAll,
+    "data-testid": "".concat(testId, "-deselect-all")
   }, "Deselect All"))));
 };
 
@@ -242,5 +252,6 @@ Listselect.propTypes = {
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
   warning: _propTypes.default.string,
-  showOptionTooltips: _propTypes.default.bool
+  showOptionTooltips: _propTypes.default.bool,
+  'data-testid': _propTypes.default.string
 };

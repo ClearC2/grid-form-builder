@@ -16,9 +16,10 @@ import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context14, _context15; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context14 = ownKeys(Object(source), !0)).call(_context14, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context15 = ownKeys(Object(source))).call(_context15, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context16, _context17; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context16 = ownKeys(Object(source), !0)).call(_context16, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context17 = ownKeys(Object(source))).call(_context17, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
@@ -29,7 +30,6 @@ import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/insta
 import _JSON$stringify from "@babel/runtime-corejs3/core-js-stable/json/stringify";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
-import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 import _Promise from "@babel/runtime-corejs3/core-js-stable/promise";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
@@ -186,7 +186,7 @@ var defaults = {
 };
 
 var Typeahead = function Typeahead(props) {
-  var _context13;
+  var _context15;
 
   var name = props.name,
       label = props.label,
@@ -225,7 +225,9 @@ var Typeahead = function Typeahead(props) {
       createlabel = props.createlabel,
       _props$options = props.options,
       typeaheadOptions = _props$options === void 0 ? defaults.object : _props$options,
-      warning = props.warning;
+      warning = props.warning,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -317,6 +319,8 @@ var Typeahead = function Typeahead(props) {
 
   var _useState21 = useState({
     Option: function Option(base) {
+      var _context, _base$data;
+
       if (base.isDisabled) {
         base.innerProps.style = {
           height: 20,
@@ -327,9 +331,17 @@ var Typeahead = function Typeahead(props) {
         };
       }
 
-      return jsx(ReactSelectBaseComponents.Option, base);
+      var newProps = _objectSpread(_objectSpread({}, base), {}, {
+        innerProps: _objectSpread(_objectSpread({}, base === null || base === void 0 ? void 0 : base.innerProps), {}, {
+          'data-testid': _concatInstanceProperty(_context = "".concat(testId, "-")).call(_context, base === null || base === void 0 ? void 0 : (_base$data = base.data) === null || _base$data === void 0 ? void 0 : _base$data.value)
+        })
+      });
+
+      return jsx(ReactSelectBaseComponents.Option, newProps);
     },
     MultiValue: function MultiValue(base) {
+      var _context2, _base$data2;
+
       var _base$children = base.children,
           children = _base$children === void 0 ? '' : _base$children;
 
@@ -348,9 +360,15 @@ var Typeahead = function Typeahead(props) {
         }, 750);
       };
 
+      var newProps = _objectSpread(_objectSpread({}, base), {}, {
+        innerProps: _objectSpread(_objectSpread({}, base === null || base === void 0 ? void 0 : base.innerProps), {}, {
+          'data-testid': _concatInstanceProperty(_context2 = "".concat(testId, "-")).call(_context2, base === null || base === void 0 ? void 0 : (_base$data2 = base.data) === null || _base$data2 === void 0 ? void 0 : _base$data2.value)
+        })
+      });
+
       return jsx("div", {
         onClick: copyValueToClipboard
-      }, jsx(ReactSelectBaseComponents.MultiValue, _extends({}, base, {
+      }, jsx(ReactSelectBaseComponents.MultiValue, _extends({}, newProps, {
         children: label
       })));
     }
@@ -421,7 +439,7 @@ var Typeahead = function Typeahead(props) {
 
   useEffect(function () {
     var populateConditionObject = function populateConditionObject() {
-      var _context;
+      var _context3;
 
       var condition = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
         name: null,
@@ -432,7 +450,7 @@ var Typeahead = function Typeahead(props) {
 
       var pluggedInValues = [];
 
-      _forEachInstanceProperty(_context = _valuesInstanceProperty(condition)).call(_context, function (value) {
+      _forEachInstanceProperty(_context3 = _valuesInstanceProperty(condition)).call(_context3, function (value) {
         var formValueForThisValueName = values.get(value, '');
 
         if (formValueForThisValueName && _indexOfInstanceProperty(pluggedInValues).call(pluggedInValues, formValueForThisValueName) === -1) {
@@ -459,9 +477,9 @@ var Typeahead = function Typeahead(props) {
       if (filter.hasOwnProperty('name')) {
         populateConditionObject(filter); // eslint-disable-next-line
       } else if (filter.hasOwnProperty('conditions') && _Array$isArray(filter.conditions)) {
-        var _context2;
+        var _context4;
 
-        _mapInstanceProperty(_context2 = filter.conditions).call(_context2, function (condition) {
+        _mapInstanceProperty(_context4 = filter.conditions).call(_context4, function (condition) {
           return populateFilterBody(condition);
         });
       }
@@ -536,11 +554,11 @@ var Typeahead = function Typeahead(props) {
   interactive, menuPlacement]);
   useEffect(function () {
     setComponents(function (prevComponents) {
-      var _context3;
+      var _context5;
 
       var showValidationError = prevComponents.showValidationError; // Required field validation
 
-      if (isRequiredFlag && _trimInstanceProperty(_context3 = value + '').call(_context3).length === 0 && !isFocused) {
+      if (isRequiredFlag && _trimInstanceProperty(_context5 = value + '').call(_context5).length === 0 && !isFocused) {
         if (!showValidationError) {
           return _objectSpread(_objectSpread({}, prevComponents), {}, {
             DropdownIndicator: function DropdownIndicator() {
@@ -701,14 +719,14 @@ var Typeahead = function Typeahead(props) {
           var options = [];
 
           if (_Array$isArray(resp.data.contains) && _Array$isArray(_startsWithInstanceProperty(resp.data))) {
-            var _context4, _context5;
+            var _context6, _context7;
 
             var _resp$data = resp.data,
                 contains = _resp$data.contains,
                 startsWith = _startsWithInstanceProperty(_resp$data);
 
             options.push({
-              label: _concatInstanceProperty(_context4 = "".concat(startsWith.length, " options start with \"")).call(_context4, search, "\" ..."),
+              label: _concatInstanceProperty(_context6 = "".concat(startsWith.length, " options start with \"")).call(_context6, search, "\" ..."),
               isDisabled: true
             });
 
@@ -721,7 +739,7 @@ var Typeahead = function Typeahead(props) {
             });
 
             options.push({
-              label: _concatInstanceProperty(_context5 = "".concat(contains.length, " options contain \"")).call(_context5, search, "\" ..."),
+              label: _concatInstanceProperty(_context7 = "".concat(contains.length, " options contain \"")).call(_context7, search, "\" ..."),
               isDisabled: true,
               className: 'gfb-typeahead-flavor-option'
             });
@@ -734,9 +752,9 @@ var Typeahead = function Typeahead(props) {
               options.push(value);
             });
           } else {
-            var _context6;
+            var _context8;
 
-            _forEachInstanceProperty(_context6 = resp.data.data).call(_context6, function (value) {
+            _forEachInstanceProperty(_context8 = resp.data.data).call(_context8, function (value) {
               if (duplication) {
                 value.duplication = duplication;
               }
@@ -776,9 +794,9 @@ var Typeahead = function Typeahead(props) {
   }, [typeahead, isZipCode, minChars, name, dynamicTypeaheadKey, conditions, typeaheadOptions]);
   var formatCreateLabel = useCallback(function (value) {
     if (typeof createlabel === 'string') {
-      var _context7;
+      var _context9;
 
-      return _concatInstanceProperty(_context7 = "".concat(createlabel, " ")).call(_context7, value);
+      return _concatInstanceProperty(_context9 = "".concat(createlabel, " ")).call(_context9, value);
     }
 
     return "Click or Tab to Create \"".concat(value, "\"");
@@ -862,9 +880,9 @@ var Typeahead = function Typeahead(props) {
     });
   }, []);
   var handleSingleValueChange = useCallback(function (newValue) {
-    var _context8;
+    var _context10;
 
-    _forEachInstanceProperty(_context8 = _Object$keys(newValue)).call(_context8, function (field) {
+    _forEachInstanceProperty(_context10 = _Object$keys(newValue)).call(_context10, function (field) {
       var newVal = newValue[field];
       if (field === 'duplication') newVal = newValue.value;
       var id = null;
@@ -932,10 +950,10 @@ var Typeahead = function Typeahead(props) {
       if (stringify) {
         if (delimiter) {
           if (_delimit && _Array$isArray(_delimit)) {
-            var _context9;
+            var _context11;
 
             // if we were provided field(s) to delimit by, build up a special string with just those values
-            _forEachInstanceProperty(_context9 = target.value).call(_context9, function (option) {
+            _forEachInstanceProperty(_context11 = target.value).call(_context11, function (option) {
               _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
                 if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
                   _value = _value + option[field] + delimiter;
@@ -946,10 +964,10 @@ var Typeahead = function Typeahead(props) {
             _value = _sliceInstanceProperty(_value).call(_value, 0, -1);
             target.value = _value;
           } else {
-            var _context10;
+            var _context12;
 
             // if we are supposed to delimit these options but we don't know which field to delimit, we are going to shove the whole object in
-            _forEachInstanceProperty(_context10 = target.value).call(_context10, function (option) {
+            _forEachInstanceProperty(_context12 = target.value).call(_context12, function (option) {
               _value = _value + _JSON$stringify(option) + delimiter;
             });
 
@@ -957,12 +975,12 @@ var Typeahead = function Typeahead(props) {
             target.value = _value;
           }
         } else if (_delimit && !delimiter) {
-          var _context11;
+          var _context13;
 
           // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as a stringified array
           _value = [];
 
-          _forEachInstanceProperty(_context11 = target.value).call(_context11, function (option) {
+          _forEachInstanceProperty(_context13 = target.value).call(_context13, function (option) {
             _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
               if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
                 _value.push(option[field]);
@@ -977,12 +995,12 @@ var Typeahead = function Typeahead(props) {
           target.value = _JSON$stringify(target.value);
         }
       } else if (_delimit && !delimiter) {
-        var _context12;
+        var _context14;
 
         // special case where they decided to delimit by some field but don't have a delimiter, we are going to build it up as an array
         _value = [];
 
-        _forEachInstanceProperty(_context12 = target.value).call(_context12, function (option) {
+        _forEachInstanceProperty(_context14 = target.value).call(_context14, function (option) {
           _forEachInstanceProperty(_delimit).call(_delimit, function (field) {
             if (_indexOfInstanceProperty(_value).call(_value, option[field]) === -1) {
               _value.push(option[field]);
@@ -1041,7 +1059,7 @@ var Typeahead = function Typeahead(props) {
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var outerClass = 'gfb-input-outer';
 
-  if (isRequiredFlag && _trimInstanceProperty(_context13 = value + '').call(_context13).length === 0 && !isFocused) {
+  if (isRequiredFlag && _trimInstanceProperty(_context15 = value + '').call(_context15).length === 0 && !isFocused) {
     outerClass = outerClass + ' gfb-validation-error';
   }
 
@@ -1056,7 +1074,8 @@ var Typeahead = function Typeahead(props) {
     ref: inputContainer,
     onMouseDown: handleOnFocus,
     style: inputOuter,
-    css: inputOuterCSS
+    css: inputOuterCSS,
+    "data-testid": testId
   }, jsx(TypeaheadPerformanceOptimizer, {
     Typeahead: Typeahead,
     ref: reactSelect,
@@ -1127,5 +1146,6 @@ Typeahead.propTypes = {
     useProcedure: PropTypes.bool,
     queryRowCount: PropTypes.bool
   }),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 };

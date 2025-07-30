@@ -40,7 +40,9 @@ var Metadata = function Metadata(props) {
   var _props$value = props.value,
       value = _props$value === void 0 ? '' : _props$value,
       _props$style = props.style,
-      style = _props$style === void 0 ? {} : _props$style;
+      style = _props$style === void 0 ? {} : _props$style,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -84,7 +86,8 @@ var Metadata = function Metadata(props) {
   }, (0, _core.jsx)("div", {
     className: "gfb-input__value-container",
     style: valueContainer,
-    css: valueContainerCSS
+    css: valueContainerCSS,
+    "data-testid": testId
   }, (0, _core.jsx)("strong", {
     style: valueStyle,
     css: valueCSS
@@ -100,5 +103,6 @@ exports.default = _default;
 Metadata.propTypes = {
   name: _propTypes.default.string,
   value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
-  style: _propTypes.default.object
+  style: _propTypes.default.object,
+  'data-testid': _propTypes.default.string
 };

@@ -1,14 +1,3 @@
-import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _toConsumableArray from "@babel/runtime-corejs3/helpers/esm/toConsumableArray";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
-
-function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
-import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
-import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _Object$getOwnPropertyDescriptor from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor";
@@ -16,6 +5,18 @@ import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/inst
 import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors";
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
+import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
+import _toConsumableArray from "@babel/runtime-corejs3/helpers/esm/toConsumableArray";
+import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
+import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -41,7 +42,9 @@ var Listselect = function Listselect(props) {
       required = props.required,
       warning = props.warning,
       _props$showOptionTool = props.showOptionTooltips,
-      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool;
+      showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -159,6 +162,8 @@ var Listselect = function Listselect(props) {
     style: valueContainer,
     css: valueContainerCSS
   }, _mapInstanceProperty(options).call(options, function (option, i) {
+    var _context;
+
     var display = option.label ? option.label : option.value;
     var selected = _indexOfInstanceProperty(value).call(value, option.value) > -1;
     var className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input';
@@ -174,7 +179,8 @@ var Listselect = function Listselect(props) {
       "data-value": option.value,
       css: valueCSS,
       "data-tip": true,
-      "data-for": optionId
+      "data-for": optionId,
+      "data-testid": _concatInstanceProperty(_context = "".concat(testId, "-")).call(_context, option.value)
     }, display, showOptionTooltips ? jsx(PortalTooltip, {
       id: optionId,
       message: option === null || option === void 0 ? void 0 : option.tooltip
@@ -182,7 +188,8 @@ var Listselect = function Listselect(props) {
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: indicatorsCSS
+    css: indicatorsCSS,
+    "data-testid": "".concat(testId, "-errors")
   }, (validationError || warning) && jsx("span", {
     className: "gfb-input__indicator-separator css-1okebmr-indicatorSeparator"
   }), warning && !validationError && jsx(ValidationErrorIcon, {
@@ -195,10 +202,12 @@ var Listselect = function Listselect(props) {
     className: "gfb-input-control-bottom"
   }, jsx("span", {
     className: "gfb-action-link",
-    onClick: handleSelectAll
+    onClick: handleSelectAll,
+    "data-testid": "".concat(testId, "-select-all")
   }, "Select All"), jsx("span", {
     className: "gfb-action-link",
-    onClick: handleDeselectAll
+    onClick: handleDeselectAll,
+    "data-testid": "".concat(testId, "-deselect-all")
   }, "Deselect All"))));
 };
 
@@ -215,5 +224,6 @@ Listselect.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   warning: PropTypes.string,
-  showOptionTooltips: PropTypes.bool
+  showOptionTooltips: PropTypes.bool,
+  'data-testid': PropTypes.string
 };

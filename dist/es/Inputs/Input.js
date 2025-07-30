@@ -46,7 +46,9 @@ var Input = function Input(props) {
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
       onBlur = props.onBlur,
-      warning = props.warning;
+      warning = props.warning,
+      _props$dataTestid = props['data-testid'],
+      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -148,11 +150,13 @@ var Input = function Input(props) {
     style: valueStyle,
     css: valueCSS,
     type: format,
-    maxLength: maxlength
+    maxLength: maxlength,
+    "data-testid": testId
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: indicatorsCSS
+    css: indicatorsCSS,
+    "data-testid": "".concat(testId, "-errors")
   }, warning && !validationError && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",
@@ -186,5 +190,6 @@ Input.propTypes = {
   required: PropTypes.bool,
   format: PropTypes.string,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  warning: PropTypes.string
+  warning: PropTypes.string,
+  'data-testid': PropTypes.string
 };

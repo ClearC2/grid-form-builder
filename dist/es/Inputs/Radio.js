@@ -8,10 +8,11 @@ import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/obje
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
+import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context, _context2; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context = ownKeys(Object(source), !0)).call(_context, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context2 = ownKeys(Object(source))).call(_context2, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
@@ -120,6 +121,8 @@ var Radio = function Radio(props) {
     style: valueContainer,
     css: valueContainerCSS
   }, _mapInstanceProperty(options).call(options, function (option, i) {
+    var _context;
+
     var checked = value && (option.value + '').toLowerCase() === (value + '').toLowerCase(); // the option value may be a number but the field have the value as a string
 
     var className = 'gfb-input__single-value gfb-input__input gfb-multi-input-input';
@@ -150,7 +153,7 @@ var Radio = function Radio(props) {
       type: "radio",
       autoComplete: autoComplete,
       css: valueCSS,
-      "data-testid": testId
+      "data-testid": _concatInstanceProperty(_context = "".concat(testId, "-")).call(_context, option.value)
     }), option.label ? option.label : option.value, showOptionTooltips ? jsx(PortalTooltip, {
       id: optionId,
       message: option === null || option === void 0 ? void 0 : option.tooltip
@@ -158,7 +161,8 @@ var Radio = function Radio(props) {
   })), jsx("div", {
     className: "gfb-input__indicators",
     style: indicators,
-    css: indicatorsCSS
+    css: indicatorsCSS,
+    "data-testid": "".concat(testId, "-errors")
   }, warning && !validationError && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",
