@@ -1,3 +1,10 @@
+## [3.123.1](https://github.com/ClearC2/grid-form-builder/compare/v3.123.0...v3.123.1) (2025-08-13)
+
+
+### Bug Fixes
+
+* **reports:** fixes a typo in full reports to user checkbox value ([40acad5](https://github.com/ClearC2/grid-form-builder/commit/40acad599eb93039a585d0c452b8995f22d8b6ba))
+
 # [3.123.0](https://github.com/ClearC2/grid-form-builder/compare/v3.122.0...v3.123.0) (2025-07-30)
 
 
