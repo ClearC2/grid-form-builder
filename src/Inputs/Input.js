@@ -24,6 +24,7 @@ const Input = props => {
     maxlength = 524288,
     onBlur,
     warning,
+    setHasValidationWarning,
     'data-testid': testId = props?.['data-testid'] || props?.name
   } = props
 
@@ -69,6 +70,9 @@ const Input = props => {
   let validationWarning
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
     validationWarning = `Maximum character limit of ${maxlength} reached.`
+    setHasValidationWarning(true)
+  } else {
+    setHasValidationWarning(false)
   }
   let outerClass = 'gfb-input-outer'
   if (isFocused) {
@@ -145,5 +149,6 @@ Input.propTypes = {
   format: PropTypes.string,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  setHasValidationWarning: PropTypes.func
 }

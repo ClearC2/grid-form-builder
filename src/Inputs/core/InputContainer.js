@@ -79,16 +79,19 @@ const InputContainer = props => {
     interactive,
     device,
     fieldDefinitions,
-    c2class
+    c2class,
+    hasValidationWarning,
+    setHasValidationWarning
   } = props
   const {name, required, style = {}, tooltips = {}, ...other} = config
   const {input: inputTooltip} = tooltips
   const {cellInput = {}} = style
   const inputId = useRef(randomId())
   const {theme} = useTheme()
+  // const [hasValidationWarning, setHasValidationWarning] = useState(false)
   return (
     <div className='gfb-inner-cell-input' style={cellInput} data-tip data-for={inputId.current} css={theme.cellInput}>
-      <PortalTooltip id={inputId.current} message={inputTooltip} />
+      {!hasValidationWarning && <PortalTooltip id={inputId.current} message={inputTooltip} />}
       {cloneElement(children, {
         requiredWarning,
         tabIndex,
@@ -108,7 +111,8 @@ const InputContainer = props => {
         ...other,
         device,
         fieldDefinitions,
-        c2class
+        c2class,
+        setHasValidationWarning
       })}
     </div>
   )
@@ -133,5 +137,7 @@ InputContainer.propTypes = {
   interactive: PropTypes.bool,
   device: PropTypes.object,
   fieldDefinitions: PropTypes.instanceOf(Map),
-  c2class: PropTypes.string
+  c2class: PropTypes.string,
+  hasValidationWarning: PropTypes.bool,
+  setHasValidationWarning: PropTypes.func
 }
