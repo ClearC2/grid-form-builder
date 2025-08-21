@@ -20,7 +20,7 @@ const Listselect = props => {
     required,
     warning,
     showOptionTooltips = false, // this flag is used to show tooltips for each individual option
-    'data-testid': testId = props?.['data-testid'] || props?.name
+    'data-testid': testId = props?.name
   } = props
 
   const {

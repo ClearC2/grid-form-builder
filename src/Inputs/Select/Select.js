@@ -36,10 +36,10 @@ const Select = (props) => {
     onBlur,
     showOptionTooltips = false, // this flag is used to show tooltips for each individual option
     createOptionPosition = 'last',
-    'data-testid': testId = props?.['data-testid'] || props?.name,
+    'data-testid': testId = props?.name,
     largeDatasetThreshold = 500, // Switch to async mode when options exceed this
     searchPlaceholder = 'Type to search...',
-    inputId = props?.inputId || `${props?.name}-select`
+    inputId
   } = props
 
   const {

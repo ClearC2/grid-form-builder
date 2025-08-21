@@ -165,8 +165,8 @@ const Typeahead = props => {
     createlabel,
     options: typeaheadOptions = defaults.object,
     warning,
-    'data-testid': testId = props?.['data-testid'] || props?.name,
-    inputId = props?.inputId || `${props?.name}-typeahead`
+    'data-testid': testId = props?.name,
+    inputId
   } = props
 
   const {

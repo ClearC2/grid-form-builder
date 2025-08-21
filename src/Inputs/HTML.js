@@ -4,14 +4,8 @@ import PropTypes from 'prop-types'
 import useTheme from '../theme/useTheme'
 import '../styles/html.css'
 
-const HTML = props => {
-  const {
-    value = '',
-    style = {},
-    disabled = true,
-    readonly = true,
-    'data-testid': testId = props?.['data-testid'] || props?.name
-  } = props
+const HTML = (props) => {
+  const {value = '', style = {}, disabled = true, readonly = true, 'data-testid': testId = props?.name} = props
 
   const contentEditable = readonly === false || disabled === false
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import useTheme from '../theme/useTheme'
 
 const Metadata = (props) => {
-  const {value = '', style = {}, 'data-testid': testId = props?.['data-testid'] || props?.name} = props
+  const {value = '', style = {}, 'data-testid': testId = props?.name} = props
 
   const {
     value: valueStyle = {},

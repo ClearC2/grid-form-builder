@@ -117,7 +117,7 @@ export class ReactQuill extends Component {
       css = {},
       tabIndex,
       className,
-      'data-testid': testId = this.props?.['data-testid'] || this.props?.name
+      'data-testid': testId = this.props?.name
     } = this.props
     return (
       <div
