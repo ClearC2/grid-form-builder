@@ -79,11 +79,12 @@ var Multiselect = function Multiselect(props) {
       _props$showOptionTool = props.showOptionTooltips,
       showOptionTooltips = _props$showOptionTool === void 0 ? false : _props$showOptionTool,
       _props$dataTestid = props['data-testid'],
-      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid,
+      testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid,
       _props$largeDatasetTh = props.largeDatasetThreshold,
       largeDatasetThreshold = _props$largeDatasetTh === void 0 ? 500 : _props$largeDatasetTh,
       _props$searchPlacehol = props.searchPlaceholder,
-      searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol;
+      searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol,
+      inputId = props.inputId;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -433,11 +434,11 @@ var Multiselect = function Multiselect(props) {
   }
 
   var Option = function Option(optionProps) {
-    var _context6;
+    var _context6, _optionProps$data;
 
     var newProps = _objectSpread(_objectSpread({}, optionProps), {}, {
       innerProps: _objectSpread(_objectSpread({}, optionProps === null || optionProps === void 0 ? void 0 : optionProps.innerProps), {}, {
-        'data-testid': _concatInstanceProperty(_context6 = "".concat(testId, "-")).call(_context6, optionProps.data.value)
+        'data-testid': _concatInstanceProperty(_context6 = "".concat(testId, "-")).call(_context6, optionProps === null || optionProps === void 0 ? void 0 : (_optionProps$data = optionProps.data) === null || _optionProps$data === void 0 ? void 0 : _optionProps$data.label)
       })
     });
 
@@ -535,7 +536,8 @@ var Multiselect = function Multiselect(props) {
       }
     },
     tabIndex: tabIndex,
-    value: selectValue
+    value: selectValue,
+    inputId: inputId
   };
   return jsx("div", {
     className: outerClass,
@@ -589,5 +591,6 @@ Multiselect.propTypes = {
   data: PropTypes.object,
   largeDatasetThreshold: PropTypes.number,
   searchPlaceholder: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  inputId: PropTypes.string
 };

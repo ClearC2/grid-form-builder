@@ -13,7 +13,7 @@ var ColorPicker = /*#__PURE__*/forwardRef(function (props, ref) {
       name = props.name,
       onChangeComplete = props.onChangeComplete,
       _props$dataTestid = props['data-testid'],
-      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
+      testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
 
   var _useState = useState('compact'),
       _useState2 = _slicedToArray(_useState, 2),

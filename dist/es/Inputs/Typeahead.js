@@ -102,7 +102,8 @@ var TypeaheadPerformanceOptimizer = /*#__PURE__*/function (_PureComponent) {
           autoComplete = _this$props.autoComplete,
           components = _this$props.components,
           defaultOptions = _this$props.defaultOptions,
-          styles = _this$props.styles;
+          styles = _this$props.styles,
+          inputId = _this$props.inputId;
       return jsx(Typeahead, {
         ref: setRef,
         className: className,
@@ -135,7 +136,8 @@ var TypeaheadPerformanceOptimizer = /*#__PURE__*/function (_PureComponent) {
         components: components,
         defaultOptions: defaultOptions,
         styles: styles,
-        openMenuOnClick: false
+        openMenuOnClick: false,
+        inputId: inputId
       });
     }
   }]);
@@ -175,7 +177,8 @@ _defineProperty(TypeaheadPerformanceOptimizer, "propTypes", {
   autoComplete: PropTypes.any,
   components: PropTypes.object,
   defaultOptions: PropTypes.any,
-  styles: PropTypes.object
+  styles: PropTypes.object,
+  inputId: PropTypes.string
 });
 
 var defaults = {
@@ -227,7 +230,8 @@ var Typeahead = function Typeahead(props) {
       typeaheadOptions = _props$options === void 0 ? defaults.object : _props$options,
       warning = props.warning,
       _props$dataTestid = props['data-testid'],
-      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
+      testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid,
+      inputId = props.inputId;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -333,7 +337,7 @@ var Typeahead = function Typeahead(props) {
 
       var newProps = _objectSpread(_objectSpread({}, base), {}, {
         innerProps: _objectSpread(_objectSpread({}, base === null || base === void 0 ? void 0 : base.innerProps), {}, {
-          'data-testid': _concatInstanceProperty(_context = "".concat(testId, "-")).call(_context, base === null || base === void 0 ? void 0 : (_base$data = base.data) === null || _base$data === void 0 ? void 0 : _base$data.value)
+          'data-testid': _concatInstanceProperty(_context = "".concat(testId, "-")).call(_context, base === null || base === void 0 ? void 0 : (_base$data = base.data) === null || _base$data === void 0 ? void 0 : _base$data.label)
         })
       });
 
@@ -1108,7 +1112,8 @@ var Typeahead = function Typeahead(props) {
     autoComplete: autoComplete,
     components: components,
     defaultOptions: defaultOptions,
-    styles: reactSelectStyles
+    styles: reactSelectStyles,
+    inputId: inputId
   }));
 };
 
@@ -1147,5 +1152,6 @@ Typeahead.propTypes = {
     queryRowCount: PropTypes.bool
   }),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  inputId: PropTypes.string
 };
