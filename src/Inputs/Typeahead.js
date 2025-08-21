@@ -49,7 +49,8 @@ class TypeaheadPerformanceOptimizer extends PureComponent {
     autoComplete: PropTypes.any,
     components: PropTypes.object,
     defaultOptions: PropTypes.any,
-    styles: PropTypes.object
+    styles: PropTypes.object,
+    inputId: PropTypes.string
   }
 
   render () {
@@ -85,7 +86,8 @@ class TypeaheadPerformanceOptimizer extends PureComponent {
       autoComplete,
       components,
       defaultOptions,
-      styles
+      styles,
+      inputId
     } = this.props
     return (
       <Typeahead
@@ -121,6 +123,7 @@ class TypeaheadPerformanceOptimizer extends PureComponent {
         defaultOptions={defaultOptions}
         styles={styles}
         openMenuOnClick={false}
+        inputId={inputId}
       />
     )
   }
@@ -162,7 +165,8 @@ const Typeahead = props => {
     createlabel,
     options: typeaheadOptions = defaults.object,
     warning,
-    'data-testid': testId = props?.['data-testid'] || props?.name
+    'data-testid': testId = props?.['data-testid'] || props?.name,
+    inputId = props?.inputId || `${props?.name}-typeahead`
   } = props
 
   const {
@@ -214,7 +218,7 @@ const Typeahead = props => {
         ...base,
         innerProps: {
           ...base?.innerProps,
-          'data-testid': `${testId}-${base?.data?.value}`
+          'data-testid': `${testId}-${base?.data?.label}`
         }
       }
       return <ReactSelectBaseComponents.Option {...newProps} />
@@ -872,6 +876,7 @@ const Typeahead = props => {
         components={components}
         defaultOptions={defaultOptions}
         styles={reactSelectStyles}
+        inputId={inputId}
       />
     </div>
   )
@@ -913,5 +918,6 @@ Typeahead.propTypes = {
     queryRowCount: PropTypes.bool
   }),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  inputId: PropTypes.string
 }

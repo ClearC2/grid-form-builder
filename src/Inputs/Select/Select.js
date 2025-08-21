@@ -38,7 +38,8 @@ const Select = (props) => {
     createOptionPosition = 'last',
     'data-testid': testId = props?.['data-testid'] || props?.name,
     largeDatasetThreshold = 500, // Switch to async mode when options exceed this
-    searchPlaceholder = 'Type to search...'
+    searchPlaceholder = 'Type to search...',
+    inputId = props?.inputId || `${props?.name}-select`
   } = props
 
   const {
@@ -310,7 +311,7 @@ const Select = (props) => {
       ...optionProps,
       innerProps: {
         ...optionProps?.innerProps,
-        'data-testid': `${testId}-${optionProps.data.value}`
+        'data-testid': `${testId}-${optionProps?.data?.label}`
       }
     }
     if (!showOptionTooltips) {
@@ -378,7 +379,8 @@ const Select = (props) => {
       }
     },
     tabIndex,
-    value: selectValue
+    value: selectValue,
+    inputId
   }
 
   return (
@@ -434,5 +436,6 @@ Select.propTypes = {
   createOptionPosition: PropTypes.string,
   largeDatasetThreshold: PropTypes.number,
   searchPlaceholder: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  inputId: PropTypes.string
 }
