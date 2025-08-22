@@ -70,7 +70,8 @@ var Input = function Input(props) {
       onBlur = props.onBlur,
       warning = props.warning,
       _props$dataTestid = props['data-testid'],
-      testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
+      testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid,
+      setHasValidationWarning = props.setHasValidationWarning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
@@ -121,6 +122,9 @@ var Input = function Input(props) {
 
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
     validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+    setHasValidationWarning(true);
+  } else {
+    setHasValidationWarning(false);
   }
 
   var outerClass = 'gfb-input-outer';
@@ -214,5 +218,6 @@ Input.propTypes = {
   format: _propTypes.default.string,
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
   warning: _propTypes.default.string,
-  'data-testid': _propTypes.default.string
+  'data-testid': _propTypes.default.string,
+  setHasValidationWarning: _propTypes.default.func
 };

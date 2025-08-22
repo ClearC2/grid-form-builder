@@ -29,7 +29,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_R
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { Component, cloneElement, useRef, useState } from 'react';
+import { Component, cloneElement, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import PortalTooltip from '../../Tooltip';

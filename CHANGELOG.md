@@ -1,3 +1,10 @@
+# [3.124.0](https://github.com/ClearC2/grid-form-builder/compare/v3.123.2...v3.124.0) (2025-08-22)
+
+
+### Features
+
+* **input:** hide tooltip if validation warning triggered ([#250](https://github.com/ClearC2/grid-form-builder/issues/250)) ([24c1dba](https://github.com/ClearC2/grid-form-builder/commit/24c1dbaf556a43806e2ad92386d9e6215960c8f7))
+
 ## [3.123.2](https://github.com/ClearC2/grid-form-builder/compare/v3.123.1...v3.123.2) (2025-08-21)
 
 

@@ -47,9 +47,9 @@ var Input = function Input(props) {
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
       onBlur = props.onBlur,
       warning = props.warning,
-      setHasValidationWarning = props.setHasValidationWarning,
       _props$dataTestid = props['data-testid'],
-      testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
+      testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid,
+      setHasValidationWarning = props.setHasValidationWarning;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,

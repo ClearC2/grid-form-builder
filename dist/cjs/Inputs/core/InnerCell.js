@@ -89,6 +89,11 @@ var InnerCell = function InnerCell(props) {
       _useContext2 = (0, _slicedToArray2.default)(_useContext, 1),
       formValues = _useContext2[0];
 
+  var _useState = (0, _react.useState)(false),
+      _useState2 = (0, _slicedToArray2.default)(_useState, 2),
+      hasValidationWarning = _useState2[0],
+      setHasValidationWarning = _useState2[1];
+
   var cellId = (0, _react.useRef)((0, _utils.randomId)()); // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
   // we will come up with a way to do this without modifying the schema - JRA 12/10/2019
 
@@ -168,7 +173,7 @@ var InnerCell = function InnerCell(props) {
     onClick: onGridElementClick,
     "data-tip": true,
     "data-for": cellId.current
-  }, (0, _core.jsx)(_Tooltip.default, {
+  }, !hasValidationWarning && (0, _core.jsx)(_Tooltip.default, {
     id: cellId.current,
     message: cellTooltip
   }), (0, _core.jsx)(_LabelContainer.default, {
@@ -192,7 +197,9 @@ var InnerCell = function InnerCell(props) {
     interactive: interactive,
     device: device,
     fieldDefinitions: fieldDefinitions,
-    c2class: c2class
+    c2class: c2class,
+    hasValidationWarning: hasValidationWarning,
+    setHasValidationWarning: setHasValidationWarning
   }, (0, _core.jsx)(Type, null))));
 };
 

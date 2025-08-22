@@ -135,7 +135,9 @@ var InputContainer = function InputContainer(props) {
       interactive = props.interactive,
       device = props.device,
       fieldDefinitions = props.fieldDefinitions,
-      c2class = props.c2class;
+      c2class = props.c2class,
+      hasValidationWarning = props.hasValidationWarning,
+      setHasValidationWarning = props.setHasValidationWarning;
   var name = config.name,
       required = config.required,
       _config$style = config.style,
@@ -149,7 +151,8 @@ var InputContainer = function InputContainer(props) {
   var inputId = (0, _react.useRef)((0, _utils.randomId)());
 
   var _useTheme = (0, _useTheme2.default)(),
-      theme = _useTheme.theme;
+      theme = _useTheme.theme; // const [hasValidationWarning, setHasValidationWarning] = useState(false)
+
 
   return (0, _core.jsx)("div", {
     className: "gfb-inner-cell-input",
@@ -157,7 +160,7 @@ var InputContainer = function InputContainer(props) {
     "data-tip": true,
     "data-for": inputId.current,
     css: theme.cellInput
-  }, (0, _core.jsx)(_Tooltip.default, {
+  }, !hasValidationWarning && (0, _core.jsx)(_Tooltip.default, {
     id: inputId.current,
     message: inputTooltip
   }), /*#__PURE__*/(0, _react.cloneElement)(children, _objectSpread(_objectSpread({
@@ -179,7 +182,8 @@ var InputContainer = function InputContainer(props) {
   }, other), {}, {
     device: device,
     fieldDefinitions: fieldDefinitions,
-    c2class: c2class
+    c2class: c2class,
+    setHasValidationWarning: setHasValidationWarning
   })));
 };
 
@@ -202,5 +206,7 @@ InputContainer.propTypes = {
   interactive: _propTypes.default.bool,
   device: _propTypes.default.object,
   fieldDefinitions: _propTypes.default.instanceOf(_immutable.Map),
-  c2class: _propTypes.default.string
+  c2class: _propTypes.default.string,
+  hasValidationWarning: _propTypes.default.bool,
+  setHasValidationWarning: _propTypes.default.func
 };
