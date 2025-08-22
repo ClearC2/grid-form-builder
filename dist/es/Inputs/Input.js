@@ -47,6 +47,7 @@ var Input = function Input(props) {
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
       onBlur = props.onBlur,
       warning = props.warning,
+      setHasValidationWarning = props.setHasValidationWarning,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -99,6 +100,9 @@ var Input = function Input(props) {
 
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
     validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+    setHasValidationWarning(true);
+  } else {
+    setHasValidationWarning(false);
   }
 
   var outerClass = 'gfb-input-outer';
@@ -191,5 +195,6 @@ Input.propTypes = {
   format: PropTypes.string,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  setHasValidationWarning: PropTypes.func
 };

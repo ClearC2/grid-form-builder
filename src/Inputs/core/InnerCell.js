@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useContext, useCallback, useEffect, useRef} from 'react'
+import {useContext, useCallback, useEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 import {FormValueContext} from '../../FormBuilder'
 import InputContainer from './InputContainer'
@@ -41,6 +41,7 @@ const InnerCell = props => {
 
   const {config = {}} = field
   const [formValues] = useContext(FormValueContext)
+  const [hasValidationWarning, setHasValidationWarning] = useState(false)
   const cellId = useRef(randomId())
 
   // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
@@ -116,7 +117,7 @@ const InnerCell = props => {
       data-tip
       data-for={cellId.current}
     >
-      <PortalTooltip id={cellId.current} message={cellTooltip} />
+      {!hasValidationWarning && <PortalTooltip id={cellId.current} message={cellTooltip} />}
       <LabelContainer
         config={config}
         handleLinkClick={handleLinkClick}
@@ -140,6 +141,8 @@ const InnerCell = props => {
         device={device}
         fieldDefinitions={fieldDefinitions}
         c2class={c2class}
+        hasValidationWarning={hasValidationWarning}
+        setHasValidationWarning={setHasValidationWarning}
       >
         <Type />
       </InputContainer>

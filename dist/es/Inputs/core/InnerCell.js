@@ -16,7 +16,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useContext, useCallback, useEffect, useRef } from 'react';
+import { useContext, useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormValueContext } from '../../FormBuilder';
 import InputContainer from './InputContainer';
@@ -59,6 +59,11 @@ var InnerCell = function InnerCell(props) {
   var _useContext = useContext(FormValueContext),
       _useContext2 = _slicedToArray(_useContext, 1),
       formValues = _useContext2[0];
+
+  var _useState = useState(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      hasValidationWarning = _useState2[0],
+      setHasValidationWarning = _useState2[1];
 
   var cellId = useRef(randomId()); // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
   // we will come up with a way to do this without modifying the schema - JRA 12/10/2019
@@ -139,7 +144,7 @@ var InnerCell = function InnerCell(props) {
     onClick: onGridElementClick,
     "data-tip": true,
     "data-for": cellId.current
-  }, jsx(PortalTooltip, {
+  }, !hasValidationWarning && jsx(PortalTooltip, {
     id: cellId.current,
     message: cellTooltip
   }), jsx(LabelContainer, {
@@ -163,7 +168,9 @@ var InnerCell = function InnerCell(props) {
     interactive: interactive,
     device: device,
     fieldDefinitions: fieldDefinitions,
-    c2class: c2class
+    c2class: c2class,
+    hasValidationWarning: hasValidationWarning,
+    setHasValidationWarning: setHasValidationWarning
   }, jsx(Type, null))));
 };
 
