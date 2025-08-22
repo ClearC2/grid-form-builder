@@ -52,7 +52,7 @@ var Percentage = function Percentage(props) {
       _props$minimum = props.minimum,
       minimum = _props$minimum === void 0 ? 0 : _props$minimum,
       _props$dataTestid = props['data-testid'],
-      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
+      testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,

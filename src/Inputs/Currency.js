@@ -29,7 +29,7 @@ const Currency = props => {
     minimum = Number.MIN_SAFE_INTEGER,
     maximum = Number.MAX_SAFE_INTEGER,
     warning,
-    'data-testid': testId = props?.['data-testid'] || props?.name
+    'data-testid': testId = props?.name
   } = props
 
   const {

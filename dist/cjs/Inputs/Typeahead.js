@@ -154,7 +154,8 @@ var TypeaheadPerformanceOptimizer = /*#__PURE__*/function (_PureComponent) {
           autoComplete = _this$props.autoComplete,
           components = _this$props.components,
           defaultOptions = _this$props.defaultOptions,
-          styles = _this$props.styles;
+          styles = _this$props.styles,
+          inputId = _this$props.inputId;
       return (0, _core.jsx)(Typeahead, {
         ref: setRef,
         className: className,
@@ -187,7 +188,8 @@ var TypeaheadPerformanceOptimizer = /*#__PURE__*/function (_PureComponent) {
         components: components,
         defaultOptions: defaultOptions,
         styles: styles,
-        openMenuOnClick: false
+        openMenuOnClick: false,
+        inputId: inputId
       });
     }
   }]);
@@ -226,7 +228,8 @@ var TypeaheadPerformanceOptimizer = /*#__PURE__*/function (_PureComponent) {
   autoComplete: _propTypes.default.any,
   components: _propTypes.default.object,
   defaultOptions: _propTypes.default.any,
-  styles: _propTypes.default.object
+  styles: _propTypes.default.object,
+  inputId: _propTypes.default.string
 });
 var defaults = {
   nullFunction: function nullFunction() {
@@ -277,7 +280,8 @@ var Typeahead = function Typeahead(props) {
       typeaheadOptions = _props$options === void 0 ? defaults.object : _props$options,
       warning = props.warning,
       _props$dataTestid = props['data-testid'],
-      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
+      testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid,
+      inputId = props.inputId;
 
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
@@ -383,7 +387,7 @@ var Typeahead = function Typeahead(props) {
 
       var newProps = _objectSpread(_objectSpread({}, base), {}, {
         innerProps: _objectSpread(_objectSpread({}, base === null || base === void 0 ? void 0 : base.innerProps), {}, {
-          'data-testid': (0, _concat.default)(_context = "".concat(testId, "-")).call(_context, base === null || base === void 0 ? void 0 : (_base$data = base.data) === null || _base$data === void 0 ? void 0 : _base$data.value)
+          'data-testid': (0, _concat.default)(_context = "".concat(testId, "-")).call(_context, base === null || base === void 0 ? void 0 : (_base$data = base.data) === null || _base$data === void 0 ? void 0 : _base$data.label)
         })
       });
 
@@ -1146,7 +1150,8 @@ var Typeahead = function Typeahead(props) {
     autoComplete: autoComplete,
     components: components,
     defaultOptions: defaultOptions,
-    styles: reactSelectStyles
+    styles: reactSelectStyles,
+    inputId: inputId
   }));
 };
 
@@ -1186,5 +1191,6 @@ Typeahead.propTypes = {
     queryRowCount: _propTypes.default.bool
   }),
   warning: _propTypes.default.string,
-  'data-testid': _propTypes.default.string
+  'data-testid': _propTypes.default.string,
+  inputId: _propTypes.default.string
 };

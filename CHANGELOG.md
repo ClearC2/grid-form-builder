@@ -1,3 +1,10 @@
+## [3.123.2](https://github.com/ClearC2/grid-form-builder/compare/v3.123.1...v3.123.2) (2025-08-21)
+
+
+### Bug Fixes
+
+* **testing:** change value to label in selects and added inputid in react-select ([#251](https://github.com/ClearC2/grid-form-builder/issues/251)) ([6a79dc7](https://github.com/ClearC2/grid-form-builder/commit/6a79dc755af89d2d708bef6960c571e423a63561))
+
 ## [3.123.1](https://github.com/ClearC2/grid-form-builder/compare/v3.123.0...v3.123.1) (2025-08-13)
 
 

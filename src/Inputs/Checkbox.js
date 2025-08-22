@@ -23,7 +23,7 @@ const Checkbox = props => {
     style = {},
     required,
     warning,
-    'data-testid': testId = props?.['data-testid'] || props?.name
+    'data-testid': testId = props?.name
   } = props
 
   const {

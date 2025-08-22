@@ -28,7 +28,7 @@ const Richtextarea = props => {
     required,
     maxlength = Number.MAX_SAFE_INTEGER,
     warning,
-    'data-testid': testId = props?.['data-testid'] || props?.name
+    'data-testid': testId = props?.name
   } = props
 
   const {

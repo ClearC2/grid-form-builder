@@ -68,7 +68,7 @@ var NativeSelect = function NativeSelect(props) {
       style = _props$style === void 0 ? {} : _props$style,
       device = props.device,
       _props$dataTestid = props['data-testid'],
-      testId = _props$dataTestid === void 0 ? (props === null || props === void 0 ? void 0 : props['data-testid']) || (props === null || props === void 0 ? void 0 : props.name) : _props$dataTestid;
+      testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,
