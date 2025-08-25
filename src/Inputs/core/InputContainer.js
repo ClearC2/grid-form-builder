@@ -88,7 +88,6 @@ const InputContainer = props => {
   const {cellInput = {}} = style
   const inputId = useRef(randomId())
   const {theme} = useTheme()
-  // const [hasValidationWarning, setHasValidationWarning] = useState(false)
   return (
     <div className='gfb-inner-cell-input' style={cellInput} data-tip data-for={inputId.current} css={theme.cellInput}>
       {!hasValidationWarning && <PortalTooltip id={inputId.current} message={inputTooltip} />}

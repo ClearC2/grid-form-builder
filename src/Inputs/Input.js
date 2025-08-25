@@ -25,7 +25,7 @@ const Input = props => {
     onBlur,
     warning,
     'data-testid': testId = props?.name,
-    setHasValidationWarning
+    setHasValidationWarning = () => {}
   } = props
 
   const {
