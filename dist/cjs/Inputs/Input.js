@@ -71,7 +71,8 @@ var Input = function Input(props) {
       warning = props.warning,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid,
-      setHasValidationWarning = props.setHasValidationWarning;
+      _props$setHasValidati = props.setHasValidationWarning,
+      setHasValidationWarning = _props$setHasValidati === void 0 ? function () {} : _props$setHasValidati;
   var _style$value = style.value,
       valueStyle = _style$value === void 0 ? {} : _style$value,
       _style$inputOuter = style.inputOuter,

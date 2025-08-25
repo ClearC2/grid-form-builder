@@ -1,3 +1,10 @@
+## [3.124.1](https://github.com/ClearC2/grid-form-builder/compare/v3.124.0...v3.124.1) (2025-08-25)
+
+
+### Bug Fixes
+
+* **validationwarning:** add default to destructured prop, removed commented line ([#252](https://github.com/ClearC2/grid-form-builder/issues/252)) ([1a2077e](https://github.com/ClearC2/grid-form-builder/commit/1a2077ef82875ef5cb71378b5a13d15ce25d5a05))
+
 # [3.124.0](https://github.com/ClearC2/grid-form-builder/compare/v3.123.2...v3.124.0) (2025-08-22)
 
 

@@ -151,8 +151,7 @@ var InputContainer = function InputContainer(props) {
   var inputId = (0, _react.useRef)((0, _utils.randomId)());
 
   var _useTheme = (0, _useTheme2.default)(),
-      theme = _useTheme.theme; // const [hasValidationWarning, setHasValidationWarning] = useState(false)
-
+      theme = _useTheme.theme;
 
   return (0, _core.jsx)("div", {
     className: "gfb-inner-cell-input",
