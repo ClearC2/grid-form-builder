@@ -264,7 +264,11 @@ var Select = function Select(props) {
     menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, false)));
     setIsFocused(false);
     setInputValue(''); // Clear search on blur
-  }, [menuIsOpen, updateIsMenuOpen, name, onBlur]);
+
+    var allOptionsToShow = _sliceInstanceProperty(fullOptions).call(fullOptions, 0, largeDatasetThreshold);
+
+    setDisplayOptions(allOptionsToShow); // Reset options to full list
+  }, [menuIsOpen, updateIsMenuOpen, name, onBlur, fullOptions, largeDatasetThreshold]);
   var setInputFieldPosition = useCallback(function () {
     if (inputContainer.current) {
       var position = inputContainer.current.getBoundingClientRect().top;
@@ -345,7 +349,11 @@ var Select = function Select(props) {
     });
     menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, false)));
     setInputValue(''); // Clear search after selection
-  }, [onChange, name, menuIsOpen]);
+
+    var allOptionsToShow = _sliceInstanceProperty(fullOptions).call(fullOptions, 0, largeDatasetThreshold);
+
+    setDisplayOptions(allOptionsToShow); // Reset options to full list
+  }, [onChange, name, menuIsOpen, fullOptions, largeDatasetThreshold]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';

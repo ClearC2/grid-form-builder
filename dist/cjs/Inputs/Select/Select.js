@@ -308,7 +308,10 @@ var Select = function Select(props) {
     menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, false)));
     setIsFocused(false);
     setInputValue(''); // Clear search on blur
-  }, [menuIsOpen, updateIsMenuOpen, name, onBlur]);
+
+    var allOptionsToShow = (0, _slice.default)(fullOptions).call(fullOptions, 0, largeDatasetThreshold);
+    setDisplayOptions(allOptionsToShow); // Reset options to full list
+  }, [menuIsOpen, updateIsMenuOpen, name, onBlur, fullOptions, largeDatasetThreshold]);
   var setInputFieldPosition = (0, _react.useCallback)(function () {
     if (inputContainer.current) {
       var position = inputContainer.current.getBoundingClientRect().top;
@@ -385,7 +388,10 @@ var Select = function Select(props) {
     });
     menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, false)));
     setInputValue(''); // Clear search after selection
-  }, [onChange, name, menuIsOpen]);
+
+    var allOptionsToShow = (0, _slice.default)(fullOptions).call(fullOptions, 0, largeDatasetThreshold);
+    setDisplayOptions(allOptionsToShow); // Reset options to full list
+  }, [onChange, name, menuIsOpen, fullOptions, largeDatasetThreshold]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
