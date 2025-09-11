@@ -170,7 +170,9 @@ var DateInput = function DateInput(props) {
       var time;
 
       if (value) {
-        var date = (0, _moment.default)(value, inputFormat);
+        // need to explicitly tell moment the date format from the api response
+        // so that it doesn't get confused when converting to UK dates - DC 09/11/2025
+        var date = String(inputFormat).toLowerCase() === 'dd-mmm-yyyy' ? (0, _moment.default)(value, 'YYYY-MM-DD') : (0, _moment.default)(value, inputFormat);
 
         if (date.isValid()) {
           time = date;

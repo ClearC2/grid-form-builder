@@ -1,3 +1,10 @@
+## [3.124.2](https://github.com/ClearC2/grid-form-builder/compare/v3.124.1...v3.124.2) (2025-09-11)
+
+
+### Bug Fixes
+
+* **date-input:** handle uk date formats ([#254](https://github.com/ClearC2/grid-form-builder/issues/254)) ([d65873c](https://github.com/ClearC2/grid-form-builder/commit/d65873cd7116a0b7f4bc4776b85db5027baa4374))
+
 ## [3.124.1](https://github.com/ClearC2/grid-form-builder/compare/v3.124.0...v3.124.1) (2025-08-25)
 
 
