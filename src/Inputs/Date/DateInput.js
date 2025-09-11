@@ -76,7 +76,11 @@ const DateInput = props => {
     return value => {
       let time
       if (value) {
-        let date = moment(value, inputFormat)
+        // need to explicitly tell moment the date format from the api response
+        // so that it doesn't get confused when converting to UK dates - DC 09/11/2025
+        let date = String(inputFormat).toLowerCase() === 'dd-mmm-yyyy'
+          ? moment(value, 'YYYY-MM-DD')
+          : moment(value, inputFormat)
         if (date.isValid()) {
           time = date
         } else {
