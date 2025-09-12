@@ -1,3 +1,10 @@
+# [3.125.0](https://github.com/ClearC2/grid-form-builder/compare/v3.124.2...v3.125.0) (2025-09-12)
+
+
+### Features
+
+* **reports:** changes the markup of the condition table to move away from table markup ([0a9304a](https://github.com/ClearC2/grid-form-builder/commit/0a9304a96b3d7f5f2e4968f906db41a7740a9b25))
+
 ## [3.124.2](https://github.com/ClearC2/grid-form-builder/compare/v3.124.1...v3.124.2) (2025-09-11)
 
 
