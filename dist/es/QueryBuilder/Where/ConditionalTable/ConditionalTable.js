@@ -533,11 +533,11 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       if (value && _this.state.noValueConditions.has(value.condition)) {
         var _context9, _context10;
 
-        return /*#__PURE__*/React.createElement("tr", {
+        return /*#__PURE__*/React.createElement("div", {
           key: _concatInstanceProperty(_context9 = "row-".concat(key, "-")).call(_context9, predicateIndex),
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
-        }, /*#__PURE__*/React.createElement("td", {
+        }, /*#__PURE__*/React.createElement("div", {
           key: _concatInstanceProperty(_context10 = "column-".concat(key, "-")).call(_context10, predicateIndex),
           style: {
             wordWrap: 'break-word'
@@ -562,11 +562,11 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
         return (
           /*#__PURE__*/
           // for basic input
-          React.createElement("tr", {
+          React.createElement("div", {
             key: _concatInstanceProperty(_context11 = "row-".concat(key, "-")).call(_context11, predicateIndex),
             style: _objectSpread({}, extraCondRowStyles),
             onClick: rowClick
-          }, /*#__PURE__*/React.createElement("td", {
+          }, /*#__PURE__*/React.createElement("div", {
             key: _concatInstanceProperty(_context12 = "column-".concat(key, "-")).call(_context12, predicateIndex),
             style: {
               wordWrap: 'break-word'
@@ -576,11 +576,11 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       } else if (typeof value === 'boolean') {
         var _context13, _context14;
 
-        return /*#__PURE__*/React.createElement("tr", {
+        return /*#__PURE__*/React.createElement("div", {
           key: _concatInstanceProperty(_context13 = "row-".concat(key, "-")).call(_context13, predicateIndex),
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
-        }, /*#__PURE__*/React.createElement("td", {
+        }, /*#__PURE__*/React.createElement("div", {
           key: _concatInstanceProperty(_context14 = "column-".concat(key, "-")).call(_context14, predicateIndex)
         }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
       } else {
@@ -590,11 +590,11 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
           return null;
         }
 
-        return /*#__PURE__*/React.createElement("tr", {
+        return /*#__PURE__*/React.createElement("div", {
           key: _concatInstanceProperty(_context15 = "row-".concat(key, "-")).call(_context15, predicateIndex),
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
-        }, /*#__PURE__*/React.createElement("td", {
+        }, /*#__PURE__*/React.createElement("div", {
           key: _concatInstanceProperty(_context16 = "column-".concat(key, "-")).call(_context16, predicateIndex)
         }, /*#__PURE__*/React.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, _concatInstanceProperty(_context17 = _valuesInstanceProperty(value)).call(_context17, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, _concatInstanceProperty(_context18 = _valuesInstanceProperty(value)).call(_context18, value.dynamicValues || []), predicateIndex)));
       }
@@ -666,27 +666,9 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       var listOpen = this.state.listOpen;
       var extraFooters = this.props.extraFooters ? this.props.extraFooters : [];
       return /*#__PURE__*/React.createElement("div", {
-        className: "table-responsive",
-        style: {
-          width: '100%',
-          maxHeight: '620px'
-        }
+        className: "report-condition-table-container"
       }, /*#__PURE__*/React.createElement("div", {
-        style: {
-          width: '100%',
-          maxHeight: '550px',
-          overflowY: 'auto'
-        }
-      }, /*#__PURE__*/React.createElement("table", {
-        className: "table table-bordered table-striped",
-        style: {
-          width: '100%'
-        }
-      }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
-        className: "col-lg-".concat(6, " col-md-", 6, " col-sm-", 6),
-        style: {
-          display: 'inlineBlock'
-        }
+        className: "report-condition-table-header"
       }, /*#__PURE__*/React.createElement("span", null, this.props.title), /*#__PURE__*/React.createElement("span", {
         className: "pull-right"
       }, /*#__PURE__*/React.createElement(Toggle, {
@@ -695,14 +677,13 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
         onToggle: this.handleToggleClick,
         activeLabel: "and",
         inactiveLabel: "or"
-      }))))), tbody.length && listOpen ? /*#__PURE__*/React.createElement("tbody", null, tbody) : null, this.props.enableListToggle && /*#__PURE__*/React.createElement("div", {
+      }))), tbody.length && listOpen ? /*#__PURE__*/React.createElement("div", {
+        className: "report-condition-table-rows-container"
+      }, tbody) : null, this.props.enableListToggle ? /*#__PURE__*/React.createElement("div", {
         style: {
-          width: '100%',
-          textAlign: 'center',
-          transform: "scale(1, ".concat(listOpen ? '' : '-', "1)"),
-          userSelect: 'none'
+          transform: "scale(1, ".concat(listOpen ? '' : '-', "1)")
         },
-        className: "cursor-hand",
+        className: "cursor-hand report-condition-list-toggle",
         onClick: function onClick() {
           return _this2.setState(function () {
             return {
@@ -710,32 +691,17 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
             };
           });
         }
-      }, "^"), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, this.props.enableResetButton || this.props.enableNextButton ? /*#__PURE__*/React.createElement("div", {
-        style: {
-          marginRight: '10px',
-          marginBottom: '10px',
-          marginTop: '10px',
-          display: 'flex',
-          flexDirection: 'row-reverse',
-          width: '100%'
-        }
-      }, this.props.enableResetButton && /*#__PURE__*/React.createElement("button", {
-        className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
-        style: {
-          marginRight: '10px',
-          marginBottom: '10px'
-        },
+      }, "^") : null, this.props.enableResetButton || this.props.enableNextButton ? /*#__PURE__*/React.createElement("div", {
+        className: "report-condition-table-footer"
+      }, this.props.enableResetButton ? /*#__PURE__*/React.createElement("button", {
+        className: "btn btn-primary pull-right",
         onClick: this.resetForm,
         disabled: isDisabled
-      }, "Reset"), this.props.enableNextButton && /*#__PURE__*/React.createElement("button", {
-        className: this.props.primaryButtonClass || 'btn btn-primary pull-right',
-        style: {
-          marginRight: '10px',
-          marginBottom: '10px'
-        },
+      }, "Reset") : null, this.props.enableNextButton ? /*#__PURE__*/React.createElement("button", {
+        className: "btn btn-primary pull-right",
         onClick: this.onNextClick,
         disabled: isDisabled
-      }, "Next"), extraFooters) : null))))));
+      }, "Next") : null, extraFooters) : null);
     }
   }]);
 

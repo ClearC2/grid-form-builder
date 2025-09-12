@@ -460,13 +460,13 @@ export default class ConditionalTable extends Component {
     }
     if (value && this.state.noValueConditions.has(value.condition)) {
       return (
-        <tr key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
-          <td key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
+        <div key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
+          <div key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
             {value.not && '(exclude) '}{value.condition}
             {this.renderDeleteIcon(key, value, predicateIndex)}
-          </td>
-        </tr>
+          </div>
+        </div>
       )
     }
     if (value && typeof value === 'string') { // raw inputs
@@ -479,23 +479,23 @@ export default class ConditionalTable extends Component {
         }
       }
       return ( // for basic input
-        <tr key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
-          <td key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
+        <div key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
+          <div key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
             <strong>{this.getLabel(key)} </strong>
             {value.not && '(exclude) '}contains {val}
             {this.renderDeleteIcon(key, value, predicateIndex)}
-          </td>
-        </tr>
+          </div>
+        </div>
       )
     } else if (typeof value === 'boolean') {
       return (
-        <tr key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
-          <td key={`column-${key}-${predicateIndex}`}>
+        <div key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
+          <div key={`column-${key}-${predicateIndex}`}>
             <strong>{this.getLabel(key)} </strong>
             is {value ? 'True' : 'False'}
             {this.renderDeleteIcon(key, value, predicateIndex)}
-          </td>
-        </tr>
+          </div>
+        </div>
       )
     } else {
       if (value.values &&
@@ -505,13 +505,13 @@ export default class ConditionalTable extends Component {
       }
 
       return (
-        <tr key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
-          <td key={`column-${key}-${predicateIndex}`}>
+        <div key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
+          <div key={`column-${key}-${predicateIndex}`}>
             <strong>{this.getLabel(key)}</strong>
             {this.buildMultiString(key, value.values.concat(value.dynamicValues || []), value.not, value)}
             {this.renderDeleteIcon(key, value.values.concat(value.dynamicValues || []), predicateIndex)}
-          </td>
-        </tr>
+          </div>
+        </div>
       )
     }
   }
@@ -542,76 +542,56 @@ export default class ConditionalTable extends Component {
     const {listOpen} = this.state
     const extraFooters = this.props.extraFooters ? this.props.extraFooters : []
     return (
-      <div className='table-responsive' style={{width: '100%', maxHeight: '620px'}}>
-        <div style={{width: '100%', maxHeight: '550px', overflowY: 'auto'}}>
-          <table className='table table-bordered table-striped' style={{width: '100%'}}>
-            <thead>
-              <tr>
-                <th className={`col-lg-${6} col-md-${6} col-sm-${6}`} style={{display: 'inlineBlock'}}>
-                  <span>{this.props.title}</span>
-                  <span className='pull-right'>
-                    <Toggle
-                      ref='row-toggle'
-                      value={this.props.toggleValue === 'and'}
-                      onToggle={this.handleToggleClick}
-                      activeLabel='and'
-                      inactiveLabel='or'
-                    />
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            {tbody.length && listOpen ? <tbody>
-              {tbody}
-            </tbody> : null}
-            {this.props.enableListToggle && <div
-              style={{
-                width: '100%',
-                textAlign: 'center',
-                transform: `scale(1, ${listOpen ? '' : '-'}1)`,
-                userSelect: 'none'
-              }}
-              className='cursor-hand'
-              onClick={() => this.setState(() => ({listOpen: !listOpen}))}
-            >
-              ^
-            </div>}
-            <tfoot>
-              <tr>
-                <td>
-                  {(this.props.enableResetButton || this.props.enableNextButton) ? <div
-                    style={{
-                      marginRight: '10px',
-                      marginBottom: '10px',
-                      marginTop: '10px',
-                      display: 'flex',
-                      flexDirection: 'row-reverse',
-                      width: '100%'
-                    }}
-                  >
-                    {this.props.enableResetButton && <button
-                      className={this.props.primaryButtonClass || 'btn btn-primary pull-right'}
-                      style={{marginRight: '10px', marginBottom: '10px'}}
-                      onClick={this.resetForm}
-                      disabled={isDisabled}
-                    >
-                      Reset
-                    </button>}
-                    {this.props.enableNextButton && <button
-                      className={this.props.primaryButtonClass || 'btn btn-primary pull-right'}
-                      style={{marginRight: '10px', marginBottom: '10px'}}
-                      onClick={this.onNextClick}
-                      disabled={isDisabled}
-                    >
-                      Next
-                    </button>}
-                    {extraFooters}
-                  </div> : null}
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+      <div className='report-condition-table-container'>
+        <div className='report-condition-table-header'>
+          <span>{this.props.title}</span>
+          <span className='pull-right'>
+            <Toggle
+              ref='row-toggle'
+              value={this.props.toggleValue === 'and'}
+              onToggle={this.handleToggleClick}
+              activeLabel='and'
+              inactiveLabel='or'
+            />
+          </span>
         </div>
+        {tbody.length && listOpen ? (
+          <div className='report-condition-table-rows-container'>
+            {tbody}
+          </div>
+        ) : null}
+        {this.props.enableListToggle ? (
+          <div
+            style={{transform: `scale(1, ${listOpen ? '' : '-'}1)`}}
+            className='cursor-hand report-condition-list-toggle'
+            onClick={() => this.setState(() => ({listOpen: !listOpen}))}
+          >
+            ^
+          </div>
+        ) : null}
+        {(this.props.enableResetButton || this.props.enableNextButton) ? (
+          <div className='report-condition-table-footer'>
+            {this.props.enableResetButton ? (
+              <button
+                className='btn btn-primary pull-right'
+                onClick={this.resetForm}
+                disabled={isDisabled}
+              >
+                Reset
+              </button>
+            ) : null}
+            {this.props.enableNextButton ? (
+              <button
+                className='btn btn-primary pull-right'
+                onClick={this.onNextClick}
+                disabled={isDisabled}
+              >
+                Next
+              </button>
+            ) : null}
+            {extraFooters}
+          </div>
+        ) : null}
       </div>
     )
   }
