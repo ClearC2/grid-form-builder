@@ -222,7 +222,12 @@ var DateInput = function DateInput(props) {
     setIsFocused(true);
     setManualBlurCheck(type !== 'month' && type !== 'datetime');
   }, [changeShowPicker, type]);
-  var handleOnBlur = useCallback(function (e) {
+  var handleOnBlur = useCallback(function () {
+    // fixes if the picker is open the input blur is causing it to close
+    if (showPicker) {
+      return;
+    }
+
     if ((type === 'month' || type === 'monthday') && manualBlurCheck) {
       var formatted = inputValue ? moment(inputValue, type === 'month' ? 'MM/YYYY' : 'MM/DD').format(inputFormat) : '';
       setShowMonthFormatted(true);

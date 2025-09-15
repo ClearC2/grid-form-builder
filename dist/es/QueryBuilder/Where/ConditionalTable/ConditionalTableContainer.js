@@ -97,7 +97,6 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
 
   if (schema) {
     if (Set(TEXT_INPUTS).has(type) && c.get('comparator') !== 'is blank' && c.get('comparator') !== 'is not blank') {
-      console.log(c.toJS());
       var val = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '');
       newFormValue = Map({
         condition: c.get('comparator'),

@@ -140,7 +140,11 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
 
   if (schema) {
     if ((0, _immutable.Set)(_index.TEXT_INPUTS).has(type) && c.get('comparator') !== 'is blank' && c.get('comparator') !== 'is not blank') {
-      newFormValue = c.get('values') instanceof _immutable.List ? c.getIn(['values', 0], ['']) : c.get('values', '');
+      var val = c.get('values') instanceof _immutable.List ? c.getIn(['values', 0], ['']) : c.get('values', '');
+      newFormValue = (0, _immutable.Map)({
+        condition: c.get('comparator'),
+        values: (0, _immutable.List)([val])
+      });
     } else {
       if (c.get('rawValues') !== undefined && !mergeDate) {
         newFormValue = (0, _immutable.Map)({

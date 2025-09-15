@@ -1,3 +1,12 @@
+## [3.125.1](https://github.com/ClearC2/grid-form-builder/compare/v3.125.0...v3.125.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* **date-picker-blur:** fix picker closing on first date selection ([#256](https://github.com/ClearC2/grid-form-builder/issues/256)) ([3b2078d](https://github.com/ClearC2/grid-form-builder/commit/3b2078dfc14944e5dec566cc40df7b8eb3df643c))
+* **reporting:** make convertSingleField return immutable Map ([#255](https://github.com/ClearC2/grid-form-builder/issues/255)) ([70276e3](https://github.com/ClearC2/grid-form-builder/commit/70276e310ee7aace7cee9cf1a7da7ba1e1819681))
+* **select:** fix issue where filtered select options did not reset when selecting an option or blurring the input ([#253](https://github.com/ClearC2/grid-form-builder/issues/253)) ([d6f564b](https://github.com/ClearC2/grid-form-builder/commit/d6f564b2d9a93f3b2460b943e0189d0e6d6a3361))
+
 # [3.125.0](https://github.com/ClearC2/grid-form-builder/compare/v3.124.2...v3.125.0) (2025-09-12)
 
 
