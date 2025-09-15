@@ -189,8 +189,10 @@ const Select = (props) => {
       menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
       setIsFocused(false)
       setInputValue('') // Clear search on blur
+      const allOptionsToShow = fullOptions.slice(0, largeDatasetThreshold)
+      setDisplayOptions(allOptionsToShow) // Reset options to full list
     },
-    [menuIsOpen, updateIsMenuOpen, name, onBlur]
+    [menuIsOpen, updateIsMenuOpen, name, onBlur, fullOptions, largeDatasetThreshold]
   )
 
   const setInputFieldPosition = useCallback(() => {
@@ -283,8 +285,10 @@ const Select = (props) => {
       })
       menuIsOpen[name] && updateIsMenuOpen({...menuIsOpen, [name]: false})
       setInputValue('') // Clear search after selection
+      const allOptionsToShow = fullOptions.slice(0, largeDatasetThreshold)
+      setDisplayOptions(allOptionsToShow) // Reset options to full list
     },
-    [onChange, name, menuIsOpen]
+    [onChange, name, menuIsOpen, fullOptions, largeDatasetThreshold]
   )
 
   const {Select} = input
