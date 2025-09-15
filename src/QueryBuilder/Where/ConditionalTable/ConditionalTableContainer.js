@@ -63,7 +63,8 @@ const convertSingleField = (c, formSchema, inBetweenDateValues) => {
         c.get('comparator') !== 'is blank' &&
         c.get('comparator') !== 'is not blank'
     ) {
-      newFormValue = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '')
+      const val = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '')
+      newFormValue = Map({condition: c.get('comparator'), values: List([val])})
     } else {
       if (c.get('rawValues') !== undefined && !mergeDate) {
         newFormValue = Map({
