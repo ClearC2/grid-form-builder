@@ -156,7 +156,12 @@ const DateInput = props => {
     setManualBlurCheck((type !== 'month' && type !== 'datetime'))
   }, [changeShowPicker, type])
 
-  const handleOnBlur = useCallback(e => {
+  const handleOnBlur = useCallback(() => {
+    // fixes if the picker is open the input blur is causing it to close
+    if (showPicker) {
+      return
+    }
+
     if ((type === 'month' || type === 'monthday') && manualBlurCheck) {
       const formatted = inputValue
         ? moment(inputValue, type === 'month' ? 'MM/YYYY' : 'MM/DD').format(inputFormat)
