@@ -153,8 +153,8 @@ const DateInput = props => {
   const handleOnFocus = useCallback(() => {
     changeShowPicker(true)
     setIsFocused(true)
-    setManualBlurCheck((type !== 'month' && type !== 'datetime'))
-  }, [changeShowPicker, type])
+    setManualBlurCheck(false)
+  }, [changeShowPicker])
 
   const handleOnBlur = useCallback(e => {
     if ((type === 'month' || type === 'monthday') && manualBlurCheck) {
@@ -183,8 +183,9 @@ const DateInput = props => {
           target: {name, value: formatted}
         })
       }
+      allowCalendarChangeEvent.current = true
     }
-    setManualBlurCheck(true)
+
     setIsFocused(false)
   }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name, dateTimeFormat]) // eslint-disable-line
 
@@ -280,6 +281,8 @@ const DateInput = props => {
                     setManualBlurCheck(true)
                     changeShowPicker(false)
                     setShowMonthFormatted(false)
+                  } else {
+                    setManualBlurCheck(true)
                   }
                 }
               }
