@@ -1,3 +1,10 @@
+## [3.125.2](https://github.com/ClearC2/grid-form-builder/compare/v3.125.1...v3.125.2) (2025-09-26)
+
+
+### Reverts
+
+* Revert "fix(date-picker-blur): fix picker closing on first date selection (#256)" ([809e0aa](https://github.com/ClearC2/grid-form-builder/commit/809e0aa3b24b32d76a37cd2fa671c43efd4434da)), closes [#256](https://github.com/ClearC2/grid-form-builder/issues/256)
+
 ## [3.125.1](https://github.com/ClearC2/grid-form-builder/compare/v3.125.0...v3.125.1) (2025-09-15)
 
 
