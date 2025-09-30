@@ -285,16 +285,16 @@ var Multiselect = function Multiselect(props) {
 
     _setTimeout(openMenu); // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
 
-  }, [openMenu, fieldPosition]);
-  var handleInputClick = useCallback(function () {
-    if (!disabled && !readonly && interactive) {
-      setInputFieldPosition();
-    }
-  }, [disabled, interactive, readonly, setInputFieldPosition]);
-  var handleOnFocus = useCallback(function () {
-    handleInputClick();
-    setIsFocused(true);
-  }, [handleInputClick]);
+  }, [openMenu, fieldPosition]); // const handleInputClick = useCallback(() => {
+  //   if (!disabled && !readonly && interactive) {
+  //     setInputFieldPosition()
+  //   }
+  // }, [disabled, interactive, readonly, setInputFieldPosition])
+  // const handleOnFocus = useCallback(() => {
+  //   handleInputClick()
+  //   setIsFocused(true)
+  // }, [handleInputClick])
+
   var closeMenuOnScroll = useCallback(function (e) {
     var menuOpenState = false;
 
