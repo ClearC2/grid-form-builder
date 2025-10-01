@@ -1,3 +1,10 @@
+## [3.125.4](https://github.com/ClearC2/grid-form-builder/compare/v3.125.3...v3.125.4) (2025-10-01)
+
+
+### Bug Fixes
+
+* **select:** move alignment of placeholder text ([#259](https://github.com/ClearC2/grid-form-builder/issues/259)) ([0098bd7](https://github.com/ClearC2/grid-form-builder/commit/0098bd734c67fc899d0bae5a7f00d43da4112750))
+
 ## [3.125.3](https://github.com/ClearC2/grid-form-builder/compare/v3.125.2...v3.125.3) (2025-10-01)
 
 
