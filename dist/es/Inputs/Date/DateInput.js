@@ -220,8 +220,8 @@ var DateInput = function DateInput(props) {
   var handleOnFocus = useCallback(function () {
     changeShowPicker(true);
     setIsFocused(true);
-    setManualBlurCheck(type !== 'month' && type !== 'datetime');
-  }, [changeShowPicker, type]);
+    setManualBlurCheck(false);
+  }, [changeShowPicker]);
   var handleOnBlur = useCallback(function (e) {
     if ((type === 'month' || type === 'monthday') && manualBlurCheck) {
       var formatted = inputValue ? moment(inputValue, type === 'month' ? 'MM/YYYY' : 'MM/DD').format(inputFormat) : '';
@@ -265,9 +265,10 @@ var DateInput = function DateInput(props) {
           }
         });
       }
+
+      allowCalendarChangeEvent.current = true;
     }
 
-    setManualBlurCheck(true);
     setIsFocused(false);
   }, [type, manualBlurCheck, inputValue, dateFormat, onChangeValidator, onChange, name, dateTimeFormat]); // eslint-disable-line
 
@@ -392,6 +393,8 @@ var DateInput = function DateInput(props) {
         setManualBlurCheck(true);
         changeShowPicker(false);
         setShowMonthFormatted(false);
+      } else {
+        setManualBlurCheck(true);
       }
     }
   }), showPicker && canPickDay && !isDisabled && jsx(DatePicker, {

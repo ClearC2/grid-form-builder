@@ -1,3 +1,10 @@
+## [3.125.3](https://github.com/ClearC2/grid-form-builder/compare/v3.125.2...v3.125.3) (2025-10-01)
+
+
+### Bug Fixes
+
+* **date:** change handler for input blur should not trigger unless they started typing into the input ([#258](https://github.com/ClearC2/grid-form-builder/issues/258)) ([9f8d66a](https://github.com/ClearC2/grid-form-builder/commit/9f8d66a619dbcc7252febaed665732f5641323fa))
+
 ## [3.125.2](https://github.com/ClearC2/grid-form-builder/compare/v3.125.1...v3.125.2) (2025-09-26)
 
 
