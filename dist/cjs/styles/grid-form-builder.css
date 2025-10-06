@@ -288,6 +288,11 @@ div.gfb-input__value-container--is-multi.gfb-input__value-container {
   height: 100%;
 }
 
+div.gfb-input__value-container--is-multi {
+  align-items: flex-start;
+  padding-top: 1px;
+}
+
 div.gfb-input__placeholder {
   top: 10px;
 }

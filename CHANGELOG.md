@@ -1,3 +1,10 @@
+# [3.126.0](https://github.com/ClearC2/grid-form-builder/compare/v3.125.4...v3.126.0) (2025-10-06)
+
+
+### Features
+
+* **multi-input:** move cursor caret to top of input ([#260](https://github.com/ClearC2/grid-form-builder/issues/260)) ([c384536](https://github.com/ClearC2/grid-form-builder/commit/c3845366fac94e0e86b76c04ab71bb3533555eda))
+
 ## [3.125.4](https://github.com/ClearC2/grid-form-builder/compare/v3.125.3...v3.125.4) (2025-10-01)
 
 

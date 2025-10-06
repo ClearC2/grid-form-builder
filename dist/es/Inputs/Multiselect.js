@@ -554,14 +554,7 @@ var Multiselect = function Multiselect(props) {
   })) : jsx(Select, _extends({}, baseSelectProps, {
     filterOption: null,
     options: displayOptions,
-    placeholder: placeholder,
-    styles: {
-      control: function control(base) {
-        return _objectSpread(_objectSpread({}, base), {}, {
-          alignItems: 'flex-start'
-        });
-      }
-    }
+    placeholder: placeholder
   })));
 };
 
