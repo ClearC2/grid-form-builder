@@ -1,3 +1,10 @@
+## [3.126.1](https://github.com/ClearC2/grid-form-builder/compare/v3.126.0...v3.126.1) (2025-10-10)
+
+
+### Bug Fixes
+
+* **multitypeahead:** fix cursor alignment to be on level with items ([#261](https://github.com/ClearC2/grid-form-builder/issues/261)) ([8669e7a](https://github.com/ClearC2/grid-form-builder/commit/8669e7a2f6ef5c269adb414ddeac161614865b5d))
+
 # [3.126.0](https://github.com/ClearC2/grid-form-builder/compare/v3.125.4...v3.126.0) (2025-10-06)
 
 
