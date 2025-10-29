@@ -1,3 +1,10 @@
+# [3.127.0](https://github.com/ClearC2/grid-form-builder/compare/v3.126.1...v3.127.0) (2025-10-29)
+
+
+### Features
+
+* **tabindex:** adds schema length to tab index prefix ([716d1eb](https://github.com/ClearC2/grid-form-builder/commit/716d1ebebeebdfd0806f386684b2f2ae5d1fcac8))
+
 ## [3.126.1](https://github.com/ClearC2/grid-form-builder/compare/v3.126.0...v3.126.1) (2025-10-10)
 
 

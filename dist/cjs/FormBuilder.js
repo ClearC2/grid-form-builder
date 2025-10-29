@@ -328,6 +328,12 @@ var FormBuilder = function FormBuilder(props) {
       var config = _objectSpread({}, field.config) || {}; // prevent mutation of the original config
 
       if ((0, _typeof2.default)(dimensions) === 'object') {
+        var length = schema.length;
+
+        while (String(length).length < 3) {
+          length = '0' + length;
+        }
+
         dimensions.i = i + '';
         var tabindex = config.tabindex;
 
@@ -339,11 +345,11 @@ var FormBuilder = function FormBuilder(props) {
             tabNumber++;
           }
 
-          tabindex = myOffset + '' + tabNumber;
+          tabindex = myOffset + '' + length + '' + tabNumber;
           specifiedTabs = specifiedTabs.add(tabNumber);
           tabNumber++;
         } else {
-          tabindex = myOffset + '' + tabindex;
+          tabindex = myOffset + '' + length + '' + tabindex;
         }
 
         var _config$rteImageUrl = config.rteImageUrl,
