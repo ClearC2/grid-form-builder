@@ -170,6 +170,10 @@ const FormBuilder = (props) => {
       const {dimensions = {x: 0, y: i, w: 12, h: 1}} = field
       const config = {...field.config} || {} // prevent mutation of the original config
       if (typeof dimensions === 'object') {
+        let length = schema.length
+        while (String(length).length < 3) {
+          length = '0' + length
+        }
         dimensions.i = i + ''
         let {tabindex} = config
         if (!tabindex) {
@@ -179,11 +183,11 @@ const FormBuilder = (props) => {
           while (specifiedTabs.has(tabNumber)) {
             tabNumber++
           }
-          tabindex = myOffset + '' + tabNumber
+          tabindex = myOffset + '' + length + '' + tabNumber
           specifiedTabs = specifiedTabs.add(tabNumber)
           tabNumber++
         } else {
-          tabindex = myOffset + '' + tabindex
+          tabindex = myOffset + '' + length + '' + tabindex
         }
         const {rteImageUrl = ''} = config
         const isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i
