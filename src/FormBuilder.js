@@ -1,4 +1,14 @@
-import React, {Component, PureComponent, useState, useEffect, useCallback, useRef, createContext} from 'react'
+
+import React, {
+  Component,
+  PureComponent,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  createContext,
+  useLayoutEffect
+} from 'react'
 import PropTypes from 'prop-types'
 import RGL from 'react-grid-layout'
 import {emailValidator, searchForLayoutArray, updateLayoutArray} from './utils'
@@ -35,6 +45,34 @@ const defaults = {
     type: 'input'
   },
   device: {cordova: false, model: 'browser', platform: 'browser', uuid: 'browser', version: 'browser'}
+}
+
+let gTabIndexPrefix = 0
+
+const useTabIndexPrefix = () => {
+  const tabIndexPrefix = useRef(null)
+
+  useLayoutEffect(() => {
+    if (tabIndexPrefix.current === null) {
+      tabIndexPrefix.current = ++gTabIndexPrefix
+    }
+  }, [])
+
+  return tabIndexPrefix.current
+}
+
+const matchSigFigs = (prefix, suffix) => {
+  // always make the tab index a 6 digit number to prevent tab indexes from jumping between different forms due to sig fig issues
+  // this MAY cause browser issues if they don't know how to handle large tab indexes - JRA 10/31/2025
+  prefix = String(prefix)
+  suffix = String(suffix)
+  while (prefix.length < 3) {
+    prefix = prefix + '0'
+  }
+  while (suffix.length < 3) {
+    suffix = '0' + suffix
+  }
+  return prefix + suffix
 }
 
 const FormBuilder = (props) => {
@@ -82,10 +120,11 @@ const FormBuilder = (props) => {
   const [compact, updateCompact] = useState(
     verticalCompact ? 'vertical' : typeof compactType === 'undefined' ? null : compactType
   )
-  const [myOffset] = useState(FormBuilder.count)
   const [id] = useState(`gfb-${Math.floor(Math.random() * 10000) + 1}`) // creates a unique id for this grid for the screen scraper
   const ReactGridLayout = useRef(null)
   const {theme} = useTheme()
+
+  const tabIndexPrefix = useTabIndexPrefix()
 
   const handleAnywhereClick = useCallback((config, e) => {
     debugLog('handleAnywhereClick')
@@ -121,12 +160,6 @@ const FormBuilder = (props) => {
     debugLog('updateRequiredWarning')
     updateRequiredWarning(validate)
   }, [validate])
-
-  useEffect(() => {
-    debugLog('FormBuilder.count')
-    // this count is used to set myOffset, which serves as a starting point for tab indexing
-    FormBuilder.count++
-  }, [])
 
   useEffect(() => {
     debugLog('inputEventListenerDebouncer')
@@ -170,10 +203,7 @@ const FormBuilder = (props) => {
       const {dimensions = {x: 0, y: i, w: 12, h: 1}} = field
       const config = {...field.config} || {} // prevent mutation of the original config
       if (typeof dimensions === 'object') {
-        let length = schema.length
-        while (String(length).length < 3) {
-          length = '0' + length
-        }
+        const prefix = tabIndexPrefix || 0
         dimensions.i = i + ''
         let {tabindex} = config
         if (!tabindex) {
@@ -183,11 +213,11 @@ const FormBuilder = (props) => {
           while (specifiedTabs.has(tabNumber)) {
             tabNumber++
           }
-          tabindex = myOffset + '' + length + '' + tabNumber
+          tabindex = matchSigFigs(prefix, tabNumber)
           specifiedTabs = specifiedTabs.add(tabNumber)
           tabNumber++
         } else {
-          tabindex = myOffset + '' + length + '' + tabindex
+          tabindex = matchSigFigs(prefix, tabindex)
         }
         const {rteImageUrl = ''} = config
         const isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i
@@ -253,10 +283,10 @@ const FormBuilder = (props) => {
     interactive,
     draggable,
     readonly,
-    myOffset,
     activeItem,
     handleLinkClick,
-    autoComplete
+    autoComplete,
+    tabIndexPrefix
   ])
 
   const removeItem = useCallback(i => {
@@ -395,8 +425,6 @@ FormBuilder.propTypes = {
   fieldDefinitions: PropTypes.instanceOf(Map),
   c2class: PropTypes.string
 }
-
-FormBuilder.count = 1
 
 class PureFormBuilder extends PureComponent {
   render = () => <FormBuilder {...this.props} />

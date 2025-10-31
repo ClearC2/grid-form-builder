@@ -37,7 +37,7 @@ import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instanc
 import _parseFloat from "@babel/runtime-corejs3/core-js-stable/parse-float";
 import _Array$isArray from "@babel/runtime-corejs3/core-js-stable/array/is-array";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
-import React, { Component, PureComponent, useState, useEffect, useCallback, useRef, createContext } from 'react';
+import React, { Component, PureComponent, useState, useEffect, useCallback, useRef, createContext, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import RGL from 'react-grid-layout';
 import { emailValidator, searchForLayoutArray, updateLayoutArray } from './utils';
@@ -81,6 +81,32 @@ var defaults = {
     uuid: 'browser',
     version: 'browser'
   }
+};
+var gTabIndexPrefix = 0;
+
+var useTabIndexPrefix = function useTabIndexPrefix() {
+  var tabIndexPrefix = useRef(null);
+  useLayoutEffect(function () {
+    if (tabIndexPrefix.current === null) {
+      tabIndexPrefix.current = ++gTabIndexPrefix;
+    }
+  }, []);
+  return tabIndexPrefix.current;
+};
+
+var matchSigFigs = function matchSigFigs(prefix, suffix) {
+  prefix = String(prefix);
+  suffix = String(suffix);
+
+  while (prefix.length < 3) {
+    prefix = prefix + '0';
+  }
+
+  while (suffix.length < 3) {
+    suffix = '0' + suffix;
+  }
+
+  return prefix + suffix;
 };
 
 var FormBuilder = function FormBuilder(props) {
@@ -161,13 +187,9 @@ var FormBuilder = function FormBuilder(props) {
       compact = _useState6[0],
       updateCompact = _useState6[1];
 
-  var _useState7 = useState(FormBuilder.count),
+  var _useState7 = useState("gfb-".concat(Math.floor(Math.random() * 10000) + 1)),
       _useState8 = _slicedToArray(_useState7, 1),
-      myOffset = _useState8[0];
-
-  var _useState9 = useState("gfb-".concat(Math.floor(Math.random() * 10000) + 1)),
-      _useState10 = _slicedToArray(_useState9, 1),
-      id = _useState10[0]; // creates a unique id for this grid for the screen scraper
+      id = _useState8[0]; // creates a unique id for this grid for the screen scraper
 
 
   var ReactGridLayout = useRef(null);
@@ -175,6 +197,7 @@ var FormBuilder = function FormBuilder(props) {
   var _useTheme = useTheme(),
       theme = _useTheme.theme;
 
+  var tabIndexPrefix = useTabIndexPrefix();
   var handleAnywhereClick = useCallback(function (config, e) {
     debugLog('handleAnywhereClick');
     onClick(config, e);
@@ -208,11 +231,6 @@ var FormBuilder = function FormBuilder(props) {
     debugLog('updateRequiredWarning');
     updateRequiredWarning(validate);
   }, [validate]);
-  useEffect(function () {
-    debugLog('FormBuilder.count'); // this count is used to set myOffset, which serves as a starting point for tab indexing
-
-    FormBuilder.count++;
-  }, []);
   useEffect(function () {
     debugLog('inputEventListenerDebouncer'); // this is used to attach css classes for browsers that do not support :focus-within
     // this is not best practice, you should always try to avoid screen scraping the dom in react
@@ -267,12 +285,7 @@ var FormBuilder = function FormBuilder(props) {
       var config = _objectSpread({}, field.config) || {}; // prevent mutation of the original config
 
       if (_typeof(dimensions) === 'object') {
-        var length = schema.length;
-
-        while (String(length).length < 3) {
-          length = '0' + length;
-        }
-
+        var prefix = tabIndexPrefix || 0;
         dimensions.i = i + '';
         var tabindex = config.tabindex;
 
@@ -284,11 +297,11 @@ var FormBuilder = function FormBuilder(props) {
             tabNumber++;
           }
 
-          tabindex = myOffset + '' + length + '' + tabNumber;
+          tabindex = matchSigFigs(prefix, tabNumber);
           specifiedTabs = specifiedTabs.add(tabNumber);
           tabNumber++;
         } else {
-          tabindex = myOffset + '' + length + '' + tabindex;
+          tabindex = matchSigFigs(prefix, tabindex);
         }
 
         var _config$rteImageUrl = config.rteImageUrl,
@@ -353,7 +366,7 @@ var FormBuilder = function FormBuilder(props) {
       elements: elements
     });
   }, [// eslint-disable-line
-  conditionalFieldValues, conditionalSearch, formSchema, handleAnywhereClick, handleCascadeKeywordClick, handleDragDropOnInput, handleRTEImageClick, requiredWarning, rowHeight, handleOnChange, interactive, draggable, readonly, myOffset, activeItem, handleLinkClick, autoComplete]);
+  conditionalFieldValues, conditionalSearch, formSchema, handleAnywhereClick, handleCascadeKeywordClick, handleDragDropOnInput, handleRTEImageClick, requiredWarning, rowHeight, handleOnChange, interactive, draggable, readonly, activeItem, handleLinkClick, autoComplete, tabIndexPrefix]);
   var removeItem = useCallback(function (i) {
     if (typeof handleOnDimensionChange === 'function') {
       var schema = searchForLayoutArray(formSchema);
@@ -516,7 +529,6 @@ FormBuilder.propTypes = {
   fieldDefinitions: PropTypes.instanceOf(Map),
   c2class: PropTypes.string
 };
-FormBuilder.count = 1;
 
 var PureFormBuilder = /*#__PURE__*/function (_PureComponent) {
   _inherits(PureFormBuilder, _PureComponent);
@@ -550,10 +562,10 @@ var SizeMemoizer = function SizeMemoizer(props) {
   var size = props.size,
       rest = _objectWithoutProperties(props, _excluded);
 
-  var _useState11 = useState(size.width),
-      _useState12 = _slicedToArray(_useState11, 2),
-      width = _useState12[0],
-      setWidth = _useState12[1];
+  var _useState9 = useState(size.width),
+      _useState10 = _slicedToArray(_useState9, 2),
+      width = _useState10[0],
+      setWidth = _useState10[1];
 
   useEffect(function () {
     var w = Math.ceil(size.width);
