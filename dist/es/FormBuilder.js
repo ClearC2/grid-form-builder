@@ -95,6 +95,8 @@ var useTabIndexPrefix = function useTabIndexPrefix() {
 };
 
 var matchSigFigs = function matchSigFigs(prefix, suffix) {
+  // always make the tab index a 6 digit number to prevent tab indexes from jumping between different forms due to sig fig issues
+  // this MAY cause browser issues if they don't know how to handle large tab indexes - JRA 10/31/2025
   prefix = String(prefix);
   suffix = String(suffix);
 

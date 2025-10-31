@@ -145,6 +145,34 @@ var defaults = {
     version: 'browser'
   }
 };
+var gTabIndexPrefix = 0;
+
+var useTabIndexPrefix = function useTabIndexPrefix() {
+  var tabIndexPrefix = (0, _react.useRef)(null);
+  (0, _react.useLayoutEffect)(function () {
+    if (tabIndexPrefix.current === null) {
+      tabIndexPrefix.current = ++gTabIndexPrefix;
+    }
+  }, []);
+  return tabIndexPrefix.current;
+};
+
+var matchSigFigs = function matchSigFigs(prefix, suffix) {
+  // always make the tab index a 6 digit number to prevent tab indexes from jumping between different forms due to sig fig issues
+  // this MAY cause browser issues if they don't know how to handle large tab indexes - JRA 10/31/2025
+  prefix = String(prefix);
+  suffix = String(suffix);
+
+  while (prefix.length < 3) {
+    prefix = prefix + '0';
+  }
+
+  while (suffix.length < 3) {
+    suffix = '0' + suffix;
+  }
+
+  return prefix + suffix;
+};
 
 var FormBuilder = function FormBuilder(props) {
   var rowHeight = props.rowHeight,
@@ -224,13 +252,9 @@ var FormBuilder = function FormBuilder(props) {
       compact = _useState6[0],
       updateCompact = _useState6[1];
 
-  var _useState7 = (0, _react.useState)(FormBuilder.count),
+  var _useState7 = (0, _react.useState)("gfb-".concat(Math.floor(Math.random() * 10000) + 1)),
       _useState8 = (0, _slicedToArray2.default)(_useState7, 1),
-      myOffset = _useState8[0];
-
-  var _useState9 = (0, _react.useState)("gfb-".concat(Math.floor(Math.random() * 10000) + 1)),
-      _useState10 = (0, _slicedToArray2.default)(_useState9, 1),
-      id = _useState10[0]; // creates a unique id for this grid for the screen scraper
+      id = _useState8[0]; // creates a unique id for this grid for the screen scraper
 
 
   var ReactGridLayout = (0, _react.useRef)(null);
@@ -238,6 +262,7 @@ var FormBuilder = function FormBuilder(props) {
   var _useTheme = (0, _useTheme2.default)(),
       theme = _useTheme.theme;
 
+  var tabIndexPrefix = useTabIndexPrefix();
   var handleAnywhereClick = (0, _react.useCallback)(function (config, e) {
     debugLog('handleAnywhereClick');
     onClick(config, e);
@@ -271,11 +296,6 @@ var FormBuilder = function FormBuilder(props) {
     debugLog('updateRequiredWarning');
     updateRequiredWarning(validate);
   }, [validate]);
-  (0, _react.useEffect)(function () {
-    debugLog('FormBuilder.count'); // this count is used to set myOffset, which serves as a starting point for tab indexing
-
-    FormBuilder.count++;
-  }, []);
   (0, _react.useEffect)(function () {
     debugLog('inputEventListenerDebouncer'); // this is used to attach css classes for browsers that do not support :focus-within
     // this is not best practice, you should always try to avoid screen scraping the dom in react
@@ -328,12 +348,7 @@ var FormBuilder = function FormBuilder(props) {
       var config = _objectSpread({}, field.config) || {}; // prevent mutation of the original config
 
       if ((0, _typeof2.default)(dimensions) === 'object') {
-        var length = schema.length;
-
-        while (String(length).length < 3) {
-          length = '0' + length;
-        }
-
+        var prefix = tabIndexPrefix || 0;
         dimensions.i = i + '';
         var tabindex = config.tabindex;
 
@@ -345,11 +360,11 @@ var FormBuilder = function FormBuilder(props) {
             tabNumber++;
           }
 
-          tabindex = myOffset + '' + length + '' + tabNumber;
+          tabindex = matchSigFigs(prefix, tabNumber);
           specifiedTabs = specifiedTabs.add(tabNumber);
           tabNumber++;
         } else {
-          tabindex = myOffset + '' + length + '' + tabindex;
+          tabindex = matchSigFigs(prefix, tabindex);
         }
 
         var _config$rteImageUrl = config.rteImageUrl,
@@ -413,7 +428,7 @@ var FormBuilder = function FormBuilder(props) {
       elements: elements
     });
   }, [// eslint-disable-line
-  conditionalFieldValues, conditionalSearch, formSchema, handleAnywhereClick, handleCascadeKeywordClick, handleDragDropOnInput, handleRTEImageClick, requiredWarning, rowHeight, handleOnChange, interactive, draggable, readonly, myOffset, activeItem, handleLinkClick, autoComplete]);
+  conditionalFieldValues, conditionalSearch, formSchema, handleAnywhereClick, handleCascadeKeywordClick, handleDragDropOnInput, handleRTEImageClick, requiredWarning, rowHeight, handleOnChange, interactive, draggable, readonly, activeItem, handleLinkClick, autoComplete, tabIndexPrefix]);
   var removeItem = (0, _react.useCallback)(function (i) {
     if (typeof handleOnDimensionChange === 'function') {
       var schema = (0, _utils.searchForLayoutArray)(formSchema);
@@ -569,7 +584,6 @@ FormBuilder.propTypes = {
   fieldDefinitions: _propTypes.default.instanceOf(_immutable.Map),
   c2class: _propTypes.default.string
 };
-FormBuilder.count = 1;
 
 var PureFormBuilder = /*#__PURE__*/function (_PureComponent) {
   (0, _inherits2.default)(PureFormBuilder, _PureComponent);
@@ -601,10 +615,10 @@ var SizeMemoizer = function SizeMemoizer(props) {
   var size = props.size,
       rest = (0, _objectWithoutProperties2.default)(props, _excluded);
 
-  var _useState11 = (0, _react.useState)(size.width),
-      _useState12 = (0, _slicedToArray2.default)(_useState11, 2),
-      width = _useState12[0],
-      setWidth = _useState12[1];
+  var _useState9 = (0, _react.useState)(size.width),
+      _useState10 = (0, _slicedToArray2.default)(_useState9, 2),
+      width = _useState10[0],
+      setWidth = _useState10[1];
 
   (0, _react.useEffect)(function () {
     var w = Math.ceil(size.width);

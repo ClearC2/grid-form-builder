@@ -1,3 +1,10 @@
+# [3.128.0](https://github.com/ClearC2/grid-form-builder/compare/v3.127.0...v3.128.0) (2025-10-31)
+
+
+### Features
+
+* **tabindex:** switches tab index to use react's useLayoutEffect ([0cc8a5e](https://github.com/ClearC2/grid-form-builder/commit/0cc8a5ecaace7d45c304382c161b39affe8136d7))
+
 # [3.127.0](https://github.com/ClearC2/grid-form-builder/compare/v3.126.1...v3.127.0) (2025-10-29)
 
 
