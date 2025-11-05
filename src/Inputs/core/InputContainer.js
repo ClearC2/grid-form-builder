@@ -2,7 +2,7 @@
 import {jsx} from '@emotion/core'
 import {Component, cloneElement, useRef} from 'react'
 import PropTypes from 'prop-types'
-import {Map} from 'immutable'
+import {Map, fromJS} from 'immutable'
 import PortalTooltip from '../../Tooltip'
 import {randomId} from '../../utils'
 import useTheme from '../../theme/useTheme'
@@ -18,6 +18,7 @@ class InputPerformanceOptimizer extends Component {
     const {config, values, value} = this.props
     const type = (typeof config.type === 'string' && config.type.toLowerCase()) || 'input'
     if (
+      fromJS(p.config).equals(fromJS(config)) &&
       !values.equals(p.values) &&
       value === p.value &&
       values.get('cfd_userisreadonly') === p.values.get('cfd_userisreadonly') // if this value is changing, rerender the field in case it needs to change read only status

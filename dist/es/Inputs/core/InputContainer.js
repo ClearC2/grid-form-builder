@@ -31,7 +31,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_R
 import { jsx } from '@emotion/core';
 import { Component, cloneElement, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { Map, fromJS } from 'immutable';
 import PortalTooltip from '../../Tooltip';
 import { randomId } from '../../utils';
 import useTheme from '../../theme/useTheme';
@@ -57,7 +57,7 @@ var InputPerformanceOptimizer = /*#__PURE__*/function (_Component) {
 
       var type = typeof config.type === 'string' && config.type.toLowerCase() || 'input';
 
-      if (!values.equals(_valuesInstanceProperty(p)) && value === p.value && values.get('cfd_userisreadonly') === _valuesInstanceProperty(p).get('cfd_userisreadonly') // if this value is changing, rerender the field in case it needs to change read only status
+      if (fromJS(p.config).equals(fromJS(config)) && !values.equals(_valuesInstanceProperty(p)) && value === p.value && values.get('cfd_userisreadonly') === _valuesInstanceProperty(p).get('cfd_userisreadonly') // if this value is changing, rerender the field in case it needs to change read only status
       ) {
         var _context;
 
