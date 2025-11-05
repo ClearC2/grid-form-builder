@@ -1,3 +1,10 @@
+# [3.129.0](https://github.com/ClearC2/grid-form-builder/compare/v3.128.0...v3.129.0) (2025-11-05)
+
+
+### Features
+
+* **updates:** if the config changes at the same time as the form values (usually due to batching), fields will still correctly rerender ([728cc1f](https://github.com/ClearC2/grid-form-builder/commit/728cc1fce5baad14cf204949bf10c281176b9a6d))
+
 # [3.128.0](https://github.com/ClearC2/grid-form-builder/compare/v3.127.0...v3.128.0) (2025-10-31)
 
 

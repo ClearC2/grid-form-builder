@@ -89,7 +89,7 @@ var InputPerformanceOptimizer = /*#__PURE__*/function (_Component) {
           value = _this$props.value;
       var type = typeof config.type === 'string' && config.type.toLowerCase() || 'input';
 
-      if (!values.equals((0, _values.default)(p)) && value === p.value && values.get('cfd_userisreadonly') === (0, _values.default)(p).get('cfd_userisreadonly') // if this value is changing, rerender the field in case it needs to change read only status
+      if ((0, _immutable.fromJS)(p.config).equals((0, _immutable.fromJS)(config)) && !values.equals((0, _values.default)(p)) && value === p.value && values.get('cfd_userisreadonly') === (0, _values.default)(p).get('cfd_userisreadonly') // if this value is changing, rerender the field in case it needs to change read only status
       ) {
         var _context;
 
