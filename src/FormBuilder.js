@@ -537,7 +537,8 @@ export default class FormValidator extends Component {
         minimum = 0,
         maximum = 0,
         pattern = null,
-        message = ''
+        message = '',
+        maxlength = 0
       } = config
       if (pattern) {
         const regex = new RegExp(pattern)
@@ -579,6 +580,23 @@ export default class FormValidator extends Component {
               reason: 'maximum value exceeded',
               message: `${label} is beyond the maximum value`,
               description: `The field ${name} has an invalid value`
+            })
+          }
+        }
+      }
+      if (type === 'richtextarea' && (formValues.get(name, '') + '').length > 0) {
+        if (maxlength > 0) {
+          const rawValue = formValues.get(name, '') || ''
+          const valueStr = String(rawValue)
+
+          const currentLength = valueStr.length
+
+          if (currentLength > maxlength) {
+            reasons.push({
+              reason: 'maximum length exceeded',
+              message: `${label} exceeds the ${maxlength} character limit.`,
+              // eslint-disable-next-line max-len
+              description: `The field ${name} contains ${currentLength} characters, exceeding the maximum of ${maxlength}.`
             })
           }
         }
