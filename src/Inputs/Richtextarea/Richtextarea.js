@@ -160,14 +160,15 @@ const Richtextarea = props => {
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
   let controlClass = 'gfb-input__control'
+  let validationWarning
   let validationError
   if (required && requiredWarning && (value + '').trim().length === 0 && !isFocused) {
     controlClass = controlClass + ' gfb-validation-error'
     validationError = 'This Field is Required'
   }
-  let validationWarning
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
-    validationWarning = `Maximum character limit of ${maxlength} reached.`
+    validationError = `Maximum character limit of ${maxlength} reached.`
+    controlClass = controlClass + ' gfb-validation-error'
   }
   let outerClass = 'gfb-input-outer'
   if (isFocused) {

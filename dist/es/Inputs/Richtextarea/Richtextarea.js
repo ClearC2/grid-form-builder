@@ -155,6 +155,7 @@ var Richtextarea = function Richtextarea(props) {
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var controlClass = 'gfb-input__control';
+  var validationWarning;
   var validationError;
 
   if (required && requiredWarning && _trimInstanceProperty(_context = value + '').call(_context).length === 0 && !isFocused) {
@@ -162,10 +163,9 @@ var Richtextarea = function Richtextarea(props) {
     validationError = 'This Field is Required';
   }
 
-  var validationWarning;
-
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
-    validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+    validationError = "Maximum character limit of ".concat(maxlength, " reached.");
+    controlClass = controlClass + ' gfb-validation-error';
   }
 
   var outerClass = 'gfb-input-outer';
