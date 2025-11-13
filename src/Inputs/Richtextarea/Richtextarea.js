@@ -95,7 +95,6 @@ const Richtextarea = props => {
       ) {
         setHasBlockedAutoFormat(true)
       } else if (html) {
-        if (html.length > maxlength) html = html.substring(0, maxlength)
         onChange({
           target: {
             name,
@@ -104,7 +103,7 @@ const Richtextarea = props => {
         })
       }
     }
-  }, [onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat, value])
+  }, [onChange, name, readonly, disabled, hasBlockedAutoFormat, value])
 
   const addTable = useCallback(() => {
     QuillRef.current.editor.getModule('table').insertTable(2, 2)
