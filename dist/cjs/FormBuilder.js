@@ -109,7 +109,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_R
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context7, _context8; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context7 = ownKeys(Object(source), !0)).call(_context7, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context8 = ownKeys(Object(source))).call(_context8, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context10, _context11; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context10 = ownKeys(Object(source), !0)).call(_context10, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context11 = ownKeys(Object(source))).call(_context11, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var inputEventListenerDebouncer = null;
 var FormValueContext = /*#__PURE__*/(0, _react.createContext)([(0, _immutable.Map)(), function () {}]);
@@ -714,7 +714,9 @@ var FormValidator = /*#__PURE__*/function (_Component) {
             _config$pattern = config.pattern,
             pattern = _config$pattern === void 0 ? null : _config$pattern,
             _config$message = config.message,
-            message = _config$message === void 0 ? '' : _config$message;
+            message = _config$message === void 0 ? '' : _config$message,
+            _config$maxlength = config.maxlength,
+            maxlength = _config$maxlength === void 0 ? 0 : _config$maxlength;
 
         if (pattern) {
           var regex = new RegExp(pattern);
@@ -763,6 +765,25 @@ var FormValidator = /*#__PURE__*/function (_Component) {
                 reason: 'maximum value exceeded',
                 message: "".concat(label, " is beyond the maximum value"),
                 description: "The field ".concat(name, " has an invalid value")
+              });
+            }
+          }
+        }
+
+        if (type === 'richtextarea' && (formValues.get(name, '') + '').length > 0) {
+          if (maxlength > 0) {
+            var rawValue = formValues.get(name, '') || '';
+            var valueStr = String(rawValue);
+            var currentLength = valueStr.length;
+
+            if (currentLength > maxlength) {
+              var _context5, _context6, _context7;
+
+              reasons.push({
+                reason: 'maximum length exceeded',
+                message: (0, _concat.default)(_context5 = "".concat(label, " exceeds the ")).call(_context5, maxlength, " character limit."),
+                // eslint-disable-next-line max-len
+                description: (0, _concat.default)(_context6 = (0, _concat.default)(_context7 = "The field ".concat(name, " contains ")).call(_context7, currentLength, " characters, exceeding the maximum of ")).call(_context6, maxlength, ".")
               });
             }
           }
@@ -833,9 +854,9 @@ var FormValidator = /*#__PURE__*/function (_Component) {
   (0, _createClass2.default)(FormValidator, [{
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(p, s) {
-      var _context5,
+      var _context8,
           _this3 = this,
-          _context6;
+          _context9;
 
       if (p.formValues !== this.props.formValues) {
         this.updateFormValues(p.formValues); // this kills the extra render from values updating, the context updating will render - JRA 11/07/2019
@@ -843,14 +864,14 @@ var FormValidator = /*#__PURE__*/function (_Component) {
         return false;
       }
 
-      var update = (0, _some.default)(_context5 = (0, _keys.default)(this.props)).call(_context5, function (prop) {
+      var update = (0, _some.default)(_context8 = (0, _keys.default)(this.props)).call(_context8, function (prop) {
         if (_this3.props[prop] && p[prop] && typeof _this3.props[prop].toJS === 'function' && typeof p[prop].toJS === 'function') {
           return !_this3.props[prop].equals(p[prop]);
         } else {
           return _this3.props[prop] !== p[prop];
         }
       });
-      if (!update) update = (0, _some.default)(_context6 = (0, _keys.default)(this.state)).call(_context6, function (state) {
+      if (!update) update = (0, _some.default)(_context9 = (0, _keys.default)(this.state)).call(_context9, function (state) {
         return _this3.state[state] !== s[state];
       });
       return update;

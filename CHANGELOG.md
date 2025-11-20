@@ -1,3 +1,10 @@
+# [3.130.0](https://github.com/ClearC2/grid-form-builder/compare/v3.129.0...v3.130.0) (2025-11-20)
+
+
+### Features
+
+* **richtextarea:** Enforce maxlength on save validation  ([#262](https://github.com/ClearC2/grid-form-builder/issues/262)) ([116a682](https://github.com/ClearC2/grid-form-builder/commit/116a682222ebbecdc7e22177ecb6a4f375de2db7))
+
 # [3.129.0](https://github.com/ClearC2/grid-form-builder/compare/v3.128.0...v3.129.0) (2025-11-05)
 
 

@@ -131,7 +131,6 @@ var Richtextarea = function Richtextarea(props) {
       if (!hasBlockedAutoFormat && typeof value === 'string' && typeof html === 'string' && ((0, _indexOf.default)(value).call(value, '<html') > -1 && (0, _indexOf.default)(html).call(html, '<html') === -1 || (0, _indexOf.default)(value).call(value, '<head') > -1 && (0, _indexOf.default)(html).call(html, '<head') === -1 || (0, _indexOf.default)(value).call(value, '<meta') > -1 && (0, _indexOf.default)(html).call(html, '<meta') === -1)) {
         setHasBlockedAutoFormat(true);
       } else if (html) {
-        if (html.length > maxlength) html = html.substring(0, maxlength);
         onChange({
           target: {
             name: name,
@@ -140,7 +139,7 @@ var Richtextarea = function Richtextarea(props) {
         });
       }
     }
-  }, [onChange, name, maxlength, readonly, disabled, hasBlockedAutoFormat, value]);
+  }, [onChange, name, readonly, disabled, hasBlockedAutoFormat, value]);
   var addTable = (0, _react.useCallback)(function () {
     QuillRef.current.editor.getModule('table').insertTable(2, 2);
   }, [QuillRef]);
@@ -184,6 +183,7 @@ var Richtextarea = function Richtextarea(props) {
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
   var controlClass = 'gfb-input__control';
+  var validationWarning;
   var validationError;
 
   if (required && requiredWarning && (0, _trim.default)(_context = value + '').call(_context).length === 0 && !isFocused) {
@@ -191,10 +191,9 @@ var Richtextarea = function Richtextarea(props) {
     validationError = 'This Field is Required';
   }
 
-  var validationWarning;
-
   if (maxlength && (value + '').length && (value + '').length >= maxlength) {
-    validationWarning = "Maximum character limit of ".concat(maxlength, " reached.");
+    validationError = "Maximum character limit of ".concat(maxlength, " reached.");
+    controlClass = controlClass + ' gfb-validation-error';
   }
 
   var outerClass = 'gfb-input-outer';
