@@ -1,3 +1,10 @@
+## [3.130.1](https://github.com/ClearC2/grid-form-builder/compare/v3.130.0...v3.130.1) (2025-12-31)
+
+
+### Bug Fixes
+
+* **select:** selects will now properly figure out open direction on mount ([02a63ef](https://github.com/ClearC2/grid-form-builder/commit/02a63ef82616bc0df25be0649524ab660b41f03e))
+
 # [3.130.0](https://github.com/ClearC2/grid-form-builder/compare/v3.129.0...v3.130.0) (2025-11-20)
 
 
