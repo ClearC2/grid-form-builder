@@ -95,11 +95,14 @@ export class ReactQuill extends Component {
     }
   }
 
-  componentDidUpdate (p) {
-    if (this.props.value !== p.value) {
+  componentDidUpdate (prevProps) {
+    const {value, readOnly} = this.props
+
+    // Only update the editor if the 'value' prop changed AND it's different from what the user just typed
+    if (value !== prevProps.value && value !== this.editor?.root?.innerHTML) {
       this.setCurrentValueInEditor()
     }
-    if (this.props.readOnly !== p.readOnly) {
+    if (readOnly !== prevProps.readOnly) {
       this.setReadOnly()
     }
   }
