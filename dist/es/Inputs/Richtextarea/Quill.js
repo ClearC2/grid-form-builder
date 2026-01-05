@@ -20,7 +20,6 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
-import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _replaceAllInstanceProperty from "@babel/runtime-corejs3/core-js/instance/replace-all";
 import _indexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/index-of";
 
@@ -97,18 +96,13 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
       }
     });
 
-    _defineProperty(_assertThisInitialized(_this), "debounce", null);
-
     _defineProperty(_assertThisInitialized(_this), "onTextChange", function (delta, oldDelta, source) {
       if (source !== 'api') {
-        clearTimeout(_this.debounce);
-        _this.debounce = _setTimeout(function () {
-          var _this$editor, _this$editor$root, _this$editor2;
+        var _this$editor, _this$editor$root, _this$editor2;
 
-          var html = ((_this$editor = _this.editor) === null || _this$editor === void 0 ? void 0 : (_this$editor$root = _this$editor.root) === null || _this$editor$root === void 0 ? void 0 : _this$editor$root.innerHTML) || ((_this$editor2 = _this.editor) === null || _this$editor2 === void 0 ? void 0 : _this$editor2.getSemanticHTML()) || '';
+        var html = ((_this$editor = _this.editor) === null || _this$editor === void 0 ? void 0 : (_this$editor$root = _this$editor.root) === null || _this$editor$root === void 0 ? void 0 : _this$editor$root.innerHTML) || ((_this$editor2 = _this.editor) === null || _this$editor2 === void 0 ? void 0 : _this$editor2.getSemanticHTML()) || '';
 
-          _this.props.onChange(html);
-        }, 1250);
+        _this.props.onChange(html);
       }
     });
 
@@ -163,12 +157,18 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
 
   _createClass(ReactQuill, [{
     key: "componentDidUpdate",
-    value: function componentDidUpdate(p) {
-      if (this.props.value !== p.value) {
+    value: function componentDidUpdate(prevProps) {
+      var _this$editor3, _this$editor3$root;
+
+      var _this$props2 = this.props,
+          value = _this$props2.value,
+          readOnly = _this$props2.readOnly; // Only update the editor if the 'value' prop changed AND it's different from what the user just typed
+
+      if (value !== prevProps.value && value !== ((_this$editor3 = this.editor) === null || _this$editor3 === void 0 ? void 0 : (_this$editor3$root = _this$editor3.root) === null || _this$editor3$root === void 0 ? void 0 : _this$editor3$root.innerHTML)) {
         this.setCurrentValueInEditor();
       }
 
-      if (this.props.readOnly !== p.readOnly) {
+      if (readOnly !== prevProps.readOnly) {
         this.setReadOnly();
       }
     }
@@ -181,18 +181,18 @@ export var ReactQuill = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props3;
+      var _this$props4;
 
-      var _this$props2 = this.props,
-          name = _this$props2.name,
-          onFocus = _this$props2.onFocus,
-          onBlur = _this$props2.onBlur,
-          _this$props2$css = _this$props2.css,
-          css = _this$props2$css === void 0 ? {} : _this$props2$css,
-          tabIndex = _this$props2.tabIndex,
-          className = _this$props2.className,
-          _this$props2$dataTes = _this$props2['data-testid'],
-          testId = _this$props2$dataTes === void 0 ? (_this$props3 = this.props) === null || _this$props3 === void 0 ? void 0 : _this$props3.name : _this$props2$dataTes;
+      var _this$props3 = this.props,
+          name = _this$props3.name,
+          onFocus = _this$props3.onFocus,
+          onBlur = _this$props3.onBlur,
+          _this$props3$css = _this$props3.css,
+          css = _this$props3$css === void 0 ? {} : _this$props3$css,
+          tabIndex = _this$props3.tabIndex,
+          className = _this$props3.className,
+          _this$props3$dataTes = _this$props3['data-testid'],
+          testId = _this$props3$dataTes === void 0 ? (_this$props4 = this.props) === null || _this$props4 === void 0 ? void 0 : _this$props4.name : _this$props3$dataTes;
       return /*#__PURE__*/React.createElement("div", {
         id: name,
         className: className,

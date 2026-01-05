@@ -1,3 +1,10 @@
+## [3.130.2](https://github.com/ClearC2/grid-form-builder/compare/v3.130.1...v3.130.2) (2026-01-05)
+
+
+### Bug Fixes
+
+* **rich-text-area:** fix rich text area cursor jumping ([#263](https://github.com/ClearC2/grid-form-builder/issues/263)) ([ae6ca30](https://github.com/ClearC2/grid-form-builder/commit/ae6ca30e8302135f86b8345c2333fe02972cf934))
+
 ## [3.130.1](https://github.com/ClearC2/grid-form-builder/compare/v3.130.0...v3.130.1) (2025-12-31)
 
 
