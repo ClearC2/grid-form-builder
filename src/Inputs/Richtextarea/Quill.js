@@ -51,15 +51,10 @@ export class ReactQuill extends Component {
     }
   }
 
-  debounce = null
-
   onTextChange = (delta, oldDelta, source) => {
     if (source !== 'api') {
-      clearTimeout(this.debounce)
-      this.debounce = setTimeout(() => {
-        const html = this.editor?.root?.innerHTML || this.editor?.getSemanticHTML() || ''
-        this.props.onChange(html)
-      }, 1250)
+      const html = this.editor?.root?.innerHTML || this.editor?.getSemanticHTML() || ''
+      this.props.onChange(html)
     }
   }
 
