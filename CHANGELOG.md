@@ -1,3 +1,10 @@
+# [3.132.0](https://github.com/ClearC2/grid-form-builder/compare/v3.131.0...v3.132.0) (2026-01-21)
+
+
+### Features
+
+* **multiselect:** multiselect should now properly calculate menu open direction ([cb34a6e](https://github.com/ClearC2/grid-form-builder/commit/cb34a6ed9f300fcac3aecbd2605040a1e1dc4235))
+
 # [3.131.0](https://github.com/ClearC2/grid-form-builder/compare/v3.130.2...v3.131.0) (2026-01-21)
 
 

@@ -82,6 +82,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 var viewPortHeight = document.documentElement.clientHeight;
 var labelCopyTimer = null;
+var debounce = null;
 
 var Multiselect = function Multiselect(props) {
   var _context7;
@@ -195,30 +196,25 @@ var Multiselect = function Multiselect(props) {
       menuIsOpen = _useState12[0],
       updateIsMenuOpen = _useState12[1];
 
-  var _useState13 = (0, _react.useState)('bottom'),
+  var _useState13 = (0, _react.useState)(0),
       _useState14 = (0, _slicedToArray2.default)(_useState13, 2),
-      menuPlacement = _useState14[0],
-      updateMenuPlacement = _useState14[1];
+      fieldPosition = _useState14[0],
+      updateFieldPosition = _useState14[1];
 
-  var _useState15 = (0, _react.useState)(0),
+  var _useState15 = (0, _react.useState)([]),
       _useState16 = (0, _slicedToArray2.default)(_useState15, 2),
-      fieldPosition = _useState16[0],
-      updateFieldPosition = _useState16[1];
+      selectValue = _useState16[0],
+      updateSelectValue = _useState16[1];
 
   var _useState17 = (0, _react.useState)([]),
       _useState18 = (0, _slicedToArray2.default)(_useState17, 2),
-      selectValue = _useState18[0],
-      updateSelectValue = _useState18[1];
+      options = _useState18[0],
+      updateSelectOptions = _useState18[1];
 
-  var _useState19 = (0, _react.useState)([]),
+  var _useState19 = (0, _react.useState)(false),
       _useState20 = (0, _slicedToArray2.default)(_useState19, 2),
-      options = _useState20[0],
-      updateSelectOptions = _useState20[1];
-
-  var _useState21 = (0, _react.useState)(false),
-      _useState22 = (0, _slicedToArray2.default)(_useState21, 2),
-      isFocused = _useState22[0],
-      setIsFocused = _useState22[1];
+      isFocused = _useState20[0],
+      setIsFocused = _useState20[1];
 
   var inputContainer = (0, _react.useRef)(null); // AsyncSelect implementation for large datasets
 
@@ -305,10 +301,6 @@ var Multiselect = function Multiselect(props) {
       updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, true)));
     }
   }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name]);
-  var setMenuOpenPosition = (0, _react.useCallback)(function () {
-    var placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top';
-    updateMenuPlacement(placement);
-  }, [fieldPosition, updateMenuPlacement]);
   var handleInputBlur = (0, _react.useCallback)(function (e) {
     if (typeof onBlur === 'function') {
       onBlur(e);
@@ -317,21 +309,16 @@ var Multiselect = function Multiselect(props) {
     menuIsOpen[name] && updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, false)));
     setIsFocused(false);
     setInputValue(''); // Clear search on blur
-  }, [menuIsOpen, updateIsMenuOpen, name, onBlur]);
-  var setInputFieldPosition = (0, _react.useCallback)(function () {
-    if (inputContainer.current) {
-      var position = inputContainer.current.getBoundingClientRect().top;
-
-      if (fieldPosition !== position) {
-        updateFieldPosition(position);
-      }
-    }
-
-    (0, _setTimeout2.default)(openMenu); // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
-  }, [openMenu, fieldPosition]);
-  (0, _react.useEffect)(function () {
-    setInputFieldPosition();
-  }, [inputContainer.current]); // const handleInputClick = useCallback(() => {
+  }, [menuIsOpen, updateIsMenuOpen, name, onBlur]); // const setInputFieldPosition = useCallback(() => {
+  //   if (inputContainer.current) {
+  //     const position = inputContainer.current.getBoundingClientRect().top
+  //     if (fieldPosition !== position) {
+  //       updateFieldPosition(position)
+  //     }
+  //   }
+  //   setTimeout(openMenu) // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
+  // }, [openMenu, fieldPosition])
+  // const handleInputClick = useCallback(() => {
   //   if (!disabled && !readonly && interactive) {
   //     setInputFieldPosition()
   //   }
@@ -383,9 +370,6 @@ var Multiselect = function Multiselect(props) {
     setDisplayOptions(initial);
   }, [delimiter, keyword.options, largeDatasetThreshold]);
   (0, _react.useEffect)(function () {
-    setMenuOpenPosition();
-  }, [fieldPosition, setMenuOpenPosition]);
-  (0, _react.useEffect)(function () {
     changeInput({
       Select: SelectComponent
     });
@@ -435,10 +419,10 @@ var Multiselect = function Multiselect(props) {
     var _p$children = p.children,
         children = _p$children === void 0 ? '' : _p$children;
 
-    var _useState23 = (0, _react.useState)(children),
-        _useState24 = (0, _slicedToArray2.default)(_useState23, 2),
-        label = _useState24[0],
-        setLabel = _useState24[1]; // eslint-disable-line
+    var _useState21 = (0, _react.useState)(children),
+        _useState22 = (0, _slicedToArray2.default)(_useState21, 2),
+        label = _useState22[0],
+        setLabel = _useState22[1]; // eslint-disable-line
 
 
     var copyValueToClipboard = function copyValueToClipboard() {
@@ -502,6 +486,25 @@ var Multiselect = function Multiselect(props) {
     }
   };
 
+  var position = 0;
+
+  if (inputContainer.current) {
+    position = inputContainer.current.getBoundingClientRect().top;
+  }
+
+  var menuPlacement = position < viewPortHeight / 2 ? 'bottom' : 'top';
+
+  if (position === 0) {
+    // this is a hacky workaround, when this component is rendered in an aggrid cellrenderer
+    // aggrid dismounts and remounts this component when the agcell is focused, and immediately focuses the field
+    // this causes the default positioning to be calculated as 0 and the menu opens downward even if it's at the bottom of the screen
+    // this timeout prevents an infinite loop, and forces a rerender very shortly after mounting to correctly calculate position - JRA 01/21/26
+    clearTimeout(debounce);
+    debounce = (0, _setTimeout2.default)(function () {
+      return updateFieldPosition(fieldPosition + 1);
+    }, 15);
+  }
+
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus multiselect-focus';
   }
@@ -524,7 +527,7 @@ var Multiselect = function Multiselect(props) {
     isDisabled: disabled || readonly || !interactive,
     isMulti: true,
     isSearchable: searchable,
-    // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+    // menuIsOpen: isMobile ? undefined : position !== 0 ? undefined : false,
     menuPlacement: !_utils.isMobile ? menuPlacement : undefined,
     menuPortalTarget: document.body,
     name: name,
