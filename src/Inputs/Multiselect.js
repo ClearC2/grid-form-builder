@@ -216,6 +216,10 @@ const Multiselect = (props) => {
     setTimeout(openMenu) // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
   }, [openMenu, fieldPosition])
 
+  useEffect(() => {
+    setInputFieldPosition()
+  }, [inputContainer.current])
+
   // const handleInputClick = useCallback(() => {
   //   if (!disabled && !readonly && interactive) {
   //     setInputFieldPosition()
@@ -432,7 +436,6 @@ const Multiselect = (props) => {
     <div
       className={outerClass}
       css={inputOuterCSS}
-      onMouseDown={setInputFieldPosition}
       ref={inputContainer}
       style={inputOuter}
       data-testid={testId}

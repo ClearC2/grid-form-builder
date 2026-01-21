@@ -621,7 +621,7 @@ const Typeahead = props => {
     if (!disabled && !readonly && interactive) {
       setInputFieldPosition()
     }
-  }, [disabled, interactive, readonly, setInputFieldPosition])
+  }, [disabled, interactive, readonly, setInputFieldPosition, inputContainer.current])
 
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)
