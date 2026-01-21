@@ -20,6 +20,8 @@ const viewPortHeight = document.documentElement.clientHeight
 
 let labelCopyTimer = null
 
+let debounce = null
+
 const Multiselect = (props) => {
   const {
     allowcreate,
@@ -81,7 +83,6 @@ const Multiselect = (props) => {
   const [input, changeInput] = useState({Select: !interactive ? Creatable : allowcreate ? Creatable : ReactSelect})
   const [isRequiredFlag, updateIsRequiredFlag] = useState(required && requiredWarning && !value.length)
   const [menuIsOpen, updateIsMenuOpen] = useState({})
-  const [menuPlacement, updateMenuPlacement] = useState('bottom')
   const [fieldPosition, updateFieldPosition] = useState(0)
   const [selectValue, updateSelectValue] = useState([])
   const [options, updateSelectOptions] = useState([])
@@ -189,11 +190,6 @@ const Multiselect = (props) => {
     }
   }, [readonly, disabled, updateIsMenuOpen, menuIsOpen, name])
 
-  const setMenuOpenPosition = useCallback(() => {
-    const placement = fieldPosition < viewPortHeight / 2 ? 'bottom' : 'top'
-    updateMenuPlacement(placement)
-  }, [fieldPosition, updateMenuPlacement])
-
   const handleInputBlur = useCallback(
     (e) => {
       if (typeof onBlur === 'function') {
@@ -206,19 +202,15 @@ const Multiselect = (props) => {
     [menuIsOpen, updateIsMenuOpen, name, onBlur]
   )
 
-  const setInputFieldPosition = useCallback(() => {
-    if (inputContainer.current) {
-      const position = inputContainer.current.getBoundingClientRect().top
-      if (fieldPosition !== position) {
-        updateFieldPosition(position)
-      }
-    }
-    setTimeout(openMenu) // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
-  }, [openMenu, fieldPosition])
-
-  useEffect(() => {
-    setInputFieldPosition()
-  }, [inputContainer.current])
+  // const setInputFieldPosition = useCallback(() => {
+  //   if (inputContainer.current) {
+  //     const position = inputContainer.current.getBoundingClientRect().top
+  //     if (fieldPosition !== position) {
+  //       updateFieldPosition(position)
+  //     }
+  //   }
+  //   setTimeout(openMenu) // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
+  // }, [openMenu, fieldPosition])
 
   // const handleInputClick = useCallback(() => {
   //   if (!disabled && !readonly && interactive) {
@@ -276,10 +268,6 @@ const Multiselect = (props) => {
     const initial = formattedOptions.slice(0, largeDatasetThreshold)
     setDisplayOptions(initial)
   }, [delimiter, keyword.options, largeDatasetThreshold])
-
-  useEffect(() => {
-    setMenuOpenPosition()
-  }, [fieldPosition, setMenuOpenPosition])
 
   useEffect(() => {
     changeInput({Select: SelectComponent})
@@ -371,6 +359,20 @@ const Multiselect = (props) => {
     }
   }
 
+  let position = 0
+  if (inputContainer.current) {
+    position = inputContainer.current.getBoundingClientRect().top
+  }
+  const menuPlacement = position < viewPortHeight / 2 ? 'bottom' : 'top'
+  if (position === 0) {
+    // this is a hacky workaround, when this component is rendered in an aggrid cellrenderer
+    // aggrid dismounts and remounts this component when the agcell is focused, and immediately focuses the field
+    // this causes the default positioning to be calculated as 0 and the menu opens downward even if it's at the bottom of the screen
+    // this timeout prevents an infinite loop, and forces a rerender very shortly after mounting to correctly calculate position - JRA 01/21/26
+    clearTimeout(debounce)
+    debounce = setTimeout(() => updateFieldPosition(fieldPosition + 1), 15)
+  }
+
   if (isFocused) {
     outerClass = outerClass + ' gfb-has-focus multiselect-focus'
   }
@@ -391,7 +393,7 @@ const Multiselect = (props) => {
     isDisabled: disabled || readonly || !interactive,
     isMulti: true,
     isSearchable: searchable,
-    // menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
+    // menuIsOpen: isMobile ? undefined : position !== 0 ? undefined : false,
     menuPlacement: !isMobile ? menuPlacement : undefined,
     menuPortalTarget: document.body,
     name,
