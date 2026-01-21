@@ -1,3 +1,10 @@
+# [3.131.0](https://github.com/ClearC2/grid-form-builder/compare/v3.130.2...v3.131.0) (2026-01-21)
+
+
+### Features
+
+* **selects:** typeaheads and multiselects will open upwards if they are on the bottom half of the screen ([9be579c](https://github.com/ClearC2/grid-form-builder/commit/9be579ca8861d2046672f725c02f0ba84c294d10))
+
 ## [3.130.2](https://github.com/ClearC2/grid-form-builder/compare/v3.130.1...v3.130.2) (2026-01-05)
 
 

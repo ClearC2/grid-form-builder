@@ -328,7 +328,10 @@ var Multiselect = function Multiselect(props) {
     }
 
     (0, _setTimeout2.default)(openMenu); // this needs to be refactored so it actually updates with react instead of hacking around the problem - JRA 12/18/2019
-  }, [openMenu, fieldPosition]); // const handleInputClick = useCallback(() => {
+  }, [openMenu, fieldPosition]);
+  (0, _react.useEffect)(function () {
+    setInputFieldPosition();
+  }, [inputContainer.current]); // const handleInputClick = useCallback(() => {
   //   if (!disabled && !readonly && interactive) {
   //     setInputFieldPosition()
   //   }
@@ -583,7 +586,6 @@ var Multiselect = function Multiselect(props) {
   return (0, _core.jsx)("div", {
     className: outerClass,
     css: inputOuterCSS,
-    onMouseDown: setInputFieldPosition,
     ref: inputContainer,
     style: inputOuter,
     "data-testid": testId

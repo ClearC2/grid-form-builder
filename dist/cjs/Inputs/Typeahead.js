@@ -886,7 +886,7 @@ var Typeahead = function Typeahead(props) {
     if (!disabled && !readonly && interactive) {
       setInputFieldPosition();
     }
-  }, [disabled, interactive, readonly, setInputFieldPosition]);
+  }, [disabled, interactive, readonly, setInputFieldPosition, inputContainer.current]);
   var handleOnFocus = (0, _react.useCallback)(function () {
     setIsFocused(true);
     var simpleValue = typeof value.toJS === 'function' ? value.toJS() : value;
