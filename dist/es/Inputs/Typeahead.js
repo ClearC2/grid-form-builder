@@ -381,7 +381,7 @@ var Typeahead = function Typeahead(props) {
       components = _useState22[0],
       setComponents = _useState22[1];
 
-  var _useState25 = useState(null),
+  var _useState25 = useState((typeahead === null || typeahead === void 0 ? void 0 : typeahead.key) || null),
       _useState26 = _slicedToArray(_useState25, 2),
       dynamicTypeaheadKey = _useState26[0],
       setDynamicTypeaheadKey = _useState26[1];
@@ -855,12 +855,6 @@ var Typeahead = function Typeahead(props) {
     }
   }, [defaultOptions, isFocused]);
   var handleOnFocus = useCallback(function () {
-    if (!initialFetch.current) {
-      // initialFetch.current = true - I think we want to fetch this every time - JRA 02/04/2026
-      openMenu();
-      loadOptions(' ', true);
-    }
-
     setIsFocused(true);
     var simpleValue = typeof value.toJS === 'function' ? value.toJS() : value;
     simpleValue = _typeof(simpleValue) === 'object' ? simpleValue.value || simpleValue.label || '' : simpleValue;
@@ -870,8 +864,14 @@ var Typeahead = function Typeahead(props) {
       updateInputValue(simpleValue);
     }
 
+    if (!initialFetch.current && !simpleValue.length) {
+      // initialFetch.current = true - I think we want to fetch this every time - JRA 02/04/2026
+      openMenu();
+      loadOptions(' ', true);
+    }
+
     handleInputClick();
-  }, [value, persist, multi, updateInputValue, handleInputClick, loadOptions, openMenu]);
+  }, [value, persist, multi, updateInputValue, handleInputClick, loadOptions, openMenu, inputValue]);
   useEffect(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);

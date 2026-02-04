@@ -248,7 +248,7 @@ const Typeahead = props => {
       )
     }
   })
-  const [dynamicTypeaheadKey, setDynamicTypeaheadKey] = useState(null)
+  const [dynamicTypeaheadKey, setDynamicTypeaheadKey] = useState(typeahead?.key || null)
   const [conditions, setConditions] = useState({})
   const [reactSelectStyles, setReactSelectStyles] = useState({
     container: base => {
@@ -634,11 +634,6 @@ const Typeahead = props => {
   }, [defaultOptions, isFocused])
 
   const handleOnFocus = useCallback(() => {
-    if (!initialFetch.current) {
-      // initialFetch.current = true - I think we want to fetch this every time - JRA 02/04/2026
-      openMenu()
-      loadOptions(' ', true)
-    }
     setIsFocused(true)
     let simpleValue = typeof value.toJS === 'function' ? value.toJS() : value
     simpleValue = typeof simpleValue === 'object' ? simpleValue.value || simpleValue.label || '' : simpleValue
@@ -646,8 +641,13 @@ const Typeahead = props => {
       // this sets the input value equal to the current value so the user can keep editing it instead of creating a new value, MP HATES the default react-select behavior - JRA 12/09/2019
       updateInputValue(simpleValue)
     }
+    if (!initialFetch.current && !simpleValue.length) {
+      // initialFetch.current = true - I think we want to fetch this every time - JRA 02/04/2026
+      openMenu()
+      loadOptions(' ', true)
+    }
     handleInputClick()
-  }, [value, persist, multi, updateInputValue, handleInputClick, loadOptions, openMenu])
+  }, [value, persist, multi, updateInputValue, handleInputClick, loadOptions, openMenu, inputValue])
 
   useEffect(() => {
     setMenuOpenPosition()
