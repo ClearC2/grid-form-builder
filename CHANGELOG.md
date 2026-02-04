@@ -1,3 +1,10 @@
+# [3.134.0](https://github.com/ClearC2/grid-form-builder/compare/v3.133.0...v3.134.0) (2026-02-04)
+
+
+### Features
+
+* **typeahead:** fixes autofocus key and prevents autosearch if field already has a value ([622cbf0](https://github.com/ClearC2/grid-form-builder/commit/622cbf0c6245ab1970f525d38b666a32072b0d67))
+
 # [3.133.0](https://github.com/ClearC2/grid-form-builder/compare/v3.132.0...v3.133.0) (2026-02-04)
 
 
