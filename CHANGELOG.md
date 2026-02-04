@@ -1,3 +1,10 @@
+# [3.133.0](https://github.com/ClearC2/grid-form-builder/compare/v3.132.0...v3.133.0) (2026-02-04)
+
+
+### Features
+
+* **typeahead:** typeahead now auto fetches results when focused ([#264](https://github.com/ClearC2/grid-form-builder/issues/264)) ([3abc249](https://github.com/ClearC2/grid-form-builder/commit/3abc2499ca81254101b1345fa324e8752f43e28c))
+
 # [3.132.0](https://github.com/ClearC2/grid-form-builder/compare/v3.131.0...v3.132.0) (2026-01-21)
 
 

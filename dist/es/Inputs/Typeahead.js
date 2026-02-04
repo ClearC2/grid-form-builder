@@ -441,6 +441,8 @@ var Typeahead = function Typeahead(props) {
   var reactSelect = useRef(null);
   var isLoadingOptions = useRef(false); // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
 
+  var initialFetch = useRef(false); // users want an autofetch the first time they focus the field - JRA 02/04/2026
+
   useEffect(function () {
     var populateConditionObject = function populateConditionObject() {
       var _context3;
@@ -809,6 +811,10 @@ var Typeahead = function Typeahead(props) {
     if (isZipCode) {
       return '3 Digits Required';
     }
+
+    if (!isLoadingOptions.current) {
+      return 'Loading...';
+    }
   }, [isZipCode]);
   var handleOnMouseDown = useCallback(function (e) {
     if (draggable) e.stopPropagation();
@@ -843,7 +849,18 @@ var Typeahead = function Typeahead(props) {
       setInputFieldPosition();
     }
   }, [disabled, interactive, readonly, setInputFieldPosition, inputContainer.current]);
+  useEffect(function () {
+    if (isFocused) {
+      openMenu();
+    }
+  }, [defaultOptions, isFocused]);
   var handleOnFocus = useCallback(function () {
+    if (!initialFetch.current) {
+      // initialFetch.current = true - I think we want to fetch this every time - JRA 02/04/2026
+      openMenu();
+      loadOptions(' ', true);
+    }
+
     setIsFocused(true);
     var simpleValue = typeof value.toJS === 'function' ? value.toJS() : value;
     simpleValue = _typeof(simpleValue) === 'object' ? simpleValue.value || simpleValue.label || '' : simpleValue;
@@ -854,7 +871,7 @@ var Typeahead = function Typeahead(props) {
     }
 
     handleInputClick();
-  }, [value, persist, multi, updateInputValue, handleInputClick]);
+  }, [value, persist, multi, updateInputValue, handleInputClick, loadOptions, openMenu]);
   useEffect(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);
