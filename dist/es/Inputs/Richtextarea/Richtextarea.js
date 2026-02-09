@@ -215,7 +215,7 @@ var Richtextarea = function Richtextarea(props) {
     style: inputControl,
     css: inputControlCSS
   }, jsx("div", {
-    className: "gfb-input__value-container",
+    className: "gfb-input__value-container notranslate",
     style: valueContainer,
     css: valueContainerCSS,
     "data-testid": testId

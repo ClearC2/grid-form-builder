@@ -1,3 +1,10 @@
+# [3.135.0](https://github.com/ClearC2/grid-form-builder/compare/v3.134.0...v3.135.0) (2026-02-09)
+
+
+### Features
+
+* **RTE:** prevent google translate from clearing Quill editor ([502e7ad](https://github.com/ClearC2/grid-form-builder/commit/502e7ad07704ef0a45abff871f18dbf367722655))
+
 # [3.134.0](https://github.com/ClearC2/grid-form-builder/compare/v3.133.0...v3.134.0) (2026-02-04)
 
 
