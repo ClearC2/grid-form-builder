@@ -200,7 +200,7 @@ const Richtextarea = props => {
         </div>
         <div className={controlClass} style={inputControl} css={inputControlCSS}>
           <div
-            className='gfb-input__value-container'
+            className='gfb-input__value-container notranslate'
             style={valueContainer}
             css={valueContainerCSS}
             data-testid={testId}
