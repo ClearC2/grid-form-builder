@@ -294,6 +294,7 @@ const Typeahead = props => {
 
   const isLoadingOptions = useRef(false) // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
   const initialFetch = useRef(false) // users want an autofetch the first time they focus the field - JRA 02/04/2026
+  const didAutoFocus = useRef(false)
 
   useEffect(() => {
     const populateConditionObject = (condition = {name: null, comparator: null, values: []}) => {
@@ -628,10 +629,16 @@ const Typeahead = props => {
   }, [disabled, interactive, readonly, setInputFieldPosition, inputContainer.current])
 
   useEffect(() => {
-    if (isFocused) {
+    if (isFocused && (!autofocus || (autofocus && didAutoFocus.current))) {
       openMenu()
     }
-  }, [defaultOptions, isFocused])
+  }, [defaultOptions, isFocused, autofocus])
+
+  useEffect(() => {
+    if (defaultOptions.length && autofocus && !didAutoFocus.current) { // don't open the menu on the first focus if autofocus is on - JRA 02/10/2026
+      didAutoFocus.current = true
+    }
+  }, [defaultOptions])
 
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)
@@ -643,11 +650,11 @@ const Typeahead = props => {
     }
     if (!initialFetch.current && !simpleValue.length) {
       // initialFetch.current = true - I think we want to fetch this every time - JRA 02/04/2026
-      openMenu()
+      !autofocus && openMenu()
       loadOptions(' ', true)
     }
     handleInputClick()
-  }, [value, persist, multi, updateInputValue, handleInputClick, loadOptions, openMenu, inputValue])
+  }, [value, persist, multi, updateInputValue, handleInputClick, loadOptions, openMenu, inputValue, autofocus])
 
   useEffect(() => {
     setMenuOpenPosition()

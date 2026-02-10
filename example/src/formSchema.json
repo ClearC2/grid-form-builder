@@ -668,7 +668,8 @@
             "type": "url",
             "icon": "externallink"
           },
-          "required": true
+          "required": true,
+          "autofocus": true
         }
       }, {
         "type": "field",

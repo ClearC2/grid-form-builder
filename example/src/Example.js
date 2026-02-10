@@ -147,16 +147,16 @@ export default class Example extends Component {
         }
       }))
     }, 250)
-    setTimeout(() => {
-      this.setState(s => {
-        let values = s.formValues.set('html-input-1', stringHtmlValueWithTableFormatting)
-        values = values.set('html-input-2', stringHtmlWithTableData)
-        values = values.set('rich-text-input-1', '<strong>Some Bold String</strong>')
-        return ({
-          formValues: values
-        })
-      })
-    }, 2000)
+    // setTimeout(() => {
+    //   this.setState(s => {
+    //     let values = s.formValues.set('html-input-1', stringHtmlValueWithTableFormatting)
+    //     values = values.set('html-input-2', stringHtmlWithTableData)
+    //     values = values.set('rich-text-input-1', '<strong>Some Bold String</strong>')
+    //     return ({
+    //       formValues: values
+    //     })
+    //   })
+    // }, 2000)
     // setTimeout(() => {
     //   debugger
     // }, 2000)
