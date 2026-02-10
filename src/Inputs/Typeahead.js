@@ -818,7 +818,7 @@ const Typeahead = props => {
         handleChange({value: inputValue}, {action: 'create-option'})
       }
     }
-    if (e.keyCode === 32) { // if key is spacebar, prevent what react select is trying to do with it and just let them enter a whitespace - JRA 02/05/2020
+    if (e.keyCode === 32 && !inputValue) { // if key is spacebar, prevent what react select is trying to do with it and just let them enter a whitespace - JRA 02/05/2020
       e.preventDefault()
       handleOnInputChange(inputValue + ' ', {action: 'input-change'})
     }
