@@ -493,6 +493,7 @@ var Typeahead = function Typeahead(props) {
 
   var initialFetch = (0, _react.useRef)(false); // users want an autofetch the first time they focus the field - JRA 02/04/2026
 
+  var didAutoFocus = (0, _react.useRef)(false);
   (0, _react.useEffect)(function () {
     var populateConditionObject = function populateConditionObject() {
       var _context3;
@@ -894,10 +895,16 @@ var Typeahead = function Typeahead(props) {
     }
   }, [disabled, interactive, readonly, setInputFieldPosition, inputContainer.current]);
   (0, _react.useEffect)(function () {
-    if (isFocused) {
+    if (isFocused && (!autofocus || autofocus && didAutoFocus.current)) {
       openMenu();
     }
-  }, [defaultOptions, isFocused]);
+  }, [defaultOptions, isFocused, autofocus]);
+  (0, _react.useEffect)(function () {
+    if (defaultOptions.length && autofocus && !didAutoFocus.current) {
+      // don't open the menu on the first focus if autofocus is on - JRA 02/10/2026
+      didAutoFocus.current = true;
+    }
+  }, [defaultOptions]);
   var handleOnFocus = (0, _react.useCallback)(function () {
     setIsFocused(true);
     var simpleValue = typeof value.toJS === 'function' ? value.toJS() : value;
@@ -910,12 +917,12 @@ var Typeahead = function Typeahead(props) {
 
     if (!initialFetch.current && !simpleValue.length) {
       // initialFetch.current = true - I think we want to fetch this every time - JRA 02/04/2026
-      openMenu();
+      !autofocus && openMenu();
       loadOptions(' ', true);
     }
 
     handleInputClick();
-  }, [value, persist, multi, updateInputValue, handleInputClick, loadOptions, openMenu, inputValue]);
+  }, [value, persist, multi, updateInputValue, handleInputClick, loadOptions, openMenu, inputValue, autofocus]);
   (0, _react.useEffect)(function () {
     setMenuOpenPosition();
   }, [fieldPosition, setMenuOpenPosition]);
@@ -1094,7 +1101,7 @@ var Typeahead = function Typeahead(props) {
       }
     }
 
-    if (e.keyCode === 32) {
+    if (e.keyCode === 32 && !inputValue) {
       // if key is spacebar, prevent what react select is trying to do with it and just let them enter a whitespace - JRA 02/05/2020
       e.preventDefault();
       handleOnInputChange(inputValue + ' ', {

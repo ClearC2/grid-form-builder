@@ -1,3 +1,11 @@
+# [3.136.0](https://github.com/ClearC2/grid-form-builder/compare/v3.135.0...v3.136.0) (2026-02-10)
+
+
+### Features
+
+* **typeahead:** autosearch wont open the menu on first focus if autofocus is on ([0f2c15d](https://github.com/ClearC2/grid-form-builder/commit/0f2c15db3444056e3b621ad6aca274f81ed94150))
+* **typeahead:** bypassing react-select spacebar behavior should only occur when the input value is empty ([a3b8de0](https://github.com/ClearC2/grid-form-builder/commit/a3b8de0094a0a814d4659babc643827673a18a8a))
+
 # [3.135.0](https://github.com/ClearC2/grid-form-builder/compare/v3.134.0...v3.135.0) (2026-02-09)
 
 
