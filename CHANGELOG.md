@@ -1,3 +1,10 @@
+## [3.136.1](https://github.com/ClearC2/grid-form-builder/compare/v3.136.0...v3.136.1) (2026-02-20)
+
+
+### Bug Fixes
+
+* **runtime-corejs:** add runtime-corejs to dependencies ([#265](https://github.com/ClearC2/grid-form-builder/issues/265)) ([dcaa1b4](https://github.com/ClearC2/grid-form-builder/commit/dcaa1b40b0b1d403c658265d953cb8e3eee0ff96))
+
 # [3.136.0](https://github.com/ClearC2/grid-form-builder/compare/v3.135.0...v3.136.0) (2026-02-10)
 
 
