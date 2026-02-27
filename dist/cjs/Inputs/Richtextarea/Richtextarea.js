@@ -222,7 +222,7 @@ var Richtextarea = function Richtextarea(props) {
     className: "gfb-input-inner",
     style: inputInner,
     css: inputInnerCSS
-  }, (0, _core.jsx)("div", {
+  }, !readonly && !disabled ? (0, _core.jsx)("div", {
     className: "gfb-input-control-top",
     style: {
       display: 'flex'
@@ -238,7 +238,7 @@ var Richtextarea = function Richtextarea(props) {
     insertColumnLeft: insertColumnLeft,
     insertColumnRight: insertColumnRight,
     deleteColumn: deleteColumn
-  })), (0, _core.jsx)("div", {
+  })) : null, (0, _core.jsx)("div", {
     className: controlClass,
     style: inputControl,
     css: inputControlCSS

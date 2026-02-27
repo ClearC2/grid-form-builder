@@ -1,3 +1,10 @@
+# [3.137.0](https://github.com/ClearC2/grid-form-builder/compare/v3.136.1...v3.137.0) (2026-02-27)
+
+
+### Features
+
+* **RTE:** hide tooltip when readonly or disabled ([6ff2441](https://github.com/ClearC2/grid-form-builder/commit/6ff2441644e839fd878b3302385ae129cb503532))
+
 ## [3.136.1](https://github.com/ClearC2/grid-form-builder/compare/v3.136.0...v3.136.1) (2026-02-20)
 
 
