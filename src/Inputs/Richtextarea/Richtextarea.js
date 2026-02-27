@@ -185,19 +185,21 @@ const Richtextarea = props => {
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
-        <div className='gfb-input-control-top' style={{display: 'flex'}} data-testid={`${testId}-toolbar`}>
-          <Toolbar
-            id={elementId.current}
-            addTable={addTable}
-            removeTable={removeTable}
-            insertRowAbove={insertRowAbove}
-            insertRowBelow={insertRowBelow}
-            deleteRow={deleteRow}
-            insertColumnLeft={insertColumnLeft}
-            insertColumnRight={insertColumnRight}
-            deleteColumn={deleteColumn}
-          />
-        </div>
+        {(!readonly && !disabled) ? (
+          <div className='gfb-input-control-top' style={{display: 'flex'}} data-testid={`${testId}-toolbar`}>
+            <Toolbar
+              id={elementId.current}
+              addTable={addTable}
+              removeTable={removeTable}
+              insertRowAbove={insertRowAbove}
+              insertRowBelow={insertRowBelow}
+              deleteRow={deleteRow}
+              insertColumnLeft={insertColumnLeft}
+              insertColumnRight={insertColumnRight}
+              deleteColumn={deleteColumn}
+            />
+          </div>
+        ) : null}
         <div className={controlClass} style={inputControl} css={inputControlCSS}>
           <div
             className='gfb-input__value-container notranslate'

@@ -333,10 +333,9 @@
           "static": false
         },
         "config": {
-          "required": true,
           "name": "rich-text-input-1",
           "label": "Rich Text Input",
-          "type": "richtextareaquill"
+          "type": "richtextarea"
         }
       }, {
         "type": "field",
@@ -668,8 +667,7 @@
             "type": "url",
             "icon": "externallink"
           },
-          "required": true,
-          "autofocus": true
+          "required": true
         }
       }, {
         "type": "field",
