@@ -30,8 +30,6 @@ var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-sta
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
-var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/slicedToArray"));
-
 var _core = require("@emotion/core");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
@@ -89,11 +87,7 @@ var NativeSelect = function NativeSelect(props) {
 
   var _theme$options = theme.options,
       optionsTheme = _theme$options === void 0 ? {} : _theme$options;
-
-  var _useState = (0, _react.useState)(keyword.options || []),
-      _useState2 = (0, _slicedToArray2.default)(_useState, 1),
-      options = _useState2[0];
-
+  var options = keyword.options || [];
   var platform = device.platform.toLowerCase();
   var handleOnChange = (0, _react.useCallback)(function (e) {
     var value = e.target.value;

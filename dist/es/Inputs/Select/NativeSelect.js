@@ -7,7 +7,6 @@ import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-st
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
-import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 
@@ -20,7 +19,7 @@ import { jsx } from '@emotion/core';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
 import '../../styles/native-select.css';
 
@@ -63,11 +62,7 @@ var NativeSelect = function NativeSelect(props) {
 
   var _theme$options = theme.options,
       optionsTheme = _theme$options === void 0 ? {} : _theme$options;
-
-  var _useState = useState(keyword.options || []),
-      _useState2 = _slicedToArray(_useState, 1),
-      options = _useState2[0];
-
+  var options = keyword.options || [];
   var platform = device.platform.toLowerCase();
   var handleOnChange = useCallback(function (e) {
     var value = e.target.value;

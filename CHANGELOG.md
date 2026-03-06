@@ -1,3 +1,10 @@
+## [3.137.1](https://github.com/ClearC2/grid-form-builder/compare/v3.137.0...v3.137.1) (2026-03-06)
+
+
+### Bug Fixes
+
+* **native-select-options:** remove options from state ([#266](https://github.com/ClearC2/grid-form-builder/issues/266)) ([3f6f68d](https://github.com/ClearC2/grid-form-builder/commit/3f6f68d8f5a69fadabfe51048a4ea73338698e55))
+
 # [3.137.0](https://github.com/ClearC2/grid-form-builder/compare/v3.136.1...v3.137.0) (2026-02-27)
 
 
