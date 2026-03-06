@@ -3,7 +3,7 @@ import {jsx} from '@emotion/core'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
 import useTheme from '../../theme/useTheme'
-import {useCallback, useState} from 'react'
+import {useCallback} from 'react'
 import {FaChevronDown} from 'react-icons/fa'
 import '../../styles/native-select.css'
 
@@ -38,7 +38,7 @@ const NativeSelect = (props) => {
 
   const {options: optionsTheme = {}} = theme
 
-  const [options] = useState(keyword.options || [])
+  const options = keyword.options || []
 
   const platform = device.platform.toLowerCase()
 
