@@ -16,7 +16,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useContext, useCallback, useEffect, useRef, useState } from 'react';
+import { useContext, useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormValueContext } from '../../FormBuilder';
 import InputContainer from './InputContainer';
@@ -34,12 +34,7 @@ var InnerCell = function InnerCell(props) {
       interactive = props.interactive,
       draggable = props.draggable,
       readonly = props.readonly,
-      didDrop = props.didDrop,
-      isOver = props.isOver,
       connectDropTarget = props.connectDropTarget,
-      handleDragDropOnInput = props.handleDragDropOnInput,
-      _props$droppedItem = props.droppedItem,
-      droppedItem = _props$droppedItem === void 0 ? null : _props$droppedItem,
       handleLinkClick = props.handleLinkClick,
       handleCascadeKeywordClick = props.handleCascadeKeywordClick,
       handleOnChange = props.handleOnChange,
@@ -74,27 +69,6 @@ var InnerCell = function InnerCell(props) {
 
   var Type = mapInputType(config.type);
   var value = formValues.get(config.name, '');
-  useEffect(function () {
-    if (didDrop && !previousDrop.current.didDrop && !isOver && previousDrop.current.isOver) {
-      // clone these objects before we send them up, we don't want them mutating them and causing unexpected behavior down here - JRA 12/05/2019
-      var source = _typeof(droppedItem) === 'object' && _typeof(droppedItem.widget) === 'object' ? _objectSpread({}, droppedItem.widget) : null;
-      var target = _typeof(field) === 'object' && _typeof(field.config) === 'object' ? _objectSpread({}, field.config) : null;
-      handleDragDropOnInput({
-        source: source,
-        target: target
-      });
-    }
-  }, [didDrop, isOver, handleDragDropOnInput, field, droppedItem]);
-  var previousDrop = useRef({
-    didDrop: false,
-    isOver: false
-  });
-  useEffect(function () {
-    previousDrop.current = {
-      didDrop: didDrop,
-      isOver: isOver
-    };
-  }, [didDrop, isOver]);
   var onGridElementClick = useCallback(function (e) {
     var config = _typeof(field) === 'object' && _typeof(field.config) === 'object' ? _objectSpread({}, field.config) : {};
     config.index = index;
@@ -174,19 +148,26 @@ var InnerCell = function InnerCell(props) {
   }, jsx(Type, null))));
 };
 
-function collect(connect, monitor) {
+function collect(connect) {
   return {
-    connectDropTarget: connect.dropTarget(),
-    droppedItem: monitor.getDropResult(),
-    didDrop: monitor.didDrop(),
-    isOver: monitor.isOver()
+    connectDropTarget: connect.dropTarget()
   };
 }
 
 var boxTarget = {
   drop: function drop(props, monitor) {
+    // Call the handler directly here rather than relying on React state transitions,
+    // since React 18 automatic batching collapses hover+drop+endDrag into one render
+    // and the component never sees didDrop=true.
+    var widget = monitor.getItem();
+    var source = _typeof(widget) === 'object' ? _objectSpread({}, widget) : null;
+    var target = _typeof(props.field) === 'object' && _typeof(props.field.config) === 'object' ? _objectSpread({}, props.field.config) : null;
+    props.handleDragDropOnInput({
+      source: source,
+      target: target
+    });
     return {
-      widget: monitor.getItem()
+      widget: widget
     };
   }
 };
@@ -198,7 +179,6 @@ InnerCell.propTypes = {
   interactive: PropTypes.bool,
   draggable: PropTypes.bool,
   readonly: PropTypes.bool,
-  didDrop: PropTypes.bool,
   handleDragDropOnInput: PropTypes.func,
   handleOnChange: PropTypes.func,
   requiredWarning: PropTypes.bool,

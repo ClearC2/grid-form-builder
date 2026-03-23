@@ -1,3 +1,10 @@
+## [3.137.2](https://github.com/ClearC2/grid-form-builder/compare/v3.137.1...v3.137.2) (2026-03-23)
+
+
+### Bug Fixes
+
+* **dnd-batching:** handle dnd batching actions ([#267](https://github.com/ClearC2/grid-form-builder/issues/267)) ([2c9dfa7](https://github.com/ClearC2/grid-form-builder/commit/2c9dfa7748d5e0c3c5e644e5460e8e459e7f0f1f))
+
 ## [3.137.1](https://github.com/ClearC2/grid-form-builder/compare/v3.137.0...v3.137.1) (2026-03-06)
 
 
