@@ -137,7 +137,7 @@ const boxTarget = {
   drop (props, monitor) {
     // Call the handler directly here rather than relying on React state transitions,
     // since React 18 automatic batching collapses hover+drop+endDrag into one render
-    // and the component never sees didDrop=true. - JRA
+    // and the component never sees didDrop=true.
     const widget = monitor.getItem()
     const source = typeof widget === 'object' ? {...widget} : null
     const target = typeof props.field === 'object' && typeof props.field.config === 'object'
