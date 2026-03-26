@@ -2,14 +2,19 @@
 import {jsx} from '@emotion/core'
 import {useCallback, useRef, useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
-// import Cleave from 'cleave.js/react'
-import Cleave from '../Cleave' // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
-import 'cleave.js/dist/addons/cleave-phone.i18n'
+import {AsYouType, validatePhoneNumberLength} from 'libphonenumber-js'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
 import countryCodes from '../countryCodes'
 import {List, Map} from 'immutable'
 import '../styles/phone.css'
+
+const formatPhoneDisplay = (rawValue, countryCode) => {
+  if (!rawValue) return ''
+  const str = (rawValue + '')
+  const withPlus = countryCode && countryCode !== 'US' && !str.startsWith('+') ? `+${str}` : str
+  return new AsYouType(countryCode || 'US').input(withPlus).replace(/\D+$/, '')
+}
 
 const Phone = (props) => {
   const {
@@ -21,7 +26,6 @@ const Phone = (props) => {
     placeholder,
     tabIndex,
     autoComplete,
-    delimiter = ' ',
     interactive = true,
     requiredWarning,
     style = {},
@@ -35,7 +39,7 @@ const Phone = (props) => {
     'data-testid': testId = props?.name
   } = props
 
-  let {value = ''} = props
+  const {value = ''} = props
 
   const {
     value: valueStyle = {},
@@ -50,13 +54,17 @@ const Phone = (props) => {
 
   const {theme} = useTheme()
 
-  const input = useRef()
-
   const selectableRegionCodes = useRef(regions || countryCodes)
 
   const [isFocused, setIsFocused] = useState(false)
 
   const [countryCode, setCountryCode] = useState(regionPropValue)
+
+  useEffect(() => {
+    setCountryCode(regionPropValue)
+  }, [regionPropValue])
+
+  const displayValue = formatPhoneDisplay(value, countryCode)
 
   const handleOnRegionChange = useCallback(e => {
     const {value: newValue} = e.target
@@ -71,10 +79,6 @@ const Phone = (props) => {
     setCountryCode(newValue)
   }, [region, onChange])
 
-  useEffect(() => {
-    setCountryCode(regionPropValue)
-  }, [regionPropValue])
-
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)
   }, [])
@@ -84,17 +88,11 @@ const Phone = (props) => {
   }, [])
 
   const handleOnChange = useCallback(e => {
-    let {value: newValue} = e.target
-    if (input.current) {
-      newValue = input.current.getRawValue()
-    }
-    onChange({
-      target: {
-        value: newValue,
-        name
-      }
-    })
-  }, [onChange, name])
+    const newDigits = e.target.value.replace(/\D/g, '')
+    const withPlus = countryCode === 'US' ? newDigits : `+${newDigits}`
+    if (validatePhoneNumberLength(withPlus, countryCode) === 'TOO_LONG') return
+    onChange({target: {value: newDigits, name}})
+  }, [onChange, name, countryCode])
 
   const isDisabled = readonly || disabled || !interactive
 
@@ -123,8 +121,6 @@ const Phone = (props) => {
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
 
-  value = countryCode && countryCode !== 'US' && !value.startsWith('+') ? `+${value}` : value
-
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
@@ -143,17 +139,11 @@ const Phone = (props) => {
             </div>
           )}
           <div className='gfb-input__value-container' style={valueContainer} css={valueContainerCSS}>
-            <Cleave
-              key={countryCode}
-              ref={input}
-              options={{
-                phone: true,
-                phoneRegionCode: countryCode,
-                delimiter
-              }}
+            <input
+              type='text'
               className={className}
               name={name}
-              value={value}
+              value={displayValue}
               onChange={handleOnChange}
               readOnly={isDisabled}
               autoFocus={autofocus}
@@ -164,7 +154,7 @@ const Phone = (props) => {
               onBlur={handleOnBlur}
               style={valueStyle}
               css={valueCSS}
-              maxLength={maxlength + Math.floor((value + '').length / 4)}
+              maxLength={maxlength + Math.floor((displayValue).length / 4)}
               data-testid={testId}
             />
           </div>

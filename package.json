@@ -110,6 +110,7 @@
     "cleave.js": "^1.5.3",
     "daterangepicker": "^3.0.5",
     "hoist-non-react-statics": "^3.3.0",
+    "libphonenumber-js": "^1.12.40",
     "moment": "^2.20.1",
     "prop-types": "^15.0.0",
     "quill": "^2.0.3",
