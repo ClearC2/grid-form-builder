@@ -13,25 +13,29 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context4, _context5; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context4 = ownKeys(Object(source), !0)).call(_context4, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context5 = ownKeys(Object(source))).call(_context5, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
+import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
-import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import PropTypes from 'prop-types'; // import Cleave from 'cleave.js/react'
-
-import Cleave from '../Cleave'; // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
-
-import 'cleave.js/dist/addons/cleave-phone.i18n';
+import PropTypes from 'prop-types';
+import { AsYouType, validatePhoneNumberLength } from 'libphonenumber-js';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 import countryCodes from '../countryCodes';
 import { List, Map } from 'immutable';
 import '../styles/phone.css';
+
+var formatPhoneDisplay = function formatPhoneDisplay(rawValue, countryCode) {
+  if (!rawValue) return '';
+  var str = rawValue + '';
+  var withPlus = countryCode && countryCode !== 'US' && !_startsWithInstanceProperty(str).call(str, '+') ? "+".concat(str) : str;
+  return new AsYouType(countryCode || 'US').input(withPlus).replace(/\D+$/, '');
+};
 
 var Phone = function Phone(props) {
   var _context, _context2, _context3;
@@ -44,8 +48,6 @@ var Phone = function Phone(props) {
       placeholder = props.placeholder,
       tabIndex = props.tabIndex,
       autoComplete = props.autoComplete,
-      _props$delimiter = props.delimiter,
-      delimiter = _props$delimiter === void 0 ? ' ' : _props$delimiter,
       _props$interactive = props.interactive,
       interactive = _props$interactive === void 0 ? true : _props$interactive,
       requiredWarning = props.requiredWarning,
@@ -83,7 +85,6 @@ var Phone = function Phone(props) {
   var _useTheme = useTheme(),
       theme = _useTheme.theme;
 
-  var input = useRef();
   var selectableRegionCodes = useRef(regions || countryCodes);
 
   var _useState = useState(false),
@@ -96,6 +97,10 @@ var Phone = function Phone(props) {
       countryCode = _useState4[0],
       setCountryCode = _useState4[1];
 
+  useEffect(function () {
+    setCountryCode(regionPropValue);
+  }, [regionPropValue]);
+  var displayValue = formatPhoneDisplay(value, countryCode);
   var handleOnRegionChange = useCallback(function (e) {
     var newValue = e.target.value;
 
@@ -111,9 +116,6 @@ var Phone = function Phone(props) {
 
     setCountryCode(newValue);
   }, [region, onChange]);
-  useEffect(function () {
-    setCountryCode(regionPropValue);
-  }, [regionPropValue]);
   var handleOnFocus = useCallback(function () {
     setIsFocused(true);
   }, []);
@@ -121,19 +123,16 @@ var Phone = function Phone(props) {
     setIsFocused(false);
   }, []);
   var handleOnChange = useCallback(function (e) {
-    var newValue = e.target.value;
-
-    if (input.current) {
-      newValue = input.current.getRawValue();
-    }
-
+    var newDigits = e.target.value.replace(/\D/g, '');
+    var withPlus = countryCode === 'US' ? newDigits : "+".concat(newDigits);
+    if (validatePhoneNumberLength(withPlus, countryCode) === 'TOO_LONG') return;
     onChange({
       target: {
-        value: newValue,
+        value: newDigits,
         name: name
       }
     });
-  }, [onChange, name]);
+  }, [onChange, name, countryCode]);
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
@@ -170,7 +169,6 @@ var Phone = function Phone(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
-  value = countryCode && countryCode !== 'US' && !_startsWithInstanceProperty(value).call(value, '+') ? "+".concat(value) : value;
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -197,17 +195,11 @@ var Phone = function Phone(props) {
     className: "gfb-input__value-container",
     style: valueContainer,
     css: valueContainerCSS
-  }, jsx(Cleave, {
-    key: countryCode,
-    ref: input,
-    options: {
-      phone: true,
-      phoneRegionCode: countryCode,
-      delimiter: delimiter
-    },
+  }, jsx("input", {
+    type: "text",
     className: className,
     name: name,
-    value: value,
+    value: displayValue,
     onChange: handleOnChange,
     readOnly: isDisabled,
     autoFocus: autofocus,
@@ -218,7 +210,7 @@ var Phone = function Phone(props) {
     onBlur: handleOnBlur,
     style: valueStyle,
     css: valueCSS,
-    maxLength: maxlength + Math.floor((value + '').length / 4),
+    maxLength: maxlength + Math.floor(displayValue.length / 4),
     "data-testid": testId
   })), jsx("div", {
     className: "gfb-input__indicators",

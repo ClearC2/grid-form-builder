@@ -1,3 +1,10 @@
+## [3.137.3](https://github.com/ClearC2/grid-form-builder/compare/v3.137.2...v3.137.3) (2026-03-26)
+
+
+### Bug Fixes
+
+* **libphonenumber:** use libphonenumber-js for phone formating ([#268](https://github.com/ClearC2/grid-form-builder/issues/268)) ([2d9b4af](https://github.com/ClearC2/grid-form-builder/commit/2d9b4af25d549158bf8df4c17017af108e4c90b1))
+
 ## [3.137.2](https://github.com/ClearC2/grid-form-builder/compare/v3.137.1...v3.137.2) (2026-03-23)
 
 
