@@ -47,7 +47,10 @@ var InnerCell = function InnerCell(props) {
       autoComplete = props.autoComplete,
       device = props.device,
       fieldDefinitions = props.fieldDefinitions,
-      c2class = props.c2class;
+      c2class = props.c2class,
+      expandable = props.expandable,
+      setItemDimensions = props.setItemDimensions,
+      dimensions = props.dimensions;
   var _field$config = field.config,
       config = _field$config === void 0 ? {} : _field$config;
 
@@ -105,6 +108,35 @@ var InnerCell = function InnerCell(props) {
     }
   }
 
+  var expandItem = useCallback(function () {
+    var _dimensions$h = dimensions.h,
+        h = _dimensions$h === void 0 ? 1 : _dimensions$h;
+    if (!h) h = 1;
+    h = +h;
+    if (isNaN(h)) h = 1;
+    h = h + 3;
+
+    var newDimensions = _objectSpread(_objectSpread({}, dimensions), {}, {
+      h: h
+    });
+
+    setItemDimensions(index, newDimensions);
+  }, [index, setItemDimensions, dimensions]);
+  var shrinkItem = useCallback(function () {
+    var _dimensions$h2 = dimensions.h,
+        h = _dimensions$h2 === void 0 ? 1 : _dimensions$h2;
+    if (!h) h = 1;
+    h = +h;
+    if (isNaN(h)) h = 1;
+    h = h - 3;
+    if (h < 1) h = 1;
+
+    var newDimensions = _objectSpread(_objectSpread({}, dimensions), {}, {
+      h: h
+    });
+
+    setItemDimensions(index, newDimensions);
+  }, [index, setItemDimensions, dimensions]);
   var _config$style = config.style,
       style = _config$style === void 0 ? {} : _config$style,
       _config$tooltips = config.tooltips,
@@ -125,7 +157,10 @@ var InnerCell = function InnerCell(props) {
     config: config,
     handleLinkClick: handleLinkClick,
     handleCascadeKeywordClick: handleCascadeKeywordClick,
-    value: value
+    value: value,
+    expandable: expandable,
+    expandItem: expandItem,
+    shrinkItem: shrinkItem
   }), jsx(InputContainer, {
     config: config,
     value: value,
@@ -190,5 +225,8 @@ InnerCell.propTypes = {
   autoComplete: PropTypes.string,
   device: PropTypes.object,
   fieldDefinitions: PropTypes.instanceOf(Map),
-  c2class: PropTypes.string
+  c2class: PropTypes.string,
+  expandable: PropTypes.bool,
+  setItemDimensions: PropTypes.func,
+  dimensions: PropTypes.object
 };

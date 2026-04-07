@@ -50,7 +50,10 @@ var LabelContainer = function LabelContainer(props) {
   var config = props.config,
       handleLinkClick = props.handleLinkClick,
       handleCascadeKeywordClick = props.handleCascadeKeywordClick,
-      value = props.value;
+      value = props.value,
+      expandable = props.expandable,
+      expandItem = props.expandItem,
+      shrinkItem = props.shrinkItem;
   var _config$icon = config.icon,
       Icon = _config$icon === void 0 ? '' : _config$icon,
       _config$cascade = config.cascade,
@@ -76,6 +79,14 @@ var LabelContainer = function LabelContainer(props) {
   Icon = (0, _Icons.mapIcon)(Icon);
   LinkIcon = (0, _Icons.mapIcon)(LinkIcon);
   CascadeIcon = (0, _Icons.mapIcon)(CascadeIcon);
+  var ExpandIcon;
+  var ShrinkIcon;
+
+  if (expandable) {
+    ExpandIcon = (0, _Icons.mapIcon)('caretdown');
+    ShrinkIcon = (0, _Icons.mapIcon)('caretup');
+  }
+
   var name = config.name,
       _config$label = config.label,
       label = _config$label === void 0 ? name : _config$label;
@@ -83,6 +94,8 @@ var LabelContainer = function LabelContainer(props) {
   var linkId = (0, _react.useRef)((0, _utils.randomId)());
   var cascadeId = (0, _react.useRef)((0, _utils.randomId)());
   var labelId = (0, _react.useRef)((0, _utils.randomId)());
+  var expandId = (0, _react.useRef)((0, _utils.randomId)());
+  var shrinkId = (0, _react.useRef)((0, _utils.randomId)());
 
   var _useTheme = (0, _useTheme2.default)(),
       theme = _useTheme.theme;
@@ -136,6 +149,12 @@ var LabelContainer = function LabelContainer(props) {
   }), (0, _core.jsx)(_Tooltip.default, {
     id: labelId.current,
     message: labelTooltip
+  }), (0, _core.jsx)(_Tooltip.default, {
+    id: expandId.current,
+    message: "Expand Input"
+  }), (0, _core.jsx)(_Tooltip.default, {
+    id: shrinkId.current,
+    message: "Condense Input"
   }), Icon && (0, _core.jsx)(Icon, {
     size: size,
     style: iconStyle,
@@ -172,7 +191,23 @@ var LabelContainer = function LabelContainer(props) {
     "data-tip": true,
     "data-for": cascadeId.current,
     css: theme.cascade
-  }));
+  }), !expandable ? null : (0, _core.jsx)("div", {
+    className: "gfb-input-expand-controls"
+  }, (0, _core.jsx)("button", {
+    onClick: shrinkItem,
+    className: "gfb-expand-input-btn"
+  }, (0, _core.jsx)(ShrinkIcon, {
+    className: "cursor-hand",
+    "data-tip": true,
+    "data-for": shrinkId.current
+  })), (0, _core.jsx)("button", {
+    onClick: expandItem,
+    className: "gfb-expand-input-btn"
+  }, (0, _core.jsx)(ExpandIcon, {
+    className: "cursor-hand",
+    "data-tip": true,
+    "data-for": expandId.current
+  }))));
 };
 
 var _default = LabelContainer;
@@ -182,5 +217,8 @@ LabelContainer.propTypes = {
   handleLinkClick: _propTypes.default.func,
   handleCascadeKeywordClick: _propTypes.default.func,
   value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.array, _propTypes.default.object, _propTypes.default.bool]),
-  type: _propTypes.default.string
+  type: _propTypes.default.string,
+  expandItem: _propTypes.default.func,
+  shrinkItem: _propTypes.default.func,
+  expandable: _propTypes.default.bool
 };

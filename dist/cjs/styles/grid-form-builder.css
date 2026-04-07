@@ -294,7 +294,7 @@ div.gfb-input__value-container--is-multi {
 
 div.gfb-input__value-container--is-multi > div > div.gfb-input__input {
   padding-top: 4px
-} 
+}
 
 
 div.gfb-input__placeholder {
@@ -408,4 +408,19 @@ div.gfb-inner-cell-label > h3 {
 
 .gfb-disabled-indicator-separator {
   border-right: 1px solid #e4e4e4 !important;
+}
+
+.gfb-input-expand-controls {
+  display: flex;
+  margin-left: auto;
+}
+
+.gfb-expand-input-btn > svg {
+  height: 16px;
+  width: 25px;
+}
+
+.gfb-expand-input-btn {
+  padding: 0;
+  margin-left: 3px;
 }

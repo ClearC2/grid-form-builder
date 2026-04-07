@@ -76,7 +76,10 @@ var InnerCell = function InnerCell(props) {
       autoComplete = props.autoComplete,
       device = props.device,
       fieldDefinitions = props.fieldDefinitions,
-      c2class = props.c2class;
+      c2class = props.c2class,
+      expandable = props.expandable,
+      setItemDimensions = props.setItemDimensions,
+      dimensions = props.dimensions;
   var _field$config = field.config,
       config = _field$config === void 0 ? {} : _field$config;
 
@@ -134,6 +137,35 @@ var InnerCell = function InnerCell(props) {
     }
   }
 
+  var expandItem = (0, _react.useCallback)(function () {
+    var _dimensions$h = dimensions.h,
+        h = _dimensions$h === void 0 ? 1 : _dimensions$h;
+    if (!h) h = 1;
+    h = +h;
+    if (isNaN(h)) h = 1;
+    h = h + 3;
+
+    var newDimensions = _objectSpread(_objectSpread({}, dimensions), {}, {
+      h: h
+    });
+
+    setItemDimensions(index, newDimensions);
+  }, [index, setItemDimensions, dimensions]);
+  var shrinkItem = (0, _react.useCallback)(function () {
+    var _dimensions$h2 = dimensions.h,
+        h = _dimensions$h2 === void 0 ? 1 : _dimensions$h2;
+    if (!h) h = 1;
+    h = +h;
+    if (isNaN(h)) h = 1;
+    h = h - 3;
+    if (h < 1) h = 1;
+
+    var newDimensions = _objectSpread(_objectSpread({}, dimensions), {}, {
+      h: h
+    });
+
+    setItemDimensions(index, newDimensions);
+  }, [index, setItemDimensions, dimensions]);
   var _config$style = config.style,
       style = _config$style === void 0 ? {} : _config$style,
       _config$tooltips = config.tooltips,
@@ -154,7 +186,10 @@ var InnerCell = function InnerCell(props) {
     config: config,
     handleLinkClick: handleLinkClick,
     handleCascadeKeywordClick: handleCascadeKeywordClick,
-    value: value
+    value: value,
+    expandable: expandable,
+    expandItem: expandItem,
+    shrinkItem: shrinkItem
   }), (0, _core.jsx)(_InputContainer.default, {
     config: config,
     value: value,
@@ -222,5 +257,8 @@ InnerCell.propTypes = {
   autoComplete: _propTypes.default.string,
   device: _propTypes.default.object,
   fieldDefinitions: _propTypes.default.instanceOf(_immutable.Map),
-  c2class: _propTypes.default.string
+  c2class: _propTypes.default.string,
+  expandable: _propTypes.default.bool,
+  setItemDimensions: _propTypes.default.func,
+  dimensions: _propTypes.default.object
 };

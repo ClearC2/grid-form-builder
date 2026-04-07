@@ -307,7 +307,9 @@ var FormBuilder = function FormBuilder(props) {
         }
 
         var _config$rteImageUrl = config.rteImageUrl,
-            rteImageUrl = _config$rteImageUrl === void 0 ? '' : _config$rteImageUrl;
+            rteImageUrl = _config$rteImageUrl === void 0 ? '' : _config$rteImageUrl,
+            _config$expandable = config.expandable,
+            expandable = _config$expandable === void 0 ? false : _config$expandable;
         var isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i;
         var className = isActive ? 'drag-item-active' : '';
         if (config.tooltip) className = className + ' gfb-has-tooltip';
@@ -357,7 +359,10 @@ var FormBuilder = function FormBuilder(props) {
           device: device,
           rteImageUrl: rteImageUrl,
           fieldDefinitions: fieldDefinitions,
-          c2class: c2class
+          c2class: c2class,
+          expandable: expandable,
+          setItemDimensions: setItemDimensions,
+          dimensions: dimensions
         })));
         layout.push(dimensions);
       }
@@ -399,6 +404,16 @@ var FormBuilder = function FormBuilder(props) {
       });
     }
   }, [formSchema, updateGrid, handleOnDimensionChange, grid]);
+  var setItemDimensions = useCallback(function (i, dimensions) {
+    var schema = searchForLayoutArray(formSchema);
+
+    var item = _objectSpread({}, schema[i]);
+
+    item.dimensions = dimensions;
+    schema[i] = item;
+    var newFormSchema = updateLayoutArray(formSchema, schema);
+    handleOnDimensionChange(newFormSchema);
+  }, [formSchema, handleOnDimensionChange]);
   var onItemLayoutUpdate = useCallback(function (newLayout) {
     debugLog('onItemLayoutUpdate');
 

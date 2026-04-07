@@ -26,7 +26,10 @@ var LabelContainer = function LabelContainer(props) {
   var config = props.config,
       handleLinkClick = props.handleLinkClick,
       handleCascadeKeywordClick = props.handleCascadeKeywordClick,
-      value = props.value;
+      value = props.value,
+      expandable = props.expandable,
+      expandItem = props.expandItem,
+      shrinkItem = props.shrinkItem;
   var _config$icon = config.icon,
       Icon = _config$icon === void 0 ? '' : _config$icon,
       _config$cascade = config.cascade,
@@ -52,6 +55,14 @@ var LabelContainer = function LabelContainer(props) {
   Icon = mapIcon(Icon);
   LinkIcon = mapIcon(LinkIcon);
   CascadeIcon = mapIcon(CascadeIcon);
+  var ExpandIcon;
+  var ShrinkIcon;
+
+  if (expandable) {
+    ExpandIcon = mapIcon('caretdown');
+    ShrinkIcon = mapIcon('caretup');
+  }
+
   var name = config.name,
       _config$label = config.label,
       label = _config$label === void 0 ? name : _config$label;
@@ -59,6 +70,8 @@ var LabelContainer = function LabelContainer(props) {
   var linkId = useRef(randomId());
   var cascadeId = useRef(randomId());
   var labelId = useRef(randomId());
+  var expandId = useRef(randomId());
+  var shrinkId = useRef(randomId());
 
   var _useTheme = useTheme(),
       theme = _useTheme.theme;
@@ -112,6 +125,12 @@ var LabelContainer = function LabelContainer(props) {
   }), jsx(PortalTooltip, {
     id: labelId.current,
     message: labelTooltip
+  }), jsx(PortalTooltip, {
+    id: expandId.current,
+    message: "Expand Input"
+  }), jsx(PortalTooltip, {
+    id: shrinkId.current,
+    message: "Condense Input"
   }), Icon && jsx(Icon, {
     size: size,
     style: iconStyle,
@@ -148,7 +167,23 @@ var LabelContainer = function LabelContainer(props) {
     "data-tip": true,
     "data-for": cascadeId.current,
     css: theme.cascade
-  }));
+  }), !expandable ? null : jsx("div", {
+    className: "gfb-input-expand-controls"
+  }, jsx("button", {
+    onClick: shrinkItem,
+    className: "gfb-expand-input-btn"
+  }, jsx(ShrinkIcon, {
+    className: "cursor-hand",
+    "data-tip": true,
+    "data-for": shrinkId.current
+  })), jsx("button", {
+    onClick: expandItem,
+    className: "gfb-expand-input-btn"
+  }, jsx(ExpandIcon, {
+    className: "cursor-hand",
+    "data-tip": true,
+    "data-for": expandId.current
+  }))));
 };
 
 export default LabelContainer;
@@ -157,5 +192,8 @@ LabelContainer.propTypes = {
   handleLinkClick: PropTypes.func,
   handleCascadeKeywordClick: PropTypes.func,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
-  type: PropTypes.string
+  type: PropTypes.string,
+  expandItem: PropTypes.func,
+  shrinkItem: PropTypes.func,
+  expandable: PropTypes.bool
 };

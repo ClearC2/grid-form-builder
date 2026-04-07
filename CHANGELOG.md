@@ -1,3 +1,10 @@
+# [3.138.0](https://github.com/ClearC2/grid-form-builder/compare/v3.137.3...v3.138.0) (2026-04-07)
+
+
+### Features
+
+* **expandable:** adds expand/condense controllers to all input types ([2fdadf1](https://github.com/ClearC2/grid-form-builder/commit/2fdadf1e9d04c7df0925326265b22a83249b57fe))
+
 ## [3.137.3](https://github.com/ClearC2/grid-form-builder/compare/v3.137.2...v3.137.3) (2026-03-26)
 
 
