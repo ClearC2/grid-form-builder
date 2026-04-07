@@ -32,7 +32,10 @@ const InnerCell = props => {
     autoComplete,
     device,
     fieldDefinitions,
-    c2class
+    c2class,
+    expandable,
+    setItemDimensions,
+    dimensions
   } = props
 
   const {config = {}} = field
@@ -83,6 +86,27 @@ const InnerCell = props => {
     }
   }
 
+  const expandItem = useCallback(() => {
+    let {h = 1} = dimensions
+    if (!h) h = 1
+    h = +h
+    if (isNaN(h)) h = 1
+    h = h + 3
+    const newDimensions = {...dimensions, h}
+    setItemDimensions(index, newDimensions)
+  }, [index, setItemDimensions, dimensions])
+
+  const shrinkItem = useCallback(() => {
+    let {h = 1} = dimensions
+    if (!h) h = 1
+    h = +h
+    if (isNaN(h)) h = 1
+    h = h - 3
+    if (h < 1) h = 1
+    const newDimensions = {...dimensions, h}
+    setItemDimensions(index, newDimensions)
+  }, [index, setItemDimensions, dimensions])
+
   const {style = {}, tooltips = {}} = config
   const {innerCell = {}} = style
   const {cell: cellTooltip} = tooltips
@@ -100,6 +124,9 @@ const InnerCell = props => {
         handleLinkClick={handleLinkClick}
         handleCascadeKeywordClick={handleCascadeKeywordClick}
         value={value}
+        expandable={expandable}
+        expandItem={expandItem}
+        shrinkItem={shrinkItem}
       />
       <InputContainer
         config={config}
@@ -167,5 +194,8 @@ InnerCell.propTypes = {
   autoComplete: PropTypes.string,
   device: PropTypes.object,
   fieldDefinitions: PropTypes.instanceOf(Map),
-  c2class: PropTypes.string
+  c2class: PropTypes.string,
+  expandable: PropTypes.bool,
+  setItemDimensions: PropTypes.func,
+  dimensions: PropTypes.object
 }

@@ -8,7 +8,15 @@ import {randomId} from '../../utils'
 import useTheme from '../../theme/useTheme'
 
 const LabelContainer = props => {
-  const {config, handleLinkClick, handleCascadeKeywordClick, value} = props
+  const {
+    config,
+    handleLinkClick,
+    handleCascadeKeywordClick,
+    value,
+    expandable,
+    expandItem,
+    shrinkItem
+  } = props
   let {
     icon: Icon = '',
     cascade = {},
@@ -23,11 +31,19 @@ const LabelContainer = props => {
   Icon = mapIcon(Icon)
   LinkIcon = mapIcon(LinkIcon)
   CascadeIcon = mapIcon(CascadeIcon)
+  let ExpandIcon
+  let ShrinkIcon
+  if (expandable) {
+    ExpandIcon = mapIcon('caretdown')
+    ShrinkIcon = mapIcon('caretup')
+  }
   const {name, label = name} = config
   const iconId = useRef(randomId())
   const linkId = useRef(randomId())
   const cascadeId = useRef(randomId())
   const labelId = useRef(randomId())
+  const expandId = useRef(randomId())
+  const shrinkId = useRef(randomId())
   const {theme} = useTheme()
 
   const onLinkClick = useCallback(() => {
@@ -73,6 +89,8 @@ const LabelContainer = props => {
       <PortalTooltip id={linkId.current} message={linkTooltip} />
       <PortalTooltip id={cascadeId.current} message={cascadeTooltip} />
       <PortalTooltip id={labelId.current} message={labelTooltip} />
+      <PortalTooltip id={expandId.current} message='Expand Input' />
+      <PortalTooltip id={shrinkId.current} message='Condense Input' />
       {Icon && (
         <Icon
           size={size}
@@ -127,6 +145,24 @@ const LabelContainer = props => {
           css={theme.cascade}
         />
       )}
+      {!expandable ? null : (
+        <div className='gfb-input-expand-controls'>
+          <button onClick={shrinkItem} className='gfb-expand-input-btn'>
+            <ShrinkIcon
+              className='cursor-hand'
+              data-tip
+              data-for={shrinkId.current}
+            />
+          </button>
+          <button onClick={expandItem} className='gfb-expand-input-btn'>
+            <ExpandIcon
+              className='cursor-hand'
+              data-tip
+              data-for={expandId.current}
+            />
+          </button>
+        </div>
+      )}
     </div>
   )
 }
@@ -138,5 +174,8 @@ LabelContainer.propTypes = {
   handleLinkClick: PropTypes.func,
   handleCascadeKeywordClick: PropTypes.func,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
-  type: PropTypes.string
+  type: PropTypes.string,
+  expandItem: PropTypes.func,
+  shrinkItem: PropTypes.func,
+  expandable: PropTypes.bool
 }

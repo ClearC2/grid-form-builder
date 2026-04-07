@@ -219,7 +219,7 @@ const FormBuilder = (props) => {
         } else {
           tabindex = matchSigFigs(prefix, tabindex)
         }
-        const {rteImageUrl = ''} = config
+        const {rteImageUrl = '', expandable = false} = config
         const isActive = (typeof activeItem === 'string' || typeof activeItem === 'number') && +activeItem === i
         let className = isActive ? 'drag-item-active' : ''
         if (config.tooltip) className = className + ' gfb-has-tooltip'
@@ -262,6 +262,9 @@ const FormBuilder = (props) => {
               rteImageUrl={rteImageUrl}
               fieldDefinitions={fieldDefinitions}
               c2class={c2class}
+              expandable={expandable}
+              setItemDimensions={setItemDimensions}
+              dimensions={dimensions}
             />
           </div>
         )
@@ -303,6 +306,15 @@ const FormBuilder = (props) => {
       setTimeout(() => updateGrid({layout: grid.layout, elements: grid.elements}))
     }
   }, [formSchema, updateGrid, handleOnDimensionChange, grid])
+
+  const setItemDimensions = useCallback((i, dimensions) => {
+    const schema = searchForLayoutArray(formSchema)
+    const item = {...schema[i]}
+    item.dimensions = dimensions
+    schema[i] = item
+    const newFormSchema = updateLayoutArray(formSchema, schema)
+    handleOnDimensionChange(newFormSchema)
+  }, [formSchema, handleOnDimensionChange])
 
   const onItemLayoutUpdate = useCallback((newLayout) => {
     debugLog('onItemLayoutUpdate')

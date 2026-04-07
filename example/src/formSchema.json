@@ -328,11 +328,12 @@
           "w": 6,
           "h": 4,
           "x": 0,
-          "y": 23,
+          "y": 5,
           "moved": false,
           "static": false
         },
         "config": {
+          "expandable": true,
           "name": "rich-text-input-1",
           "label": "Rich Text Input",
           "type": "richtextarea"
@@ -1037,7 +1038,8 @@
           "type": "email",
           "name": "email",
           "label": "Email Input",
-          "required": true
+          "required": true,
+          "expandable": true
         }
       }]
     },
