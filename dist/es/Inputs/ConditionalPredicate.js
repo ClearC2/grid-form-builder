@@ -28,7 +28,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormBuilder } from '../index';
 import { Map, List, fromJS, Set } from 'immutable';
-import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, DATES, SINGLE_FIELD_INPUTS } from './SearchUtils'; // eslint-disable-line
+import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, DATES, SINGLE_FIELD_INPUTS, EXCLUDE_DAYS_CONDITIONS } from './SearchUtils'; // eslint-disable-line
 
 var STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime', 'textarea']);
 
@@ -151,6 +151,14 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
 
       if (props.value.get('isfield')) {
         initialModalValues.isfield = props.value.get('isfield');
+      }
+
+      if (props.value.get('excludeDays')) {
+        initialModalValues.excludeDays = props.value.get('excludeDays');
+      }
+
+      if (props.value.get('excludedDays')) {
+        initialModalValues.excludedDays = props.value.get('excludedDays');
       }
 
       dialogOnChange({
@@ -309,6 +317,69 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
         }
       });
       return schema;
+    }
+
+    var supportsExcludedDays = EXCLUDE_DAYS_CONDITIONS.has(modalValues.get('condition'));
+
+    if (supportsExcludedDays) {
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {
+          x: 1,
+          y: 2,
+          h: 1,
+          w: 3
+        },
+        config: {
+          name: 'excludeDays',
+          label: 'Days to Exclude',
+          type: 'checkbox',
+          onValue: true,
+          offValue: false
+        }
+      });
+
+      if (modalValues.get('excludeDays')) {
+        schema.form.jsonschema.layout.push({
+          type: 'field',
+          dimensions: {
+            x: 4,
+            y: 2,
+            h: 2,
+            w: 5
+          },
+          config: {
+            name: 'excludedDays',
+            label: 'Excluded Days',
+            type: 'select',
+            keyword: {
+              category: 'NONE',
+              options: [{
+                label: 'Sunday',
+                value: 'sunday'
+              }, {
+                label: 'Monday',
+                value: 'monday'
+              }, {
+                label: 'Tuesday',
+                value: 'tuesday'
+              }, {
+                label: 'Wednesday',
+                value: 'wednesday'
+              }, {
+                label: 'Thursday',
+                value: 'thursday'
+              }, {
+                label: 'Friday',
+                value: 'friday'
+              }, {
+                label: 'Saturday',
+                value: 'saturday'
+              }]
+            }
+          }
+        });
+      }
     }
 
     var relativeConditions = ['is greater than', 'is less than'];
@@ -480,7 +551,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           allowcreate: isContains || isIsOneOf || isNotContains || isNotOneOf,
           searchable: true,
           // I just added this line
-          type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
+          type: NUMERICAL_CONDITIONS.has(modalValues.get('condition', '')) ? 'number' : props.inputType.toLowerCase(),
           // eslint-disable-line
           handleOnChange: dialogOnChange
         })
@@ -517,7 +588,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
             label: label,
             interactive: true,
             clearable: true,
-            type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
+            type: NUMERICAL_CONDITIONS.has(modalValues.get('condition', '')) ? 'number' : props.inputType.toLowerCase(),
             // eslint-disable-line
             handleOnChange: dialogOnChange
           })
@@ -576,6 +647,11 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
 
     if (oldValue && oldValue instanceof Map) {
       var newFieldValue = props.value.set(e.target.name, e.target.value);
+
+      if (!EXCLUDE_DAYS_CONDITIONS.has(e.target.value)) {
+        newFieldValue = newFieldValue.delete('excludeDays').delete('excludedDays');
+      }
+
       var maxFieldValues = CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields;
 
       if (newFieldValue.get('values', List()).size >= maxFieldValues) {
@@ -714,6 +790,39 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       var displayValues = modalValues.merge((_modalValues$merge = {}, _defineProperty(_modalValues$merge, "".concat(props.name, "-0"), ''), _defineProperty(_modalValues$merge, "isfield", e.target.value), _modalValues$merge));
       setModalValues(displayValues); // set the temp values displayed in the UI
 
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      }, props.index);
+      return;
+    }
+
+    if (e.target.name === 'excludeDays') {
+      newFieldValue = newFieldValue.set('excludeDays', e.target.value);
+
+      if (!e.target.value) {
+        newFieldValue = newFieldValue.delete('excludedDays');
+
+        var _displayValues = modalValues.set('excludeDays', e.target.value).delete('excludedDays');
+
+        setModalValues(_displayValues);
+      } else {
+        setModalValues(modalValues.set('excludeDays', e.target.value));
+      }
+
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      }, props.index);
+      return;
+    }
+
+    if (e.target.name === 'excludedDays') {
+      newFieldValue = newFieldValue.set('excludedDays', List.isList(e.target.value) ? e.target.value : fromJS(e.target.value || []));
       props.onChange({
         target: {
           name: props.name,
