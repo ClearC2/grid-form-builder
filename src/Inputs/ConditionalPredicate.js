@@ -207,7 +207,7 @@ const ConditionalPredicate = (props) => {
             },
             {
               type: 'field',
-              dimensions: {x: 1, y: 1, h: 1, w: 2},
+              dimensions: {x: 1, y: 1, h: 1, w: 3},
               config: {
                 name: 'not',
                 label: 'Exclude Condition',
@@ -218,7 +218,7 @@ const ConditionalPredicate = (props) => {
             },
             {
               type: 'field',
-              dimensions: {x: 3, y: 1, h: 1, w: 3},
+              dimensions: {x: 4, y: 1, h: 1, w: 4},
               config: {
                 name: 'isfield',
                 label: 'Compare Against Another Field',
@@ -266,7 +266,7 @@ const ConditionalPredicate = (props) => {
     if (supportsExcludedDays) {
       schema.form.jsonschema.layout.push({
         type: 'field',
-        dimensions: {x: 6, y: 1, h: 1, w: 3},
+        dimensions: {x: 8, y: 1, h: 1, w: 3},
         config: {
           name: 'excludeDays',
           label: 'Days to Exclude',

@@ -259,7 +259,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
               x: 1,
               y: 1,
               h: 1,
-              w: 2
+              w: 3
             },
             config: {
               name: 'not',
@@ -271,10 +271,10 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           }, {
             type: 'field',
             dimensions: {
-              x: 3,
+              x: 4,
               y: 1,
               h: 1,
-              w: 3
+              w: 4
             },
             config: {
               name: 'isfield',
@@ -328,7 +328,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {
-          x: 6,
+          x: 8,
           y: 1,
           h: 1,
           w: 3
