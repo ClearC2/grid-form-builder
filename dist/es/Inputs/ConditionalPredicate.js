@@ -259,7 +259,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
               x: 1,
               y: 1,
               h: 1,
-              w: 3
+              w: 2
             },
             config: {
               name: 'not',
@@ -271,10 +271,10 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           }, {
             type: 'field',
             dimensions: {
-              x: 4,
+              x: 3,
               y: 1,
               h: 1,
-              w: 6
+              w: 3
             },
             config: {
               name: 'isfield',
@@ -328,8 +328,8 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       schema.form.jsonschema.layout.push({
         type: 'field',
         dimensions: {
-          x: 1,
-          y: 2,
+          x: 6,
+          y: 1,
           h: 1,
           w: 3
         },
@@ -346,15 +346,16 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
         schema.form.jsonschema.layout.push({
           type: 'field',
           dimensions: {
-            x: 4,
-            y: 2,
-            h: 2,
-            w: 5
+            x: 1,
+            y: 3,
+            h: 1,
+            w: 8
           },
           config: {
             name: 'excludedDays',
             label: 'Excluded Days',
-            type: 'select',
+            type: 'multiselect',
+            clearable: true,
             keyword: {
               category: 'NONE',
               options: [{
