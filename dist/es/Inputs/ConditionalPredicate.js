@@ -28,7 +28,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormBuilder } from '../index';
 import { Map, List, fromJS, Set } from 'immutable';
-import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, DATES, SINGLE_FIELD_INPUTS, EXCLUDE_DAYS_CONDITIONS } from './SearchUtils'; // eslint-disable-line
+import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, SINGLE_FIELD_INPUTS, EXCLUDE_DAYS_CONDITIONS } from './SearchUtils'; // eslint-disable-line
 
 var STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime', 'textarea']);
 
@@ -48,10 +48,12 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
   var propsVals = props.value.get('values').toJS();
 
   if (propsVals.length) {
+    // eslint-disable-next-line no-prototype-builtins
     if (_someInstanceProperty(propsVals).call(propsVals, function (val) {
       return val.hasOwnProperty('__isNew__');
     })) {
       _forEachInstanceProperty(propsVals).call(propsVals, function (val) {
+        // eslint-disable-next-line no-prototype-builtins
         if (val.hasOwnProperty('__isNew__')) {
           defaultCreatedInputOpts.push(val);
         }
@@ -168,7 +170,8 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
         }
       });
       setModalValues(Map(initialModalValues));
-    }
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [props.name]);
 
   function getMaxFieldCount() {
@@ -551,7 +554,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           allowcreate: isContains || isIsOneOf || isNotContains || isNotOneOf,
           searchable: true,
           // I just added this line
-          type: NUMERICAL_CONDITIONS.has(modalValues.get('condition', '')) ? 'number' : props.inputType.toLowerCase(),
+          type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
           // eslint-disable-line
           handleOnChange: dialogOnChange
         })
@@ -588,7 +591,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
             label: label,
             interactive: true,
             clearable: true,
-            type: NUMERICAL_CONDITIONS.has(modalValues.get('condition', '')) ? 'number' : props.inputType.toLowerCase(),
+            type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),
             // eslint-disable-line
             handleOnChange: dialogOnChange
           })
@@ -875,6 +878,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
 
         if (valArr.length) {
           _forEachInstanceProperty(valArr).call(valArr, function (val) {
+            // eslint-disable-next-line no-prototype-builtins
             if (val.hasOwnProperty('__isNew__')) {
               opts.push(val);
               setCreatedInputOpts(opts);

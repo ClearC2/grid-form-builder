@@ -68,7 +68,7 @@ var ConditionalInput = function ConditionalInput(props) {
   useEffect(function () {
     var setDefaults = true;
 
-    if (value instanceof Map) {
+    if (Map.isMap(value)) {
       if (value.has('condition') && value.has('values')) setDefaults = false;
       if (value.has('conditions') && value.has('type')) setDefaults = false;
     }
@@ -85,7 +85,7 @@ var ConditionalInput = function ConditionalInput(props) {
         } else {
           _defaults = _defaults.set('values', List());
         }
-      } else if (value instanceof List || _Array$isArray(value)) {
+      } else if (List.isList(value) || _Array$isArray(value)) {
         _defaults = _defaults.set('values', fromJS(value));
       }
 

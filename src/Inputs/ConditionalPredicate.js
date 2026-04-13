@@ -7,7 +7,6 @@ import {
   TYPEAHEAD_CONDITIONS,
   NUMERICAL_CONDITIONS,
   MULTI_FIELD_INPUTS,
-  DATES,
   SINGLE_FIELD_INPUTS,
   EXCLUDE_DAYS_CONDITIONS
 } from './SearchUtils' // eslint-disable-line
@@ -33,8 +32,10 @@ const ConditionalPredicate = (props) => {
   }
   const propsVals = props.value.get('values').toJS()
   if (propsVals.length) {
+    // eslint-disable-next-line no-prototype-builtins
     if (propsVals.some((val) => val.hasOwnProperty('__isNew__'))) {
       propsVals.forEach((val) => {
+        // eslint-disable-next-line no-prototype-builtins
         if (val.hasOwnProperty('__isNew__')) {
           defaultCreatedInputOpts.push(val)
         }
@@ -125,6 +126,7 @@ const ConditionalPredicate = (props) => {
       dialogOnChange({target: {name: 'condition', value: initCondition}})
       setModalValues(Map(initialModalValues))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.name])
   function getMaxFieldCount() {
     if (CONDITIONS[condition()]) {
@@ -427,7 +429,7 @@ const ConditionalPredicate = (props) => {
           },
           allowcreate: isContains || isIsOneOf || isNotContains || isNotOneOf,
           searchable: true, // I just added this line
-          type: NUMERICAL_CONDITIONS.has(modalValues.get('condition', ''))
+          type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], ''))
             ? 'number'
             : props.inputType.toLowerCase(), // eslint-disable-line
           handleOnChange: dialogOnChange
@@ -467,7 +469,7 @@ const ConditionalPredicate = (props) => {
             label: label,
             interactive: true,
             clearable: true,
-            type: NUMERICAL_CONDITIONS.has(modalValues.get('condition', ''))
+            type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], ''))
               ? 'number'
               : props.inputType.toLowerCase(), // eslint-disable-line
             handleOnChange: dialogOnChange
@@ -719,6 +721,7 @@ const ConditionalPredicate = (props) => {
         const opts = [...createdInputOpts]
         if (valArr.length) {
           valArr.forEach((val) => {
+            // eslint-disable-next-line no-prototype-builtins
             if (val.hasOwnProperty('__isNew__')) {
               opts.push(val)
               setCreatedInputOpts(opts)

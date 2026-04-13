@@ -9,7 +9,7 @@ const defaults = {
   nullFunction: () => null
 }
 
-const ConditionalInput = props => {
+const ConditionalInput = (props) => {
   const {
     style = defaults.object,
     name = '',
@@ -19,7 +19,14 @@ const ConditionalInput = props => {
     'data-testid': testId = props?.name
   } = props
 
-  const {value: valueStyle = {}, inputOuter = {}, inputInner = {}, inputControl = {}, valueContainer = {}, indicators = {}} = style// eslint-disable-line
+  const {
+    value: valueStyle = {},
+    inputOuter = {},
+    inputInner = {},
+    inputControl = {},
+    valueContainer = {},
+    indicators = {}
+  } = style // eslint-disable-line
 
   const [showDialog, setShowDialog] = useState(false)
 
@@ -29,7 +36,7 @@ const ConditionalInput = props => {
 
   useEffect(() => {
     let setDefaults = true
-    if (value instanceof Map) {
+    if (Map.isMap(value)) {
       if (value.has('condition') && value.has('values')) setDefaults = false
       if (value.has('conditions') && value.has('type')) setDefaults = false
     }
@@ -41,7 +48,7 @@ const ConditionalInput = props => {
         } else {
           defaults = defaults.set('values', List())
         }
-      } else if (value instanceof List || Array.isArray(value)) {
+      } else if (List.isList(value) || Array.isArray(value)) {
         defaults = defaults.set('values', fromJS(value))
       }
       onChange({target: {name: name, value: defaults}})
@@ -50,14 +57,27 @@ const ConditionalInput = props => {
 
   const cond = values.getIn([name, 'condition'], '')
   const vals = values.getIn([name, 'values'], List())
-  const hasValue = vals.size > 0 || cond.includes('blank') ||
+  const hasValue =
+    vals.size > 0 ||
+    cond.includes('blank') ||
     /* eslint-disable-next-line max-len */
-    cond === 'today' || cond === 'this month' || cond === 'year to date' || cond === 'fiscal year to date' || cond === 'fiscal year' ||
-    cond === 'this quarter' || cond === 'quarter to date' || cond === 'this week' ||
-    cond === 'last year' || cond === 'this year' || cond === 'last fiscal year' ||
-    cond === 'next year' || cond === 'next fiscal year' || cond === 'next quarter' ||
-    (values.getIn([name, 'dynamicValues']) && values.getIn([name, 'dynamicValues']).size) ||
-    (values.getIn([name, 'conditions'], List()).size > 0)
+    cond === 'today' ||
+    cond === 'this month' ||
+    cond === 'year to date' ||
+    cond === 'fiscal year to date' ||
+    cond === 'fiscal year' ||
+    cond === 'this quarter' ||
+    cond === 'quarter to date' ||
+    cond === 'this week' ||
+    cond === 'last year' ||
+    cond === 'this year' ||
+    cond === 'last fiscal year' ||
+    cond === 'next year' ||
+    cond === 'next fiscal year' ||
+    cond === 'next quarter' ||
+    (values.getIn([name, 'dynamicValues']) &&
+      values.getIn([name, 'dynamicValues']).size) ||
+    values.getIn([name, 'conditions'], List()).size > 0
   return (
     <div className='gfb-input-outer' style={inputOuter}>
       <div className='gfb-input-inner' style={inputInner}>
@@ -92,7 +112,13 @@ export default ConditionalInput
 ConditionalInput.propTypes = {
   onChange: PropTypes.func,
   name: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object, PropTypes.bool]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.bool
+  ]),
   values: PropTypes.object,
   disabled: PropTypes.bool,
   readonly: PropTypes.bool,
