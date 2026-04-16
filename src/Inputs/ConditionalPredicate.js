@@ -2,9 +2,23 @@ import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
 import {FormBuilder} from '../index'
 import {Map, List, fromJS, Set} from 'immutable'
-import {CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, DATES, SINGLE_FIELD_INPUTS} from './SearchUtils'// eslint-disable-line
-const STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime', 'textarea'])
-const ConditionalPredicate = props => {
+import {
+  CONDITIONS,
+  TYPEAHEAD_CONDITIONS,
+  NUMERICAL_CONDITIONS,
+  MULTI_FIELD_INPUTS,
+  SINGLE_FIELD_INPUTS,
+  EXCLUDE_DAYS_CONDITIONS
+} from './SearchUtils' // eslint-disable-line
+const STRING_VALUES = Set([
+  'input',
+  'number',
+  'percentage',
+  'currency',
+  'datetime',
+  'textarea'
+])
+const ConditionalPredicate = (props) => {
   let propValue = props.value
   if (!propValue) {
     propValue = Map()
@@ -12,35 +26,46 @@ const ConditionalPredicate = props => {
 
   let defaultCreatedInputOpts = []
   if (props.keyword && props.keyword.options) {
-    defaultCreatedInputOpts = defaultCreatedInputOpts.concat(props.keyword.options)
+    defaultCreatedInputOpts = defaultCreatedInputOpts.concat(
+      props.keyword.options
+    )
   }
   const propsVals = props.value.get('values').toJS()
   if (propsVals.length) {
-    if (propsVals.some(val => val.hasOwnProperty('__isNew__'))) {
-      propsVals.forEach(val => {
+    // eslint-disable-next-line no-prototype-builtins
+    if (propsVals.some((val) => val.hasOwnProperty('__isNew__'))) {
+      propsVals.forEach((val) => {
+        // eslint-disable-next-line no-prototype-builtins
         if (val.hasOwnProperty('__isNew__')) {
           defaultCreatedInputOpts.push(val)
         }
       })
     }
   }
-  const [createdInputOpts, setCreatedInputOpts] = useState(defaultCreatedInputOpts)
-  function convertListToOptions (list) {
+  const [createdInputOpts, setCreatedInputOpts] = useState(
+    defaultCreatedInputOpts
+  )
+  function convertListToOptions(list) {
     const inputType = props.inputType.toLowerCase()
-    if (inputType === 'number' || inputType === 'currency' || inputType === 'decimal') {
-      list = list.filter(l => {
-        return (l !== 'is blank' &&
+    if (
+      inputType === 'number' ||
+      inputType === 'currency' ||
+      inputType === 'decimal'
+    ) {
+      list = list.filter((l) => {
+        return (
+          l !== 'is blank' &&
           l !== 'is not blank' &&
           l !== 'contains' &&
           l !== 'does not contain'
         )
       })
     }
-    return list.map(opt => {
+    return list.map((opt) => {
       return {value: opt, label: opt}
     })
   }
-  function inputTypeOptionsList () {
+  function inputTypeOptionsList() {
     const options = [] // Object.keys(CONDITIONS).map(c => ({label: c, value: c}))
     Object.keys(CONDITIONS).forEach((key) => {
       const excludes = Set(CONDITIONS[key].invalidInputTypes)
@@ -50,14 +75,23 @@ const ConditionalPredicate = props => {
     })
     return convertListToOptions(options)
   }
-  const [modalValues, setModalValues] = useState(Map({condition: inputTypeOptionsList()[0].value}))
+  const [modalValues, setModalValues] = useState(
+    Map({condition: inputTypeOptionsList()[0].value})
+  )
   useEffect(() => {
     // const v = props.values[props.name]
     if (props.name) {
       let initCondition = inputTypeOptionsList()[0].value
-      if (props.value.getIn(['condition']) && inputTypeOptionsList()
-        .some(c => c.value === props.value.getIn(['condition']))) {
-        initCondition = props.value.getIn(['condition'], inputTypeOptionsList()[0].value)
+      if (
+        props.value.getIn(['condition']) &&
+        inputTypeOptionsList().some(
+          (c) => c.value === props.value.getIn(['condition'])
+        )
+      ) {
+        initCondition = props.value.getIn(
+          ['condition'],
+          inputTypeOptionsList()[0].value
+        )
       }
       const initialModalValues = {condition: initCondition}
       if (SINGLE_FIELD_INPUTS.has(props.inputType.toLowerCase())) {
@@ -83,35 +117,47 @@ const ConditionalPredicate = props => {
       if (props.value.get('isfield')) {
         initialModalValues.isfield = props.value.get('isfield')
       }
+      if (props.value.get('excludeDays')) {
+        initialModalValues.excludeDays = props.value.get('excludeDays')
+      }
+      if (props.value.get('excludedDays')) {
+        initialModalValues.excludedDays = props.value.get('excludedDays')
+      }
       dialogOnChange({target: {name: 'condition', value: initCondition}})
       setModalValues(Map(initialModalValues))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.name])
-  function getMaxFieldCount () {
+  function getMaxFieldCount() {
     if (CONDITIONS[condition()]) {
       return CONDITIONS[condition()].maxFields
     } else {
       return 999
     }
   }
-  function getMinFieldCount () {
+  function getMinFieldCount() {
     if (CONDITIONS[condition()]) {
       return CONDITIONS[condition()].minFields
     } else {
       return 0
     }
   }
-  function calculateFieldHeight (type) {
+  function calculateFieldHeight(type) {
     if (type === 'radio' || type === 'listselect' || type === 'multicheckbox') {
       return props.keyword.options.length
     }
     if (type === 'multiselect') {
-      return 1 + (modalValues[`${props.name}-0`] ? modalValues[`${props.name}-0`].length / 3 : 0)
+      return (
+        1 +
+        (modalValues[`${props.name}-0`]
+          ? modalValues[`${props.name}-0`].length / 3
+          : 0)
+      )
     }
     return 1
   }
 
-  function nFieldsWithValues () {
+  function nFieldsWithValues() {
     let ret = 0
     if (!propValue) {
       return 0
@@ -127,14 +173,17 @@ const ConditionalPredicate = props => {
     }
     return ret
   }
-  function hasDynamicValues () {
-    return props.typeahead &&
+  function hasDynamicValues() {
+    return (
+      props.typeahead &&
       props.typeahead.key &&
       props.typeahead.key.toLowerCase().startsWith('c3_sec_') &&
       modalValues &&
-      (modalValues.get('condition', '') === 'is one of' || modalValues.get('condition', '') === 'is not one of')
+      (modalValues.get('condition', '') === 'is one of' ||
+        modalValues.get('condition', '') === 'is not one of')
+    )
   }
-  function getSchema () {
+  function getSchema() {
     const schema = {
       form: {
         name: 'Conditional Input1',
@@ -169,7 +218,7 @@ const ConditionalPredicate = props => {
             },
             {
               type: 'field',
-              dimensions: {x: 4, y: 1, h: 1, w: 6},
+              dimensions: {x: 4, y: 1, h: 1, w: 4},
               config: {
                 name: 'isfield',
                 label: 'Compare Against Another Field',
@@ -188,64 +237,110 @@ const ConditionalPredicate = props => {
       createdBy: 'will darden'
     }
 
-    if (props.value.get('isfield')) { // the user comparing this field against another field on the record - JRA 10/29/2024
-      schema.form.jsonschema.layout.push(
-        {
-          type: 'field',
-          dimensions: {x: 1, y: 2, h: 1, w: 8},
-          config: {
-            name: `${props.name}-0`,
-            label: props.label,
-            type: 'select',
-            keyword: {
-              options: props.classFields.map(field => ({label: field.get('label'), value: field.get('name')})).toList()
-            }
+    if (props.value.get('isfield')) {
+      // the user comparing this field against another field on the record - JRA 10/29/2024
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {x: 1, y: 2, h: 1, w: 8},
+        config: {
+          name: `${props.name}-0`,
+          label: props.label,
+          type: 'select',
+          keyword: {
+            options: props.classFields
+              .map((field) => ({
+                label: field.get('label'),
+                value: field.get('name')
+              }))
+              .toList()
           }
         }
-      )
+      })
       return schema
     }
 
-    const relativeConditions = ['is greater than', 'is less than']
-    if (relativeConditions.includes(modalValues.get('condition')) && props.inputType === 'date') {
-      schema.form.jsonschema.layout.push(
-        {
-          type: 'field',
-          dimensions: {x: 1, y: 2, h: 1, w: 3},
-          config: {
-            name: 'relative',
-            label: 'Use Relative Dates',
-            type: 'checkbox',
-            onValue: 1,
-            offValue: 0
-          }
+    const supportsExcludedDays = EXCLUDE_DAYS_CONDITIONS.has(
+      modalValues.get('condition')
+    )
+
+    if (supportsExcludedDays) {
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {x: 8, y: 1, h: 1, w: 3},
+        config: {
+          name: 'excludeDays',
+          label: 'Days to Exclude',
+          type: 'checkbox',
+          onValue: true,
+          offValue: false
         }
-      )
-      if (modalValues.get('relative')) {
-        schema.form.jsonschema.layout.push(
-          {
-            type: 'field',
-            dimensions: {x: 1, y: 3, h: 1, w: 8},
-            config: {
-              name: `${props.name}-0`,
-              label: `${props.label}`,
-              type: 'select',
-              suppressBlankOption: true,
-              clearable: false,
-              keyword: {
-                category: 'NONE',
-                options: [
-                  {label: 'Yesterday', value: 'yesterday'},
-                  {label: 'Today', value: 'today'},
-                  {label: 'Tomorrow', value: 'tomorrow'},
-                  {label: 'This Month', value: 'this month'},
-                  {label: 'This Year', value: 'this year'},
-                  {label: 'This Quarter', value: 'this quarter'}
-                ]
-              }
+      })
+
+      if (modalValues.get('excludeDays')) {
+        schema.form.jsonschema.layout.push({
+          type: 'field',
+          dimensions: {x: 1, y: 3, h: 1, w: 8},
+          config: {
+            name: 'excludedDays',
+            label: 'Excluded Days',
+            type: 'multiselect',
+            clearable: true,
+            keyword: {
+              category: 'NONE',
+              options: [
+                {label: 'Sunday', value: 'sunday'},
+                {label: 'Monday', value: 'monday'},
+                {label: 'Tuesday', value: 'tuesday'},
+                {label: 'Wednesday', value: 'wednesday'},
+                {label: 'Thursday', value: 'thursday'},
+                {label: 'Friday', value: 'friday'},
+                {label: 'Saturday', value: 'saturday'}
+              ]
             }
           }
-        )
+        })
+      }
+    }
+
+    const relativeConditions = ['is greater than', 'is less than']
+    if (
+      relativeConditions.includes(modalValues.get('condition')) &&
+      props.inputType === 'date'
+    ) {
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {x: 1, y: 2, h: 1, w: 3},
+        config: {
+          name: 'relative',
+          label: 'Use Relative Dates',
+          type: 'checkbox',
+          onValue: 1,
+          offValue: 0
+        }
+      })
+      if (modalValues.get('relative')) {
+        schema.form.jsonschema.layout.push({
+          type: 'field',
+          dimensions: {x: 1, y: 3, h: 1, w: 8},
+          config: {
+            name: `${props.name}-0`,
+            label: `${props.label}`,
+            type: 'select',
+            suppressBlankOption: true,
+            clearable: false,
+            keyword: {
+              category: 'NONE',
+              options: [
+                {label: 'Yesterday', value: 'yesterday'},
+                {label: 'Today', value: 'today'},
+                {label: 'Tomorrow', value: 'tomorrow'},
+                {label: 'This Month', value: 'this month'},
+                {label: 'This Year', value: 'this year'},
+                {label: 'This Quarter', value: 'this quarter'}
+              ]
+            }
+          }
+        })
       }
     }
 
@@ -281,8 +376,14 @@ const ConditionalPredicate = props => {
             category: 'NONE',
             options: [
               {label: '{Logged on User}', value: '{Logged on User}'},
-              {label: '{Reports to Logged on User}', value: '{Reports to Logged on User}'},
-              {label: '{Full Reports to Logged on User}', value: '{Full Reports to Logged on User}'}
+              {
+                label: '{Reports to Logged on User}',
+                value: '{Reports to Logged on User}'
+              },
+              {
+                label: '{Full Reports to Logged on User}',
+                value: '{Full Reports to Logged on User}'
+              }
             ]
           }
         }
@@ -294,14 +395,25 @@ const ConditionalPredicate = props => {
     delete extraFieldProps.name
     delete extraFieldProps.values
     delete extraFieldProps.value
-    if (fieldCount < nFieldsWithValues() + 1 && maxFieldCount > 0 && !modalValues.get('relative')) {
+    if (
+      fieldCount < nFieldsWithValues() + 1 &&
+      maxFieldCount > 0 &&
+      !modalValues.get('relative')
+    ) {
       const isContains = props.value.getIn(['condition'], '') === 'contains'
       const isIsOneOf = props.value.getIn(['condition'], '') === 'is one of'
-      const isNotContains = props.value.getIn(['condition'], '') === 'does not contain'
-      const isNotOneOf = props.value.getIn(['condition'], '') === 'is not one of'
+      const isNotContains =
+        props.value.getIn(['condition'], '') === 'does not contain'
+      const isNotOneOf =
+        props.value.getIn(['condition'], '') === 'is not one of'
       schema.form.jsonschema.layout.push({
         type: 'field',
-        dimensions: {x: 1, y: 2, h: calculateFieldHeight(props.inputType.toLowerCase()), w: 8},
+        dimensions: {
+          x: 1,
+          y: 2,
+          h: calculateFieldHeight(props.inputType.toLowerCase()),
+          w: 8
+        },
         config: {
           ...extraFieldProps,
           link: undefined,
@@ -318,14 +430,23 @@ const ConditionalPredicate = props => {
           },
           allowcreate: isContains || isIsOneOf || isNotContains || isNotOneOf,
           searchable: true, // I just added this line
-          type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),// eslint-disable-line
+          type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], ''))
+            ? 'number'
+            : props.inputType.toLowerCase(), // eslint-disable-line
           handleOnChange: dialogOnChange
         }
       })
       fieldCount++
     }
-    if (MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) && maxFieldCount > 0 && !modalValues.get('relative')) {
-      while (fieldCount < minFieldCount || (fieldCount < maxFieldCount && fieldCount < nFieldsWithValues() + 1)) {
+    if (
+      MULTI_FIELD_INPUTS.has(props.inputType.toLowerCase()) &&
+      maxFieldCount > 0 &&
+      !modalValues.get('relative')
+    ) {
+      while (
+        fieldCount < minFieldCount ||
+        (fieldCount < maxFieldCount && fieldCount < nFieldsWithValues() + 1)
+      ) {
         let label = CONDITIONS[condition()]
         if (typeof label === 'object') {
           label = label.joinString
@@ -335,7 +456,12 @@ const ConditionalPredicate = props => {
         }
         const newField = {
           type: 'field',
-          dimensions: {x: 1, y: fieldCount + 2, h: calculateFieldHeight(props.inputType.toLowerCase()), w: 8},
+          dimensions: {
+            x: 1,
+            y: fieldCount + 2,
+            h: calculateFieldHeight(props.inputType.toLowerCase()),
+            w: 8
+          },
           config: {
             ...extraFieldProps,
             link: undefined,
@@ -344,7 +470,9 @@ const ConditionalPredicate = props => {
             label: label,
             interactive: true,
             clearable: true,
-            type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) ? 'number' : props.inputType.toLowerCase(),// eslint-disable-line
+            type: NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], ''))
+              ? 'number'
+              : props.inputType.toLowerCase(), // eslint-disable-line
             handleOnChange: dialogOnChange
           }
         }
@@ -358,7 +486,7 @@ const ConditionalPredicate = props => {
     return schema
   }
 
-  function condition () {
+  function condition() {
     const oldValue = props.value
     if (oldValue && oldValue instanceof Map) {
       return props.value.get('condition', '')
@@ -366,41 +494,72 @@ const ConditionalPredicate = props => {
       return modalValues.get('condition', 'contains')
     }
   }
-  function handleConditionChange (e) {
+  function handleConditionChange(e) {
     const currentCondition = condition()
     setModalValues(modalValues.set(e.target.name, e.target.value))
     const trueType = (props.inputType || 'input').toLowerCase()
     if (trueType === 'typeahead') {
-      if (TYPEAHEAD_CONDITIONS.has(currentCondition) && !TYPEAHEAD_CONDITIONS.has(e.target.value)) {
-        setTimeout(() => { dialogOnChange({target: {name: `${props.name}-0`, value: ''}}) }, 0)
-      } else if (!TYPEAHEAD_CONDITIONS.has(currentCondition) && TYPEAHEAD_CONDITIONS.has(e.target.value)) {
-        setTimeout(() => { dialogOnChange({target: {name: `${props.name}-0`, value: List()}}) }, 0)
+      if (
+        TYPEAHEAD_CONDITIONS.has(currentCondition) &&
+        !TYPEAHEAD_CONDITIONS.has(e.target.value)
+      ) {
+        setTimeout(() => {
+          dialogOnChange({target: {name: `${props.name}-0`, value: ''}})
+        }, 0)
+      } else if (
+        !TYPEAHEAD_CONDITIONS.has(currentCondition) &&
+        TYPEAHEAD_CONDITIONS.has(e.target.value)
+      ) {
+        setTimeout(() => {
+          dialogOnChange({target: {name: `${props.name}-0`, value: List()}})
+        }, 0)
       }
     }
     const oldValue = props.value
     if (oldValue && oldValue instanceof Map) {
       let newFieldValue = props.value.set(e.target.name, e.target.value)
-      const maxFieldValues = CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields
-      if (newFieldValue.get('values', List()).size >= maxFieldValues) {
-        newFieldValue = newFieldValue.set('values', newFieldValue.get('values', List()).slice(0, maxFieldValues))
+
+      if (!EXCLUDE_DAYS_CONDITIONS.has(e.target.value)) {
+        newFieldValue = newFieldValue
+          .delete('excludeDays')
+          .delete('excludedDays')
       }
-      props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+      const maxFieldValues =
+        CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields
+      if (newFieldValue.get('values', List()).size >= maxFieldValues) {
+        newFieldValue = newFieldValue.set(
+          'values',
+          newFieldValue.get('values', List()).slice(0, maxFieldValues)
+        )
+      }
+      props.onChange(
+        {target: {name: props.name, value: newFieldValue}},
+        props.index
+      )
     }
-    if ((!NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) &&
+    if (
+      (!NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) &&
         NUMERICAL_CONDITIONS.has(e.target.value)) ||
       (NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) &&
-        !NUMERICAL_CONDITIONS.has(e.target.value))) {
+        !NUMERICAL_CONDITIONS.has(e.target.value))
+    ) {
       let newFieldValue = props.value.set(e.target.name, e.target.value)
       newFieldValue = newFieldValue.set('values', List())
-      props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+      props.onChange(
+        {target: {name: props.name, value: newFieldValue}},
+        props.index
+      )
     }
   }
 
-  function deleteIndex (i, values) {
+  function deleteIndex(i, values) {
     let stateChanges = modalValues
     for (let x = parseInt(i); x < values.size - 1; x++) {
       const next = x + 1
-      stateChanges = stateChanges.set(`${props.name}-${x}`, modalValues.get(`${props.name}-${next}`, ''))
+      stateChanges = stateChanges.set(
+        `${props.name}-${x}`,
+        modalValues.get(`${props.name}-${next}`, '')
+      )
     }
     stateChanges = stateChanges.delete(`${props.name}-${values.size - 1}`)
     if (i === 'relative') {
@@ -416,7 +575,8 @@ const ConditionalPredicate = props => {
       return
     }
     setModalValues(modalValues.set(e.target.name, e.target.value)) // for display in the dialog
-    let newFieldValue = props.value || Map({condition: 'contains', values: List()})
+    let newFieldValue =
+      props.value || Map({condition: 'contains', values: List()})
     let values = newFieldValue.get('values', List())
     if (newFieldValue.get('relative') && e.target.value === '') {
       newFieldValue = newFieldValue.set(e.target.name, e.target.value)
@@ -426,12 +586,15 @@ const ConditionalPredicate = props => {
       m = m.set(e.target.name, '')
       m = m.delete('relative')
       setModalValues(m)
-      props.onChange({
-        target: {
-          name: props.name,
-          value: newFieldValue
-        }
-      }, props.index)
+      props.onChange(
+        {
+          target: {
+            name: props.name,
+            value: newFieldValue
+          }
+        },
+        props.index
+      )
       return
     }
     if (e.target.name === 'monthtest-0' && e.target.value === '') {
@@ -442,7 +605,10 @@ const ConditionalPredicate = props => {
       m = m.set('monthtest-0', '')
       m = m.delete('relative')
       setModalValues(m)
-      props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+      props.onChange(
+        {target: {name: props.name, value: newFieldValue}},
+        props.index
+      )
       return
     }
     if (e.target.name === 'relative') {
@@ -451,25 +617,73 @@ const ConditionalPredicate = props => {
       let m = modalValues.set(e.target.name, e.target.value)
       m = m.delete(`${props.name}-0`)
       setModalValues(m)
-      props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+      props.onChange(
+        {target: {name: props.name, value: newFieldValue}},
+        props.index
+      )
       return
     }
     if (e.target.name === 'not') {
       newFieldValue = newFieldValue.set('not', e.target.value)
-      props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+      props.onChange(
+        {target: {name: props.name, value: newFieldValue}},
+        props.index
+      )
       return
     }
-    if (e.target.name === 'isfield') { // if they are toggling this, blank out the values and make them start over - JRA 10/30/2024
+    if (e.target.name === 'isfield') {
+      // if they are toggling this, blank out the values and make them start over - JRA 10/30/2024
       newFieldValue = newFieldValue.set('isfield', e.target.value) // set the value in bleu
       newFieldValue = newFieldValue.set('values', List()) // blank the values out in bleu
-      const displayValues = modalValues.merge({[`${props.name}-0`]: '', isfield: e.target.value})
+      const displayValues = modalValues.merge({
+        [`${props.name}-0`]: '',
+        isfield: e.target.value
+      })
       setModalValues(displayValues) // set the temp values displayed in the UI
-      props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+      props.onChange(
+        {target: {name: props.name, value: newFieldValue}},
+        props.index
+      )
+      return
+    }
+    if (e.target.name === 'excludeDays') {
+      newFieldValue = newFieldValue.set('excludeDays', e.target.value)
+
+      if (!e.target.value) {
+        newFieldValue = newFieldValue.delete('excludedDays')
+        const displayValues = modalValues
+          .set('excludeDays', e.target.value)
+          .delete('excludedDays')
+        setModalValues(displayValues)
+      } else {
+        setModalValues(modalValues.set('excludeDays', e.target.value))
+      }
+
+      props.onChange(
+        {target: {name: props.name, value: newFieldValue}},
+        props.index
+      )
+      return
+    }
+
+    if (e.target.name === 'excludedDays') {
+      newFieldValue = newFieldValue.set(
+        'excludedDays',
+        List.isList(e.target.value)
+          ? e.target.value
+          : fromJS(e.target.value || [])
+      )
+      props.onChange(
+        {target: {name: props.name, value: newFieldValue}},
+        props.index
+      )
       return
     }
     if (STRING_VALUES.has(props.inputType.toLowerCase())) {
       // i have a string. what index?
-      const i = parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1])
+      const i = parseInt(
+        e.target.name.split('-')[e.target.name.split('-').length - 1]
+      )
       if (e.target.value === '') {
         values = deleteIndex(i, values)
       } else {
@@ -477,7 +691,9 @@ const ConditionalPredicate = props => {
       }
     } else {
       if (typeof e.target.value === 'string') {
-        const i = parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1])
+        const i = parseInt(
+          e.target.name.split('-')[e.target.name.split('-').length - 1]
+        )
         if (i > values.size - 1) {
           values = values.concat(fromJS([e.target.value]))
         } else {
@@ -505,7 +721,8 @@ const ConditionalPredicate = props => {
         const valArr = e.target.value
         const opts = [...createdInputOpts]
         if (valArr.length) {
-          valArr.forEach(val => {
+          valArr.forEach((val) => {
+            // eslint-disable-next-line no-prototype-builtins
             if (val.hasOwnProperty('__isNew__')) {
               opts.push(val)
               setCreatedInputOpts(opts)
@@ -519,7 +736,10 @@ const ConditionalPredicate = props => {
       newFieldValue = newFieldValue.set('dynamicValues', e.target.value)
     }
     newFieldValue = newFieldValue.set('values', values)
-    props.onChange({target: {name: props.name, value: newFieldValue}}, props.index)
+    props.onChange(
+      {target: {name: props.name, value: newFieldValue}},
+      props.index
+    )
   }
   return (
     <div style={{width: '100%', height: '100%'}}>
@@ -545,7 +765,12 @@ ConditionalPredicate.propTypes = {
   inputType: PropTypes.string,
   index: PropTypes.number,
   label: PropTypes.string,
-  values: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
+  values: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.array,
+    PropTypes.object
+  ]),
   disabled: PropTypes.bool,
   readonly: PropTypes.bool,
   autofocus: PropTypes.bool,

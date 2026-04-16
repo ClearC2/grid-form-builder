@@ -11,15 +11,15 @@ import { Set } from 'immutable';
  */
 
 /*
-* SINGLE_FIELD_INPUTS
-* These inputs will have one input field. They can have more than one value, but it is in one field
-*/
+ * SINGLE_FIELD_INPUTS
+ * These inputs will have one input field. They can have more than one value, but it is in one field
+ */
 
 export var SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselect', 'typeahead']);
 /*
-* MULTI_FIELD_INPUTS
-* These inputs can have more than one input field, with one value per field
-*/
+ * MULTI_FIELD_INPUTS
+ * These inputs can have more than one input field, with one value per field
+ */
 
 export var MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'month', 'phone', 'email', 'currency', 'time', 'number', 'percent', 'textarea']); // eslint-disable-line
 
@@ -28,15 +28,16 @@ export var ALL_BUT_DATES = Set(['input', 'number', 'percent', 'phone', 'email', 
 
 export var DATES = Set(['date', 'datetime']);
 /*
-* TYPEAHEAD_CONDITIONS
-* If a field is a typeahead on the original formSchema, it will only remain a typeahead input if the condition
-* is one of the following. Otherwise it will be converted to an input. Typeaheads can have other conditions, but the
-* the input type may change
-*/
+ * TYPEAHEAD_CONDITIONS
+ * If a field is a typeahead on the original formSchema, it will only remain a typeahead input if the condition
+ * is one of the following. Otherwise it will be converted to an input. Typeaheads can have other conditions, but the
+ * the input type may change
+ */
 
 export var TYPEAHEAD_CONDITIONS = Set(['is equal to', 'is not equal to', 'is one of', 'is not one of']); // eslint-disable-next-line max-len
 
 export var NUMERICAL_CONDITIONS = Set(['last (x) days', 'last (x) months', 'next (x) days', 'last (x) weeks', 'next (x) weeks', 'next (x) months', 'is top (x)', 'is bottom (x)', 'is top (%)', 'is bottom (%)']);
+export var EXCLUDE_DAYS_CONDITIONS = Set(['last (x) days', 'last (x) months', 'next (x) days', 'last (x) weeks', 'next (x) weeks', 'next (x) months']);
 export var TEXT_INPUTS = ['checkbox', 'radio']; // export const LIST_INPUTS = []
 
 export var CONDITIONS = {

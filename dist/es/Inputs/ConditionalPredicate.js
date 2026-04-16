@@ -28,7 +28,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormBuilder } from '../index';
 import { Map, List, fromJS, Set } from 'immutable';
-import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, DATES, SINGLE_FIELD_INPUTS } from './SearchUtils'; // eslint-disable-line
+import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, SINGLE_FIELD_INPUTS, EXCLUDE_DAYS_CONDITIONS } from './SearchUtils'; // eslint-disable-line
 
 var STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime', 'textarea']);
 
@@ -48,10 +48,12 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
   var propsVals = props.value.get('values').toJS();
 
   if (propsVals.length) {
+    // eslint-disable-next-line no-prototype-builtins
     if (_someInstanceProperty(propsVals).call(propsVals, function (val) {
       return val.hasOwnProperty('__isNew__');
     })) {
       _forEachInstanceProperty(propsVals).call(propsVals, function (val) {
+        // eslint-disable-next-line no-prototype-builtins
         if (val.hasOwnProperty('__isNew__')) {
           defaultCreatedInputOpts.push(val);
         }
@@ -153,6 +155,14 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
         initialModalValues.isfield = props.value.get('isfield');
       }
 
+      if (props.value.get('excludeDays')) {
+        initialModalValues.excludeDays = props.value.get('excludeDays');
+      }
+
+      if (props.value.get('excludedDays')) {
+        initialModalValues.excludedDays = props.value.get('excludedDays');
+      }
+
       dialogOnChange({
         target: {
           name: 'condition',
@@ -160,7 +170,8 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
         }
       });
       setModalValues(Map(initialModalValues));
-    }
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [props.name]);
 
   function getMaxFieldCount() {
@@ -263,7 +274,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
               x: 4,
               y: 1,
               h: 1,
-              w: 6
+              w: 4
             },
             config: {
               name: 'isfield',
@@ -309,6 +320,70 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
         }
       });
       return schema;
+    }
+
+    var supportsExcludedDays = EXCLUDE_DAYS_CONDITIONS.has(modalValues.get('condition'));
+
+    if (supportsExcludedDays) {
+      schema.form.jsonschema.layout.push({
+        type: 'field',
+        dimensions: {
+          x: 8,
+          y: 1,
+          h: 1,
+          w: 3
+        },
+        config: {
+          name: 'excludeDays',
+          label: 'Days to Exclude',
+          type: 'checkbox',
+          onValue: true,
+          offValue: false
+        }
+      });
+
+      if (modalValues.get('excludeDays')) {
+        schema.form.jsonschema.layout.push({
+          type: 'field',
+          dimensions: {
+            x: 1,
+            y: 3,
+            h: 1,
+            w: 8
+          },
+          config: {
+            name: 'excludedDays',
+            label: 'Excluded Days',
+            type: 'multiselect',
+            clearable: true,
+            keyword: {
+              category: 'NONE',
+              options: [{
+                label: 'Sunday',
+                value: 'sunday'
+              }, {
+                label: 'Monday',
+                value: 'monday'
+              }, {
+                label: 'Tuesday',
+                value: 'tuesday'
+              }, {
+                label: 'Wednesday',
+                value: 'wednesday'
+              }, {
+                label: 'Thursday',
+                value: 'thursday'
+              }, {
+                label: 'Friday',
+                value: 'friday'
+              }, {
+                label: 'Saturday',
+                value: 'saturday'
+              }]
+            }
+          }
+        });
+      }
     }
 
     var relativeConditions = ['is greater than', 'is less than'];
@@ -576,6 +651,11 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
 
     if (oldValue && oldValue instanceof Map) {
       var newFieldValue = props.value.set(e.target.name, e.target.value);
+
+      if (!EXCLUDE_DAYS_CONDITIONS.has(e.target.value)) {
+        newFieldValue = newFieldValue.delete('excludeDays').delete('excludedDays');
+      }
+
       var maxFieldValues = CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields;
 
       if (newFieldValue.get('values', List()).size >= maxFieldValues) {
@@ -723,6 +803,39 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       return;
     }
 
+    if (e.target.name === 'excludeDays') {
+      newFieldValue = newFieldValue.set('excludeDays', e.target.value);
+
+      if (!e.target.value) {
+        newFieldValue = newFieldValue.delete('excludedDays');
+
+        var _displayValues = modalValues.set('excludeDays', e.target.value).delete('excludedDays');
+
+        setModalValues(_displayValues);
+      } else {
+        setModalValues(modalValues.set('excludeDays', e.target.value));
+      }
+
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      }, props.index);
+      return;
+    }
+
+    if (e.target.name === 'excludedDays') {
+      newFieldValue = newFieldValue.set('excludedDays', List.isList(e.target.value) ? e.target.value : fromJS(e.target.value || []));
+      props.onChange({
+        target: {
+          name: props.name,
+          value: newFieldValue
+        }
+      }, props.index);
+      return;
+    }
+
     if (STRING_VALUES.has(props.inputType.toLowerCase())) {
       // i have a string. what index?
       var i = _parseInt(e.target.name.split('-')[e.target.name.split('-').length - 1]);
@@ -766,6 +879,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
 
         if (valArr.length) {
           _forEachInstanceProperty(valArr).call(valArr, function (val) {
+            // eslint-disable-next-line no-prototype-builtins
             if (val.hasOwnProperty('__isNew__')) {
               opts.push(val);
               setCreatedInputOpts(opts);

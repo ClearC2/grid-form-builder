@@ -5,28 +5,88 @@ import {Set} from 'immutable'
   checkboxes are converted to multicheckboxes
  */
 /*
-* SINGLE_FIELD_INPUTS
-* These inputs will have one input field. They can have more than one value, but it is in one field
-*/
-export const SINGLE_FIELD_INPUTS = Set(['multiselect', 'multicheckbox', 'listselect', 'typeahead'])
+ * SINGLE_FIELD_INPUTS
+ * These inputs will have one input field. They can have more than one value, but it is in one field
+ */
+export const SINGLE_FIELD_INPUTS = Set([
+  'multiselect',
+  'multicheckbox',
+  'listselect',
+  'typeahead'
+])
 /*
-* MULTI_FIELD_INPUTS
-* These inputs can have more than one input field, with one value per field
-*/
-export const MULTI_FIELD_INPUTS = Set(['input', 'date', 'datetime', 'month', 'phone', 'email', 'currency', 'time', 'number', 'percent', 'textarea'])// eslint-disable-line
-export const ONLY_CATEGORICAL_INPUT = Set(['multicheckbox', 'multiselect', 'listselect'])
+ * MULTI_FIELD_INPUTS
+ * These inputs can have more than one input field, with one value per field
+ */
+export const MULTI_FIELD_INPUTS = Set([
+  'input',
+  'date',
+  'datetime',
+  'month',
+  'phone',
+  'email',
+  'currency',
+  'time',
+  'number',
+  'percent',
+  'textarea'
+]) // eslint-disable-line
+export const ONLY_CATEGORICAL_INPUT = Set([
+  'multicheckbox',
+  'multiselect',
+  'listselect'
+])
 
-export const ALL_BUT_DATES = Set(['input', 'number', 'percent', 'phone', 'email', 'currency', 'time', 'multicheckbox', 'multiselect', 'listselect', 'typeahead', 'textarea', 'checkbox', 'radio'])// eslint-disable-line
+export const ALL_BUT_DATES = Set([
+  'input',
+  'number',
+  'percent',
+  'phone',
+  'email',
+  'currency',
+  'time',
+  'multicheckbox',
+  'multiselect',
+  'listselect',
+  'typeahead',
+  'textarea',
+  'checkbox',
+  'radio'
+]) // eslint-disable-line
 export const DATES = Set(['date', 'datetime'])
 /*
-* TYPEAHEAD_CONDITIONS
-* If a field is a typeahead on the original formSchema, it will only remain a typeahead input if the condition
-* is one of the following. Otherwise it will be converted to an input. Typeaheads can have other conditions, but the
-* the input type may change
-*/
-export const TYPEAHEAD_CONDITIONS = Set(['is equal to', 'is not equal to', 'is one of', 'is not one of'])
+ * TYPEAHEAD_CONDITIONS
+ * If a field is a typeahead on the original formSchema, it will only remain a typeahead input if the condition
+ * is one of the following. Otherwise it will be converted to an input. Typeaheads can have other conditions, but the
+ * the input type may change
+ */
+export const TYPEAHEAD_CONDITIONS = Set([
+  'is equal to',
+  'is not equal to',
+  'is one of',
+  'is not one of'
+])
 // eslint-disable-next-line max-len
-export const NUMERICAL_CONDITIONS = Set(['last (x) days', 'last (x) months', 'next (x) days', 'last (x) weeks', 'next (x) weeks', 'next (x) months', 'is top (x)', 'is bottom (x)', 'is top (%)', 'is bottom (%)'])
+export const NUMERICAL_CONDITIONS = Set([
+  'last (x) days',
+  'last (x) months',
+  'next (x) days',
+  'last (x) weeks',
+  'next (x) weeks',
+  'next (x) months',
+  'is top (x)',
+  'is bottom (x)',
+  'is top (%)',
+  'is bottom (%)'
+])
+export const EXCLUDE_DAYS_CONDITIONS = Set([
+  'last (x) days',
+  'last (x) months',
+  'next (x) days',
+  'last (x) weeks',
+  'next (x) weeks',
+  'next (x) months'
+])
 export const TEXT_INPUTS = ['checkbox', 'radio']
 // export const LIST_INPUTS = []
 
@@ -221,26 +281,66 @@ export const CONDITIONS = {
   'is top (x)': {
     maxFields: 1,
     minFields: 1,
-    invalidInputTypes: ['input', 'phone', 'email', 'multicheckbox', 'multiselect',
-      'listselect', 'typeahead', 'textarea', 'checkbox', 'radio']
+    invalidInputTypes: [
+      'input',
+      'phone',
+      'email',
+      'multicheckbox',
+      'multiselect',
+      'listselect',
+      'typeahead',
+      'textarea',
+      'checkbox',
+      'radio'
+    ]
   },
   'is top (%)': {
     maxFields: 1,
     minFields: 1,
-    invalidInputTypes: ['input', 'phone', 'email', 'multicheckbox', 'multiselect',
-      'listselect', 'typeahead', 'textarea', 'checkbox', 'radio']
+    invalidInputTypes: [
+      'input',
+      'phone',
+      'email',
+      'multicheckbox',
+      'multiselect',
+      'listselect',
+      'typeahead',
+      'textarea',
+      'checkbox',
+      'radio'
+    ]
   },
   'is bottom (x)': {
     maxFields: 1,
     minFields: 1,
-    invalidInputTypes: ['input', 'phone', 'email', 'multicheckbox', 'multiselect',
-      'listselect', 'typeahead', 'textarea', 'checkbox', 'radio']
+    invalidInputTypes: [
+      'input',
+      'phone',
+      'email',
+      'multicheckbox',
+      'multiselect',
+      'listselect',
+      'typeahead',
+      'textarea',
+      'checkbox',
+      'radio'
+    ]
   },
   'is bottom (%)': {
     maxFields: 1,
     minFields: 1,
-    invalidInputTypes: ['input', 'phone', 'email', 'multicheckbox', 'multiselect',
-      'listselect', 'typeahead', 'textarea', 'checkbox', 'radio']
+    invalidInputTypes: [
+      'input',
+      'phone',
+      'email',
+      'multicheckbox',
+      'multiselect',
+      'listselect',
+      'typeahead',
+      'textarea',
+      'checkbox',
+      'radio'
+    ]
   },
   '': {
     maxFields: 999,
