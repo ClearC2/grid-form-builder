@@ -28,7 +28,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormBuilder } from '../index';
 import { Map, List, fromJS, Set } from 'immutable';
-import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, SINGLE_FIELD_INPUTS, EXCLUDE_DAYS_CONDITIONS } from './SearchUtils'; // eslint-disable-line
+import { CONDITIONS, TYPEAHEAD_CONDITIONS, NUMERICAL_CONDITIONS, MULTI_FIELD_INPUTS, SINGLE_FIELD_INPUTS } from './SearchUtils'; // eslint-disable-line
 
 var STRING_VALUES = Set(['input', 'number', 'percentage', 'currency', 'datetime', 'textarea']);
 
@@ -322,7 +322,9 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       return schema;
     }
 
-    var supportsExcludedDays = EXCLUDE_DAYS_CONDITIONS.has(modalValues.get('condition'));
+    var supportsExcludedDays = modalValues.get('condition') !== 'match month';
+    console.log(modalValues.get('condition'));
+    console.log(supportsExcludedDays);
 
     if (supportsExcludedDays) {
       schema.form.jsonschema.layout.push({
@@ -652,7 +654,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
     if (oldValue && oldValue instanceof Map) {
       var newFieldValue = props.value.set(e.target.name, e.target.value);
 
-      if (!EXCLUDE_DAYS_CONDITIONS.has(e.target.value)) {
+      if (e.target.value === 'match month') {
         newFieldValue = newFieldValue.delete('excludeDays').delete('excludedDays');
       }
 
