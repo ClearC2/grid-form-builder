@@ -260,8 +260,6 @@ const ConditionalPredicate = (props) => {
 
     const supportsExcludedDays = modalValues.get('condition') !== 'match month'
 
-    console.log(modalValues.get('condition'))
-    console.log(supportsExcludedDays)
     if (supportsExcludedDays) {
       schema.form.jsonschema.layout.push({
         type: 'field',
