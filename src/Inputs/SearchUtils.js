@@ -79,14 +79,6 @@ export const NUMERICAL_CONDITIONS = Set([
   'is top (%)',
   'is bottom (%)'
 ])
-export const EXCLUDE_DAYS_CONDITIONS = Set([
-  'last (x) days',
-  'last (x) months',
-  'next (x) days',
-  'last (x) weeks',
-  'next (x) weeks',
-  'next (x) months'
-])
 export const TEXT_INPUTS = ['checkbox', 'radio']
 // export const LIST_INPUTS = []
 

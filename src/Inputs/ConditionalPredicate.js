@@ -7,8 +7,7 @@ import {
   TYPEAHEAD_CONDITIONS,
   NUMERICAL_CONDITIONS,
   MULTI_FIELD_INPUTS,
-  SINGLE_FIELD_INPUTS,
-  EXCLUDE_DAYS_CONDITIONS
+  SINGLE_FIELD_INPUTS
 } from './SearchUtils' // eslint-disable-line
 const STRING_VALUES = Set([
   'input',
@@ -259,9 +258,7 @@ const ConditionalPredicate = (props) => {
       return schema
     }
 
-    const supportsExcludedDays = EXCLUDE_DAYS_CONDITIONS.has(
-      modalValues.get('condition')
-    )
+    const supportsExcludedDays = modalValues.get('condition') !== 'match month'
 
     if (supportsExcludedDays) {
       schema.form.jsonschema.layout.push({
@@ -519,7 +516,7 @@ const ConditionalPredicate = (props) => {
     if (oldValue && oldValue instanceof Map) {
       let newFieldValue = props.value.set(e.target.name, e.target.value)
 
-      if (!EXCLUDE_DAYS_CONDITIONS.has(e.target.value)) {
+      if (e.target.value === 'match month') {
         newFieldValue = newFieldValue
           .delete('excludeDays')
           .delete('excludedDays')
