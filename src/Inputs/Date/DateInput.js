@@ -1,9 +1,12 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useCallback, useEffect, useState, useRef, useMemo} from 'react'
+import {forwardRef, useCallback, useEffect, useState, useRef, useMemo} from 'react'
 import PropTypes from 'prop-types'
-import DatePicker from './DatePicker'
+import ReactDatePicker from 'react-datepicker'
+import {addDays, endOfMonth, format as formatDate, isValid} from 'date-fns'
 import MonthPicker from './MonthPicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import '../../styles/datepicker.css'
 import moment from 'moment'
 import {randomId} from '../../utils'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
@@ -11,6 +14,94 @@ import useTheme from '../../theme/useTheme'
 
 const defaults = {
   trueFunction: () => true
+}
+
+const calculateDate = (dateVal) => {
+  if (!dateVal) return undefined
+  if (dateVal === 'today') return new Date()
+  if (typeof dateVal === 'string' && dateVal.startsWith('today +')) {
+    const days = parseInt(dateVal.split('+')[1].trim(), 10)
+    return addDays(new Date(), days)
+  }
+  if (dateVal === 'this month') return endOfMonth(new Date())
+  return undefined
+}
+
+/* eslint-disable react/prop-types */
+const CustomTimeInput = ({date, onChange}) => {
+  // read time from the selected Date object; fall back to noon when no date selected yet
+  // onChange expects "HH:mm" string (react-datepicker requirement)
+  const hours = date ? date.getHours() : 12
+  const minutes = date ? date.getMinutes() : 0
+  const isPM = hours >= 12
+  const hour12 = hours % 12 || 12
+
+  const to24h = (h12, pm) => {
+    if (pm) return h12 === 12 ? 12 : h12 + 12
+    return h12 === 12 ? 0 : h12
+  }
+
+  const update = (h24, min) => {
+    const pad = n => String(n).padStart(2, '0')
+    onChange(`${pad(h24)}:${pad(min)}`)
+  }
+
+  return (
+    <div className='gfb-time-input'>
+      <select value={hour12} onChange={e => update(to24h(+e.target.value, isPM), minutes)}>
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(h => (
+          <option key={h} value={h}>{h}</option>
+        ))}
+      </select>
+      {' : '}
+      <select value={minutes} onChange={e => update(to24h(hour12, isPM), +e.target.value)}>
+        {Array.from({length: 12}, (_, i) => i * 5).map(m => (
+          <option key={m} value={m}>{String(m).padStart(2, '0')}</option>
+        ))}
+      </select>
+      <select value={isPM ? 'PM' : 'AM'} onChange={e => update(to24h(hour12, e.target.value === 'PM'), minutes)}>
+        <option value='AM'>AM</option>
+        <option value='PM'>PM</option>
+      </select>
+    </div>
+  )
+}
+/* eslint-enable react/prop-types */
+
+const CustomDateInput = forwardRef(function CustomDateInput (
+  {value, valueOverride, onClick, onChange, onFocus, onBlur, onKeyDown, inputRefCallback, ...rest},
+  dpRef
+) {
+  const setRef = useCallback((node) => {
+    if (typeof inputRefCallback === 'function') inputRefCallback(node)
+    if (typeof dpRef === 'function') dpRef(node)
+    else if (dpRef) dpRef.current = node
+  }, [dpRef, inputRefCallback])
+
+  return (
+    <input
+      ref={setRef}
+      value={valueOverride !== undefined ? valueOverride : value}
+      onClick={onClick}
+      onChange={onChange}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      onKeyDown={onKeyDown}
+      {...rest}
+    />
+  )
+})
+
+function toDateFnsFormat (momentFmt) {
+  if (!momentFmt) return momentFmt
+  return momentFmt
+    .replace(/YYYY/g, 'yyyy')
+    .replace(/YY/g, 'yy')
+    .replace(/DD/g, 'dd')
+    .replace(/\bD\b/g, 'd')
+    .replace(/\bA\b/g, 'a')
+    .replace(/ddd/g, 'eee')
+    .replace(/dddd/g, 'eeee')
 }
 
 const DateInput = props => {
@@ -43,7 +134,6 @@ const DateInput = props => {
     maxDate,
     onChangeValidator = defaults.trueFunction,
     warning,
-    autoApply = false,
     'data-testid': testId = props?.name
   } = props
 
@@ -64,6 +154,7 @@ const DateInput = props => {
   const elementId = useRef(randomId())
   const portalRef = useRef()
   const inputRef = useRef()
+  const inputRefCallback = useCallback((node) => { inputRef.current = node }, [])
   const [showPicker, changeShowPicker] = useState(false)
   const [inputFormat, setInputFormat] = useState()
   const [isFocused, setIsFocused] = useState(false)
@@ -234,6 +325,8 @@ const DateInput = props => {
     outerClass = outerClass + ' gfb-has-focus'
   }
 
+  const dateFnsFormat = toDateFnsFormat(inputFormat)
+
   const startDate = convertDateToMomentFormat(inputValue)
   const isDisabled = readonly || disabled || !interactive
 
@@ -256,53 +349,63 @@ const DateInput = props => {
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
         <div className={controlClass} style={inputControl} css={inputControlCSS}>
           <div className='gfb-input__value-container' style={valueContainer} css={valueContainerCSS}>
-            <input
-              id={elementId.current}
-              ref={inputRef}
-              className={className}
-              name={name}
-              value={valueOverride}
-              onChange={handleOnInputChange}
-              readOnly={isDisabled}
-              autoFocus={autofocus}
-              placeholder={placeholder}
-              tabIndex={tabIndex}
+            <ReactDatePicker
+              customInput={
+                <CustomDateInput
+                  id={elementId.current}
+                  className={className}
+                  name={name}
+                  valueOverride={valueOverride}
+                  readOnly={isDisabled}
+                  autoFocus={autofocus}
+                  placeholder={placeholder}
+                  tabIndex={tabIndex}
+                  autoComplete={autoComplete}
+                  style={valueStyle}
+                  css={valueCSS}
+                  data-testid={testId}
+                  maxLength={maxlength}
+                  onFocus={handleOnFocus}
+                  onKeyDown={e => {
+                    if (type === 'month' || type === 'monthday') {
+                      if (showPicker) changeInputValue(e.target.value)
+                      setManualBlurCheck(true)
+                      changeShowPicker(false)
+                      setShowMonthFormatted(false)
+                    } else {
+                      setManualBlurCheck(true)
+                    }
+                  }}
+                  inputRefCallback={inputRefCallback}
+                />
+              }
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
-              autoComplete={autoComplete}
-              style={valueStyle}
-              css={valueCSS}
-              data-testid={testId}
-              maxLength={maxlength}
-              onKeyDown={
-                e => {
-                  if (type === 'month' || type === 'monthday') {
-                    if (showPicker) changeInputValue(e.target.value)
-                    setManualBlurCheck(true)
-                    changeShowPicker(false)
-                    setShowMonthFormatted(false)
-                  } else {
-                    setManualBlurCheck(true)
-                  }
+              onChangeRaw={handleOnInputChange}
+              open={showPicker && canPickDay && !isDisabled}
+              onClickOutside={() => changeShowPicker(false)}
+              onCalendarClose={() => changeShowPicker(false)}
+              selected={startDate ? startDate.toDate() : null}
+              onChange={(date) => {
+                if (date && isValid(date) && dateFnsFormat) {
+                  allowCalendarChangeEvent.current = true
+                  handleOnCalendarChange({target: {name, value: formatDate(date, dateFnsFormat)}})
                 }
-              }
+                changeShowPicker(false)
+              }}
+              dateFormat={dateFnsFormat}
+              showTimeSelect={timePicker && !showCalendar}
+              showTimeSelectOnly={timePicker && !showCalendar}
+              showTimeInput={timePicker && showCalendar}
+              customTimeInput={timePicker && showCalendar ? <CustomTimeInput /> : undefined}
+              showYearDropdown={canPickYear}
+              showMonthDropdown={canPickYear}
+              dropdownMode='select'
+              minDate={calculateDate(minDate)}
+              maxDate={calculateDate(maxDate)}
+              portalId='gfb-datepicker-portal'
+              popperProps={{strategy: 'fixed'}}
             />
-            {showPicker && canPickDay && !isDisabled && (
-              <DatePicker
-                elementId={elementId.current}
-                handleOnChange={handleOnCalendarChange}
-                changeShowPicker={changeShowPicker}
-                name={name}
-                timePicker={timePicker}
-                showCalendar={showCalendar}
-                startDate={startDate}
-                format={inputFormat}
-                minDate={minDate}
-                maxDate={maxDate}
-                canPickYear={canPickYear}
-                autoApply={autoApply}
-              />
-            )}
             {showPicker && !canPickDay && !isDisabled && (
               <MonthPicker
                 elementId={elementId.current}

@@ -1,0 +1,70 @@
+/* Portal container - renders at body level to escape dialog stacking contexts */
+#gfb-datepicker-portal {
+  position: relative;
+  z-index: 9999;
+}
+
+.react-datepicker-popper {
+  z-index: 9999 !important;
+}
+
+/* Match outside-month day color to bleu */
+.react-datepicker__day--outside-month {
+  color: #ccc;
+}
+
+/* Ensure the input container stretches full width */
+.react-datepicker__input-container input {
+  width: 100%;
+}
+
+/* Remove gray header background */
+.react-datepicker__header {
+  background-color: #fff !important;
+  border-bottom: 1px solid #aeaeae;
+}
+
+/* Hide redundant month/year text when dropdown selects are shown */
+.react-datepicker__header:has(.react-datepicker__header__dropdown) .react-datepicker__current-month {
+  display: none;
+}
+
+/* Align prev/next arrows with the dropdown row (compensates for hidden current-month text) */
+.react-datepicker__navigation {
+  top: 8px !important;
+}
+.react-datepicker__navigation--previous {
+  left: -3px !important;
+}
+.react-datepicker__navigation--next {
+  right: -3px !important;
+}
+
+/* Reduce oversized focus outline on navigation arrows */
+.react-datepicker__navigation:focus-visible {
+  outline: 1px solid #aeaeae;
+  border-radius: 2px;
+  outline-offset: 2px;
+}
+.react-datepicker__navigation:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Time panel - make consistent with the calendar width */
+.react-datepicker__time-container {
+  border-left: 1px solid #aeaeae;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
+  width: 85px;
+}
+
+/* Custom time input (hour/minute/AM-PM dropdowns) */
+.gfb-time-input {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border-top: 1px solid #aeaeae;
+  justify-content: center;
+}
