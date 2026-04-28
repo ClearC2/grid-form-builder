@@ -20,6 +20,7 @@ import InnerCell from './Inputs'
 import {FaTrash as Trash} from 'react-icons/fa'
 import useTheme, {ThemeProvider} from './theme/useTheme'
 import {useAutoHideTooltip} from './useAutoHideTooltip'
+import ReactTooltip from 'react-tooltip'
 
 let inputEventListenerDebouncer = null
 
@@ -265,6 +266,7 @@ const FormBuilder = (props) => {
               expandable={expandable}
               setItemDimensions={setItemDimensions}
               dimensions={dimensions}
+              tooltipId={id}
             />
           </div>
         )
@@ -368,6 +370,10 @@ const FormBuilder = (props) => {
 
   dropItemDimensions.i = '-1'
 
+  useEffect(() => {
+    ReactTooltip.rebuild()
+  })
+
   return (
     <div
       id={id}
@@ -375,6 +381,7 @@ const FormBuilder = (props) => {
       ref={setContainerRef}
       style={style}
     >
+      <ReactTooltip id={id} />
       <RGL
         ref={ReactGridLayout}
         autoSize={rglAutoSize}

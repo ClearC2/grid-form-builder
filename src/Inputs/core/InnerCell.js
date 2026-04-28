@@ -35,7 +35,8 @@ const InnerCell = props => {
     c2class,
     expandable,
     setItemDimensions,
-    dimensions
+    dimensions,
+    tooltipId
   } = props
 
   const {config = {}} = field
@@ -127,6 +128,7 @@ const InnerCell = props => {
         expandable={expandable}
         expandItem={expandItem}
         shrinkItem={shrinkItem}
+        tooltipId={tooltipId}
       />
       <InputContainer
         config={config}
@@ -147,6 +149,7 @@ const InnerCell = props => {
         c2class={c2class}
         hasValidationWarning={hasValidationWarning}
         setHasValidationWarning={setHasValidationWarning}
+        tooltipId={tooltipId}
       >
         <Type />
       </InputContainer>
@@ -197,5 +200,6 @@ InnerCell.propTypes = {
   c2class: PropTypes.string,
   expandable: PropTypes.bool,
   setItemDimensions: PropTypes.func,
-  dimensions: PropTypes.object
+  dimensions: PropTypes.object,
+  tooltipId: PropTypes.string
 }

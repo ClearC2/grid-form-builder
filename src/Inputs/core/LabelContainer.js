@@ -1,10 +1,8 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useCallback, useRef} from 'react'
+import {useCallback} from 'react'
 import PropTypes from 'prop-types'
 import {mapIcon} from '../../Icons'
-import PortalTooltip from '../../Tooltip'
-import {randomId} from '../../utils'
 import useTheme from '../../theme/useTheme'
 
 const LabelContainer = props => {
@@ -15,7 +13,8 @@ const LabelContainer = props => {
     value,
     expandable,
     expandItem,
-    shrinkItem
+    shrinkItem,
+    tooltipId
   } = props
   let {
     icon: Icon = '',
@@ -38,12 +37,6 @@ const LabelContainer = props => {
     ShrinkIcon = mapIcon('caretup')
   }
   const {name, label = name} = config
-  const iconId = useRef(randomId())
-  const linkId = useRef(randomId())
-  const cascadeId = useRef(randomId())
-  const labelId = useRef(randomId())
-  const expandId = useRef(randomId())
-  const shrinkId = useRef(randomId())
   const {theme} = useTheme()
 
   const onLinkClick = useCallback(() => {
@@ -85,18 +78,12 @@ const LabelContainer = props => {
 
   return (
     <div className={className} style={cellStyle} css={theme.cellLabel}>
-      <PortalTooltip id={iconId.current} message={iconTooltip} />
-      <PortalTooltip id={linkId.current} message={linkTooltip} />
-      <PortalTooltip id={cascadeId.current} message={cascadeTooltip} />
-      <PortalTooltip id={labelId.current} message={labelTooltip} />
-      <PortalTooltip id={expandId.current} message='Expand Input' />
-      <PortalTooltip id={shrinkId.current} message='Condense Input' />
       {Icon && (
         <Icon
           size={size}
           style={iconStyle}
-          data-tip
-          data-for={iconId.current}
+          data-tip={iconTooltip}
+          data-for={tooltipId}
           css={theme.icon}
         />
       )}
@@ -106,8 +93,8 @@ const LabelContainer = props => {
           onClick={onLabelTextClick}
           className={LinkIcon || CascadeIcon ? 'cursor-hand gfb-field-label' : 'gfb-field-label'}
           style={labelStyle}
-          data-tip
-          data-for={labelId.current}
+          data-tip={labelTooltip}
+          data-for={tooltipId}
           css={theme.label}
         >
           {label}
@@ -118,8 +105,8 @@ const LabelContainer = props => {
           onClick={onLabelTextClick}
           className={LinkIcon || CascadeIcon ? 'cursor-hand' : ''}
           style={labelStyle}
-          data-tip
-          data-for={labelId.current}
+          data-tip={labelTooltip}
+          data-for={tooltipId}
           css={theme.label}
         >
           {label}
@@ -130,8 +117,8 @@ const LabelContainer = props => {
           className='cursor-hand'
           onClick={onLinkClick}
           style={linkStyle}
-          data-tip
-          data-for={linkId.current}
+          data-tip={linkTooltip}
+          data-for={tooltipId}
           css={theme.link}
         />
       )}
@@ -140,8 +127,8 @@ const LabelContainer = props => {
           className='cursor-hand'
           onClick={onCascadeKeywordClick}
           style={cascadeStyle}
-          data-tip
-          data-for={cascadeId.current}
+          data-tip={cascadeTooltip}
+          data-for={tooltipId}
           css={theme.cascade}
         />
       )}
@@ -150,15 +137,15 @@ const LabelContainer = props => {
           <button onClick={shrinkItem} className='gfb-expand-input-btn'>
             <ShrinkIcon
               className='cursor-hand'
-              data-tip
-              data-for={shrinkId.current}
+              data-tip='Condense Input'
+              data-for={tooltipId}
             />
           </button>
           <button onClick={expandItem} className='gfb-expand-input-btn'>
             <ExpandIcon
               className='cursor-hand'
-              data-tip
-              data-for={expandId.current}
+              data-tip='Expand Input'
+              data-for={tooltipId}
             />
           </button>
         </div>
@@ -177,5 +164,6 @@ LabelContainer.propTypes = {
   type: PropTypes.string,
   expandItem: PropTypes.func,
   shrinkItem: PropTypes.func,
-  expandable: PropTypes.bool
+  expandable: PropTypes.bool,
+  tooltipId: PropTypes.string
 }
