@@ -1,3 +1,10 @@
+## [3.138.1](https://github.com/ClearC2/grid-form-builder/compare/v3.138.0...v3.138.1) (2026-04-28)
+
+
+### Performance Improvements
+
+* **tooltips:** rolled label tooltips into a single component ([4d455df](https://github.com/ClearC2/grid-form-builder/commit/4d455dfaddc86e61e3f7c17d8dfe83a61d616a45))
+
 # [3.138.0](https://github.com/ClearC2/grid-form-builder/compare/v3.137.3...v3.138.0) (2026-04-07)
 
 

@@ -50,7 +50,8 @@ var InnerCell = function InnerCell(props) {
       c2class = props.c2class,
       expandable = props.expandable,
       setItemDimensions = props.setItemDimensions,
-      dimensions = props.dimensions;
+      dimensions = props.dimensions,
+      tooltipId = props.tooltipId;
   var _field$config = field.config,
       config = _field$config === void 0 ? {} : _field$config;
 
@@ -160,7 +161,8 @@ var InnerCell = function InnerCell(props) {
     value: value,
     expandable: expandable,
     expandItem: expandItem,
-    shrinkItem: shrinkItem
+    shrinkItem: shrinkItem,
+    tooltipId: tooltipId
   }), jsx(InputContainer, {
     config: config,
     value: value,
@@ -179,7 +181,8 @@ var InnerCell = function InnerCell(props) {
     fieldDefinitions: fieldDefinitions,
     c2class: c2class,
     hasValidationWarning: hasValidationWarning,
-    setHasValidationWarning: setHasValidationWarning
+    setHasValidationWarning: setHasValidationWarning,
+    tooltipId: tooltipId
   }, jsx(Type, null))));
 };
 
@@ -228,5 +231,6 @@ InnerCell.propTypes = {
   c2class: PropTypes.string,
   expandable: PropTypes.bool,
   setItemDimensions: PropTypes.func,
-  dimensions: PropTypes.object
+  dimensions: PropTypes.object,
+  tooltipId: PropTypes.string
 };

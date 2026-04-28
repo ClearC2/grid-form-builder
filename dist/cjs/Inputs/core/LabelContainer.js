@@ -36,10 +36,6 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Icons = require("../../Icons");
 
-var _Tooltip = _interopRequireDefault(require("../../Tooltip"));
-
-var _utils = require("../../utils");
-
 var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -53,7 +49,8 @@ var LabelContainer = function LabelContainer(props) {
       value = props.value,
       expandable = props.expandable,
       expandItem = props.expandItem,
-      shrinkItem = props.shrinkItem;
+      shrinkItem = props.shrinkItem,
+      tooltipId = props.tooltipId;
   var _config$icon = config.icon,
       Icon = _config$icon === void 0 ? '' : _config$icon,
       _config$cascade = config.cascade,
@@ -90,12 +87,6 @@ var LabelContainer = function LabelContainer(props) {
   var name = config.name,
       _config$label = config.label,
       label = _config$label === void 0 ? name : _config$label;
-  var iconId = (0, _react.useRef)((0, _utils.randomId)());
-  var linkId = (0, _react.useRef)((0, _utils.randomId)());
-  var cascadeId = (0, _react.useRef)((0, _utils.randomId)());
-  var labelId = (0, _react.useRef)((0, _utils.randomId)());
-  var expandId = (0, _react.useRef)((0, _utils.randomId)());
-  var shrinkId = (0, _react.useRef)((0, _utils.randomId)());
 
   var _useTheme = (0, _useTheme2.default)(),
       theme = _useTheme.theme;
@@ -137,29 +128,11 @@ var LabelContainer = function LabelContainer(props) {
     className: className,
     style: cellStyle,
     css: theme.cellLabel
-  }, (0, _core.jsx)(_Tooltip.default, {
-    id: iconId.current,
-    message: iconTooltip
-  }), (0, _core.jsx)(_Tooltip.default, {
-    id: linkId.current,
-    message: linkTooltip
-  }), (0, _core.jsx)(_Tooltip.default, {
-    id: cascadeId.current,
-    message: cascadeTooltip
-  }), (0, _core.jsx)(_Tooltip.default, {
-    id: labelId.current,
-    message: labelTooltip
-  }), (0, _core.jsx)(_Tooltip.default, {
-    id: expandId.current,
-    message: "Expand Input"
-  }), (0, _core.jsx)(_Tooltip.default, {
-    id: shrinkId.current,
-    message: "Condense Input"
-  }), Icon && (0, _core.jsx)(Icon, {
+  }, Icon && (0, _core.jsx)(Icon, {
     size: size,
     style: iconStyle,
-    "data-tip": true,
-    "data-for": iconId.current,
+    "data-tip": iconTooltip,
+    "data-for": tooltipId,
     css: theme.icon
   }), required && (0, _core.jsx)("strong", {
     className: "gfb-validation-indicator"
@@ -167,29 +140,29 @@ var LabelContainer = function LabelContainer(props) {
     onClick: onLabelTextClick,
     className: LinkIcon || CascadeIcon ? 'cursor-hand gfb-field-label' : 'gfb-field-label',
     style: labelStyle,
-    "data-tip": true,
-    "data-for": labelId.current,
+    "data-tip": labelTooltip,
+    "data-for": tooltipId,
     css: theme.label
   }, label), label && type === 'header' && (0, _core.jsx)("h3", {
     onClick: onLabelTextClick,
     className: LinkIcon || CascadeIcon ? 'cursor-hand' : '',
     style: labelStyle,
-    "data-tip": true,
-    "data-for": labelId.current,
+    "data-tip": labelTooltip,
+    "data-for": tooltipId,
     css: theme.label
   }, label), LinkIcon && (0, _core.jsx)(LinkIcon, {
     className: "cursor-hand",
     onClick: onLinkClick,
     style: linkStyle,
-    "data-tip": true,
-    "data-for": linkId.current,
+    "data-tip": linkTooltip,
+    "data-for": tooltipId,
     css: theme.link
   }), CascadeIcon && (0, _core.jsx)(CascadeIcon, {
     className: "cursor-hand",
     onClick: onCascadeKeywordClick,
     style: cascadeStyle,
-    "data-tip": true,
-    "data-for": cascadeId.current,
+    "data-tip": cascadeTooltip,
+    "data-for": tooltipId,
     css: theme.cascade
   }), !expandable ? null : (0, _core.jsx)("div", {
     className: "gfb-input-expand-controls"
@@ -198,15 +171,15 @@ var LabelContainer = function LabelContainer(props) {
     className: "gfb-expand-input-btn"
   }, (0, _core.jsx)(ShrinkIcon, {
     className: "cursor-hand",
-    "data-tip": true,
-    "data-for": shrinkId.current
+    "data-tip": "Condense Input",
+    "data-for": tooltipId
   })), (0, _core.jsx)("button", {
     onClick: expandItem,
     className: "gfb-expand-input-btn"
   }, (0, _core.jsx)(ExpandIcon, {
     className: "cursor-hand",
-    "data-tip": true,
-    "data-for": expandId.current
+    "data-tip": "Expand Input",
+    "data-for": tooltipId
   }))));
 };
 
@@ -220,5 +193,6 @@ LabelContainer.propTypes = {
   type: _propTypes.default.string,
   expandItem: _propTypes.default.func,
   shrinkItem: _propTypes.default.func,
-  expandable: _propTypes.default.bool
+  expandable: _propTypes.default.bool,
+  tooltipId: _propTypes.default.string
 };

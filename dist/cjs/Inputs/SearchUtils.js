@@ -25,14 +25,14 @@ var _context;
  */
 
 /*
-* SINGLE_FIELD_INPUTS
-* These inputs will have one input field. They can have more than one value, but it is in one field
-*/
+ * SINGLE_FIELD_INPUTS
+ * These inputs will have one input field. They can have more than one value, but it is in one field
+ */
 var SINGLE_FIELD_INPUTS = (0, _immutable.Set)(['multiselect', 'multicheckbox', 'listselect', 'typeahead']);
 /*
-* MULTI_FIELD_INPUTS
-* These inputs can have more than one input field, with one value per field
-*/
+ * MULTI_FIELD_INPUTS
+ * These inputs can have more than one input field, with one value per field
+ */
 
 exports.SINGLE_FIELD_INPUTS = SINGLE_FIELD_INPUTS;
 var MULTI_FIELD_INPUTS = (0, _immutable.Set)(['input', 'date', 'datetime', 'month', 'phone', 'email', 'currency', 'time', 'number', 'percent', 'textarea']); // eslint-disable-line
@@ -45,11 +45,11 @@ var ALL_BUT_DATES = (0, _immutable.Set)(['input', 'number', 'percent', 'phone', 
 exports.ALL_BUT_DATES = ALL_BUT_DATES;
 var DATES = (0, _immutable.Set)(['date', 'datetime']);
 /*
-* TYPEAHEAD_CONDITIONS
-* If a field is a typeahead on the original formSchema, it will only remain a typeahead input if the condition
-* is one of the following. Otherwise it will be converted to an input. Typeaheads can have other conditions, but the
-* the input type may change
-*/
+ * TYPEAHEAD_CONDITIONS
+ * If a field is a typeahead on the original formSchema, it will only remain a typeahead input if the condition
+ * is one of the following. Otherwise it will be converted to an input. Typeaheads can have other conditions, but the
+ * the input type may change
+ */
 
 exports.DATES = DATES;
 var TYPEAHEAD_CONDITIONS = (0, _immutable.Set)(['is equal to', 'is not equal to', 'is one of', 'is not one of']); // eslint-disable-next-line max-len

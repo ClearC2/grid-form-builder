@@ -54,10 +54,6 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _immutable = require("immutable");
 
-var _Tooltip = _interopRequireDefault(require("../../Tooltip"));
-
-var _utils = require("../../utils");
-
 var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
 
 var _excluded = ["name", "required", "style", "tooltips"];
@@ -137,7 +133,8 @@ var InputContainer = function InputContainer(props) {
       fieldDefinitions = props.fieldDefinitions,
       c2class = props.c2class,
       hasValidationWarning = props.hasValidationWarning,
-      setHasValidationWarning = props.setHasValidationWarning;
+      setHasValidationWarning = props.setHasValidationWarning,
+      tooltipId = props.tooltipId;
   var name = config.name,
       required = config.required,
       _config$style = config.style,
@@ -148,7 +145,6 @@ var InputContainer = function InputContainer(props) {
   var inputTooltip = tooltips.input;
   var _style$cellInput = style.cellInput,
       cellInput = _style$cellInput === void 0 ? {} : _style$cellInput;
-  var inputId = (0, _react.useRef)((0, _utils.randomId)());
 
   var _useTheme = (0, _useTheme2.default)(),
       theme = _useTheme.theme;
@@ -156,13 +152,10 @@ var InputContainer = function InputContainer(props) {
   return (0, _core.jsx)("div", {
     className: "gfb-inner-cell-input",
     style: cellInput,
-    "data-tip": true,
-    "data-for": inputId.current,
+    "data-tip": hasValidationWarning ? inputTooltip : undefined,
+    "data-for": tooltipId,
     css: theme.cellInput
-  }, !hasValidationWarning && (0, _core.jsx)(_Tooltip.default, {
-    id: inputId.current,
-    message: inputTooltip
-  }), /*#__PURE__*/(0, _react.cloneElement)(children, _objectSpread(_objectSpread({
+  }, /*#__PURE__*/(0, _react.cloneElement)(children, _objectSpread(_objectSpread({
     requiredWarning: requiredWarning,
     tabIndex: tabIndex,
     draggable: draggable,
@@ -182,7 +175,8 @@ var InputContainer = function InputContainer(props) {
     device: device,
     fieldDefinitions: fieldDefinitions,
     c2class: c2class,
-    setHasValidationWarning: setHasValidationWarning
+    setHasValidationWarning: setHasValidationWarning,
+    tooltipId: tooltipId
   })));
 };
 
@@ -207,5 +201,6 @@ InputContainer.propTypes = {
   fieldDefinitions: _propTypes.default.instanceOf(_immutable.Map),
   c2class: _propTypes.default.string,
   hasValidationWarning: _propTypes.default.bool,
-  setHasValidationWarning: _propTypes.default.func
+  setHasValidationWarning: _propTypes.default.func,
+  tooltipId: _propTypes.default.string
 };

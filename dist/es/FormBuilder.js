@@ -49,6 +49,7 @@ import InnerCell from './Inputs';
 import { FaTrash as Trash } from 'react-icons/fa';
 import useTheme, { ThemeProvider } from './theme/useTheme';
 import { useAutoHideTooltip } from './useAutoHideTooltip';
+import ReactTooltip from 'react-tooltip';
 var inputEventListenerDebouncer = null;
 export var FormValueContext = /*#__PURE__*/createContext([Map(), function () {}]);
 var debug = false;
@@ -362,7 +363,8 @@ var FormBuilder = function FormBuilder(props) {
           c2class: c2class,
           expandable: expandable,
           setItemDimensions: setItemDimensions,
-          dimensions: dimensions
+          dimensions: dimensions,
+          tooltipId: id
         })));
         layout.push(dimensions);
       }
@@ -483,12 +485,17 @@ var FormBuilder = function FormBuilder(props) {
   }, [formSchema, dropItemConfig, handleOnDimensionChange]);
   debugLog('render');
   dropItemDimensions.i = '-1';
+  useEffect(function () {
+    ReactTooltip.rebuild();
+  });
   return /*#__PURE__*/React.createElement("div", {
     id: id,
     className: "grid-form-builder-parent",
     ref: setContainerRef,
     style: style
-  }, /*#__PURE__*/React.createElement(RGL, {
+  }, /*#__PURE__*/React.createElement(ReactTooltip, {
+    id: id
+  }), /*#__PURE__*/React.createElement(RGL, {
     ref: ReactGridLayout,
     autoSize: rglAutoSize,
     style: rglStyle,

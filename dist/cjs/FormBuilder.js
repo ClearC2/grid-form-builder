@@ -96,6 +96,8 @@ var _useTheme2 = _interopRequireWildcard(require("./theme/useTheme"));
 
 var _useAutoHideTooltip = require("./useAutoHideTooltip");
 
+var _reactTooltip = _interopRequireDefault(require("react-tooltip"));
+
 var _excluded = ["size"],
     _excluded2 = ["formValues", "theme"];
 
@@ -423,7 +425,8 @@ var FormBuilder = function FormBuilder(props) {
           c2class: c2class,
           expandable: expandable,
           setItemDimensions: setItemDimensions,
-          dimensions: dimensions
+          dimensions: dimensions,
+          tooltipId: id
         })));
         layout.push(dimensions);
       }
@@ -536,12 +539,17 @@ var FormBuilder = function FormBuilder(props) {
   }, [formSchema, dropItemConfig, handleOnDimensionChange]);
   debugLog('render');
   dropItemDimensions.i = '-1';
+  (0, _react.useEffect)(function () {
+    _reactTooltip.default.rebuild();
+  });
   return /*#__PURE__*/_react.default.createElement("div", {
     id: id,
     className: "grid-form-builder-parent",
     ref: setContainerRef,
     style: style
-  }, /*#__PURE__*/_react.default.createElement(_reactGridLayout.default, {
+  }, /*#__PURE__*/_react.default.createElement(_reactTooltip.default, {
+    id: id
+  }), /*#__PURE__*/_react.default.createElement(_reactGridLayout.default, {
     ref: ReactGridLayout,
     autoSize: rglAutoSize,
     style: rglStyle,
