@@ -79,6 +79,20 @@ export const NUMERICAL_CONDITIONS = Set([
   'is top (%)',
   'is bottom (%)'
 ])
+
+export const EXCLUDE_DAYS_UNSUPPORTED_CONDITIONS = Set([
+  'match month',
+  'is equal to',
+  'is between',
+  'is greater than',
+  'is less than',
+  'is one of',
+  'is not equal to',
+  'is not one of',
+  'is blank',
+  'is not blank'
+])
+
 export const TEXT_INPUTS = ['checkbox', 'radio']
 // export const LIST_INPUTS = []
 
