@@ -548,7 +548,15 @@ var FormBuilder = function FormBuilder(props) {
     ref: setContainerRef,
     style: style
   }, /*#__PURE__*/_react.default.createElement(_reactTooltip.default, {
-    id: id
+    id: id,
+    getContent: function getContent(content) {
+      // this is needed to maintain support for passing markup as a potential tooltip as data-tip in react-tooltip v4 - JRA 04/29/2026
+      return /*#__PURE__*/_react.default.createElement("div", {
+        dangerouslySetInnerHTML: {
+          __html: content
+        }
+      });
+    }
   }), /*#__PURE__*/_react.default.createElement(_reactGridLayout.default, {
     ref: ReactGridLayout,
     autoSize: rglAutoSize,

@@ -32,6 +32,8 @@ var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js
 
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
 
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
@@ -55,6 +57,8 @@ var _countryCodes = _interopRequireDefault(require("../countryCodes"));
 var _immutable = require("immutable");
 
 require("../styles/phone.css");
+
+var _CopyValueIcon = _interopRequireDefault(require("../CopyValueIcon"));
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -93,6 +97,8 @@ var Phone = function Phone(props) {
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
       warning = props.warning,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _props$value = props.value,
@@ -126,6 +132,12 @@ var Phone = function Phone(props) {
       countryCode = _useState4[0],
       setCountryCode = _useState4[1];
 
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
+      showCopyVerification = _useState6[0],
+      setCopyVerification = _useState6[1];
+
+  var showCopyDebounce = (0, _react.useRef)();
   (0, _react.useEffect)(function () {
     setCountryCode(regionPropValue);
   }, [regionPropValue]);
@@ -162,6 +174,14 @@ var Phone = function Phone(props) {
       }
     });
   }, [onChange, name, countryCode]);
+  var onCopyClick = (0, _react.useCallback)(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(value);
+    setCopyVerification(true);
+    showCopyDebounce.current = (0, _setTimeout2.default)(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [value]);
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
@@ -198,6 +218,11 @@ var Phone = function Phone(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
+
   return (0, _core.jsx)("div", {
     className: outerClass,
     style: inputOuter,
@@ -228,7 +253,7 @@ var Phone = function Phone(props) {
     type: "text",
     className: className,
     name: name,
-    value: displayValue,
+    value: showCopyVerification ? 'Copied!' : displayValue,
     onChange: handleOnChange,
     readOnly: isDisabled,
     autoFocus: autofocus,
@@ -246,7 +271,10 @@ var Phone = function Phone(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, copy ? (0, _core.jsx)(_CopyValueIcon.default, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: warning,
     color: "#FFCC00",
     type: "warning"
@@ -284,5 +312,7 @@ Phone.propTypes = {
   values: _propTypes.default.instanceOf(_immutable.Map),
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
   warning: _propTypes.default.string,
-  'data-testid': _propTypes.default.string
+  'data-testid': _propTypes.default.string,
+  tooltipId: _propTypes.default.string,
+  copy: _propTypes.default.bool
 };

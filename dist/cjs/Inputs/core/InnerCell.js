@@ -46,10 +46,6 @@ var _index = require("../index");
 
 var _reactDnd = require("react-dnd");
 
-var _Tooltip = _interopRequireDefault(require("../../Tooltip"));
-
-var _utils = require("../../utils");
-
 var _immutable = require("immutable");
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -91,10 +87,9 @@ var InnerCell = function InnerCell(props) {
   var _useState = (0, _react.useState)(false),
       _useState2 = (0, _slicedToArray2.default)(_useState, 2),
       hasValidationWarning = _useState2[0],
-      setHasValidationWarning = _useState2[1];
-
-  var cellId = (0, _react.useRef)((0, _utils.randomId)()); // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
+      setHasValidationWarning = _useState2[1]; // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
   // we will come up with a way to do this without modifying the schema - JRA 12/10/2019
+
 
   if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) {
     config.readonly = true;
@@ -178,12 +173,9 @@ var InnerCell = function InnerCell(props) {
     style: innerCell,
     className: className,
     onClick: onGridElementClick,
-    "data-tip": true,
-    "data-for": cellId.current
-  }, !hasValidationWarning && (0, _core.jsx)(_Tooltip.default, {
-    id: cellId.current,
-    message: cellTooltip
-  }), (0, _core.jsx)(_LabelContainer.default, {
+    "data-tip": !hasValidationWarning ? cellTooltip : undefined,
+    "data-for": tooltipId
+  }, (0, _core.jsx)(_LabelContainer.default, {
     config: config,
     handleLinkClick: handleLinkClick,
     handleCascadeKeywordClick: handleCascadeKeywordClick,

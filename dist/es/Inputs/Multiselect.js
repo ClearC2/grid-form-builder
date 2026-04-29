@@ -19,6 +19,7 @@ import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instan
 import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/includes";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
+import _JSON$stringify from "@babel/runtime-corejs3/core-js-stable/json/stringify";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 
@@ -34,6 +35,7 @@ import { isMobile, convertDelimitedValueIntoLabelValueArray, convertLabelValueAr
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
 import PortalTooltip from '../Tooltip';
+import CopyValueIcon from '../CopyValueIcon';
 var viewPortHeight = document.documentElement.clientHeight;
 var labelCopyTimer = null;
 var debounce = null;
@@ -85,6 +87,8 @@ var Multiselect = function Multiselect(props) {
       largeDatasetThreshold = _props$largeDatasetTh === void 0 ? 500 : _props$largeDatasetTh,
       _props$searchPlacehol = props.searchPlaceholder,
       searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       inputId = props.inputId;
 
   var _style$value = style.value,
@@ -170,7 +174,14 @@ var Multiselect = function Multiselect(props) {
       isFocused = _useState20[0],
       setIsFocused = _useState20[1];
 
-  var inputContainer = useRef(null); // AsyncSelect implementation for large datasets
+  var inputContainer = useRef(null);
+
+  var _useState21 = useState(false),
+      _useState22 = _slicedToArray(_useState21, 2),
+      showCopyVerification = _useState22[0],
+      setCopyVerification = _useState22[1];
+
+  var showCopyDebounce = useRef(); // AsyncSelect implementation for large datasets
 
   var loadOptions = useCallback(function (inputValue) {
     return new _Promise(function (resolve) {
@@ -293,6 +304,20 @@ var Multiselect = function Multiselect(props) {
 
     updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, _defineProperty({}, name, menuOpenState)));
   }, [menuIsOpen, name, updateIsMenuOpen]);
+  var onCopyClick = useCallback(function () {
+    clearTimeout(showCopyDebounce.current);
+    var copiedValue = selectValue;
+
+    if (_typeof(selectValue) === 'object') {
+      copiedValue = _JSON$stringify(selectValue);
+    }
+
+    navigator.clipboard.writeText(copiedValue);
+    setCopyVerification(true);
+    showCopyDebounce.current = _setTimeout(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [selectValue]);
   useEffect(function () {
     var formattedOptions = keyword.options || [];
     if (!formattedOptions) formattedOptions = [];
@@ -377,10 +402,10 @@ var Multiselect = function Multiselect(props) {
     var _p$children = p.children,
         children = _p$children === void 0 ? '' : _p$children;
 
-    var _useState21 = useState(children),
-        _useState22 = _slicedToArray(_useState21, 2),
-        label = _useState22[0],
-        setLabel = _useState22[1]; // eslint-disable-line
+    var _useState23 = useState(children),
+        _useState24 = _slicedToArray(_useState23, 2),
+        label = _useState24[0],
+        setLabel = _useState24[1]; // eslint-disable-line
 
 
     var copyValueToClipboard = function copyValueToClipboard() {
@@ -541,7 +566,10 @@ var Multiselect = function Multiselect(props) {
       }
     },
     tabIndex: tabIndex,
-    value: selectValue,
+    value: showCopyVerification ? [{
+      label: 'Copied!',
+      value: ''
+    }] : selectValue,
     inputId: inputId
   };
   return jsx("div", {
@@ -559,7 +587,18 @@ var Multiselect = function Multiselect(props) {
     filterOption: null,
     options: displayOptions,
     placeholder: placeholder
-  })));
+  })), copy ? jsx("div", {
+    style: {
+      marginLeft: 5,
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  }, jsx(CopyValueIcon, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  })) : null);
 };
 
 export default Multiselect;
@@ -596,5 +635,7 @@ Multiselect.propTypes = {
   largeDatasetThreshold: PropTypes.number,
   searchPlaceholder: PropTypes.string,
   'data-testid': PropTypes.string,
-  inputId: PropTypes.string
+  inputId: PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 };

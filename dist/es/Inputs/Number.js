@@ -5,6 +5,7 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
+import _replaceAllInstanceProperty from "@babel/runtime-corejs3/core-js/instance/replace-all";
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
@@ -25,6 +26,7 @@ import Cleave from '../Cleave'; // switch this back to cleave.js package as soon
 
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
+import CopyValueIcon from '../CopyValueIcon';
 
 var Number = function Number(props) {
   var _context;
@@ -60,6 +62,8 @@ var Number = function Number(props) {
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
       warning = props.warning,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -85,6 +89,12 @@ var Number = function Number(props) {
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
 
+  var _useState3 = useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      showCopyVerification = _useState4[0],
+      setCopyVerification = _useState4[1];
+
+  var showCopyDebounce = useRef();
   var handleOnFocus = useCallback(function () {
     setIsFocused(true);
   }, []);
@@ -99,6 +109,7 @@ var Number = function Number(props) {
     }
 
     if (prefix) newValue = newValue.replace(prefix, '');
+    newValue = _replaceAllInstanceProperty(newValue).call(newValue, delimiter, '');
 
     if (isNaN(+newValue) || +newValue > maximum || +newValue < minimum) {
       // if our value is not within our bounds, do not update the value
@@ -121,7 +132,15 @@ var Number = function Number(props) {
         name: name
       }
     });
-  }, [value, prefix, onChange, name, maximum, minimum]);
+  }, [value, prefix, onChange, name, maximum, minimum, delimiter]);
+  var onCopyClick = useCallback(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(value);
+    setCopyVerification(true);
+    showCopyDebounce.current = _setTimeout(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [value]);
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
@@ -157,6 +176,11 @@ var Number = function Number(props) {
   var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
+
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
 
   return jsx("div", {
     className: outerClass,
@@ -203,7 +227,10 @@ var Number = function Number(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, warning && !validationError && jsx(ValidationErrorIcon, {
+  }, copy ? jsx(CopyValueIcon, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, warning && !validationError && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",
     type: "warning"
@@ -241,5 +268,7 @@ Number.propTypes = {
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 };

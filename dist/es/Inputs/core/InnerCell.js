@@ -16,15 +16,13 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useContext, useCallback, useRef, useState } from 'react';
+import { useContext, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormValueContext } from '../../FormBuilder';
 import InputContainer from './InputContainer';
 import LabelContainer from './LabelContainer';
 import { mapInputType } from '../index';
 import { DropTarget } from 'react-dnd';
-import PortalTooltip from '../../Tooltip';
-import { randomId } from '../../utils';
 import { Map } from 'immutable';
 
 var InnerCell = function InnerCell(props) {
@@ -62,10 +60,9 @@ var InnerCell = function InnerCell(props) {
   var _useState = useState(false),
       _useState2 = _slicedToArray(_useState, 2),
       hasValidationWarning = _useState2[0],
-      setHasValidationWarning = _useState2[1];
-
-  var cellId = useRef(randomId()); // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
+      setHasValidationWarning = _useState2[1]; // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
   // we will come up with a way to do this without modifying the schema - JRA 12/10/2019
+
 
   if (readonly || +formValues.get('cfd_userisreadonly', '0') === 1) {
     config.readonly = true;
@@ -149,12 +146,9 @@ var InnerCell = function InnerCell(props) {
     style: innerCell,
     className: className,
     onClick: onGridElementClick,
-    "data-tip": true,
-    "data-for": cellId.current
-  }, !hasValidationWarning && jsx(PortalTooltip, {
-    id: cellId.current,
-    message: cellTooltip
-  }), jsx(LabelContainer, {
+    "data-tip": !hasValidationWarning ? cellTooltip : undefined,
+    "data-for": tooltipId
+  }, jsx(LabelContainer, {
     config: config,
     handleLinkClick: handleLinkClick,
     handleCascadeKeywordClick: handleCascadeKeywordClick,

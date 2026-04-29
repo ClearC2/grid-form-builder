@@ -94,6 +94,8 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIco
 
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
+var _CopyValueIcon = _interopRequireDefault(require("../CopyValueIcon"));
+
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context16, _context17; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context16 = ownKeys(Object(source), !0)).call(_context16, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context17 = ownKeys(Object(source))).call(_context17, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -281,6 +283,8 @@ var Typeahead = function Typeahead(props) {
       warning = props.warning,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       inputId = props.inputId;
 
   var _style$value = style.value,
@@ -472,6 +476,10 @@ var Typeahead = function Typeahead(props) {
         base.color = 'green';
       }
 
+      if (showCopyVerification) {
+        base.color = '#63a7bd';
+      }
+
       return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
     },
     menuPortal: function menuPortal(base) {
@@ -494,6 +502,13 @@ var Typeahead = function Typeahead(props) {
   var initialFetch = (0, _react.useRef)(false); // users want an autofetch the first time they focus the field - JRA 02/04/2026
 
   var didAutoFocus = (0, _react.useRef)(false);
+
+  var _useState31 = (0, _react.useState)(false),
+      _useState32 = (0, _slicedToArray2.default)(_useState31, 2),
+      showCopyVerification = _useState32[0],
+      setCopyVerification = _useState32[1];
+
+  var showCopyDebounce = (0, _react.useRef)();
   (0, _react.useEffect)(function () {
     var populateConditionObject = function populateConditionObject() {
       var _context3;
@@ -894,6 +909,20 @@ var Typeahead = function Typeahead(props) {
       setInputFieldPosition();
     }
   }, [disabled, interactive, readonly, setInputFieldPosition, inputContainer.current]);
+  var onCopyClick = (0, _react.useCallback)(function (e) {
+    clearTimeout(showCopyDebounce.current);
+    var copiedValue = selectValue;
+
+    if ((0, _typeof2.default)(selectValue) === 'object') {
+      copiedValue = (0, _stringify.default)(selectValue);
+    }
+
+    navigator.clipboard.writeText(copiedValue);
+    setCopyVerification(true);
+    showCopyDebounce.current = (0, _setTimeout2.default)(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [selectValue]);
   (0, _react.useEffect)(function () {
     if (isFocused && (!autofocus || autofocus && didAutoFocus.current)) {
       openMenu();
@@ -905,7 +934,10 @@ var Typeahead = function Typeahead(props) {
       didAutoFocus.current = true;
     }
   }, [defaultOptions]);
-  var handleOnFocus = (0, _react.useCallback)(function () {
+  var handleOnFocus = (0, _react.useCallback)(function (e) {
+    var tag = e.target.tagName.toLowerCase();
+    var classList = e.target.classList;
+    if (tag === 'path' || classList[0] === 'copy-input-value-btn') return;
     setIsFocused(true);
     var simpleValue = typeof value.toJS === 'function' ? value.toJS() : value;
     simpleValue = (0, _typeof2.default)(simpleValue) === 'object' ? simpleValue.value || simpleValue.label || '' : simpleValue;
@@ -1135,6 +1167,21 @@ var Typeahead = function Typeahead(props) {
 
   var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
 
+  var displayValue = inputValue;
+  var _selectValue = selectValue;
+
+  if (showCopyVerification) {
+    if (multi) {
+      _selectValue = [{
+        value: '',
+        label: 'Copied!'
+      }];
+    } else {
+      displayValue = 'Copied!';
+      inputOuterCSS.color = '#63a7bd';
+    }
+  }
+
   return (0, _core.jsx)("div", {
     className: outerClass,
     ref: inputContainer,
@@ -1160,7 +1207,7 @@ var Typeahead = function Typeahead(props) {
     name: name,
     noOptionsMessage: noOptionsMessage,
     placeholder: placeholder,
-    inputValue: inputValue,
+    inputValue: displayValue,
     menuIsOpen: !_utils.isMobile ? menuIsOpen[name] : undefined,
     menuPlacement: !_utils.isMobile ? menuPlacement : undefined,
     onKeyDown: handleOnKeyDown,
@@ -1170,13 +1217,24 @@ var Typeahead = function Typeahead(props) {
     onInputChange: handleOnInputChange,
     loadOptions: loadOptions,
     onChange: handleChange,
-    value: selectValue,
+    value: _selectValue,
     autoComplete: autoComplete,
     components: components,
     defaultOptions: defaultOptions,
     styles: reactSelectStyles,
     inputId: inputId
-  }));
+  }), copy ? (0, _core.jsx)("div", {
+    style: {
+      marginLeft: 5,
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  }, (0, _core.jsx)(_CopyValueIcon.default, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  })) : null);
 };
 
 var _default = Typeahead;
@@ -1216,5 +1274,7 @@ Typeahead.propTypes = {
   }),
   warning: _propTypes.default.string,
   'data-testid': _propTypes.default.string,
-  inputId: _propTypes.default.string
+  inputId: _propTypes.default.string,
+  tooltipId: _propTypes.default.string,
+  copy: _propTypes.default.bool
 };

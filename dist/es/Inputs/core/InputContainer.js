@@ -125,7 +125,7 @@ var InputContainer = function InputContainer(props) {
   return jsx("div", {
     className: "gfb-inner-cell-input",
     style: cellInput,
-    "data-tip": hasValidationWarning ? inputTooltip : undefined,
+    "data-tip": !hasValidationWarning ? inputTooltip : undefined,
     "data-for": tooltipId,
     css: theme.cellInput
   }, /*#__PURE__*/cloneElement(children, _objectSpread(_objectSpread({

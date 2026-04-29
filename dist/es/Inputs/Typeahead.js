@@ -49,6 +49,7 @@ import { isMobile } from '../utils';
 import GFBConfig from '../config';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
+import CopyValueIcon from '../CopyValueIcon';
 var viewPortHeight = document.documentElement.clientHeight;
 var debounce = null;
 var labelCopyTimer = null;
@@ -231,6 +232,8 @@ var Typeahead = function Typeahead(props) {
       warning = props.warning,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       inputId = props.inputId;
 
   var _style$value = style.value,
@@ -422,6 +425,10 @@ var Typeahead = function Typeahead(props) {
         base.color = 'green';
       }
 
+      if (showCopyVerification) {
+        base.color = '#63a7bd';
+      }
+
       return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
     },
     menuPortal: function menuPortal(base) {
@@ -444,6 +451,13 @@ var Typeahead = function Typeahead(props) {
   var initialFetch = useRef(false); // users want an autofetch the first time they focus the field - JRA 02/04/2026
 
   var didAutoFocus = useRef(false);
+
+  var _useState31 = useState(false),
+      _useState32 = _slicedToArray(_useState31, 2),
+      showCopyVerification = _useState32[0],
+      setCopyVerification = _useState32[1];
+
+  var showCopyDebounce = useRef();
   useEffect(function () {
     var populateConditionObject = function populateConditionObject() {
       var _context3;
@@ -850,6 +864,20 @@ var Typeahead = function Typeahead(props) {
       setInputFieldPosition();
     }
   }, [disabled, interactive, readonly, setInputFieldPosition, inputContainer.current]);
+  var onCopyClick = useCallback(function (e) {
+    clearTimeout(showCopyDebounce.current);
+    var copiedValue = selectValue;
+
+    if (_typeof(selectValue) === 'object') {
+      copiedValue = _JSON$stringify(selectValue);
+    }
+
+    navigator.clipboard.writeText(copiedValue);
+    setCopyVerification(true);
+    showCopyDebounce.current = _setTimeout(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [selectValue]);
   useEffect(function () {
     if (isFocused && (!autofocus || autofocus && didAutoFocus.current)) {
       openMenu();
@@ -861,7 +889,10 @@ var Typeahead = function Typeahead(props) {
       didAutoFocus.current = true;
     }
   }, [defaultOptions]);
-  var handleOnFocus = useCallback(function () {
+  var handleOnFocus = useCallback(function (e) {
+    var tag = e.target.tagName.toLowerCase();
+    var classList = e.target.classList;
+    if (tag === 'path' || classList[0] === 'copy-input-value-btn') return;
     setIsFocused(true);
     var simpleValue = typeof value.toJS === 'function' ? value.toJS() : value;
     simpleValue = _typeof(simpleValue) === 'object' ? simpleValue.value || simpleValue.label || '' : simpleValue;
@@ -1097,6 +1128,21 @@ var Typeahead = function Typeahead(props) {
 
   var inputOuterCSS = _objectSpread(_objectSpread({}, theme.inputOuter), inputOuter);
 
+  var displayValue = inputValue;
+  var _selectValue = selectValue;
+
+  if (showCopyVerification) {
+    if (multi) {
+      _selectValue = [{
+        value: '',
+        label: 'Copied!'
+      }];
+    } else {
+      displayValue = 'Copied!';
+      inputOuterCSS.color = '#63a7bd';
+    }
+  }
+
   return jsx("div", {
     className: outerClass,
     ref: inputContainer,
@@ -1122,7 +1168,7 @@ var Typeahead = function Typeahead(props) {
     name: name,
     noOptionsMessage: noOptionsMessage,
     placeholder: placeholder,
-    inputValue: inputValue,
+    inputValue: displayValue,
     menuIsOpen: !isMobile ? menuIsOpen[name] : undefined,
     menuPlacement: !isMobile ? menuPlacement : undefined,
     onKeyDown: handleOnKeyDown,
@@ -1132,13 +1178,24 @@ var Typeahead = function Typeahead(props) {
     onInputChange: handleOnInputChange,
     loadOptions: loadOptions,
     onChange: handleChange,
-    value: selectValue,
+    value: _selectValue,
     autoComplete: autoComplete,
     components: components,
     defaultOptions: defaultOptions,
     styles: reactSelectStyles,
     inputId: inputId
-  }));
+  }), copy ? jsx("div", {
+    style: {
+      marginLeft: 5,
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  }, jsx(CopyValueIcon, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  })) : null);
 };
 
 export default Typeahead;
@@ -1177,5 +1234,7 @@ Typeahead.propTypes = {
   }),
   warning: PropTypes.string,
   'data-testid': PropTypes.string,
-  inputId: PropTypes.string
+  inputId: PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 };

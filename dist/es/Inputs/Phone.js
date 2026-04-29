@@ -15,6 +15,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 import _startsWithInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/starts-with";
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _mapInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/map";
 import _sortInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/sort";
@@ -29,6 +30,7 @@ import useTheme from '../theme/useTheme';
 import countryCodes from '../countryCodes';
 import { List, Map } from 'immutable';
 import '../styles/phone.css';
+import CopyValueIcon from '../CopyValueIcon';
 
 var formatPhoneDisplay = function formatPhoneDisplay(rawValue, countryCode) {
   if (!rawValue) return '';
@@ -63,6 +65,8 @@ var Phone = function Phone(props) {
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
       warning = props.warning,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
 
@@ -97,6 +101,12 @@ var Phone = function Phone(props) {
       countryCode = _useState4[0],
       setCountryCode = _useState4[1];
 
+  var _useState5 = useState(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      showCopyVerification = _useState6[0],
+      setCopyVerification = _useState6[1];
+
+  var showCopyDebounce = useRef();
   useEffect(function () {
     setCountryCode(regionPropValue);
   }, [regionPropValue]);
@@ -133,6 +143,14 @@ var Phone = function Phone(props) {
       }
     });
   }, [onChange, name, countryCode]);
+  var onCopyClick = useCallback(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(value);
+    setCopyVerification(true);
+    showCopyDebounce.current = _setTimeout(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [value]);
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
@@ -169,6 +187,11 @@ var Phone = function Phone(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
+
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -199,7 +222,7 @@ var Phone = function Phone(props) {
     type: "text",
     className: className,
     name: name,
-    value: displayValue,
+    value: showCopyVerification ? 'Copied!' : displayValue,
     onChange: handleOnChange,
     readOnly: isDisabled,
     autoFocus: autofocus,
@@ -217,7 +240,10 @@ var Phone = function Phone(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, warning && !validationError && jsx(ValidationErrorIcon, {
+  }, copy ? jsx(CopyValueIcon, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, warning && !validationError && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",
     type: "warning"
@@ -254,5 +280,7 @@ Phone.propTypes = {
   values: PropTypes.instanceOf(Map),
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 };
