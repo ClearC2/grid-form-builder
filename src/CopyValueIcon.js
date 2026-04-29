@@ -10,7 +10,7 @@ const CopyValueIcon = props => {
 
   return (
     <div
-      className='gfb-input__indicator'
+      className='copy-input-value-btn gfb-input__indicator'
       style={{
         display: 'flex',
         justifyContent: 'center',
@@ -18,7 +18,7 @@ const CopyValueIcon = props => {
       }}
     >
       <div
-        className='btn'
+        className='copy-input-value-btn btn'
         style={{
           border: '1px solid #555555',
           padding: 2

@@ -1,9 +1,10 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useCallback, useEffect, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
+import CopyValueIcon from '../CopyValueIcon'
 
 const Percentage = (props) => {
   const {
@@ -25,6 +26,8 @@ const Percentage = (props) => {
     warning,
     maximum = 100,
     minimum = 0,
+    tooltipId,
+    copy,
     'data-testid': testId = props?.name
   } = props
 
@@ -47,6 +50,8 @@ const Percentage = (props) => {
 
   const [isFocused, setIsFocused] = useState(false)
   const [formattedValue, setFormattedValue] = useState(formatValue(value))
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   useEffect(() => {
     if (!isFocused) {
@@ -93,6 +98,15 @@ const Percentage = (props) => {
     [decimals, name, onChange, minimum, maximum]
   )
 
+  const onCopyClick = useCallback(() => {
+    clearTimeout(showCopyDebounce.current)
+    navigator.clipboard.writeText(value)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [value])
+
   const isDisabled = readonly || disabled || !interactive
 
   let className = 'gfb-input__single-value gfb-input__input'
@@ -122,6 +136,12 @@ const Percentage = (props) => {
   const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
+
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd'
+    valueCSS.fontSize = '9pt'
+  }
+
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
@@ -152,6 +172,12 @@ const Percentage = (props) => {
             css={indicatorsCSS}
             data-testid={`${testId}-errors`}
           >
+            {copy ? (
+              <CopyValueIcon
+                onClick={onCopyClick}
+                tooltipId={tooltipId}
+              />
+            ) : null}
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
@@ -186,5 +212,7 @@ Percentage.propTypes = {
   warning: PropTypes.number,
   maximum: PropTypes.number,
   minimum: PropTypes.number,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

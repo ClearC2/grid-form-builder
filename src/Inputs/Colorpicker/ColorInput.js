@@ -6,6 +6,7 @@ import ColorPicker from './ColorPicker'
 import {randomId} from '../../utils'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
 import useTheme from '../../theme/useTheme'
+import CopyValueIcon from '../../CopyValueIcon'
 
 const ColorInput = props => {
   const {
@@ -23,6 +24,8 @@ const ColorInput = props => {
     style = {},
     required,
     maxlength = 524288,
+    tooltipId,
+    copy,
     'data-testid': testId = props?.name
   } = props
 
@@ -41,6 +44,8 @@ const ColorInput = props => {
   const inputId = useRef(randomId())
   const portalRef = useRef()
   const [isFocused, setIsFocused] = useState(false)
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   const windowClickListener = useMemo(() => {
     return e => {
@@ -88,6 +93,15 @@ const ColorInput = props => {
     setIsFocused(false)
   }, [])
 
+  const onCopyClick = useCallback(() => {
+    clearTimeout(showCopyDebounce.current)
+    navigator.clipboard.writeText(value)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [value])
+
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
@@ -114,6 +128,11 @@ const ColorInput = props => {
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd'
+    valueCSS.fontSize = '9pt'
+  }
+
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
@@ -123,7 +142,7 @@ const ColorInput = props => {
               id={inputId.current}
               className={className}
               name={name}
-              value={value}
+              value={showCopyVerification ? 'Copied!' : value}
               onChange={handleOnInputChange}
               readOnly={isDisabled}
               autoFocus={autofocus}
@@ -154,6 +173,12 @@ const ColorInput = props => {
             css={indicatorsCSS}
             data-testid={`${testId}-errors`}
           >
+            {copy ? (
+              <CopyValueIcon
+                onClick={onCopyClick}
+                tooltipId={tooltipId}
+              />
+            ) : null}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
               <span className='gfb-input__indicator-separator css-1okebmr-indicatorSeparator' />
@@ -191,5 +216,7 @@ ColorInput.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

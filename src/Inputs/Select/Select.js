@@ -10,6 +10,7 @@ import {isMobile, randomId} from '../../utils'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
 import useTheme from '../../theme/useTheme'
 import PortalTooltip from '../../Tooltip'
+import CopyValueIcon from '../../CopyValueIcon'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -39,6 +40,8 @@ const Select = (props) => {
     'data-testid': testId = props?.name,
     largeDatasetThreshold = 500, // Switch to async mode when options exceed this
     searchPlaceholder = 'Type to search...',
+    tooltipId,
+    copy,
     inputId
   } = props
 
@@ -75,6 +78,8 @@ const Select = (props) => {
   const [isFocused, setIsFocused] = useState(false)
 
   const inputContainer = useRef(null)
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   // AsyncSelect implementation for large datasets
   const loadOptions = useCallback(
@@ -295,6 +300,19 @@ const Select = (props) => {
     [onChange, name, menuIsOpen, fullOptions, largeDatasetThreshold]
   )
 
+  const onCopyClick = useCallback(() => {
+    clearTimeout(showCopyDebounce.current)
+    let copiedValue = selectValue
+    if (typeof selectValue === 'object') {
+      copiedValue = JSON.stringify(selectValue)
+    }
+    navigator.clipboard.writeText(copiedValue)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [selectValue])
+
   const {Select} = input
 
   let className = 'gfb-input-inner'
@@ -378,6 +396,9 @@ const Select = (props) => {
         if (!interactive) {
           base.color = 'green'
         }
+        if (showCopyVerification) {
+          base.color = '#63a7bd'
+        }
         return {...base, ...valueStyle, ...valueTheme}
       },
       menuPortal: (base) => {
@@ -387,7 +408,7 @@ const Select = (props) => {
       }
     },
     tabIndex,
-    value: selectValue,
+    value: showCopyVerification ? {label: 'Copied!', value: ''} : selectValue,
     inputId
   }
 
@@ -411,6 +432,22 @@ const Select = (props) => {
       ) : (
         <Select {...baseSelectProps} filterOption={null} options={displayOptions} placeholder={placeholder} />
       )}
+      {copy ? (
+        <div
+          style={{
+            marginLeft: 5,
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <CopyValueIcon
+            onClick={onCopyClick}
+            tooltipId={tooltipId}
+          />
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -445,5 +482,7 @@ Select.propTypes = {
   largeDatasetThreshold: PropTypes.number,
   searchPlaceholder: PropTypes.string,
   'data-testid': PropTypes.string,
-  inputId: PropTypes.string
+  inputId: PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

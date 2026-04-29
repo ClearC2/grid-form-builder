@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import Cleave from '../Cleave' // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
+import CopyValueIcon from '../CopyValueIcon'
 
 const Number = (props) => {
   const {
@@ -30,6 +31,8 @@ const Number = (props) => {
     required,
     maxlength = 524288,
     warning,
+    tooltipId,
+    copy,
     'data-testid': testId = props?.name
   } = props
 
@@ -47,6 +50,8 @@ const Number = (props) => {
   const input = useRef()
 
   const [isFocused, setIsFocused] = useState(false)
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)
@@ -62,6 +67,7 @@ const Number = (props) => {
       newValue = input.current.getRawValue()
     }
     if (prefix) newValue = newValue.replace(prefix, '')
+    newValue = newValue.replaceAll(delimiter, '')
     if (isNaN(+newValue) || +newValue > maximum || +newValue < minimum) { // if our value is not within our bounds, do not update the value
       newValue = value
       if (input.current) { // if we have the ref of the cleave input, let's update its state back to a valid number so the user does not get confused
@@ -76,7 +82,16 @@ const Number = (props) => {
         name
       }
     })
-  }, [value, prefix, onChange, name, maximum, minimum])
+  }, [value, prefix, onChange, name, maximum, minimum, delimiter])
+
+  const onCopyClick = useCallback(() => {
+    clearTimeout(showCopyDebounce.current)
+    navigator.clipboard.writeText(value)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [value])
 
   const isDisabled = readonly || disabled || !interactive
 
@@ -104,6 +119,11 @@ const Number = (props) => {
   const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
+
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd'
+    valueCSS.fontSize = '9pt'
+  }
 
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
@@ -142,6 +162,12 @@ const Number = (props) => {
             css={indicatorsCSS}
             data-testid={`${testId}-errors`}
           >
+            {copy ? (
+              <CopyValueIcon
+                onClick={onCopyClick}
+                tooltipId={tooltipId}
+              />
+            ) : null}
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
@@ -179,5 +205,7 @@ Number.propTypes = {
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

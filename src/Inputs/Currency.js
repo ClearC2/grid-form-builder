@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import Cleave from '../Cleave' // switch this back to cleave.js package as soon they remove the deprecated lifecycles - JRA 01/15/2020
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
+import CopyValueIcon from '../CopyValueIcon'
 
 const Currency = props => {
   const {
@@ -29,6 +30,8 @@ const Currency = props => {
     minimum = Number.MIN_SAFE_INTEGER,
     maximum = Number.MAX_SAFE_INTEGER,
     warning,
+    tooltipId,
+    copy,
     'data-testid': testId = props?.name
   } = props
 
@@ -45,6 +48,8 @@ const Currency = props => {
 
   const input = useRef()
   const [isFocused, setIsFocused] = useState(false)
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)
@@ -67,6 +72,15 @@ const Currency = props => {
       }
     })
   }, [prefix, onChange, name])
+
+  const onCopyClick = useCallback(() => {
+    clearTimeout(showCopyDebounce.current)
+    navigator.clipboard.writeText(value)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [value])
 
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
@@ -99,6 +113,11 @@ const Currency = props => {
   const valueContainerCSS = {...theme.valueContainer, ...valueContainer}
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
+
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd'
+    valueCSS.fontSize = '9pt'
+  }
 
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
@@ -138,6 +157,12 @@ const Currency = props => {
             css={indicatorsCSS}
             data-testid={`${testId}-errors`}
           >
+            {copy ? (
+              <CopyValueIcon
+                onClick={onCopyClick}
+                tooltipId={tooltipId}
+              />
+            ) : null}
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
@@ -174,5 +199,7 @@ Currency.propTypes = {
   minimum: PropTypes.number,
   maximum: PropTypes.number,
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

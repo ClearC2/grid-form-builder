@@ -15,6 +15,7 @@ import {
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
 import PortalTooltip from '../Tooltip'
+import CopyValueIcon from '../CopyValueIcon'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -53,6 +54,8 @@ const Multiselect = (props) => {
     'data-testid': testId = props?.name,
     largeDatasetThreshold = 500, // Switch to async mode when options exceed this
     searchPlaceholder = 'Type to search...',
+    tooltipId,
+    copy,
     inputId
   } = props
 
@@ -89,6 +92,8 @@ const Multiselect = (props) => {
   const [isFocused, setIsFocused] = useState(false)
 
   const inputContainer = useRef(null)
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   // AsyncSelect implementation for large datasets
   const loadOptions = useCallback(
@@ -235,6 +240,19 @@ const Multiselect = (props) => {
     },
     [menuIsOpen, name, updateIsMenuOpen]
   )
+
+  const onCopyClick = useCallback(() => {
+    clearTimeout(showCopyDebounce.current)
+    let copiedValue = selectValue
+    if (typeof selectValue === 'object') {
+      copiedValue = JSON.stringify(selectValue)
+    }
+    navigator.clipboard.writeText(copiedValue)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [selectValue])
 
   useEffect(() => {
     let formattedOptions = keyword.options || []
@@ -430,7 +448,7 @@ const Multiselect = (props) => {
       }
     },
     tabIndex,
-    value: selectValue,
+    value: showCopyVerification ? [{label: 'Copied!', value: ''}] : selectValue,
     inputId
   }
 
@@ -453,6 +471,22 @@ const Multiselect = (props) => {
       ) : (
         <Select {...baseSelectProps} filterOption={null} options={displayOptions} placeholder={placeholder} />
       )}
+      {copy ? (
+        <div
+          style={{
+            marginLeft: 5,
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <CopyValueIcon
+            onClick={onCopyClick}
+            tooltipId={tooltipId}
+          />
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -492,5 +526,7 @@ Multiselect.propTypes = {
   largeDatasetThreshold: PropTypes.number,
   searchPlaceholder: PropTypes.string,
   'data-testid': PropTypes.string,
-  inputId: PropTypes.string
+  inputId: PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

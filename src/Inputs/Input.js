@@ -63,9 +63,9 @@ const Input = props => {
 
   const onCopyClick = useCallback(() => {
     clearTimeout(showCopyDebounce.current)
+    navigator.clipboard.writeText(value)
     setCopyVerification(true)
     showCopyDebounce.current = setTimeout(() => {
-      navigator.clipboard.writeText(value)
       setCopyVerification(false)
     }, 750)
   }, [value])
