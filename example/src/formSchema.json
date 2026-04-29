@@ -106,6 +106,7 @@
           "name": "unique-test-input",
           "label": "Test Input",
           "type": "input",
+          "copy": true,
           "placeholder": "This Field Is Required",
           "style": {
             "value": {

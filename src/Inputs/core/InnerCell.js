@@ -1,14 +1,12 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useContext, useCallback, useRef, useState} from 'react'
+import {useContext, useCallback, useState} from 'react'
 import PropTypes from 'prop-types'
 import {FormValueContext} from '../../FormBuilder'
 import InputContainer from './InputContainer'
 import LabelContainer from './LabelContainer'
 import {mapInputType} from '../index'
 import {DropTarget} from 'react-dnd'
-import PortalTooltip from '../../Tooltip'
-import {randomId} from '../../utils'
 import {Map} from 'immutable'
 
 const InnerCell = props => {
@@ -42,7 +40,6 @@ const InnerCell = props => {
   const {config = {}} = field
   const [formValues] = useContext(FormValueContext)
   const [hasValidationWarning, setHasValidationWarning] = useState(false)
-  const cellId = useRef(randomId())
 
   // we want to make fields readonly if draggable is on but it mutates the schema on the callback so every input is readonly on update
   // we will come up with a way to do this without modifying the schema - JRA 12/10/2019
@@ -116,10 +113,9 @@ const InnerCell = props => {
       style={innerCell}
       className={className}
       onClick={onGridElementClick}
-      data-tip
-      data-for={cellId.current}
+      data-tip={!hasValidationWarning ? cellTooltip : undefined}
+      data-for={tooltipId}
     >
-      {!hasValidationWarning && <PortalTooltip id={cellId.current} message={cellTooltip} />}
       <LabelContainer
         config={config}
         handleLinkClick={handleLinkClick}
