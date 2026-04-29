@@ -381,7 +381,13 @@ const FormBuilder = (props) => {
       ref={setContainerRef}
       style={style}
     >
-      <ReactTooltip id={id} />
+      <ReactTooltip
+        id={id}
+        getContent={content => {
+          // this is needed to maintain support for passing markup as a potential tooltip as data-tip in react-tooltip v4 - JRA 04/29/2026
+          return <div dangerouslySetInnerHTML={{__html: content}} />
+        }}
+      />
       <RGL
         ref={ReactGridLayout}
         autoSize={rglAutoSize}
