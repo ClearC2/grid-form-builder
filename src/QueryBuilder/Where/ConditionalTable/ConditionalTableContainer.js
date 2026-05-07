@@ -30,10 +30,14 @@ const getDefaultFormat = (inputType) => {
   return '' // type should not be a date
 }
 const getFieldSchema = (key, formSchema) => {
-  if (formSchema && typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
+  if (formSchema && typeof formSchema.toJS === 'function') {
+    formSchema = formSchema.toJS()
+  }
   if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
     formSchema = convertFormSchemaToSearch(formSchema)
-    return List(formSchema.jsonschema.layout).find(row => row.config.name === key)
+    return List(formSchema.jsonschema.layout).find(
+      (row) => row.config.name === key
+    )
   } else {
     return undefined
   }
@@ -41,8 +45,8 @@ const getFieldSchema = (key, formSchema) => {
 
 const getBetweenDatesValues = (query) => {
   return query
-    .filter(q => String(q.name).includes('date'))
-    .map(q => {
+    .filter((q) => String(q.name).includes('date'))
+    .map((q) => {
       if (q.values && q.values.length) {
         return {
           field: q.name,
@@ -53,17 +57,46 @@ const getBetweenDatesValues = (query) => {
     .filter(Boolean)
 }
 
+const formatDayLabel = (day) => {
+  if (!day || typeof day !== 'string') return ''
+  return day.charAt(0).toUpperCase() + day.slice(1)
+}
+
+const getExcludedDaysFields = (c) => {
+  const days = c.get('days_to_exclude', List())
+
+  if (!days || !days.size) {
+    return {}
+  }
+
+  return {
+    excludeDays: true,
+    excludedDays: days.map((day) => ({
+      label: formatDayLabel(day),
+      value: day
+    }))
+  }
+}
+
 const convertSingleField = (c, formSchema, inBetweenDateValues) => {
   let newFormValue
   const schema = getFieldSchema(c.get('name'), formSchema)
-  const type = schema.config && typeof schema.config.type === 'string' ? schema.config.type.toLowerCase() : 'input'
+  const type =
+    schema.config && typeof schema.config.type === 'string'
+      ? schema.config.type.toLowerCase()
+      : 'input'
   const mergeDate = c.get('mergeDate', false)
+  const excludedDaysFields = getExcludedDaysFields(c)
   if (schema) {
-    if (Set(TEXT_INPUTS).has(type) &&
-        c.get('comparator') !== 'is blank' &&
-        c.get('comparator') !== 'is not blank'
+    if (
+      Set(TEXT_INPUTS).has(type) &&
+      c.get('comparator') !== 'is blank' &&
+      c.get('comparator') !== 'is not blank'
     ) {
-      const val = c.get('values') instanceof List ? c.getIn(['values', 0], ['']) : c.get('values', '')
+      const val =
+        c.get('values') instanceof List
+          ? c.getIn(['values', 0], [''])
+          : c.get('values', '')
       newFormValue = Map({condition: c.get('comparator'), values: List([val])})
     } else {
       if (c.get('rawValues') !== undefined && !mergeDate) {
@@ -73,18 +106,22 @@ const convertSingleField = (c, formSchema, inBetweenDateValues) => {
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
           isfield: c.get('isfield', false),
-          format: c.get('format', '')
+          format: c.get('format', ''),
+          ...excludedDaysFields
         })
         // https://github.com/ClearC2/bleu/issues/4734
       } else if (mergeDate) {
-        const values = inBetweenDateValues.filter(v => v.field === c.get('name')).map(v => v.value)
+        const values = inBetweenDateValues
+          .filter((v) => v.field === c.get('name'))
+          .map((v) => v.value)
         newFormValue = Map({
           condition: 'is between',
           values: List(values),
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
           isfield: c.get('isfield', false),
-          format: c.get('format', '')
+          format: c.get('format', ''),
+          ...excludedDaysFields
         })
       } else {
         newFormValue = Map({
@@ -93,14 +130,20 @@ const convertSingleField = (c, formSchema, inBetweenDateValues) => {
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
           isfield: c.get('isfield', false),
-          format: c.get('format', '')
+          format: c.get('format', ''),
+          ...excludedDaysFields
         })
       }
     }
   }
   return newFormValue
 }
-export const convertQueryToFormValues = (query, clearExistingValues = true, fValues, formSchema) => {
+export const convertQueryToFormValues = (
+  query,
+  clearExistingValues = true,
+  fValues,
+  formSchema
+) => {
   let formValues = fromJS(fValues)
   if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
   if (query) {
@@ -109,13 +152,20 @@ export const convertQueryToFormValues = (query, clearExistingValues = true, fVal
       formValues.forEach((v, k) => {
         if (v instanceof Map) {
           const schema = getFieldSchema(k, formSchema)
-          formValues = formValues.set(k, Map({
-            condition: schema ? getDefaultCondition(schema.config.type) : v.get('condition'),
-            values: List(),
-            dynamicValues: v.get('dynamicValues'),
-            not: v.get('not', false),
-            format: schema ? getDefaultFormat(schema.config.format) : v.get('format', '')
-          }))
+          formValues = formValues.set(
+            k,
+            Map({
+              condition: schema
+                ? getDefaultCondition(schema.config.type)
+                : v.get('condition'),
+              values: List(),
+              dynamicValues: v.get('dynamicValues'),
+              not: v.get('not', false),
+              format: schema
+                ? getDefaultFormat(schema.config.format)
+                : v.get('format', '')
+            })
+          )
         } else if (typeof v === 'string') {
           formValues = formValues.set(k, '')
         }
@@ -127,20 +177,31 @@ export const convertQueryToFormValues = (query, clearExistingValues = true, fVal
     }
     if (query.conditions) {
       const inBetweenDateValues = getBetweenDatesValues(query.conditions)
-      fromJS(query.conditions).forEach(c => {
+      fromJS(query.conditions).forEach((c) => {
         if (c.get('conditions')) {
           let conditions = List()
-          c.get('conditions').forEach(pred => {
-            let newField = convertSingleField(pred, formSchema, inBetweenDateValues)
+          c.get('conditions').forEach((pred) => {
+            let newField = convertSingleField(
+              pred,
+              formSchema,
+              inBetweenDateValues
+            )
             newField = newField.set('name', pred)
             conditions = conditions.push(newField)
           })
-          formValues = formValues.set(c.getIn(['conditions', 0, 'name']), fromJS({
-            conditions: conditions,
-            type: c.get('type')
-          }))
+          formValues = formValues.set(
+            c.getIn(['conditions', 0, 'name']),
+            fromJS({
+              conditions: conditions,
+              type: c.get('type')
+            })
+          )
         } else {
-          const newValue = convertSingleField(c, formSchema, inBetweenDateValues)
+          const newValue = convertSingleField(
+            c,
+            formSchema,
+            inBetweenDateValues
+          )
           formValues = formValues.set(c.get('name'), newValue)
         }
       })
@@ -176,7 +237,7 @@ class _ConditionalTableContainer extends Component {
     enableDelete: true
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     let {formSchema} = props
     if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
@@ -185,20 +246,23 @@ class _ConditionalTableContainer extends Component {
     }
   }
 
-  componentDidUpdate (props) {
+  componentDidUpdate(props) {
     let {formSchema} = props
     if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
     let {formSchema: stateSchema = []} = this.state
     if (typeof stateSchema.toJS === 'function') stateSchema = stateSchema.toJS()
     if (Object.keys(formSchema).length !== Object.keys(stateSchema).length) {
       this.setState({formSchema: convertFormSchemaToSearch(formSchema)})
-    } else if (stateSchema &&
+    } else if (
+      stateSchema &&
       stateSchema.jsonschema &&
       stateSchema.jsonschema.layout &&
       formSchema &&
       formSchema.jsonschema &&
       formSchema.jsonschema.layout &&
-      stateSchema.jsonschema.layout.length !== formSchema.jsonschema.layout.length) {
+      stateSchema.jsonschema.layout.length !==
+        formSchema.jsonschema.layout.length
+    ) {
       this.setState({formSchema: convertFormSchemaToSearch(formSchema)})
     }
   }
@@ -208,7 +272,12 @@ class _ConditionalTableContainer extends Component {
     let {formSchema} = this.state
     if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
     if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
-    return convertQueryToFormValues(query, clearExistingValues, formValues, formSchema)
+    return convertQueryToFormValues(
+      query,
+      clearExistingValues,
+      formValues,
+      formSchema
+    )
   }
 
   getDefaultCondition = (inputType) => {
@@ -227,13 +296,15 @@ class _ConditionalTableContainer extends Component {
     let {formSchema} = this.state
     if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
     if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-      return List(formSchema.jsonschema.layout).find(row => row.config.name === key)
+      return List(formSchema.jsonschema.layout).find(
+        (row) => row.config.name === key
+      )
     } else {
       return undefined
     }
   }
 
-  render () {
+  render() {
     return (
       <ConditionalTable
         {...this.props}
@@ -257,4 +328,6 @@ class _ConditionalTableContainer extends Component {
   }
 }
 
-export default connect(null, null, null, {forwardRef: true})(_ConditionalTableContainer)
+export default connect(null, null, null, {forwardRef: true})(
+  _ConditionalTableContainer
+)

@@ -7,7 +7,8 @@ import {
   TYPEAHEAD_CONDITIONS,
   NUMERICAL_CONDITIONS,
   MULTI_FIELD_INPUTS,
-  SINGLE_FIELD_INPUTS
+  SINGLE_FIELD_INPUTS,
+  EXCLUDE_DAYS_UNSUPPORTED_CONDITIONS
 } from './SearchUtils' // eslint-disable-line
 const STRING_VALUES = Set([
   'input',
@@ -258,7 +259,9 @@ const ConditionalPredicate = (props) => {
       return schema
     }
 
-    const supportsExcludedDays = modalValues.get('condition') !== 'match month'
+    const supportsExcludedDays = !EXCLUDE_DAYS_UNSUPPORTED_CONDITIONS.has(
+      modalValues.get('condition')
+    )
 
     if (supportsExcludedDays) {
       schema.form.jsonschema.layout.push({
@@ -491,61 +494,64 @@ const ConditionalPredicate = (props) => {
       return modalValues.get('condition', 'contains')
     }
   }
+
   function handleConditionChange(e) {
+    const nextCondition = e.target.value
     const currentCondition = condition()
-    setModalValues(modalValues.set(e.target.name, e.target.value))
     const trueType = (props.inputType || 'input').toLowerCase()
+
+    let newModalValues = modalValues.set(e.target.name, nextCondition)
+
+    const oldValue = props.value
+    let newFieldValue =
+      oldValue && oldValue.set
+        ? oldValue.set(e.target.name, nextCondition)
+        : Map({condition: nextCondition, values: List()})
+
+    if (EXCLUDE_DAYS_UNSUPPORTED_CONDITIONS.has(nextCondition)) {
+      newFieldValue = newFieldValue.delete('excludeDays').delete('excludedDays')
+
+      newModalValues = newModalValues
+        .delete('excludeDays')
+        .delete('excludedDays')
+    }
+
+    const maxFieldValues =
+      CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields
+
+    if (maxFieldValues === 0) {
+      newFieldValue = newFieldValue.set('values', List())
+      newModalValues = newModalValues.delete(`${props.name}-0`)
+    } else if (newFieldValue.get('values', List()).size >= maxFieldValues) {
+      newFieldValue = newFieldValue.set(
+        'values',
+        newFieldValue.get('values', List()).slice(0, maxFieldValues)
+      )
+    }
+
+    setModalValues(newModalValues)
+
+    props.onChange(
+      {target: {name: props.name, value: newFieldValue}},
+      props.index
+    )
+
     if (trueType === 'typeahead') {
       if (
         TYPEAHEAD_CONDITIONS.has(currentCondition) &&
-        !TYPEAHEAD_CONDITIONS.has(e.target.value)
+        !TYPEAHEAD_CONDITIONS.has(nextCondition)
       ) {
         setTimeout(() => {
           dialogOnChange({target: {name: `${props.name}-0`, value: ''}})
         }, 0)
       } else if (
         !TYPEAHEAD_CONDITIONS.has(currentCondition) &&
-        TYPEAHEAD_CONDITIONS.has(e.target.value)
+        TYPEAHEAD_CONDITIONS.has(nextCondition)
       ) {
         setTimeout(() => {
           dialogOnChange({target: {name: `${props.name}-0`, value: List()}})
         }, 0)
       }
-    }
-    const oldValue = props.value
-    if (oldValue && oldValue instanceof Map) {
-      let newFieldValue = props.value.set(e.target.name, e.target.value)
-
-      if (e.target.value === 'match month') {
-        newFieldValue = newFieldValue
-          .delete('excludeDays')
-          .delete('excludedDays')
-      }
-      const maxFieldValues =
-        CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields
-      if (newFieldValue.get('values', List()).size >= maxFieldValues) {
-        newFieldValue = newFieldValue.set(
-          'values',
-          newFieldValue.get('values', List()).slice(0, maxFieldValues)
-        )
-      }
-      props.onChange(
-        {target: {name: props.name, value: newFieldValue}},
-        props.index
-      )
-    }
-    if (
-      (!NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) &&
-        NUMERICAL_CONDITIONS.has(e.target.value)) ||
-      (NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) &&
-        !NUMERICAL_CONDITIONS.has(e.target.value))
-    ) {
-      let newFieldValue = props.value.set(e.target.name, e.target.value)
-      newFieldValue = newFieldValue.set('values', List())
-      props.onChange(
-        {target: {name: props.name, value: newFieldValue}},
-        props.index
-      )
     }
   }
 

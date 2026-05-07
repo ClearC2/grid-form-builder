@@ -29,7 +29,7 @@ export default class ConditionalTable extends Component {
     enableListToggle: PropTypes.bool
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     const noValueConditions = []
     Object.keys(CONDITIONS).forEach((k) => {
@@ -53,7 +53,8 @@ export default class ConditionalTable extends Component {
     enableListToggle: false
   }
 
-  componentDidUpdate (props) { // eslint-disable-line
+  componentDidUpdate(props) {
+    // eslint-disable-line
     if (this.props.formValues !== props.formValues) {
       if (this.props.onQueryChange) {
         const query = this.buildRequest(this.props.formValues)
@@ -76,7 +77,7 @@ export default class ConditionalTable extends Component {
         if (typeof value[0] === 'string' && value[0].split('¤').length > 1) {
           value = value[0].split('¤')
         } else {
-          value = value.map(v => v ? v.label || v : '')
+          value = value.map((v) => (v ? v.label || v : ''))
         }
       }
       let i = value.length
@@ -87,7 +88,7 @@ export default class ConditionalTable extends Component {
       i = value.length
 
       if (value && value.forEach) {
-        value.forEach(val => {
+        value.forEach((val) => {
           if (typeof val === 'object') {
             if (val.values) {
               val = val.values
@@ -95,14 +96,44 @@ export default class ConditionalTable extends Component {
               val = val.label || val
             }
           }
-          valString = valString + val + ((i > 1) ? ', ' : '')
+          valString = valString + val + (i > 1 ? ', ' : '')
           i--
         })
       }
-      return `${exclude ? ' (exclude) ' : ''}` + ' ' + this.getConditionValue(rawValue) + ' ' + valString
+      return (
+        `${exclude ? ' (exclude) ' : ''}` +
+        ' ' +
+        this.getConditionValue(rawValue) +
+        ' ' +
+        valString
+      )
     } else {
       return ''
     }
+  }
+
+  buildExcludedDaysString = (value) => {
+    if (!value || !value.excludeDays || !value.excludedDays) return ''
+
+    let days = value.excludedDays
+
+    if (days.toJS) {
+      days = days.toJS()
+    }
+
+    if (!Array.isArray(days)) {
+      days = days ? [days] : []
+    }
+
+    const dayLabels = days
+      .map((day) => {
+        if (typeof day === 'string') return day
+        if (day && typeof day === 'object') return day.label || day.value || ''
+        return ''
+      })
+      .filter(Boolean)
+
+    return dayLabels.length ? ` (excluding ${dayLabels.join(', ')})` : ''
   }
 
   getLabel = (key) => {
@@ -112,7 +143,9 @@ export default class ConditionalTable extends Component {
       const fieldSchema = this.props.getFieldSchema(key)
       let name = ''
       if (fieldSchema) {
-        name = fieldSchema.config.label || (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.label)
+        name =
+          fieldSchema.config.label ||
+          (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.label)
       }
       return name || ''
     } else {
@@ -130,8 +163,13 @@ export default class ConditionalTable extends Component {
       let type = ''
 
       if (fieldSchema) {
-        format = fieldSchema.config.format || (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.format)
-        type = fieldSchema.config.type || (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.type)
+        format =
+          fieldSchema.config.format ||
+          (fieldSchema.config.metaConfig &&
+            fieldSchema.config.metaConfig.format)
+        type =
+          fieldSchema.config.type ||
+          (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.type)
 
         if (!format && (type === 'date' || type === 'datetime')) {
           format = type
@@ -166,7 +204,7 @@ export default class ConditionalTable extends Component {
       if (typeof value.values[0] === 'object') {
         // for typeaheads
         rawValues = value.values
-        const ids = value.values.map(obj => obj.value)
+        const ids = value.values.map((obj) => obj.value)
         newValue = List(ids)
       } else if (typeof value.values[0] === 'string') {
         // inputs
@@ -182,117 +220,174 @@ export default class ConditionalTable extends Component {
         }
       }
     }
-    return ({newValue: newValue, rawValues: rawValues})
+    return {newValue: newValue, rawValues: rawValues}
   }
 
   buildRequest = (formValues = this.props.formValues) => {
     if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
+
+    const normalizeExcludedDays = (val) => {
+      if (!val || !val.excludeDays || !val.excludedDays) return null
+
+      let days = val.excludedDays
+
+      if (days?.toJS) {
+        days = days.toJS()
+      }
+
+      if (!Array.isArray(days)) {
+        days = days ? [days] : []
+      }
+
+      const normalized = days
+        .map((d) => (typeof d === 'string' ? d : d?.value))
+        .filter(Boolean)
+
+      return normalized.length ? normalized : null
+    }
+
     const req = {
       query: {
         type: this.state.conditionType,
         conditions: []
       }
     }
-    Map(formValues).filter((val) => !!val).forEach((value, key) => {
-      let newValue
-      let rawValues
-      if (!value.type) {
-        const resp = this.getNewValue(value, key)
-        newValue = resp.newValue
-        rawValues = resp.rawValues
-      }
-      if (newValue && (newValue.size > 0 || this.state.noValueConditions.has(value.condition) || value.dynamicValues)) {
-        let cond = 'contains'
-        if (formValues[key] && formValues[key].condition) {
-          cond = formValues[key].condition
+
+    Map(formValues)
+      .filter((val) => !!val)
+      .forEach((value, key) => {
+        let newValue
+        let rawValues
+
+        if (!value.type) {
+          const resp = this.getNewValue(value, key)
+          newValue = resp.newValue
+          rawValues = resp.rawValues
         }
-        if (newValue.size > CONDITIONS[cond].maxFields) {
-          newValue = newValue.slice(0, CONDITIONS[cond].maxFields)
-        }
-        // https://github.com/ClearC2/bleu/issues/4734
-        if (cond === 'is between') {
-          req.query.conditions.push({
-            fieldSchema: this.props.getFieldSchema(key),
-            name: key,
-            values: [newValue.get('0', '')],
-            comparator: 'is greater than',
-            mergeDate: true
+
+        if (
+          newValue &&
+          (newValue.size > 0 ||
+            this.state.noValueConditions.has(value.condition) ||
+            value.dynamicValues)
+        ) {
+          let cond = 'contains'
+          if (formValues[key] && formValues[key].condition) {
+            cond = formValues[key].condition
+          }
+
+          if (newValue.size > CONDITIONS[cond].maxFields) {
+            newValue = newValue.slice(0, CONDITIONS[cond].maxFields)
+          }
+
+          if (cond === 'is between') {
+            req.query.conditions.push({
+              fieldSchema: this.props.getFieldSchema(key),
+              name: key,
+              values: [newValue.get('0', '')],
+              comparator: 'is greater than',
+              mergeDate: true
+            })
+
+            req.query.conditions.push({
+              fieldSchema: this.props.getFieldSchema(key),
+              name: key,
+              values: [newValue.get('1', '')],
+              comparator: 'is less than',
+              mergeDate: true
+            })
+          } else {
+            const query = {
+              fieldSchema: this.props.getFieldSchema(key),
+              name: key,
+              label: this.getLabel(key),
+              comparator: cond,
+              values: newValue,
+              dynamicValues: value.dynamicValues,
+              rawValues: rawValues,
+              not: value.not || false,
+              format: this.getFormat(key)
+            }
+
+            if (value.isfield) {
+              query.isfield = value.isfield
+            }
+
+            const days = normalizeExcludedDays(value)
+            if (days) {
+              query.days_to_exclude = days
+            }
+
+            req.query.conditions.push(query)
+          }
+        } else if (value.type) {
+          const newValues = []
+
+          value.conditions.forEach((v) => {
+            let {newValue, rawValues} = this.getNewValue(v, key)
+
+            if (
+              newValue.size > 0 ||
+              this.state.noValueConditions.has(v.condition) ||
+              v.dynamicValues ||
+              this.state.noValueConditions.has(v.comparator)
+            ) {
+              let cond = 'contains'
+              if (v && v.condition) {
+                cond = v.condition
+              }
+              if (v && v.comparator) {
+                cond = v.comparator
+              }
+
+              if (newValue.size > CONDITIONS[cond].maxFields) {
+                newValue = newValue.slice(0, CONDITIONS[cond].maxFields)
+              }
+
+              if (cond === 'is between') {
+                newValues.push({
+                  fieldSchema: this.props.getFieldSchema(key),
+                  name: key,
+                  values: [newValue.get('0', '')],
+                  comparator: 'is greater than',
+                  mergeDate: true
+                })
+
+                newValues.push({
+                  fieldSchema: this.props.getFieldSchema(key),
+                  name: key,
+                  values: [newValue.get('1', '')],
+                  comparator: 'is less than',
+                  mergeDate: true
+                })
+              } else {
+                const conditionObj = {
+                  fieldSchema: this.props.getFieldSchema(key),
+                  name: key,
+                  label: this.getLabel(key),
+                  comparator: cond,
+                  values: newValue,
+                  dynamicValues: v.dynamicValues || value.dynamicValues,
+                  rawValues: rawValues,
+                  not: v.not || false,
+                  format: this.getFormat(key)
+                }
+
+                const days = normalizeExcludedDays(v)
+                if (days) {
+                  conditionObj.days_to_exclude = days
+                }
+
+                newValues.push(conditionObj)
+              }
+            }
           })
-          req.query.conditions.push({
-            fieldSchema: this.props.getFieldSchema(key),
-            name: key,
-            values: [newValue.get('1', '')],
-            comparator: 'is less than',
-            mergeDate: true
-          })
-        } else {
-          const query = {
-            fieldSchema: this.props.getFieldSchema(key),
-            name: key,
-            label: this.getLabel(key),
-            comparator: cond,
-            values: newValue,
-            dynamicValues: value.dynamicValues,
-            rawValues: rawValues,
-            not: value.not || false,
-            format: this.getFormat(key)
-          }
-          if (value.isfield) {
-            query.isfield = value.isfield
-          }
-          req.query.conditions.push(query)
+
+          value.conditions = newValues
+          req.query.conditions.push(value)
         }
-      } else if (value.type) {
-        const newValues = []
-        value.conditions.forEach(v => {
-          let {newValue, rawValues} = this.getNewValue(v, key)
-          if (newValue.size > 0 || this.state.noValueConditions.has(v.condition) ||
-            v.dynamicValues || this.state.noValueConditions.has(v.comparator)) {
-            let cond = 'contains'
-            if (v && v.condition) {
-              cond = v.condition
-            }
-            if (v && v.comparator) {
-              cond = v.comparator
-            }
-            if (newValue.size > CONDITIONS[cond].maxFields) {
-              newValue = newValue.slice(0, CONDITIONS[cond].maxFields)
-            }
-            // https://github.com/ClearC2/bleu/issues/4734
-            if (cond === 'is between') {
-              newValues.push({
-                fieldSchema: this.props.getFieldSchema(key),
-                name: key,
-                values: [newValue.get('0', '')],
-                comparator: 'is greater than',
-                mergeDate: true
-              })
-              newValues.push({
-                fieldSchema: this.props.getFieldSchema(key),
-                name: key,
-                values: [newValue.get('1', '')],
-                comparator: 'is less than',
-                mergeDate: true
-              })
-            } else {
-              newValues.push({
-                fieldSchema: this.props.getFieldSchema(key),
-                name: key,
-                label: this.getLabel(key),
-                comparator: cond,
-                values: newValue,
-                dynamicValues: v.dynamicValues || value.dynamicValues,
-                rawValues: rawValues,
-                not: v.not || false,
-                format: this.getFormat(key)
-              })
-            }
-          }
-        })
-        value.conditions = newValues
-        req.query.conditions.push(value)
-      }
-    })
+      })
+
     return req
   }
 
@@ -322,12 +417,15 @@ export default class ConditionalTable extends Component {
   resetForm = () => {
     let {formValues} = this.prop
     if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
-    Object.keys(formValues).map(key => {
+    Object.keys(formValues).map((key) => {
       const schema = this.props.getFieldSchema(key)
-      if (schema && schema.config && (schema.config.type === 'textarea' ||
+      if (
+        schema &&
+        schema.config &&
+        (schema.config.type === 'textarea' ||
           schema.config.type === 'checkbox' ||
-          schema.config.type === 'radio'
-      )) {
+          schema.config.type === 'radio')
+      ) {
         this.props.handleOnChange({
           target: {
             name: key,
@@ -350,9 +448,13 @@ export default class ConditionalTable extends Component {
 
   handleRemoveConditionClick = (e, key, predicateIndex) => {
     const schema = this.props.getFieldSchema(key)
-    if (schema && schema.config && (schema.config.type === 'textarea' ||
+    if (
+      schema &&
+      schema.config &&
+      (schema.config.type === 'textarea' ||
         schema.config.type === 'checkbox' ||
-        schema.config.type === 'radio')) {
+        schema.config.type === 'radio')
+    ) {
       this.props.handleOnChange({
         target: {
           name: key,
@@ -460,16 +562,26 @@ export default class ConditionalTable extends Component {
     }
     if (value && this.state.noValueConditions.has(value.condition)) {
       return (
-        <div key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
-          <div key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
+        <div
+          key={`row-${key}-${predicateIndex}`}
+          style={{...extraCondRowStyles}}
+          onClick={rowClick}
+        >
+          <div
+            key={`column-${key}-${predicateIndex}`}
+            style={{wordWrap: 'break-word'}}
+          >
             <strong>{this.getLabel(key)} </strong>
-            {value.not && '(exclude) '}{value.condition}
+            {value.not && '(exclude) '}
+            {value.condition}
+            {this.buildExcludedDaysString(value)}
             {this.renderDeleteIcon(key, value, predicateIndex)}
           </div>
         </div>
       )
     }
-    if (value && typeof value === 'string') { // raw inputs
+    if (value && typeof value === 'string') {
+      // raw inputs
       let val = value
       if (this.getFieldType(key) === 'checkbox') {
         if (val === '0' || val === 0) {
@@ -478,9 +590,17 @@ export default class ConditionalTable extends Component {
           val = 'true'
         }
       }
-      return ( // for basic input
-        <div key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
-          <div key={`column-${key}-${predicateIndex}`} style={{wordWrap: 'break-word'}}>
+      return (
+        // for basic input
+        <div
+          key={`row-${key}-${predicateIndex}`}
+          style={{...extraCondRowStyles}}
+          onClick={rowClick}
+        >
+          <div
+            key={`column-${key}-${predicateIndex}`}
+            style={{wordWrap: 'break-word'}}
+          >
             <strong>{this.getLabel(key)} </strong>
             {value.not && '(exclude) '}contains {val}
             {this.renderDeleteIcon(key, value, predicateIndex)}
@@ -489,7 +609,11 @@ export default class ConditionalTable extends Component {
       )
     } else if (typeof value === 'boolean') {
       return (
-        <div key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
+        <div
+          key={`row-${key}-${predicateIndex}`}
+          style={{...extraCondRowStyles}}
+          onClick={rowClick}
+        >
           <div key={`column-${key}-${predicateIndex}`}>
             <strong>{this.getLabel(key)} </strong>
             is {value ? 'True' : 'False'}
@@ -498,34 +622,50 @@ export default class ConditionalTable extends Component {
         </div>
       )
     } else {
-      if (value.values &&
+      if (
+        value.values &&
         value.values.length === 0 &&
-        (!value.dynamicValues || (value.dynamicValues && value.dynamicValues.length === 0))) {
+        (!value.dynamicValues ||
+          (value.dynamicValues && value.dynamicValues.length === 0))
+      ) {
         return null
       }
 
       return (
-        <div key={`row-${key}-${predicateIndex}`} style={{...extraCondRowStyles}} onClick={rowClick}>
+        <div
+          key={`row-${key}-${predicateIndex}`}
+          style={{...extraCondRowStyles}}
+          onClick={rowClick}
+        >
           <div key={`column-${key}-${predicateIndex}`}>
             <strong>{this.getLabel(key)}</strong>
-            {this.buildMultiString(key, value.values.concat(value.dynamicValues || []), value.not, value)}
-            {this.renderDeleteIcon(key, value.values.concat(value.dynamicValues || []), predicateIndex)}
+            {this.buildMultiString(
+              key,
+              value.values.concat(value.dynamicValues || []),
+              value.not,
+              value
+            )}
+            {this.buildExcludedDaysString(value)}
+            {this.renderDeleteIcon(
+              key,
+              value.values.concat(value.dynamicValues || []),
+              predicateIndex
+            )}
           </div>
         </div>
       )
     }
   }
 
-  render () {
+  render() {
     let {formValues = {}} = this.props
     if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
-    const singleRows = Object.keys(formValues)
-      .sort((a, b) => {
-        if (this.getLabel(a) === undefined || this.getLabel(b) === undefined) {
-          return 0
-        }
-        return this.getLabel(a).localeCompare(this.getLabel(b))
-      })
+    const singleRows = Object.keys(formValues).sort((a, b) => {
+      if (this.getLabel(a) === undefined || this.getLabel(b) === undefined) {
+        return 0
+      }
+      return this.getLabel(a).localeCompare(this.getLabel(b))
+    })
     const tbody = []
     singleRows.forEach((key) => {
       if (this.props.formValues[key]) {
@@ -538,7 +678,8 @@ export default class ConditionalTable extends Component {
         }
       }
     })
-    const isDisabled = this.buildRequest(this.props.formValues).query.conditions.length === 0
+    const isDisabled =
+      this.buildRequest(this.props.formValues).query.conditions.length === 0
     const {listOpen} = this.state
     const extraFooters = this.props.extraFooters ? this.props.extraFooters : []
     return (
@@ -556,9 +697,7 @@ export default class ConditionalTable extends Component {
           </span>
         </div>
         {tbody.length && listOpen ? (
-          <div className='report-condition-table-rows-container'>
-            {tbody}
-          </div>
+          <div className='report-condition-table-rows-container'>{tbody}</div>
         ) : null}
         {this.props.enableListToggle ? (
           <div
@@ -569,7 +708,7 @@ export default class ConditionalTable extends Component {
             ^
           </div>
         ) : null}
-        {(this.props.enableResetButton || this.props.enableNextButton) ? (
+        {this.props.enableResetButton || this.props.enableNextButton ? (
           <div className='report-condition-table-footer'>
             {this.props.enableResetButton ? (
               <button
