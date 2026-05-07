@@ -24,6 +24,8 @@ _Object$defineProperty(exports, "__esModule", {
 
 exports.default = void 0;
 
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
@@ -47,6 +49,8 @@ var _utils = require("../../utils");
 var _ValidationErrorIcon = _interopRequireDefault(require("../../ValidationErrorIcon"));
 
 var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
+
+var _CopyValueIcon = _interopRequireDefault(require("../../CopyValueIcon"));
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -102,6 +106,8 @@ var DateInput = function DateInput(props) {
       warning = props.warning,
       _props$autoApply = props.autoApply,
       autoApply = _props$autoApply === void 0 ? false : _props$autoApply,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -165,6 +171,12 @@ var DateInput = function DateInput(props) {
       isBlank = _useState14[0],
       setIsBlank = _useState14[1];
 
+  var _useState15 = (0, _react.useState)(false),
+      _useState16 = (0, _slicedToArray2.default)(_useState15, 2),
+      showCopyVerification = _useState16[0],
+      setCopyVerification = _useState16[1];
+
+  var showCopyDebounce = (0, _react.useRef)();
   var convertDateToMomentFormat = (0, _react.useMemo)(function () {
     return function (value) {
       var time;
@@ -330,6 +342,14 @@ var DateInput = function DateInput(props) {
       allowCalendarChangeEvent.current = true;
     }
   }, [onChangeValidator, inputValue, onChange, name]);
+  var onCopyClick = (0, _react.useCallback)(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(inputValue);
+    setCopyVerification(true);
+    showCopyDebounce.current = (0, _setTimeout2.default)(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [inputValue]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -380,6 +400,11 @@ var DateInput = function DateInput(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
+
   return (0, _core.jsx)("div", {
     className: outerClass,
     style: inputOuter,
@@ -401,7 +426,7 @@ var DateInput = function DateInput(props) {
     ref: inputRef,
     className: className,
     name: name,
-    value: valueOverride,
+    value: showCopyVerification ? 'Copied!' : valueOverride,
     onChange: handleOnInputChange,
     readOnly: isDisabled,
     autoFocus: autofocus,
@@ -455,7 +480,10 @@ var DateInput = function DateInput(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, warning && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, copy ? (0, _core.jsx)(_CopyValueIcon.default, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, warning && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: warning,
     color: "#FFCC00",
     type: "warning"
@@ -503,5 +531,7 @@ DateInput.propTypes = {
   onChangeValidator: _propTypes.default.func,
   warning: _propTypes.default.string,
   autoApply: _propTypes.default.bool,
-  'data-testid': _propTypes.default.string
+  'data-testid': _propTypes.default.string,
+  tooltipId: _propTypes.default.string,
+  copy: _propTypes.default.bool
 };

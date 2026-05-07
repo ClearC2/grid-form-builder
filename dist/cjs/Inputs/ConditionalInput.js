@@ -104,7 +104,7 @@ var ConditionalInput = function ConditionalInput(props) {
   (0, _react.useEffect)(function () {
     var setDefaults = true;
 
-    if (value instanceof _immutable.Map) {
+    if (_immutable.Map.isMap(value)) {
       if (value.has('condition') && value.has('values')) setDefaults = false;
       if (value.has('conditions') && value.has('type')) setDefaults = false;
     }
@@ -121,7 +121,7 @@ var ConditionalInput = function ConditionalInput(props) {
         } else {
           _defaults = _defaults.set('values', (0, _immutable.List)());
         }
-      } else if (value instanceof _immutable.List || (0, _isArray.default)(value)) {
+      } else if (_immutable.List.isList(value) || (0, _isArray.default)(value)) {
         _defaults = _defaults.set('values', (0, _immutable.fromJS)(value));
       }
 

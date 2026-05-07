@@ -1,6 +1,6 @@
 "use strict";
 
-var _typeof = require("@babel/runtime-corejs3/helpers/typeof");
+var _typeof3 = require("@babel/runtime-corejs3/helpers/typeof");
 
 var _Object$keys = require("@babel/runtime-corejs3/core-js-stable/object/keys");
 
@@ -40,11 +40,15 @@ var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-sta
 
 var _reduce = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/reduce"));
 
+var _stringify = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/json/stringify"));
+
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
 var _extends2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/extends"));
+
+var _typeof2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/typeof"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
 
@@ -72,9 +76,11 @@ var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
 
 var _Tooltip = _interopRequireDefault(require("../../Tooltip"));
 
+var _CopyValueIcon = _interopRequireDefault(require("../../CopyValueIcon"));
+
 function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof3(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = _Object$defineProperty && _Object$getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? _Object$getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { _Object$defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -122,6 +128,8 @@ var Select = function Select(props) {
       largeDatasetThreshold = _props$largeDatasetTh === void 0 ? 500 : _props$largeDatasetTh,
       _props$searchPlacehol = props.searchPlaceholder,
       searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       inputId = props.inputId;
 
   var _style$value = style.value,
@@ -211,7 +219,14 @@ var Select = function Select(props) {
       isFocused = _useState20[0],
       setIsFocused = _useState20[1];
 
-  var inputContainer = (0, _react.useRef)(null); // AsyncSelect implementation for large datasets
+  var inputContainer = (0, _react.useRef)(null);
+
+  var _useState21 = (0, _react.useState)(false),
+      _useState22 = (0, _slicedToArray2.default)(_useState21, 2),
+      showCopyVerification = _useState22[0],
+      setCopyVerification = _useState22[1];
+
+  var showCopyDebounce = (0, _react.useRef)(); // AsyncSelect implementation for large datasets
 
   var loadOptions = (0, _react.useCallback)(function (inputValue) {
     return new _promise.default(function (resolve) {
@@ -399,6 +414,20 @@ var Select = function Select(props) {
     var allOptionsToShow = (0, _slice.default)(fullOptions).call(fullOptions, 0, largeDatasetThreshold);
     setDisplayOptions(allOptionsToShow); // Reset options to full list
   }, [onChange, name, menuIsOpen, fullOptions, largeDatasetThreshold]);
+  var onCopyClick = (0, _react.useCallback)(function () {
+    clearTimeout(showCopyDebounce.current);
+    var copiedValue = selectValue;
+
+    if ((0, _typeof2.default)(selectValue) === 'object') {
+      copiedValue = (0, _stringify.default)(selectValue);
+    }
+
+    navigator.clipboard.writeText(copiedValue);
+    setCopyVerification(true);
+    showCopyDebounce.current = (0, _setTimeout2.default)(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [selectValue]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -506,6 +535,10 @@ var Select = function Select(props) {
           base.color = 'green';
         }
 
+        if (showCopyVerification) {
+          base.color = '#63a7bd';
+        }
+
         return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
       },
       menuPortal: function menuPortal(base) {
@@ -519,7 +552,10 @@ var Select = function Select(props) {
       }
     },
     tabIndex: tabIndex,
-    value: selectValue,
+    value: showCopyVerification ? {
+      label: 'Copied!',
+      value: ''
+    } : selectValue,
     inputId: inputId
   };
   return (0, _core.jsx)("div", {
@@ -538,7 +574,18 @@ var Select = function Select(props) {
     filterOption: null,
     options: displayOptions,
     placeholder: placeholder
-  })));
+  })), copy ? (0, _core.jsx)("div", {
+    style: {
+      marginLeft: 5,
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  }, (0, _core.jsx)(_CopyValueIcon.default, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  })) : null);
 };
 
 var _default = Select;
@@ -571,5 +618,7 @@ Select.propTypes = {
   largeDatasetThreshold: _propTypes.default.number,
   searchPlaceholder: _propTypes.default.string,
   'data-testid': _propTypes.default.string,
-  inputId: _propTypes.default.string
+  inputId: _propTypes.default.string,
+  tooltipId: _propTypes.default.string,
+  copy: _propTypes.default.bool
 };

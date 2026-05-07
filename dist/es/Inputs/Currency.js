@@ -7,6 +7,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 import _Number$MIN_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/min-safe-integer";
 import _Number$MAX_SAFE_INTEGER from "@babel/runtime-corejs3/core-js-stable/number/max-safe-integer";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _parseFloat from "@babel/runtime-corejs3/core-js-stable/parse-float";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
@@ -27,6 +28,7 @@ import Cleave from '../Cleave'; // switch this back to cleave.js package as soon
 
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
+import CopyValueIcon from '../CopyValueIcon';
 
 var Currency = function Currency(props) {
   var _context;
@@ -60,6 +62,8 @@ var Currency = function Currency(props) {
       _props$maximum = props.maximum,
       maximum = _props$maximum === void 0 ? _Number$MAX_SAFE_INTEGER : _props$maximum,
       warning = props.warning,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -85,6 +89,12 @@ var Currency = function Currency(props) {
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
 
+  var _useState3 = useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      showCopyVerification = _useState4[0],
+      setCopyVerification = _useState4[1];
+
+  var showCopyDebounce = useRef();
   var handleOnFocus = useCallback(function () {
     setIsFocused(true);
   }, []);
@@ -106,6 +116,14 @@ var Currency = function Currency(props) {
       }
     });
   }, [prefix, onChange, name]);
+  var onCopyClick = useCallback(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(value);
+    setCopyVerification(true);
+    showCopyDebounce.current = _setTimeout(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [value]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -150,6 +168,11 @@ var Currency = function Currency(props) {
   var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
+
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
 
   return jsx("div", {
     className: outerClass,
@@ -197,7 +220,10 @@ var Currency = function Currency(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, warning && !validationError && jsx(ValidationErrorIcon, {
+  }, copy ? jsx(CopyValueIcon, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, warning && !validationError && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",
     type: "warning"
@@ -234,5 +260,7 @@ Currency.propTypes = {
   minimum: PropTypes.number,
   maximum: PropTypes.number,
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 };

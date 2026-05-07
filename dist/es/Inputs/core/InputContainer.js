@@ -29,11 +29,9 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_R
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { Component, cloneElement, useRef } from 'react';
+import { Component, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import { Map, fromJS } from 'immutable';
-import PortalTooltip from '../../Tooltip';
-import { randomId } from '../../utils';
 import useTheme from '../../theme/useTheme';
 
 var InputPerformanceOptimizer = /*#__PURE__*/function (_Component) {
@@ -106,7 +104,8 @@ var InputContainer = function InputContainer(props) {
       fieldDefinitions = props.fieldDefinitions,
       c2class = props.c2class,
       hasValidationWarning = props.hasValidationWarning,
-      setHasValidationWarning = props.setHasValidationWarning;
+      setHasValidationWarning = props.setHasValidationWarning,
+      tooltipId = props.tooltipId;
 
   var name = config.name,
       required = config.required,
@@ -119,7 +118,6 @@ var InputContainer = function InputContainer(props) {
   var inputTooltip = tooltips.input;
   var _style$cellInput = style.cellInput,
       cellInput = _style$cellInput === void 0 ? {} : _style$cellInput;
-  var inputId = useRef(randomId());
 
   var _useTheme = useTheme(),
       theme = _useTheme.theme;
@@ -127,13 +125,10 @@ var InputContainer = function InputContainer(props) {
   return jsx("div", {
     className: "gfb-inner-cell-input",
     style: cellInput,
-    "data-tip": true,
-    "data-for": inputId.current,
+    "data-tip": !hasValidationWarning ? inputTooltip : undefined,
+    "data-for": tooltipId,
     css: theme.cellInput
-  }, !hasValidationWarning && jsx(PortalTooltip, {
-    id: inputId.current,
-    message: inputTooltip
-  }), /*#__PURE__*/cloneElement(children, _objectSpread(_objectSpread({
+  }, /*#__PURE__*/cloneElement(children, _objectSpread(_objectSpread({
     requiredWarning: requiredWarning,
     tabIndex: tabIndex,
     draggable: draggable,
@@ -153,7 +148,8 @@ var InputContainer = function InputContainer(props) {
     device: device,
     fieldDefinitions: fieldDefinitions,
     c2class: c2class,
-    setHasValidationWarning: setHasValidationWarning
+    setHasValidationWarning: setHasValidationWarning,
+    tooltipId: tooltipId
   })));
 };
 
@@ -177,5 +173,6 @@ InputContainer.propTypes = {
   fieldDefinitions: PropTypes.instanceOf(Map),
   c2class: PropTypes.string,
   hasValidationWarning: PropTypes.bool,
-  setHasValidationWarning: PropTypes.func
+  setHasValidationWarning: PropTypes.func,
+  tooltipId: PropTypes.string
 };

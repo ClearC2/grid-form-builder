@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {useCallback, useState} from 'react'
+import {useCallback, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 import {emailValidator} from '../utils'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
+import CopyValueIcon from '../CopyValueIcon'
 
 const Email = props => {
   const {
@@ -23,6 +24,8 @@ const Email = props => {
     required,
     maxlength = 524288,
     warning,
+    tooltipId,
+    copy,
     'data-testid': testId = props?.name
   } = props
 
@@ -38,6 +41,8 @@ const Email = props => {
   const {theme} = useTheme()
 
   const [isFocused, setIsFocused] = useState(false)
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   const handleOnFocus = useCallback(() => {
     setIsFocused(true)
@@ -54,6 +59,15 @@ const Email = props => {
       })
     }
   }, [onChange, value, name])
+
+  const onCopyClick = useCallback(() => {
+    clearTimeout(showCopyDebounce.current)
+    navigator.clipboard.writeText(value)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [value])
 
   const isDisabled = readonly || disabled || !interactive
   let className = 'gfb-input__single-value gfb-input__input'
@@ -85,6 +99,11 @@ const Email = props => {
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd'
+    valueCSS.fontSize = '9pt'
+  }
+
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
@@ -93,7 +112,7 @@ const Email = props => {
             <input
               className={className}
               name={name}
-              value={value}
+              value={showCopyVerification ? 'Copied!' : value}
               onChange={onChange}
               readOnly={isDisabled}
               autoFocus={autofocus}
@@ -114,6 +133,12 @@ const Email = props => {
             css={indicatorsCSS}
             data-testid={`${testId}-errors`}
           >
+            {copy ? (
+              <CopyValueIcon
+                onClick={onCopyClick}
+                tooltipId={tooltipId}
+              />
+            ) : null}
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
@@ -145,5 +170,7 @@ Email.propTypes = {
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

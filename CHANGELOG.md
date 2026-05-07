@@ -1,3 +1,24 @@
+# [3.139.0](https://github.com/ClearC2/grid-form-builder/compare/v3.138.1...v3.139.0) (2026-04-29)
+
+
+### Bug Fixes
+
+* **tooltip:** data-tip for tooltips can be markup ([7e04392](https://github.com/ClearC2/grid-form-builder/commit/7e0439249e95404529a22be21766ff37b932f8b4))
+* **tooltip:** fixes inverse condition ([722f696](https://github.com/ClearC2/grid-form-builder/commit/722f6962f3e4da4c8f4bc807e812f98b3418c19e))
+
+
+### Features
+
+* **copy:** adds copy button to most input types ([36c3c98](https://github.com/ClearC2/grid-form-builder/commit/36c3c98fb25e92157a1edccc6b4a1ef327134c1a))
+* **copy:** adds copy prop to normal input ([157844b](https://github.com/ClearC2/grid-form-builder/commit/157844b1da04ae68d429e6178234202504ec7d4b))
+
+## [3.138.1](https://github.com/ClearC2/grid-form-builder/compare/v3.138.0...v3.138.1) (2026-04-28)
+
+
+### Performance Improvements
+
+* **tooltips:** rolled label tooltips into a single component ([4d455df](https://github.com/ClearC2/grid-form-builder/commit/4d455dfaddc86e61e3f7c17d8dfe83a61d616a45))
+
 # [3.138.0](https://github.com/ClearC2/grid-form-builder/compare/v3.137.3...v3.138.0) (2026-04-07)
 
 

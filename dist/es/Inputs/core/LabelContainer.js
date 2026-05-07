@@ -15,11 +15,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { mapIcon } from '../../Icons';
-import PortalTooltip from '../../Tooltip';
-import { randomId } from '../../utils';
 import useTheme from '../../theme/useTheme';
 
 var LabelContainer = function LabelContainer(props) {
@@ -29,7 +27,8 @@ var LabelContainer = function LabelContainer(props) {
       value = props.value,
       expandable = props.expandable,
       expandItem = props.expandItem,
-      shrinkItem = props.shrinkItem;
+      shrinkItem = props.shrinkItem,
+      tooltipId = props.tooltipId;
   var _config$icon = config.icon,
       Icon = _config$icon === void 0 ? '' : _config$icon,
       _config$cascade = config.cascade,
@@ -66,12 +65,6 @@ var LabelContainer = function LabelContainer(props) {
   var name = config.name,
       _config$label = config.label,
       label = _config$label === void 0 ? name : _config$label;
-  var iconId = useRef(randomId());
-  var linkId = useRef(randomId());
-  var cascadeId = useRef(randomId());
-  var labelId = useRef(randomId());
-  var expandId = useRef(randomId());
-  var shrinkId = useRef(randomId());
 
   var _useTheme = useTheme(),
       theme = _useTheme.theme;
@@ -113,29 +106,11 @@ var LabelContainer = function LabelContainer(props) {
     className: className,
     style: cellStyle,
     css: theme.cellLabel
-  }, jsx(PortalTooltip, {
-    id: iconId.current,
-    message: iconTooltip
-  }), jsx(PortalTooltip, {
-    id: linkId.current,
-    message: linkTooltip
-  }), jsx(PortalTooltip, {
-    id: cascadeId.current,
-    message: cascadeTooltip
-  }), jsx(PortalTooltip, {
-    id: labelId.current,
-    message: labelTooltip
-  }), jsx(PortalTooltip, {
-    id: expandId.current,
-    message: "Expand Input"
-  }), jsx(PortalTooltip, {
-    id: shrinkId.current,
-    message: "Condense Input"
-  }), Icon && jsx(Icon, {
+  }, Icon && jsx(Icon, {
     size: size,
     style: iconStyle,
-    "data-tip": true,
-    "data-for": iconId.current,
+    "data-tip": iconTooltip,
+    "data-for": tooltipId,
     css: theme.icon
   }), required && jsx("strong", {
     className: "gfb-validation-indicator"
@@ -143,29 +118,29 @@ var LabelContainer = function LabelContainer(props) {
     onClick: onLabelTextClick,
     className: LinkIcon || CascadeIcon ? 'cursor-hand gfb-field-label' : 'gfb-field-label',
     style: labelStyle,
-    "data-tip": true,
-    "data-for": labelId.current,
+    "data-tip": labelTooltip,
+    "data-for": tooltipId,
     css: theme.label
   }, label), label && type === 'header' && jsx("h3", {
     onClick: onLabelTextClick,
     className: LinkIcon || CascadeIcon ? 'cursor-hand' : '',
     style: labelStyle,
-    "data-tip": true,
-    "data-for": labelId.current,
+    "data-tip": labelTooltip,
+    "data-for": tooltipId,
     css: theme.label
   }, label), LinkIcon && jsx(LinkIcon, {
     className: "cursor-hand",
     onClick: onLinkClick,
     style: linkStyle,
-    "data-tip": true,
-    "data-for": linkId.current,
+    "data-tip": linkTooltip,
+    "data-for": tooltipId,
     css: theme.link
   }), CascadeIcon && jsx(CascadeIcon, {
     className: "cursor-hand",
     onClick: onCascadeKeywordClick,
     style: cascadeStyle,
-    "data-tip": true,
-    "data-for": cascadeId.current,
+    "data-tip": cascadeTooltip,
+    "data-for": tooltipId,
     css: theme.cascade
   }), !expandable ? null : jsx("div", {
     className: "gfb-input-expand-controls"
@@ -174,15 +149,15 @@ var LabelContainer = function LabelContainer(props) {
     className: "gfb-expand-input-btn"
   }, jsx(ShrinkIcon, {
     className: "cursor-hand",
-    "data-tip": true,
-    "data-for": shrinkId.current
+    "data-tip": "Condense Input",
+    "data-for": tooltipId
   })), jsx("button", {
     onClick: expandItem,
     className: "gfb-expand-input-btn"
   }, jsx(ExpandIcon, {
     className: "cursor-hand",
-    "data-tip": true,
-    "data-for": expandId.current
+    "data-tip": "Expand Input",
+    "data-for": tooltipId
   }))));
 };
 
@@ -195,5 +170,6 @@ LabelContainer.propTypes = {
   type: PropTypes.string,
   expandItem: PropTypes.func,
   shrinkItem: PropTypes.func,
-  expandable: PropTypes.bool
+  expandable: PropTypes.bool,
+  tooltipId: PropTypes.string
 };

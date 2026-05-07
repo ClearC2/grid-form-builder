@@ -26,6 +26,8 @@ exports.default = void 0;
 
 var _some = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/some"));
 
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime-corejs3/helpers/defineProperty"));
@@ -45,6 +47,8 @@ var _utils = require("../../utils");
 var _ValidationErrorIcon = _interopRequireDefault(require("../../ValidationErrorIcon"));
 
 var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
+
+var _CopyValueIcon = _interopRequireDefault(require("../../CopyValueIcon"));
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -71,6 +75,8 @@ var ColorInput = function ColorInput(props) {
       required = props.required,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -102,6 +108,12 @@ var ColorInput = function ColorInput(props) {
       isFocused = _useState4[0],
       setIsFocused = _useState4[1];
 
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
+      showCopyVerification = _useState6[0],
+      setCopyVerification = _useState6[1];
+
+  var showCopyDebounce = (0, _react.useRef)();
   var windowClickListener = (0, _react.useMemo)(function () {
     return function (e) {
       var pathHandler = e.path || e.composedPath();
@@ -140,6 +152,14 @@ var ColorInput = function ColorInput(props) {
   var handleOnBlur = (0, _react.useCallback)(function () {
     setIsFocused(false);
   }, []);
+  var onCopyClick = (0, _react.useCallback)(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(value);
+    setCopyVerification(true);
+    showCopyDebounce.current = (0, _setTimeout2.default)(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [value]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -176,6 +196,11 @@ var ColorInput = function ColorInput(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
+
   return (0, _core.jsx)("div", {
     className: outerClass,
     style: inputOuter,
@@ -196,7 +221,7 @@ var ColorInput = function ColorInput(props) {
     id: inputId.current,
     className: className,
     name: name,
-    value: value,
+    value: showCopyVerification ? 'Copied!' : value,
     onChange: handleOnInputChange,
     readOnly: isDisabled,
     autoFocus: autofocus,
@@ -221,7 +246,10 @@ var ColorInput = function ColorInput(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, copy ? (0, _core.jsx)(_CopyValueIcon.default, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, validationWarning && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: validationWarning,
     color: "#FFCC00",
     type: "warning"
@@ -257,5 +285,7 @@ ColorInput.propTypes = {
   style: _propTypes.default.object,
   required: _propTypes.default.bool,
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
-  'data-testid': _propTypes.default.string
+  'data-testid': _propTypes.default.string,
+  tooltipId: _propTypes.default.string,
+  copy: _propTypes.default.bool
 };

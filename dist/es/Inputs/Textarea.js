@@ -5,6 +5,7 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
@@ -17,10 +18,11 @@ import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
+import CopyValueIcon from '../CopyValueIcon';
 
 var Textarea = function Textarea(props) {
   var _context;
@@ -44,6 +46,8 @@ var Textarea = function Textarea(props) {
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
       warning = props.warning,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -67,12 +71,26 @@ var Textarea = function Textarea(props) {
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
 
+  var _useState3 = useState(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      showCopyVerification = _useState4[0],
+      setCopyVerification = _useState4[1];
+
+  var showCopyDebounce = useRef();
   var handleOnFocus = useCallback(function () {
     setIsFocused(true);
   }, []);
   var handleOnBlur = useCallback(function () {
     setIsFocused(false);
   }, []);
+  var onCopyClick = useCallback(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(value);
+    setCopyVerification(true);
+    showCopyDebounce.current = _setTimeout(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [value]);
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (isDisabled) className = className + ' gfb-disabled-input';
@@ -109,6 +127,11 @@ var Textarea = function Textarea(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
+
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -128,7 +151,7 @@ var Textarea = function Textarea(props) {
   }, jsx("textarea", {
     className: className,
     name: name,
-    value: value,
+    value: showCopyVerification ? 'Copied!' : value,
     onChange: onChange,
     autoFocus: autofocus,
     placeholder: placeholder,
@@ -146,7 +169,10 @@ var Textarea = function Textarea(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, warning && !validationError && jsx(ValidationErrorIcon, {
+  }, copy ? jsx(CopyValueIcon, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, warning && !validationError && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",
     type: "warning"
@@ -178,5 +204,7 @@ Textarea.propTypes = {
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 };

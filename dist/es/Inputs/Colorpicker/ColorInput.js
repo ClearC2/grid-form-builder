@@ -6,6 +6,7 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 import _someInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/some";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
@@ -24,6 +25,7 @@ import ColorPicker from './ColorPicker';
 import { randomId } from '../../utils';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
+import CopyValueIcon from '../../CopyValueIcon';
 
 var ColorInput = function ColorInput(props) {
   var _context;
@@ -46,6 +48,8 @@ var ColorInput = function ColorInput(props) {
       required = props.required,
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? 524288 : _props$maxlength,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -77,6 +81,12 @@ var ColorInput = function ColorInput(props) {
       isFocused = _useState4[0],
       setIsFocused = _useState4[1];
 
+  var _useState5 = useState(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      showCopyVerification = _useState6[0],
+      setCopyVerification = _useState6[1];
+
+  var showCopyDebounce = useRef();
   var windowClickListener = useMemo(function () {
     return function (e) {
       var pathHandler = e.path || e.composedPath();
@@ -116,6 +126,14 @@ var ColorInput = function ColorInput(props) {
   var handleOnBlur = useCallback(function () {
     setIsFocused(false);
   }, []);
+  var onCopyClick = useCallback(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(value);
+    setCopyVerification(true);
+    showCopyDebounce.current = _setTimeout(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [value]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -152,6 +170,11 @@ var ColorInput = function ColorInput(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
+
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -172,7 +195,7 @@ var ColorInput = function ColorInput(props) {
     id: inputId.current,
     className: className,
     name: name,
-    value: value,
+    value: showCopyVerification ? 'Copied!' : value,
     onChange: handleOnInputChange,
     readOnly: isDisabled,
     autoFocus: autofocus,
@@ -197,7 +220,10 @@ var ColorInput = function ColorInput(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, validationWarning && jsx(ValidationErrorIcon, {
+  }, copy ? jsx(CopyValueIcon, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, validationWarning && jsx(ValidationErrorIcon, {
     message: validationWarning,
     color: "#FFCC00",
     type: "warning"
@@ -232,5 +258,7 @@ ColorInput.propTypes = {
   style: PropTypes.object,
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 };

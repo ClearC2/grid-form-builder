@@ -5,6 +5,7 @@ function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context2, _context3; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context2 = ownKeys(Object(source), !0)).call(_context2, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context3 = ownKeys(Object(source))).call(_context3, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
@@ -25,6 +26,7 @@ import moment from 'moment';
 import { randomId } from '../../utils';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
+import CopyValueIcon from '../../CopyValueIcon';
 var defaults = {
   trueFunction: function trueFunction() {
     return true;
@@ -75,6 +77,8 @@ var DateInput = function DateInput(props) {
       warning = props.warning,
       _props$autoApply = props.autoApply,
       autoApply = _props$autoApply === void 0 ? false : _props$autoApply,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -138,6 +142,12 @@ var DateInput = function DateInput(props) {
       isBlank = _useState14[0],
       setIsBlank = _useState14[1];
 
+  var _useState15 = useState(false),
+      _useState16 = _slicedToArray(_useState15, 2),
+      showCopyVerification = _useState16[0],
+      setCopyVerification = _useState16[1];
+
+  var showCopyDebounce = useRef();
   var convertDateToMomentFormat = useMemo(function () {
     return function (value) {
       var time;
@@ -303,6 +313,14 @@ var DateInput = function DateInput(props) {
       allowCalendarChangeEvent.current = true;
     }
   }, [onChangeValidator, inputValue, onChange, name]);
+  var onCopyClick = useCallback(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(inputValue);
+    setCopyVerification(true);
+    showCopyDebounce.current = _setTimeout(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [inputValue]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -353,6 +371,11 @@ var DateInput = function DateInput(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
+
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -374,7 +397,7 @@ var DateInput = function DateInput(props) {
     ref: inputRef,
     className: className,
     name: name,
-    value: valueOverride,
+    value: showCopyVerification ? 'Copied!' : valueOverride,
     onChange: handleOnInputChange,
     readOnly: isDisabled,
     autoFocus: autofocus,
@@ -428,7 +451,10 @@ var DateInput = function DateInput(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, warning && jsx(ValidationErrorIcon, {
+  }, copy ? jsx(CopyValueIcon, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, warning && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",
     type: "warning"
@@ -475,5 +501,7 @@ DateInput.propTypes = {
   onChangeValidator: PropTypes.func,
   warning: PropTypes.string,
   autoApply: PropTypes.bool,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 };

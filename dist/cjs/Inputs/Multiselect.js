@@ -38,6 +38,8 @@ var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-j
 
 var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
 
+var _stringify = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/json/stringify"));
+
 var _map = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/map"));
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
@@ -71,6 +73,8 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIco
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
 
 var _Tooltip = _interopRequireDefault(require("../Tooltip"));
+
+var _CopyValueIcon = _interopRequireDefault(require("../CopyValueIcon"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof _WeakMap !== "function") return null; var cacheBabelInterop = new _WeakMap(); var cacheNodeInterop = new _WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -131,6 +135,8 @@ var Multiselect = function Multiselect(props) {
       largeDatasetThreshold = _props$largeDatasetTh === void 0 ? 500 : _props$largeDatasetTh,
       _props$searchPlacehol = props.searchPlaceholder,
       searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       inputId = props.inputId;
 
   var _style$value = style.value,
@@ -216,7 +222,14 @@ var Multiselect = function Multiselect(props) {
       isFocused = _useState20[0],
       setIsFocused = _useState20[1];
 
-  var inputContainer = (0, _react.useRef)(null); // AsyncSelect implementation for large datasets
+  var inputContainer = (0, _react.useRef)(null);
+
+  var _useState21 = (0, _react.useState)(false),
+      _useState22 = (0, _slicedToArray2.default)(_useState21, 2),
+      showCopyVerification = _useState22[0],
+      setCopyVerification = _useState22[1];
+
+  var showCopyDebounce = (0, _react.useRef)(); // AsyncSelect implementation for large datasets
 
   var loadOptions = (0, _react.useCallback)(function (inputValue) {
     return new _promise.default(function (resolve) {
@@ -337,6 +350,20 @@ var Multiselect = function Multiselect(props) {
 
     updateIsMenuOpen(_objectSpread(_objectSpread({}, menuIsOpen), {}, (0, _defineProperty2.default)({}, name, menuOpenState)));
   }, [menuIsOpen, name, updateIsMenuOpen]);
+  var onCopyClick = (0, _react.useCallback)(function () {
+    clearTimeout(showCopyDebounce.current);
+    var copiedValue = selectValue;
+
+    if ((0, _typeof2.default)(selectValue) === 'object') {
+      copiedValue = (0, _stringify.default)(selectValue);
+    }
+
+    navigator.clipboard.writeText(copiedValue);
+    setCopyVerification(true);
+    showCopyDebounce.current = (0, _setTimeout2.default)(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [selectValue]);
   (0, _react.useEffect)(function () {
     var formattedOptions = keyword.options || [];
     if (!formattedOptions) formattedOptions = [];
@@ -419,10 +446,10 @@ var Multiselect = function Multiselect(props) {
     var _p$children = p.children,
         children = _p$children === void 0 ? '' : _p$children;
 
-    var _useState21 = (0, _react.useState)(children),
-        _useState22 = (0, _slicedToArray2.default)(_useState21, 2),
-        label = _useState22[0],
-        setLabel = _useState22[1]; // eslint-disable-line
+    var _useState23 = (0, _react.useState)(children),
+        _useState24 = (0, _slicedToArray2.default)(_useState23, 2),
+        label = _useState24[0],
+        setLabel = _useState24[1]; // eslint-disable-line
 
 
     var copyValueToClipboard = function copyValueToClipboard() {
@@ -583,7 +610,10 @@ var Multiselect = function Multiselect(props) {
       }
     },
     tabIndex: tabIndex,
-    value: selectValue,
+    value: showCopyVerification ? [{
+      label: 'Copied!',
+      value: ''
+    }] : selectValue,
     inputId: inputId
   };
   return (0, _core.jsx)("div", {
@@ -601,7 +631,18 @@ var Multiselect = function Multiselect(props) {
     filterOption: null,
     options: displayOptions,
     placeholder: placeholder
-  })));
+  })), copy ? (0, _core.jsx)("div", {
+    style: {
+      marginLeft: 5,
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  }, (0, _core.jsx)(_CopyValueIcon.default, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  })) : null);
 };
 
 var _default = Multiselect;
@@ -639,5 +680,7 @@ Multiselect.propTypes = {
   largeDatasetThreshold: _propTypes.default.number,
   searchPlaceholder: _propTypes.default.string,
   'data-testid': _propTypes.default.string,
-  inputId: _propTypes.default.string
+  inputId: _propTypes.default.string,
+  tooltipId: _propTypes.default.string,
+  copy: _propTypes.default.bool
 };

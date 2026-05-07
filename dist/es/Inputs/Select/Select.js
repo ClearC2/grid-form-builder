@@ -6,6 +6,7 @@ import _Object$getOwnPropertyDescriptors from "@babel/runtime-corejs3/core-js-st
 import _Object$defineProperties from "@babel/runtime-corejs3/core-js-stable/object/define-properties";
 import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object/define-property";
 import _extends from "@babel/runtime-corejs3/helpers/esm/extends";
+import _typeof from "@babel/runtime-corejs3/helpers/esm/typeof";
 import _defineProperty from "@babel/runtime-corejs3/helpers/esm/defineProperty";
 import _slicedToArray from "@babel/runtime-corejs3/helpers/esm/slicedToArray";
 
@@ -19,6 +20,7 @@ import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/ins
 import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
 import _reduceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/reduce";
+import _JSON$stringify from "@babel/runtime-corejs3/core-js-stable/json/stringify";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
 import _concatInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/concat";
 
@@ -34,6 +36,7 @@ import { isMobile, randomId } from '../../utils';
 import ValidationErrorIcon from '../../ValidationErrorIcon';
 import useTheme from '../../theme/useTheme';
 import PortalTooltip from '../../Tooltip';
+import CopyValueIcon from '../../CopyValueIcon';
 var viewPortHeight = document.documentElement.clientHeight;
 
 var Select = function Select(props) {
@@ -76,6 +79,8 @@ var Select = function Select(props) {
       largeDatasetThreshold = _props$largeDatasetTh === void 0 ? 500 : _props$largeDatasetTh,
       _props$searchPlacehol = props.searchPlaceholder,
       searchPlaceholder = _props$searchPlacehol === void 0 ? 'Type to search...' : _props$searchPlacehol,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       inputId = props.inputId;
 
   var _style$value = style.value,
@@ -165,7 +170,14 @@ var Select = function Select(props) {
       isFocused = _useState20[0],
       setIsFocused = _useState20[1];
 
-  var inputContainer = useRef(null); // AsyncSelect implementation for large datasets
+  var inputContainer = useRef(null);
+
+  var _useState21 = useState(false),
+      _useState22 = _slicedToArray(_useState21, 2),
+      showCopyVerification = _useState22[0],
+      setCopyVerification = _useState22[1];
+
+  var showCopyDebounce = useRef(); // AsyncSelect implementation for large datasets
 
   var loadOptions = useCallback(function (inputValue) {
     return new _Promise(function (resolve) {
@@ -361,6 +373,20 @@ var Select = function Select(props) {
 
     setDisplayOptions(allOptionsToShow); // Reset options to full list
   }, [onChange, name, menuIsOpen, fullOptions, largeDatasetThreshold]);
+  var onCopyClick = useCallback(function () {
+    clearTimeout(showCopyDebounce.current);
+    var copiedValue = selectValue;
+
+    if (_typeof(selectValue) === 'object') {
+      copiedValue = _JSON$stringify(selectValue);
+    }
+
+    navigator.clipboard.writeText(copiedValue);
+    setCopyVerification(true);
+    showCopyDebounce.current = _setTimeout(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [selectValue]);
   var Select = input.Select;
   var className = 'gfb-input-inner';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -468,6 +494,10 @@ var Select = function Select(props) {
           base.color = 'green';
         }
 
+        if (showCopyVerification) {
+          base.color = '#63a7bd';
+        }
+
         return _objectSpread(_objectSpread(_objectSpread({}, base), valueStyle), valueTheme);
       },
       menuPortal: function menuPortal(base) {
@@ -481,7 +511,10 @@ var Select = function Select(props) {
       }
     },
     tabIndex: tabIndex,
-    value: selectValue,
+    value: showCopyVerification ? {
+      label: 'Copied!',
+      value: ''
+    } : selectValue,
     inputId: inputId
   };
   return jsx("div", {
@@ -500,7 +533,18 @@ var Select = function Select(props) {
     filterOption: null,
     options: displayOptions,
     placeholder: placeholder
-  })));
+  })), copy ? jsx("div", {
+    style: {
+      marginLeft: 5,
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  }, jsx(CopyValueIcon, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  })) : null);
 };
 
 export default Select;
@@ -532,5 +576,7 @@ Select.propTypes = {
   largeDatasetThreshold: PropTypes.number,
   searchPlaceholder: PropTypes.string,
   'data-testid': PropTypes.string,
-  inputId: PropTypes.string
+  inputId: PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 };

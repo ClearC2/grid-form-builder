@@ -8,6 +8,7 @@ import moment from 'moment'
 import {randomId} from '../../utils'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
 import useTheme from '../../theme/useTheme'
+import CopyValueIcon from '../../CopyValueIcon'
 
 const defaults = {
   trueFunction: () => true
@@ -44,6 +45,8 @@ const DateInput = props => {
     onChangeValidator = defaults.trueFunction,
     warning,
     autoApply = false,
+    tooltipId,
+    copy,
     'data-testid': testId = props?.name
   } = props
 
@@ -71,6 +74,8 @@ const DateInput = props => {
   const [manualBlurCheck, setManualBlurCheck] = useState(false)
   const [showMonthFormatted, setShowMonthFormatted] = useState(true)
   const [isBlank, setIsBlank] = useState(false)
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   const convertDateToMomentFormat = useMemo(() => {
     return value => {
@@ -213,6 +218,15 @@ const DateInput = props => {
     }
   }, [onChangeValidator, inputValue, onChange, name])
 
+  const onCopyClick = useCallback(() => {
+    clearTimeout(showCopyDebounce.current)
+    navigator.clipboard.writeText(inputValue)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [inputValue])
+
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
@@ -251,6 +265,11 @@ const DateInput = props => {
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd'
+    valueCSS.fontSize = '9pt'
+  }
+
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
@@ -261,7 +280,7 @@ const DateInput = props => {
               ref={inputRef}
               className={className}
               name={name}
-              value={valueOverride}
+              value={showCopyVerification ? 'Copied!' : valueOverride}
               onChange={handleOnInputChange}
               readOnly={isDisabled}
               autoFocus={autofocus}
@@ -326,6 +345,12 @@ const DateInput = props => {
             css={indicatorsCSS}
             data-testid={`${testId}-errors`}
           >
+            {copy ? (
+              <CopyValueIcon
+                onClick={onCopyClick}
+                tooltipId={tooltipId}
+              />
+            ) : null}
             {warning && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
@@ -372,5 +397,7 @@ DateInput.propTypes = {
   onChangeValidator: PropTypes.func,
   warning: PropTypes.string,
   autoApply: PropTypes.bool,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

@@ -106,6 +106,7 @@
           "name": "unique-test-input",
           "label": "Test Input",
           "type": "input",
+          "copy": true,
           "placeholder": "This Field Is Required",
           "style": {
             "value": {
@@ -133,7 +134,8 @@
           "maxlength": 10,
           "name": "price",
           "label": "Price (Currency Input)",
-          "type": "currency"
+          "type": "currency",
+          "copy": true
         }
       }, {
         "type": "field",
@@ -149,7 +151,8 @@
           "required": true,
           "name": "quantity",
           "label": "Quantity",
-          "type": "number"
+          "type": "number",
+          "copy": true
         }
       }, {
         "type": "field",
@@ -182,7 +185,8 @@
           "required": true,
           "name": "cfd_percent",
           "label": "Percent Input",
-          "type": "Percentage"
+          "type": "Percentage",
+          "copy": true
         }
       }, {
         "type": "field",
@@ -270,7 +274,8 @@
           "regionselect": true,
           "regions": ["US", "GB", "RU"],
           "region": "pp_mobile_phone_region",
-          "delimiter": "-"
+          "delimiter": "-",
+          "copy": true
         }
       }, {
         "type": "field",
@@ -336,7 +341,8 @@
           "expandable": true,
           "name": "rich-text-input-1",
           "label": "Rich Text Input",
-          "type": "richtextarea"
+          "type": "richtextarea",
+          "copy": true
         }
       }, {
         "type": "field",
@@ -372,6 +378,7 @@
           "name": "multiselecttest",
           "label": "Multiselect",
           "type": "multiselect",
+          "copy": true,
           "allowcreate": true,
           "searchable": true,
           "keyword": {
@@ -656,13 +663,14 @@
               }]
             }
           },
-          "name": "cfd_companyname",
+          "name": "companyname",
           "cascade": {
             "keyword": "C2_PEOPLE_SOMETHING",
             "icon": "tree"
           },
           "label": "Normal Typeahead",
           "type": "typeahead",
+          "copy": true,
           "link": {
             "id": ["www.host.com/company/", "companyid", "/person/", "personid"],
             "type": "url",
@@ -688,6 +696,7 @@
             "fields": ["inputtest", "textareatest"],
             "fieldId": "value"
           },
+          "copy": true,
           "stringify": true,
           "name": "typeaheadtest2",
           "label": "Typeahead2",
@@ -796,10 +805,9 @@
         },
         "config": {
           "name": "textareatest",
-          "label": "Textarea",
+          "label": "Textarea 1",
           "type": "textarea",
-          "maxlength": 10,
-          "required": true
+          "copy": true
         }
       }, {
         "type": "header",
@@ -833,7 +841,7 @@
       }, {
         "type": "field",
         "dimensions": {
-          "w": 1,
+          "w": 6,
           "h": 1,
           "x": 0,
           "y": 17,
@@ -845,6 +853,7 @@
           "label": "Normal Select",
           "type": "select",
           "allowcreate": true,
+          "copy": true,
           "createOptionPosition": "first",
           "keyword": {
             "category": "TASKS",
@@ -1039,7 +1048,8 @@
           "name": "email",
           "label": "Email Input",
           "required": true,
-          "expandable": true
+          "expandable": true,
+          "copy": true
         }
       }]
     },

@@ -9,6 +9,7 @@ import {isMobile} from '../utils'
 import GFBConfig from '../config'
 import ValidationErrorIcon from '../ValidationErrorIcon'
 import useTheme from '../theme/useTheme'
+import CopyValueIcon from '../CopyValueIcon'
 
 const viewPortHeight = document.documentElement.clientHeight
 
@@ -166,6 +167,8 @@ const Typeahead = props => {
     options: typeaheadOptions = defaults.object,
     warning,
     'data-testid': testId = props?.name,
+    tooltipId,
+    copy,
     inputId
   } = props
 
@@ -279,6 +282,9 @@ const Typeahead = props => {
       if (!interactive) {
         base.color = 'green'
       }
+      if (showCopyVerification) {
+        base.color = '#63a7bd'
+      }
       return ({...base, ...valueStyle, ...valueTheme})
     },
     menuPortal: base => {
@@ -295,6 +301,9 @@ const Typeahead = props => {
   const isLoadingOptions = useRef(false) // this is a ref and not state because it needs to be looked at in async calls and needs real time updates outside of lifecycles - JRA 02/13/2020
   const initialFetch = useRef(false) // users want an autofetch the first time they focus the field - JRA 02/04/2026
   const didAutoFocus = useRef(false)
+
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   useEffect(() => {
     const populateConditionObject = (condition = {name: null, comparator: null, values: []}) => {
@@ -628,6 +637,19 @@ const Typeahead = props => {
     }
   }, [disabled, interactive, readonly, setInputFieldPosition, inputContainer.current])
 
+  const onCopyClick = useCallback(e => {
+    clearTimeout(showCopyDebounce.current)
+    let copiedValue = selectValue
+    if (typeof selectValue === 'object') {
+      copiedValue = JSON.stringify(selectValue)
+    }
+    navigator.clipboard.writeText(copiedValue)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [selectValue])
+
   useEffect(() => {
     if (isFocused && (!autofocus || (autofocus && didAutoFocus.current))) {
       openMenu()
@@ -640,7 +662,10 @@ const Typeahead = props => {
     }
   }, [defaultOptions])
 
-  const handleOnFocus = useCallback(() => {
+  const handleOnFocus = useCallback(e => {
+    const tag = e.target.tagName.toLowerCase()
+    const classList = e.target.classList
+    if (tag === 'path' || classList[0] === 'copy-input-value-btn') return
     setIsFocused(true)
     let simpleValue = typeof value.toJS === 'function' ? value.toJS() : value
     simpleValue = typeof simpleValue === 'object' ? simpleValue.value || simpleValue.label || '' : simpleValue
@@ -856,6 +881,17 @@ const Typeahead = props => {
 
   const inputOuterCSS = {...theme.inputOuter, ...inputOuter}
 
+  let displayValue = inputValue
+  let _selectValue = selectValue
+  if (showCopyVerification) {
+    if (multi) {
+      _selectValue = [{value: '', label: 'Copied!'}]
+    } else {
+      displayValue = 'Copied!'
+      inputOuterCSS.color = '#63a7bd'
+    }
+  }
+
   return (
     <div
       className={outerClass}
@@ -883,7 +919,7 @@ const Typeahead = props => {
         name={name}
         noOptionsMessage={noOptionsMessage}
         placeholder={placeholder}
-        inputValue={inputValue}
+        inputValue={displayValue}
         menuIsOpen={!isMobile ? menuIsOpen[name] : undefined}
         menuPlacement={!isMobile ? menuPlacement : undefined}
         onKeyDown={handleOnKeyDown}
@@ -893,13 +929,29 @@ const Typeahead = props => {
         onInputChange={handleOnInputChange}
         loadOptions={loadOptions}
         onChange={handleChange}
-        value={selectValue}
+        value={_selectValue}
         autoComplete={autoComplete}
         components={components}
         defaultOptions={defaultOptions}
         styles={reactSelectStyles}
         inputId={inputId}
       />
+      {copy ? (
+        <div
+          style={{
+            marginLeft: 5,
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <CopyValueIcon
+            onClick={onCopyClick}
+            tooltipId={tooltipId}
+          />
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -941,5 +993,7 @@ Typeahead.propTypes = {
   }),
   warning: PropTypes.string,
   'data-testid': PropTypes.string,
-  inputId: PropTypes.string
+  inputId: PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

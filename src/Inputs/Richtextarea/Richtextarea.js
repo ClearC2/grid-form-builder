@@ -8,6 +8,7 @@ import Toolbar from './Toolbar'
 import ValidationErrorIcon from '../../ValidationErrorIcon'
 import '../../styles/richtext.css'
 import useTheme from '../../theme/useTheme'
+import CopyValueIcon from '../../CopyValueIcon'
 
 const Richtextarea = props => {
   const {
@@ -28,6 +29,8 @@ const Richtextarea = props => {
     required,
     maxlength = Number.MAX_SAFE_INTEGER,
     warning,
+    tooltipId,
+    copy,
     'data-testid': testId = props?.name
   } = props
 
@@ -63,6 +66,8 @@ const Richtextarea = props => {
     'color',
     'background'
   ])
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   const insertImage = useCallback(() => {
     handleRTEImageClick(name)
@@ -156,6 +161,15 @@ const Richtextarea = props => {
     setIsFocused(false)
   }, [])
 
+  const onCopyClick = useCallback(() => {
+    clearTimeout(showCopyDebounce.current)
+    navigator.clipboard.writeText(value)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [value])
+
   let className = 'gfb-input__single-value gfb-input__input'
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input'
   if (!interactive) className = className + ' gfb-non-interactive-input'
@@ -186,7 +200,11 @@ const Richtextarea = props => {
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
         {(!readonly && !disabled) ? (
-          <div className='gfb-input-control-top' style={{display: 'flex'}} data-testid={`${testId}-toolbar`}>
+          <div
+            className='gfb-input-control-top'
+            style={{display: 'flex', justifyContent: 'space-between'}}
+            data-testid={`${testId}-toolbar`}
+          >
             <Toolbar
               id={elementId.current}
               addTable={addTable}
@@ -198,8 +216,28 @@ const Richtextarea = props => {
               insertColumnRight={insertColumnRight}
               deleteColumn={deleteColumn}
             />
+            {copy ? (
+              <CopyValueIcon
+                onClick={onCopyClick}
+                tooltipId={tooltipId}
+              />
+            ) : null}
           </div>
-        ) : null}
+        ) : (
+          <div
+            className='gfb-input-control-top'
+            style={{display: 'flex', justifyContent: 'space-between', height: 41}}
+            data-testid={`${testId}-toolbar`}
+          >
+            <div />
+            {copy ? (
+              <CopyValueIcon
+                onClick={onCopyClick}
+                tooltipId={tooltipId}
+              />
+            ) : null}
+          </div>
+        )}
         <div className={controlClass} style={inputControl} css={inputControlCSS}>
           <div
             className='gfb-input__value-container notranslate'
@@ -213,7 +251,7 @@ const Richtextarea = props => {
               readOnly={readonly || disabled || !interactive}
               className={className}
               ref={QuillRef}
-              value={value}
+              value={showCopyVerification ? 'Copied!' : value}
               placeholder={placeholder}
               modules={modules.current}
               formats={formats.current}
@@ -269,5 +307,7 @@ Richtextarea.propTypes = {
   required: PropTypes.bool,
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

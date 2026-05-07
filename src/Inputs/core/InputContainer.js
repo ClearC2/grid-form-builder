@@ -1,10 +1,8 @@
 /** @jsx jsx */
 import {jsx} from '@emotion/core'
-import {Component, cloneElement, useRef} from 'react'
+import {Component, cloneElement} from 'react'
 import PropTypes from 'prop-types'
 import {Map, fromJS} from 'immutable'
-import PortalTooltip from '../../Tooltip'
-import {randomId} from '../../utils'
 import useTheme from '../../theme/useTheme'
 
 class InputPerformanceOptimizer extends Component {
@@ -82,16 +80,21 @@ const InputContainer = props => {
     fieldDefinitions,
     c2class,
     hasValidationWarning,
-    setHasValidationWarning
+    setHasValidationWarning,
+    tooltipId
   } = props
   const {name, required, style = {}, tooltips = {}, ...other} = config
   const {input: inputTooltip} = tooltips
   const {cellInput = {}} = style
-  const inputId = useRef(randomId())
   const {theme} = useTheme()
   return (
-    <div className='gfb-inner-cell-input' style={cellInput} data-tip data-for={inputId.current} css={theme.cellInput}>
-      {!hasValidationWarning && <PortalTooltip id={inputId.current} message={inputTooltip} />}
+    <div
+      className='gfb-inner-cell-input'
+      style={cellInput}
+      data-tip={!hasValidationWarning ? inputTooltip : undefined}
+      data-for={tooltipId}
+      css={theme.cellInput}
+    >
       {cloneElement(children, {
         requiredWarning,
         tabIndex,
@@ -112,7 +115,8 @@ const InputContainer = props => {
         device,
         fieldDefinitions,
         c2class,
-        setHasValidationWarning
+        setHasValidationWarning,
+        tooltipId
       })}
     </div>
   )
@@ -139,5 +143,6 @@ InputContainer.propTypes = {
   fieldDefinitions: PropTypes.instanceOf(Map),
   c2class: PropTypes.string,
   hasValidationWarning: PropTypes.bool,
-  setHasValidationWarning: PropTypes.func
+  setHasValidationWarning: PropTypes.func,
+  tooltipId: PropTypes.string
 }

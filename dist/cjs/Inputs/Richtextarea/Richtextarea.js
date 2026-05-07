@@ -32,6 +32,8 @@ var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/cor
 
 var _indexOf = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/index-of"));
 
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
 var _core = require("@emotion/core");
@@ -51,6 +53,8 @@ var _ValidationErrorIcon = _interopRequireDefault(require("../../ValidationError
 require("../../styles/richtext.css");
 
 var _useTheme2 = _interopRequireDefault(require("../../theme/useTheme"));
+
+var _CopyValueIcon = _interopRequireDefault(require("../../CopyValueIcon"));
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -80,6 +84,8 @@ var Richtextarea = function Richtextarea(props) {
       _props$maxlength = props.maxlength,
       maxlength = _props$maxlength === void 0 ? _maxSafeInteger.default : _props$maxlength,
       warning = props.warning,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -111,6 +117,13 @@ var Richtextarea = function Richtextarea(props) {
   var elementId = (0, _react.useRef)('gfb-' + (0, _utils.randomId)());
   var QuillRef = (0, _react.useRef)();
   var formats = (0, _react.useRef)(['header', 'font', 'size', 'bold', 'italic', 'underline', 'strike', 'blockquote', 'list', 'bullet', 'indent', 'link', 'image', 'color', 'background']);
+
+  var _useState5 = (0, _react.useState)(false),
+      _useState6 = (0, _slicedToArray2.default)(_useState5, 2),
+      showCopyVerification = _useState6[0],
+      setCopyVerification = _useState6[1];
+
+  var showCopyDebounce = (0, _react.useRef)();
   var insertImage = (0, _react.useCallback)(function () {
     handleRTEImageClick(name);
   }, [handleRTEImageClick, name]);
@@ -179,6 +192,14 @@ var Richtextarea = function Richtextarea(props) {
   var handleOnBlur = (0, _react.useCallback)(function () {
     setIsFocused(false);
   }, []);
+  var onCopyClick = (0, _react.useCallback)(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(value);
+    setCopyVerification(true);
+    showCopyDebounce.current = (0, _setTimeout2.default)(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [value]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -225,7 +246,8 @@ var Richtextarea = function Richtextarea(props) {
   }, !readonly && !disabled ? (0, _core.jsx)("div", {
     className: "gfb-input-control-top",
     style: {
-      display: 'flex'
+      display: 'flex',
+      justifyContent: 'space-between'
     },
     "data-testid": "".concat(testId, "-toolbar")
   }, (0, _core.jsx)(_Toolbar.default, {
@@ -238,7 +260,21 @@ var Richtextarea = function Richtextarea(props) {
     insertColumnLeft: insertColumnLeft,
     insertColumnRight: insertColumnRight,
     deleteColumn: deleteColumn
-  })) : null, (0, _core.jsx)("div", {
+  }), copy ? (0, _core.jsx)(_CopyValueIcon.default, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null) : (0, _core.jsx)("div", {
+    className: "gfb-input-control-top",
+    style: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      height: 41
+    },
+    "data-testid": "".concat(testId, "-toolbar")
+  }, (0, _core.jsx)("div", null), copy ? (0, _core.jsx)(_CopyValueIcon.default, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null), (0, _core.jsx)("div", {
     className: controlClass,
     style: inputControl,
     css: inputControlCSS
@@ -253,7 +289,7 @@ var Richtextarea = function Richtextarea(props) {
     readOnly: readonly || disabled || !interactive,
     className: className,
     ref: QuillRef,
-    value: value,
+    value: showCopyVerification ? 'Copied!' : value,
     placeholder: placeholder,
     modules: modules.current,
     formats: formats.current,
@@ -308,5 +344,7 @@ Richtextarea.propTypes = {
   required: _propTypes.default.bool,
   maxlength: _propTypes.default.oneOfType([_propTypes.default.number, _propTypes.default.string]),
   warning: _propTypes.default.string,
-  'data-testid': _propTypes.default.string
+  'data-testid': _propTypes.default.string,
+  tooltipId: _propTypes.default.string,
+  copy: _propTypes.default.bool
 };

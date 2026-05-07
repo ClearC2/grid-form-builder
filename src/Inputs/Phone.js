@@ -8,6 +8,7 @@ import useTheme from '../theme/useTheme'
 import countryCodes from '../countryCodes'
 import {List, Map} from 'immutable'
 import '../styles/phone.css'
+import CopyValueIcon from '../CopyValueIcon'
 
 const formatPhoneDisplay = (rawValue, countryCode) => {
   if (!rawValue) return ''
@@ -36,6 +37,8 @@ const Phone = (props) => {
     values,
     maxlength = 524288,
     warning,
+    tooltipId,
+    copy,
     'data-testid': testId = props?.name
   } = props
 
@@ -59,6 +62,9 @@ const Phone = (props) => {
   const [isFocused, setIsFocused] = useState(false)
 
   const [countryCode, setCountryCode] = useState(regionPropValue)
+
+  const [showCopyVerification, setCopyVerification] = useState(false)
+  const showCopyDebounce = useRef()
 
   useEffect(() => {
     setCountryCode(regionPropValue)
@@ -94,6 +100,15 @@ const Phone = (props) => {
     onChange({target: {value: newDigits, name}})
   }, [onChange, name, countryCode])
 
+  const onCopyClick = useCallback(() => {
+    clearTimeout(showCopyDebounce.current)
+    navigator.clipboard.writeText(value)
+    setCopyVerification(true)
+    showCopyDebounce.current = setTimeout(() => {
+      setCopyVerification(false)
+    }, 750)
+  }, [value])
+
   const isDisabled = readonly || disabled || !interactive
 
   let className = 'gfb-input__single-value gfb-input__input'
@@ -121,6 +136,11 @@ const Phone = (props) => {
   const valueCSS = {...theme.value, ...valueStyle}
   const indicatorsCSS = {...theme.indicators, ...indicators}
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd'
+    valueCSS.fontSize = '9pt'
+  }
+
   return (
     <div className={outerClass} style={inputOuter} css={inputOuterCSS}>
       <div className='gfb-input-inner' style={inputInner} css={inputInnerCSS}>
@@ -143,7 +163,7 @@ const Phone = (props) => {
               type='text'
               className={className}
               name={name}
-              value={displayValue}
+              value={showCopyVerification ? 'Copied!' : displayValue}
               onChange={handleOnChange}
               readOnly={isDisabled}
               autoFocus={autofocus}
@@ -164,6 +184,12 @@ const Phone = (props) => {
             css={indicatorsCSS}
             data-testid={`${testId}-errors`}
           >
+            {copy ? (
+              <CopyValueIcon
+                onClick={onCopyClick}
+                tooltipId={tooltipId}
+              />
+            ) : null}
             {warning && !validationError && <ValidationErrorIcon message={warning} color='#FFCC00' type='warning' />}
             {validationWarning && <ValidationErrorIcon message={validationWarning} color='#FFCC00' type='warning' />}
             {validationWarning && validationError && (
@@ -200,5 +226,7 @@ Phone.propTypes = {
   values: PropTypes.instanceOf(Map),
   maxlength: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   warning: PropTypes.string,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 }

@@ -7,6 +7,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 import _parseFloat from "@babel/runtime-corejs3/core-js-stable/parse-float";
 import _trimInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/trim";
+import _setTimeout from "@babel/runtime-corejs3/core-js-stable/set-timeout";
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _Object$getOwnPropertySymbols from "@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols";
 import _filterInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/filter";
@@ -18,10 +19,11 @@ import _Object$defineProperty from "@babel/runtime-corejs3/core-js-stable/object
 
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import ValidationErrorIcon from '../ValidationErrorIcon';
 import useTheme from '../theme/useTheme';
+import CopyValueIcon from '../CopyValueIcon';
 
 var Percentage = function Percentage(props) {
   var _context2;
@@ -51,6 +53,8 @@ var Percentage = function Percentage(props) {
       maximum = _props$maximum === void 0 ? 100 : _props$maximum,
       _props$minimum = props.minimum,
       minimum = _props$minimum === void 0 ? 0 : _props$minimum,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -86,6 +90,12 @@ var Percentage = function Percentage(props) {
       formattedValue = _useState4[0],
       setFormattedValue = _useState4[1];
 
+  var _useState5 = useState(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      showCopyVerification = _useState6[0],
+      setCopyVerification = _useState6[1];
+
+  var showCopyDebounce = useRef();
   useEffect(function () {
     if (!isFocused) {
       setFormattedValue(formatValue(value));
@@ -145,6 +155,14 @@ var Percentage = function Percentage(props) {
       }
     });
   }, [decimals, name, onChange, minimum, maximum]);
+  var onCopyClick = useCallback(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(value);
+    setCopyVerification(true);
+    showCopyDebounce.current = _setTimeout(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [value]);
   var isDisabled = readonly || disabled || !interactive;
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
@@ -185,6 +203,11 @@ var Percentage = function Percentage(props) {
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
 
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
+
   return jsx("div", {
     className: outerClass,
     style: inputOuter,
@@ -223,7 +246,10 @@ var Percentage = function Percentage(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, warning && !validationError && jsx(ValidationErrorIcon, {
+  }, copy ? jsx(CopyValueIcon, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, warning && !validationError && jsx(ValidationErrorIcon, {
     message: warning,
     color: "#FFCC00",
     type: "warning"
@@ -258,5 +284,7 @@ Percentage.propTypes = {
   warning: PropTypes.number,
   maximum: PropTypes.number,
   minimum: PropTypes.number,
-  'data-testid': PropTypes.string
+  'data-testid': PropTypes.string,
+  tooltipId: PropTypes.string,
+  copy: PropTypes.bool
 };

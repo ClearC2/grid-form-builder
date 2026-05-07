@@ -32,6 +32,8 @@ var _minSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/cor
 
 var _maxSafeInteger = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/number/max-safe-integer"));
 
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
+
 var _trim = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/trim"));
 
 var _parseFloat2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-float"));
@@ -47,6 +49,8 @@ var _Cleave = _interopRequireDefault(require("../Cleave"));
 var _ValidationErrorIcon = _interopRequireDefault(require("../ValidationErrorIcon"));
 
 var _useTheme2 = _interopRequireDefault(require("../theme/useTheme"));
+
+var _CopyValueIcon = _interopRequireDefault(require("../CopyValueIcon"));
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
@@ -84,6 +88,8 @@ var Currency = function Currency(props) {
       _props$maximum = props.maximum,
       maximum = _props$maximum === void 0 ? _maxSafeInteger.default : _props$maximum,
       warning = props.warning,
+      tooltipId = props.tooltipId,
+      copy = props.copy,
       _props$dataTestid = props['data-testid'],
       testId = _props$dataTestid === void 0 ? props === null || props === void 0 ? void 0 : props.name : _props$dataTestid;
   var _style$value = style.value,
@@ -109,6 +115,12 @@ var Currency = function Currency(props) {
       isFocused = _useState2[0],
       setIsFocused = _useState2[1];
 
+  var _useState3 = (0, _react.useState)(false),
+      _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
+      showCopyVerification = _useState4[0],
+      setCopyVerification = _useState4[1];
+
+  var showCopyDebounce = (0, _react.useRef)();
   var handleOnFocus = (0, _react.useCallback)(function () {
     setIsFocused(true);
   }, []);
@@ -130,6 +142,14 @@ var Currency = function Currency(props) {
       }
     });
   }, [prefix, onChange, name]);
+  var onCopyClick = (0, _react.useCallback)(function () {
+    clearTimeout(showCopyDebounce.current);
+    navigator.clipboard.writeText(value);
+    setCopyVerification(true);
+    showCopyDebounce.current = (0, _setTimeout2.default)(function () {
+      setCopyVerification(false);
+    }, 750);
+  }, [value]);
   var className = 'gfb-input__single-value gfb-input__input';
   if (readonly || disabled || !interactive) className = className + ' gfb-disabled-input';
   if (!interactive) className = className + ' gfb-non-interactive-input';
@@ -174,6 +194,11 @@ var Currency = function Currency(props) {
   var valueCSS = _objectSpread(_objectSpread({}, theme.value), valueStyle);
 
   var indicatorsCSS = _objectSpread(_objectSpread({}, theme.indicators), indicators);
+
+  if (showCopyVerification) {
+    valueCSS.color = '#63a7bd';
+    valueCSS.fontSize = '9pt';
+  }
 
   return (0, _core.jsx)("div", {
     className: outerClass,
@@ -221,7 +246,10 @@ var Currency = function Currency(props) {
     style: indicators,
     css: indicatorsCSS,
     "data-testid": "".concat(testId, "-errors")
-  }, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
+  }, copy ? (0, _core.jsx)(_CopyValueIcon.default, {
+    onClick: onCopyClick,
+    tooltipId: tooltipId
+  }) : null, warning && !validationError && (0, _core.jsx)(_ValidationErrorIcon.default, {
     message: warning,
     color: "#FFCC00",
     type: "warning"
@@ -259,5 +287,7 @@ Currency.propTypes = {
   minimum: _propTypes.default.number,
   maximum: _propTypes.default.number,
   warning: _propTypes.default.string,
-  'data-testid': _propTypes.default.string
+  'data-testid': _propTypes.default.string,
+  tooltipId: _propTypes.default.string,
+  copy: _propTypes.default.bool
 };
