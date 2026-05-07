@@ -1,3 +1,10 @@
+## [3.139.1](https://github.com/ClearC2/grid-form-builder/compare/v3.139.0...v3.139.1) (2026-05-07)
+
+
+### Bug Fixes
+
+* **reporting:** Daystoexclude fix mapping back to form values from report view ([#271](https://github.com/ClearC2/grid-form-builder/issues/271)) ([70fadf5](https://github.com/ClearC2/grid-form-builder/commit/70fadf55ba0e2930f90084e39e87490638c9d633))
+
 # [3.139.0](https://github.com/ClearC2/grid-form-builder/compare/v3.138.1...v3.139.0) (2026-04-29)
 
 

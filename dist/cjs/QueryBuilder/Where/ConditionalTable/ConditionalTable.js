@@ -38,6 +38,8 @@ var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-st
 
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
 
+var _isArray = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/array/is-array"));
+
 var _filter = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/filter"));
 
 var _keys = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/object/keys"));
@@ -78,7 +80,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context22, _context23; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context22 = ownKeys(Object(source), !0)).call(_context22, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context23 = ownKeys(Object(source))).call(_context23, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context24, _context25; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context24 = ownKeys(Object(source), !0)).call(_context24, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context25 = ownKeys(Object(source))).call(_context25, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
 
@@ -92,7 +94,7 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
   var _super = _createSuper(ConditionalTable);
 
   function ConditionalTable(props) {
-    var _context19;
+    var _context21;
 
     var _this;
 
@@ -152,6 +154,27 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       } else {
         return '';
       }
+    });
+    (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildExcludedDaysString", function (value) {
+      var _context2;
+
+      if (!value || !value.excludeDays || !value.excludedDays) return '';
+      var days = value.excludedDays;
+
+      if (days.toJS) {
+        days = days.toJS();
+      }
+
+      if (!(0, _isArray.default)(days)) {
+        days = days ? [days] : [];
+      }
+
+      var dayLabels = (0, _filter.default)(_context2 = (0, _map.default)(days).call(days, function (day) {
+        if (typeof day === 'string') return day;
+        if (day && (0, _typeof2.default)(day) === 'object') return day.label || day.value || '';
+        return '';
+      })).call(_context2, Boolean);
+      return dayLabels.length ? " (excluding ".concat(dayLabels.join(', '), ")") : '';
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getLabel", function (key) {
       var _this$props$formSchem = _this.props.formSchema,
@@ -219,11 +242,11 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
         }
       } else {
         if ((0, _typeof2.default)((0, _values.default)(value)[0]) === 'object') {
-          var _context2;
+          var _context3;
 
           // for typeaheads
           rawValues = (0, _values.default)(value);
-          var ids = (0, _map.default)(_context2 = (0, _values.default)(value)).call(_context2, function (obj) {
+          var ids = (0, _map.default)(_context3 = (0, _values.default)(value)).call(_context3, function (obj) {
             return obj.value;
           });
           newValue = (0, _immutable.List)(ids);
@@ -249,19 +272,40 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       };
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "buildRequest", function () {
-      var _context3, _context4;
+      var _context5, _context6;
 
       var formValues = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _this.props.formValues;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
+
+      var normalizeExcludedDays = function normalizeExcludedDays(val) {
+        var _days, _context4;
+
+        if (!val || !val.excludeDays || !val.excludedDays) return null;
+        var days = val.excludedDays;
+
+        if ((_days = days) !== null && _days !== void 0 && _days.toJS) {
+          days = days.toJS();
+        }
+
+        if (!(0, _isArray.default)(days)) {
+          days = days ? [days] : [];
+        }
+
+        var normalized = (0, _filter.default)(_context4 = (0, _map.default)(days).call(days, function (d) {
+          return typeof d === 'string' ? d : d === null || d === void 0 ? void 0 : d.value;
+        })).call(_context4, Boolean);
+        return normalized.length ? normalized : null;
+      };
+
       var req = {
         query: {
           type: _this.state.conditionType,
           conditions: []
         }
       };
-      (0, _forEach.default)(_context3 = (0, _filter.default)(_context4 = (0, _immutable.Map)(formValues)).call(_context4, function (val) {
+      (0, _forEach.default)(_context5 = (0, _filter.default)(_context6 = (0, _immutable.Map)(formValues)).call(_context6, function (val) {
         return !!val;
-      })).call(_context3, function (value, key) {
+      })).call(_context5, function (value, key) {
         var newValue;
         var rawValues;
 
@@ -281,8 +325,7 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
 
           if (newValue.size > _index.CONDITIONS[cond].maxFields) {
             newValue = (0, _slice.default)(newValue).call(newValue, 0, _index.CONDITIONS[cond].maxFields);
-          } // https://github.com/ClearC2/bleu/issues/4734
-
+          }
 
           if (cond === 'is between') {
             req.query.conditions.push({
@@ -316,13 +359,19 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
               query.isfield = value.isfield;
             }
 
+            var days = normalizeExcludedDays(value);
+
+            if (days) {
+              query.days_to_exclude = days;
+            }
+
             req.query.conditions.push(query);
           }
         } else if (value.type) {
-          var _context5;
+          var _context7;
 
           var newValues = [];
-          (0, _forEach.default)(_context5 = value.conditions).call(_context5, function (v) {
+          (0, _forEach.default)(_context7 = value.conditions).call(_context7, function (v) {
             var _this$getNewValue = _this.getNewValue(v, key),
                 newValue = _this$getNewValue.newValue,
                 rawValues = _this$getNewValue.rawValues;
@@ -340,8 +389,7 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
 
               if (newValue.size > _index.CONDITIONS[_cond].maxFields) {
                 newValue = (0, _slice.default)(newValue).call(newValue, 0, _index.CONDITIONS[_cond].maxFields);
-              } // https://github.com/ClearC2/bleu/issues/4734
-
+              }
 
               if (_cond === 'is between') {
                 newValues.push({
@@ -359,7 +407,7 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
                   mergeDate: true
                 });
               } else {
-                newValues.push({
+                var conditionObj = {
                   fieldSchema: _this.props.getFieldSchema(key),
                   name: key,
                   label: _this.getLabel(key),
@@ -369,7 +417,15 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
                   rawValues: rawValues,
                   not: v.not || false,
                   format: _this.getFormat(key)
-                });
+                };
+
+                var _days2 = normalizeExcludedDays(v);
+
+                if (_days2) {
+                  conditionObj.days_to_exclude = _days2;
+                }
+
+                newValues.push(conditionObj);
               }
             }
           });
@@ -408,11 +464,11 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       }
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "resetForm", function () {
-      var _context6;
+      var _context8;
 
       var formValues = _this.prop.formValues;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
-      (0, _map.default)(_context6 = (0, _keys.default)(formValues)).call(_context6, function (key) {
+      (0, _map.default)(_context8 = (0, _keys.default)(formValues)).call(_context8, function (key) {
         var schema = _this.props.getFieldSchema(key);
 
         if (schema && schema.config && (schema.config.type === 'textarea' || schema.config.type === 'checkbox' || schema.config.type === 'radio')) {
@@ -447,11 +503,11 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
         });
       } else {
         if (predicateIndex >= 0) {
-          var _context7;
+          var _context9;
 
           var predicate = _this.props.formValues[key];
           var newConditions = [];
-          (0, _forEach.default)(_context7 = predicate.conditions).call(_context7, function (c, i) {
+          (0, _forEach.default)(_context9 = predicate.conditions).call(_context9, function (c, i) {
             if (i !== predicateIndex) {
               newConditions.push(c);
             }
@@ -524,13 +580,13 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       }
     });
     (0, _defineProperty2.default)((0, _assertThisInitialized2.default)(_this), "getFieldType", function (fieldName) {
-      var _context8;
+      var _context10;
 
       var _this$props$formSchem3 = _this.props.formSchema,
           formSchema = _this$props$formSchem3 === void 0 ? {} : _this$props$formSchem3;
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
       var type = '';
-      (0, _forEach.default)(_context8 = formSchema.jsonschema.layout).call(_context8, function (field) {
+      (0, _forEach.default)(_context10 = formSchema.jsonschema.layout).call(_context10, function (field) {
         if (field.config.name === fieldName) {
           type = field.config.type;
           return true;
@@ -556,22 +612,22 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       }
 
       if (value && _this.state.noValueConditions.has(value.condition)) {
-        var _context9, _context10;
+        var _context11, _context12;
 
         return /*#__PURE__*/_react.default.createElement("div", {
-          key: (0, _concat.default)(_context9 = "row-".concat(key, "-")).call(_context9, predicateIndex),
+          key: (0, _concat.default)(_context11 = "row-".concat(key, "-")).call(_context11, predicateIndex),
           style: _objectSpread({}, extraCondRowStyles),
           onClick: rowClick
         }, /*#__PURE__*/_react.default.createElement("div", {
-          key: (0, _concat.default)(_context10 = "column-".concat(key, "-")).call(_context10, predicateIndex),
+          key: (0, _concat.default)(_context12 = "column-".concat(key, "-")).call(_context12, predicateIndex),
           style: {
             wordWrap: 'break-word'
           }
-        }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.renderDeleteIcon(key, value, predicateIndex)));
+        }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', value.condition, _this.buildExcludedDaysString(value), _this.renderDeleteIcon(key, value, predicateIndex)));
       }
 
       if (value && typeof value === 'string') {
-        var _context11, _context12;
+        var _context13, _context14;
 
         // raw inputs
         var val = value;
@@ -588,32 +644,18 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
           /*#__PURE__*/
           // for basic input
           _react.default.createElement("div", {
-            key: (0, _concat.default)(_context11 = "row-".concat(key, "-")).call(_context11, predicateIndex),
+            key: (0, _concat.default)(_context13 = "row-".concat(key, "-")).call(_context13, predicateIndex),
             style: _objectSpread({}, extraCondRowStyles),
             onClick: rowClick
           }, /*#__PURE__*/_react.default.createElement("div", {
-            key: (0, _concat.default)(_context12 = "column-".concat(key, "-")).call(_context12, predicateIndex),
+            key: (0, _concat.default)(_context14 = "column-".concat(key, "-")).call(_context14, predicateIndex),
             style: {
               wordWrap: 'break-word'
             }
           }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key), " "), value.not && '(exclude) ', "contains ", val, _this.renderDeleteIcon(key, value, predicateIndex)))
         );
       } else if (typeof value === 'boolean') {
-        var _context13, _context14;
-
-        return /*#__PURE__*/_react.default.createElement("div", {
-          key: (0, _concat.default)(_context13 = "row-".concat(key, "-")).call(_context13, predicateIndex),
-          style: _objectSpread({}, extraCondRowStyles),
-          onClick: rowClick
-        }, /*#__PURE__*/_react.default.createElement("div", {
-          key: (0, _concat.default)(_context14 = "column-".concat(key, "-")).call(_context14, predicateIndex)
-        }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
-      } else {
-        var _context15, _context16, _context17, _context18;
-
-        if ((0, _values.default)(value) && (0, _values.default)(value).length === 0 && (!value.dynamicValues || value.dynamicValues && value.dynamicValues.length === 0)) {
-          return null;
-        }
+        var _context15, _context16;
 
         return /*#__PURE__*/_react.default.createElement("div", {
           key: (0, _concat.default)(_context15 = "row-".concat(key, "-")).call(_context15, predicateIndex),
@@ -621,11 +663,25 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
           onClick: rowClick
         }, /*#__PURE__*/_react.default.createElement("div", {
           key: (0, _concat.default)(_context16 = "column-".concat(key, "-")).call(_context16, predicateIndex)
-        }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _concat.default)(_context17 = (0, _values.default)(value)).call(_context17, value.dynamicValues || []), value.not, value), _this.renderDeleteIcon(key, (0, _concat.default)(_context18 = (0, _values.default)(value)).call(_context18, value.dynamicValues || []), predicateIndex)));
+        }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key), " "), "is ", value ? 'True' : 'False', _this.renderDeleteIcon(key, value, predicateIndex)));
+      } else {
+        var _context17, _context18, _context19, _context20;
+
+        if ((0, _values.default)(value) && (0, _values.default)(value).length === 0 && (!value.dynamicValues || value.dynamicValues && value.dynamicValues.length === 0)) {
+          return null;
+        }
+
+        return /*#__PURE__*/_react.default.createElement("div", {
+          key: (0, _concat.default)(_context17 = "row-".concat(key, "-")).call(_context17, predicateIndex),
+          style: _objectSpread({}, extraCondRowStyles),
+          onClick: rowClick
+        }, /*#__PURE__*/_react.default.createElement("div", {
+          key: (0, _concat.default)(_context18 = "column-".concat(key, "-")).call(_context18, predicateIndex)
+        }, /*#__PURE__*/_react.default.createElement("strong", null, _this.getLabel(key)), _this.buildMultiString(key, (0, _concat.default)(_context19 = (0, _values.default)(value)).call(_context19, value.dynamicValues || []), value.not, value), _this.buildExcludedDaysString(value), _this.renderDeleteIcon(key, (0, _concat.default)(_context20 = (0, _values.default)(value)).call(_context20, value.dynamicValues || []), predicateIndex)));
       }
     });
     var noValueConditions = [];
-    (0, _forEach.default)(_context19 = (0, _keys.default)(_index.CONDITIONS)).call(_context19, function (k) {
+    (0, _forEach.default)(_context21 = (0, _keys.default)(_index.CONDITIONS)).call(_context21, function (k) {
       if (_index.CONDITIONS[k].maxFields === 0) {
         noValueConditions.push(k);
       }
@@ -653,13 +709,13 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _context20,
+      var _context22,
           _this2 = this;
 
       var _this$props$formValue = this.props.formValues,
           formValues = _this$props$formValue === void 0 ? {} : _this$props$formValue;
       if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
-      var singleRows = (0, _sort.default)(_context20 = (0, _keys.default)(formValues)).call(_context20, function (a, b) {
+      var singleRows = (0, _sort.default)(_context22 = (0, _keys.default)(formValues)).call(_context22, function (a, b) {
         if (_this2.getLabel(a) === undefined || _this2.getLabel(b) === undefined) {
           return 0;
         }
@@ -670,9 +726,9 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       (0, _forEach.default)(singleRows).call(singleRows, function (key) {
         if (_this2.props.formValues[key]) {
           if (_this2.props.formValues[key].type) {
-            var _context21;
+            var _context23;
 
-            (0, _forEach.default)(_context21 = _this2.props.formValues[key].conditions).call(_context21, function (v, predicateIndex) {
+            (0, _forEach.default)(_context23 = _this2.props.formValues[key].conditions).call(_context23, function (v, predicateIndex) {
               tbody.push(_this2.buildTableRow(key, v, predicateIndex));
             });
           } else {

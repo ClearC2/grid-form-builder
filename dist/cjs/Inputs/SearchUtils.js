@@ -8,7 +8,7 @@ _Object$defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.TYPEAHEAD_CONDITIONS = exports.TEXT_INPUTS = exports.SINGLE_FIELD_INPUTS = exports.ONLY_CATEGORICAL_INPUT = exports.NUMERICAL_CONDITIONS = exports.MULTI_FIELD_INPUTS = exports.DATES = exports.CONDITIONS = exports.ALL_BUT_DATES = void 0;
+exports.TYPEAHEAD_CONDITIONS = exports.TEXT_INPUTS = exports.SINGLE_FIELD_INPUTS = exports.ONLY_CATEGORICAL_INPUT = exports.NUMERICAL_CONDITIONS = exports.MULTI_FIELD_INPUTS = exports.EXCLUDE_DAYS_UNSUPPORTED_CONDITIONS = exports.DATES = exports.CONDITIONS = exports.ALL_BUT_DATES = void 0;
 
 var _concat = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/concat"));
 
@@ -57,6 +57,8 @@ var TYPEAHEAD_CONDITIONS = (0, _immutable.Set)(['is equal to', 'is not equal to'
 exports.TYPEAHEAD_CONDITIONS = TYPEAHEAD_CONDITIONS;
 var NUMERICAL_CONDITIONS = (0, _immutable.Set)(['last (x) days', 'last (x) months', 'next (x) days', 'last (x) weeks', 'next (x) weeks', 'next (x) months', 'is top (x)', 'is bottom (x)', 'is top (%)', 'is bottom (%)']);
 exports.NUMERICAL_CONDITIONS = NUMERICAL_CONDITIONS;
+var EXCLUDE_DAYS_UNSUPPORTED_CONDITIONS = (0, _immutable.Set)(['match month', 'is equal to', 'is between', 'is greater than', 'is less than', 'is one of', 'is not equal to', 'is not one of', 'is blank', 'is not blank']);
+exports.EXCLUDE_DAYS_UNSUPPORTED_CONDITIONS = EXCLUDE_DAYS_UNSUPPORTED_CONDITIONS;
 var TEXT_INPUTS = ['checkbox', 'radio']; // export const LIST_INPUTS = []
 
 exports.TEXT_INPUTS = TEXT_INPUTS;

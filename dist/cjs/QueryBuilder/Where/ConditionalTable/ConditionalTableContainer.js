@@ -2,13 +2,25 @@
 
 var _typeof = require("@babel/runtime-corejs3/helpers/typeof");
 
-var _Reflect$construct = require("@babel/runtime-corejs3/core-js-stable/reflect/construct");
+var _Object$keys2 = require("@babel/runtime-corejs3/core-js-stable/object/keys");
 
-var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
+var _Object$getOwnPropertySymbols = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-symbols");
+
+var _filterInstanceProperty2 = require("@babel/runtime-corejs3/core-js-stable/instance/filter");
+
+var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+
+var _forEachInstanceProperty2 = require("@babel/runtime-corejs3/core-js-stable/instance/for-each");
+
+var _Object$getOwnPropertyDescriptors = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptors");
+
+var _Object$defineProperties = require("@babel/runtime-corejs3/core-js-stable/object/define-properties");
 
 var _Object$defineProperty = require("@babel/runtime-corejs3/core-js-stable/object/define-property");
 
-var _Object$getOwnPropertyDescriptor = require("@babel/runtime-corejs3/core-js-stable/object/get-own-property-descriptor");
+var _Reflect$construct = require("@babel/runtime-corejs3/core-js-stable/reflect/construct");
+
+var _WeakMap = require("@babel/runtime-corejs3/core-js-stable/weak-map");
 
 var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
@@ -46,6 +58,8 @@ var _includes = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-s
 
 var _values = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/values"));
 
+var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
+
 var _forEach = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/for-each"));
 
 var _react = _interopRequireWildcard(require("react"));
@@ -69,6 +83,10 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = _Reflect$construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_Reflect$construct) return false; if (_Reflect$construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(_Reflect$construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context9, _context10; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context9 = ownKeys(Object(source), !0)).call(_context9, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context10 = ownKeys(Object(source))).call(_context10, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var getDefaultCondition = function getDefaultCondition(inputType) {
   var i = 0;
@@ -101,7 +119,9 @@ var getDefaultFormat = function getDefaultFormat(inputType) {
 };
 
 var getFieldSchema = function getFieldSchema(key, formSchema) {
-  if (formSchema && typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
+  if (formSchema && typeof formSchema.toJS === 'function') {
+    formSchema = formSchema.toJS();
+  }
 
   if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
     var _context;
@@ -132,11 +152,35 @@ var getBetweenDatesValues = function getBetweenDatesValues(query) {
   })).call(_context2, Boolean);
 };
 
+var formatDayLabel = function formatDayLabel(day) {
+  if (!day || typeof day !== 'string') return '';
+  return day.charAt(0).toUpperCase() + (0, _slice.default)(day).call(day, 1);
+};
+
+var getExcludedDaysFields = function getExcludedDaysFields(c) {
+  var days = c.get('days_to_exclude', (0, _immutable.List)());
+
+  if (!days || !days.size) {
+    return {};
+  }
+
+  return {
+    excludeDays: true,
+    excludedDays: (0, _map.default)(days).call(days, function (day) {
+      return {
+        label: formatDayLabel(day),
+        value: day
+      };
+    })
+  };
+};
+
 var convertSingleField = function convertSingleField(c, formSchema, inBetweenDateValues) {
   var newFormValue;
   var schema = getFieldSchema(c.get('name'), formSchema);
   var type = schema.config && typeof schema.config.type === 'string' ? schema.config.type.toLowerCase() : 'input';
   var mergeDate = c.get('mergeDate', false);
+  var excludedDaysFields = getExcludedDaysFields(c);
 
   if (schema) {
     if ((0, _immutable.Set)(_index.TEXT_INPUTS).has(type) && c.get('comparator') !== 'is blank' && c.get('comparator') !== 'is not blank') {
@@ -147,14 +191,14 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
       });
     } else {
       if (c.get('rawValues') !== undefined && !mergeDate) {
-        newFormValue = (0, _immutable.Map)({
+        newFormValue = (0, _immutable.Map)(_objectSpread({
           condition: c.get('comparator'),
           values: c.get('rawValues', (0, _immutable.List)()),
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
           isfield: c.get('isfield', false),
           format: c.get('format', '')
-        }); // https://github.com/ClearC2/bleu/issues/4734
+        }, excludedDaysFields)); // https://github.com/ClearC2/bleu/issues/4734
       } else if (mergeDate) {
         var _context5;
 
@@ -163,23 +207,23 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
         })).call(_context5, function (v) {
           return v.value;
         });
-        newFormValue = (0, _immutable.Map)({
+        newFormValue = (0, _immutable.Map)(_objectSpread({
           condition: 'is between',
           values: (0, _immutable.List)(values),
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
           isfield: c.get('isfield', false),
           format: c.get('format', '')
-        });
+        }, excludedDaysFields));
       } else {
-        newFormValue = (0, _immutable.Map)({
+        newFormValue = (0, _immutable.Map)(_objectSpread({
           condition: c.get('comparator'),
           values: c.get('values', (0, _immutable.List)()),
           dynamicValues: c.get('dynamicValues'),
           not: c.get('not', false),
           isfield: c.get('isfield', false),
           format: c.get('format', '')
-        });
+        }, excludedDaysFields));
       }
     }
   }

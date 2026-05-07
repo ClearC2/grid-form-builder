@@ -52,9 +52,9 @@ var _startsWith = _interopRequireDefault(require("@babel/runtime-corejs3/core-js
 
 var _includes = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/includes"));
 
-var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
-
 var _slice = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/instance/slice"));
+
+var _setTimeout2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/set-timeout"));
 
 var _parseInt2 = _interopRequireDefault(require("@babel/runtime-corejs3/core-js-stable/parse-int"));
 
@@ -370,7 +370,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
       return schema;
     }
 
-    var supportsExcludedDays = modalValues.get('condition') !== 'match month';
+    var supportsExcludedDays = !_SearchUtils.EXCLUDE_DAYS_UNSUPPORTED_CONDITIONS.has(modalValues.get('condition'));
 
     if (supportsExcludedDays) {
       schema.form.jsonschema.layout.push({
@@ -669,12 +669,42 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
   }
 
   function handleConditionChange(e) {
+    var nextCondition = e.target.value;
     var currentCondition = condition();
-    setModalValues(modalValues.set(e.target.name, e.target.value));
     var trueType = (props.inputType || 'input').toLowerCase();
+    var newModalValues = modalValues.set(e.target.name, nextCondition);
+    var oldValue = props.value;
+    var newFieldValue = oldValue && oldValue.set ? oldValue.set(e.target.name, nextCondition) : (0, _immutable.Map)({
+      condition: nextCondition,
+      values: (0, _immutable.List)()
+    });
+
+    if (_SearchUtils.EXCLUDE_DAYS_UNSUPPORTED_CONDITIONS.has(nextCondition)) {
+      newFieldValue = newFieldValue.delete('excludeDays').delete('excludedDays');
+      newModalValues = newModalValues.delete('excludeDays').delete('excludedDays');
+    }
+
+    var maxFieldValues = _SearchUtils.CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields;
+
+    if (maxFieldValues === 0) {
+      newFieldValue = newFieldValue.set('values', (0, _immutable.List)());
+      newModalValues = newModalValues.delete("".concat(props.name, "-0"));
+    } else if (newFieldValue.get('values', (0, _immutable.List)()).size >= maxFieldValues) {
+      var _context10;
+
+      newFieldValue = newFieldValue.set('values', (0, _slice.default)(_context10 = newFieldValue.get('values', (0, _immutable.List)())).call(_context10, 0, maxFieldValues));
+    }
+
+    setModalValues(newModalValues);
+    props.onChange({
+      target: {
+        name: props.name,
+        value: newFieldValue
+      }
+    }, props.index);
 
     if (trueType === 'typeahead') {
-      if (_SearchUtils.TYPEAHEAD_CONDITIONS.has(currentCondition) && !_SearchUtils.TYPEAHEAD_CONDITIONS.has(e.target.value)) {
+      if (_SearchUtils.TYPEAHEAD_CONDITIONS.has(currentCondition) && !_SearchUtils.TYPEAHEAD_CONDITIONS.has(nextCondition)) {
         (0, _setTimeout2.default)(function () {
           dialogOnChange({
             target: {
@@ -683,7 +713,7 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
             }
           });
         }, 0);
-      } else if (!_SearchUtils.TYPEAHEAD_CONDITIONS.has(currentCondition) && _SearchUtils.TYPEAHEAD_CONDITIONS.has(e.target.value)) {
+      } else if (!_SearchUtils.TYPEAHEAD_CONDITIONS.has(currentCondition) && _SearchUtils.TYPEAHEAD_CONDITIONS.has(nextCondition)) {
         (0, _setTimeout2.default)(function () {
           dialogOnChange({
             target: {
@@ -693,43 +723,6 @@ var ConditionalPredicate = function ConditionalPredicate(props) {
           });
         }, 0);
       }
-    }
-
-    var oldValue = props.value;
-
-    if (oldValue && oldValue instanceof _immutable.Map) {
-      var newFieldValue = props.value.set(e.target.name, e.target.value);
-
-      if (e.target.value === 'match month') {
-        newFieldValue = newFieldValue.delete('excludeDays').delete('excludedDays');
-      }
-
-      var maxFieldValues = _SearchUtils.CONDITIONS[newFieldValue.get('condition', 'contains')].maxFields;
-
-      if (newFieldValue.get('values', (0, _immutable.List)()).size >= maxFieldValues) {
-        var _context10;
-
-        newFieldValue = newFieldValue.set('values', (0, _slice.default)(_context10 = newFieldValue.get('values', (0, _immutable.List)())).call(_context10, 0, maxFieldValues));
-      }
-
-      props.onChange({
-        target: {
-          name: props.name,
-          value: newFieldValue
-        }
-      }, props.index);
-    }
-
-    if (!_SearchUtils.NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) && _SearchUtils.NUMERICAL_CONDITIONS.has(e.target.value) || _SearchUtils.NUMERICAL_CONDITIONS.has(props.value.getIn(['condition'], '')) && !_SearchUtils.NUMERICAL_CONDITIONS.has(e.target.value)) {
-      var _newFieldValue = props.value.set(e.target.name, e.target.value);
-
-      _newFieldValue = _newFieldValue.set('values', (0, _immutable.List)());
-      props.onChange({
-        target: {
-          name: props.name,
-          value: _newFieldValue
-        }
-      }, props.index);
     }
   }
 
