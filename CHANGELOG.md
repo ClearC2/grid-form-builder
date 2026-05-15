@@ -1,3 +1,10 @@
+# [3.140.0](https://github.com/ClearC2/grid-form-builder/compare/v3.139.1...v3.140.0) (2026-05-15)
+
+
+### Features
+
+* **reports:** if field def isn't in schema, default to string ([9c04180](https://github.com/ClearC2/grid-form-builder/commit/9c0418070afde6e95ab4af881a64ff41effcac35))
+
 ## [3.139.1](https://github.com/ClearC2/grid-form-builder/compare/v3.139.0...v3.139.1) (2026-05-07)
 
 
