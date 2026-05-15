@@ -35,11 +35,31 @@ const getFieldSchema = (key, formSchema) => {
   }
   if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
     formSchema = convertFormSchemaToSearch(formSchema)
-    return List(formSchema.jsonschema.layout).find(
+    const fieldSchema = List(formSchema.jsonschema.layout).find(
       (row) => row.config.name === key
     )
+    if (fieldSchema) return fieldSchema
+    // this field isn't in the form schema, default it to a string - JRA 05/15/2026
+    return {
+      config: {
+        label: key,
+        name: key,
+        type: 'input'
+      },
+      dimensions: {},
+      type: 'input'
+    }
   } else {
-    return undefined
+    // we have no form schema, default this field to a string - JRA 05/15/2026
+    return {
+      config: {
+        label: key,
+        name: key,
+        type: 'input'
+      },
+      dimensions: {},
+      type: 'input'
+    }
   }
 }
 

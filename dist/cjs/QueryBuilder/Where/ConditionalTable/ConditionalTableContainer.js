@@ -127,11 +127,31 @@ var getFieldSchema = function getFieldSchema(key, formSchema) {
     var _context;
 
     formSchema = (0, _Utils.convertFormSchemaToSearch)(formSchema);
-    return (0, _find.default)(_context = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context, function (row) {
+    var fieldSchema = (0, _find.default)(_context = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context, function (row) {
       return row.config.name === key;
     });
+    if (fieldSchema) return fieldSchema; // this field isn't in the form schema, default it to a string - JRA 05/15/2026
+
+    return {
+      config: {
+        label: key,
+        name: key,
+        type: 'input'
+      },
+      dimensions: {},
+      type: 'input'
+    };
   } else {
-    return undefined;
+    // we have no form schema, default this field to a string - JRA 05/15/2026
+    return {
+      config: {
+        label: key,
+        name: key,
+        type: 'input'
+      },
+      dimensions: {},
+      type: 'input'
+    };
   }
 };
 
