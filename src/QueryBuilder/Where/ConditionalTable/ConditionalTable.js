@@ -147,7 +147,7 @@ export default class ConditionalTable extends Component {
           fieldSchema.config.label ||
           (fieldSchema.config.metaConfig && fieldSchema.config.metaConfig.label)
       }
-      return name || ''
+      return name || key
     } else {
       return 'No Key in schema'
     }
