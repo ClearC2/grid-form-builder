@@ -247,7 +247,6 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
 
           _forEachInstanceProperty(_context7 = c.get('conditions')).call(_context7, function (pred) {
             var newField = convertSingleField(pred, formSchema, inBetweenDateValues);
-            console.log(newField, pred);
             newField = newField.set('name', pred);
             conditions = conditions.push(newField);
           });

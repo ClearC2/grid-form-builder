@@ -302,7 +302,14 @@ var convertQueryToFormValues = function convertQueryToFormValues(query) {
           }));
         } else {
           var newValue = convertSingleField(c, formSchema, inBetweenDateValues);
-          formValues = formValues.set(c.get('name'), newValue);
+          var name = c.get('name');
+
+          if ((0, _includes.default)(name).call(name, '.') && c.get('label')) {
+            // https://github.com/ClearC2/bleu/issues/11762
+            name = c.get('label');
+          }
+
+          formValues = formValues.set(name, newValue);
         }
       });
     }
