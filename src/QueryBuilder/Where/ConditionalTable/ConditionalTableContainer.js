@@ -222,7 +222,12 @@ export const convertQueryToFormValues = (
             formSchema,
             inBetweenDateValues
           )
-          formValues = formValues.set(c.get('name'), newValue)
+          let name = c.get('name')
+          if (name.includes('.') && c.get('label')) {
+            // https://github.com/ClearC2/bleu/issues/11762
+            name = c.get('label')
+          }
+          formValues = formValues.set(name, newValue)
         }
       })
     }
