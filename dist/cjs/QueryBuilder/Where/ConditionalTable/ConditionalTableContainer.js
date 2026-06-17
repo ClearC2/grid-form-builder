@@ -86,7 +86,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_R
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys2(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty2(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context9, _context10; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context9 = ownKeys(Object(source), !0)).call(_context9, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context10 = ownKeys(Object(source))).call(_context10, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context10, _context11; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty2(_context10 = ownKeys(Object(source), !0)).call(_context10, function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty2(_context11 = ownKeys(Object(source))).call(_context11, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 var getDefaultCondition = function getDefaultCondition(inputType) {
   var i = 0;
@@ -362,9 +362,19 @@ var _ConditionalTableContainer = /*#__PURE__*/function (_Component) {
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
         var _context8;
 
-        return (0, _find.default)(_context8 = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context8, function (row) {
+        var input = (0, _find.default)(_context8 = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context8, function (row) {
           return row.config.name === key;
         });
+
+        if (!input) {
+          var _context9;
+
+          input = (0, _find.default)(_context9 = (0, _immutable.List)(formSchema.jsonschema.layout)).call(_context9, function (row) {
+            return row.config.label === key;
+          });
+        }
+
+        return input;
       } else {
         return undefined;
       }

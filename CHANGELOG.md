@@ -1,3 +1,10 @@
+# [3.143.0](https://github.com/ClearC2/grid-form-builder/compare/v3.142.0...v3.143.0) (2026-06-17)
+
+
+### Features
+
+* **reports:** conditions will look for join labels if join field is not in schema ([4336a2b](https://github.com/ClearC2/grid-form-builder/commit/4336a2beb7710c5f9da8aefa25ba07681d64c5b5))
+
 # [3.142.0](https://github.com/ClearC2/grid-form-builder/compare/v3.141.0...v3.142.0) (2026-05-22)
 
 
