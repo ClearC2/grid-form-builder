@@ -35,9 +35,15 @@ const getFieldSchema = (key, formSchema) => {
   }
   if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
     formSchema = convertFormSchemaToSearch(formSchema)
-    const fieldSchema = List(formSchema.jsonschema.layout).find(
+    let fieldSchema = List(formSchema.jsonschema.layout).find(
       (row) => row.config.name === key
     )
+    if (!fieldSchema) {
+      // this might be a join field and we only have the label
+      fieldSchema = List(formSchema.jsonschema.layout).find(
+        (row) => row.config.label === key
+      )
+    }
     if (fieldSchema) return fieldSchema
     // this field isn't in the form schema, default it to a string - JRA 05/15/2026
     return {
@@ -217,7 +223,7 @@ export const convertQueryToFormValues = (
             })
           )
         } else {
-          const newValue = convertSingleField(
+          let newValue = convertSingleField(
             c,
             formSchema,
             inBetweenDateValues
@@ -225,7 +231,20 @@ export const convertQueryToFormValues = (
           let name = c.get('name')
           if (name.includes('.') && c.get('label')) {
             // https://github.com/ClearC2/bleu/issues/11762
-            name = c.get('label')
+            newValue = newValue.set('label', c.get('label'))
+          }
+          if (fValues) {
+            // I have no idea why it works this way, but the join field drops the last portion of the label in edit mode - JRA 06/17/2026
+            // luckily in edit mode we appear to be passing in default fvalues, so we can clue in based off that
+            const joinField = name.split('.')[name.split('.').length - 1]
+            const suffix = joinField.split('_')[joinField.split('_').length - 1]
+            const index = name.lastIndexOf(suffix)
+            const field = name.slice(0, index) + name.slice(index + suffix.length)
+            if (formValues.get(field)) {
+              // if our query is a join field, and the base join field without the suffix already exists in our form values
+              // update that value instead of our full join field name, this prevents duplicate conditions in the UI in edit mode
+              name = field
+            }
           }
           formValues = formValues.set(name, newValue)
         }
@@ -262,7 +281,7 @@ class _ConditionalTableContainer extends Component {
     enableDelete: true
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     let {formSchema} = props
     if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
@@ -271,7 +290,7 @@ class _ConditionalTableContainer extends Component {
     }
   }
 
-  componentDidUpdate(props) {
+  componentDidUpdate (props) {
     let {formSchema} = props
     if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
     let {formSchema: stateSchema = []} = this.state
@@ -335,7 +354,7 @@ class _ConditionalTableContainer extends Component {
     }
   }
 
-  render() {
+  render () {
     return (
       <ConditionalTable
         {...this.props}

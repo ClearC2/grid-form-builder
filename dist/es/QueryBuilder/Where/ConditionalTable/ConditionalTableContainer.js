@@ -19,7 +19,7 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !_R
 
 function ownKeys(object, enumerableOnly) { var keys = _Object$keys(object); if (_Object$getOwnPropertySymbols) { var symbols = _Object$getOwnPropertySymbols(object); enumerableOnly && (symbols = _filterInstanceProperty(symbols).call(symbols, function (sym) { return _Object$getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context10, _context11; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context10 = ownKeys(Object(source), !0)).call(_context10, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context11 = ownKeys(Object(source))).call(_context11, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var _context11, _context12; var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? _forEachInstanceProperty(_context11 = ownKeys(Object(source), !0)).call(_context11, function (key) { _defineProperty(target, key, source[key]); }) : _Object$getOwnPropertyDescriptors ? _Object$defineProperties(target, _Object$getOwnPropertyDescriptors(source)) : _forEachInstanceProperty(_context12 = ownKeys(Object(source))).call(_context12, function (key) { _Object$defineProperty(target, key, _Object$getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 import _Object$keys from "@babel/runtime-corejs3/core-js-stable/object/keys";
 import _findInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/find";
@@ -29,6 +29,7 @@ import _includesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/ins
 import _valuesInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/values";
 import _sliceInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/slice";
 import _forEachInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/for-each";
+import _lastIndexOfInstanceProperty from "@babel/runtime-corejs3/core-js-stable/instance/last-index-of";
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -81,6 +82,15 @@ var getFieldSchema = function getFieldSchema(key, formSchema) {
       return row.config.name === key;
     });
 
+    if (!fieldSchema) {
+      var _context2;
+
+      // this might be a join field and we only have the label
+      fieldSchema = _findInstanceProperty(_context2 = List(formSchema.jsonschema.layout)).call(_context2, function (row) {
+        return row.config.label === key;
+      });
+    }
+
     if (fieldSchema) return fieldSchema; // this field isn't in the form schema, default it to a string - JRA 05/15/2026
 
     return {
@@ -107,20 +117,20 @@ var getFieldSchema = function getFieldSchema(key, formSchema) {
 };
 
 var getBetweenDatesValues = function getBetweenDatesValues(query) {
-  var _context2, _context3;
+  var _context3, _context4;
 
-  return _filterInstanceProperty(_context2 = _mapInstanceProperty(_context3 = _filterInstanceProperty(query).call(query, function (q) {
-    var _context4;
+  return _filterInstanceProperty(_context3 = _mapInstanceProperty(_context4 = _filterInstanceProperty(query).call(query, function (q) {
+    var _context5;
 
-    return _includesInstanceProperty(_context4 = String(q.name)).call(_context4, 'date');
-  })).call(_context3, function (q) {
+    return _includesInstanceProperty(_context5 = String(q.name)).call(_context5, 'date');
+  })).call(_context4, function (q) {
     if (_valuesInstanceProperty(q) && _valuesInstanceProperty(q).length) {
       return {
         field: q.name,
         value: _valuesInstanceProperty(q)[0]
       };
     }
-  })).call(_context2, Boolean);
+  })).call(_context3, Boolean);
 };
 
 var formatDayLabel = function formatDayLabel(day) {
@@ -171,11 +181,11 @@ var convertSingleField = function convertSingleField(c, formSchema, inBetweenDat
           format: c.get('format', '')
         }, excludedDaysFields)); // https://github.com/ClearC2/bleu/issues/4734
       } else if (mergeDate) {
-        var _context5;
+        var _context6;
 
-        var values = _mapInstanceProperty(_context5 = _filterInstanceProperty(inBetweenDateValues).call(inBetweenDateValues, function (v) {
+        var values = _mapInstanceProperty(_context6 = _filterInstanceProperty(inBetweenDateValues).call(inBetweenDateValues, function (v) {
           return v.field === c.get('name');
-        })).call(_context5, function (v) {
+        })).call(_context6, function (v) {
           return v.value;
         });
 
@@ -235,17 +245,17 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
     }
 
     if (query.conditions) {
-      var _context6;
+      var _context7;
 
       var inBetweenDateValues = getBetweenDatesValues(query.conditions);
 
-      _forEachInstanceProperty(_context6 = fromJS(query.conditions)).call(_context6, function (c) {
+      _forEachInstanceProperty(_context7 = fromJS(query.conditions)).call(_context7, function (c) {
         if (c.get('conditions')) {
-          var _context7;
+          var _context8;
 
           var conditions = List();
 
-          _forEachInstanceProperty(_context7 = c.get('conditions')).call(_context7, function (pred) {
+          _forEachInstanceProperty(_context8 = c.get('conditions')).call(_context8, function (pred) {
             var newField = convertSingleField(pred, formSchema, inBetweenDateValues);
             newField = newField.set('name', pred);
             conditions = conditions.push(newField);
@@ -261,7 +271,24 @@ export var convertQueryToFormValues = function convertQueryToFormValues(query) {
 
           if (_includesInstanceProperty(name).call(name, '.') && c.get('label')) {
             // https://github.com/ClearC2/bleu/issues/11762
-            name = c.get('label');
+            newValue = newValue.set('label', c.get('label'));
+          }
+
+          if (fValues) {
+            // I have no idea why it works this way, but the join field drops the last portion of the label in edit mode - JRA 06/17/2026
+            // luckily in edit mode we appear to be passing in default fvalues, so we can clue in based off that
+            var joinField = name.split('.')[name.split('.').length - 1];
+            var suffix = joinField.split('_')[joinField.split('_').length - 1];
+
+            var index = _lastIndexOfInstanceProperty(name).call(name, suffix);
+
+            var field = _sliceInstanceProperty(name).call(name, 0, index) + _sliceInstanceProperty(name).call(name, index + suffix.length);
+
+            if (formValues.get(field)) {
+              // if our query is a join field, and the base join field without the suffix already exists in our form values
+              // update that value instead of our full join field name, this prevents duplicate conditions in the UI in edit mode
+              name = field;
+            }
           }
 
           formValues = formValues.set(name, newValue);
@@ -317,16 +344,16 @@ var _ConditionalTableContainer = /*#__PURE__*/function (_Component) {
       if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS();
 
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-        var _context8;
+        var _context9;
 
-        var input = _findInstanceProperty(_context8 = List(formSchema.jsonschema.layout)).call(_context8, function (row) {
+        var input = _findInstanceProperty(_context9 = List(formSchema.jsonschema.layout)).call(_context9, function (row) {
           return row.config.name === key;
         });
 
         if (!input) {
-          var _context9;
+          var _context10;
 
-          input = _findInstanceProperty(_context9 = List(formSchema.jsonschema.layout)).call(_context9, function (row) {
+          input = _findInstanceProperty(_context10 = List(formSchema.jsonschema.layout)).call(_context10, function (row) {
             return row.config.label === key;
           });
         }

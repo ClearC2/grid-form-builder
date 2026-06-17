@@ -29,7 +29,7 @@ export default class ConditionalTable extends Component {
     enableListToggle: PropTypes.bool
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     const noValueConditions = []
     Object.keys(CONDITIONS).forEach((k) => {
@@ -53,7 +53,7 @@ export default class ConditionalTable extends Component {
     enableListToggle: false
   }
 
-  componentDidUpdate(props) {
+  componentDidUpdate (props) {
     // eslint-disable-line
     if (this.props.formValues !== props.formValues) {
       if (this.props.onQueryChange) {
@@ -140,7 +140,21 @@ export default class ConditionalTable extends Component {
     let {formSchema = {}} = this.props
     if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
     if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-      const fieldSchema = this.props.getFieldSchema(key)
+      let fieldSchema = this.props.getFieldSchema(key)
+      if (!fieldSchema) {
+        // if the field doesn't exist in the form schema but we have a label in the current values, display that
+        let {formValues} = this.props
+        if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
+        if (formValues[key] && formValues[key].label) {
+          fieldSchema = {
+            config: {
+              label: formValues[key].label,
+              name: key,
+              type: formValues[key].format
+            }
+          }
+        }
+      }
       let name = ''
       if (fieldSchema) {
         name =
@@ -657,7 +671,7 @@ export default class ConditionalTable extends Component {
     }
   }
 
-  render() {
+  render () {
     let {formValues = {}} = this.props
     if (typeof formValues.toJS === 'function') formValues = formValues.toJS()
     const singleRows = Object.keys(formValues).sort((a, b) => {
