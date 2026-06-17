@@ -321,9 +321,15 @@ class _ConditionalTableContainer extends Component {
     let {formSchema} = this.state
     if (typeof formSchema.toJS === 'function') formSchema = formSchema.toJS()
     if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
-      return List(formSchema.jsonschema.layout).find(
+      let input = List(formSchema.jsonschema.layout).find(
         (row) => row.config.name === key
       )
+      if (!input) {
+        input = List(formSchema.jsonschema.layout).find(
+          (row) => row.config.label === key
+        )
+      }
+      return input
     } else {
       return undefined
     }
