@@ -184,6 +184,22 @@ var ConditionalTable = /*#__PURE__*/function (_Component) {
       if (formSchema && formSchema.jsonschema && formSchema.jsonschema.layout) {
         var fieldSchema = _this.props.getFieldSchema(key);
 
+        if (!fieldSchema) {
+          // if the field doesn't exist in the form schema but we have a label in the current values, display that
+          var formValues = _this.props.formValues;
+          if (typeof formValues.toJS === 'function') formValues = formValues.toJS();
+
+          if (formValues[key] && formValues[key].label) {
+            fieldSchema = {
+              config: {
+                label: formValues[key].label,
+                name: key,
+                type: formValues[key].format
+              }
+            };
+          }
+        }
+
         var name = '';
 
         if (fieldSchema) {

@@ -1,3 +1,10 @@
+# [3.144.0](https://github.com/ClearC2/grid-form-builder/compare/v3.143.0...v3.144.0) (2026-06-17)
+
+
+### Features
+
+* **reports:** join field will attempt to use base form value if it exists in current values ([eb3605d](https://github.com/ClearC2/grid-form-builder/commit/eb3605d0ce94414c0cfc3665ab74a7431cb3f494))
+
 # [3.143.0](https://github.com/ClearC2/grid-form-builder/compare/v3.142.0...v3.143.0) (2026-06-17)
 
 
