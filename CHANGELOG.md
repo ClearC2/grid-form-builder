@@ -1,3 +1,10 @@
+## [3.145.1](https://github.com/ClearC2/grid-form-builder/compare/v3.145.0...v3.145.1) (2026-09-15)
+
+
+### Bug Fixes
+
+* **console:** remove console ([f8ddaa4](https://github.com/ClearC2/grid-form-builder/commit/f8ddaa495dcd5edca157433c07038f55a32f3f58))
+
 # [3.145.0](https://github.com/ClearC2/grid-form-builder/compare/v3.144.0...v3.145.0) (2026-09-15)
 
 
