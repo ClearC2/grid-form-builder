@@ -692,6 +692,7 @@ var Typeahead = function Typeahead(props) {
   }, [value, convertValueStringToValueArrayIfNeeded, multi]);
   var loadOptions = useCallback(function (search) {
     var setDefault = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    console.log('load options');
 
     var fetchResults = function fetchResults(resolve) {
       var _typeahead$key2 = typeahead.key,
@@ -902,7 +903,7 @@ var Typeahead = function Typeahead(props) {
       updateInputValue(simpleValue);
     }
 
-    if (!initialFetch.current && !simpleValue.length) {
+    if (!initialFetch.current) {
       // initialFetch.current = true - I think we want to fetch this every time - JRA 02/04/2026
       !autofocus && openMenu();
       loadOptions(' ', true);

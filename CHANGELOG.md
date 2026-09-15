@@ -1,3 +1,10 @@
+# [3.145.0](https://github.com/ClearC2/grid-form-builder/compare/v3.144.0...v3.145.0) (2026-09-15)
+
+
+### Features
+
+* **typeahead:** typeahead will now search for the default blank string on focus even if it already has a value ([d2585f4](https://github.com/ClearC2/grid-form-builder/commit/d2585f4460756df3bbdd53a743b10cc10150bccb))
+
 # [3.144.0](https://github.com/ClearC2/grid-form-builder/compare/v3.143.0...v3.144.0) (2026-06-17)
 
 
