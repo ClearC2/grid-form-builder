@@ -497,7 +497,6 @@ const Typeahead = props => {
   }, [value, convertValueStringToValueArrayIfNeeded, multi])
 
   const loadOptions = useCallback((search, setDefault = false) => {
-    console.log('load options')
     const fetchResults = resolve => {
       const {key = null, duplication = false, fieldvalue = null} = typeahead
       const minSearchLength = isZipCode ? 3 : minChars
