@@ -497,6 +497,7 @@ const Typeahead = props => {
   }, [value, convertValueStringToValueArrayIfNeeded, multi])
 
   const loadOptions = useCallback((search, setDefault = false) => {
+    console.log('load options')
     const fetchResults = resolve => {
       const {key = null, duplication = false, fieldvalue = null} = typeahead
       const minSearchLength = isZipCode ? 3 : minChars
@@ -673,7 +674,7 @@ const Typeahead = props => {
       // this sets the input value equal to the current value so the user can keep editing it instead of creating a new value, MP HATES the default react-select behavior - JRA 12/09/2019
       updateInputValue(simpleValue)
     }
-    if (!initialFetch.current && !simpleValue.length) {
+    if (!initialFetch.current) {
       // initialFetch.current = true - I think we want to fetch this every time - JRA 02/04/2026
       !autofocus && openMenu()
       loadOptions(' ', true)
